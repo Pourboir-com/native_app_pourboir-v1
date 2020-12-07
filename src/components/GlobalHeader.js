@@ -11,12 +11,14 @@ import {
 } from 'react-native';
 import {Header, Body, Left, Right} from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+// import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 // import Colors, {Fonts} from '../constants/theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
+
 
 const GlobalHeader = (props) => {
   const goBackHandler = (props) => {
@@ -32,6 +34,7 @@ const GlobalHeader = (props) => {
         borderBottomRightRadius: 20,
         overflow: 'hidden',
         width: '100%',
+        zIndex:10
       }}>
       <Header
         style={[
@@ -48,25 +51,23 @@ const GlobalHeader = (props) => {
             borderRadius: 20,
             backgroundColor: props.backgroundColor
               ? props.backgroundColor
-              : 'red',
+              : 'orange',
               height: props.height ? props.height : 70,
           },
           Platform.OS === 'ios' ? {borderBottomWidth: 0} : {},
         ]}>
 
         {props.left ? null :
-        <Left style={{flex: 1, marginBottom: 20}}>
+        <Left style={{flex: props.leftText ? 2 : 1, marginBottom: 20}}>
           <View style={styles.viewLeft}>
-            {props.Drawer && (
-              <TouchableOpacity
-              style={styles.btnDrawer}
-                onPress={() => {
-                  props.navigation.toggleDrawer();
-                  // console.log('Navigation', navigation);
-                  // console.log('Propssss', props);
-                }}>
-                <Entypo name="menu" size={35} color="#fff" />
-              </TouchableOpacity>
+            {props.leftText && (
+              <Text 
+                style={{
+                    color: props.color ? props.color : '#FFFFFF',
+                    fontSize: props.fontSize ? props.fontSize : 20,
+                    alignSelf:"flex-start"
+                }}
+            >{props.leftText}</Text>
             )}
 
             {props.arrow === true && (
@@ -85,7 +86,7 @@ const GlobalHeader = (props) => {
                 <MaterialIcons
                   name={'arrow-back'}
                   size={props.Arrowsize ? props.Arrowsize : 30}
-                  color={props.BackIconColor ? props.BackIconColor : null}
+                  color={props.BackIconColor ? props.BackIconColor : '#000'}
                   />
               </TouchableOpacity>
             )}
@@ -95,11 +96,11 @@ const GlobalHeader = (props) => {
 
         <Body
           style={{
-            flex: props.secondText ? 5 : 6,
+            flex: props.centerHide === true ? 0 : 5,
             left: 20,
-            marginBottom: 12,
+            marginBottom: 15,
             justifyContent: 'center',
-            width: '100%',
+            // width: '100%',
             alignItems: props.headingALign ? props.headingALign : 'center',
             alignSelf: 'center',
           }}>
@@ -140,18 +141,20 @@ const GlobalHeader = (props) => {
 
         <Right
           style={{
-            flex: 2,
+            flex: props.leftText ? 1 : 2,
             // marginBottom: 20,
             height: '100%',
+            // justifyContent:"center",
+            alignItems:"center"
           }}>
           {props.isFavouriteLoading ? (
             <View style={[styles.arrowView, {marginRight: 10}]}>
               <ActivityIndicator size={25} color="#FFF" />
             </View>
-          ) : props.RightIcon == true ? (
-            <TouchableOpacity style={styles.arrowView}>
-              <Entypo name="circle-with-cross" size={33} color="#fff" />
-            </TouchableOpacity>
+          ) : props.RightImg ? (
+            <View style={styles.viewImg}>
+              <FontAwesome name="user-circle-o" size={45} color="#fff" />
+            </View>
           ) : null}
         </Right>
       </Header>
@@ -174,12 +177,14 @@ const styles = StyleSheet.create({
     height: '100%',
     marginTop: 10,
   },
-  arrowView: {
-    width: '100%',
-    height: '100%',
+  viewImg: {
+    width: 45,
+    height: 45,
+    borderRadius:30, backgroundColor:"#bbb",
     justifyContent: 'center',
-    alignItems: 'flex-end',
-    marginRight:10
+    alignItems: 'center',
+    marginRight:5,
+    marginTop:-10
   },
   viewLeft: {
     width: '100%',

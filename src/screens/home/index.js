@@ -7,8 +7,11 @@ const Home = () => {
     return <View style={styles.container}>
         <StatusBar backgroundColor="gold" />
         <GlobalHeader
-        arrow={true}
-        headingText="kjshk"
+        // arrow={true}
+        // headingText="kjshk"
+        leftText="Bonjour Zain hasan"
+        centerHide={true}
+        RightImg={true}
         />
         <Text style={{fontSize:30, marginTop:20}}>Hoome</Text>
     </View>

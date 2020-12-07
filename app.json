@@ -27,11 +27,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "rnpm": {
-      "assets": [
-        "./assets/fonts/ProximaNova/"
-      ]
     }
   }
 }

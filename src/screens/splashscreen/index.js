@@ -10,8 +10,6 @@ import {
   StatusBar
 } from 'react-native';
 import {CommonActions} from '@react-navigation/native';
-// import {Colors, Fonts} from '../../constants/theme';
-
 
 export default class SplashScreen extends Component {
   constructor(props) {

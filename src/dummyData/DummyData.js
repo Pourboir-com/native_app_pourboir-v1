@@ -1,28 +1,33 @@
 
-export const ShopCardData = [
+export const rateList = [
     {
       id: '1',
-      heading: 'PLAY KNOCKOUT TOURNAMENT',
-      img:
-        'https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/98381915/original/79769d7b92cdf570c23f4099bcbf29bd78386b1c/design-minimalist-flat-line-vector-avatar-of-you.jpg',
-      cardColor: '#0074FF',
-      playBtn: true,
+      heading: 'Hospitalite',
     },
     {
       id: '2',
-      heading: 'Buzzer game lets play',
-      img:
-        'https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/98381915/original/79769d7b92cdf570c23f4099bcbf29bd78386b1c/design-minimalist-flat-line-vector-avatar-of-you.jpg',
-      cardColor: '#F26351',
-      time: '05:47',
-      playBtn: false,
+      heading: 'Rapldlte',
     },
     {
       id: '3',
-      heading: 'PLAY KNOCKOUT TOURNAMENT',
-      img:
-        'https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/98381915/original/79769d7b92cdf570c23f4099bcbf29bd78386b1c/design-minimalist-flat-line-vector-avatar-of-you.jpg',
-      cardColor: '#FFD800',
-      playBtn: true,
+      heading: 'Service',
     },
+    
+    {
+        id: '4',
+        heading: 'Professionalisme',
+      },
+      {
+        id: '5',
+        heading: 'Voutre pourboir au serveur',
+      },
+      
+    {
+        id: '6',
+        heading: 'Hospitalite',
+      },
+      {
+        id: '7',
+        heading: 'Hospitalite',
+      },
   ];

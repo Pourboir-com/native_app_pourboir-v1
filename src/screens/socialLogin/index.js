@@ -20,6 +20,16 @@ const SocialLogin = () => {
             <FontAwesome name="google" color="#fff" size={20} />
             <Text style={styles.textFb}>Continuer avec Google</Text>
         </TouchableOpacity>
+        <Text>kjs ma kawd kuaw skjwds liawhd</Text>
+        <View style={styles.viewbtns}>
+            <TouchableOpacity>
+                <Text>jdha klhsa lkjhadsk</Text>
+            </TouchableOpacity>
+            <View style={{width:1,height:15, backgroundColor:"grey",marginHorizontal:15}} />
+            <TouchableOpacity>
+                <Text>kjdn asjdh ajsdhk</Text>
+            </TouchableOpacity>
+        </View>
     </View>
 }
 export default SocialLogin;
@@ -30,6 +40,9 @@ const styles = StyleSheet.create({
         // justifyContent:"center",
          alignItems:'center',
         backgroundColor:"gold"
+    },
+    viewbtns:{
+        flexDirection:"row", width:"90%", justifyContent:"center", alignItems:"center"
     },
     imgStyle:{
         width:150, 

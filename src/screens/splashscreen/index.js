@@ -42,7 +42,7 @@ export default function SplashScreen(props) {
   return (
     <View style={styles.container}>
       <StatusBar
-        backgroundColor="orange"
+        backgroundColor="#fee684"
         barStyle={'dark-content'}
       />
       {
@@ -58,10 +58,8 @@ export default function SplashScreen(props) {
               transform: [{ scale: springValue }],
               justifyContent: "center", alignItems: "center"
             }}>
-            <Text style={{ fontSize: 30, 
-              fontFamily: 'Inter-Black'
-               }}>POURBOIR'</Text>
-            <Text>More than tips</Text>
+            <Text style={styles.text}>POURBOIR'</Text>
+            <Text style={styles.tagline}>More than tips</Text>
           </Animated.View>
       }
     </View>
@@ -71,10 +69,17 @@ export default function SplashScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'orange',
+    backgroundColor: '#fee684',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  text: {
+    fontSize: 30,
+    fontFamily: 'Inter-Black'
+  },
+  tagline: {
+    fontFamily: 'Inter-Black'
+  }
 });
 
 

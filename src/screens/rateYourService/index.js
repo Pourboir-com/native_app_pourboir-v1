@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, StatusBar, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, FlatList, StatusBar } from 'react-native';
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader';
 import {rateList as RATELIST} from '../../dummyData/DummyData'
@@ -12,13 +12,13 @@ const Home = () => {
     }
 
     return <View style={styles.container}>
-        <StatusBar backgroundColor="gold" />
         <GlobalHeader
             arrow={true}
             headingText="Notez votre serveur"
             fontSize={17}
             color="#000"
         />
+        <StatusBar backgroundColor="orange" />
         <View style={styles.viewProfile}>
             <View style={styles.viewImg}>
               <FontAwesome name="user-circle-o" size={60} color="#fff" />

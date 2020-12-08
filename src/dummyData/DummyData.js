@@ -21,13 +21,4 @@ export const rateList = [
         id: '5',
         heading: 'Voutre pourboir au serveur',
       },
-      
-    {
-        id: '6',
-        heading: 'Hospitalite',
-      },
-      {
-        id: '7',
-        heading: 'Hospitalite',
-      },
   ];

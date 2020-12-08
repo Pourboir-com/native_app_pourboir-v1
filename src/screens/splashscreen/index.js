@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,49 +11,45 @@ import {
 } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 
-export default class SplashScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.springValue = new Animated.Value(0.7);
-  }
-  componentWillMount() {
-    // this.spring();
-  }
-  componentDidMount() {
-    //   setTimeout(() => {
-    //     this.props.navigation.dispatch(
-    //       CommonActions.reset({
-    //         index: 0,
-    //         routes: [{name: 'socialLogin'}],
-    //       }),
-    //     );
-    //   }, 3200);
-    // }
-    // spring() {
-    //   Animated.spring(this.springValue, {
-    //     toValue: 1,
-    //     friction: 1,
-    //   }).start();
-  }
+export default function SplashScreen(props) {
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <StatusBar
-          backgroundColor="orange"
-          barStyle={'dark-content'}
-        />
-        <Animated.View
-          style={{
-            transform: [{ scale: this.springValue }],
-            justifyContent: "center", alignItems: "center"
-          }}>
-          <Text style={{ fontSize: 30 }}>POURBOIR'</Text>
-          <Text>More than tips</Text>
-        </Animated.View>
-      </View>
-    );
-  }
+  const [springValue] = React.useState(new Animated.Value(0.5))
+
+  React.useEffect(() => {
+
+    setTimeout(() => {
+      props.navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'socialLogin' }],
+        }),
+      );
+    }, 3200)
+
+    // const spring = () => {
+    Animated.spring(springValue, {
+      toValue: 1,
+      friction: 1,
+    }).start()
+    // }
+  }, [])
+
+  return (
+    <View style={styles.container}>
+      <StatusBar
+        backgroundColor="orange"
+        barStyle={'dark-content'}
+      />
+      <Animated.View
+        style={{
+          transform: [{ scale: springValue }],
+          justifyContent: "center", alignItems: "center"
+        }}>
+        <Text style={{ fontSize: 30 }}>POURBOIR'</Text>
+        <Text>More than tips</Text>
+      </Animated.View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -64,3 +60,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+

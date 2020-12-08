@@ -45,23 +45,14 @@ export default function SplashScreen(props) {
         backgroundColor="#fee684"
         barStyle={'dark-content'}
       />
-      {
-        !fontsLoaded ?
-          <View>
-            <Text>
-              Font loading
-        </Text>
-          </View>
-          :
-          <Animated.View
-            style={{
-              transform: [{ scale: springValue }],
-              justifyContent: "center", alignItems: "center"
-            }}>
-            <Text style={styles.text}>POURBOIR'</Text>
-            <Text style={styles.tagline}>More than tips</Text>
-          </Animated.View>
-      }
+      <Animated.View
+        style={{
+          transform: [{ scale: springValue }],
+          justifyContent: "center", alignItems: "center"
+        }}>
+        <Text style={styles.text}>POURBOIR'</Text>
+        <Text style={styles.tagline}>More than tips</Text>
+      </Animated.View>
     </View>
   );
 }

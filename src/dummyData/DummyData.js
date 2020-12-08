@@ -31,7 +31,16 @@ export const rateList = [
       rate: 4/5,
       name: 'Brasserie Le Soleil',
       distance: '650m',
-      services: '13',
+      services: [
+        {
+          userName: 'Amy Farha',
+          rating: 4.5,
+        },
+        {
+          userName: 'Chris Jackson',
+          rating: 4.5,
+        },
+      ],
       img: img1,
     },
     {
@@ -39,7 +48,16 @@ export const rateList = [
       rate: 4/5,
       name: 'La Samaritaine',
       distance: '650m',
-      services: '13',
+      services: [
+        {
+          userName: 'Amy Farha',
+          rating: 4.5,
+        },
+        {
+          userName: 'Chris Jackson',
+          rating: 4.5,
+        },
+      ],
       img: img2,
     },
     {
@@ -47,7 +65,16 @@ export const rateList = [
       rate: 4/5,
       name: 'Le Baletti',
       distance: '650m',
-      services: '13',
+      services: [
+        {
+          userName: 'Amy Farha',
+          rating: 4.5,
+        },
+        {
+          userName: 'Chris Jackson',
+          rating: 4.5,
+        },
+      ],
       img: img3,
     },
     {
@@ -55,7 +82,16 @@ export const rateList = [
       rate: 4/5,
       name: 'Le petit Boileau',
       distance: '650m',
-      services: '13',
+      services: [
+        {
+          userName: 'Amy Farha',
+          rating: 4.5,
+        },
+        {
+          userName: 'Chris Jackson',
+          rating: 4.5,
+        },
+      ],
       img: img1,
     },
     {
@@ -63,7 +99,16 @@ export const rateList = [
       rate: 4/5,
       name: 'Le Baletti',
       distance: '650m',
-      services: '13',
+      services: [
+        {
+          userName: 'Amy Farha',
+          rating: 4.5,
+        },
+        {
+          userName: 'Chris Jackson',
+          rating: 4.5,
+        },
+      ],
       img: img2,
     },
   ]

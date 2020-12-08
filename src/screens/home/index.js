@@ -1,11 +1,11 @@
 import React from 'react'
-import { StyleSheet, Text, View, StatusBar, ImageBackground, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader'
 import {placesList as LIST} from '../../dummyData/DummyData'
 import { Rating, AirbnbRating } from 'react-native-ratings';
 
-const Home = () => {
+const Home = ({navigation}) => {
     return <View style={styles.container}>
         <GlobalHeader
         // arrow={true}
@@ -15,6 +15,7 @@ const Home = () => {
         RightImg={true}
         />
         <StatusBar backgroundColor="orange" />
+        <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.txtHeading}>
             Autour de vous
         </Text>
@@ -24,7 +25,17 @@ const Home = () => {
             numColumns={2}
             keyExtractor={(item) => item._id}
             renderItem={(itemData) => (
-                <View style={styles.viewItemConatier}>
+                <TouchableOpacity 
+                onPress={()=>navigation.navigate('OpenCardReviews',
+                 {
+                    img: itemData.item.img,
+                    rating: itemData.item.rate,
+                    name: itemData.item.name,
+                    distance: itemData.item.distance,
+                    services: itemData.item.services
+                 }
+                 )}
+                style={styles.viewItemConatier}>
                     <ImageBackground style={styles.imgCard} source={{uri: itemData.item.img}}>
                         <View style={{}}>
                         <Rating
@@ -43,13 +54,14 @@ const Home = () => {
                             <Text style={{color:"#fff", fontSize:17}}>{itemData.item.name}</Text>
                             <View style={styles.view2Card}>
                                 <Text style={styles.txt2Card}>{itemData.item.distance}</Text>
-                                <Text style={styles.txt2Card}>{itemData.item.services} serveurs</Text>
+                                <Text style={styles.txt2Card}>{itemData.item.services.length} serveurs</Text>
                             </View>
                         </View>
                     </ImageBackground>
-                </View>
+                </TouchableOpacity>
             )}
             />
+            </ScrollView>
     </View>
 }
 export default Home;

@@ -5,6 +5,7 @@ import {
   Text,
   Image,
   View,
+  TextInput,
   Platform,
   ActivityIndicator,
   StatusBar,
@@ -17,7 +18,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
 // import Colors, {Fonts} from '../constants/theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
+import { MaterialIcons, FontAwesome, Fontisto } from "@expo/vector-icons";
 
 
 const GlobalHeader = (props) => {
@@ -34,7 +35,9 @@ const GlobalHeader = (props) => {
         borderBottomRightRadius: 20,
         overflow: 'hidden',
         width: '100%',
-        zIndex:10
+        zIndex:10,
+        backgroundColor:"orange"
+        // borderBottomLeftRadius:20, borderBottomRightRadius:20
       }}>
       <Header
         style={[
@@ -46,7 +49,7 @@ const GlobalHeader = (props) => {
             alignItems: 'center',
             justifyContent: 'center',
             paddingTop: 10,
-            height: 100,
+            // height: 100,
             zIndex: -10,
             borderRadius: 20,
             backgroundColor: props.backgroundColor
@@ -63,7 +66,7 @@ const GlobalHeader = (props) => {
             {props.leftText && (
               <Text 
                 style={{
-                    color: props.color ? props.color : '#FFFFFF',
+                    color: props.color ? props.color : '#000',
                     fontSize: props.fontSize ? props.fontSize : 20,
                     alignSelf:"flex-start"
                 }}
@@ -158,6 +161,13 @@ const GlobalHeader = (props) => {
           ) : null}
         </Right>
       </Header>
+        <View style={styles.viewSearch}>
+            <Fontisto name="search" size={20} color="orange" />
+            <TextInput 
+            placeholder="Recherchez votre restaurant"
+              style={{flex:1, height:43,paddingHorizontal:15}}
+            />
+        </View>
     </View>
   );
 };
@@ -169,6 +179,10 @@ const styles = StyleSheet.create({
     width: 160,
     height: 30,
     marginTop: 137,
+  },
+  viewSearch:{
+    width:"90%", flexDirection:"row", alignSelf:"center", height:45, paddingHorizontal:15,
+    backgroundColor:"#fff", marginBottom:15, borderRadius:10, alignItems:"center"
   },
   btnDrawer: {
     alignItems: 'center',

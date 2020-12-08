@@ -1,11 +1,10 @@
 import React from 'react'
-import { StyleSheet, Text, View, StatusBar, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader'
 
 const Home = () => {
     return <View style={styles.container}>
-        <StatusBar backgroundColor="gold" />
         <GlobalHeader
         // arrow={true}
         // headingText="kjshk"
@@ -13,7 +12,10 @@ const Home = () => {
         centerHide={true}
         RightImg={true}
         />
-        <Text style={{fontSize:30, marginTop:20}}>Hoome</Text>
+        <StatusBar backgroundColor="orange" />
+        <Text style={{fontSize:22, marginTop:10,width:"90%", alignSelf:"center"}}>
+            Autour de vous
+        </Text>
     </View>
 }
 export default Home;
@@ -22,7 +24,7 @@ const styles = StyleSheet.create({
     container: {
         flex:1,
         // justifyContent:"center",
-         alignItems:'center',
-        backgroundColor:"gold"
+        //  alignItems:'center',
+        backgroundColor:"#fff"
     },
 })

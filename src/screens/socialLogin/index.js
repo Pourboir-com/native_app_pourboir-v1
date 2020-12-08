@@ -5,13 +5,14 @@ import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 
 const SocialLogin = () => {
     return <View style={styles.container}>
-        <StatusBar backgroundColor="orange" />
+        <StatusBar backgroundColor="#fee684" />
         <Text style={{fontSize:30, marginTop:20}}>POURBOIR'</Text>
         <Text>More than tips</Text>
         {/* <Image 
             style={styles.imgStyle} 
             source={imgPath1} 
         /> */}
+        <View style={styles.viewImg}></View>
         <TouchableOpacity style={styles.btnFb}>
             <FontAwesome name="facebook" color="#fff" size={20} />
             <Text style={styles.textFb}>Continuer avec Facebook</Text>
@@ -39,7 +40,10 @@ const styles = StyleSheet.create({
         flex:1,
         // justifyContent:"center",
          alignItems:'center',
-        backgroundColor:"orange"
+        backgroundColor:"#fee684"
+    },
+    viewImg:{
+        width:"80%", alignSelf:"center",height: Dimensions.get('window').height*0.5
     },
     viewbtns:{
         flexDirection:"row", width:"90%", justifyContent:"center", alignItems:"center"

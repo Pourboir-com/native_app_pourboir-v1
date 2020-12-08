@@ -989,6 +989,11 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
+"@expo-google-fonts/inter@^0.1.0":
+  "integrity" "sha512-Y6GCqsUX6JwexQ2wmBkMiJBY6M2GpNQRTczzIGbBGhXWQxqGmP5awRcf0ZJV+OlLeJcKAzas/TW45ZLdpG3yzA=="
+  "resolved" "https://registry.npmjs.org/@expo-google-fonts/inter/-/inter-0.1.0.tgz"
+  "version" "0.1.0"
+
 "@expo/configure-splash-screen@0.2.0":
   "integrity" "sha512-2RG0NOeXZAGKNJXVEEA9wukDsxjmMdDTclZP9FPb15r3+siWI/GZaC36IqoQ8/mw4wzX5Y+OvZ2cHhc0J8t+0A=="
   "resolved" "https://registry.npmjs.org/@expo/configure-splash-screen/-/configure-splash-screen-0.2.0.tgz"
@@ -2935,7 +2940,7 @@
   dependencies:
     "uuid" "^3.4.0"
 
-"expo-font@~8.3.0":
+"expo-font@^8.3.0", "expo-font@~8.3.0":
   "integrity" "sha512-WK3Oh3JwLjH/y94w1GPhE1Ix59WEJ9hTUKJBuvsM9SYqdN4N0DDb2VKhCH218HPdLURfyZnhMi2KrVycUWIUEQ=="
   "resolved" "https://registry.npmjs.org/expo-font/-/expo-font-8.3.0.tgz"
   "version" "8.3.0"

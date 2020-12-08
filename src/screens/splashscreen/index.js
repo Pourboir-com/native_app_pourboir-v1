@@ -11,20 +11,25 @@ import {
 } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 
+import { useFonts } from 'expo-font'
+
 export default function SplashScreen(props) {
+
+  let [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
+  });
 
   const [springValue] = React.useState(new Animated.Value(0.5))
 
   React.useEffect(() => {
-
-    setTimeout(() => {
-      props.navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: 'socialLogin' }],
-        }),
-      );
-    }, 3200)
+    // setTimeout(() => {
+    //   props.navigation.dispatch(
+    //     CommonActions.reset({
+    //       index: 0,
+    //       routes: [{ name: 'socialLogin' }],
+    //     }),
+    //   );
+    // }, 3200)
 
     // const spring = () => {
     Animated.spring(springValue, {
@@ -40,14 +45,25 @@ export default function SplashScreen(props) {
         backgroundColor="orange"
         barStyle={'dark-content'}
       />
-      <Animated.View
-        style={{
-          transform: [{ scale: springValue }],
-          justifyContent: "center", alignItems: "center"
-        }}>
-        <Text style={{ fontSize: 30 }}>POURBOIR'</Text>
-        <Text>More than tips</Text>
-      </Animated.View>
+      {
+        !fontsLoaded ?
+          <View>
+            <Text>
+              Font loading
+        </Text>
+          </View>
+          :
+          <Animated.View
+            style={{
+              transform: [{ scale: springValue }],
+              justifyContent: "center", alignItems: "center"
+            }}>
+            <Text style={{ fontSize: 30, 
+              fontFamily: 'Inter-Black'
+               }}>POURBOIR'</Text>
+            <Text>More than tips</Text>
+          </Animated.View>
+      }
     </View>
   );
 }

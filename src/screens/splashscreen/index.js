@@ -39,10 +39,11 @@ export default class SplashScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor="gold" />
+        <StatusBar backgroundColor="orange" />
           <Animated.View
             style={{
               transform: [{scale: this.springValue}],
+              justifyContent:"center", alignItems:"center"
             }}>
                 <Text style={{fontSize:30}}>POURBOIR'</Text>
                 <Text>More than tips</Text>
@@ -55,7 +56,7 @@ export default class SplashScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'gold',
+    backgroundColor: 'orange',
     justifyContent: 'center',
     alignItems: 'center',
   },

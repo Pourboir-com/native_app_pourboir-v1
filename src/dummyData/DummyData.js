@@ -1,6 +1,7 @@
 const img1 = "https://www.samaa.tv/wp-content/uploads/2016/12/besthotelsites-1.jpg";
 const img2 = "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/izeD0hHEwWUc/v0/1000x-1.jpg";
 const img3 = "https://thebodrumbyphr.com/wp-content/uploads/2020/04/The-Bodrum-by-Paramount-Hotels-Resorts-11-1024x682.jpg";
+const img4 = "https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png";
 
 export const rateList = [
     {
@@ -35,10 +36,12 @@ export const rateList = [
         {
           userName: 'Amy Farha',
           rating: 4.5,
+          imgAvatar: img4,
         },
         {
           userName: 'Chris Jackson',
           rating: 4.5,
+          imgAvatar: img4,
         },
       ],
       img: img1,
@@ -52,10 +55,12 @@ export const rateList = [
         {
           userName: 'Amy Farha',
           rating: 4.5,
+          imgAvatar: img4,
         },
         {
           userName: 'Chris Jackson',
           rating: 4.5,
+          imgAvatar: img4,
         },
       ],
       img: img2,
@@ -69,10 +74,12 @@ export const rateList = [
         {
           userName: 'Amy Farha',
           rating: 4.5,
+          imgAvatar: img4,
         },
         {
           userName: 'Chris Jackson',
           rating: 4.5,
+          imgAvatar: img4,
         },
       ],
       img: img3,
@@ -86,10 +93,12 @@ export const rateList = [
         {
           userName: 'Amy Farha',
           rating: 4.5,
+          imgAvatar: img4,
         },
         {
           userName: 'Chris Jackson',
           rating: 4.5,
+          imgAvatar: img4,
         },
       ],
       img: img1,
@@ -103,10 +112,12 @@ export const rateList = [
         {
           userName: 'Amy Farha',
           rating: 4.5,
+          imgAvatar: img4,
         },
         {
           userName: 'Chris Jackson',
           rating: 4.5,
+          imgAvatar: img4,
         },
       ],
       img: img2,

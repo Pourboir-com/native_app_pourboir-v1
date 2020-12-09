@@ -1,24 +1,33 @@
 import React, {useState} from 'react'
 import { StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
-import { MaterialIcons, FontAwesome, Ionicons } from "@expo/vector-icons";
+import { MaterialIcons, FontAwesome, Ionicons, AntDesign } from "@expo/vector-icons";
 import { Rating, AirbnbRating } from 'react-native-ratings';
-import ConfirmationModal from '../../components/modals/ConfirmModal'
+import ConfirmationModal from '../../components/modals/ConfirmModal';
+import HelpUsImproveModal from '../../components/modals/HelpUsImproveModal'
+import {Colors} from '../../constants/Theme';
 
 const ReviewDetails = ({navigation, route}) => {
     // console.log('routesssss',route.params)
     const { img, name, rating, distance, services } = route.params;
     const [confirmModalVisible, setconfirmModalVisible] = useState(false);
+    const [helpUsModalVisible, sethelpUsModalVisible] = useState(false);
 
     const handleModalClose = () => {
         setconfirmModalVisible(false);
+        sethelpUsModalVisible(false);
       };
 
-      const handleModalOpen = () => {
+      const handleConfirmModalOpen = () => {
         setconfirmModalVisible(true);
       };
 
+      const handleHelpUsModalOpen = () => {
+        //   alert('working')
+          sethelpUsModalVisible(true);
+      }
+
     return <View style={styles.container}>
-        <StatusBar backgroundColor="orange" hidden={true} />
+        <StatusBar hidden={true} />
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.viewImg}>
                 <ImageBackground 
@@ -75,17 +84,35 @@ const ReviewDetails = ({navigation, route}) => {
                     </TouchableOpacity>
                 )}
             />
+            <View style={styles.viewAddReview}>
+                <Text style={styles.txtCantFind}>Vous ne trouvez pas votre serveur?</Text>
+                <View style={{flexDirection:"row", alignItems:"center"}}>
+                    <Text style={styles.txtAddReview}>Ajoutez votre serveur</Text>
+                    <TouchableOpacity 
+                        onPress={handleHelpUsModalOpen}
+                        style={styles.btnAdd}
+                    >
+                        <AntDesign name="plus" size={16} color={Colors.fontDark} />
+                    </TouchableOpacity>
+                </View>
+            </View>
         </ScrollView>
         <TouchableOpacity 
-            onPress={handleModalOpen} 
+            onPress={handleConfirmModalOpen} 
             style={styles.viewLastBtn}
         >
             <Text>Vous etes serveur</Text>
         </TouchableOpacity>
+
         <ConfirmationModal 
             isVisible={confirmModalVisible} 
             handleModalClose={handleModalClose}
             name={name}
+        />
+
+        <HelpUsImproveModal 
+            isVisible={helpUsModalVisible} 
+            handleModalClose={handleModalClose}
         />
 
     </View>
@@ -97,12 +124,25 @@ const styles = StyleSheet.create({
         flex:1,
         backgroundColor:"#F1F3F2"
     },
+    btnAdd:{
+        backgroundColor:Colors.yellow, padding:4, borderRadius:6, marginLeft:10
+    },
+    txtAddReview:{
+        fontSize:16, color:Colors.fontDark
+    },
+    txtCantFind:{
+        fontSize:16, color:Colors.fontLight
+    },
+    viewAddReview:{
+        backgroundColor:"rgba(0,0,0,0.1)", width:"90%", alignSelf:"center", marginBottom:10,
+        justifyContent:"center", alignItems:"center", borderRadius:10,paddingVertical:15
+    },
     viewLastBtn:{
-        width:"90%", alignSelf:"center", backgroundColor:"orange", height:50,
-        justifyContent:"center", alignItems:"center", borderRadius:10, marginBottom:15
+        width:"90%", alignSelf:"center", backgroundColor:Colors.yellow, height:50,
+        justifyContent:"center", alignItems:"center", borderRadius:10, marginBottom:15, marginTop:1
     },
     txtNumRaters:{
-        backgroundColor:"orange", padding:2,paddingHorizontal:9,marginLeft:10,fontSize:18,
+        backgroundColor:Colors.yellow, padding:2,paddingHorizontal:9,marginLeft:10,fontSize:18,
         borderRadius:9
     },
     txtHeading:{
@@ -119,7 +159,7 @@ const styles = StyleSheet.create({
         textAlign:"center",marginLeft:-25,color:"#fff", fontSize:20
     },
     viewImg:{
-        width:"100%", height:230, borderBottomLeftRadius:20,borderBottomRightRadius:20,
+        width:"100%", height:200, borderBottomLeftRadius:20,borderBottomRightRadius:20,
         overflow:"hidden",
     },
     viewItemConatier:{

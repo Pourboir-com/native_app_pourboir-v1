@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 
 function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="socialLogin" headerMode="none">
+    <Stack.Navigator initialRouteName="splashScreen" headerMode="none">
       <Stack.Screen name="socialLogin" component={socialLogin} />
       <Stack.Screen name="splashScreen" component={splashScreen} />
       <Stack.Screen name="Home" component={Home} />

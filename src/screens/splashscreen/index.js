@@ -1,17 +1,19 @@
 import React from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   ImageBackground,
   Image,
-  ScrollView,
   Animated,
+  Dimensions,
   StatusBar
 } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import Svg, { Circle, Rect } from 'react-native-svg';
 import { useFonts } from 'expo-font'
+
+const imgSplash = require('../../assets/images/splash.png')
+
 
 export default function SplashScreen(props) {
 
@@ -41,14 +43,14 @@ export default function SplashScreen(props) {
 
   return (
     <View style={styles.container}>
-      <StatusBar
-        backgroundColor="#fee684"
-        barStyle={'dark-content'}
-      />
+      <StatusBar hidden={true} />
       <ImageBackground 
-      style={{flex:1}}
+      style={{
+        width:Dimensions.get('window').width*1,
+        height:Dimensions.get('window').height*1
+      }}
       resizeMode="cover"
-      source={require('../../assets/images/splash.png')}></ImageBackground>
+      source={imgSplash}></ImageBackground>
       {/* <Animated.View
         style={{
           transform: [{ scale: springValue }],

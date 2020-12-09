@@ -1,7 +1,8 @@
 export const Colors = {
     fontPurple: '#7313B4',
-    Linear1Shopbutton: '#A700FF',
-    Linear2Shoptbutton: '#6200FF',
+    fontDark: '#1E272E',
+    fontLight: '#485460',
+    yellow: '#FCDF6F'
   };
   
   export const Fonts = {

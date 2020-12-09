@@ -1,13 +1,22 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
 import { MaterialIcons, FontAwesome, Ionicons } from "@expo/vector-icons";
-// import GlobalHeader from '../../components/GlobalHeader'
-// import {placesList as LIST} from '../../dummyData/DummyData'
 import { Rating, AirbnbRating } from 'react-native-ratings';
+import ConfirmationModal from '../../components/modals/ConfirmModal'
 
 const ReviewDetails = ({navigation, route}) => {
-    console.log('routesssss',route.params)
+    // console.log('routesssss',route.params)
     const { img, name, rating, distance, services } = route.params;
+    const [confirmModalVisible, setconfirmModalVisible] = useState(false);
+
+    const handleModalClose = () => {
+        setconfirmModalVisible(false);
+      };
+
+      const handleModalOpen = () => {
+        setconfirmModalVisible(true);
+      };
+
     return <View style={styles.container}>
         <StatusBar backgroundColor="orange" hidden={true} />
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -67,9 +76,18 @@ const ReviewDetails = ({navigation, route}) => {
                 )}
             />
         </ScrollView>
-            <TouchableOpacity style={styles.viewLastBtn}>
-                <Text>Vous etes serveur</Text>
-            </TouchableOpacity>
+        <TouchableOpacity 
+            onPress={handleModalOpen} 
+            style={styles.viewLastBtn}
+        >
+            <Text>Vous etes serveur</Text>
+        </TouchableOpacity>
+        <ConfirmationModal 
+            isVisible={confirmModalVisible} 
+            handleModalClose={handleModalClose}
+            name={name}
+        />
+
     </View>
 }
 export default ReviewDetails;

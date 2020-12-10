@@ -161,13 +161,15 @@ const GlobalHeader = (props) => {
           ) : null}
         </Right>
       </Header>
+      {props.search ? 
         <View style={styles.viewSearch}>
             <Fontisto name="search" size={20} color={Colors.yellow} />
             <TextInput 
             placeholder="Recherchez votre restaurant"
               style={{flex:1, height:43,paddingHorizontal:15}}
             />
-        </View>
+        </View> : null
+      }
     </View>
   );
 };

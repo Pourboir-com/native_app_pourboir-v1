@@ -1,9 +1,10 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, FlatList, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TextInput, Dimensions, TouchableOpacity, FlatList, StatusBar } from 'react-native';
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader';
 import {rateList as RATELIST} from '../../dummyData/DummyData'
 import { Rating, AirbnbRating } from 'react-native-ratings';
+import {Colors} from '../../constants/Theme';
 
 const Home = () => {
 
@@ -16,38 +17,42 @@ const Home = () => {
             arrow={true}
             headingText="Notez votre serveur"
             fontSize={17}
-            color="#000"
+            color={Colors.fontDark}
         />
-        <StatusBar backgroundColor="orange" />
+        <StatusBar backgroundColor={Colors.yellow} />
         <View style={styles.viewProfile}>
             <View style={styles.viewImg}>
-              <FontAwesome name="user-circle-o" size={60} color="#fff" />
+              <FontAwesome name="user-circle-o" size={100} color="#fff" />
             </View>
             <Text style={styles.txtName}>Amy Farha</Text>
         </View>
-        <View style={styles.viewFlatlist}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.viewFlatlist}>
             <FlatList
             data={RATELIST}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item._id}
             renderItem={(itemData) => (
-                <View style={styles.viewListCard}>
-                    <Text>{itemData.item.heading}</Text>
+                <TouchableOpacity style={styles.viewListCard}>
+                    <Text style={styles.txtCard}>{itemData.item.heading}</Text>
                     <Rating
                         // showRating
                         // onFinishRating={this.ratingCompleted}
-                        style={{ paddingVertical: 5, width:"100%" }}
+                        style={{ width:"100%",marginTop:15 }}
                         imageSize={20}
                         readonly={true}
                         // ratingCount={4}
                         // starContainerStyle={{backgroundColor:"blue", padding:5,margin:5}}
                     />
-                </View>
+                </TouchableOpacity>
             )}
             />
-        </View>
+            <View style={styles.viewTip}>
+                <Text style={styles.txtCard}>Votre pourboir au serveur</Text>
+                <TextInput style={styles.inputStyle} />
+            </View>
+        </ScrollView>
         <TouchableOpacity style={styles.btnValider}>
-            <Text>Valider</Text>
+            <Text style={{fontSize:16}}>Valider</Text>
         </TouchableOpacity>
     </View>
 }
@@ -58,26 +63,37 @@ const styles = StyleSheet.create({
         flex:1,
         // justifyContent:"center",
          alignItems:'center',
-        backgroundColor:"#EEF0EF"
+        backgroundColor:"#F9F9F9"
+    },
+    inputStyle:{
+        height:45, width:"80%", backgroundColor:"#F8F8F8",borderRadius:10, marginTop:12
+    },
+    viewTip:{
+        backgroundColor:"#fff", width:"90%", alignSelf:"center", marginBottom:10,height:120,
+        borderRadius:15, alignItems:"center", borderWidth:1,borderColor:'rgba(0,0,0,0.05)'
+    },
+    txtCard:{
+        fontSize:18, marginTop:15
     },
     viewFlatlist:{
-        backgroundColor:"transparent",width:"100%", flex:1, marginTop:-50
+        backgroundColor:"transparent",width:"100%", flex:1, marginTop:-40
     },
     btnValider:{
-        backgroundColor:"orange", width:"90%", justifyContent:"center",alignItems:"center",
+        backgroundColor:Colors.yellow, width:"90%", justifyContent:"center",alignItems:"center",
         height:50, borderRadius:8, marginBottom:15, marginTop:3
     },
     viewListCard:{
-        backgroundColor:"#fff", width:"90%", alignSelf:"center", marginBottom:15,
-        borderRadius:10, justifyContent:"center", alignItems:"center", paddingVertical:7
+        backgroundColor:"#fff", width:"90%", alignSelf:"center", marginBottom:10,height:100,
+        borderRadius:15, alignItems:"center", borderWidth:1,borderColor:'rgba(0,0,0,0.05)', 
+
     },
     txtName:{
-        alignSelf:"center",marginTop:10, fontSize:17,
+        alignSelf:"center",marginTop:10, fontSize:24, color:Colors.fontDark
     },
     viewImg: {
-        width: 60,
-        height: 60,
-        borderRadius:30, backgroundColor:"#bbb",
+        width: 100,
+        height: 100,
+        borderRadius:50, backgroundColor:"#bbb",
         justifyContent: 'center',
         alignItems: 'center',
         marginRight:5,
@@ -85,7 +101,7 @@ const styles = StyleSheet.create({
         alignSelf:"center"
       },
     viewProfile:{
-        backgroundColor:"orange", width:"100%", height:190, marginTop:-20,
+        backgroundColor:Colors.yellow, width:"100%", paddingBottom:70, marginTop:-20,
         borderBottomLeftRadius:40, borderBottomRightRadius:40
     }
 })

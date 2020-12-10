@@ -20,10 +20,6 @@ export const rateList = [
         id: '4',
         heading: 'Professionalisme',
       },
-      {
-        id: '5',
-        heading: 'Voutre pourboir au serveur',
-      },
   ];
 
   export const placesList = [

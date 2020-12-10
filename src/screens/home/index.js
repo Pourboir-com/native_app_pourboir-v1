@@ -15,6 +15,7 @@ const Home = ({navigation}) => {
         leftText="Bonjour Zain hasan"
         centerHide={true}
         RightImg={true}
+        search={true}
         />
         <StatusBar backgroundColor={Colors.yellow} />
         <ScrollView showsVerticalScrollIndicator={false}>

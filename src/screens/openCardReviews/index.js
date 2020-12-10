@@ -35,7 +35,9 @@ const ReviewDetails = ({navigation, route}) => {
                     style={{flex:1, justifyContent:"space-between"}}
                 >
                     <View style={styles.viewHeader}>
-                        <TouchableOpacity onPress={()=> navigation.goBack()}>
+                        <TouchableOpacity style={{paddingRight:20, paddingBottom:20}} 
+                        onPress={()=> navigation.goBack()}
+                        >
                             <MaterialIcons name={"arrow-back"} size={25} color="#fff" />
                         </TouchableOpacity>
                         <View style={{flex:1,}}>

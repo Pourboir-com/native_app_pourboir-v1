@@ -4,6 +4,8 @@ import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader'
 import {placesList as LIST} from '../../dummyData/DummyData'
 import { Rating, AirbnbRating } from 'react-native-ratings';
+import {Colors} from '../../constants/Theme';
+import HomeCard from '../../components/HomeCard';
 
 const Home = ({navigation}) => {
     return <View style={styles.container}>
@@ -14,7 +16,7 @@ const Home = ({navigation}) => {
         centerHide={true}
         RightImg={true}
         />
-        <StatusBar backgroundColor="orange" />
+        <StatusBar backgroundColor={Colors.yellow} />
         <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.txtHeading}>
             Autour de vous
@@ -24,7 +26,16 @@ const Home = ({navigation}) => {
             showsVerticalScrollIndicator={false}
             numColumns={2}
             keyExtractor={(item) => item._id}
-            renderItem={(itemData) => (
+            renderItem={(itemData) => ( 
+                // <HomeCard 
+                //     navigation={navigation}
+                //     img={itemData.item.img}
+                //     rating={itemData.item.rate}
+                //     name={itemData.item.name}
+                //     distance={itemData.item.distance}
+                //     services={itemData.item.services}
+                //     />
+                // <View/>
                 <TouchableOpacity 
                 onPress={()=>navigation.navigate('OpenCardReviews',
                  {
@@ -35,7 +46,7 @@ const Home = ({navigation}) => {
                     services: itemData.item.services
                  }
                  )}
-                style={styles.viewItemConatier}>
+                style={[styles.viewItemConatier]}>
                     <ImageBackground style={styles.imgCard} source={{uri: itemData.item.img}}>
                         <View style={{}}>
                         <Rating
@@ -49,6 +60,8 @@ const Home = ({navigation}) => {
                             // readonly={true}
                             ratingCount={5}
                         />
+                        <Text style={{color:"red"}}>
+                        </Text>
                         </View>
                         <View style={{}}>
                             <Text style={{color:"#fff", fontSize:17}}>{itemData.item.name}</Text>
@@ -59,7 +72,8 @@ const Home = ({navigation}) => {
                         </View>
                     </ImageBackground>
                 </TouchableOpacity>
-            )}
+            )
+        }
             />
             </ScrollView>
     </View>

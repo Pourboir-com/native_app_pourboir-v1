@@ -16,7 +16,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
-// import Colors, {Fonts} from '../constants/theme';
+import {Colors} from '../constants/Theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { MaterialIcons, FontAwesome, Fontisto } from "@expo/vector-icons";
 
@@ -36,7 +36,7 @@ const GlobalHeader = (props) => {
         overflow: 'hidden',
         width: '100%',
         zIndex:10,
-        backgroundColor:"orange"
+        backgroundColor:Colors.yellow
         // borderBottomLeftRadius:20, borderBottomRightRadius:20
       }}>
       <Header
@@ -54,7 +54,7 @@ const GlobalHeader = (props) => {
             borderRadius: 20,
             backgroundColor: props.backgroundColor
               ? props.backgroundColor
-              : 'orange',
+              : Colors.yellow,
               height: props.height ? props.height : 70,
           },
           Platform.OS === 'ios' ? {borderBottomWidth: 0} : {},
@@ -162,7 +162,7 @@ const GlobalHeader = (props) => {
         </Right>
       </Header>
         <View style={styles.viewSearch}>
-            <Fontisto name="search" size={20} color="orange" />
+            <Fontisto name="search" size={20} color={Colors.yellow} />
             <TextInput 
             placeholder="Recherchez votre restaurant"
               style={{flex:1, height:43,paddingHorizontal:15}}

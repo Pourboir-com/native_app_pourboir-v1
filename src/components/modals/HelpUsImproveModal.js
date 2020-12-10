@@ -5,13 +5,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  Image
+  Image,
+  ImageBackground
 } from 'react-native';
 import {Overlay} from 'react-native-elements';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {Colors} from '../../constants/Theme';
 
 const imgSitting = require('../../assets/images/sittingtable.png')
+const imgBg = require('../../assets/images/Group7.png')
 
 const HelpUsImproveModal = ({isVisible, handleModalClose}) => {
   return (
@@ -19,6 +21,11 @@ const HelpUsImproveModal = ({isVisible, handleModalClose}) => {
       overlayStyle={styles.container}
       isVisible={isVisible}
       onBackdropPress={handleModalClose}>
+      <ImageBackground 
+          style={styles.imgBgStyle} 
+          source={imgBg}
+          resizeMode="stretch"
+        >
         <View style={styles.viewImg}>
             <TouchableOpacity
                 onPress={handleModalClose}
@@ -31,7 +38,7 @@ const HelpUsImproveModal = ({isVisible, handleModalClose}) => {
                 resizeMode="contain"
             />
         </View>
-      
+        </ImageBackground>
         <Text style={styles.txtName}>
             Aidez-nous à améliorer notre app. Donnez nous le nom de votre serveur
         </Text>
@@ -61,6 +68,9 @@ const styles = StyleSheet.create({
     padding:0,
     overflow:"hidden",
     borderRadius:15
+  },
+  imgBgStyle:{
+    width:"100%", height:240,
   },
   inputStyle:{
     width:"85%", height:50, backgroundColor:"#F8F8F8", borderRadius:10, marginVertical:15,
@@ -93,9 +103,6 @@ const styles = StyleSheet.create({
     marginRight:-20
   },
   viewImg:{
-    backgroundColor:Colors.yellow, width:"100%", height:240,
-    borderBottomRightRadius:30,
-    borderBottomLeftRadius:80,
-    overflow:"hidden"
+    width:"100%", height:240,
   }
 });

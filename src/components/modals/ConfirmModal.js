@@ -5,13 +5,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  Image
+  Image,
+  ImageBackground
 } from 'react-native';
 import {Overlay} from 'react-native-elements';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {Colors} from '../../constants/Theme';
 
 const imgWaiter = require('../../assets/images/waiter2.png')
+const imgBg = require('../../assets/images/Group7.png')
 
 const ConfirmationModal = ({isVisible, handleModalClose,name}) => {
   return (
@@ -19,19 +21,24 @@ const ConfirmationModal = ({isVisible, handleModalClose,name}) => {
       overlayStyle={styles.container}
       isVisible={isVisible}
       onBackdropPress={handleModalClose}>
-        <View style={styles.viewImg}>
-            <TouchableOpacity
-                onPress={handleModalClose}
-                style={{alignSelf: 'flex-end',margin:10}}>
-                <Entypo name="cross" size={29} color="#485460" />
-            </TouchableOpacity>
-            <Image 
-                source={imgWaiter} 
-                style={styles.imgStyle} 
-                resizeMode="contain"
-            />
-        </View>
-      
+        <ImageBackground 
+          style={styles.imgBgStyle} 
+          source={imgBg}
+          resizeMode="stretch"
+        >
+          <View style={styles.viewImg}>
+              <TouchableOpacity
+                  onPress={handleModalClose}
+                  style={{alignSelf: 'flex-end',margin:10}}>
+                  <Entypo name="cross" size={29} color="#485460" />
+              </TouchableOpacity>
+              <Image 
+                  source={imgWaiter} 
+                  style={styles.imgStyle} 
+                  resizeMode="contain"
+              />
+          </View>
+        </ImageBackground>
         <Text
           style={styles.txtConfrm}>
           Confirmez que vous êtes serveur pour
@@ -56,6 +63,9 @@ const styles = StyleSheet.create({
     overflow:"hidden",
     borderRadius:15
   },
+  imgBgStyle:{
+    width:"100%", height:240,
+  },
   txtBtnConfrm:{
       fontSize:16, color:Colors.fontDark
   },
@@ -69,7 +79,7 @@ const styles = StyleSheet.create({
   txtConfrm:{
     fontSize: 16,
     color: Colors.fontLight,
-    marginTop: 10,
+    marginTop: 20,
     width:180, textAlign:"center"
   },
   txtName:{
@@ -82,9 +92,6 @@ const styles = StyleSheet.create({
     marginRight:-20
   },
   viewImg:{
-    backgroundColor:Colors.yellow, width:"100%", height:240,
-    borderBottomRightRadius:30,
-    borderBottomLeftRadius:80,
-    overflow:"hidden"
+    width:"100%", height:240,
   }
 });

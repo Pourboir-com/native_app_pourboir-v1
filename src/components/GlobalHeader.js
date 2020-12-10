@@ -26,7 +26,7 @@ const GlobalHeader = (props) => {
     props.navigation.goBack();
   };
 
-  console.log('Propssss', props);
+  // console.log('Propssss', props);
 
   return (
     <View
@@ -66,7 +66,7 @@ const GlobalHeader = (props) => {
             {props.leftText && (
               <Text 
                 style={{
-                    color: props.color ? props.color : '#000',
+                    color: props.color ? props.color : Colors.fontLight,
                     fontSize: props.fontSize ? props.fontSize : 20,
                     alignSelf:"flex-start"
                 }}
@@ -207,5 +207,6 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft:8
   },
 });

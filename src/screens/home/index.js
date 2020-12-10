@@ -8,6 +8,21 @@ import {Colors} from '../../constants/Theme';
 import HomeCard from '../../components/HomeCard';
 
 const Home = ({navigation}) => {
+
+    let ItemsOdd = []
+    let ItemsEven = []
+
+    for (var i=0; i<LIST.length; i++){
+        if((i+2)%2==0) {
+            ItemsOdd.push(LIST[i]);
+        }
+        else {
+            ItemsEven.push(LIST[i]);
+        }
+    }
+    console.log('ItemsOddddddddd',ItemsOdd)
+    console.log('ItemsEvennnnnnnn',ItemsEven)
+
     return <View style={styles.container}>
         <GlobalHeader
         // arrow={true}
@@ -22,7 +37,88 @@ const Home = ({navigation}) => {
         <Text style={styles.txtHeading}>
             Autour de vous
         </Text>
+        <View style={{flexDirection:"row"}}>
         <FlatList
+            data={ItemsOdd}
+            showsVerticalScrollIndicator={false}
+            // numColumns={2}
+            keyExtractor={(item) => item._id}
+            renderItem={(itemData) => ( 
+                <TouchableOpacity 
+                onPress={()=>navigation.navigate('OpenCardReviews',
+                 {
+                    img: itemData.item.img,
+                    rating: itemData.item.rate,
+                    name: itemData.item.name,
+                    distance: itemData.item.distance,
+                    services: itemData.item.services
+                 }
+                 )}
+                style={[styles.viewItemConatier]}>
+                    <ImageBackground style={styles.imgCard} source={{uri: itemData.item.img}}>
+                        <View style={{}}>
+                        <Rating
+                            style={{ paddingVertical: 0, alignSelf:"flex-start" }}
+                            imageSize={20}
+                            ratingCount={5}
+                        />
+                        <Text style={{color:"red"}}>
+                        </Text>
+                        </View>
+                        <View style={{}}>
+                            <Text style={{color:"#fff", fontSize:18}}>{itemData.item.name}</Text>
+                            <View style={styles.view2Card}>
+                                <Text style={styles.txt2Card}>{itemData.item.distance}</Text>
+                                <Text style={styles.txt2Card}>{itemData.item.services.length} serveurs</Text>
+                            </View>
+                        </View>
+                    </ImageBackground>
+                </TouchableOpacity>
+            )
+        }
+            />
+            <FlatList
+            data={ItemsEven}
+            showsVerticalScrollIndicator={false}
+            // numColumns={2}
+            style={{marginTop:15}}
+            keyExtractor={(item) => item._id}
+            renderItem={(itemData) => ( 
+                <TouchableOpacity 
+                onPress={()=>navigation.navigate('OpenCardReviews',
+                 {
+                    img: itemData.item.img,
+                    rating: itemData.item.rate,
+                    name: itemData.item.name,
+                    distance: itemData.item.distance,
+                    services: itemData.item.services
+                 }
+                 )}
+                style={[styles.viewItemConatier]}>
+                    <ImageBackground style={styles.imgCard} source={{uri: itemData.item.img}}>
+                        <View style={{}}>
+                        <Rating
+                            style={{ paddingVertical: 0, alignSelf:"flex-start" }}
+                            imageSize={20}
+                            ratingCount={5}
+                        />
+                        <Text style={{color:"red"}}>
+                        </Text>
+                        </View>
+                        <View style={{}}>
+                            <Text style={{color:"#fff", fontSize:18}}>{itemData.item.name}</Text>
+                            <View style={styles.view2Card}>
+                                <Text style={styles.txt2Card}>{itemData.item.distance}</Text>
+                                <Text style={styles.txt2Card}>{itemData.item.services.length} serveurs</Text>
+                            </View>
+                        </View>
+                    </ImageBackground>
+                </TouchableOpacity>
+            )
+        }
+            />
+        </View>
+        {/* <FlatList
             data={LIST}
             showsVerticalScrollIndicator={false}
             numColumns={2}
@@ -51,21 +147,15 @@ const Home = ({navigation}) => {
                     <ImageBackground style={styles.imgCard} source={{uri: itemData.item.img}}>
                         <View style={{}}>
                         <Rating
-                            // showRating
-                            // onFinishRating={this.ratingCompleted}
                             style={{ paddingVertical: 0, alignSelf:"flex-start" }}
-                            // ratingBackgroundColor='blue'
-                            // ratingColor='green'
                             imageSize={20}
-                            // startingValue={ratingCount/2}
-                            // readonly={true}
                             ratingCount={5}
                         />
                         <Text style={{color:"red"}}>
                         </Text>
                         </View>
                         <View style={{}}>
-                            <Text style={{color:"#fff", fontSize:17}}>{itemData.item.name}</Text>
+                            <Text style={{color:"#fff", fontSize:18}}>{itemData.item.name}</Text>
                             <View style={styles.view2Card}>
                                 <Text style={styles.txt2Card}>{itemData.item.distance}</Text>
                                 <Text style={styles.txt2Card}>{itemData.item.services.length} serveurs</Text>
@@ -75,7 +165,7 @@ const Home = ({navigation}) => {
                 </TouchableOpacity>
             )
         }
-            />
+            /> */}
             </ScrollView>
     </View>
 }

@@ -88,7 +88,7 @@ const GlobalHeader = (props) => {
                 onPress={() => goBackHandler(props)}>
                 <MaterialIcons
                   name={'arrow-back'}
-                  size={props.Arrowsize ? props.Arrowsize : 30}
+                  size={props.Arrowsize ? props.Arrowsize : 24}
                   color={props.BackIconColor ? props.BackIconColor : '#000'}
                   />
               </TouchableOpacity>

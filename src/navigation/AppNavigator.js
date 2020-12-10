@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 
 function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="RateYourService" headerMode="none">
+    <Stack.Navigator initialRouteName="OpenCardReviews" headerMode="none">
       <Stack.Screen name="socialLogin" component={socialLogin} />
       <Stack.Screen name="splashScreen" component={splashScreen} />
       <Stack.Screen name="Home" component={Home} />

@@ -1,16 +1,27 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { StyleSheet, Text, View, Image, ScrollView, TextInput, Dimensions, TouchableOpacity, FlatList, StatusBar } from 'react-native';
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader';
 import {rateList as RATELIST} from '../../dummyData/DummyData'
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import {Colors} from '../../constants/Theme';
+import ThankRatingModal from '../../components/modals/ThanksRatingModal'
 
-const Home = () => {
+const RateService = () => {
+
+    const [isVisible, setisVisible] = useState(false);
 
     const ratingCompleted = (rating) => {
       console.log("Rating is: " + rating)
     }
+
+    const handleModalClose = () => {
+        setisVisible(false);
+      };
+
+      const handleModalOpen = () => {
+        setisVisible(true);
+      };
 
     return <View style={styles.container}>
         <GlobalHeader
@@ -51,12 +62,17 @@ const Home = () => {
                 <TextInput style={styles.inputStyle} />
             </View>
         </ScrollView>
-        <TouchableOpacity style={styles.btnValider}>
+        <TouchableOpacity onPress={handleModalOpen} style={styles.btnValider}>
             <Text style={{fontSize:16}}>Valider</Text>
         </TouchableOpacity>
+
+        <ThankRatingModal 
+         isVisible={isVisible}
+         handleModalClose={handleModalClose}
+        />
     </View>
 }
-export default Home;
+export default RateService;
 
 const styles = StyleSheet.create({
     container: {
@@ -66,7 +82,8 @@ const styles = StyleSheet.create({
         backgroundColor:"#F9F9F9"
     },
     inputStyle:{
-        height:45, width:"80%", backgroundColor:"#F8F8F8",borderRadius:10, marginTop:12
+        height:45, width:"80%", backgroundColor:"#F8F8F8",borderRadius:10, marginTop:12,
+        fontSize:18, paddingVertical:0
     },
     viewTip:{
         backgroundColor:"#fff", width:"90%", alignSelf:"center", marginBottom:10,height:120,

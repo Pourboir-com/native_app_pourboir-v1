@@ -5,7 +5,9 @@ import GlobalHeader from '../../components/GlobalHeader'
 import { placesList as LIST } from '../../dummyData/DummyData'
 import { Colors } from '../../constants/Theme';
 import HomeCard from '../../components/HomeCard';
-import RatingStar from '../../components/RatingComponent';
+// import RatingStar from '../../components/RatingComponent';
+
+const NoListImg = require('../../assets/images/emptyRestaurantList.png')
 
 const Home = ({ navigation }) => {
 
@@ -20,8 +22,10 @@ const Home = ({ navigation }) => {
             ItemsEven.push(LIST[i]);
         }
     }
-    console.log('ItemsOddddddddd', ItemsOdd)
-    console.log('ItemsEvennnnnnnn', ItemsEven)
+    // console.log('ItemsOddddddddd', ItemsOdd)
+    // console.log('ItemsEvennnnnnnn', ItemsEven)
+    console.log('LisssssssssTTTTTTTT', LIST.length)
+    // alert(LIST)
 
     // Star arrayyyyyyyy
     const [starSelect, setstarSelect] = useState(3.5)
@@ -40,7 +44,24 @@ const Home = ({ navigation }) => {
         />
         <StatusBar backgroundColor={Colors.yellow} />
 
-        <ScrollView showsVerticalScrollIndicator={false}>
+        {
+            LIST.length === 0 ?
+            <View style={styles.viewEmptyList}>
+                <View style={{backgroundColor:"#fff", width:160, height:160, borderRadius:100}}>
+                <Image source={NoListImg}
+                style={{width:260, height:220,marginTop:-55,marginLeft:-50}}
+                resizeMode="contain"
+                />
+                </View>
+                <Text style={styles.txt1NoRest}>
+                    Vous n’avez aucun restaurant pour le moment
+                </Text>
+                <Text style={styles.txt2NoRest}>
+                Recherchez votre restaurant et ajoutez vous en choisissant: Vous êtes serveur
+                </Text>
+            </View>
+            :
+            <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={styles.txtHeading}>
                 Autour de vous
             </Text>
@@ -74,60 +95,11 @@ const Home = ({ navigation }) => {
                         distance={itemData.item.distance}
                         services={itemData.item.services}
                     />
-                        // <TouchableOpacity
-                        //     onPress={() => navigation.navigate('OpenCardReviews',
-                        //         {
-                        //             img: itemData.item.img,
-                        //             rating: itemData.item.rate,
-                        //             name: itemData.item.name,
-                        //             distance: itemData.item.distance,
-                        //             services: itemData.item.services
-                        //         }
-                        //     )}
-                        //     style={[styles.viewItemConatier]}>
-                        //     <ImageBackground style={styles.imgCard} source={{ uri: itemData.item.img }}>
-                        //         <TouchableOpacity
-                        //             style={styles.btnCross}
-                        //         >
-                        //             <Entypo
-                        //                 name="cross"
-                        //                 size={21}
-                        //                 color="#485460"
-                        //                 style={{ backgroundColor: Colors.yellow, borderRadius: 20 }}
-                        //             />
-                        //         </TouchableOpacity>
-                        //         <View style={{}}>
-                        //             <View style={{ flexDirection: "row" }}>
-                        //                 {obj.map((v, i) => {
-                        //                     return (
-                        //                         <TouchableOpacity onPress={() => { onPressStar(v) }}>
-                        //                             <RatingStar starSize={17}
-                        //                                 type={ v <= starSelect ? "filled" : 
-                        //                                 v === starSelect + 0.5 ? "half" : "empty" 
-                        //                             }
-                        //                                 notRatedStarColor='rgba(255,255,255, 0.6)'
-                        //                             />
-                        //                         </TouchableOpacity>
-                        //                     )
-                        //                 }
-                        //                 )}
-                        //             </View>
-                        //             <Text style={{ color: "red" }}>
-                        //             </Text>
-                        //         </View>
-                        //         <View style={{}}>
-                        //             <Text style={{ color: "#fff", fontSize: 18 }}>{itemData.item.name}</Text>
-                        //             <View style={styles.view2Card}>
-                        //                 <Text style={styles.txt2Card}>{itemData.item.distance}</Text>
-                        //                 <Text style={styles.txt2Card}>{itemData.item.services.length} serveurs</Text>
-                        //             </View>
-                        //         </View>
-                        //     </ImageBackground>
-                        // </TouchableOpacity>
                     )}
                 />
             </View>
         </ScrollView>
+        }
     </View>
 }
 export default Home;
@@ -136,6 +108,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#fff"
+    },
+    txt1NoRest:{
+        fontSize:16, color:Colors.fontDark, textAlign:"center", maxWidth:190, marginTop:20
+    },
+    txt2NoRest:{
+        fontSize:16, color:Colors.fontLight, textAlign:"center",maxWidth:320, marginTop:15
+    },
+    viewEmptyList:{
+        flex:1, backgroundColor:"#F9F9F9",justifyContent:"center", alignItems:"center"
     },
     btnCross: {
         backgroundColor: "#fff", position: "absolute", alignSelf: "flex-end",

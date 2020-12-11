@@ -23,99 +23,99 @@ export const rateList = [
   ];
 
   export const placesList = [
-    // {
-    //   id:1,
-    //   rate: 4/5,
-    //   name: 'Brasserie Le Soleil',
-    //   distance: '650m',
-    //   services: [
-    //     {
-    //       userName: 'Amy Farha',
-    //       rating: 4.5,
-    //       imgAvatar: img4,
-    //     },
-    //     {
-    //       userName: 'Chris Jackson',
-    //       rating: 4.5,
-    //       imgAvatar: img4,
-    //     },
-    //   ],
-    //   img: img1,
-    // },
-    // {
-    //   id:2,
-    //   rate: 4/5,
-    //   name: 'La Samaritaine',
-    //   distance: '650m',
-    //   services: [
-    //     {
-    //       userName: 'Amy Farha',
-    //       rating: 4.5,
-    //       imgAvatar: img4,
-    //     },
-    //     {
-    //       userName: 'Chris Jackson',
-    //       rating: 4.5,
-    //       imgAvatar: img4,
-    //     },
-    //   ],
-    //   img: img2,
-    // },
-    // {
-    //   id:3,
-    //   rate: 4/5,
-    //   name: 'Le Baletti',
-    //   distance: '650m',
-    //   services: [
-    //     {
-    //       userName: 'Amy Farha',
-    //       rating: 4.5,
-    //       imgAvatar: img4,
-    //     },
-    //     {
-    //       userName: 'Chris Jackson',
-    //       rating: 4.5,
-    //       imgAvatar: img4,
-    //     },
-    //   ],
-    //   img: img3,
-    // },
-    // {
-    //   id:4,
-    //   rate: 4/5,
-    //   name: 'Le petit Boileau',
-    //   distance: '650m',
-    //   services: [
-    //     {
-    //       userName: 'Amy Farha',
-    //       rating: 4.5,
-    //       imgAvatar: img4,
-    //     },
-    //     {
-    //       userName: 'Chris Jackson',
-    //       rating: 4.5,
-    //       imgAvatar: img4,
-    //     },
-    //   ],
-    //   img: img1,
-    // },
-    // {
-    //   id:5,
-    //   rate: 4/5,
-    //   name: 'Le Baletti',
-    //   distance: '650m',
-    //   services: [
-    //     {
-    //       userName: 'Amy Farha',
-    //       rating: 4.5,
-    //       imgAvatar: img4,
-    //     },
-    //     {
-    //       userName: 'Chris Jackson',
-    //       rating: 4.5,
-    //       imgAvatar: img4,
-    //     },
-    //   ],
-    //   img: img2,
-    // },
+    {
+      id:1,
+      rate: 4/5,
+      name: 'Brasserie Le Soleil',
+      distance: '650m',
+      services: [
+        {
+          userName: 'Amy Farha',
+          rating: 4.5,
+          imgAvatar: img4,
+        },
+        {
+          userName: 'Chris Jackson',
+          rating: 4.5,
+          imgAvatar: img4,
+        },
+      ],
+      img: img1,
+    },
+    {
+      id:2,
+      rate: 4/5,
+      name: 'La Samaritaine',
+      distance: '650m',
+      services: [
+        {
+          userName: 'Amy Farha',
+          rating: 4.5,
+          imgAvatar: img4,
+        },
+        {
+          userName: 'Chris Jackson',
+          rating: 4.5,
+          imgAvatar: img4,
+        },
+      ],
+      img: img2,
+    },
+    {
+      id:3,
+      rate: 4/5,
+      name: 'Le Baletti',
+      distance: '650m',
+      services: [
+        {
+          userName: 'Amy Farha',
+          rating: 4.5,
+          imgAvatar: img4,
+        },
+        {
+          userName: 'Chris Jackson',
+          rating: 4.5,
+          imgAvatar: img4,
+        },
+      ],
+      img: img3,
+    },
+    {
+      id:4,
+      rate: 4/5,
+      name: 'Le petit Boileau',
+      distance: '650m',
+      services: [
+        {
+          userName: 'Amy Farha',
+          rating: 4.5,
+          imgAvatar: img4,
+        },
+        {
+          userName: 'Chris Jackson',
+          rating: 4.5,
+          imgAvatar: img4,
+        },
+      ],
+      img: img1,
+    },
+    {
+      id:5,
+      rate: 4/5,
+      name: 'Le Baletti',
+      distance: '650m',
+      services: [
+        {
+          userName: 'Amy Farha',
+          rating: 4.5,
+          imgAvatar: img4,
+        },
+        {
+          userName: 'Chris Jackson',
+          rating: 4.5,
+          imgAvatar: img4,
+        },
+      ],
+      img: img2,
+    },
   ]

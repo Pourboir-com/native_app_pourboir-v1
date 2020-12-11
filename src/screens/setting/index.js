@@ -1,14 +1,37 @@
-import React from 'react'
-import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, FlatList, StatusBar } from 'react-native';
-import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
+import React,{useState} from 'react'
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
+import { MaterialIcons, FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader';
 import {Colors} from '../../constants/Theme';
+import * as ImagePicker from "expo-image-picker";
 
 const Setting = () => {
+    const [image, setImage] = useState(
+        // null
+        'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png'
+        );
 
     const ratingCompleted = (rating) => {
       console.log("Rating is: " + rating)
     }
+
+    const _pickImage = async () => {
+        try {
+          let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 1,
+          });
+          if (!result.cancelled) {
+            setImage(result.uri);
+          }
+    
+          console.log(result);
+        } catch (E) {
+          console.log(E);
+        }
+      };
 
     return <View style={styles.container}>
         <GlobalHeader
@@ -18,31 +41,60 @@ const Setting = () => {
             color="#000"
         />
         <StatusBar backgroundColor={Colors.yellow} />
+
         <View style={styles.viewProfile}>
-            <View style={styles.viewImg}>
+            <TouchableOpacity 
+                onPress={() => _pickImage()}
+                style={styles.viewImg}
+                >
+                {image === null || image === undefined ?
+                    <FontAwesome name="user-circle-o" size={110} color="#fff" />
+                    :
+                    <Image
+                        style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: 60,
+                        }}
+                        source={{uri: image}}
+                        resizeMode="cover"
+                    />
+                }
+            </TouchableOpacity>
+                <TouchableOpacity 
+                 onPress={() => _pickImage()}
+                 style={styles.btnPencil}
+                >
+                    <View style={styles.viewPencil}>
+                        <MaterialCommunityIcons name="pencil-outline" color='#fff' size={16} />
+                    </View>
+                </TouchableOpacity>
+            {/* <View style={styles.viewImg}>
               <FontAwesome name="user-circle-o" size={120} color="#fff" />
-            </View>
+            </View> */}
             <Text style={styles.txtName}>Christine Zhou</Text>
         </View>
         <View style={styles.viewBtnConatiner}>
-            <TouchableOpacity style={styles.viewItem}>
-                <View style={styles.viewIcon}>
-                    <FontAwesome name="star" size={20} color={Colors.yellow} />
-                </View>
-                <Text>Notez I'application</Text>
-            </TouchableOpacity> 
-            <TouchableOpacity style={styles.viewItem}>
-                <View style={styles.viewIcon}>
-                    <FontAwesome name="envelope" size={16} color={Colors.yellow} />
-                </View>
-                <Text>Contactez nous</Text>
-            </TouchableOpacity>      
-            <TouchableOpacity style={[styles.viewItem,{marginBottom:0}]}>
-                <View style={styles.viewIcon}>
-                    <FontAwesome name="cutlery" size={16} color={Colors.yellow} />
-                </View>
-                <Text>Vous etes serveur?</Text>
-            </TouchableOpacity>           
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <TouchableOpacity style={styles.viewItem}>
+                    <View style={styles.viewIcon}>
+                        <FontAwesome name="star" size={20} color={Colors.yellow} />
+                    </View>
+                    <Text>Notez I'application</Text>
+                </TouchableOpacity> 
+                <TouchableOpacity style={styles.viewItem}>
+                    <View style={styles.viewIcon}>
+                        <FontAwesome name="envelope" size={16} color={Colors.yellow} />
+                    </View>
+                    <Text>Contactez nous</Text>
+                </TouchableOpacity>      
+                <TouchableOpacity style={[styles.viewItem,{marginBottom:0}]}>
+                    <View style={styles.viewIcon}>
+                        <FontAwesome name="cutlery" size={16} color={Colors.yellow} />
+                    </View>
+                    <Text>Vous etes serveur?</Text>
+                </TouchableOpacity>           
+            </ScrollView>
         </View>
         <TouchableOpacity style={styles.btnValider}>
             <Text>Se deconnecter</Text>
@@ -57,6 +109,14 @@ const styles = StyleSheet.create({
         // justifyContent:"center",
          alignItems:'center',
         backgroundColor:"#EEF0EF"
+    },
+    viewPencil:{
+        width:30,height:30,backgroundColor:"#1E272E",borderRadius:20, justifyContent:"center",
+        alignItems:"center"
+    },
+    btnPencil:{
+        backgroundColor:"#FCDF6F",width:35, height:35, borderRadius:20,justifyContent:"center",
+        alignItems:"center", alignSelf:"center", marginRight:-70,marginTop:-30
     },
     viewIcon:{
         width:30, height:30, backgroundColor:"#FFF6D4", borderRadius:5, marginRight:10,

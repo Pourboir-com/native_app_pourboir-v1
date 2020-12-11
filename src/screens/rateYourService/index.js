@@ -6,6 +6,7 @@ import {rateList as RATELIST} from '../../dummyData/DummyData'
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import {Colors} from '../../constants/Theme';
 import ThankRatingModal from '../../components/modals/ThanksRatingModal'
+import RatingStar from '../../components/RatingComponent';
 
 const RateService = () => {
 
@@ -22,6 +23,13 @@ const RateService = () => {
       const handleModalOpen = () => {
         setisVisible(true);
       };
+
+      // Star arrayyyyyyyy
+      const [starSelect, setstarSelect] = useState(3.5)
+      const obj = [1, 2, 3, 4, 5];
+      const onPressStar = (v) => {
+          setstarSelect(v);
+      }
 
     return <View style={styles.container}>
         <GlobalHeader
@@ -45,15 +53,21 @@ const RateService = () => {
             renderItem={(itemData) => (
                 <TouchableOpacity style={styles.viewListCard}>
                     <Text style={styles.txtCard}>{itemData.item.heading}</Text>
-                    <Rating
-                        // showRating
-                        // onFinishRating={this.ratingCompleted}
-                        style={{ width:"100%",marginTop:15 }}
-                        imageSize={20}
-                        readonly={true}
-                        // ratingCount={4}
-                        // starContainerStyle={{backgroundColor:"blue", padding:5,margin:5}}
-                    />
+                    <View style={{ flexDirection: "row", marginTop:10 }}>
+                                        {obj.map((v, i) => {
+                                            return (
+                                                <TouchableOpacity onPress={() => { onPressStar(v) }}>
+                                                    <RatingStar starSize={25}
+                                                        type={ v <= starSelect ? "filled" : 
+                                                        v === starSelect + 0.5 ? "half" : "empty" 
+                                                    }
+                                                        notRatedStarColor='rgba(0,0,0,0.2)'
+                                                    />
+                                                </TouchableOpacity>
+                                            )
+                                        }
+                                        )}
+                                    </View>
                 </TouchableOpacity>
             )}
             />

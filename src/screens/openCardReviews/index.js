@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
 import { StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
 import { MaterialIcons, FontAwesome, Ionicons, AntDesign } from "@expo/vector-icons";
-import { Rating, AirbnbRating } from 'react-native-ratings';
 import ConfirmationModal from '../../components/modals/ConfirmModal';
 import HelpUsImproveModal from '../../components/modals/HelpUsImproveModal'
 import {Colors} from '../../constants/Theme';
+import RatingStar from '../../components/RatingComponent';
 
 const ReviewDetails = ({navigation, route}) => {
     // console.log('routesssss',route.params)
@@ -26,6 +26,13 @@ const ReviewDetails = ({navigation, route}) => {
           sethelpUsModalVisible(true);
       }
 
+      // Star arrayyyyyyyy
+    const [starSelect, setstarSelect] = useState(3.5)
+    const obj = [1, 2, 3, 4, 5];
+    const onPressStar = (v) => {
+        setstarSelect(v);
+    }
+
     return <View style={styles.container}>
         <StatusBar hidden={true} />
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -45,13 +52,21 @@ const ReviewDetails = ({navigation, route}) => {
                         </View>
                     </View>
                     <View style={styles.viewBottom}>
-                        <Rating
-                            // showRating
-                            // onFinishRating={this.ratingCompleted}
-                            style={{ paddingVertical: 0, alignSelf:"flex-start" }}
-                            imageSize={20}
-                            ratingCount={5}
-                        />
+                        <View style={{ flexDirection: "row" }}>
+                                        {obj.map((v, i) => {
+                                            return (
+                                                <TouchableOpacity onPress={() => { onPressStar(v) }}>
+                                                    <RatingStar starSize={20}
+                                                        type={ v <= starSelect ? "filled" : 
+                                                        v === starSelect + 0.5 ? "half" : "empty" 
+                                                    }
+                                                        notRatedStarColor='rgba(255,255,255, 0.6)'
+                                                    />
+                                                </TouchableOpacity>
+                                            )
+                                        }
+                                        )}
+                                    </View>
                         <Text style={{color:"#fff"}}>{distance}</Text>
                     </View>
                 </ImageBackground>
@@ -73,13 +88,21 @@ const ReviewDetails = ({navigation, route}) => {
                             />
                             <View style={{marginLeft:10}}>
                                 <Text>{itemData.item.userName}</Text>
-                                <Rating
-                                    // showRating
-                                    // onFinishRating={this.ratingCompleted}
-                                    style={{ paddingVertical: 0, alignSelf:"flex-start" }}
-                                    imageSize={20}
-                                    ratingCount={5}
-                                />
+                                <View style={{ flexDirection: "row" }}>
+                                        {obj.map((v, i) => {
+                                            return (
+                                                <TouchableOpacity onPress={() => { onPressStar(v) }}>
+                                                    <RatingStar starSize={17}
+                                                        type={ v <= starSelect ? "filled" : 
+                                                        v === starSelect + 0.5 ? "half" : "empty" 
+                                                    }
+                                                        notRatedStarColor='rgba(0,0,0,0.2)'
+                                                    />
+                                                </TouchableOpacity>
+                                            )
+                                        }
+                                        )}
+                                    </View>
                             </View>
                         </View>
                         <MaterialIcons name="chevron-right" size={28} color="grey" />

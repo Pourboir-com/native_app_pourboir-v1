@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image, 
 import { MaterialIcons, FontAwesome, Entypo } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader'
 import { placesList as LIST } from '../../dummyData/DummyData'
-import { Rating, AirbnbRating } from 'react-native-ratings';
 import { Colors } from '../../constants/Theme';
 import HomeCard from '../../components/HomeCard';
 import RatingStar from '../../components/RatingComponent';
@@ -49,7 +48,6 @@ const Home = ({ navigation }) => {
                 <FlatList
                     data={ItemsOdd}
                     showsVerticalScrollIndicator={false}
-                    // numColumns={2}
                     keyExtractor={(item) => item._id}
                     renderItem={(itemData) => (
                         <TouchableOpacity
@@ -80,7 +78,6 @@ const Home = ({ navigation }) => {
                                             return (
                                                 <TouchableOpacity onPress={() => { onPressStar(v) }}>
                                                     <RatingStar starSize={17}
-                                                        filled={starSelect + 1 <= v ? false : true}
                                                         type={ v <= starSelect ? "filled" : 
                                                         v === starSelect + 0.5 ? "half" : "empty" 
                                                     }
@@ -109,7 +106,6 @@ const Home = ({ navigation }) => {
                 <FlatList
                     data={ItemsEven}
                     showsVerticalScrollIndicator={false}
-                    // numColumns={2}
                     style={{ marginTop: 15 }}
                     keyExtractor={(item) => item._id}
                     renderItem={(itemData) => (
@@ -141,7 +137,9 @@ const Home = ({ navigation }) => {
                                             return (
                                                 <TouchableOpacity onPress={() => { onPressStar(v) }}>
                                                     <RatingStar starSize={17}
-                                                        filled={starSelect + 1 <= v ? false : true}
+                                                        type={ v <= starSelect ? "filled" : 
+                                                        v === starSelect + 0.5 ? "half" : "empty" 
+                                                    }
                                                         notRatedStarColor='rgba(255,255,255, 0.6)'
                                                     />
                                                 </TouchableOpacity>

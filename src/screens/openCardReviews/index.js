@@ -80,7 +80,7 @@ const ReviewDetails = ({navigation, route}) => {
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item._id}
                 renderItem={(itemData) => (
-                    <TouchableOpacity style={styles.viewItemConatier}>
+                    <TouchableOpacity onPress={()=> navigation.navigate('RateYourService')} style={styles.viewItemConatier}>
                         <View style={{flexDirection:"row", alignItems:"center"}}>
                             <Image 
                                 style={{width:45, height:45, borderRadius:30}}

@@ -8,7 +8,7 @@ import {Colors} from '../../constants/Theme';
 import ThankRatingModal from '../../components/modals/ThanksRatingModal'
 import RatingStar from '../../components/RatingComponent';
 
-const RateService = () => {
+const RateService = ({navigation}) => {
 
     const [isVisible, setisVisible] = useState(false);
 
@@ -51,7 +51,10 @@ const RateService = () => {
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item._id}
             renderItem={(itemData) => (
-                <TouchableOpacity style={styles.viewListCard}>
+                <TouchableOpacity 
+                    onPress={()=> navigation.navigate('socialLogin')} 
+                    style={styles.viewListCard}
+                >
                     <Text style={styles.txtCard}>{itemData.item.heading}</Text>
                     <View style={{ flexDirection: "row", marginTop:10 }}>
                                         {obj.map((v, i) => {

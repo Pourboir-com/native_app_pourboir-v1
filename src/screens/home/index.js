@@ -236,9 +236,9 @@ const styles = StyleSheet.create({
         flex: 1, padding: 12, justifyContent: 'space-between'
     },
     viewItemConatier: {
-        width: Dimensions.get('window').width * 0.44,
-        height: Dimensions.get('window').width * 0.55,
-        margin: Dimensions.get('window').width * 0.03, backgroundColor: "red",
+        width: Dimensions.get('window').width * 0.45,
+        height: Dimensions.get('window').width * 0.56,
+        margin: Dimensions.get('window').width * 0.02, backgroundColor: "red",
         borderRadius: 12, overflow: "hidden"
     },
     txtHeading: {

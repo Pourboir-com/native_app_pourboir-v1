@@ -16,7 +16,7 @@ const HomeCard = ({navigation,img,rating,name,distance,services}) => {
     return  <TouchableOpacity 
                 onPress={()=> navigation.navigate('OpenCardReviews', {
                     img: img,
-                    rating: rate,
+                    rating: starSelect,
                     name: name,
                     distance: distance,
                     services: services,

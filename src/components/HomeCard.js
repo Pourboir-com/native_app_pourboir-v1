@@ -1,11 +1,19 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
-import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import { MaterialIcons, FontAwesome, Entypo } from "@expo/vector-icons";
 import {Colors} from '../constants/Theme';
+import RatingStar from './RatingComponent';
 
 const HomeCard = ({navigation,img,rating,name,distance,services}) => {
-            <TouchableOpacity 
+
+    // Star arrayyyyyyyy
+    const [starSelect, setstarSelect] = useState(3.5)
+    const obj = [1, 2, 3, 4, 5];
+    const onPressStar = (v) => {
+        setstarSelect(v);
+    }
+
+    return  <TouchableOpacity 
                 onPress={()=> navigation.navigate('OpenCardReviews', {
                     img: img,
                     rating: rate,
@@ -15,12 +23,32 @@ const HomeCard = ({navigation,img,rating,name,distance,services}) => {
                 })}
                 style={[styles.viewItemConatier]}>
                     <ImageBackground style={styles.imgCard} source={{uri: img}}>
+                    <TouchableOpacity
+                        style={styles.btnCross}
+                        >
+                                    <Entypo
+                                        name="cross"
+                                        size={21}
+                                        color="#485460"
+                                        style={{ backgroundColor: Colors.yellow, borderRadius: 20 }}
+                                    />
+                         </TouchableOpacity>
                         <View style={{}}>
-                        <Rating
-                            style={{ paddingVertical: 0, alignSelf:"flex-start" }}
-                            imageSize={20}
-                            ratingCount={5}
-                        />
+                        <View style={{ flexDirection: "row" }}>
+                                        {obj.map((v, i) => {
+                                            return (
+                                                <TouchableOpacity onPress={() => { onPressStar(v) }}>
+                                                    <RatingStar starSize={17}
+                                                        type={ v <= starSelect ? "filled" : 
+                                                        v === starSelect + 0.5 ? "half" : "empty" 
+                                                    }
+                                                        notRatedStarColor='rgba(255,255,255, 0.6)'
+                                                    />
+                                                </TouchableOpacity>
+                                            )
+                                        }
+                                        )}
+                                    </View>
                         <Text style={{color:"red"}}>
                         </Text>
                         </View>
@@ -40,6 +68,11 @@ const styles = StyleSheet.create({
     view2Card:{
         flexDirection:"row", width:"100%", alignItems:"center", justifyContent:"space-between"
     },
+    btnCross: {
+        backgroundColor: "#fff", position: "absolute", alignSelf: "flex-end",
+        borderRadius: 20, margin: -1, right: 0, width: 30, height: 30,
+        justifyContent: "center", alignItems: "center"
+    },
     txt2Card:{
         color:"#EDEFEE", fontSize:13
     },
@@ -47,10 +80,10 @@ const styles = StyleSheet.create({
         flex:1, padding:12, justifyContent:'space-between'
     },
     viewItemConatier:{
-        width:Dimensions.get('window').width*0.44,
-        height:Dimensions.get('window').width*0.55,
-        margin:Dimensions.get('window').width*0.03, backgroundColor:"red",
-        borderRadius:12,overflow:"hidden"
+        width: Dimensions.get('window').width * 0.45,
+        height: Dimensions.get('window').width * 0.56,
+        margin: Dimensions.get('window').width * 0.02, backgroundColor: "red",
+        borderRadius: 12, overflow: "hidden"
     },
     txtHeading:{
         fontSize:22, marginTop:10,width:"90%", alignSelf:"center"

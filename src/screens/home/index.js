@@ -43,65 +43,22 @@ const Home = ({ navigation }) => {
         <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={styles.txtHeading}>
                 Autour de vous
-        </Text>
+            </Text>
             <View style={{ flexDirection: "row" }}>
                 <FlatList
                     data={ItemsOdd}
                     showsVerticalScrollIndicator={false}
                     keyExtractor={(item) => item._id}
                     renderItem={(itemData) => (
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate('OpenCardReviews',
-                                {
-                                    img: itemData.item.img,
-                                    rating: itemData.item.rate,
-                                    name: itemData.item.name,
-                                    distance: itemData.item.distance,
-                                    services: itemData.item.services
-                                }
-                            )}
-                            style={[styles.viewItemConatier]}>
-                            <ImageBackground style={styles.imgCard} source={{ uri: itemData.item.img }}>
-                                <TouchableOpacity
-                                    style={styles.btnCross}
-                                >
-                                    <Entypo
-                                        name="cross"
-                                        size={21}
-                                        color="#485460"
-                                        style={{ backgroundColor: Colors.yellow, borderRadius: 20 }}
-                                    />
-                                </TouchableOpacity>
-                                <View style={{}}>
-                                    <View style={{ flexDirection: "row" }}>
-                                        {obj.map((v, i) => {
-                                            return (
-                                                <TouchableOpacity onPress={() => { onPressStar(v) }}>
-                                                    <RatingStar starSize={17}
-                                                        type={ v <= starSelect ? "filled" : 
-                                                        v === starSelect + 0.5 ? "half" : "empty" 
-                                                    }
-                                                        notRatedStarColor='rgba(255,255,255, 0.6)'
-                                                    />
-                                                </TouchableOpacity>
-                                            )
-                                        }
-                                        )}
-                                    </View>
-                                    <Text style={{ color: "red" }}>
-                                    </Text>
-                                </View>
-                                <View style={{}}>
-                                    <Text style={{ color: "#fff", fontSize: 18 }}>{itemData.item.name}</Text>
-                                    <View style={styles.view2Card}>
-                                        <Text style={styles.txt2Card}>{itemData.item.distance}</Text>
-                                        <Text style={styles.txt2Card}>{itemData.item.services.length} serveurs</Text>
-                                    </View>
-                                </View>
-                            </ImageBackground>
-                        </TouchableOpacity>
-                    )
-                    }
+                    <HomeCard 
+                        navigation={navigation}
+                        img={itemData.item.img}
+                        rating={itemData.item.rate}
+                        name={itemData.item.name}
+                        distance={itemData.item.distance}
+                        services={itemData.item.services}
+                    />
+                    )}
                 />
                 <FlatList
                     data={ItemsEven}
@@ -109,108 +66,67 @@ const Home = ({ navigation }) => {
                     style={{ marginTop: 15 }}
                     keyExtractor={(item) => item._id}
                     renderItem={(itemData) => (
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate('OpenCardReviews',
-                                {
-                                    img: itemData.item.img,
-                                    rating: itemData.item.rate,
-                                    name: itemData.item.name,
-                                    distance: itemData.item.distance,
-                                    services: itemData.item.services
-                                }
-                            )}
-                            style={[styles.viewItemConatier]}>
-                            <ImageBackground style={styles.imgCard} source={{ uri: itemData.item.img }}>
-                                <TouchableOpacity
-                                    style={styles.btnCross}
-                                >
-                                    <Entypo
-                                        name="cross"
-                                        size={21}
-                                        color="#485460"
-                                        style={{ backgroundColor: Colors.yellow, borderRadius: 20 }}
-                                    />
-                                </TouchableOpacity>
-                                <View style={{}}>
-                                    <View style={{ flexDirection: "row" }}>
-                                        {obj.map((v, i) => {
-                                            return (
-                                                <TouchableOpacity onPress={() => { onPressStar(v) }}>
-                                                    <RatingStar starSize={17}
-                                                        type={ v <= starSelect ? "filled" : 
-                                                        v === starSelect + 0.5 ? "half" : "empty" 
-                                                    }
-                                                        notRatedStarColor='rgba(255,255,255, 0.6)'
-                                                    />
-                                                </TouchableOpacity>
-                                            )
-                                        }
-                                        )}
-                                    </View>
-                                    <Text style={{ color: "red" }}>
-                                    </Text>
-                                </View>
-                                <View style={{}}>
-                                    <Text style={{ color: "#fff", fontSize: 18 }}>{itemData.item.name}</Text>
-                                    <View style={styles.view2Card}>
-                                        <Text style={styles.txt2Card}>{itemData.item.distance}</Text>
-                                        <Text style={styles.txt2Card}>{itemData.item.services.length} serveurs</Text>
-                                    </View>
-                                </View>
-                            </ImageBackground>
-                        </TouchableOpacity>
-                    )
-                    }
+                    <HomeCard 
+                        navigation={navigation}
+                        img={itemData.item.img}
+                        rating={itemData.item.rate}
+                        name={itemData.item.name}
+                        distance={itemData.item.distance}
+                        services={itemData.item.services}
+                    />
+                        // <TouchableOpacity
+                        //     onPress={() => navigation.navigate('OpenCardReviews',
+                        //         {
+                        //             img: itemData.item.img,
+                        //             rating: itemData.item.rate,
+                        //             name: itemData.item.name,
+                        //             distance: itemData.item.distance,
+                        //             services: itemData.item.services
+                        //         }
+                        //     )}
+                        //     style={[styles.viewItemConatier]}>
+                        //     <ImageBackground style={styles.imgCard} source={{ uri: itemData.item.img }}>
+                        //         <TouchableOpacity
+                        //             style={styles.btnCross}
+                        //         >
+                        //             <Entypo
+                        //                 name="cross"
+                        //                 size={21}
+                        //                 color="#485460"
+                        //                 style={{ backgroundColor: Colors.yellow, borderRadius: 20 }}
+                        //             />
+                        //         </TouchableOpacity>
+                        //         <View style={{}}>
+                        //             <View style={{ flexDirection: "row" }}>
+                        //                 {obj.map((v, i) => {
+                        //                     return (
+                        //                         <TouchableOpacity onPress={() => { onPressStar(v) }}>
+                        //                             <RatingStar starSize={17}
+                        //                                 type={ v <= starSelect ? "filled" : 
+                        //                                 v === starSelect + 0.5 ? "half" : "empty" 
+                        //                             }
+                        //                                 notRatedStarColor='rgba(255,255,255, 0.6)'
+                        //                             />
+                        //                         </TouchableOpacity>
+                        //                     )
+                        //                 }
+                        //                 )}
+                        //             </View>
+                        //             <Text style={{ color: "red" }}>
+                        //             </Text>
+                        //         </View>
+                        //         <View style={{}}>
+                        //             <Text style={{ color: "#fff", fontSize: 18 }}>{itemData.item.name}</Text>
+                        //             <View style={styles.view2Card}>
+                        //                 <Text style={styles.txt2Card}>{itemData.item.distance}</Text>
+                        //                 <Text style={styles.txt2Card}>{itemData.item.services.length} serveurs</Text>
+                        //             </View>
+                        //         </View>
+                        //     </ImageBackground>
+                        // </TouchableOpacity>
+                    )}
                 />
             </View>
-            {/* <FlatList
-            data={LIST}
-            showsVerticalScrollIndicator={false}
-            numColumns={2}
-            keyExtractor={(item) => item._id}
-            renderItem={(itemData) => ( 
-                // <HomeCard 
-                //     navigation={navigation}
-                //     img={itemData.item.img}
-                //     rating={itemData.item.rate}
-                //     name={itemData.item.name}
-                //     distance={itemData.item.distance}
-                //     services={itemData.item.services}
-                //     />
-                // <View/>
-                <TouchableOpacity 
-                onPress={()=>navigation.navigate('OpenCardReviews',
-                 {
-                    img: itemData.item.img,
-                    rating: itemData.item.rate,
-                    name: itemData.item.name,
-                    distance: itemData.item.distance,
-                    services: itemData.item.services
-                 }
-                 )}
-                style={[styles.viewItemConatier]}>
-                    <ImageBackground style={styles.imgCard} source={{uri: itemData.item.img}}>
-                        <View style={{}}>
-                        <Rating
-                            style={{ paddingVertical: 0, alignSelf:"flex-start" }}
-                            imageSize={20}
-                            ratingCount={5}
-                        />
-                        <Text style={{color:"red"}}>
-                        </Text>
-                        </View>
-                        <View style={{}}>
-                            <Text style={{color:"#fff", fontSize:18}}>{itemData.item.name}</Text>
-                            <View style={styles.view2Card}>
-                                <Text style={styles.txt2Card}>{itemData.item.distance}</Text>
-                                <Text style={styles.txt2Card}>{itemData.item.services.length} serveurs</Text>
-                            </View>
-                        </View>
-                    </ImageBackground>
-                </TouchableOpacity>
-            )
-        }
-            /> */}
         </ScrollView>
     </View>
 }

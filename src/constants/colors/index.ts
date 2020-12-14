@@ -63,7 +63,8 @@ const darkColor = {
     light: '#FFE685',
   },
   secondary: {
-    main: '#000000',
+    // main: '#000000',
+    main:"#FFF6D4",
     light: '#18202c',
   },
   background: {
@@ -98,6 +99,7 @@ const darkColor = {
   },
   disabled: {
     main: 'hsl(208, 8%, 90%)',
+    // main: '#FFF6D4',
   },
   common: {
     white: '#FFFFFF',

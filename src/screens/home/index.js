@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useLayoutEffect, useRef } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, Dimensions, TouchableOpacity, FlatList} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Dimensions, TouchableOpacity, StatusBar, FlatList} from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
@@ -47,7 +47,7 @@ export default HomeScreen = (props) => {
   });
   const searchBarTop = scrollYAnimatedValue.interpolate({
     inputRange: [0, HEADER_HEIGHT],
-    outputRange: [HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT, getStatusBarHeight()],
+    outputRange: [HEADER_HEIGHT - 1.6 * HEADER_BAR_HEIGHT, getStatusBarHeight()],
     extrapolate: Extrapolate.CLAMP,
   });
   const titleHeaderMarginLeft = scrollYAnimatedValue.interpolate({
@@ -77,6 +77,7 @@ export default HomeScreen = (props) => {
             marginLeft: titleHeaderMarginLeft,
           }}
         >
+          {/* <StatusBar hidden={true} /> */}
           <Text style={{ 
             // fontFamily: 'ProximaNova-Bold', 
           fontSize: 20, color: COLORS[colorScheme].text.primary }} ellipsizeMode="tail" numberOfLines={1}>
@@ -115,21 +116,6 @@ export default HomeScreen = (props) => {
         showsVerticalScrollIndicator={false}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollYAnimatedValue } } }])}
       >
-        {/* <View>
-          <Text>
-            yay
-          </Text>
-        </View>
-        <View>
-          <Text>
-            yay
-          </Text>
-        </View>
-        <View>
-          <Text>
-            yay
-          </Text>
-        </View> */}
         {
             LIST.length === 0 ?
             <View style={styles.viewEmptyList}>

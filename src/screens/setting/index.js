@@ -5,7 +5,7 @@ import GlobalHeader from '../../components/GlobalHeader';
 import {Colors} from '../../constants/Theme';
 import * as ImagePicker from "expo-image-picker";
 
-const Setting = () => {
+const Setting = ({navigation}) => {
     const [image, setImage] = useState(
         // null
         'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png'
@@ -39,6 +39,7 @@ const Setting = () => {
             headingText="Parametre"
             fontSize={18}
             color="#000"
+            navigation={navigation}
         />
         <StatusBar backgroundColor={Colors.yellow} />
 

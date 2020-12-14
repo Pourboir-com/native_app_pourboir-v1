@@ -58,11 +58,14 @@ export default HomeScreen = (props) => {
 
   useLayoutEffect(() => {
 
-    const renderUserIcon = () => {
+    const renderUserIcon = ({}) => {
 
       // return <Ionicons name="ios-contact" size={30} onPress={(): void => propsUserIcon.navigation.navigate('SelectSignIn')} />;
       return (
-        <TouchableOpacity onPress={() => propsUserIcon.navigation.navigate('SelectSignIn')}>
+        <TouchableOpacity 
+        // onPress={() => propsUserIcon.navigation.navigate('Setting')}
+        onPress={() => props.navigation.navigate('Setting')}
+        >
           <SvgHeaderUserIcon height={HEADER_BAR_HEIGHT} />
         </TouchableOpacity>
       );

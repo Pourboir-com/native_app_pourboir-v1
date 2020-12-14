@@ -92,7 +92,9 @@ const Setting = ({navigation}) => {
                     </View>
                     <Text>Contactez nous</Text>
                 </TouchableOpacity>      
-                <TouchableOpacity style={[styles.viewItem,{marginBottom:0}]}>
+                <TouchableOpacity 
+                onPress={()=> navigation.navigate('NoLocation')}
+                style={[styles.viewItem,{marginBottom:0}]}>
                     <View style={styles.viewIcon}>
                         <FontAwesome name="cutlery" size={16} color={Colors.yellow} />
                     </View>

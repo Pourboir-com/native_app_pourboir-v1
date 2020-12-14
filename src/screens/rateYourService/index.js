@@ -37,6 +37,7 @@ const RateService = ({navigation}) => {
             headingText="Notez votre serveur"
             fontSize={17}
             color={Colors.fontDark}
+            navigation={navigation}
         />
         <StatusBar backgroundColor={Colors.yellow} />
         <View style={styles.viewProfile}>

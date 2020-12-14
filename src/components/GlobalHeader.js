@@ -23,6 +23,9 @@ import { MaterialIcons, FontAwesome, Fontisto } from "@expo/vector-icons";
 
 const GlobalHeader = (props) => {
   const goBackHandler = (props) => {
+    // props.navigation.goBackHome ? 
+    // props.navigation.navigate('Home') :
+    // props.homeNavigation ? props.homeNavigation :
     props.navigation.goBack();
   };
 
@@ -85,7 +88,9 @@ const GlobalHeader = (props) => {
                 //   alert('dsads');
                 //   props.navigation.goBack();
                 // }}
-                onPress={() => goBackHandler(props)}>
+                onPress={() => 
+                goBackHandler(props)
+                }>
                 <MaterialIcons
                   name={'arrow-back'}
                   size={props.Arrowsize ? props.Arrowsize : 24}

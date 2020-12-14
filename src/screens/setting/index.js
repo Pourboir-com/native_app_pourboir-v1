@@ -32,6 +32,9 @@ const Setting = ({navigation}) => {
           console.log(E);
         }
       };
+      const homeNavigation = (navigation) => {
+        navigation.navigate('Home')
+      }
 
     return <View style={styles.container}>
         <GlobalHeader

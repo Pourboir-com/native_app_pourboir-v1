@@ -7,6 +7,7 @@ import Home from '../screens/home';
 import RateYourService from '../screens/rateYourService';
 import Setting from '../screens/setting';
 import OpenCardReviews from '../screens/openCardReviews'
+import NoLocation from '../screens/NoLocationFound'
 
 import { spacing } from "../constants/layout";
 
@@ -14,7 +15,7 @@ const Stack = createStackNavigator();
 
 function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }} >
+    <Stack.Navigator initialRouteName="NoLocation" screenOptions={{ headerShown: false }} >
       <Stack.Screen name="splashScreen" component={splashScreen} />
       <Stack.Screen name="socialLogin" component={socialLogin} />
       <Stack.Screen name="Home" component={Home}
@@ -29,6 +30,7 @@ function AppNavigator() {
       <Stack.Screen name="RateYourService" component={RateYourService} />
       <Stack.Screen name="Setting" component={Setting} />
       <Stack.Screen name="OpenCardReviews" component={OpenCardReviews} />
+      <Stack.Screen name="NoLocation" component={NoLocation} />
     </Stack.Navigator>
   );
 }

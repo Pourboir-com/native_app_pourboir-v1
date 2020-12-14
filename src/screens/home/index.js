@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useLayoutEffect, useRef } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, Dimensions, TouchableOpacity, StatusBar, FlatList} from 'react-native';
+import { StyleSheet, Text, TextInput, View, ScrollView, Image, Dimensions, TouchableOpacity, StatusBar, FlatList} from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
@@ -215,11 +215,14 @@ export default HomeScreen = (props) => {
             <View style={{ paddingLeft: HEADER_BAR_HEIGHT / 4 }}>
               <SvgHeaderSearchIcon />
             </View>
-            <Animated.Text style={[{
+            <TextInput 
+            placeholder="Recherchez votre restaurant"
+            style={{flex:1, paddingHorizontal:25}} />
+            {/* <Animated.Text style={[{
                fontSize: 14,
               //  fontFamily: 'ProximaNova-Regular',
                color: COLORS[colorScheme].text.secondary,
-            }, { paddingLeft: spacing(1), opacity: searchBarOpacity }]}>Recherchez votre restaurant</Animated.Text>
+            }, { paddingLeft: spacing(1), opacity: searchBarOpacity }]}>Recherchez votre restaurant</Animated.Text> */}
           </View>
         </Animated.View>
       </Animated.View>

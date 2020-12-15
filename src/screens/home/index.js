@@ -54,7 +54,7 @@ export default HomeScreen = (props) => {
   });
   const searchBarTop = scrollYAnimatedValue.interpolate({
     inputRange: [0, HEADER_HEIGHT],
-    outputRange: [HEADER_HEIGHT - 1.6 * HEADER_BAR_HEIGHT, getStatusBarHeight()],
+    outputRange: [HEADER_HEIGHT - 1.7 * HEADER_BAR_HEIGHT, getStatusBarHeight()],
     extrapolate: Extrapolate.CLAMP,
   });
   const titleHeaderMarginLeft = scrollYAnimatedValue.interpolate({
@@ -238,7 +238,7 @@ export default HomeScreen = (props) => {
               height: HEADER_BAR_HEIGHT,
               width: searchBarWidth,
               left: spacing(1.5),
-              borderRadius: HEADER_BAR_HEIGHT,
+              borderRadius: HEADER_BAR_HEIGHT- HEADER_BAR_HEIGHT*0.75,
               backgroundColor: searchBarColor
             }}
           >

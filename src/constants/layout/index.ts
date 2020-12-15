@@ -19,7 +19,7 @@ export const spacing = (value: number): number => {
 };
 
 export const HEADER_BAR_HEIGHT = Platform.select({
-  ios: 45,
-  android: 47,
+  ios: 56,
+  android: 50,
   default: 64,
 });

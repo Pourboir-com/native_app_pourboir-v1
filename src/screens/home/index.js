@@ -238,7 +238,8 @@ export default HomeScreen = (props) => {
               height: HEADER_BAR_HEIGHT,
               width: searchBarWidth,
               left: spacing(1.5),
-              borderRadius: HEADER_BAR_HEIGHT- HEADER_BAR_HEIGHT*0.75,
+              borderRadius: HEADER_BAR_HEIGHT,
+              // backgroundColor:"red"
               backgroundColor: searchBarColor
             }}
           >
@@ -270,10 +271,10 @@ const styles = StyleSheet.create({
   },
   viewInputSearch: {
     flexDirection: "row", alignItems: "center", backgroundColor: "#fff", width: "90%",
-    marginTop: 15, alignSelf: "center", borderRadius: 7, overflow: "hidden"
+    marginTop: 45, alignSelf: "center", borderRadius: 7, overflow: "hidden"
   },
   viewHeader2: {
-    width: "100%", height: 80, backgroundColor: Colors.yellow, borderBottomLeftRadius: 20,
+    width: "100%", height: 110, backgroundColor: Colors.yellow, borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20
   },
   txt1NoRest: {

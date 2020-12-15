@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useLayoutEffect, useRef } from 'react';
-import { StyleSheet, Text, TextInput, View, ScrollView, Image, Dimensions, TouchableOpacity, StatusBar, FlatList} from 'react-native';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import { StyleSheet, Text, TextInput, View, ScrollView, Image, Dimensions, TouchableOpacity, StatusBar, FlatList } from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
@@ -16,9 +16,12 @@ import { placesList as LIST } from '../../dummyData/DummyData'
 import { Colors } from '../../constants/Theme';
 import HomeCard from '../../components/HomeCard';
 
+// import SkeletonContent from 'react-native-skeleton-content';
+
 const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3 + getStatusBarHeight();
 
 export default HomeScreen = (props) => {
+  const [loading, setLoading] = useState(true)
 
   const navigation = useNavigation();
 
@@ -58,13 +61,13 @@ export default HomeScreen = (props) => {
 
   useLayoutEffect(() => {
 
-    const renderUserIcon = ({}) => {
+    const renderUserIcon = ({ }) => {
 
       // return <Ionicons name="ios-contact" size={30} onPress={(): void => propsUserIcon.navigation.navigate('SelectSignIn')} />;
       return (
-        <TouchableOpacity 
-        // onPress={() => propsUserIcon.navigation.navigate('Setting')}
-        onPress={() => props.navigation.navigate('Setting')}
+        <TouchableOpacity
+          // onPress={() => propsUserIcon.navigation.navigate('Setting')}
+          onPress={() => props.navigation.navigate('Setting')}
         >
           <SvgHeaderUserIcon height={HEADER_BAR_HEIGHT} />
         </TouchableOpacity>
@@ -81,9 +84,10 @@ export default HomeScreen = (props) => {
           }}
         >
           {/* <StatusBar hidden={true} /> */}
-          <Text style={{ 
+          <Text style={{
             // fontFamily: 'ProximaNova-Bold', 
-          fontSize: 20, color: COLORS[colorScheme].text.primary }} ellipsizeMode="tail" numberOfLines={1}>
+            fontSize: 20, color: COLORS[colorScheme].text.primary
+          }} ellipsizeMode="tail" numberOfLines={1}>
             Bonjour '80' Vincent Delacourt
           </Text>
         </Animated.View>
@@ -96,19 +100,20 @@ export default HomeScreen = (props) => {
       headerRight: renderUserIcon,
     });
 
-  }, [colorScheme,  navigation, titleHeaderMarginLeft ]);
+  }, [colorScheme, navigation, titleHeaderMarginLeft]);
 
   let ItemsOdd = []
-    let ItemsEven = []
+  let ItemsEven = []
 
-    for (var i = 0; i < LIST.length; i++) {
-        if ((i + 2) % 2 == 0) {
-            ItemsOdd.push(LIST[i]);
-        }
-        else {
-            ItemsEven.push(LIST[i]);
-        }
+  for (var i = 0; i < LIST.length; i++) {
+    if ((i + 2) % 2 == 0) {
+      ItemsOdd.push(LIST[i]);
     }
+    else {
+      ItemsEven.push(LIST[i]);
+    }
+  }
+  const dummyArray = [1,2,3]
 
   return (
     <>
@@ -120,60 +125,62 @@ export default HomeScreen = (props) => {
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollYAnimatedValue } } }])}
       >
         {
-            LIST.length === 0 ?
+          LIST.length === 0 ?
             <View style={styles.viewEmptyList}>
-                <View style={{backgroundColor:"#fff", width:160, height:160, borderRadius:100}}>
+              <View style={{ backgroundColor: "#fff", width: 160, height: 160, borderRadius: 100 }}>
                 <Image source={NoListImg}
-                style={{width:260, height:220,marginTop:-55,marginLeft:-50}}
-                resizeMode="contain"
+                  style={{ width: 260, height: 220, marginTop: -55, marginLeft: -50 }}
+                  resizeMode="contain"
                 />
-                </View>
-                <Text style={styles.txt1NoRest}>
-                    Vous n’avez aucun restaurant pour le moment
+              </View>
+              <Text style={styles.txt1NoRest}>
+                Vous n’avez aucun restaurant pour le moment
                 </Text>
-                <Text style={styles.txt2NoRest}>
+              <Text style={styles.txt2NoRest}>
                 Recherchez votre restaurant et ajoutez vous en choisissant: Vous êtes serveur
                 </Text>
             </View>
             :
             <ScrollView showsVerticalScrollIndicator={false}>
-            <Text style={styles.txtHeading}>
+              <Text style={styles.txtHeading}>
                 Autour de vous
             </Text>
-            <View style={{ flexDirection: "row" }}>
+              <View style={{ flexDirection: "row" }}>
                 <FlatList
-                    data={ItemsOdd}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={(item) => item._id}
-                    renderItem={(itemData) => (
-                    <HomeCard 
-                        navigation={navigation}
-                        img={itemData.item.img}
-                        rating={itemData.item.rate}
-                        name={itemData.item.name}
-                        distance={itemData.item.distance}
-                        services={itemData.item.services}
+                  data={ loading ? dummyArray : ItemsOdd}
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={(item) => item._id}
+                  renderItem={(itemData) => (
+                    <HomeCard
+                      navigation={navigation}
+                      img={ loading ? null : itemData.item.img}
+                      rating={ loading ? null : itemData.item.rate}
+                      name={ loading ? null : itemData.item.name}
+                      distance={ loading ? null : itemData.item.distance}
+                      services={ loading ? null : itemData.item.services}
+                      loading={loading}
                     />
-                    )}
+                  )}
                 />
                 <FlatList
-                    data={ItemsEven}
-                    showsVerticalScrollIndicator={false}
-                    style={{ marginTop: 15 }}
-                    keyExtractor={(item) => item._id}
-                    renderItem={(itemData) => (
-                    <HomeCard 
-                        navigation={navigation}
-                        img={itemData.item.img}
-                        rating={itemData.item.rate}
-                        name={itemData.item.name}
-                        distance={itemData.item.distance}
-                        services={itemData.item.services}
+                  data={loading ? dummyArray : ItemsEven}
+                  showsVerticalScrollIndicator={false}
+                  style={{ marginTop: 15 }}
+                  keyExtractor={(item) => item._id}
+                  renderItem={(itemData) => (
+                    <HomeCard
+                      navigation={navigation}
+                      img={ loading ? null : itemData.item.img}
+                      rating={ loading ? null : itemData.item.rate}
+                      name={ loading ? null : itemData.item.name}
+                      distance={ loading ? null : itemData.item.distance}
+                      services={ loading ? null : itemData.item.services}
+                      loading={loading}
                     />
-                    )}
+                  )}
                 />
-            </View>
-        </ScrollView>
+              </View>
+            </ScrollView>
         }
       </Animated.ScrollView>
       <Animated.View style={{
@@ -215,9 +222,9 @@ export default HomeScreen = (props) => {
             <View style={{ paddingLeft: HEADER_BAR_HEIGHT / 4 }}>
               <SvgHeaderSearchIcon />
             </View>
-            <TextInput 
-            placeholder="Recherchez votre restaurant"
-            style={{flex:1, paddingHorizontal:25}} />
+            <TextInput
+              placeholder="Recherchez votre restaurant"
+              style={{ flex: 1, paddingHorizontal: 25 }} />
             {/* <Animated.Text style={[{
                fontSize: 14,
               //  fontFamily: 'ProximaNova-Regular',
@@ -232,39 +239,39 @@ export default HomeScreen = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      backgroundColor: "#fff"
+    flex: 1,
+    backgroundColor: "#fff"
   },
-  txt1NoRest:{
-      fontSize:16, color:Colors.fontDark, textAlign:"center", maxWidth:190, marginTop:20
+  txt1NoRest: {
+    fontSize: 16, color: Colors.fontDark, textAlign: "center", maxWidth: 190, marginTop: 20
   },
-  txt2NoRest:{
-      fontSize:16, color:Colors.fontLight, textAlign:"center",maxWidth:320, marginTop:15
+  txt2NoRest: {
+    fontSize: 16, color: Colors.fontLight, textAlign: "center", maxWidth: 320, marginTop: 15
   },
-  viewEmptyList:{
-      flex:1, backgroundColor:"#F9F9F9",justifyContent:"center", alignItems:"center"
+  viewEmptyList: {
+    flex: 1, backgroundColor: "#F9F9F9", justifyContent: "center", alignItems: "center"
   },
   btnCross: {
-      backgroundColor: "#fff", position: "absolute", alignSelf: "flex-end",
-      borderRadius: 20, margin: -1, right: 0, width: 30, height: 30,
-      justifyContent: "center", alignItems: "center"
+    backgroundColor: "#fff", position: "absolute", alignSelf: "flex-end",
+    borderRadius: 20, margin: -1, right: 0, width: 30, height: 30,
+    justifyContent: "center", alignItems: "center"
   },
   view2Card: {
-      flexDirection: "row", width: "100%", alignItems: "center", justifyContent: "space-between"
+    flexDirection: "row", width: "100%", alignItems: "center", justifyContent: "space-between"
   },
   txt2Card: {
-      color: "#EDEFEE", fontSize: 13
+    color: "#EDEFEE", fontSize: 13
   },
   imgCard: {
-      flex: 1, padding: 12, justifyContent: 'space-between'
+    flex: 1, padding: 12, justifyContent: 'space-between'
   },
   viewItemConatier: {
-      width: Dimensions.get('window').width * 0.45,
-      height: Dimensions.get('window').width * 0.56,
-      margin: Dimensions.get('window').width * 0.02, backgroundColor: "red",
-      borderRadius: 12, overflow: "hidden"
+    width: Dimensions.get('window').width * 0.45,
+    height: Dimensions.get('window').width * 0.56,
+    margin: Dimensions.get('window').width * 0.02, backgroundColor: "red",
+    borderRadius: 12, overflow: "hidden"
   },
   txtHeading: {
-      fontSize: 22, marginTop: 10, width: "90%", alignSelf: "center"
+    fontSize: 22, marginTop: 10, width: "90%", alignSelf: "center"
   }
 })

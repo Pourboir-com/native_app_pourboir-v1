@@ -25,7 +25,7 @@ const SocialLogin = ({navigation}) => {
             <FontAwesome name="facebook" color="#fff" size={20} />
             <Text style={styles.textFb}>Continuer avec Facebook</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>navigation.navigate('Home')} style={styles.btnGoogle}>
+        <TouchableOpacity onPress={()=>navigation.navigate('NoLocation')} style={styles.btnGoogle}>
             <FontAwesome name="google" color="#fff" size={20} />
             <Text style={styles.textFb}>Continuer avec Google</Text>
         </TouchableOpacity>

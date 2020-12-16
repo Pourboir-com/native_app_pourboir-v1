@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
-import { MaterialIcons, FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader';
 import {Colors} from '../../constants/Theme';
 import * as ImagePicker from "expo-image-picker";

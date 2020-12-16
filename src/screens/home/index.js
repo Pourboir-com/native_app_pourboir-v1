@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, TextInput, View, ScrollView, Image, Dimensions, TouchableOpacity, StatusBar, FlatList } from 'react-native';
+import { StyleSheet, Text, TextInput, View, ScrollView, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
-import { MaterialIcons, Feather, Entypo } from "@expo/vector-icons";
+import { Feather, Entypo } from "@expo/vector-icons";
 
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity, StatusBar } from 'react-native';
 import { Colors } from '../../constants/Theme';
-import { MaterialIcons, FontAwesome, Entypo } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import * as Location from 'expo-location';
 
 const NoLocation = () => {

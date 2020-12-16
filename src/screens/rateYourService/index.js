@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
 import { StyleSheet, Text, View, Image, ScrollView, TextInput, Dimensions, TouchableOpacity, FlatList, StatusBar } from 'react-native';
-import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader';
 import {rateList as RATELIST} from '../../dummyData/DummyData'
-import { Rating, AirbnbRating } from 'react-native-ratings';
 import {Colors} from '../../constants/Theme';
 import ThankRatingModal from '../../components/modals/ThanksRatingModal'
 import RatingStar from '../../components/RatingComponent';

@@ -11,21 +11,12 @@ import {
   StatusBar,
 } from 'react-native';
 import {Header, Body, Left, Right} from 'native-base';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-// import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Entypo from 'react-native-vector-icons/Entypo';
 import {Colors} from '../constants/Theme';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import { MaterialIcons, FontAwesome, Fontisto } from "@expo/vector-icons";
+import { MaterialIcons, FontAwesome, Fontisto, FontAwesome5 } from "@expo/vector-icons";
 
 
 const GlobalHeader = (props) => {
   const goBackHandler = (props) => {
-    // props.navigation.goBackHome ? 
-    // props.navigation.navigate('Home') :
-    // props.homeNavigation ? props.homeNavigation :
     props.navigation.goBack();
   };
 

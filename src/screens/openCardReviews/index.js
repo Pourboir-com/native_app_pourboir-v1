@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
-import { MaterialIcons, FontAwesome, Ionicons, AntDesign } from "@expo/vector-icons";
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import ConfirmationModal from '../../components/modals/ConfirmModal';
 import HelpUsImproveModal from '../../components/modals/HelpUsImproveModal'
 import {Colors} from '../../constants/Theme';

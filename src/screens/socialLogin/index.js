@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, StatusBar, Image, Dimensions, TouchableOpacity } from 'react-native';
-import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import {Colors} from '../../constants/Theme';
 
 const imgLogo = require('../../assets/images/imgLogo.png')

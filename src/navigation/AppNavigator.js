@@ -8,6 +8,7 @@ import RateYourService from '../screens/rateYourService';
 import Setting from '../screens/setting';
 import OpenCardReviews from '../screens/openCardReviews'
 import NoLocation from '../screens/NoLocationFound'
+import SelectLanguage from "../screens/selectLanguage"
 
 import { spacing } from "../constants/layout";
 
@@ -15,7 +16,7 @@ const Stack = createStackNavigator();
 
 function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="socialLogin" screenOptions={{ headerShown: false }} >
+    <Stack.Navigator initialRouteName="SelectLanguage" screenOptions={{ headerShown: false }} >
       <Stack.Screen name="splashScreen" component={splashScreen} />
       <Stack.Screen name="socialLogin" component={socialLogin} />
       <Stack.Screen name="Home" component={Home}
@@ -31,6 +32,8 @@ function AppNavigator() {
       <Stack.Screen name="Setting" component={Setting} />
       <Stack.Screen name="OpenCardReviews" component={OpenCardReviews} />
       <Stack.Screen name="NoLocation" component={NoLocation} />
+      <Stack.Screen name="SelectLanguage" component={SelectLanguage} />
+
     </Stack.Navigator>
   );
 }

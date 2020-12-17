@@ -25,7 +25,7 @@ export default {
     validate:'Validate',
 
     // No location
-    // OPen card reviews
+    
     // Settings
     setting: 'Setting',
     rate_application:'Rate the application',

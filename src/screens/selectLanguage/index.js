@@ -1,23 +1,26 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity } from 'react-native';
 // import Language from '../../li8n/Language'
 
 const SelectLanguage = ({ }) => {
     const [newLang, setNewLang] = useState('')
-    const changeToEnglish = () => {
+    console.log(newLang);
+
+    const changeToEnglish = (newLang) => {
         setNewLang('en')
     }
-    const changeToFrench = () => {
+    const changeToFrench = (newLang) => {
         setNewLang('fr')
     }
     return <View style={styles.container}>
-        <Text>Change your language</Text>
+        <Text style={{fontSize:22}}>Change your language</Text>
         <TouchableOpacity style={styles.btnSelection} onPress={changeToEnglish}>
-            <Text>English</Text>
+            <Text style={{color:"#fff"}}>English</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnSelection} onPress={changeToFrench}>
-            <Text>French</Text>
+            <Text style={{color:"#fff"}}>French</Text>
         </TouchableOpacity>
+        {/* <Language/> */}
     </View>
 }
 export default SelectLanguage;
@@ -30,7 +33,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     btnSelection: {
-        width: "80%", paddingVertical: 10, borderRadius: 8, marginTop:25,
-        justifyContent: "center", alignItems: "center"
+        width: "80%", paddingVertical: 15, borderRadius: 8, marginTop:25,
+        justifyContent: "center", alignItems: "center", backgroundColor:"#5969ED"
     }
 })

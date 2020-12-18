@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, StatusBar, Image, Dimensions, TouchableOpacity 
 import { FontAwesome } from "@expo/vector-icons";
 import { Colors } from '../../constants/Theme';
 
-// import { currentLanguage } from '../../li8n/Language'
+import i18n from '../../li8n';
 
 const imgLogo = require('../../assets/images/imgLogo.png')
 const imgWaiter = require('../../assets/images/waiter2.png')
@@ -25,7 +25,7 @@ const SocialLogin = ({ navigation }) => {
         </View>
         <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.btnFb}>
             <FontAwesome name="facebook" color="#fff" size={20} />
-            <Text style={styles.textFb}>Continuer avec Facebook</Text>
+            <Text style={styles.textFb}>{i18n.t('continue_with_fb')}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('NoLocation')} style={styles.btnGoogle}>
             <FontAwesome name="google" color="#fff" size={20} />

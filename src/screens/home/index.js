@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState,useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, ScrollView, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
 import { Feather, Entypo } from "@expo/vector-icons";
@@ -63,7 +63,7 @@ export default HomeScreen = (props) => {
     extrapolate: Extrapolate.CLAMP,
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
 
     const renderUserIcon = ({ }) => {
       // return <Ionicons name="ios-contact" size={30} onPress={(): void => propsUserIcon.navigation.navigate('SelectSignIn')} />;
@@ -107,7 +107,7 @@ export default HomeScreen = (props) => {
       headerRight: renderUserIcon,
     });
 
-  }, [colorScheme, navigation, titleHeaderMarginLeft]);
+  });
 
   let ItemsOdd = []
   let ItemsEven = []
@@ -230,7 +230,6 @@ export default HomeScreen = (props) => {
               </G>
             </Svg>
           </Animated.View>
-
           <Animated.View
             style={{
               position: 'absolute',
@@ -239,14 +238,15 @@ export default HomeScreen = (props) => {
               width: searchBarWidth,
               left: spacing(1.5),
               borderRadius: HEADER_BAR_HEIGHT,
+              // borderRadius: 10,
               // backgroundColor:"red"
               backgroundColor: searchBarColor
             }}
           >
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-              <TouchableOpacity 
-              onPress={()=> setsearchIconPress(!searchIconPress)}
-              style={{ paddingLeft: HEADER_BAR_HEIGHT / 4 }}>
+              <TouchableOpacity
+                onPress={() => setsearchIconPress(!searchIconPress)}
+                style={{ paddingLeft: HEADER_BAR_HEIGHT / 4 }}>
                 <SvgHeaderSearchIcon />
               </TouchableOpacity>
               <TextInput
@@ -274,7 +274,9 @@ const styles = StyleSheet.create({
     marginTop: 45, alignSelf: "center", borderRadius: 7, overflow: "hidden"
   },
   viewHeader2: {
-    width: "100%", height: 110, backgroundColor: Colors.yellow, borderBottomLeftRadius: 20,
+    width: "100%", height: 110,
+    backgroundColor: Colors.yellow,
+    borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20
   },
   txt1NoRest: {

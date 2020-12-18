@@ -57,16 +57,21 @@ const styles = StyleSheet.create({
         color: Colors.fontLight, fontSize: 12, marginTop: 10
     },
     viewImg: {
-        width: "80%", alignSelf: "center", height: Dimensions.get('window').height * 0.5,
-        marginBottom: 10
+        width: "100%", 
+        alignSelf: "center", 
+        height: Dimensions.get('window').height * 0.5,
+        marginBottom: 10,
+        // backgroundColor:'black'
     },
     viewbtns: {
         flexDirection: "row", width: "90%", justifyContent: "center", alignItems: "center"
     },
     imgStyle: {
         // flex:1,
+        // backgroundColor:'red',
         width: 300,
         height: Dimensions.get('window').height * 0.5,
+        alignSelf:'center',
         // marginBottom:20
     },
     imgLogoStyle: {

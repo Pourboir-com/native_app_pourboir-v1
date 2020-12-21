@@ -4,7 +4,7 @@ import { MaterialIcons, FontAwesome, Entypo } from "@expo/vector-icons";
 import { Colors } from '../constants/Theme';
 import RatingStar from './RatingComponent';
 
-const HomeCard = ({ navigation, img, rating, name, distance, services, loading }) => {
+const HomeCard = ({ navigation, img, rating, name, distance, services, loading, updateAble }) => {
 
     // Star arrayyyyyyyy
     const [starSelect, setstarSelect] = useState(3.5)
@@ -31,16 +31,19 @@ const HomeCard = ({ navigation, img, rating, name, distance, services, loading }
                 })}
                 style={[styles.viewItemConatier]}>
                 <ImageBackground style={styles.imgCard} source={{ uri: img }}>
-                    <TouchableOpacity
-                        style={styles.btnCross}
-                    >
-                        <Entypo
-                            name="cross"
-                            size={21}
-                            color="#485460"
-                            style={{ backgroundColor: Colors.yellow, borderRadius: 20 }}
-                        />
-                    </TouchableOpacity>
+                    {
+                        updateAble &&
+                        <TouchableOpacity
+                            style={styles.btnCross}
+                        >
+                            <Entypo
+                                name="cross"
+                                size={21}
+                                color="#485460"
+                                style={{ backgroundColor: Colors.yellow, borderRadius: 20 }}
+                            />
+                        </TouchableOpacity>
+                    }
                     <View style={{}}>
                         <View style={{ flexDirection: "row" }}>
                             {obj.map((v, i) => {
@@ -78,11 +81,11 @@ const styles = StyleSheet.create({
     view2Card: {
         flexDirection: "row", width: "100%", alignItems: "center", justifyContent: "space-between"
     },
-    view1dumy:{
-        width:"90%", height:20, backgroundColor:"#F6F6F6",marginBottom:70
+    view1dumy: {
+        width: "90%", height: 20, backgroundColor: "#F6F6F6", marginBottom: 70
     },
-    view2dumy:{
-        width:"90%", height:15, backgroundColor:"#F6F6F6",marginTop:10
+    view2dumy: {
+        width: "90%", height: 15, backgroundColor: "#F6F6F6", marginTop: 10
     },
     btnCross: {
         backgroundColor: "#fff", position: "absolute", alignSelf: "flex-end",
@@ -106,7 +109,7 @@ const styles = StyleSheet.create({
         height: 210,
         margin: Dimensions.get('window').width * 0.02, backgroundColor: "#fff",
         borderRadius: 12, overflow: "hidden",
-        padding:20
+        padding: 20
     },
     txtHeading: {
         fontSize: 22, marginTop: 10, width: "90%", alignSelf: "center"

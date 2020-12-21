@@ -20,6 +20,7 @@ import { spacing } from '../../constants/layout';
 
 import Header from './HeaderAnimated';
 import HeaderSimple from './HeaderSimple';
+import { StatusBar } from 'react-native';
 
 
 
@@ -141,6 +142,7 @@ export default HomeScreen = (props) => {
 
     return (
         <>
+            {/* <StatusBar /> */}
             {
                 !searchIconPress ?
                     <Header

@@ -38,7 +38,7 @@ const RateService = ({navigation}) => {
             color={Colors.fontDark}
             navigation={navigation}
         />
-        <StatusBar backgroundColor={Colors.yellow} />
+        {/* <StatusBar  translucent={true}  /> */}
         <View style={styles.viewProfile}>
             <View style={styles.viewImg}>
               <FontAwesome name="user-circle-o" size={100} color="#fff" />

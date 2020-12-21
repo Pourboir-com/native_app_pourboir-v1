@@ -44,7 +44,7 @@ const Setting = ({ navigation }) => {
             color="#000"
             navigation={navigation}
         />
-        <StatusBar backgroundColor={Colors.yellow} />
+        {/* <StatusBar backgroundColor={Colors.yellow} /> */}
 
         <View style={styles.viewProfile}>
             <TouchableOpacity

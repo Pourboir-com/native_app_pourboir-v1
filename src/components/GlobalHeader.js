@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
@@ -10,8 +10,8 @@ import {
   ActivityIndicator,
   StatusBar,
 } from 'react-native';
-import {Header, Body, Left, Right} from 'native-base';
-import {Colors} from '../constants/Theme';
+import { Header, Body, Left, Right } from 'native-base';
+import { Colors } from '../constants/Theme';
 import { MaterialIcons, FontAwesome, Fontisto, FontAwesome5 } from "@expo/vector-icons";
 
 
@@ -29,14 +29,15 @@ const GlobalHeader = (props) => {
         borderBottomRightRadius: 20,
         overflow: 'hidden',
         width: '100%',
-        zIndex:10,
-        backgroundColor:Colors.yellow
+        zIndex: 10,
+        backgroundColor: Colors.yellow
         // borderBottomLeftRadius:20, borderBottomRightRadius:20
       }}>
-      <Header
+      <View
+
         style={[
           {
-            shadowOffset: {height: 0, width: 0},
+            shadowOffset: { height: 0, width: 0 },
             shadowOpacity: 0,
             elevation: 0,
             width: '100%',
@@ -46,52 +47,54 @@ const GlobalHeader = (props) => {
             // height: 100,
             zIndex: -10,
             borderRadius: 20,
+            // backgroundColor: 'red',
+            flexDirection:'row',
             backgroundColor: props.backgroundColor
               ? props.backgroundColor
               : Colors.yellow,
-              height: props.height ? props.height : 70,
+            height: props.height ? props.height : 70,
           },
-          Platform.OS === 'ios' ? {borderBottomWidth: 0} : {},
+          Platform.OS === 'ios' ? { borderBottomWidth: 0 } : {},
         ]}>
 
         {props.left ? null :
-        <Left style={{flex: props.leftText ? 2 : 1, marginBottom: 20}}>
-          <View style={styles.viewLeft}>
-            {props.leftText && (
-              <Text 
-                style={{
+          <Left style={{ flex: props.leftText ? 2 : 1, marginBottom: 20 }}>
+            <View style={styles.viewLeft}>
+              {props.leftText && (
+                <Text
+                  style={{
                     color: props.color ? props.color : Colors.fontLight,
                     fontSize: props.fontSize ? props.fontSize : 20,
-                    alignSelf:"flex-start"
-                }}
-            >{props.leftText}</Text>
-            )}
+                    alignSelf: "flex-start"
+                  }}
+                >{props.leftText}</Text>
+              )}
 
-            {props.arrow === true && (
-              <TouchableOpacity
-              style={{paddingRight: 5, paddingTop: 19}}
-                // onPress={() => {
-                //   // this.props.otherNavigation
-                //   //   ? this.props.navigation.navigate.otherNavigation
-                //   // :
-                //   // this.props.navigation.goBack();
-                //   // goBackHandler();
-                //   alert('dsads');
-                //   props.navigation.goBack();
-                // }}
-                onPress={() => 
-                goBackHandler(props)
-                }>
-                <MaterialIcons
-                  name={'arrow-back'}
-                  size={props.Arrowsize ? props.Arrowsize : 24}
-                  color={props.BackIconColor ? props.BackIconColor : '#000'}
+              {props.arrow === true && (
+                <TouchableOpacity
+                  style={{ paddingRight: 5, paddingTop: 19 }}
+                  // onPress={() => {
+                  //   // this.props.otherNavigation
+                  //   //   ? this.props.navigation.navigate.otherNavigation
+                  //   // :
+                  //   // this.props.navigation.goBack();
+                  //   // goBackHandler();
+                  //   alert('dsads');
+                  //   props.navigation.goBack();
+                  // }}
+                  onPress={() =>
+                    goBackHandler(props)
+                  }>
+                  <MaterialIcons
+                    name={'arrow-back'}
+                    size={props.Arrowsize ? props.Arrowsize : 24}
+                    color={props.BackIconColor ? props.BackIconColor : '#000'}
                   />
-              </TouchableOpacity>
-            )}
-          </View>
-        </Left>
-      }
+                </TouchableOpacity>
+              )}
+            </View>
+          </Left>
+        }
 
         <Body
           style={{
@@ -109,7 +112,7 @@ const GlobalHeader = (props) => {
                 alignItems: 'center',
                 flexDirection: props.HeadingRow ? props.HeadingRow : 'column',
               }}>
-              <View style={{alignItems: 'center'}}>
+              <View style={{ alignItems: 'center' }}>
                 <Text
                   numberOfLines={1}
                   style={{
@@ -144,10 +147,10 @@ const GlobalHeader = (props) => {
             // marginBottom: 20,
             height: '100%',
             // justifyContent:"center",
-            alignItems:"center"
+            alignItems: "center"
           }}>
           {props.isFavouriteLoading ? (
-            <View style={[styles.arrowView, {marginRight: 10}]}>
+            <View style={[styles.arrowView, { marginRight: 10 }]}>
               <ActivityIndicator size={25} color="#FFF" />
             </View>
           ) : props.RightImg ? (
@@ -156,14 +159,14 @@ const GlobalHeader = (props) => {
             </View>
           ) : null}
         </Right>
-      </Header>
-      {props.search ? 
+      </View>
+      {props.search ?
         <View style={styles.viewSearch}>
-            <Fontisto name="search" size={20} color={Colors.yellow} />
-            <TextInput 
+          <Fontisto name="search" size={20} color={Colors.yellow} />
+          <TextInput
             placeholder="Recherchez votre restaurant"
-              style={{flex:1, height:43,paddingHorizontal:15}}
-            />
+            style={{ flex: 1, height: 43, paddingHorizontal: 15 }}
+          />
         </View> : null
       }
     </View>
@@ -178,9 +181,9 @@ const styles = StyleSheet.create({
     height: 30,
     marginTop: 137,
   },
-  viewSearch:{
-    width:"90%", flexDirection:"row", alignSelf:"center", height:45, paddingHorizontal:15,
-    backgroundColor:"#fff", marginBottom:15, borderRadius:10, alignItems:"center"
+  viewSearch: {
+    width: "90%", flexDirection: "row", alignSelf: "center", height: 45, paddingHorizontal: 15,
+    backgroundColor: "#fff", marginBottom: 15, borderRadius: 10, alignItems: "center"
   },
   btnDrawer: {
     alignItems: 'center',
@@ -192,17 +195,17 @@ const styles = StyleSheet.create({
   viewImg: {
     width: 45,
     height: 45,
-    borderRadius:30, backgroundColor:"#bbb",
+    borderRadius: 30, backgroundColor: "#bbb",
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight:5,
-    marginTop:-10
+    marginRight: 5,
+    marginTop: -10
   },
   viewLeft: {
     width: '100%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft:8
+    marginLeft: 8
   },
 });

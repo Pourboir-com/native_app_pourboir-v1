@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet, Text, View, StatusBar, Image, Dimensions, TouchableOpacity } from 'react-native';
+import React, {useEffect, useState} from 'react'
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { FontAwesome } from "@expo/vector-icons";
 import { Colors } from '../../constants/Theme';
 
@@ -9,8 +9,16 @@ const imgLogo = require('../../assets/images/imgLogo.png')
 const imgWaiter = require('../../assets/images/waiter2.png')
 
 const SocialLogin = ({ navigation }) => {
-    return <View style={styles.container}>
-        {/* <StatusBar backgroundColor={Colors.yellow} /> */}
+    const [loading, setLoading] = useState(true)
+
+    React.useEffect(() => {
+        setTimeout(() => {
+          setLoading(false)
+        }, 2500)
+      }, [])
+    return <View style={[styles.container,{backgroundColor: loading ? '#fff': Colors.yellow}]}>
+        {loading ? <ActivityIndicator size={70} color={Colors.yellow}/> : 
+        <View style={{width:"100%",alignItems:"center"}}>
         <Image
             style={styles.imgLogoStyle}
             source={imgLogo}
@@ -43,6 +51,8 @@ const SocialLogin = ({ navigation }) => {
                 <Text style={{ color: "#0050A0", fontSize: 12 }}>{i18n.t('privacy_policy')}</Text>
             </TouchableOpacity>
         </View>
+        </View>
+         }
     </View>
 }
 export default SocialLogin;
@@ -51,7 +61,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: Colors.yellow,
+        justifyContent:"center"
     },
     txtCreatingAcc: {
         color: Colors.fontLight, fontSize: 12, marginTop: 10

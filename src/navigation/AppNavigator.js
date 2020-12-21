@@ -16,7 +16,7 @@ const Stack = createStackNavigator();
 
 function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="splashScreen" screenOptions={{ headerShown: false }} >
+    <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }} >
       <Stack.Screen name="splashScreen" component={splashScreen} 
       options={() => ({
         headerShown: true,

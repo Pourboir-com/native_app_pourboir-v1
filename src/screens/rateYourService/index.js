@@ -46,7 +46,7 @@ const RateService = ({ navigation }) => {
         setstarSelect(v);
     }
 
-    return <ScrollView
+    return <View
         style={styles.container}
     >
         <GlobalHeader
@@ -64,36 +64,6 @@ const RateService = ({ navigation }) => {
             <Text style={styles.txtName}>Amy Farha</Text>
         </View>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.viewFlatlist}>
-            {/* <FlatList
-                data={RATELIST}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={(item) => item._id}
-                renderItem={(itemData) => (
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate('socialLogin')}
-                        style={styles.viewListCard}
-                    >
-                        <Text style={styles.txtCard}>{itemData.item.heading}</Text>
-                        <View style={{ flexDirection: "row", marginTop: 10 }}>
-                            {obj.map((v, i) => {
-                                return (
-                                    <TouchableOpacity onPress={() => { onPressStar(v) }}>
-                                        <RatingStar
-                                            padding={true}
-                                            starSize={25}
-                                            type={v <= starSelect ? "filled" :
-                                                v === starSelect + 0.5 ? "half" : "empty"
-                                            }
-                                            notRatedStarColor='rgba(0,0,0,0.2)'
-                                        />
-                                    </TouchableOpacity>
-                                )
-                            }
-                            )}
-                        </View>
-                    </TouchableOpacity>
-                )}
-            /> */}
             <TouchableOpacity
                 onPress={() => navigation.navigate('socialLogin')}
                 style={styles.viewListCard}
@@ -186,20 +156,18 @@ const RateService = ({ navigation }) => {
                     )}
                 </View>
             </TouchableOpacity>
-        </ScrollView>
+            <View style={{ alignItems: 'center' }}>
 
-        <View style={{ alignItems: 'center' }}>
+                <View style={styles.viewTip}>
+                    <Text style={styles.txtCard}>{i18n.t('your_tip_to_waiter')}</Text>
+                    <TextInput style={styles.inputStyle} />
+                </View>
 
-            <View style={styles.viewTip}>
-                <Text style={styles.txtCard}>{i18n.t('your_tip_to_waiter')}</Text>
-                <TextInput style={styles.inputStyle} />
             </View>
-            <TouchableOpacity onPress={handleModalOpen} style={styles.btnValider}>
-                <Text style={{ fontSize: 16 }}>{i18n.t('validate')}</Text>
-            </TouchableOpacity>
-
-        </View>
-
+        </ScrollView>
+        <TouchableOpacity onPress={handleModalOpen} style={styles.btnValider}>
+            <Text style={{ fontSize: 16 }}>{i18n.t('validate')}</Text>
+        </TouchableOpacity>
 
         <ThankRatingModal
             isVisible={isVisible}
@@ -207,7 +175,7 @@ const RateService = ({ navigation }) => {
         />
 
 
-    </ScrollView>
+    </View>
 }
 export default RateService;
 
@@ -234,7 +202,7 @@ const styles = StyleSheet.create({
     },
     btnValider: {
         backgroundColor: Colors.yellow, width: "90%", justifyContent: "center", alignItems: "center",
-        height: 50, borderRadius: 8, marginBottom: 15, marginTop: 3
+        height: 50, borderRadius: 8, marginBottom: 15, marginTop: 2, alignSelf: "center"
     },
     viewListCard: {
         backgroundColor: "#fff", width: "90%", alignSelf: "center", marginBottom: 10, height: 100,

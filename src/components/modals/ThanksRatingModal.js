@@ -34,6 +34,7 @@ const ThanksRatingModal = ({ isVisible, handleModalClose }) => {
             style={{ alignSelf: 'flex-end', margin: 10 }}>
             <Entypo name="cross" size={29} color="#485460" />
           </TouchableOpacity>
+          <View style={{width:140, height:140,borderRadius:100, backgroundColor:"rgba(255, 255, 255, 0.5)", alignSelf:"center",marginBottom:-70,bottom:-20}} />
           <Image
             source={imgWaiter}
             style={styles.imgStyle}
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     marginTop: 12, width: 270, textAlign: "center", marginBottom: 30
   },
   imgStyle: {
-    width: 220, height: 200, alignSelf: "center", marginTop: -30,
+    width: 260, height: 220, alignSelf: "center", marginTop: -120,
     marginRight: -20
   },
   viewImg: {

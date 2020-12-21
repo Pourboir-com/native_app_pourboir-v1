@@ -25,6 +25,8 @@ export default {
     validate:'Validate',
 
     // No location
+    activate_your_geolocation: 'Activate your geolocation',
+    activate_geoloc: 'Activate geolocation',
     
     // Settings
     setting: 'Setting',
@@ -35,7 +37,7 @@ export default {
 
     // Social Login
     continue_with_fb : 'Continue with Facebook',
-    continue_with_google : 'Continue with Facebook',
+    continue_with_google : 'Continue with Google',
     by_creatin_your_acc : 'By creating your account you accept our',
     terms_of_use: 'Terms of use',
     privacy_policy: 'privacy policy',

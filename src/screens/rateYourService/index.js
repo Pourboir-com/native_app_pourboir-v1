@@ -19,6 +19,9 @@ import { Colors } from '../../constants/Theme';
 import ThankRatingModal from '../../components/modals/ThanksRatingModal'
 import RatingStar from '../../components/RatingComponent';
 
+import i18n from '../../li8n';
+
+
 const RateService = ({ navigation }) => {
 
     const [isVisible, setisVisible] = useState(false);
@@ -38,19 +41,17 @@ const RateService = ({ navigation }) => {
     // Star arrayyyyyyyy
     const [starSelect, setstarSelect] = useState(3.5)
     const obj = [1, 2, 3, 4, 5];
+
     const onPressStar = (v) => {
         setstarSelect(v);
     }
 
     return <ScrollView
         style={styles.container}
-
     >
-
-
         <GlobalHeader
             arrow={true}
-            headingText="Notez votre serveur"
+            headingText={i18n.t('rate_your_server')}
             fontSize={17}
             color={Colors.fontDark}
             navigation={navigation}
@@ -63,7 +64,7 @@ const RateService = ({ navigation }) => {
             <Text style={styles.txtName}>Amy Farha</Text>
         </View>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.viewFlatlist}>
-            <FlatList
+            {/* <FlatList
                 data={RATELIST}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item._id}
@@ -92,17 +93,109 @@ const RateService = ({ navigation }) => {
                         </View>
                     </TouchableOpacity>
                 )}
-            />
+            /> */}
+            <TouchableOpacity
+                onPress={() => navigation.navigate('socialLogin')}
+                style={styles.viewListCard}
+            >
+                <Text style={styles.txtCard}>{i18n.t('hospitality')}</Text>
+                <View style={{ flexDirection: "row", marginTop: 10 }}>
+                    {obj.map((v, i) => {
+                        return (
+                            <TouchableOpacity onPress={() => { onPressStar(v) }}>
+                                <RatingStar
+                                    padding={true}
+                                    starSize={25}
+                                    type={v <= starSelect ? "filled" :
+                                        v === starSelect + 0.5 ? "half" : "empty"
+                                    }
+                                    notRatedStarColor='rgba(0,0,0,0.2)'
+                                />
+                            </TouchableOpacity>
+                        )
+                    }
+                    )}
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('socialLogin')}
+                style={styles.viewListCard}
+            >
+                <Text style={styles.txtCard}>{i18n.t('speed')}</Text>
+                <View style={{ flexDirection: "row", marginTop: 10 }}>
+                    {obj.map((v, i) => {
+                        return (
+                            <TouchableOpacity onPress={() => { onPressStar(v) }}>
+                                <RatingStar
+                                    padding={true}
+                                    starSize={25}
+                                    type={v <= starSelect ? "filled" :
+                                        v === starSelect + 0.5 ? "half" : "empty"
+                                    }
+                                    notRatedStarColor='rgba(0,0,0,0.2)'
+                                />
+                            </TouchableOpacity>
+                        )
+                    }
+                    )}
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('socialLogin')}
+                style={styles.viewListCard}
+            >
+                <Text style={styles.txtCard}>{i18n.t('service')}</Text>
+                <View style={{ flexDirection: "row", marginTop: 10 }}>
+                    {obj.map((v, i) => {
+                        return (
+                            <TouchableOpacity onPress={() => { onPressStar(v) }}>
+                                <RatingStar
+                                    padding={true}
+                                    starSize={25}
+                                    type={v <= starSelect ? "filled" :
+                                        v === starSelect + 0.5 ? "half" : "empty"
+                                    }
+                                    notRatedStarColor='rgba(0,0,0,0.2)'
+                                />
+                            </TouchableOpacity>
+                        )
+                    }
+                    )}
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('socialLogin')}
+                style={styles.viewListCard}
+            >
+                <Text style={styles.txtCard}>{i18n.t('professionalism')}</Text>
+                <View style={{ flexDirection: "row", marginTop: 10 }}>
+                    {obj.map((v, i) => {
+                        return (
+                            <TouchableOpacity onPress={() => { onPressStar(v) }}>
+                                <RatingStar
+                                    padding={true}
+                                    starSize={25}
+                                    type={v <= starSelect ? "filled" :
+                                        v === starSelect + 0.5 ? "half" : "empty"
+                                    }
+                                    notRatedStarColor='rgba(0,0,0,0.2)'
+                                />
+                            </TouchableOpacity>
+                        )
+                    }
+                    )}
+                </View>
+            </TouchableOpacity>
         </ScrollView>
 
-        <View style={{alignItems:'center'}}>
+        <View style={{ alignItems: 'center' }}>
 
             <View style={styles.viewTip}>
-                <Text style={styles.txtCard}>Votre pourboir au serveur</Text>
+                <Text style={styles.txtCard}>{i18n.t('your_tip_to_waiter')}</Text>
                 <TextInput style={styles.inputStyle} />
             </View>
             <TouchableOpacity onPress={handleModalOpen} style={styles.btnValider}>
-                <Text style={{ fontSize: 16 }}>Valider</Text>
+                <Text style={{ fontSize: 16 }}>{i18n.t('validate')}</Text>
             </TouchableOpacity>
 
         </View>

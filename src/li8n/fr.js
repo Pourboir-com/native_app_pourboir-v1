@@ -25,6 +25,8 @@ export default {
     validate:'Valider',
 
     // No location
+    activate_your_geolocation: 'Activez votre geolocalisation',
+    activate_geoloc: 'Activer la geolocalisation',
     
     // Settings
     setting: 'Paramètre',

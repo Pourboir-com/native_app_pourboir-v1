@@ -9,7 +9,7 @@ import {
     FlatList,
     TouchableOpacity,
     TextInput,
-    Animated
+    Animated, StatusBar
 } from 'react-native';
 import { Feather, Entypo } from "@expo/vector-icons";
 
@@ -20,9 +20,9 @@ import { spacing } from '../../constants/layout';
 
 import Header from './HeaderAnimated';
 import HeaderSimple from './HeaderSimple';
-import { StatusBar } from 'react-native';
+// import { StatusBar } from 'react-native';
 
-
+import i18n from '../../li8n';
 
 
 function HomeScreenContent({ loading, setLoading, searchIconPress, setSearchIconPress }) {
@@ -60,18 +60,18 @@ function HomeScreenContent({ loading, setLoading, searchIconPress, setSearchIcon
                             />
                         </View>
                         <Text style={styles.txt1NoRest}>
-                            Vous n’avez aucun restaurant pour le moment
-                                  </Text>
+                            {i18n.t('you_have_no_restaurant')}
+                        </Text>
                         <Text style={styles.txt2NoRest}>
-                            Recherchez votre restaurant et ajoutez vous en choisissant: Vous êtes serveur
-                                  </Text>
+                            {i18n.t('search_for_rest_and_add')}
+                        </Text>
                     </View>
                     :
                     <ScrollView showsVerticalScrollIndicator={false}>
 
                         <Text style={styles.txtHeading}>
-                            Autour de vous
-                                  </Text>
+                            {i18n.t('around_you')}
+                        </Text>
                         <View style={{ flexDirection: "row" }}>
                             <FlatList
                                 data={loading ? dummyArray : ItemsOdd}

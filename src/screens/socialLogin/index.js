@@ -29,18 +29,18 @@ const SocialLogin = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('NoLocation')} style={styles.btnGoogle}>
             <FontAwesome name="google" color="#fff" size={20} />
-            <Text style={styles.textFb}>Continuer avec Google</Text>
+            <Text style={styles.textFb}>{i18n.t('continue_with_google')}</Text>
         </TouchableOpacity>
         <Text style={styles.txtCreatingAcc}>
-            En créant votre compte vous acceptez nos
+            {i18n.t('by_creatin_your_acc')}
         </Text>
         <View style={styles.viewbtns}>
             <TouchableOpacity>
-                <Text style={{ color: "#0050A0", fontSize: 12 }}>conditions d’utilisation</Text>
+                <Text style={{ color: "#0050A0", fontSize: 12 }}>{i18n.t('terms_of_use')}</Text>
             </TouchableOpacity>
             <View style={{ width: 1, height: 10, backgroundColor: "grey", marginHorizontal: 10 }} />
             <TouchableOpacity>
-                <Text style={{ color: "#0050A0", fontSize: 12 }}>politique de confidentialité</Text>
+                <Text style={{ color: "#0050A0", fontSize: 12 }}>{i18n.t('privacy_policy')}</Text>
             </TouchableOpacity>
         </View>
     </View>
@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
         color: Colors.fontLight, fontSize: 12, marginTop: 10
     },
     viewImg: {
-        width: "100%", 
-        alignSelf: "center", 
+        width: "100%",
+        alignSelf: "center",
         height: Dimensions.get('window').height * 0.5,
         marginBottom: 10,
         // backgroundColor:'black'
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         // backgroundColor:'red',
         width: 300,
         height: Dimensions.get('window').height * 0.5,
-        alignSelf:'center',
+        alignSelf: 'center',
         // marginBottom:20
     },
     imgLogoStyle: {

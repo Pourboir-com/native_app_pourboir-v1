@@ -15,6 +15,8 @@ import {Colors} from '../../constants/Theme';
 const imgSitting = require('../../assets/images/sittingtable.png')
 const imgBg = require('../../assets/images/Group7.png')
 
+import i18n from '../../li8n';
+
 const HelpUsImproveModal = ({isVisible, handleModalClose}) => {
   return (
     <Overlay
@@ -40,18 +42,18 @@ const HelpUsImproveModal = ({isVisible, handleModalClose}) => {
         </View>
         </ImageBackground>
         <Text style={styles.txtName}>
-            Aidez-nous à améliorer notre app. Donnez nous le nom de votre serveur
+            {i18n.t('help_us_improve')}
         </Text>
         <Text
           style={styles.txtConfrm}>
-            Nous le contacterons prochainement pour l’ajouter dans notre app.
+            {i18n.t('will_contact_shortly')}
         </Text>
         <TextInput 
-        placeholder="Le nom de votre serveur"
+        placeholder={i18n.t('name_of_your_server')} 
         style={styles.inputStyle} 
         />
         <TouchableOpacity style={styles.btnConfrm}>
-            <Text style={styles.txtBtnConfrm}>Ajouter</Text>
+            <Text style={styles.txtBtnConfrm}>{i18n.t('add')} </Text>
         </TouchableOpacity>
     </Overlay>
   );

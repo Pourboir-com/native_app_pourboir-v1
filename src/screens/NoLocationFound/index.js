@@ -4,6 +4,8 @@ import { Colors } from '../../constants/Theme';
 import { Entypo } from "@expo/vector-icons";
 import * as Location from 'expo-location';
 
+import i18n from '../../li8n';
+
 const NoLocation = () => {
 
     const [location, setLocation] = useState(null);
@@ -33,11 +35,12 @@ const NoLocation = () => {
         <Entypo name="location-pin" size={220} color={Colors.yellow} style={{ marginBottom: -150, zIndex: 10 }} />
         <View style={{ width: 150, height: 150, backgroundColor: '#fff', borderRadius: 100, zIndex: -10 }}></View>
         <Text style={{ fontSize: 20, color: Colors.fontDark, marginTop: 20 }}>
-            Activez votre geolocalisation
+            {i18n.t('activate_your_geolocation')}
         </Text>
-        {/* <Text style={{}}>{text}</Text> */}
         <TouchableOpacity style={styles.btnStyle}>
-            <Text style={styles.txtColor}>Activer la geolocalisation</Text>
+            <Text style={styles.txtColor}>
+                {i18n.t('activate_geoloc')}
+            </Text>
         </TouchableOpacity>
     </View>
 }

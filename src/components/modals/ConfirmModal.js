@@ -12,6 +12,8 @@ import {Overlay} from 'react-native-elements';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {Colors} from '../../constants/Theme';
 
+import i18n from '../../li8n';
+
 const imgWaiter = require('../../assets/images/waiter2.png')
 const imgBg = require('../../assets/images/Group7.png')
 
@@ -41,11 +43,11 @@ const ConfirmationModal = ({isVisible, handleModalClose,name}) => {
         </ImageBackground>
         <Text
           style={styles.txtConfrm}>
-          Confirmez que vous êtes serveur pour
+          {i18n.t('confrm_you_are_server')}
         </Text>
         <Text style={styles.txtName}>{name}</Text>
         <TouchableOpacity style={styles.btnConfrm}>
-            <Text style={styles.txtBtnConfrm}>Je confirme</Text>
+            <Text style={styles.txtBtnConfrm}>{i18n.t('i_confirm')}</Text>
         </TouchableOpacity>
     </Overlay>
   );

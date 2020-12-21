@@ -3,6 +3,7 @@ const img2 = "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/izeD0hHEwWUc/v0/1
 const img3 = "https://thebodrumbyphr.com/wp-content/uploads/2020/04/The-Bodrum-by-Paramount-Hotels-Resorts-11-1024x682.jpg";
 const img4 = "https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png";
 
+
 export const rateList = [
     {
       id: '1',

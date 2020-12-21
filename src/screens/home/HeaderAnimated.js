@@ -21,6 +21,8 @@ import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import { COLORS } from '../../constants/colors';
 import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
 
+import i18n from '../../li8n';
+
 
 const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3 + getStatusBarHeight();
 
@@ -90,7 +92,7 @@ export default HomeScreen = (props) => {
             <Text style={{
               fontSize: 20, color: COLORS[colorScheme].text.primary
             }} ellipsizeMode="tail" numberOfLines={1}>
-              Bonjour 80 Vincent Delacourt 80 Vincent Delacourt
+              {i18n.t('hello')} Vincent Delacourt
             </Text>
           </Animated.View>
         </View>
@@ -169,7 +171,7 @@ export default HomeScreen = (props) => {
               <SvgHeaderSearchIcon />
             </TouchableOpacity>
             <TextInput
-              placeholder="Recherchez votre restaurant"
+              placeholder={i18n.t('find_your_restaurant')}
               style={{ flex: 1, paddingHorizontal: 25 }} />
           </View>
         </Animated.View>

@@ -6,6 +6,8 @@ import HelpUsImproveModal from '../../components/modals/HelpUsImproveModal'
 import { Colors } from '../../constants/Theme';
 import RatingStar from '../../components/RatingComponent';
 
+import i18n from '../../li8n';
+
 const ReviewDetails = ({ navigation, route }) => {
     // console.log('routesssss',route.params)
     const { img, name, rating, distance, services } = route.params;
@@ -72,7 +74,7 @@ const ReviewDetails = ({ navigation, route }) => {
                 </ImageBackground>
             </View>
             <View style={{ flexDirection: "row", marginTop: 15, marginHorizontal: 15 }}>
-                <Text style={styles.txtHeading}>Les serveurs</Text>
+                <Text style={styles.txtHeading}>{i18n.t('waiters')}</Text>
                 <Text style={styles.txtNumRaters}>{services.length}</Text>
             </View>
 
@@ -111,9 +113,9 @@ const ReviewDetails = ({ navigation, route }) => {
                 )}
             />
             <View style={styles.viewAddReview}>
-                <Text style={styles.txtCantFind}>Vous ne trouvez pas votre serveur?</Text>
+                <Text style={styles.txtCantFind}>{i18n.t('cant_find_your_server')}</Text>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text style={styles.txtAddReview}>Ajoutez votre serveur</Text>
+                    <Text style={styles.txtAddReview}>{i18n.t('add_your_server')}</Text>
                     <TouchableOpacity
                         onPress={handleHelpUsModalOpen}
                         style={styles.btnAdd}
@@ -127,7 +129,7 @@ const ReviewDetails = ({ navigation, route }) => {
             onPress={handleConfirmModalOpen}
             style={styles.viewLastBtn}
         >
-            <Text>Vous etes serveur</Text>
+            <Text>{i18n.t('are_you_waiter')}</Text>
         </TouchableOpacity>
 
         <ConfirmationModal

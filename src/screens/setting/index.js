@@ -5,6 +5,8 @@ import GlobalHeader from '../../components/GlobalHeader';
 import { Colors } from '../../constants/Theme';
 import * as ImagePicker from "expo-image-picker";
 
+import i18n from '../../li8n';
+
 const Setting = ({ navigation }) => {
     const [image, setImage] = useState(
         // null
@@ -84,13 +86,13 @@ const Setting = ({ navigation }) => {
                     <View style={styles.viewIcon}>
                         <FontAwesome name="star" size={20} color={Colors.yellow} />
                     </View>
-                    <Text>Notez I'application</Text>
+                    <Text>{i18n.t('rate_application')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.viewItem}>
                     <View style={styles.viewIcon}>
                         <FontAwesome name="envelope" size={16} color={Colors.yellow} />
                     </View>
-                    <Text>Contactez nous</Text>
+                    <Text>{i18n.t('contact_us')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('NoLocation')}
@@ -98,7 +100,7 @@ const Setting = ({ navigation }) => {
                     <View style={styles.viewIcon}>
                         <FontAwesome name="cutlery" size={16} color={Colors.yellow} />
                     </View>
-                    <Text>Vous etes serveur?</Text>
+                    <Text>{i18n.t('are_you_waiter')}</Text>
 
                     <View
                         style={{
@@ -118,7 +120,7 @@ const Setting = ({ navigation }) => {
             </Text>
         </View>
         <TouchableOpacity style={styles.btnValider}>
-            <Text>Se deconnecter</Text>
+            <Text>{i18n.t('sign_out')}</Text>
         </TouchableOpacity>
     </View>
 }

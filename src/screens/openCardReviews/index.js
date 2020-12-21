@@ -1,12 +1,12 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import ConfirmationModal from '../../components/modals/ConfirmModal';
 import HelpUsImproveModal from '../../components/modals/HelpUsImproveModal'
-import {Colors} from '../../constants/Theme';
+import { Colors } from '../../constants/Theme';
 import RatingStar from '../../components/RatingComponent';
 
-const ReviewDetails = ({navigation, route}) => {
+const ReviewDetails = ({ navigation, route }) => {
     // console.log('routesssss',route.params)
     const { img, name, rating, distance, services } = route.params;
     const [confirmModalVisible, setconfirmModalVisible] = useState(false);
@@ -15,18 +15,18 @@ const ReviewDetails = ({navigation, route}) => {
     const handleModalClose = () => {
         setconfirmModalVisible(false);
         sethelpUsModalVisible(false);
-      };
+    };
 
-      const handleConfirmModalOpen = () => {
+    const handleConfirmModalOpen = () => {
         setconfirmModalVisible(true);
-      };
+    };
 
-      const handleHelpUsModalOpen = () => {
+    const handleHelpUsModalOpen = () => {
         //   alert('working')
-          sethelpUsModalVisible(true);
-      }
+        sethelpUsModalVisible(true);
+    }
 
-      // Star arrayyyyyyyy
+    // Star arrayyyyyyyy
     const [starSelect, setstarSelect] = useState(3.5)
     const obj = [1, 2, 3, 4, 5];
     const onPressStar = (v) => {
@@ -37,72 +37,73 @@ const ReviewDetails = ({navigation, route}) => {
         {/* <StatusBar hidden={true} /> */}
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.viewImg}>
-                <ImageBackground 
-                    source={{uri: img}} 
-                    style={{flex:1, justifyContent:"space-between"}}
+                <ImageBackground
+                    source={{ uri: img }}
+                    style={{ flex: 1, justifyContent: "space-between" }}
                 >
                     <View style={styles.viewHeader}>
-                        <TouchableOpacity style={{paddingRight:20, paddingBottom:20}} 
-                        onPress={()=> navigation.goBack()}
+                        <TouchableOpacity style={{ paddingRight: 20, paddingBottom: 20 }}
+                            onPress={() => navigation.goBack()}
                         >
                             <MaterialIcons name={"arrow-back"} size={25} color="#fff" />
                         </TouchableOpacity>
-                        <View style={{flex:1,}}>
+                        <View style={{ flex: 1, }}>
                             <Text style={styles.txtName}>{name}</Text>
                         </View>
                     </View>
                     <View style={styles.viewBottom}>
                         <View style={{ flexDirection: "row" }}>
-                                        {obj.map((v, i) => {
-                                            return (
-                                                <TouchableOpacity onPress={() => { onPressStar(v) }}>
-                                                    <RatingStar starSize={20}
-                                                        type={ v <= starSelect ? "filled" : 
-                                                        v === starSelect + 0.5 ? "half" : "empty" 
-                                                    }
-                                                        notRatedStarColor='rgba(255,255,255, 0.6)'
-                                                    />
-                                                </TouchableOpacity>
-                                            )
-                                        }
-                                        )}
-                                    </View>
-                        <Text style={{color:"#fff"}}>{distance}</Text>
+                            {obj.map((v, i) => {
+                                return (
+                                    <TouchableOpacity onPress={() => { onPressStar(v) }}>
+                                        <RatingStar starSize={20}
+                                            type={v <= starSelect ? "filled" :
+                                                v === starSelect + 0.5 ? "half" : "empty"
+                                            }
+                                            notRatedStarColor='rgba(255,255,255, 0.6)'
+                                        />
+                                    </TouchableOpacity>
+                                )
+                            }
+                            )}
+                        </View>
+                        <Text style={{ color: "#fff" }}>{distance}</Text>
                     </View>
                 </ImageBackground>
             </View>
-            <View style={{flexDirection:"row",marginTop:15, marginHorizontal:15}}>
+            <View style={{ flexDirection: "row", marginTop: 15, marginHorizontal: 15 }}>
                 <Text style={styles.txtHeading}>Les serveurs</Text>
                 <Text style={styles.txtNumRaters}>{services.length}</Text>
             </View>
+
             <FlatList
                 data={services}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item._id}
                 renderItem={(itemData) => (
-                    <TouchableOpacity onPress={()=> navigation.navigate('RateYourService')} style={styles.viewItemConatier}>
-                        <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <Image 
-                                style={{width:45, height:45, borderRadius:30}}
-                                source={{uri: itemData.item.imgAvatar}} 
+                    <TouchableOpacity onPress={() => navigation.navigate('RateYourService')} style={styles.viewItemConatier}>
+                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                            <Image
+                                style={{ width: 45, height: 45, borderRadius: 30 }}
+                                source={{ uri: itemData.item.imgAvatar }}
                             />
-                            <View style={{marginLeft:10}}>
+                            <View style={{ marginLeft: 10 }}>
                                 <Text>{itemData.item.userName}</Text>
                                 <View style={{ flexDirection: "row" }}>
-                                        {obj.map((v, i) => {
-                                            return (
-                                                <TouchableOpacity onPress={() => { onPressStar(v) }}>
-                                                    <RatingStar starSize={17}
-                                                        type={ v <= starSelect ? "filled" : 
-                                                        v === starSelect + 0.5 ? "half" : "empty" 
+                                    {obj.map((v, i) => {
+                                        return (
+                                            <TouchableOpacity onPress={() => { onPressStar(v) }}>
+                                                <RatingStar starSize={17}
+                                                    type={v <= starSelect ? "filled" :
+                                                        v === starSelect + 0.5 ? "half" : "empty"
                                                     }
-                                                        notRatedStarColor='rgba(0,0,0,0.2)'
-                                                    />
-                                                </TouchableOpacity>
-                                            )
-                                        }
-                                        )}
-                                    </View>
+                                                    notRatedStarColor='rgba(0,0,0,0.2)'
+                                                />
+                                            </TouchableOpacity>
+                                        )
+                                    }
+                                    )}
+                                </View>
                             </View>
                         </View>
                         <MaterialIcons name="chevron-right" size={28} color="grey" />
@@ -111,9 +112,9 @@ const ReviewDetails = ({navigation, route}) => {
             />
             <View style={styles.viewAddReview}>
                 <Text style={styles.txtCantFind}>Vous ne trouvez pas votre serveur?</Text>
-                <View style={{flexDirection:"row", alignItems:"center"}}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text style={styles.txtAddReview}>Ajoutez votre serveur</Text>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         onPress={handleHelpUsModalOpen}
                         style={styles.btnAdd}
                     >
@@ -122,21 +123,21 @@ const ReviewDetails = ({navigation, route}) => {
                 </View>
             </View>
         </ScrollView>
-        <TouchableOpacity 
-            onPress={handleConfirmModalOpen} 
+        <TouchableOpacity
+            onPress={handleConfirmModalOpen}
             style={styles.viewLastBtn}
         >
             <Text>Vous etes serveur</Text>
         </TouchableOpacity>
 
-        <ConfirmationModal 
-            isVisible={confirmModalVisible} 
+        <ConfirmationModal
+            isVisible={confirmModalVisible}
             handleModalClose={handleModalClose}
             name={name}
         />
 
-        <HelpUsImproveModal 
-            isVisible={helpUsModalVisible} 
+        <HelpUsImproveModal
+            isVisible={helpUsModalVisible}
             handleModalClose={handleModalClose}
         />
 
@@ -146,50 +147,53 @@ export default ReviewDetails;
 
 const styles = StyleSheet.create({
     container: {
-        flex:1,
-        backgroundColor:"#F1F3F2"
+        flex: 1,
+        backgroundColor: "#F1F3F2"
     },
-    btnAdd:{
-        backgroundColor:Colors.yellow, padding:4, borderRadius:6, marginLeft:10
+    btnAdd: {
+        backgroundColor: Colors.yellow, padding: 4, borderRadius: 6, marginLeft: 10
     },
-    txtAddReview:{
-        fontSize:16, color:Colors.fontDark
+    txtAddReview: {
+        fontSize: 16, color: Colors.fontDark
     },
-    txtCantFind:{
-        fontSize:16, color:Colors.fontLight
+    txtCantFind: {
+        fontSize: 16, color: Colors.fontLight
     },
-    viewAddReview:{
-        backgroundColor:"rgba(0,0,0,0.1)", width:"90%", alignSelf:"center", marginBottom:10,
-        justifyContent:"center", alignItems:"center", borderRadius:10,paddingVertical:15
+    viewAddReview: {
+        backgroundColor: "transparent", width: "90%", alignSelf: "center", marginBottom: 10,
+        justifyContent: "center", alignItems: "center", borderRadius: 10, paddingVertical: 15,
+        borderWidth: 1,
+        borderStyle: 'dashed',
+        borderColor: '#DADADA'
     },
-    viewLastBtn:{
-        width:"90%", alignSelf:"center", backgroundColor:Colors.yellow, height:50,
-        justifyContent:"center", alignItems:"center", borderRadius:10, marginBottom:15, marginTop:1
+    viewLastBtn: {
+        width: "90%", alignSelf: "center", backgroundColor: Colors.yellow, height: 50,
+        justifyContent: "center", alignItems: "center", borderRadius: 10, marginBottom: 15, marginTop: 1
     },
-    txtNumRaters:{
-        backgroundColor:Colors.yellow, padding:2,paddingHorizontal:9,marginLeft:10,fontSize:18,
-        borderRadius:9
+    txtNumRaters: {
+        backgroundColor: Colors.yellow, padding: 2, paddingHorizontal: 9, marginLeft: 10, fontSize: 18,
+        borderRadius: 9
     },
-    txtHeading:{
-        alignSelf:"center", fontSize:20
+    txtHeading: {
+        alignSelf: "center", fontSize: 20, fontWeight: 'bold'
     },
-    viewHeader:{
-        flexDirection:"row",marginTop:30, paddingHorizontal:10
+    viewHeader: {
+        flexDirection: "row", marginTop: 30, paddingHorizontal: 10
     },
-    viewBottom:{
-        flexDirection:"row",marginBottom:20, justifyContent:"space-between",
-        alignItems:"center", paddingHorizontal:20
+    viewBottom: {
+        flexDirection: "row", marginBottom: 20, justifyContent: "space-between",
+        alignItems: "center", paddingHorizontal: 20
     },
-    txtName:{
-        textAlign:"center",marginLeft:-25,color:"#fff", fontSize:20
+    txtName: {
+        textAlign: "center", marginLeft: -25, color: "#fff", fontSize: 20
     },
-    viewImg:{
-        width:"100%", height:200, borderBottomLeftRadius:20,borderBottomRightRadius:20,
-        overflow:"hidden",
+    viewImg: {
+        width: "100%", height: 200, borderBottomLeftRadius: 20, borderBottomRightRadius: 20,
+        overflow: "hidden",
     },
-    viewItemConatier:{
-        width:"90%", backgroundColor:"#fff", alignSelf:"center", height:80, marginVertical:10,
-        borderRadius:10, alignItems:"center", flexDirection:"row", paddingHorizontal:15,
-        justifyContent:"space-between"
+    viewItemConatier: {
+        width: "90%", backgroundColor: "#fff", alignSelf: "center", height: 80, marginVertical: 10,
+        borderRadius: 10, alignItems: "center", flexDirection: "row", paddingHorizontal: 15,
+        justifyContent: "space-between"
     },
 })

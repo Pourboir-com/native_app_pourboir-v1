@@ -34,7 +34,7 @@ const ReviewDetails = ({navigation, route}) => {
     }
 
     return <View style={styles.container}>
-        <StatusBar hidden={true} />
+        {/* <StatusBar hidden={true} /> */}
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.viewImg}>
                 <ImageBackground 

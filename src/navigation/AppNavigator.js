@@ -22,17 +22,61 @@ function AppNavigator() {
       <Stack.Screen name="Home" component={Home}
         options={() => ({
           headerShown: true,
+          title: '',
           headerLeft: null,
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
         })}
       />
-      <Stack.Screen name="RateYourService" component={RateYourService} />
-      <Stack.Screen name="Setting" component={Setting} />
-      <Stack.Screen name="OpenCardReviews" component={OpenCardReviews} />
-      <Stack.Screen name="NoLocation" component={NoLocation} />
-      <Stack.Screen name="SelectLanguage" component={SelectLanguage} />
+      <Stack.Screen name="RateYourService" component={RateYourService}
+        options={() => ({
+          headerShown: true,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+        })}
+      />
+      <Stack.Screen name="Setting" component={Setting}
+
+        options={() => ({
+          headerShown: true,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+        })}
+      />
+      <Stack.Screen name="OpenCardReviews" component={OpenCardReviews}
+        options={() => ({
+          headerShown: true,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+        })} />
+      <Stack.Screen name="NoLocation" component={NoLocation}
+        options={() => ({
+          headerShown: true,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+        })} />
+      <Stack.Screen name="SelectLanguage" component={SelectLanguage}
+        options={() => ({
+          headerShown: true,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+        })} />
 
     </Stack.Navigator>
   );

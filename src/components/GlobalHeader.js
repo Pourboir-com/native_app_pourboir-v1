@@ -8,7 +8,6 @@ import {
   TextInput,
   Platform,
   ActivityIndicator,
-  StatusBar,
 } from 'react-native';
 import { Header, Body, Left, Right } from 'native-base';
 import { Colors } from '../constants/Theme';

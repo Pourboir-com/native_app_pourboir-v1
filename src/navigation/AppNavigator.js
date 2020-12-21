@@ -17,8 +17,24 @@ const Stack = createStackNavigator();
 function AppNavigator() {
   return (
     <Stack.Navigator initialRouteName="splashScreen" screenOptions={{ headerShown: false }} >
-      <Stack.Screen name="splashScreen" component={splashScreen} />
-      <Stack.Screen name="socialLogin" component={socialLogin} />
+      <Stack.Screen name="splashScreen" component={splashScreen} 
+      options={() => ({
+        headerShown: true,
+        title: '',
+        headerLeft: null,
+        headerTransparent: true,
+        headerTitleAlign: 'left',
+        headerRightContainerStyle: { paddingRight: spacing(2) },
+      })}/>
+      <Stack.Screen name="socialLogin" component={socialLogin} 
+      options={() => ({
+        headerShown: true,
+        title: '',
+        headerLeft: null,
+        headerTransparent: true,
+        headerTitleAlign: 'left',
+        headerRightContainerStyle: { paddingRight: spacing(2) },
+      })} />
       <Stack.Screen name="Home" component={Home}
         options={() => ({
           headerShown: true,

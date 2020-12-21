@@ -8,7 +8,7 @@ import {
     Dimensions,
     FlatList,
     TouchableOpacity,
-    Animated, StatusBar,
+    Animated
     
 } from 'react-native';
 import { Feather, Entypo } from "@expo/vector-icons";

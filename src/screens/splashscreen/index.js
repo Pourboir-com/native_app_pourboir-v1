@@ -43,7 +43,7 @@ export default function SplashScreen(props) {
 
   return (
     <View style={styles.container}>
-      <StatusBar hidden={true} />
+      {/* <StatusBar hidden={true} /> */}
       <ImageBackground 
       style={{
         width:Dimensions.get('window').width*1,

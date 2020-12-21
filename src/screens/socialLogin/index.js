@@ -10,7 +10,7 @@ const imgWaiter = require('../../assets/images/waiter2.png')
 
 const SocialLogin = ({ navigation }) => {
     return <View style={styles.container}>
-        <StatusBar backgroundColor={Colors.yellow} />
+        {/* <StatusBar backgroundColor={Colors.yellow} /> */}
         <Image
             style={styles.imgLogoStyle}
             source={imgLogo}

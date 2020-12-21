@@ -38,7 +38,7 @@ const ThanksRatingModal = ({ isVisible, handleModalClose }) => {
           <Image
             source={imgWaiter}
             style={styles.imgStyle}
-            resizeMode="contain"
+            resizeMode="cover"
           />
         </View>
       </ImageBackground>
@@ -91,10 +91,11 @@ const styles = StyleSheet.create({
     marginTop: 12, width: 270, textAlign: "center", marginBottom: 30
   },
   imgStyle: {
-    width: 260, height: 220, alignSelf: "center", marginTop: -120,
+    width: 210, height: 200, alignSelf: "center", marginTop: -109,
     marginRight: -20
   },
   viewImg: {
     width: "100%", height: 240,
+    // backgroundColor:"red"
   }
 });

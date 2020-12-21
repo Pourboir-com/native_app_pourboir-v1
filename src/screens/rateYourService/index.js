@@ -1,5 +1,17 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Image, ScrollView, TextInput, Dimensions, TouchableOpacity, FlatList, StatusBar } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    ScrollView,
+    TextInput,
+    Dimensions,
+    TouchableOpacity,
+    FlatList,
+    StatusBar,
+    KeyboardAvoidingView
+} from 'react-native';
 import { FontAwesome } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader';
 import { rateList as RATELIST } from '../../dummyData/DummyData'
@@ -30,7 +42,12 @@ const RateService = ({ navigation }) => {
         setstarSelect(v);
     }
 
-    return <View style={styles.container}>
+    return <ScrollView
+        style={styles.container}
+
+    >
+
+
         <GlobalHeader
             arrow={true}
             headingText="Notez votre serveur"
@@ -76,20 +93,28 @@ const RateService = ({ navigation }) => {
                     </TouchableOpacity>
                 )}
             />
+        </ScrollView>
+
+        <View style={{alignItems:'center'}}>
+
             <View style={styles.viewTip}>
                 <Text style={styles.txtCard}>Votre pourboir au serveur</Text>
                 <TextInput style={styles.inputStyle} />
             </View>
-        </ScrollView>
-        <TouchableOpacity onPress={handleModalOpen} style={styles.btnValider}>
-            <Text style={{ fontSize: 16 }}>Valider</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={handleModalOpen} style={styles.btnValider}>
+                <Text style={{ fontSize: 16 }}>Valider</Text>
+            </TouchableOpacity>
+
+        </View>
+
 
         <ThankRatingModal
             isVisible={isVisible}
             handleModalClose={handleModalClose}
         />
-    </View>
+
+
+    </ScrollView>
 }
 export default RateService;
 
@@ -97,12 +122,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         // justifyContent:"center",
-        alignItems: 'center',
+        // alignItems: 'center',
         backgroundColor: "#F9F9F9"
     },
     inputStyle: {
         height: 45, width: "80%", backgroundColor: "#F8F8F8", borderRadius: 10, marginTop: 12,
-        fontSize: 18, paddingVertical: 0
+        fontSize: 18, paddingVertical: 0, paddingLeft: 10, paddingRight: 10
     },
     viewTip: {
         backgroundColor: "#fff", width: "90%", alignSelf: "center", marginBottom: 10, height: 120,

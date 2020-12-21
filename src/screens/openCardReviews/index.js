@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image, 
+    Dimensions, TouchableOpacity, FlatList, SafeAreaView, KeyboardAvoidingView
+ } from 'react-native';
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import ConfirmationModal from '../../components/modals/ConfirmModal';
 import HelpUsImproveModal from '../../components/modals/HelpUsImproveModal'
@@ -137,11 +139,14 @@ const ReviewDetails = ({ navigation, route }) => {
             handleModalClose={handleModalClose}
             name={name}
         />
-
-        <HelpUsImproveModal
-            isVisible={helpUsModalVisible}
-            handleModalClose={handleModalClose}
-        />
+        {/* <KeyboardAvoidingView>
+        <ScrollView> */}
+            <HelpUsImproveModal
+                isVisible={helpUsModalVisible}
+                handleModalClose={handleModalClose}
+            />
+        {/* </ScrollView>
+        </KeyboardAvoidingView> */}
 
     </View>
 }

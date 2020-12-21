@@ -8,8 +8,8 @@ import {
     Dimensions,
     FlatList,
     TouchableOpacity,
-    TextInput,
-    Animated, StatusBar
+    Animated, StatusBar,
+    
 } from 'react-native';
 import { Feather, Entypo } from "@expo/vector-icons";
 
@@ -45,7 +45,6 @@ function HomeScreenContent({ loading, setLoading, searchIconPress, setSearchIcon
     React.useEffect(() => {
         console.log('will call Apis here')
     })
-
 
 
     return (

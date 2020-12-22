@@ -57,7 +57,7 @@ const GlobalHeader = (props) => {
         ]}>
 
         {props.left ? null :
-          <Left style={{ flex: props.leftText ? 2 : 1, marginBottom: 20 }}>
+          <Left style={{ flex: props.leftText ? 2 : 1, marginBottom: 10 }}>
             <View style={styles.viewLeft}>
               {props.leftText && (
                 <Text
@@ -71,7 +71,7 @@ const GlobalHeader = (props) => {
 
               {props.arrow === true && (
                 <TouchableOpacity
-                  style={{ paddingRight: 5, paddingTop: 19 }}
+                  style={{ paddingRight: 5, paddingVertical: 15, padding:10 }}
                   // onPress={() => {
                   //   // this.props.otherNavigation
                   //   //   ? this.props.navigation.navigate.otherNavigation
@@ -88,6 +88,7 @@ const GlobalHeader = (props) => {
                     name={'arrow-back'}
                     size={props.Arrowsize ? props.Arrowsize : 24}
                     color={props.BackIconColor ? props.BackIconColor : '#000'}
+                    onPress={()=> goBackHandler(props)}
                   />
                 </TouchableOpacity>
               )}
@@ -99,7 +100,7 @@ const GlobalHeader = (props) => {
           style={{
             flex: props.centerHide === true ? 0 : 5,
             left: 20,
-            marginBottom: 15,
+            marginBottom: 12,
             justifyContent: 'center',
             // width: '100%',
             alignItems: props.headingALign ? props.headingALign : 'center',
@@ -120,6 +121,7 @@ const GlobalHeader = (props) => {
                     marginTop: props.headingMargin ? props.headingMargin : 15,
                     color: props.color ? props.color : '#FFFFFF',
                     fontSize: props.fontSize ? props.fontSize : 24,
+                    paddingVertical:15,
                   }}>
                   {props.headingText}
                 </Text>

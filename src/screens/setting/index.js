@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ScrollView,ImageBackground, StatusBar } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader';
 import { Colors } from '../../constants/Theme';
 import * as ImagePicker from "expo-image-picker";
+
+const imgBg = require('../../assets/images/Group5.png')
 
 import i18n from '../../li8n';
 
@@ -49,6 +51,9 @@ const Setting = ({ navigation }) => {
         {/* <StatusBar backgroundColor={Colors.yellow} /> */}
 
         <View style={styles.viewProfile}>
+            <ImageBackground 
+            style={{width:"100%", height: Dimensions.get('window').height * 0.5}} 
+            source={imgBg} resizeMode='stretch' >
             <TouchableOpacity
                 onPress={() => _pickImage()}
                 style={styles.viewImg}
@@ -79,6 +84,7 @@ const Setting = ({ navigation }) => {
               <FontAwesome name="user-circle-o" size={120} color="#fff" />
             </View> */}
             <Text style={styles.txtName}>Christine Zhou</Text>
+            </ImageBackground>
         </View>
         <View style={styles.viewBtnConatiner}>
             <ScrollView showsVerticalScrollIndicator={false}>

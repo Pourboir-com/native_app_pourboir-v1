@@ -3,7 +3,7 @@ import {
     StyleSheet,
     Text,
     View,
-    Image,
+    ImageBackground,
     ScrollView,
     TextInput,
     Dimensions,
@@ -22,6 +22,7 @@ import RatingStar from '../../components/RatingComponent';
 
 import i18n from '../../li8n';
 
+const imgBg = require('../../assets/images/Group5.png')
 
 const RateService = ({ navigation }) => {
 
@@ -59,10 +60,14 @@ const RateService = ({ navigation }) => {
         />
         {/* <StatusBar  translucent={true}  /> */}
         <View style={styles.viewProfile}>
+        <ImageBackground 
+            style={{width:'100%', height:'auto', paddingBottom: 70}} 
+            source={imgBg} resizeMode='stretch' >
             <View style={styles.viewImg}>
                 <FontAwesome name="user-circle-o" size={100} color="#fff" />
             </View>
             <Text style={styles.txtName}>Amy Farha</Text>
+            </ImageBackground>
         </View>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.viewFlatlist}>
             <TouchableOpacity
@@ -224,7 +229,7 @@ const styles = StyleSheet.create({
         alignSelf: "center"
     },
     viewProfile: {
-        backgroundColor: Colors.yellow, width: "100%", paddingBottom: 70, marginTop: -20,
+        backgroundColor: Colors.yellow, width: "100%", marginTop: -20,
         borderBottomLeftRadius: 40, borderBottomRightRadius: 40
     }
 })

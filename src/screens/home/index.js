@@ -147,7 +147,7 @@ export default HomeScreen = (props) => {
                     <Header
                         setsearchIconPress={setSearchIconPress}
                         searchIconPress={searchIconPress}
-
+                        navigation={props.navigation}
                     >
                         {
                             <HomeScreenContent

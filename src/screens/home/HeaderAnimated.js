@@ -66,7 +66,7 @@ export default HomeScreen = (props) => {
 
   useLayoutEffect(() => {
 
-    const renderUserIcon = ({ }) => {
+    const renderUserIcon = () => {
       // return <Ionicons name="ios-contact" size={30} onPress={(): void => propsUserIcon.navigation.navigate('SelectSignIn')} />;
       return (
         <View>

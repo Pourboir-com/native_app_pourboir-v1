@@ -95,7 +95,7 @@ const Setting = ({ navigation }) => {
                     <Text>{i18n.t('contact_us')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('NoLocation')}
+                    onPress={() => navigation.navigate('Home')}
                     style={[styles.viewItem, { marginBottom: 0 }]}>
                     <View style={styles.viewIcon}>
                         <FontAwesome name="cutlery" size={16} color={Colors.yellow} />

@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image, 
+import {
+    StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image,
     Dimensions, TouchableOpacity, FlatList, SafeAreaView, KeyboardAvoidingView
- } from 'react-native';
+} from 'react-native';
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import ConfirmationModal from '../../components/modals/ConfirmModal';
 import HelpUsImproveModal from '../../components/modals/HelpUsImproveModal'
 import { Colors } from '../../constants/Theme';
 import RatingStar from '../../components/RatingComponent';
+import GlobalHeader from '../../components/GlobalHeader';
 
 import i18n from '../../li8n';
 
@@ -37,7 +39,7 @@ const ReviewDetails = ({ navigation, route }) => {
         setstarSelect(v);
     }
 
-    return <View style={styles.container}>
+    return <SafeAreaView style={styles.container}>
         {/* <StatusBar hidden={true} /> */}
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.viewImg}>
@@ -45,16 +47,34 @@ const ReviewDetails = ({ navigation, route }) => {
                     source={{ uri: img }}
                     style={{ flex: 1, justifyContent: "space-between" }}
                 >
-                    <View style={styles.viewHeader}>
-                        <TouchableOpacity style={{ paddingRight: 20, paddingBottom: 20 }}
+                    {/* <View style={styles.viewHeader}>
+                        <TouchableOpacity 
+                        // style={{ paddingHorizontal: 14, paddingBottom: 30, backgroundColor: 'red' }}
                             onPress={() => navigation.goBack()}
                         >
-                            <MaterialIcons name={"arrow-back"} size={25} color="#fff" />
+                            <MaterialIcons
+                                // style={{ paddingHorizontal: 14, paddingBottom: 15,
+                                // backgroundColor:'red',zIndex:99999999 }}
+                                onPress={() => { alert('navigation.goBack()') }}
+                                name={"arrow-back"} size={25} color="#fff"
+                            />
+                            <AntDesign name="plus" size={16} color={Colors.fontDark} />
+
                         </TouchableOpacity>
                         <View style={{ flex: 1, }}>
                             <Text style={styles.txtName}>{name}</Text>
                         </View>
-                    </View>
+                    </View> */}
+                    <GlobalHeader
+                        arrow={true}
+                        headingText={name}
+                        fontSize={20}
+                        color={'#fff'}
+                        bold={true}
+                        BackIconColor={'#fff'}
+                        backgroundColor={'transparent'}
+                        navigation={navigation}
+                    />
                     <View style={styles.viewBottom}>
                         <View style={{ flexDirection: "row" }}>
                             {obj.map((v, i) => {
@@ -141,14 +161,14 @@ const ReviewDetails = ({ navigation, route }) => {
         />
         {/* <KeyboardAvoidingView>
         <ScrollView> */}
-            <HelpUsImproveModal
-                isVisible={helpUsModalVisible}
-                handleModalClose={handleModalClose}
-            />
+        <HelpUsImproveModal
+            isVisible={helpUsModalVisible}
+            handleModalClose={handleModalClose}
+        />
         {/* </ScrollView>
         </KeyboardAvoidingView> */}
 
-    </View>
+    </SafeAreaView>
 }
 export default ReviewDetails;
 

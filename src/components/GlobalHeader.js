@@ -29,7 +29,7 @@ const GlobalHeader = (props) => {
         overflow: 'hidden',
         width: '100%',
         zIndex: 10,
-        backgroundColor: Colors.yellow
+        backgroundColor: props.backgroundColor ? props.backgroundColor : Colors.yellow
         // borderBottomLeftRadius:20, borderBottomRightRadius:20
       }}>
       <View
@@ -47,7 +47,7 @@ const GlobalHeader = (props) => {
             zIndex: -10,
             borderRadius: 20,
             // backgroundColor: 'red',
-            flexDirection:'row',
+            flexDirection: 'row',
             backgroundColor: props.backgroundColor
               ? props.backgroundColor
               : Colors.yellow,
@@ -71,7 +71,7 @@ const GlobalHeader = (props) => {
 
               {props.arrow === true && (
                 <TouchableOpacity
-                  style={{ paddingRight: 5, paddingVertical: 15, padding:10 }}
+                  style={{ paddingRight: 5, paddingVertical: 15, padding: 10 }}
                   // onPress={() => {
                   //   // this.props.otherNavigation
                   //   //   ? this.props.navigation.navigate.otherNavigation
@@ -84,11 +84,13 @@ const GlobalHeader = (props) => {
                   onPress={() =>
                     goBackHandler(props)
                   }>
+                  {/* <Text>
+                    B
+                  </Text> */}
                   <MaterialIcons
                     name={'arrow-back'}
                     size={props.Arrowsize ? props.Arrowsize : 24}
                     color={props.BackIconColor ? props.BackIconColor : '#000'}
-                    onPress={()=> goBackHandler(props)}
                   />
                 </TouchableOpacity>
               )}
@@ -121,7 +123,7 @@ const GlobalHeader = (props) => {
                     marginTop: props.headingMargin ? props.headingMargin : 15,
                     color: props.color ? props.color : '#FFFFFF',
                     fontSize: props.fontSize ? props.fontSize : 24,
-                    paddingVertical:15,
+                    paddingVertical: 15,
                   }}>
                   {props.headingText}
                 </Text>

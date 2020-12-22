@@ -10,7 +10,8 @@ import {
     TouchableOpacity,
     FlatList,
     StatusBar,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    SafeAreaView
 } from 'react-native';
 import { FontAwesome } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader';
@@ -46,7 +47,7 @@ const RateService = ({ navigation }) => {
         setstarSelect(v);
     }
 
-    return <View
+    return <SafeAreaView
         style={styles.container}
     >
         <GlobalHeader
@@ -164,10 +165,10 @@ const RateService = ({ navigation }) => {
                 </View>
 
             </View>
-        </ScrollView>
         <TouchableOpacity onPress={handleModalOpen} style={styles.btnValider}>
             <Text style={{ fontSize: 16 }}>{i18n.t('validate')}</Text>
         </TouchableOpacity>
+        </ScrollView>
 
         <ThankRatingModal
             isVisible={isVisible}
@@ -175,7 +176,7 @@ const RateService = ({ navigation }) => {
         />
 
 
-    </View>
+    </SafeAreaView>
 }
 export default RateService;
 

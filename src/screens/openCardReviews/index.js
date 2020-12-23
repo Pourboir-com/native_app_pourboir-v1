@@ -41,7 +41,7 @@ const ReviewDetails = ({ navigation, route }) => {
 
     return <SafeAreaView style={styles.container}>
         {/* <StatusBar hidden={true} /> */}
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView bounces={false} alwaysBounceVertical={false} showsVerticalScrollIndicator={false}>
             <View style={styles.viewImg}>
                 <ImageBackground
                     source={{ uri: img }}

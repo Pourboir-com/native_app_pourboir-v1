@@ -9,7 +9,7 @@ import {
     FlatList,
     TouchableOpacity,
     Animated
-    
+
 } from 'react-native';
 import { Feather, Entypo } from "@expo/vector-icons";
 
@@ -66,7 +66,7 @@ function HomeScreenContent({ loading, setLoading, searchIconPress, setSearchIcon
                         </Text>
                     </View>
                     :
-                    <ScrollView showsVerticalScrollIndicator={false}>
+                    <ScrollView bounces={true} alwaysBounceVertical={true} showsVerticalScrollIndicator={false}>
 
                         <Text style={styles.txtHeading}>
                             {i18n.t('around_you')}

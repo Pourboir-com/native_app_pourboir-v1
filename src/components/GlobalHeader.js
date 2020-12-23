@@ -8,6 +8,7 @@ import {
   TextInput,
   Platform,
   ActivityIndicator,
+  SafeAreaView
 } from 'react-native';
 import { Header, Body, Left, Right } from 'native-base';
 import { Colors } from '../constants/Theme';
@@ -22,7 +23,7 @@ const GlobalHeader = (props) => {
   // console.log('Propssss', props);
 
   return (
-    <View
+    <SafeAreaView
       style={{
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
@@ -172,7 +173,7 @@ const GlobalHeader = (props) => {
           />
         </View> : null
       }
-    </View>
+    </SafeAreaView>
   );
 };
 

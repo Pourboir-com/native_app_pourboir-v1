@@ -39,8 +39,10 @@ const ReviewDetails = ({ navigation, route }) => {
         setstarSelect(v);
     }
 
-    return <SafeAreaView style={styles.container}>
-        {/* <StatusBar hidden={true} /> */}
+    return <View style={styles.container}>
+        {/* <StatusBar 
+        backgroundColor={Colors.yellow}
+        hidden={true} /> */}
         <ScrollView bounces={false} alwaysBounceVertical={false} showsVerticalScrollIndicator={false}>
             <View style={styles.viewImg}>
                 <ImageBackground
@@ -168,7 +170,7 @@ const ReviewDetails = ({ navigation, route }) => {
         {/* </ScrollView>
         </KeyboardAvoidingView> */}
 
-    </SafeAreaView>
+    </View>
 }
 export default ReviewDetails;
 

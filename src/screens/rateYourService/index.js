@@ -48,7 +48,7 @@ const RateService = ({ navigation }) => {
         setstarSelect(v);
     }
 
-    return <SafeAreaView
+    return <View
         style={styles.container}
     >
         <GlobalHeader
@@ -181,7 +181,7 @@ const RateService = ({ navigation }) => {
         />
 
 
-    </SafeAreaView>
+    </View>
 }
 export default RateService;
 

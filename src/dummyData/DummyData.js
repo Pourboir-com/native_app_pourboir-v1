@@ -13,14 +13,14 @@ export const rateList = [
       id: '2',
       heading: 'Rapldlte',
     },
-    {
-      id: '3',
-      heading: 'Service',
-    },
-    {
-        id: '4',
-        heading: 'Professionalisme',
-      },
+    // {
+    //   id: '3',
+    //   heading: 'Service',
+    // },
+    // {
+    //     id: '4',
+    //     heading: 'Professionalisme',
+    //   },
   ];
 
   export const placesList = [
@@ -30,6 +30,16 @@ export const rateList = [
       name: 'Brasserie Le Soleil',
       distance: '650m',
       services: [
+        {
+          userName: 'Amy Farha',
+          rating: 4.5,
+          imgAvatar: img4,
+        },
+        {
+          userName: 'Chris Jackson',
+          rating: 4.5,
+          imgAvatar: img4,
+        },
         {
           userName: 'Amy Farha',
           rating: 4.5,

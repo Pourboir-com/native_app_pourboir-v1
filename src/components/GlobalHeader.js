@@ -72,7 +72,7 @@ const GlobalHeader = (props) => {
 
               {props.arrow === true && (
                 <TouchableOpacity
-                  style={{ paddingRight: 5, paddingVertical: 15, padding: 10 }}
+                  style={{ paddingRight: 5, paddingVertical: 10, padding: 10 }}
                   // onPress={() => {
                   //   // this.props.otherNavigation
                   //   //   ? this.props.navigation.navigate.otherNavigation
@@ -121,10 +121,10 @@ const GlobalHeader = (props) => {
                   style={{
                     textAlign: 'center',
                     // fontFamily: Fonts.boldenVan_regular,
-                    marginTop: props.headingMargin ? props.headingMargin : 15,
+                    // marginTop: props.headingMargin ? props.headingMargin : 10,
                     color: props.color ? props.color : '#FFFFFF',
                     fontSize: props.fontSize ? props.fontSize : 24,
-                    paddingVertical: 15,
+                    // paddingVertical: 15,
                   }}>
                   {props.headingText}
                 </Text>

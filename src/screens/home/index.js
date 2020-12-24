@@ -9,7 +9,6 @@ import {
     FlatList,
     TouchableOpacity,
     Animated
-
 } from 'react-native';
 import { Feather, Entypo } from "@expo/vector-icons";
 
@@ -25,8 +24,8 @@ import HeaderSimple from './HeaderSimple';
 import i18n from '../../li8n';
 
 
-function HomeScreenContent({ loading, setLoading, searchIconPress, setSearchIconPress, route }) {
-
+function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
+    const [loading, setLoading] = useState(true)
 
     const navigation = useNavigation();
     let ItemsOdd = []
@@ -53,6 +52,12 @@ function HomeScreenContent({ loading, setLoading, searchIconPress, setSearchIcon
 
 
     // }, [])
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false)
+        }, 2000)
+    })
 
 
 

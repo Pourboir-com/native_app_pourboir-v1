@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     Text,
@@ -25,7 +25,7 @@ import HeaderSimple from './HeaderSimple';
 import i18n from '../../li8n';
 
 
-function HomeScreenContent({ loading, setLoading, searchIconPress, setSearchIconPress }) {
+function HomeScreenContent({ loading, setLoading, searchIconPress, setSearchIconPress, route }) {
 
 
     const navigation = useNavigation();
@@ -42,9 +42,18 @@ function HomeScreenContent({ loading, setLoading, searchIconPress, setSearchIcon
     }
     const dummyArray = [1, 2, 3]
 
-    React.useEffect(() => {
-        console.log('will call Apis here')
-    })
+    // useEffect(() => {
+    //     // setTimeout(() => {
+    //     //     navigation.navigate('Home')
+    //     //   }, 2000)
+
+    //     // // console.log(navigation)
+    //     // console.log(route + '+++++++++++++++++F')
+    //     // alert(navigation.routes)
+
+
+    // }, [])
+
 
 
     return (
@@ -85,6 +94,7 @@ function HomeScreenContent({ loading, setLoading, searchIconPress, setSearchIcon
                                         distance={loading ? null : itemData.item.distance}
                                         services={loading ? null : itemData.item.services}
                                         loading={loading}
+                                        crossIcon={route.params.crossIcon}
                                     />
                                 )}
                             />
@@ -102,6 +112,7 @@ function HomeScreenContent({ loading, setLoading, searchIconPress, setSearchIcon
                                         distance={loading ? null : itemData.item.distance}
                                         services={loading ? null : itemData.item.services}
                                         loading={loading}
+                                        crossIcon={route.params.crossIcon}
                                     />
                                 )}
                             />
@@ -154,7 +165,9 @@ export default HomeScreen = (props) => {
                                 loading={loading}
                                 setLoading={setLoading}
                                 searchIconPress={searchIconPress}
-                                setSearchIconPress={setSearchIconPress} />
+                                setSearchIconPress={setSearchIconPress}
+                                route={props.route}
+                            />
                         }
                     </Header>
                     :
@@ -182,7 +195,9 @@ export default HomeScreen = (props) => {
                                 loading={loading}
                                 setLoading={setLoading}
                                 searchIconPress={searchIconPress}
-                                setSearchIconPress={setSearchIconPress} />
+                                setSearchIconPress={setSearchIconPress}
+                                route={props.route}
+                            />
                         }
                     </>
 

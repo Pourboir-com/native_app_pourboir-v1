@@ -4,8 +4,8 @@ import { MaterialIcons, FontAwesome, Entypo } from "@expo/vector-icons";
 import { Colors } from '../constants/Theme';
 import RatingStar from './RatingComponent';
 
-const HomeCard = ({ navigation, img, rating, name, distance, services, loading, updateAble }) => {
-
+const HomeCard = ({ navigation, img, rating, name, distance, services, loading, crossIcon }) => {
+// const {crossIcon} = routes.params;
     // Star arrayyyyyyyy
     const [starSelect, setstarSelect] = useState(3.5)
     const obj = [1, 2, 3, 4, 5];
@@ -32,7 +32,7 @@ const HomeCard = ({ navigation, img, rating, name, distance, services, loading, 
                 style={[styles.viewItemConatier]}>
                 <ImageBackground style={styles.imgCard} source={{ uri: img }}>
                     {
-                        updateAble &&
+                        crossIcon &&
                         <TouchableOpacity
                             style={styles.btnCross}
                         >

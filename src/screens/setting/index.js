@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ScrollView,ImageBackground, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ScrollView, ImageBackground, StatusBar } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader';
 import { Colors } from '../../constants/Theme';
@@ -10,6 +10,7 @@ const imgBg = require('../../assets/images/Group5.png')
 import i18n from '../../li8n';
 
 const Setting = ({ navigation }) => {
+    const [crossIcon, setcrossIcon] = useState(true)
     const [image, setImage] = useState(
         // null
         'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png'
@@ -51,39 +52,39 @@ const Setting = ({ navigation }) => {
         {/* <StatusBar backgroundColor={Colors.yellow} /> */}
 
         <View style={styles.viewProfile}>
-            <ImageBackground 
-            style={{width:"100%", height: Dimensions.get('window').height * 0.5}} 
-            source={imgBg} resizeMode='stretch' >
-            <TouchableOpacity
-                onPress={() => _pickImage()}
-                style={styles.viewImg}
-            >
-                {image === null || image === undefined ?
-                    <FontAwesome name="user-circle-o" size={110} color="#fff" />
-                    :
-                    <Image
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                            borderRadius: 60,
-                        }}
-                        source={{ uri: image }}
-                        resizeMode="cover"
-                    />
-                }
-            </TouchableOpacity>
-            <TouchableOpacity
-                onPress={() => _pickImage()}
-                style={styles.btnPencil}
-            >
-                <View style={styles.viewPencil}>
-                    <MaterialCommunityIcons name="pencil-outline" color='#fff' size={16} />
-                </View>
-            </TouchableOpacity>
-            {/* <View style={styles.viewImg}>
+            <ImageBackground
+                style={{ width: "100%", height: Dimensions.get('window').height * 0.5 }}
+                source={imgBg} resizeMode='stretch' >
+                <TouchableOpacity
+                    onPress={() => _pickImage()}
+                    style={styles.viewImg}
+                >
+                    {image === null || image === undefined ?
+                        <FontAwesome name="user-circle-o" size={110} color="#fff" />
+                        :
+                        <Image
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                borderRadius: 60,
+                            }}
+                            source={{ uri: image }}
+                            resizeMode="cover"
+                        />
+                    }
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => _pickImage()}
+                    style={styles.btnPencil}
+                >
+                    <View style={styles.viewPencil}>
+                        <MaterialCommunityIcons name="pencil-outline" color='#fff' size={16} />
+                    </View>
+                </TouchableOpacity>
+                {/* <View style={styles.viewImg}>
               <FontAwesome name="user-circle-o" size={120} color="#fff" />
             </View> */}
-            <Text style={styles.txtName}>Christine Zhou</Text>
+                <Text style={styles.txtName}>Christine Zhou</Text>
             </ImageBackground>
         </View>
         <View style={styles.viewBtnConatiner}>
@@ -101,7 +102,9 @@ const Setting = ({ navigation }) => {
                     <Text>{i18n.t('contact_us')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Home')}
+                    onPress={() => navigation.navigate('Home', {
+                        crossIcon:true
+                    })}
                     style={[styles.viewItem, { marginBottom: 0 }]}>
                     <View style={styles.viewIcon}>
                         <FontAwesome name="cutlery" size={16} color={Colors.yellow} />

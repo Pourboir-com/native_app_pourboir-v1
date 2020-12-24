@@ -26,38 +26,41 @@ import i18n from '../../li8n';
 
 function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
     const [loading, setLoading] = useState(true)
+    const [data, setData] = useState(LIST)
 
     const navigation = useNavigation();
     let ItemsOdd = []
     let ItemsEven = []
 
-    for (var i = 0; i < LIST.length; i++) {
+    // useEffect(()=> {
+    // },[])
+    for (var i = 0; i < data.length; i++) {
         if ((i + 2) % 2 == 0) {
-            ItemsOdd.push(LIST[i]);
+            ItemsOdd.push(data[i]);
         }
         else {
-            ItemsEven.push(LIST[i]);
+            ItemsEven.push(data[i]);
         }
     }
+
     const dummyArray = [1, 2, 3]
 
-    // useEffect(() => {
-    //     // setTimeout(() => {
-    //     //     navigation.navigate('Home')
-    //     //   }, 2000)
 
-    //     // // console.log(navigation)
-    //     // console.log(route + '+++++++++++++++++F')
-    //     // alert(navigation.routes)
-
-
-    // }, [])
 
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
         }, 2000)
     })
+
+    const onDeleteCard = (id) => {
+        let newData = data;
+        let objDelete = newData.indexOf(id);
+        newData.splice(objDelete, 1);
+        setData({data: newData});
+        // data.id === id ? setData(data.id)
+        // setData([...data, data.id === id ? data.id === null : null])
+    }
 
 
 
@@ -93,6 +96,7 @@ function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
                                 renderItem={(itemData) => (
                                     <HomeCard
                                         navigation={navigation}
+                                        // key={item._id}
                                         img={loading ? null : itemData.item.img}
                                         rating={loading ? null : itemData.item.rate}
                                         name={loading ? null : itemData.item.name}
@@ -100,6 +104,7 @@ function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
                                         services={loading ? null : itemData.item.services}
                                         loading={loading}
                                         crossIcon={route.params.crossIcon}
+                                        deleteCall={() => onDeleteCard(itemData.item.id)}
                                     />
                                 )}
                             />
@@ -111,6 +116,7 @@ function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
                                 renderItem={(itemData) => (
                                     <HomeCard
                                         navigation={navigation}
+                                        // key={item._id}
                                         img={loading ? null : itemData.item.img}
                                         rating={loading ? null : itemData.item.rate}
                                         name={loading ? null : itemData.item.name}
@@ -118,6 +124,7 @@ function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
                                         services={loading ? null : itemData.item.services}
                                         loading={loading}
                                         crossIcon={route.params.crossIcon}
+                                        deleteCall={() => onDeleteCard(itemData.item.id)}
                                     />
                                 )}
                             />

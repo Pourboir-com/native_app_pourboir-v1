@@ -43,60 +43,42 @@ const ReviewDetails = ({ navigation, route }) => {
         {/* <StatusBar 
         backgroundColor={Colors.yellow}
         hidden={true} /> */}
-            <View style={styles.viewImg}>
-                <ImageBackground
-                    source={{ uri: img }}
-                    style={{ flex: 1, justifyContent: "space-between" }}
-                >
-                    {/* <View style={styles.viewHeader}>
-                        <TouchableOpacity 
-                        // style={{ paddingHorizontal: 14, paddingBottom: 30, backgroundColor: 'red' }}
-                            onPress={() => navigation.goBack()}
-                        >
-                        <MaterialIcons
-                                // style={{ paddingHorizontal: 14, paddingBottom: 15,
-                                // backgroundColor:'red',zIndex:99999999 }}
-                                onPress={() => { alert('navigation.goBack()') }}
-                                name={"arrow-back"} size={25} color="#fff"
-                            />
-                            <AntDesign name="plus" size={16} color={Colors.fontDark} />
-
-                        </TouchableOpacity>
-                        <View style={{ flex: 1, }}>
-                            <Text style={styles.txtName}>{name}</Text>
-                        </View>
-                    </View> */}
-                    <GlobalHeader
-                        arrow={true}
-                        headingText={name}
-                        fontSize={20}
-                        color={'#fff'}
-                        bold={true}
-                        BackIconColor={'#fff'}
-                        backgroundColor={'transparent'}
-                        navigation={navigation}
-                    />
-                    <View style={styles.viewBottom}>
-                        <View style={{ flexDirection: "row" }}>
-                            {obj.map((v, i) => {
-                                return (
-                                    <TouchableOpacity onPress={() => { onPressStar(v) }}>
-                                        <RatingStar starSize={20}
-                                            type={v <= starSelect ? "filled" :
-                                                v === starSelect + 0.5 ? "half" : "empty"
-                                            }
-                                            notRatedStarColor='rgba(255,255,255, 0.6)'
-                                        />
-                                    </TouchableOpacity>
-                                )
-                            }
-                            )}
-                        </View>
-                        <Text style={{ color: "#fff" }}>{distance}</Text>
+        <View style={styles.viewImg}>
+            <ImageBackground
+                source={{ uri: img }}
+                style={{ flex: 1, justifyContent: "space-between" }}
+            >
+                <GlobalHeader
+                    arrow={true}
+                    headingText={name}
+                    fontSize={20}
+                    color={'#fff'}
+                    bold={true}
+                    BackIconColor={'#fff'}
+                    backgroundColor={'transparent'}
+                    navigation={navigation}
+                />
+                <View style={styles.viewBottom}>
+                    <View style={{ flexDirection: "row" }}>
+                        {obj.map((v, i) => {
+                            return (
+                                <TouchableOpacity onPress={() => { onPressStar(v) }}>
+                                    <RatingStar starSize={20}
+                                        type={v <= starSelect ? "filled" :
+                                            v === starSelect + 0.5 ? "half" : "empty"
+                                        }
+                                        notRatedStarColor='rgba(255,255,255, 0.6)'
+                                    />
+                                </TouchableOpacity>
+                            )
+                        }
+                        )}
                     </View>
-                </ImageBackground>
-            </View>
-                        <ScrollView bounces={false} alwaysBounceVertical={false} showsVerticalScrollIndicator={false}>
+                    <Text style={{ color: "#fff" }}>{distance}</Text>
+                </View>
+            </ImageBackground>
+        </View>
+        <ScrollView bounces={false} alwaysBounceVertical={false} showsVerticalScrollIndicator={false}>
             <View style={{ flexDirection: "row", marginTop: 15, marginHorizontal: 15 }}>
                 <Text style={styles.txtHeading}>{i18n.t('waiters')}</Text>
                 <Text style={styles.txtNumRaters}>{services.length}</Text>

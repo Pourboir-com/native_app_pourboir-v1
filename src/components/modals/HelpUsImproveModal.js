@@ -8,7 +8,8 @@ import {
   Image,
   ImageBackground,
   SafeAreaView, KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
+  Dimensions, Platform
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -20,50 +21,56 @@ const imgBg = require('../../assets/images/Group7.png')
 import i18n from '../../li8n';
 
 const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
+  const [onHandleFocus, setonHandleFocus] = useState(false)
   return (
     <Overlay
-      overlayStyle={styles.container}
+      overlayStyle={[styles.container,
+      Platform.OS === 'ios' ?
+        onHandleFocus ? { marginBottom: Dimensions.get('window').height * 0.4 }
+          : null : null
+      ]}
       isVisible={isVisible}
       onBackdropPress={handleModalClose}>
-        <ScrollView>
-      <SafeAreaView style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 0,
-      }}>
-        <ImageBackground
-          style={styles.imgBgStyle}
-          source={imgBg}
-          resizeMode="stretch"
-        >
-          <View style={styles.viewImg}>
-            <TouchableOpacity
-              onPress={handleModalClose}
-              style={{ alignSelf: 'flex-end', margin: 10 }}>
-              <Entypo name="cross" size={29} color="#485460" />
-            </TouchableOpacity>
-            <Image
-              source={imgSitting}
-              style={styles.imgStyle}
-              resizeMode="contain"
-            />
-          </View>
-        </ImageBackground>
-        <Text style={styles.txtName}>
-          {i18n.t('help_us_improve')}
-        </Text>
-        <Text
-          style={styles.txtConfrm}>
-          {i18n.t('will_contact_shortly')}
-        </Text>
-        <TextInput
-          placeholder={i18n.t('name_of_your_server')}
-          style={styles.inputStyle}
-        />
-        <TouchableOpacity style={styles.btnConfrm}>
-          <Text style={styles.txtBtnConfrm}>{i18n.t('add')} </Text>
-        </TouchableOpacity>
-      </SafeAreaView>
+      <ScrollView>
+        <KeyboardAvoidingView style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 0,
+        }}>
+          <ImageBackground
+            style={styles.imgBgStyle}
+            source={imgBg}
+            resizeMode="stretch"
+          >
+            <View style={styles.viewImg}>
+              <TouchableOpacity
+                onPress={handleModalClose}
+                style={{ alignSelf: 'flex-end', margin: 10 }}>
+                <Entypo name="cross" size={29} color="#485460" />
+              </TouchableOpacity>
+              <Image
+                source={imgSitting}
+                style={styles.imgStyle}
+                resizeMode="contain"
+              />
+            </View>
+          </ImageBackground>
+          <Text style={styles.txtName}>
+            {i18n.t('help_us_improve')}
+          </Text>
+          <Text
+            style={styles.txtConfrm}>
+            {i18n.t('will_contact_shortly')}
+          </Text>
+          <TextInput
+            placeholder={i18n.t('name_of_your_server')}
+            style={styles.inputStyle}
+            onFocus={() => { setonHandleFocus(!onHandleFocus) }}
+          />
+          <TouchableOpacity style={styles.btnConfrm}>
+            <Text style={styles.txtBtnConfrm}>{i18n.t('add')} </Text>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
       </ScrollView>
     </Overlay>
   );
@@ -79,7 +86,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     padding: 0,
     overflow: "hidden",
-    borderRadius: 15
+    borderRadius: 15,
   },
   imgBgStyle: {
     width: "100%", height: 240,

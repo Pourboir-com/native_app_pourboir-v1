@@ -36,12 +36,14 @@ const HomeCard = ({ navigation, img, rating, name, distance, services, loading, 
                         <TouchableOpacity
                             style={styles.btnCross}
                         >
+                            <View style={{borderRadius:20, overflow:"hidden"}}>
                             <Entypo
                                 name="cross"
                                 size={21}
                                 color="#485460"
                                 style={{ backgroundColor: Colors.yellow, borderRadius: 20 }}
                             />
+                            </View>
                         </TouchableOpacity>
                     }
                     <View style={{}}>

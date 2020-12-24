@@ -170,10 +170,10 @@ const RateService = ({ navigation }) => {
                 </View>
 
             </View>
+        </ScrollView>
         <TouchableOpacity onPress={handleModalOpen} style={styles.btnValider}>
             <Text style={{ fontSize: 16 }}>{i18n.t('validate')}</Text>
         </TouchableOpacity>
-        </ScrollView>
 
         <ThankRatingModal
             isVisible={isVisible}

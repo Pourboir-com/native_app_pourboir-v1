@@ -43,7 +43,6 @@ const ReviewDetails = ({ navigation, route }) => {
         {/* <StatusBar 
         backgroundColor={Colors.yellow}
         hidden={true} /> */}
-        <ScrollView bounces={false} alwaysBounceVertical={false} showsVerticalScrollIndicator={false}>
             <View style={styles.viewImg}>
                 <ImageBackground
                     source={{ uri: img }}
@@ -54,7 +53,7 @@ const ReviewDetails = ({ navigation, route }) => {
                         // style={{ paddingHorizontal: 14, paddingBottom: 30, backgroundColor: 'red' }}
                             onPress={() => navigation.goBack()}
                         >
-                            <MaterialIcons
+                        <MaterialIcons
                                 // style={{ paddingHorizontal: 14, paddingBottom: 15,
                                 // backgroundColor:'red',zIndex:99999999 }}
                                 onPress={() => { alert('navigation.goBack()') }}
@@ -97,6 +96,7 @@ const ReviewDetails = ({ navigation, route }) => {
                     </View>
                 </ImageBackground>
             </View>
+                        <ScrollView bounces={false} alwaysBounceVertical={false} showsVerticalScrollIndicator={false}>
             <View style={{ flexDirection: "row", marginTop: 15, marginHorizontal: 15 }}>
                 <Text style={styles.txtHeading}>{i18n.t('waiters')}</Text>
                 <Text style={styles.txtNumRaters}>{services.length}</Text>

@@ -34,7 +34,6 @@ const GlobalHeader = (props) => {
         // borderBottomLeftRadius:20, borderBottomRightRadius:20
       }}>
       <View
-
         style={[
           {
             shadowOffset: { height: 0, width: 0 },
@@ -43,7 +42,7 @@ const GlobalHeader = (props) => {
             width: '100%',
             alignItems: 'center',
             justifyContent: 'center',
-            paddingTop: 10,
+            paddingTop: 35,
             // height: 100,
             zIndex: -10,
             borderRadius: 20,

@@ -92,7 +92,8 @@ const styles = StyleSheet.create({
     width: "100%", height: 240,
   },
   inputStyle: {
-    width: "85%", height: 50, backgroundColor: "#F8F8F8", borderRadius: 10, marginVertical: 15,
+    width: "85%", height: 50, backgroundColor: "#F8F8F8", 
+    borderRadius: 10, marginVertical: 15,
     fontSize: 16, textAlign: "center"
   },
   txtBtnConfrm: {

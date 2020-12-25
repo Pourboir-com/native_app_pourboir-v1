@@ -53,11 +53,36 @@ function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
         }, 2000)
     })
 
+    // const deleteItem = (id) => data.find((item)=>{
+    //     return item.id === id;
+    // });
+
+    // data = data.filter((item)=> {
+    //     return item.id !== data.id;
+    // })
     const onDeleteCard = (id) => {
-        let newData = data;
-        let objDelete = newData.indexOf(id);
-        newData.splice(objDelete, 1);
-        setData({data: newData});
+        // let newData = data;
+        // console.log(id)
+
+        // console.log(data[id-1])
+        // let removeItem =  data[id - 1]
+
+        // for (let i=0; i <= data.length; i++) {
+        //     if(data.indexOf(data[id]) == id ) {
+        //         console.log('Valid', 'id =',id-1 )
+        //     } else {
+        //         console.log('This has to be delete', 'id =',id-1 )
+        //     }
+        // }
+        // console.log(data.indexOf(data[id]))
+        // console.log('Data id', id)
+
+        // let objDelete = newData;
+        // console.log(objDelete)
+        let newData = data.splice(id, id+1)
+        console.log('New Dataaaaa',newData)
+        // newData.splice(objDelete, 1);
+        // setData({data: newData});
         // data.id === id ? setData(data.id)
         // setData([...data, data.id === id ? data.id === null : null])
     }
@@ -92,11 +117,11 @@ function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
                             <FlatList
                                 data={loading ? dummyArray : ItemsOdd}
                                 showsVerticalScrollIndicator={false}
-                                keyExtractor={(item) => item._id}
+                                keyExtractor={(item) => item.id}
                                 renderItem={(itemData) => (
                                     <HomeCard
                                         navigation={navigation}
-                                        // key={item._id}
+                                        // id={itemData.item.id}
                                         img={loading ? null : itemData.item.img}
                                         rating={loading ? null : itemData.item.rate}
                                         name={loading ? null : itemData.item.name}
@@ -108,7 +133,7 @@ function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
                                     />
                                 )}
                             />
-                            <FlatList
+                            {/* <FlatList
                                 data={loading ? dummyArray : ItemsEven}
                                 showsVerticalScrollIndicator={false}
                                 style={{ marginTop: 15 }}
@@ -127,7 +152,7 @@ function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
                                         deleteCall={() => onDeleteCard(itemData.item.id)}
                                     />
                                 )}
-                            />
+                            /> */}
                         </View>
                     </ScrollView>
             }

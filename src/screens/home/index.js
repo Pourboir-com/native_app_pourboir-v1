@@ -9,6 +9,7 @@ import {
   FlatList,
   TouchableOpacity,
   Animated,
+  Image
 } from "react-native";
 import { Feather, Entypo } from "@expo/vector-icons";
 
@@ -24,22 +25,56 @@ import HeaderSimple from "./HeaderSimple";
 import i18n from "../../li8n";
 
 function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
+
+
+  const NoListImg = require('../../assets/images/emptyRestaurantList.png')
+
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(LIST);
 
   const navigation = useNavigation();
-  let ItemsOdd = [];
-  let ItemsEven = [];
+  // let ItemsOdd = [];
+  // let ItemsEven = [];
 
-  // useEffect(()=> {
-  // },[])
-  for (var i = 0; i < data.length; i++) {
-    if ((i + 2) % 2 == 0) {
-      ItemsOdd.push(data[i]);
-    } else {
-      ItemsEven.push(data[i]);
+  const [ItemsEven, setItemsEven] = useState([]);
+  const [ItemsOdd, setItemsOdd] = useState([]);
+
+
+
+
+  useEffect(() => {
+
+    const adjustData = () => {
+
+      let tempEven = [];
+      let tempOdd = [];
+
+      for (var i = 0; i < data.length; i++) {
+        if (i % 2 == 0) {
+          tempEven.push(data[i])
+          // setItemsEven([...ItemsEven, data[i]])
+        } else {
+          tempOdd.push(data[i])
+          // setItemsOdd([...ItemsOdd, data[i]])
+        }
+      }
+
+      setItemsEven([...tempEven])
+      setItemsOdd([...tempOdd])
+
+      console.log(data)
+      console.log(tempEven)
+      console.log(tempOdd)
+
+      console.log(ItemsEven)
+      console.log(ItemsOdd)
+
     }
-  }
+    adjustData()
+
+  }, [data])
+
+
 
   const dummyArray = [1, 2, 3];
 
@@ -56,36 +91,26 @@ function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
   // data = data.filter((item)=> {
   //     return item.id !== data.id;
   // })
-  const onDeleteCard = (id) => {
-    // let newData = data;
-    // console.log(id)
+  const onDeleteCard = (index, even) => {
 
-    // console.log(data[id-1])
-    // let removeItem =  data[id - 1]
+    console.log(index);
 
-    // for (let i=0; i <= data.length; i++) {
-    //     if(data.indexOf(data[id]) == id ) {
-    //         console.log('Valid', 'id =',id-1 )
-    //     } else {
-    //         console.log('This has to be delete', 'id =',id-1 )
-    //     }
-    // }
-    // console.log(data.indexOf(data[id]))
-    // console.log('Data id', id)
+    let indexToRemove = even ? (index) * 2 : (index) * 2 + 1;
 
-    // let objDelete = newData;
-    // console.log(objDelete)
-    let newData = data.splice(id, id + 1);
-    console.log("New Dataaaaa", newData);
-    // newData.splice(objDelete, 1);
-    // setData({data: newData});
-    // data.id === id ? setData(data.id)
-    // setData([...data, data.id === id ? data.id === null : null])
+    console.log(indexToRemove);
+
+    let tempArr = data;
+
+    tempArr.splice(indexToRemove, 1)
+
+    console.log(tempArr)
+    setData([...tempArr])
+
   };
 
   return (
     <>
-      {LIST.length === 0 ? (
+      {data.length === 0 ? (
         <View style={styles.viewEmptyList}>
           <View
             style={{
@@ -114,55 +139,55 @@ function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
           </Text>
         </View>
       ) : (
-        <ScrollView
-          bounces={true}
-          alwaysBounceVertical={true}
-          showsVerticalScrollIndicator={false}
-        >
-          <Text style={styles.txtHeading}>{i18n.t("around_you")}</Text>
-          <View style={{ flexDirection: "row" }}>
-            <FlatList
-              data={loading ? dummyArray : ItemsOdd}
-              showsVerticalScrollIndicator={false}
-              keyExtractor={(item) => item.id}
-              renderItem={(itemData) => (
-                <HomeCard
-                  navigation={navigation}
-                  // id={itemData.item.id}
-                  img={loading ? null : itemData.item.img}
-                  rating={loading ? null : itemData.item.rate}
-                  name={loading ? null : itemData.item.name}
-                  distance={loading ? null : itemData.item.distance}
-                  services={loading ? null : itemData.item.services}
-                  loading={loading}
-                  crossIcon={route.params.crossIcon}
-                  deleteCall={() => onDeleteCard(itemData.item.id)}
-                />
-              )}
-            />
-            {/* <FlatList
-                                data={loading ? dummyArray : ItemsEven}
-                                showsVerticalScrollIndicator={false}
-                                style={{ marginTop: 15 }}
-                                keyExtractor={(item) => item._id}
-                                renderItem={(itemData) => (
-                                    <HomeCard
-                                        navigation={navigation}
-                                        // key={item._id}
-                                        img={loading ? null : itemData.item.img}
-                                        rating={loading ? null : itemData.item.rate}
-                                        name={loading ? null : itemData.item.name}
-                                        distance={loading ? null : itemData.item.distance}
-                                        services={loading ? null : itemData.item.services}
-                                        loading={loading}
-                                        crossIcon={route.params.crossIcon}
-                                        deleteCall={() => onDeleteCard(itemData.item.id)}
-                                    />
-                                )}
-                            /> */}
-          </View>
-        </ScrollView>
-      )}
+          <ScrollView
+            bounces={true}
+            alwaysBounceVertical={true}
+            showsVerticalScrollIndicator={false}
+          >
+            <Text style={styles.txtHeading}>{i18n.t("around_you")}</Text>
+            <View style={{ flexDirection: "row" }}>
+              <FlatList
+                data={loading ? dummyArray : ItemsEven}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={(itemData) => (
+                  <HomeCard
+                    navigation={navigation}
+                    // id={itemData.item.id}
+                    img={loading ? null : itemData.item.img}
+                    rating={loading ? null : itemData.item.rate}
+                    name={loading ? null : itemData.item.name}
+                    distance={loading ? null : itemData.item.distance}
+                    services={loading ? null : itemData.item.services}
+                    loading={loading}
+                    crossIcon={route.params.crossIcon}
+                    deleteCall={() => onDeleteCard(itemData.index, true)}
+                  />
+                )}
+              />
+              <FlatList
+                data={loading ? dummyArray : ItemsOdd}
+                showsVerticalScrollIndicator={false}
+                style={{ marginTop: 15 }}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={(itemData, index) => (
+                  <HomeCard
+                    navigation={navigation}
+                    // key={item._id}
+                    img={loading ? null : itemData.item.img}
+                    rating={loading ? null : itemData.item.rate}
+                    name={loading ? null : itemData.item.name}
+                    distance={loading ? null : itemData.item.distance}
+                    services={loading ? null : itemData.item.services}
+                    loading={loading}
+                    crossIcon={route.params.crossIcon}
+                    deleteCall={() => onDeleteCard(itemData.index, false)}
+                  />
+                )}
+              />
+            </View>
+          </ScrollView>
+        )}
     </>
   );
 }
@@ -207,8 +232,8 @@ export default HomeScreen = (props) => {
           }
         </Header>
       ) : (
-        <>
-          {/* <View style={styles.viewHeader2}>
+          <>
+            {/* <View style={styles.viewHeader2}>
                             <View style={styles.viewInputSearch}>
                                 <TouchableOpacity
                                     onPress={() => setSearchIconPress(!searchIconPress)}
@@ -222,21 +247,21 @@ export default HomeScreen = (props) => {
                                 </TouchableOpacity>
                             </View>
                         </View> */}
-          <HeaderSimple
-            setSearchIconPress={setSearchIconPress}
-            searchIconPress={searchIconPress}
-          />
-          {
-            <HomeScreenContent
-              loading={loading}
-              setLoading={setLoading}
-              searchIconPress={searchIconPress}
+            <HeaderSimple
               setSearchIconPress={setSearchIconPress}
-              route={props.route}
+              searchIconPress={searchIconPress}
             />
-          }
-        </>
-      )}
+            {
+              <HomeScreenContent
+                loading={loading}
+                setLoading={setLoading}
+                searchIconPress={searchIconPress}
+                setSearchIconPress={setSearchIconPress}
+                route={props.route}
+              />
+            }
+          </>
+        )}
     </>
   );
 };

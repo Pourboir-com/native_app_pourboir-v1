@@ -4,6 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import splashScreen from '../screens/splashscreen';
 import socialLogin from '../screens/socialLogin';
 import Home from '../screens/home';
+import Remove from '../screens/remove';
+
 import RateYourService from '../screens/rateYourService';
 import Setting from '../screens/setting';
 import OpenCardReviews from '../screens/openCardReviews'
@@ -36,6 +38,16 @@ function AppNavigator() {
           headerRightContainerStyle: { paddingRight: spacing(2) },
         })} />
       <Stack.Screen name="Home" component={Home}
+        options={() => ({
+          headerShown: true,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+        })}
+      />
+      <Stack.Screen name="Remove" component={Remove}
         options={() => ({
           headerShown: true,
           title: '',

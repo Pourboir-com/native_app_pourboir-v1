@@ -102,7 +102,7 @@ const Setting = ({ navigation }) => {
                     <Text>{i18n.t('contact_us')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Home', {
+                    onPress={() => navigation.navigate('Remove', {
                         crossIcon:true
                     })}
                     style={[styles.viewItem, { marginBottom: 0 }]}>

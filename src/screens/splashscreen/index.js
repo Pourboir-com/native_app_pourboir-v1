@@ -31,7 +31,7 @@ export default function SplashScreen(props) {
           routes: [{ name: 'socialLogin' }],
         }),
       );
-    }, 3200)
+    }, 3200) 
 
     // const spring = () => {
     Animated.spring(springValue, {
@@ -42,24 +42,13 @@ export default function SplashScreen(props) {
   }, [])
 
   return (
-    <View style={styles.container}>
-      {/* <StatusBar hidden={true} /> */}
       <ImageBackground 
       style={{
         width:Dimensions.get('window').width*1,
-        height:Dimensions.get('window').height*1
+        height:Dimensions.get('screen').height*1
       }}
-      resizeMode="cover"
+      resizeMode="stretch"
       source={imgSplash}></ImageBackground>
-      {/* <Animated.View
-        style={{
-          transform: [{ scale: springValue }],
-          justifyContent: "center", alignItems: "center"
-        }}>
-        <Text style={styles.text}>POURBOIR'</Text>
-        <Text style={styles.tagline}>More than tips</Text>
-      </Animated.View> */}
-    </View>
   );
 }
 

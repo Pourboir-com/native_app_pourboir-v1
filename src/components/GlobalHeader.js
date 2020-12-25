@@ -8,19 +8,57 @@ import {
   TextInput,
   Platform,
   ActivityIndicator,
-  SafeAreaView
+  SafeAreaView,
+  BackHandler
 } from 'react-native';
 import { Header, Body, Left, Right } from 'native-base';
 import { Colors } from '../constants/Theme';
 import { MaterialIcons, FontAwesome, Fontisto, FontAwesome5 } from "@expo/vector-icons";
+import { spacing } from '../constants/layout';
 
 
 const GlobalHeader = (props) => {
+
   const goBackHandler = (props) => {
-    props.navigation.goBack();
+    if (props.setting) {
+      props.navigation.navigate('Setting')
+    }
+    else {
+      props.navigation.goBack(null);
+    }
   };
 
-  // console.log('Propssss', props);
+
+  React.useLayoutEffect(() => {
+    props.navigation.setOptions({
+      headerTitle: '',
+      headerRight: null,
+      headerShown: true,
+      headerLeft: null,
+      headerTransparent: true,
+      headerTitleAlign: 'left',
+      headerRightContainerStyle: { paddingRight: spacing(2) }
+    });
+  });
+
+  React.useEffect(() => {
+
+    const handleBackButtonClick = () => {
+      if (props.setting) {
+        props.navigation.navigate('Setting')
+        return true
+      }
+    };
+
+    props.navigation.addListener('focus', () => {
+      BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+
+    });
+    props.navigation.addListener('blur', () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+    });
+  })
+
 
   return (
     <SafeAreaView
@@ -31,7 +69,6 @@ const GlobalHeader = (props) => {
         width: '100%',
         zIndex: 10,
         backgroundColor: props.backgroundColor ? props.backgroundColor : Colors.yellow
-        // borderBottomLeftRadius:20, borderBottomRightRadius:20
       }}>
       <View
         style={[
@@ -43,10 +80,8 @@ const GlobalHeader = (props) => {
             alignItems: 'center',
             justifyContent: 'center',
             paddingTop: 35,
-            // height: 100,
             zIndex: -10,
             borderRadius: 20,
-            // backgroundColor: 'red',
             flexDirection: 'row',
             backgroundColor: props.backgroundColor
               ? props.backgroundColor
@@ -72,21 +107,10 @@ const GlobalHeader = (props) => {
               {props.arrow === true && (
                 <TouchableOpacity
                   style={{ paddingRight: 5, paddingVertical: 10, padding: 10 }}
-                  // onPress={() => {
-                  //   // this.props.otherNavigation
-                  //   //   ? this.props.navigation.navigate.otherNavigation
-                  //   // :
-                  //   // this.props.navigation.goBack();
-                  //   // goBackHandler();
-                  //   alert('dsads');
-                  //   props.navigation.goBack();
-                  // }}
+
                   onPress={() =>
                     goBackHandler(props)
                   }>
-                  {/* <Text>
-                    B
-                  </Text> */}
                   <MaterialIcons
                     name={'arrow-back'}
                     size={props.Arrowsize ? props.Arrowsize : 24}
@@ -104,7 +128,6 @@ const GlobalHeader = (props) => {
             left: 20,
             marginBottom: 12,
             justifyContent: 'center',
-            // width: '100%',
             alignItems: props.headingALign ? props.headingALign : 'center',
             alignSelf: 'center',
           }}>
@@ -119,11 +142,8 @@ const GlobalHeader = (props) => {
                   numberOfLines={1}
                   style={{
                     textAlign: 'center',
-                    // fontFamily: Fonts.boldenVan_regular,
-                    // marginTop: props.headingMargin ? props.headingMargin : 10,
                     color: props.color ? props.color : '#FFFFFF',
                     fontSize: props.fontSize ? props.fontSize : 24,
-                    // paddingVertical: 15,
                   }}>
                   {props.headingText}
                 </Text>
@@ -132,8 +152,6 @@ const GlobalHeader = (props) => {
                     numberOfLines={1}
                     style={{
                       color: 'rgba(255, 255, 255, 0.8)',
-                      // fontSize: 15,
-                      // marginTop: -2,
                       marginBottom: -8,
                     }}>
                     {props.secondText}
@@ -147,9 +165,7 @@ const GlobalHeader = (props) => {
         <Right
           style={{
             flex: props.leftText ? 1 : 2,
-            // marginBottom: 20,
             height: '100%',
-            // justifyContent:"center",
             alignItems: "center"
           }}>
           {props.isFavouriteLoading ? (

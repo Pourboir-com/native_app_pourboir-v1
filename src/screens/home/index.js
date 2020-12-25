@@ -20,7 +20,8 @@ import { spacing } from "../../constants/layout";
 
 import Header from "./HeaderAnimated";
 import HeaderSimple from "./HeaderSimple";
-// import { StatusBar } from 'react-native';
+import GlobalHeader from '../../components/GlobalHeader';
+
 
 import i18n from "../../li8n";
 
@@ -33,8 +34,6 @@ function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
   const [data, setData] = useState(LIST);
 
   const navigation = useNavigation();
-  // let ItemsOdd = [];
-  // let ItemsEven = [];
 
   const [ItemsEven, setItemsEven] = useState([]);
   const [ItemsOdd, setItemsOdd] = useState([]);
@@ -43,7 +42,6 @@ function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
 
 
   useEffect(() => {
-
     const adjustData = () => {
 
       let tempEven = [];
@@ -62,18 +60,11 @@ function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
       setItemsEven([...tempEven])
       setItemsOdd([...tempOdd])
 
-      console.log(data)
-      console.log(tempEven)
-      console.log(tempOdd)
-
-      console.log(ItemsEven)
-      console.log(ItemsOdd)
 
     }
     adjustData()
 
   }, [data])
-
 
 
   const dummyArray = [1, 2, 3];
@@ -84,28 +75,15 @@ function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
     }, 2000);
   });
 
-  // const deleteItem = (id) => data.find((item)=>{
-  //     return item.id === id;
-  // });
-
-  // data = data.filter((item)=> {
-  //     return item.id !== data.id;
-  // })
   const onDeleteCard = (index, even) => {
 
-    console.log(index);
-
     let indexToRemove = even ? (index) * 2 : (index) * 2 + 1;
-
-    console.log(indexToRemove);
 
     let tempArr = data;
 
     tempArr.splice(indexToRemove, 1)
 
-    console.log(tempArr)
     setData([...tempArr])
-
   };
 
   return (
@@ -144,7 +122,10 @@ function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
             alwaysBounceVertical={true}
             showsVerticalScrollIndicator={false}
           >
-            <Text style={styles.txtHeading}>{i18n.t("around_you")}</Text>
+            {
+              !route.params.crossIcon &&
+              <Text style={styles.txtHeading}>{i18n.t("around_you")}</Text>
+            }
             <View style={{ flexDirection: "row" }}>
               <FlatList
                 data={loading ? dummyArray : ItemsEven}
@@ -198,30 +179,59 @@ export default HomeScreen = (props) => {
 
   const navigation = useNavigation();
 
-  // React.useEffect(() => {
 
-  //     navigation.setOptions({
-  //         headerTitle: '',
-  //         headerRight: '',
-  //         headerShown: true,
-  //         headerLeft: null,
-  //         headerTransparent: true,
-  //         headerTitleAlign: 'left',
-  //         headerRightContainerStyle: { paddingRight: spacing(2) }
-  //     });
-
-  // }, [searchIconPress]);
 
   return (
     <>
       {/* <StatusBar /> */}
-      {!searchIconPress ? (
-        <Header
-          setsearchIconPress={setSearchIconPress}
-          searchIconPress={searchIconPress}
-          navigation={props.navigation}
-        >
-          {
+      {
+        !props.route.params.crossIcon ?
+          <>
+            {!searchIconPress ? (
+              <Header
+                setsearchIconPress={setSearchIconPress}
+                searchIconPress={searchIconPress}
+                navigation={props.navigation}
+              >
+                {
+                  <HomeScreenContent
+                    loading={loading}
+                    setLoading={setLoading}
+                    searchIconPress={searchIconPress}
+                    setSearchIconPress={setSearchIconPress}
+                    route={props.route}
+                  />
+                }
+              </Header>
+            ) : (
+                <>
+
+                  <HeaderSimple
+                    setSearchIconPress={setSearchIconPress}
+                    searchIconPress={searchIconPress}
+                  />
+                  {
+                    <HomeScreenContent
+                      loading={loading}
+                      setLoading={setLoading}
+                      searchIconPress={searchIconPress}
+                      setSearchIconPress={setSearchIconPress}
+                      route={props.route}
+                    />
+                  }
+                </>
+              )}
+          </>
+          :
+          <>
+            <GlobalHeader
+              arrow={true}
+              headingText={i18n.t('your_restaurant')}
+              fontSize={17}
+              color={Colors.fontDark}
+              navigation={navigation}
+              setting={true}
+            />
             <HomeScreenContent
               loading={loading}
               setLoading={setLoading}
@@ -229,39 +239,11 @@ export default HomeScreen = (props) => {
               setSearchIconPress={setSearchIconPress}
               route={props.route}
             />
-          }
-        </Header>
-      ) : (
-          <>
-            {/* <View style={styles.viewHeader2}>
-                            <View style={styles.viewInputSearch}>
-                                <TouchableOpacity
-                                    onPress={() => setSearchIconPress(!searchIconPress)}
-                                    style={{ paddingHorizontal: 8 }}
-                                >
-                                    <Feather name="search" color={Colors.yellow} size={25} />
-                                </TouchableOpacity>
-                                <TextInput placeholder="Search" style={styles.inputSearch} />
-                                <TouchableOpacity style={{ paddingHorizontal: 8 }}>
-                                    <Entypo name="circle-with-cross" color={Colors.yellow} size={25} />
-                                </TouchableOpacity>
-                            </View>
-                        </View> */}
-            <HeaderSimple
-              setSearchIconPress={setSearchIconPress}
-              searchIconPress={searchIconPress}
-            />
-            {
-              <HomeScreenContent
-                loading={loading}
-                setLoading={setLoading}
-                searchIconPress={searchIconPress}
-                setSearchIconPress={setSearchIconPress}
-                route={props.route}
-              />
-            }
           </>
-        )}
+      }
+
+
+
     </>
   );
 };

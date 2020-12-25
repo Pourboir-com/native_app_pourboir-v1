@@ -16,9 +16,9 @@ const SocialLogin = ({ navigation }) => {
             setLoading(false)
         }, 2500)
 
-        setTimeout(() => {
-            navigation.navigate('Home', { crossIcon: false })
-        }, 4000)
+        // setTimeout(() => {
+        //     navigation.navigate('Home', { crossIcon: false })
+        // }, 4000)
 
     }, [])
     return <View style={[styles.container, { backgroundColor: loading ? '#fff' : Colors.yellow }]}>

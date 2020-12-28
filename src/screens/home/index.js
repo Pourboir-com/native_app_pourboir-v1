@@ -23,6 +23,7 @@ import HeaderSimple from "./HeaderSimple";
 import GlobalHeader from '../../components/GlobalHeader';
 
 import HomeScreenContent from '../../components/HomeContent'
+import { StatusBar } from 'expo-status-bar';
 
 import i18n from "../../li8n";
 
@@ -194,6 +195,8 @@ export default HomeScreen = (props) => {
                 searchIconPress={searchIconPress}
                 navigation={props.navigation}
               >
+        <StatusBar translucent={true} style='dark' />
+
                 {
                   <HomeScreenContent
                     loading={loading}
@@ -211,6 +214,7 @@ export default HomeScreen = (props) => {
                     setSearchIconPress={setSearchIconPress}
                     searchIconPress={searchIconPress}
                   />
+                   <StatusBar translucent={true} style='dark' />
                   {
                     <HomeScreenContent
                       loading={loading}
@@ -233,6 +237,7 @@ export default HomeScreen = (props) => {
               navigation={navigation}
               setting={true}
             />
+             <StatusBar translucent={true} style='dark' />
             <HomeScreenContent
               loading={loading}
               setLoading={setLoading}

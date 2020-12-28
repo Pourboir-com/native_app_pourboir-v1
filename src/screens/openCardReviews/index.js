@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {
-    StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image,
+    StyleSheet, Text, View,  ImageBackground, ScrollView, Image,
     Dimensions, TouchableOpacity, FlatList, SafeAreaView, KeyboardAvoidingView
 } from 'react-native';
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
@@ -9,6 +9,7 @@ import HelpUsImproveModal from '../../components/modals/HelpUsImproveModal'
 import { Colors } from '../../constants/Theme';
 import RatingStar from '../../components/RatingComponent';
 import GlobalHeader from '../../components/GlobalHeader';
+import { StatusBar } from 'expo-status-bar';
 
 import i18n from '../../li8n';
 
@@ -43,6 +44,7 @@ const ReviewDetails = ({ navigation, route }) => {
         {/* <StatusBar 
         backgroundColor={Colors.yellow}
         hidden={true} /> */}
+        <StatusBar translucent={true} style='light' />
         <View style={styles.viewImg}>
             <ImageBackground
                 source={{ uri: img }}

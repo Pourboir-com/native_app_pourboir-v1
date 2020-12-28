@@ -9,7 +9,6 @@ import {
     Dimensions,
     TouchableOpacity,
     FlatList,
-    StatusBar,
     KeyboardAvoidingView,
     SafeAreaView
 } from 'react-native';
@@ -19,6 +18,8 @@ import { rateList as RATELIST } from '../../dummyData/DummyData'
 import { Colors } from '../../constants/Theme';
 import ThankRatingModal from '../../components/modals/ThanksRatingModal'
 import RatingStar from '../../components/RatingComponent';
+
+import { StatusBar } from 'expo-status-bar';
 
 import i18n from '../../li8n';
 
@@ -58,15 +59,15 @@ const RateService = ({ navigation }) => {
             color={Colors.fontDark}
             navigation={navigation}
         />
-        {/* <StatusBar  translucent={true}  /> */}
+        <StatusBar translucent={true} style='light' />
         <View style={styles.viewProfile}>
-        <ImageBackground 
-            style={{width:'100%', height:'auto', paddingBottom: 70}} 
-            source={imgBg} resizeMode='stretch' >
-            <View style={styles.viewImg}>
-                <FontAwesome name="user-circle-o" size={100} color="#fff" />
-            </View>
-            <Text style={styles.txtName}>Amy Farha</Text>
+            <ImageBackground
+                style={{ width: '100%', height: 'auto', paddingBottom: 70 }}
+                source={imgBg} resizeMode='stretch' >
+                <View style={styles.viewImg}>
+                    <FontAwesome name="user-circle-o" size={100} color="#fff" />
+                </View>
+                <Text style={styles.txtName}>Amy Farha</Text>
             </ImageBackground>
         </View>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.viewFlatlist}>

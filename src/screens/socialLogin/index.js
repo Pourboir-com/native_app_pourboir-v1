@@ -4,14 +4,21 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Colors } from '../../constants/Theme';
 
 import i18n from '../../li8n';
+import { loadAsync } from 'expo-font';
 
 const imgLogo = require('../../assets/images/imgLogo.png')
 const imgWaiter = require('../../assets/images/waiter2.png')
 
 const SocialLogin = ({ navigation }) => {
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
 
-    React.useEffect(() => {
+
+    React.useEffect(async () => {
+        await loadAsync({
+            // Load a font `Montserrat` from a static resource
+            ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf')
+        });
+
         setTimeout(() => {
             setLoading(false)
         }, 2500)
@@ -36,29 +43,37 @@ const SocialLogin = ({ navigation }) => {
                         resizeMode="contain"
                     />
                 </View>
-                <TouchableOpacity onPress={() =>  navigation.navigate('Home', { crossIcon: false })} style={styles.btnFb}>
+                <TouchableOpacity onPress={() => navigation.navigate('Home', { crossIcon: false })} style={styles.btnFb}>
                     <FontAwesome name="facebook" color="#fff" size={20} />
-                    <Text style={styles.textFb}>{i18n.t('continue_with_fb')}</Text>
+                    <Text style={[styles.textFb, {
+                        fontSize: 16, fontFamily: 'ProximaNova'
+                    }]}>{i18n.t('continue_with_fb')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('NoLocation')} style={styles.btnGoogle}>
                     <FontAwesome name="google" color="#fff" size={20} />
-                    <Text style={styles.textFb}>{i18n.t('continue_with_google')}</Text>
+                    <Text style={[styles.textFb, {
+                        fontSize: 16, fontFamily: 'ProximaNova'
+                    }]}>{i18n.t('continue_with_google')}</Text>
                 </TouchableOpacity>
-                <Text style={styles.txtCreatingAcc}>
+
+
+                <Text style={[styles.txtCreatingAcc, {
+                    fontSize: 14, fontFamily: 'ProximaNova'
+                }]}>
                     {i18n.t('by_creatin_your_acc')}
                 </Text>
                 <View style={styles.viewbtns}>
                     <TouchableOpacity>
-                        <Text style={{ color: "#0050A0", fontSize: 12 }}>{i18n.t('terms_of_use')}</Text>
+                        <Text style={{ color: "#0050A0", fontSize: 14, fontFamily: 'ProximaNova' }}>{i18n.t('terms_of_use')}</Text>
                     </TouchableOpacity>
                     <View style={{ width: 1, height: 10, backgroundColor: "grey", marginHorizontal: 10 }} />
                     <TouchableOpacity>
-                        <Text style={{ color: "#0050A0", fontSize: 12 }}>{i18n.t('privacy_policy')}</Text>
+                        <Text style={{ color: "#0050A0", fontSize: 14, fontFamily: 'ProximaNova' }}>{i18n.t('privacy_policy')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
         }
-    </View>
+    </View >
 }
 export default SocialLogin;
 
@@ -84,7 +99,8 @@ const styles = StyleSheet.create({
     imgStyle: {
         // flex:1,
         // backgroundColor:'red',
-        width: 300,
+        width: Dimensions.get('window').width * 1,
+        marginLeft: Dimensions.get('window').width * 0.05,
         height: Dimensions.get('window').height * 0.5,
         alignSelf: 'center',
         // marginBottom:20

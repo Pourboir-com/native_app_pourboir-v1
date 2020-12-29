@@ -79,7 +79,7 @@ const Setting = ({ navigation }) => {
                     style={styles.btnPencil}
                 >
                     <View style={styles.viewPencil}>
-                        <MaterialCommunityIcons name="pencil-outline" color='#fff' size={16} />
+                        <MaterialCommunityIcons name="pencil-outline" color='#fff' size={15} />
                     </View>
                 </TouchableOpacity>
                 {/* <View style={styles.viewImg}>
@@ -147,11 +147,11 @@ const styles = StyleSheet.create({
         marginTop: 20, color: Colors.fontLight, fontSize:12
     },
     viewPencil: {
-        width: 30, height: 30, backgroundColor: "#1E272E", borderRadius: 20, justifyContent: "center",
+        width: 25, height: 25, backgroundColor: "#1E272E", borderRadius: 20, justifyContent: "center",
         alignItems: "center"
     },
     btnPencil: {
-        backgroundColor: "#FCDF6F", width: 35, height: 35, borderRadius: 20, justifyContent: "center",
+        backgroundColor: "#FCDF6F", width: 30, height: 30, borderRadius: 20, justifyContent: "center",
         alignItems: "center", alignSelf: "center", marginRight: -70, marginTop: -30
     },
     viewIcon: {

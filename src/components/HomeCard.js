@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
 import { MaterialIcons, FontAwesome, Entypo } from "@expo/vector-icons";
 import { Colors } from '../constants/Theme';
 import RatingStar from './RatingComponent';
+
+import { loadAsync } from 'expo-font';
 
 const HomeCard = ({ navigation, img, rating, name, distance, services, loading, crossIcon, deleteCall }) => {
 // const {crossIcon} = routes.params;
@@ -12,7 +14,6 @@ const HomeCard = ({ navigation, img, rating, name, distance, services, loading, 
     const onPressStar = (v) => {
         setstarSelect(v);
     }
-
     return <View>
         {loading ?
             <View style={styles.viewDummyCard} >
@@ -67,10 +68,16 @@ const HomeCard = ({ navigation, img, rating, name, distance, services, loading, 
                         </Text>
                     </View>
                     <View style={{}}>
-                        <Text style={{ color: "#fff", fontSize: 17 }}>{name}</Text>
+                        <Text style={[styles.txtName
+                            ,{fontFamily:'ProximaNovaBold'}
+                            ]}>{name}</Text>
                         <View style={styles.view2Card}>
-                            <Text style={styles.txt2Card}>{distance}</Text>
-                            <Text style={styles.txt2Card}>{services.length} serveurs</Text>
+                            <Text style={[styles.txt2Card
+                                ,{fontFamily:'ProximaNova'}
+                                ]}>{distance}</Text>
+                            <Text style={[styles.txt2Card
+                                ,{fontFamily:'ProximaNova'}
+                                ]}>{services.length} serveurs</Text>
                         </View>
                     </View>
                 </ImageBackground>
@@ -84,6 +91,10 @@ const styles = StyleSheet.create({
     view2Card: {
         flexDirection: "row", width: "100%", alignItems: "center", justifyContent: "space-between"
     },
+    txtName:{
+        color: "#fff", fontSize: 18, 
+        // fontFamily:'ProximaNovaBold'
+    },
     view1dumy: {
         width: "90%", height: 20, backgroundColor: "#F6F6F6", marginBottom: 70
     },
@@ -96,7 +107,8 @@ const styles = StyleSheet.create({
         justifyContent: "center", alignItems: "center"
     },
     txt2Card: {
-        color: "#EDEFEE", fontSize: 13
+        color: "#EDEFEE", fontSize: 12, 
+        // fontFamily:'ProximaNova'
     },
     imgCard: {
         flex: 1, padding: 12, justifyContent: 'space-between'

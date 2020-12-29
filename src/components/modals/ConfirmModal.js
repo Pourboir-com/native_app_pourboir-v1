@@ -9,7 +9,7 @@ import {
   ImageBackground
 } from 'react-native';
 import {Overlay} from 'react-native-elements';
-import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Colors} from '../../constants/Theme';
 
 import i18n from '../../li8n';
@@ -32,7 +32,7 @@ const ConfirmationModal = ({isVisible, handleModalClose,name}) => {
               <TouchableOpacity
                   onPress={handleModalClose}
                   style={{alignSelf: 'flex-end',margin:10}}>
-                  <Entypo name="cross" size={29} color="#485460" />
+                  <AntDesign name="close" size={29} color="#485460" />
               </TouchableOpacity>
               <Image 
                   source={imgWaiter} 
@@ -42,12 +42,12 @@ const ConfirmationModal = ({isVisible, handleModalClose,name}) => {
           </View>
         </ImageBackground>
         <Text
-          style={styles.txtConfrm}>
+          style={[styles.txtConfrm,{fontFamily:'ProximaNova'}]}>
           {i18n.t('confrm_you_are_server')}
         </Text>
-        <Text style={styles.txtName}>{name}</Text>
+        <Text style={[styles.txtName,{fontFamily:'ProximaNovaBold'}]}>{name}</Text>
         <TouchableOpacity style={styles.btnConfrm}>
-            <Text style={styles.txtBtnConfrm}>{i18n.t('i_confirm')}</Text>
+            <Text style={[styles.txtBtnConfrm,{fontFamily:'ProximaNova'}]}>{i18n.t('i_confirm')}</Text>
         </TouchableOpacity>
     </Overlay>
   );

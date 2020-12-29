@@ -9,7 +9,7 @@ import {
   ImageBackground
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
-import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 
 const imgWaiter = require('../../assets/images/ThanksGiving.png')
@@ -32,7 +32,7 @@ const ThanksRatingModal = ({ isVisible, handleModalClose }) => {
           <TouchableOpacity
             onPress={handleModalClose}
             style={{ alignSelf: 'flex-end', margin: 10 }}>
-            <Entypo name="cross" size={29} color="#485460" />
+            <AntDesign name="close" size={29} color="#485460" />
           </TouchableOpacity>
           <View style={{width:140, height:140,borderRadius:100, backgroundColor:"rgba(255, 255, 255, 0.5)", alignSelf:"center",marginBottom:-70,bottom:-20}} />
           <Image
@@ -44,10 +44,10 @@ const ThanksRatingModal = ({ isVisible, handleModalClose }) => {
       </ImageBackground>
 
       <Text
-        style={styles.txtConfrm}>
+        style={[styles.txtConfrm,{fontFamily:'ProximaNovaBold'}]}>
         {i18n.t('thanks_for_vote')}
       </Text>
-      <Text style={styles.txtName}>
+      <Text style={[styles.txtName,{fontFamily:'ProximaNova'}]}>
         {i18n.t('will_contact_by_email')}
       </Text>
     </Overlay>

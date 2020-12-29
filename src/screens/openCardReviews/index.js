@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {
-    StyleSheet, Text, View,  ImageBackground, ScrollView, Image,
+    StyleSheet, Text, View, ImageBackground, ScrollView, Image,
     Dimensions, TouchableOpacity, FlatList, SafeAreaView, KeyboardAvoidingView
 } from 'react-native';
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
@@ -82,8 +82,8 @@ const ReviewDetails = ({ navigation, route }) => {
         </View>
         <ScrollView bounces={false} alwaysBounceVertical={false} showsVerticalScrollIndicator={false}>
             <View style={{ flexDirection: "row", marginTop: 15, marginHorizontal: 15 }}>
-                <Text style={styles.txtHeading}>{i18n.t('waiters')}</Text>
-                <Text style={styles.txtNumRaters}>{services.length}</Text>
+                <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('waiters')}</Text>
+                <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length}</Text>
             </View>
 
             <FlatList
@@ -98,7 +98,7 @@ const ReviewDetails = ({ navigation, route }) => {
                                 source={{ uri: itemData.item.imgAvatar }}
                             />
                             <View style={{ marginLeft: 10 }}>
-                                <Text>{itemData.item.userName}</Text>
+                                <Text style={{ fontFamily: 'ProximaNova', fontSize: 18, color: Colors.fontLight }}>{itemData.item.userName}</Text>
                                 <View style={{ flexDirection: "row" }}>
                                     {obj.map((v, i) => {
                                         return (
@@ -121,9 +121,9 @@ const ReviewDetails = ({ navigation, route }) => {
                 )}
             />
             <View style={styles.viewAddReview}>
-                <Text style={styles.txtCantFind}>{i18n.t('cant_find_your_server')}</Text>
+                <Text style={[styles.txtCantFind, { fontFamily: 'ProximaNova' }]}>{i18n.t('cant_find_your_server')}</Text>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text style={styles.txtAddReview}>{i18n.t('add_your_server')}</Text>
+                    <Text style={[styles.txtAddReview, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('add_your_server')}</Text>
                     <TouchableOpacity
                         onPress={handleHelpUsModalOpen}
                         style={styles.btnAdd}
@@ -137,7 +137,9 @@ const ReviewDetails = ({ navigation, route }) => {
             onPress={handleConfirmModalOpen}
             style={styles.viewLastBtn}
         >
-            <Text>{i18n.t('are_you_waiter')}</Text>
+            <Text style={{ fontFamily: 'ProximaNova', fontSize: 16, color: Colors.fontDark }}>
+                {i18n.t('are_you_waiter')}
+            </Text>
         </TouchableOpacity>
 
         <ConfirmationModal
@@ -184,11 +186,11 @@ const styles = StyleSheet.create({
         justifyContent: "center", alignItems: "center", borderRadius: 10, marginBottom: 15, marginTop: 1
     },
     txtNumRaters: {
-        backgroundColor: Colors.yellow, padding: 2, paddingHorizontal: 9, marginLeft: 10, fontSize: 18,
-        borderRadius: 9
+        backgroundColor: Colors.yellow, paddingVertical: 3, paddingHorizontal: 9,
+        marginLeft: 10, fontSize: 18, borderRadius: 15
     },
     txtHeading: {
-        alignSelf: "center", fontSize: 20, fontWeight: 'bold'
+        alignSelf: "center", fontSize: 24
     },
     viewHeader: {
         flexDirection: "row", marginTop: 30, paddingHorizontal: 10

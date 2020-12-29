@@ -12,7 +12,8 @@ import {
   Dimensions, Platform
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
-import Entypo from 'react-native-vector-icons/Entypo';
+// import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import { Colors } from '../../constants/Theme';
 
 const imgSitting = require('../../assets/images/sittingtable.png')
@@ -46,7 +47,7 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
               <TouchableOpacity
                 onPress={handleModalClose}
                 style={{ alignSelf: 'flex-end', margin: 10 }}>
-                <Entypo name="cross" size={29} color="#485460" />
+                <AntDesign name="close" size={29} color="#485460" />
               </TouchableOpacity>
               <Image
                 source={imgSitting}
@@ -55,20 +56,20 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
               />
             </View>
           </ImageBackground>
-          <Text style={styles.txtName}>
+          <Text style={[styles.txtName,{fontFamily:'ProximaNovaBold'}]}>
             {i18n.t('help_us_improve')}
           </Text>
           <Text
-            style={styles.txtConfrm}>
+            style={[styles.txtConfrm,{fontFamily:'ProximaNova'}]}>
             {i18n.t('will_contact_shortly')}
           </Text>
           <TextInput
             placeholder={i18n.t('name_of_your_server')}
-            style={styles.inputStyle}
+            style={[styles.inputStyle,{fontFamily:'ProximaNova'}]}
             onFocus={() => { setonHandleFocus(!onHandleFocus) }}
           />
           <TouchableOpacity style={styles.btnConfrm}>
-            <Text style={styles.txtBtnConfrm}>{i18n.t('add')} </Text>
+            <Text style={[styles.txtBtnConfrm,{fontFamily:'ProximaNova'}]}>{i18n.t('add')} </Text>
           </TouchableOpacity>
         </KeyboardAvoidingView>
       </ScrollView>

@@ -52,22 +52,23 @@ const RateService = ({ navigation }) => {
     return <View
         style={styles.container}
     >
-        <GlobalHeader
-            arrow={true}
-            headingText={i18n.t('rate_your_server')}
-            fontSize={17}
-            color={Colors.fontDark}
-            navigation={navigation}
-        />
         <StatusBar translucent={true} style='light' />
         <View style={styles.viewProfile}>
             <ImageBackground
                 style={{ width: '100%', height: 'auto', paddingBottom: 70 }}
                 source={imgBg} resizeMode='stretch' >
+                <GlobalHeader
+                    arrow={true}
+                    headingText={i18n.t('rate_your_server')}
+                    fontSize={17}
+                    color={Colors.fontDark}
+                    backgroundColor={'transparent'}
+                    navigation={navigation}
+                />
                 <View style={styles.viewImg}>
                     <FontAwesome name="user-circle-o" size={100} color="#fff" />
                 </View>
-                <Text style={styles.txtName}>Amy Farha</Text>
+                <Text style={[styles.txtName,{fontFamily:'ProximaNovaBold'}]}>Amy Farha</Text>
             </ImageBackground>
         </View>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.viewFlatlist}>
@@ -75,7 +76,7 @@ const RateService = ({ navigation }) => {
                 onPress={() => navigation.navigate('socialLogin')}
                 style={styles.viewListCard}
             >
-                <Text style={styles.txtCard}>{i18n.t('hospitality')}</Text>
+                <Text style={[styles.txtCard,{fontFamily:'ProximaNovaBold'}]}>{i18n.t('hospitality')}</Text>
                 <View style={{ flexDirection: "row", marginTop: 10 }}>
                     {obj.map((v, i) => {
                         return (
@@ -98,7 +99,7 @@ const RateService = ({ navigation }) => {
                 onPress={() => navigation.navigate('socialLogin')}
                 style={styles.viewListCard}
             >
-                <Text style={styles.txtCard}>{i18n.t('speed')}</Text>
+                <Text style={[styles.txtCard,{fontFamily:'ProximaNovaBold'}]}>{i18n.t('speed')}</Text>
                 <View style={{ flexDirection: "row", marginTop: 10 }}>
                     {obj.map((v, i) => {
                         return (
@@ -121,7 +122,7 @@ const RateService = ({ navigation }) => {
                 onPress={() => navigation.navigate('socialLogin')}
                 style={styles.viewListCard}
             >
-                <Text style={styles.txtCard}>{i18n.t('service')}</Text>
+                <Text style={[styles.txtCard,{fontFamily:'ProximaNovaBold'}]}>{i18n.t('service')}</Text>
                 <View style={{ flexDirection: "row", marginTop: 10 }}>
                     {obj.map((v, i) => {
                         return (
@@ -144,7 +145,7 @@ const RateService = ({ navigation }) => {
                 onPress={() => navigation.navigate('socialLogin')}
                 style={styles.viewListCard}
             >
-                <Text style={styles.txtCard}>{i18n.t('professionalism')}</Text>
+                <Text style={[styles.txtCard,{fontFamily:'ProximaNovaBold'}]}>{i18n.t('professionalism')}</Text>
                 <View style={{ flexDirection: "row", marginTop: 10 }}>
                     {obj.map((v, i) => {
                         return (
@@ -166,14 +167,14 @@ const RateService = ({ navigation }) => {
             <View style={{ alignItems: 'center' }}>
 
                 <View style={styles.viewTip}>
-                    <Text style={styles.txtCard}>{i18n.t('your_tip_to_waiter')}</Text>
-                    <TextInput style={styles.inputStyle} />
+                    <Text style={[styles.txtCard,{fontFamily:'ProximaNovaBold'}]}>{i18n.t('your_tip_to_waiter')}</Text>
+                    <TextInput style={[styles.inputStyle,{fontFamily:'ProximaNova'}]} />
                 </View>
 
             </View>
         </ScrollView>
         <TouchableOpacity onPress={handleModalOpen} style={styles.btnValider}>
-            <Text style={{ fontSize: 16 }}>{i18n.t('validate')}</Text>
+            <Text style={{ fontSize: 16,fontFamily:'ProximaNova', color:Colors.fontLight }}>{i18n.t('validate')}</Text>
         </TouchableOpacity>
 
         <ThankRatingModal
@@ -208,7 +209,7 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent", width: "100%", flex: 1, marginTop: -40
     },
     btnValider: {
-        backgroundColor: Colors.yellow, width: "90%", justifyContent: "center", alignItems: "center",
+        backgroundColor: '#EAEAEA', width: "90%", justifyContent: "center", alignItems: "center",
         height: 50, borderRadius: 8, marginBottom: 15, marginTop: 2, alignSelf: "center"
     },
     viewListCard: {
@@ -226,7 +227,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 5,
-        marginTop: 30,
+        marginTop: 10,
         alignSelf: "center"
     },
     viewProfile: {

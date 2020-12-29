@@ -13,9 +13,6 @@ import {
 import { placesList as LIST } from "../dummyData/DummyData";
 import { Colors } from "../constants/Theme";
 import HomeCard from "./HomeCard";
-import { spacing } from "../constants/layout";
-
-
 
 import i18n from "../li8n";
 
@@ -34,7 +31,6 @@ export default function HomeScreenContent({ searchIconPress, setSearchIconPress,
 
     useEffect(() => {
         const adjustData = () => {
-
             let tempEven = [];
             let tempOdd = [];
 
@@ -100,10 +96,10 @@ export default function HomeScreenContent({ searchIconPress, setSearchIconPress,
                             resizeMode="contain"
                         />
                     </View>
-                    <Text style={styles.txt1NoRest}>
+                    <Text style={[styles.txt1NoRest,{fontFamily:'ProximaNovaBold'}]}>
                         {i18n.t("you_have_no_restaurant")}
                     </Text>
-                    <Text style={styles.txt2NoRest}>
+                    <Text style={[styles.txt2NoRest,{fontFamily:'ProximaNova'}]}>
                         {i18n.t("search_for_rest_and_add")}
                     </Text>
                 </View>
@@ -115,7 +111,9 @@ export default function HomeScreenContent({ searchIconPress, setSearchIconPress,
                     >
                         {
                             !route.params.crossIcon &&
-                            <Text style={styles.txtHeading}>{i18n.t("around_you")}</Text>
+                            <Text style={[styles.txtHeading
+                                ,{fontFamily:'ProximaNovaBold'}
+                            ]}>{i18n.t("around_you")}</Text>
                         }
                         <View style={{ flexDirection: "row" }}>
                             <FlatList
@@ -275,9 +273,10 @@ const styles = StyleSheet.create({
         overflow: "hidden",
     },
     txtHeading: {
-        fontSize: 22,
+        fontSize: 24,
         marginTop: 10,
         width: "90%",
         alignSelf: "center",
+        color:"#1E272E"
     },
 });

@@ -68,7 +68,9 @@ const GlobalHeader = (props) => {
         overflow: 'hidden',
         width: '100%',
         zIndex: 10,
-        backgroundColor: props.backgroundColor ? props.backgroundColor : Colors.yellow
+        backgroundColor: props.backgroundColor ? props.backgroundColor : Colors.yellow,
+        // backgroundColor:"red",
+        height: props.height ? props.height : 110,
       }}>
       <View
         style={[
@@ -83,10 +85,10 @@ const GlobalHeader = (props) => {
             zIndex: -10,
             borderRadius: 20,
             flexDirection: 'row',
-            backgroundColor: props.backgroundColor
-              ? props.backgroundColor
-              : Colors.yellow,
-            height: props.height ? props.height : 70,
+            // backgroundColor: props.backgroundColor
+            //   ? props.backgroundColor
+            //   : Colors.yellow,
+            // height: props.height ? props.height : 70,
           },
           Platform.OS === 'ios' ? { borderBottomWidth: 0 } : {},
         ]}>

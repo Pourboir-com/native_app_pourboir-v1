@@ -26,6 +26,7 @@ import HomeScreenContent from '../../components/HomeContent'
 import { StatusBar } from 'expo-status-bar';
 
 import i18n from "../../li8n";
+import { ImageBackground } from "react-native";
 
 // function HomeScreenContent({ searchIconPress, setSearchIconPress, route }) {
 
@@ -195,7 +196,7 @@ export default HomeScreen = (props) => {
                 searchIconPress={searchIconPress}
                 navigation={props.navigation}
               >
-        <StatusBar translucent={true} style='dark' />
+                <StatusBar translucent={true} style='dark' />
 
                 {
                   <HomeScreenContent
@@ -214,7 +215,7 @@ export default HomeScreen = (props) => {
                     setSearchIconPress={setSearchIconPress}
                     searchIconPress={searchIconPress}
                   />
-                   <StatusBar translucent={true} style='dark' />
+                  <StatusBar translucent={true} style='dark' />
                   {
                     <HomeScreenContent
                       loading={loading}
@@ -229,15 +230,18 @@ export default HomeScreen = (props) => {
           </>
           :
           <>
-            <GlobalHeader
-              arrow={true}
-              headingText={i18n.t('your_restaurant')}
-              fontSize={17}
-              color={Colors.fontDark}
-              navigation={navigation}
-              setting={true}
-            />
-             <StatusBar translucent={true} style='dark' />
+            <ImageBackground style={{ backgroundColor: "red", width: '100%', height: 100 }} source={require('../../assets/images/Group3.png')}>
+              <GlobalHeader
+                arrow={true}
+                headingText={i18n.t('your_restaurant')}
+                fontSize={17}
+                color={Colors.fontDark}
+                navigation={navigation}
+                setting={true}
+                backgroundColor={'transparent'}
+              />
+            </ImageBackground>
+            <StatusBar translucent={true} style='dark' />
             <HomeScreenContent
               loading={loading}
               setLoading={setLoading}

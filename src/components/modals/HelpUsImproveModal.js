@@ -65,6 +65,7 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
           </Text>
           <TextInput
             placeholder={i18n.t('name_of_your_server')}
+            placeholderTextColor="rgba(0,0,0,0.2)"
             style={[styles.inputStyle,{fontFamily:'ProximaNova'}]}
             onFocus={() => { setonHandleFocus(!onHandleFocus) }}
           />

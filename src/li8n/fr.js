@@ -13,6 +13,7 @@ export default {
     cant_find_your_server: 'Vous ne trouvez pas votre serveur?',
     add_your_server: 'Ajoutez votre serveur',
     are_you_waiter: 'Vous êtes serveur?',
+    see_the_menu: 'Voir le menu',
 
     // Rate your server
     rate_your_server:'Notez votre serveur',

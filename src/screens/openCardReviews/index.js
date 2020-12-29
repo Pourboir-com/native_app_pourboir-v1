@@ -83,7 +83,7 @@ const ReviewDetails = ({ navigation, route }) => {
                             borderWidth:1, borderColor:"#fff", borderRadius:7
                         }}
                         >
-                            <Text style={{ color: "#fff" }}>See the menu</Text>
+                            <Text style={{ color: "#fff" }}>{i18n.t("see_the_menu")}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

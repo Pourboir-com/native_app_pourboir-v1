@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
         width: "90%", alignSelf: "center", borderRadius: 15, marginTop: -45, overflow: "hidden", backgroundColor: "#EEF0EF",
     },
     viewItem: {
-        width: "100%", height: 60, backgroundColor: "#fff", marginBottom: 1, flexDirection: "row",
+        width: "100%", height: 55, backgroundColor: "#fff", marginBottom: 1, flexDirection: "row",
         alignItems: "center", paddingHorizontal: 10
     },
     btnValider: {

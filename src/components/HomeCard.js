@@ -7,7 +7,7 @@ import RatingStar from './RatingComponent';
 import { loadAsync } from 'expo-font';
 
 const HomeCard = ({ navigation, img, rating, name, distance, services, loading, crossIcon, deleteCall }) => {
-// const {crossIcon} = routes.params;
+    // const {crossIcon} = routes.params;
     // Star arrayyyyyyyy
     const [starSelect, setstarSelect] = useState(3.5)
     const obj = [1, 2, 3, 4, 5];
@@ -38,13 +38,13 @@ const HomeCard = ({ navigation, img, rating, name, distance, services, loading, 
                             style={styles.btnCross}
                             onPress={deleteCall}
                         >
-                            <View style={{borderRadius:20, overflow:"hidden"}}>
-                            <Entypo
-                                name="cross"
-                                size={21}
-                                color="#485460"
-                                style={{ backgroundColor: Colors.yellow, borderRadius: 20 }}
-                            />
+                            <View style={{ borderRadius: 20, overflow: "hidden" }}>
+                                <Entypo
+                                    name="cross"
+                                    size={21}
+                                    color="#485460"
+                                    style={{ backgroundColor: Colors.yellow, borderRadius: 20 }}
+                                />
                             </View>
                         </TouchableOpacity>
                     }
@@ -68,16 +68,13 @@ const HomeCard = ({ navigation, img, rating, name, distance, services, loading, 
                         </Text>
                     </View>
                     <View style={{}}>
-                        <Text style={[styles.txtName
-                            ,{fontFamily:'ProximaNovaBold'}
-                            ]}>{name}</Text>
+                        <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>{name}</Text>
                         <View style={styles.view2Card}>
-                            <Text style={[styles.txt2Card
-                                ,{fontFamily:'ProximaNova'}
-                                ]}>{distance}</Text>
-                            <Text style={[styles.txt2Card
-                                ,{fontFamily:'ProximaNova'}
-                                ]}>{services.length} serveurs</Text>
+                            <Text style={[styles.txt2Card, { fontFamily: 'ProximaNova' }]}>{distance}</Text>
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                <Text style={{ color: Colors.yellow, fontFamily: 'ProximaNovaBold', fontSize:12 }}>{services.length}</Text>
+                                <Text style={[styles.txt2Card, { fontFamily: 'ProximaNova' }]}> serveurs</Text>
+                            </View>
                         </View>
                     </View>
                 </ImageBackground>
@@ -89,10 +86,11 @@ export default HomeCard;
 
 const styles = StyleSheet.create({
     view2Card: {
-        flexDirection: "row", width: "100%", alignItems: "center", justifyContent: "space-between"
+        flexDirection: "row", width: "100%", alignItems: "center", justifyContent: "space-between",
+        marginTop:5
     },
-    txtName:{
-        color: "#fff", fontSize: 18, 
+    txtName: {
+        color: "#fff", fontSize: 18,
         // fontFamily:'ProximaNovaBold'
     },
     view1dumy: {
@@ -107,7 +105,7 @@ const styles = StyleSheet.create({
         justifyContent: "center", alignItems: "center"
     },
     txt2Card: {
-        color: "#EDEFEE", fontSize: 12, 
+        color: "#EDEFEE", fontSize: 12,
         // fontFamily:'ProximaNova'
     },
     imgCard: {

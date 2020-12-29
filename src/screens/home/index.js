@@ -247,9 +247,6 @@ export default HomeScreen = (props) => {
             />
           </>
       }
-
-
-
     </>
   );
 };
@@ -257,7 +254,7 @@ export default HomeScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#f9f9f9",
   },
   inputSearch: {
     height: 45,

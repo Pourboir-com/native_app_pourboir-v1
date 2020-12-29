@@ -64,8 +64,8 @@ const ReviewDetails = ({ navigation, route }) => {
                     <View style={{ flexDirection: "row" }}>
                         {obj.map((v, i) => {
                             return (
-                                <TouchableOpacity onPress={() => { onPressStar(v) }}>
-                                    <RatingStar starSize={20}
+                                <TouchableOpacity style={{ marginRight: 3 }} onPress={() => { onPressStar(v) }}>
+                                    <RatingStar starSize={17}
                                         type={v <= starSelect ? "filled" :
                                             v === starSelect + 0.5 ? "half" : "empty"
                                         }
@@ -76,14 +76,25 @@ const ReviewDetails = ({ navigation, route }) => {
                         }
                         )}
                     </View>
-                    <Text style={{ color: "#fff" }}>{distance}</Text>
+                    <View style={{ alignItems:"flex-end"}}>
+                        <Text style={{ color: "#fff",marginBottom:10, fontFamily:'ProximaNova', fontSize:16 }}>{distance}</Text>
+                        <TouchableOpacity 
+                        style={{ paddingHorizontal: 10, paddingVertical: 5, 
+                            borderWidth:1, borderColor:"#fff", borderRadius:7
+                        }}
+                        >
+                            <Text style={{ color: "#fff" }}>See the menu</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </ImageBackground>
         </View>
         <ScrollView bounces={false} alwaysBounceVertical={false} showsVerticalScrollIndicator={false}>
             <View style={{ flexDirection: "row", marginTop: 15, marginHorizontal: 15 }}>
                 <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('waiters')}</Text>
-                <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length}</Text>
+                <View>
+                    <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length}</Text>
+                </View>
             </View>
 
             <FlatList
@@ -102,8 +113,8 @@ const ReviewDetails = ({ navigation, route }) => {
                                 <View style={{ flexDirection: "row" }}>
                                     {obj.map((v, i) => {
                                         return (
-                                            <TouchableOpacity onPress={() => { onPressStar(v) }}>
-                                                <RatingStar starSize={17}
+                                            <TouchableOpacity style={{ marginRight: 2 }} onPress={() => { onPressStar(v) }}>
+                                                <RatingStar starSize={15}
                                                     type={v <= starSelect ? "filled" :
                                                         v === starSelect + 0.5 ? "half" : "empty"
                                                     }
@@ -163,7 +174,7 @@ export default ReviewDetails;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F1F3F2"
+        backgroundColor: "#f9f9f9"
     },
     btnAdd: {
         backgroundColor: Colors.yellow, padding: 4, borderRadius: 6, marginLeft: 10
@@ -197,7 +208,7 @@ const styles = StyleSheet.create({
     },
     viewBottom: {
         flexDirection: "row", marginBottom: 20, justifyContent: "space-between",
-        alignItems: "center", paddingHorizontal: 20
+        alignItems: "center", paddingHorizontal: 20, alignItems:'flex-end'
     },
     txtName: {
         textAlign: "center", marginLeft: -25, color: "#fff", fontSize: 20

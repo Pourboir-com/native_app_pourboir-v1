@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     StyleSheet,
     Text,
@@ -10,7 +10,7 @@ import {
     TouchableOpacity,
     FlatList,
     KeyboardAvoidingView,
-    SafeAreaView
+    Keyboard
 } from 'react-native';
 import { FontAwesome } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader';
@@ -26,6 +26,28 @@ import i18n from '../../li8n';
 const imgBg = require('../../assets/images/Group5.png')
 
 const RateService = ({ navigation }) => {
+
+    // const [onHandleFocus, setonHandleFocus] = useState(false)
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            () => {
+                setKeyboardVisible(true); // or some other action
+            }
+        );
+        const keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            () => {
+                setKeyboardVisible(false); // or some other action
+            }
+        );
+
+        return () => {
+            keyboardDidHideListener.remove();
+            keyboardDidShowListener.remove();
+        };
+    }, []);
 
     const [isVisible, setisVisible] = useState(false);
 
@@ -65,10 +87,14 @@ const RateService = ({ navigation }) => {
                     backgroundColor={'transparent'}
                     navigation={navigation}
                 />
-                <View style={styles.viewImg}>
-                    <FontAwesome name="user-circle-o" size={100} color="#fff" />
-                </View>
-                <Text style={[styles.txtName,{fontFamily:'ProximaNovaBold'}]}>Amy Farha</Text>
+                {isKeyboardVisible ? null
+                    : <View>
+                        <View style={styles.viewImg}>
+                            <FontAwesome name="user-circle-o" size={100} color="#fff" />
+                        </View>
+                        <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>Amy Farha</Text>
+                    </View>
+                }
             </ImageBackground>
         </View>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.viewFlatlist}>
@@ -76,7 +102,7 @@ const RateService = ({ navigation }) => {
                 onPress={() => navigation.navigate('socialLogin')}
                 style={styles.viewListCard}
             >
-                <Text style={[styles.txtCard,{fontFamily:'ProximaNovaBold'}]}>{i18n.t('hospitality')}</Text>
+                <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('hospitality')}</Text>
                 <View style={{ flexDirection: "row", marginTop: 10 }}>
                     {obj.map((v, i) => {
                         return (
@@ -99,7 +125,7 @@ const RateService = ({ navigation }) => {
                 onPress={() => navigation.navigate('socialLogin')}
                 style={styles.viewListCard}
             >
-                <Text style={[styles.txtCard,{fontFamily:'ProximaNovaBold'}]}>{i18n.t('speed')}</Text>
+                <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('speed')}</Text>
                 <View style={{ flexDirection: "row", marginTop: 10 }}>
                     {obj.map((v, i) => {
                         return (
@@ -122,7 +148,7 @@ const RateService = ({ navigation }) => {
                 onPress={() => navigation.navigate('socialLogin')}
                 style={styles.viewListCard}
             >
-                <Text style={[styles.txtCard,{fontFamily:'ProximaNovaBold'}]}>{i18n.t('service')}</Text>
+                <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('service')}</Text>
                 <View style={{ flexDirection: "row", marginTop: 10 }}>
                     {obj.map((v, i) => {
                         return (
@@ -145,7 +171,7 @@ const RateService = ({ navigation }) => {
                 onPress={() => navigation.navigate('socialLogin')}
                 style={styles.viewListCard}
             >
-                <Text style={[styles.txtCard,{fontFamily:'ProximaNovaBold'}]}>{i18n.t('professionalism')}</Text>
+                <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('professionalism')}</Text>
                 <View style={{ flexDirection: "row", marginTop: 10 }}>
                     {obj.map((v, i) => {
                         return (
@@ -167,14 +193,16 @@ const RateService = ({ navigation }) => {
             <View style={{ alignItems: 'center' }}>
 
                 <View style={styles.viewTip}>
-                    <Text style={[styles.txtCard,{fontFamily:'ProximaNovaBold'}]}>{i18n.t('your_tip_to_waiter')}</Text>
-                    <TextInput style={[styles.inputStyle,{fontFamily:'ProximaNova'}]} />
+                    <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('your_tip_to_waiter')}</Text>
+                    <TextInput
+                        //  onFocus={() => setonHandleFocus(!onHandleFocus)}
+                        style={[styles.inputStyle, { fontFamily: 'ProximaNova' }]} />
                 </View>
 
             </View>
         </ScrollView>
         <TouchableOpacity onPress={handleModalOpen} style={styles.btnValider}>
-            <Text style={{ fontSize: 16,fontFamily:'ProximaNova', color:Colors.fontLight }}>{i18n.t('validate')}</Text>
+            <Text style={{ fontSize: 16, fontFamily: 'ProximaNova', color: Colors.fontLight }}>{i18n.t('validate')}</Text>
         </TouchableOpacity>
 
         <ThankRatingModal

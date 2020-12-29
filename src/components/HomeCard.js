@@ -41,7 +41,7 @@ const HomeCard = ({ navigation, img, rating, name, distance, services, loading, 
                             <View style={{ borderRadius: 20, overflow: "hidden" }}>
                                 <Entypo
                                     name="cross"
-                                    size={21}
+                                    size={20}
                                     color="#485460"
                                     style={{ backgroundColor: Colors.yellow, borderRadius: 20 }}
                                 />
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         width: "90%", height: 15, backgroundColor: "#F6F6F6", marginTop: 10
     },
     btnCross: {
-        backgroundColor: "#fff", position: "absolute", alignSelf: "flex-end",
+        backgroundColor: "#f9f9f9", position: "absolute", alignSelf: "flex-end",
         borderRadius: 20, margin: -1, right: 0, width: 30, height: 30,
         justifyContent: "center", alignItems: "center"
     },

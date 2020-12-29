@@ -113,7 +113,7 @@ const RateService = ({ navigation }) => {
                                     type={v <= starSelect ? "filled" :
                                         v === starSelect + 0.5 ? "half" : "empty"
                                     }
-                                    notRatedStarColor='rgba(0,0,0,0.2)'
+                                    notRatedStarColor='rgba(0,0,0,0.1)'
                                 />
                             </TouchableOpacity>
                         )
@@ -136,7 +136,7 @@ const RateService = ({ navigation }) => {
                                     type={v <= starSelect ? "filled" :
                                         v === starSelect + 0.5 ? "half" : "empty"
                                     }
-                                    notRatedStarColor='rgba(0,0,0,0.2)'
+                                    notRatedStarColor='rgba(0,0,0,0.1)'
                                 />
                             </TouchableOpacity>
                         )
@@ -159,7 +159,7 @@ const RateService = ({ navigation }) => {
                                     type={v <= starSelect ? "filled" :
                                         v === starSelect + 0.5 ? "half" : "empty"
                                     }
-                                    notRatedStarColor='rgba(0,0,0,0.2)'
+                                    notRatedStarColor='rgba(0,0,0,0.1)'
                                 />
                             </TouchableOpacity>
                         )
@@ -182,7 +182,7 @@ const RateService = ({ navigation }) => {
                                     type={v <= starSelect ? "filled" :
                                         v === starSelect + 0.5 ? "half" : "empty"
                                     }
-                                    notRatedStarColor='rgba(0,0,0,0.2)'
+                                    notRatedStarColor='rgba(0,0,0,0.1)'
                                 />
                             </TouchableOpacity>
                         )
@@ -200,10 +200,10 @@ const RateService = ({ navigation }) => {
                 </View>
 
             </View>
+            <TouchableOpacity onPress={handleModalOpen} style={styles.btnValider}>
+                <Text style={{ fontSize: 16, fontFamily: 'ProximaNova', color: Colors.fontLight }}>{i18n.t('validate')}</Text>
+            </TouchableOpacity>
         </ScrollView>
-        <TouchableOpacity onPress={handleModalOpen} style={styles.btnValider}>
-            <Text style={{ fontSize: 16, fontFamily: 'ProximaNova', color: Colors.fontLight }}>{i18n.t('validate')}</Text>
-        </TouchableOpacity>
 
         <ThankRatingModal
             isVisible={isVisible}

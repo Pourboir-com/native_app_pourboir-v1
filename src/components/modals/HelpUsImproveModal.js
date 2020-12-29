@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     fontSize: 16, color: Colors.fontLight,
   },
   btnConfrm: {
-    backgroundColor: '#EAEAEA',
+    backgroundColor: Colors.yellow,
     borderRadius: 10,
     width: "85%",
     justifyContent: "center", alignItems: "center",

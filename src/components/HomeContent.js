@@ -109,11 +109,11 @@ export default function HomeScreenContent({ searchIconPress, setSearchIconPress,
                         alwaysBounceVertical={true}
                         showsVerticalScrollIndicator={false}
                     >
-                        {
-                            !route.params.crossIcon &&
-                            <Text style={[styles.txtHeading
-                                ,{fontFamily:'ProximaNovaBold'}
-                            ]}>{i18n.t("around_you")}</Text>
+                        { loading ? null :
+                            !route.params.crossIcon && 
+                            <Text style={[styles.txtHeading,{fontFamily:'ProximaNovaBold'}]}>
+                                {i18n.t("around_you")}
+                            </Text> 
                         }
                         <View style={{ flexDirection: "row" }}>
                             <FlatList

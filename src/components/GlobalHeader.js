@@ -146,6 +146,7 @@ const GlobalHeader = (props) => {
                     textAlign: 'center',
                     color: props.color ? props.color : '#FFFFFF',
                     fontSize: props.fontSize ? props.fontSize : 24,
+                    fontFamily: 'ProximaNovaBold'
                   }}>
                   {props.headingText}
                 </Text>

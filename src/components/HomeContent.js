@@ -96,10 +96,10 @@ export default function HomeScreenContent({ searchIconPress, setSearchIconPress,
                             resizeMode="contain"
                         />
                     </View>
-                    <Text style={[styles.txt1NoRest,{fontFamily:'ProximaNovaBold'}]}>
+                    <Text style={[styles.txt1NoRest, { fontFamily: 'ProximaNovaBold' }]}>
                         {i18n.t("you_have_no_restaurant")}
                     </Text>
-                    <Text style={[styles.txt2NoRest,{fontFamily:'ProximaNova'}]}>
+                    <Text style={[styles.txt2NoRest, { fontFamily: 'ProximaNova' }]}>
                         {i18n.t("search_for_rest_and_add")}
                     </Text>
                 </View>
@@ -110,10 +110,10 @@ export default function HomeScreenContent({ searchIconPress, setSearchIconPress,
                         showsVerticalScrollIndicator={false}
                     >
                         { loading ? null :
-                            !route.params.crossIcon && 
-                            <Text style={[styles.txtHeading,{fontFamily:'ProximaNovaBold'}]}>
+                            !route.params.crossIcon &&
+                            <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
                                 {i18n.t("around_you")}
-                            </Text> 
+                            </Text>
                         }
                         <View style={{ flexDirection: "row" }}>
                             <FlatList
@@ -277,6 +277,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: "90%",
         alignSelf: "center",
-        color:"#1E272E"
+        color: "#1E272E"
     },
 });

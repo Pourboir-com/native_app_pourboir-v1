@@ -97,7 +97,7 @@ export default HomeScreen = (props) => {
           >
             <Text style={{
               fontSize: 20, color: COLORS[colorScheme].text.primary,
-              fontFamily: 'ProximaNova',
+              fontFamily: 'ProximaNovaBold',
               fontWeight: 'bold'
             }} ellipsizeMode="tail" numberOfLines={1}>
               {i18n.t('hello')}

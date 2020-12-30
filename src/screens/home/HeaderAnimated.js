@@ -64,6 +64,12 @@ export default HomeScreen = (props) => {
     extrapolate: Extrapolate.CLAMP,
   });
 
+  const borderRadiusIcon = scrollYAnimatedValue.interpolate({
+    inputRange: [0, HEADER_BAR_HEIGHT],
+    outputRange: [10, HEADER_BAR_HEIGHT],
+    extrapolate: Extrapolate.CLAMP,
+  });
+
   useLayoutEffect(() => {
 
     const renderUserIcon = () => {
@@ -114,7 +120,6 @@ export default HomeScreen = (props) => {
   });
 
 
-
   return (
     <>
       {/* <StatusBar backgroundColor={Colors.yellow}    /> */}
@@ -161,7 +166,7 @@ export default HomeScreen = (props) => {
             height: HEADER_BAR_HEIGHT,
             width: searchBarWidth,
             left: spacing(1.5),
-            borderRadius: HEADER_BAR_HEIGHT,
+            borderRadius: borderRadiusIcon,
             backgroundColor: searchBarColor,
             marginTop: 5,
             marginBottom: 10

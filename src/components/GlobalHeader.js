@@ -70,6 +70,7 @@ const GlobalHeader = (props) => {
         zIndex: 10,
         backgroundColor: props.backgroundColor ? props.backgroundColor : Colors.yellow,
         // backgroundColor:"red",
+        position: props.position == 'absoulte' ? 'absolute' : 'relative',
         height: props.height ? props.height : 110,
       }}>
       <View

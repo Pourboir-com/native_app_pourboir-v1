@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import {
     StyleSheet, Text, View, ImageBackground, ScrollView, Image,
-    Dimensions, TouchableOpacity, FlatList, SafeAreaView, KeyboardAvoidingView
+    Dimensions, TouchableOpacity, FlatList, SafeAreaView, KeyboardAvoidingView,
+    Animated
 } from 'react-native';
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import ConfirmationModal from '../../components/modals/ConfirmModal';
@@ -14,6 +15,12 @@ import { StatusBar } from 'expo-status-bar';
 import i18n from '../../li8n';
 
 const ReviewDetails = ({ navigation, route }) => {
+    const scrollY = new Animated.Value(0)
+    const diffClamp = Animated.diffClamp(scrollY, 0, 100)
+    const translateY = diffClamp.interpolate({
+        inputRange: [0, 100],
+        outputRange: [0, -100]
+    })
     // console.log('routesssss',route.params)
     const { img, name, rating, distance, services } = route.params;
     const [confirmModalVisible, setconfirmModalVisible] = useState(false);
@@ -45,51 +52,66 @@ const ReviewDetails = ({ navigation, route }) => {
         backgroundColor={Colors.yellow}
         hidden={true} /> */}
         <StatusBar translucent={true} style='light' />
-        <View style={styles.viewImg}>
-            <ImageBackground
-                source={{ uri: img }}
-                style={{ flex: 1, justifyContent: "space-between" }}
-            >
-                <GlobalHeader
-                    arrow={true}
-                    headingText={name}
-                    fontSize={20}
-                    color={'#fff'}
-                    bold={true}
-                    BackIconColor={'#fff'}
-                    backgroundColor={'transparent'}
-                    navigation={navigation}
-                />
-                <View style={styles.viewBottom}>
-                    <View style={{ flexDirection: "row" }}>
-                        {obj.map((v, i) => {
-                            return (
-                                <TouchableOpacity style={{ marginRight: 3 }} onPress={() => { onPressStar(v) }}>
-                                    <RatingStar starSize={17}
-                                        type={v <= starSelect ? "filled" :
-                                            v === starSelect + 0.5 ? "half" : "empty"
-                                        }
-                                        notRatedStarColor='rgba(255,255,255, 0.6)'
-                                    />
-                                </TouchableOpacity>
-                            )
-                        }
-                        )}
+        <Animated.View
+            style={{
+                transform: [
+                    { translateY: translateY }
+                ],
+                zIndex:100, elevation:4
+            }}
+        >
+            <View style={styles.viewImg}>
+                <ImageBackground
+                    source={{ uri: img }}
+                    style={{ flex: 1, justifyContent: "space-between" }}
+                >
+                    <GlobalHeader
+                        arrow={true}
+                        headingText={name}
+                        fontSize={20}
+                        color={'#fff'}
+                        bold={true}
+                        BackIconColor={'#fff'}
+                        backgroundColor={'transparent'}
+                        // position="absoulte"
+                        navigation={navigation}
+                    />
+                    <View style={styles.viewBottom}>
+                        <View style={{ flexDirection: "row" }}>
+                            {obj.map((v, i) => {
+                                return (
+                                    <TouchableOpacity style={{ marginRight: 3 }} onPress={() => { onPressStar(v) }}>
+                                        <RatingStar starSize={17}
+                                            type={v <= starSelect ? "filled" :
+                                                v === starSelect + 0.5 ? "half" : "empty"
+                                            }
+                                            notRatedStarColor='rgba(255,255,255, 0.6)'
+                                        />
+                                    </TouchableOpacity>
+                                )
+                            }
+                            )}
+                        </View>
+                        <View style={{ alignItems: "flex-end" }}>
+                            <Text style={{ color: "#fff", marginBottom: 10, fontFamily: 'ProximaNova', fontSize: 16 }}>{distance}</Text>
+                            <TouchableOpacity
+                                style={{
+                                    paddingHorizontal: 10, paddingVertical: 5,
+                                    borderWidth: 1, borderColor: "#fff", borderRadius: 7
+                                }}
+                            >
+                                <Text style={{ color: "#fff" }}>{i18n.t("see_the_menu")}</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={{ alignItems:"flex-end"}}>
-                        <Text style={{ color: "#fff",marginBottom:10, fontFamily:'ProximaNova', fontSize:16 }}>{distance}</Text>
-                        <TouchableOpacity 
-                        style={{ paddingHorizontal: 10, paddingVertical: 5, 
-                            borderWidth:1, borderColor:"#fff", borderRadius:7
-                        }}
-                        >
-                            <Text style={{ color: "#fff" }}>{i18n.t("see_the_menu")}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </ImageBackground>
-        </View>
-        <ScrollView bounces={false} alwaysBounceVertical={false} showsVerticalScrollIndicator={false}>
+                </ImageBackground>
+            </View>
+        </Animated.View>
+        <ScrollView
+            onScroll={(e) => {
+                scrollY.setValue(e.nativeEvent.contentOffset.y)
+            }}
+            showsVerticalScrollIndicator={false}>
             <View style={{ flexDirection: "row", marginTop: 15, marginHorizontal: 15 }}>
                 <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('waiters')}</Text>
                 <View>
@@ -208,7 +230,7 @@ const styles = StyleSheet.create({
     },
     viewBottom: {
         flexDirection: "row", marginBottom: 20, justifyContent: "space-between",
-        alignItems: "center", paddingHorizontal: 20, alignItems:'flex-end'
+        alignItems: "center", paddingHorizontal: 20, alignItems: 'flex-end'
     },
     txtName: {
         textAlign: "center", marginLeft: -25, color: "#fff", fontSize: 20
@@ -216,6 +238,7 @@ const styles = StyleSheet.create({
     viewImg: {
         width: "100%", height: 200, borderBottomLeftRadius: 20, borderBottomRightRadius: 20,
         overflow: "hidden",
+        // position:"absolute",top:0, left:0, right:0
     },
     viewItemConatier: {
         width: "90%", backgroundColor: "#fff", alignSelf: "center", height: 80, marginVertical: 10,

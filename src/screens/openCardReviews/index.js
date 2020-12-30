@@ -16,10 +16,10 @@ import i18n from '../../li8n';
 
 const ReviewDetails = ({ navigation, route }) => {
     const scrollY = new Animated.Value(0)
-    const diffClamp = Animated.diffClamp(scrollY, 0, 100)
+    const diffClamp = Animated.diffClamp(scrollY, 0, 50)
     const translateY = diffClamp.interpolate({
-        inputRange: [0, 100],
-        outputRange: [0, -100]
+        inputRange: [0, 50],
+        outputRange: [0, -50]
     })
     // console.log('routesssss',route.params)
     const { img, name, rating, distance, services } = route.params;
@@ -52,12 +52,24 @@ const ReviewDetails = ({ navigation, route }) => {
         backgroundColor={Colors.yellow}
         hidden={true} /> */}
         <StatusBar translucent={true} style='light' />
+        <GlobalHeader
+            arrow={true}
+            headingText={name}
+            fontSize={20}
+            color={'#fff'}
+            bold={true}
+            BackIconColor={'#fff'}
+            backgroundColor={'transparent'}
+            position="absoulte"
+            navigation={navigation}
+        />
         <Animated.View
             style={{
                 transform: [
                     { translateY: translateY }
                 ],
-                zIndex:100, elevation:4
+                elevation: 0,
+                zIndex: 9,
             }}
         >
             <View style={styles.viewImg}>
@@ -65,17 +77,7 @@ const ReviewDetails = ({ navigation, route }) => {
                     source={{ uri: img }}
                     style={{ flex: 1, justifyContent: "space-between" }}
                 >
-                    <GlobalHeader
-                        arrow={true}
-                        headingText={name}
-                        fontSize={20}
-                        color={'#fff'}
-                        bold={true}
-                        BackIconColor={'#fff'}
-                        backgroundColor={'transparent'}
-                        // position="absoulte"
-                        navigation={navigation}
-                    />
+
                     <View style={styles.viewBottom}>
                         <View style={{ flexDirection: "row" }}>
                             {obj.map((v, i) => {
@@ -111,16 +113,17 @@ const ReviewDetails = ({ navigation, route }) => {
             onScroll={(e) => {
                 scrollY.setValue(e.nativeEvent.contentOffset.y)
             }}
+            scrollEventThrottle={1}
             showsVerticalScrollIndicator={false}>
-            <View style={{ flexDirection: "row", marginTop: 15, marginHorizontal: 15 }}>
+            <View style={{ flexDirection: "row", marginTop: 220, marginHorizontal: 15 }}>
                 <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('waiters')}</Text>
                 <View>
-                    <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length}</Text>
+                    <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length*2}</Text>
                 </View>
             </View>
 
             <FlatList
-                data={services}
+                data={[...services,...services]}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item._id}
                 renderItem={(itemData) => (
@@ -229,16 +232,18 @@ const styles = StyleSheet.create({
         flexDirection: "row", marginTop: 30, paddingHorizontal: 10
     },
     viewBottom: {
-        flexDirection: "row", marginBottom: 20, justifyContent: "space-between",
-        alignItems: "center", paddingHorizontal: 20, alignItems: 'flex-end'
+        flexDirection: "row", marginBottom: 10, justifyContent: "space-between",
+        alignItems: "center", paddingHorizontal: 20, alignItems: 'flex-end',
+        bottom: 0, position: 'absolute', width: '100%'
     },
     txtName: {
         textAlign: "center", marginLeft: -25, color: "#fff", fontSize: 20
     },
     viewImg: {
+
         width: "100%", height: 200, borderBottomLeftRadius: 20, borderBottomRightRadius: 20,
         overflow: "hidden",
-        // position:"absolute",top:0, left:0, right:0
+        position: "absolute", top: 0, left: 0, right: 0
     },
     viewItemConatier: {
         width: "90%", backgroundColor: "#fff", alignSelf: "center", height: 80, marginVertical: 10,

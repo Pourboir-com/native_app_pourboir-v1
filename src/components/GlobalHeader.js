@@ -63,6 +63,7 @@ const GlobalHeader = (props) => {
   return (
     <SafeAreaView
       style={{
+
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
         overflow: 'hidden',
@@ -71,6 +72,9 @@ const GlobalHeader = (props) => {
         backgroundColor: props.backgroundColor ? props.backgroundColor : Colors.yellow,
         // backgroundColor:"red",
         position: props.position == 'absoulte' ? 'absolute' : 'relative',
+        elevation: 0,
+        shadowOpacity: 0,
+        shadowRadius: 0,
         height: props.height ? props.height : 110,
       }}>
       <View

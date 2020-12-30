@@ -56,21 +56,23 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
               />
             </View>
           </ImageBackground>
-          <Text style={[styles.txtName,{fontFamily:'ProximaNovaBold'}]}>
+          <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
             {i18n.t('help_us_improve')}
           </Text>
           <Text
-            style={[styles.txtConfrm,{fontFamily:'ProximaNova'}]}>
+            style={[styles.txtConfrm, { fontFamily: 'ProximaNova' }]}>
             {i18n.t('will_contact_shortly')}
           </Text>
           <TextInput
+            selectionColor={Colors.yellow}
             placeholder={i18n.t('name_of_your_server')}
-            placeholderTextColor="rgba(0,0,0,0.2)"
-            style={[styles.inputStyle,{fontFamily:'ProximaNova'}]}
+            placeholderTextColor="rgba(0,0,0,0.3)"
+
+            style={[styles.inputStyle, { fontFamily: 'ProximaNova', fontWeight: 'bold' }]}
             onFocus={() => { setonHandleFocus(!onHandleFocus) }}
           />
           <TouchableOpacity style={styles.btnConfrm}>
-            <Text style={[styles.txtBtnConfrm,{fontFamily:'ProximaNova'}]}>{i18n.t('add')} </Text>
+            <Text style={[styles.txtBtnConfrm, { fontFamily: 'ProximaNova' }]}>{i18n.t('add')} </Text>
           </TouchableOpacity>
         </KeyboardAvoidingView>
       </ScrollView>
@@ -94,15 +96,16 @@ const styles = StyleSheet.create({
     width: "100%", height: 240,
   },
   inputStyle: {
-    width: "85%", height: 50, backgroundColor: "#F8F8F8", 
+    width: "85%", height: 50, backgroundColor: "#F8F8F8",
     borderRadius: 10, marginVertical: 15,
     fontSize: 16, textAlign: "center"
   },
   txtBtnConfrm: {
-    fontSize: 16, color: Colors.fontLight,
+    fontSize: 16, color: Colors.fontDark,
   },
   btnConfrm: {
-    backgroundColor: Colors.yellow,
+    // backgroundColor: Colors.fontLight,
+    backgroundColor: "#EAEAEA",
     borderRadius: 10,
     width: "85%",
     justifyContent: "center", alignItems: "center",

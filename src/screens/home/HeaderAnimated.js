@@ -77,7 +77,7 @@ export default HomeScreen = (props) => {
       // return <Ionicons name="ios-contact" size={30} onPress={(): void => propsUserIcon.navigation.navigate('SelectSignIn')} />;
       return (
         <View style={[{ margin: 10, },
-        Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT/2} : { marginTop: 5 }
+        Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 2 } : { marginTop: 5 }
         ]}>
           <TouchableOpacity
             onPress={() =>
@@ -91,7 +91,7 @@ export default HomeScreen = (props) => {
     const renderTitle = () => {
       return (
         <View style={[{ margin: 5, },
-        Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT/2 } : { marginTop: 5 }
+        Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 2 } : { marginTop: 5 }
         ]}>
           <Animated.View
             style={{
@@ -174,12 +174,23 @@ export default HomeScreen = (props) => {
             borderRadius: borderRadiusIcon,
             backgroundColor: searchBarColor,
             marginTop: 2,
-            // marginBottom: 10,
-            // margin:20
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 3,
+            },
+            shadowOpacity: 0.2,
+            shadowRadius: 0.1,
+            elevation: 5,
+            overflow: 'hidden',
+            backgroundColor: "white"
 
           }}
         >
-          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+          <View style={{
+            flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start',
+            
+          }}>
             <TouchableOpacity
               onPress={() => props.setsearchIconPress(!props.searchIconPress)}
               style={{ paddingLeft: HEADER_BAR_HEIGHT / 4 }}>

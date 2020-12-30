@@ -69,11 +69,11 @@ export default HomeScreen = (props) => {
     const renderUserIcon = () => {
       // return <Ionicons name="ios-contact" size={30} onPress={(): void => propsUserIcon.navigation.navigate('SelectSignIn')} />;
       return (
-        <View>
+        <View style={{ margin: 10 }}>
           <TouchableOpacity
             onPress={() =>
               props.navigation.navigate('Setting')}>
-            <SvgHeaderUserIcon height={HEADER_BAR_HEIGHT} />
+            <SvgHeaderUserIcon height={HEADER_BAR_HEIGHT} width />
           </TouchableOpacity>
 
         </View>
@@ -81,7 +81,7 @@ export default HomeScreen = (props) => {
     };
     const renderTitle = () => {
       return (
-        <View>
+        <View style={{ margin: 5 }}>
           <Animated.View
             style={{
               alignItems: 'flex-start',
@@ -90,9 +90,11 @@ export default HomeScreen = (props) => {
             }}
           >
             <Text style={{
-              fontSize: 20, color: COLORS[colorScheme].text.primary
+              fontSize: 20, color: COLORS[colorScheme].text.primary,
+              fontFamily: 'ProximaNova',
+              fontWeight: 'bold'
             }} ellipsizeMode="tail" numberOfLines={1}>
-              {i18n.t('hello')} Vincent Delacourt
+              {i18n.t('hello')}
             </Text>
           </Animated.View>
         </View>
@@ -161,6 +163,8 @@ export default HomeScreen = (props) => {
             left: spacing(1.5),
             borderRadius: HEADER_BAR_HEIGHT,
             backgroundColor: searchBarColor,
+            marginTop: 5,
+            marginBottom: 10
 
           }}
         >

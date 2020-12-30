@@ -9,6 +9,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Platform
 } from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
 
@@ -75,11 +76,13 @@ export default HomeScreen = (props) => {
     const renderUserIcon = () => {
       // return <Ionicons name="ios-contact" size={30} onPress={(): void => propsUserIcon.navigation.navigate('SelectSignIn')} />;
       return (
-        <View style={{ margin: 10 }}>
+        <View style={[{ margin: 10, },
+        Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT/2} : { marginTop: 5 }
+        ]}>
           <TouchableOpacity
             onPress={() =>
               props.navigation.navigate('Setting')}>
-            <SvgHeaderUserIcon height={HEADER_BAR_HEIGHT} width />
+            <SvgHeaderUserIcon height={HEADER_BAR_HEIGHT} />
           </TouchableOpacity>
 
         </View>
@@ -87,7 +90,9 @@ export default HomeScreen = (props) => {
     };
     const renderTitle = () => {
       return (
-        <View style={{ margin: 5 }}>
+        <View style={[{ margin: 5, },
+        Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT/2 } : { marginTop: 5 }
+        ]}>
           <Animated.View
             style={{
               alignItems: 'flex-start',

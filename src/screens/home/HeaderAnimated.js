@@ -168,8 +168,9 @@ export default HomeScreen = (props) => {
             left: spacing(1.5),
             borderRadius: borderRadiusIcon,
             backgroundColor: searchBarColor,
-            marginTop: 5,
-            marginBottom: 10
+            marginTop: 2,
+            // marginBottom: 10,
+            // margin:20
 
           }}
         >

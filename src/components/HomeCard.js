@@ -60,8 +60,8 @@ const HomeCard = ({ navigation, img, rating, name, distance, services, loading, 
                         <View style={{ flexDirection: "row", zIndex: 9999 }}>
                             {obj.map((v, i) => {
                                 return (
-                                    <TouchableOpacity onPress={() => { onPressStar(v) }}>
-                                        <RatingStar starSize={17}
+                                    <TouchableOpacity style={{ marginRight: 3 }} onPress={() => { onPressStar(v) }}>
+                                        <RatingStar starSize={16}
                                             type={v <= starSelect ? "filled" :
                                                 v === starSelect + 0.5 ? "half" : "empty"
                                             }

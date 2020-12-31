@@ -22,7 +22,8 @@ const imgBg = require('../../assets/images/Group7.png')
 import i18n from '../../li8n';
 
 const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
-  const [onHandleFocus, setonHandleFocus] = useState(false)
+  const [onHandleFocus, setonHandleFocus] = useState(false);
+  const [remarks, setRemarks] = useState('');
   return (
     <Overlay
       overlayStyle={[styles.container,
@@ -67,11 +68,14 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
             selectionColor={Colors.yellow}
             placeholder={i18n.t('name_of_your_server')}
             placeholderTextColor="rgba(0,0,0,0.3)"
-
+            value={remarks}
+            onChangeText={(e) => { setRemarks(e) }}
             style={[styles.inputStyle, { fontFamily: 'ProximaNova', fontWeight: 'bold' }]}
             onFocus={() => { setonHandleFocus(!onHandleFocus) }}
           />
-          <TouchableOpacity style={styles.btnConfrm}>
+          <TouchableOpacity style={[styles.btnConfrm,
+          remarks !== '' ? { backgroundColor: Colors.yellow } : null
+          ]}>
             <Text style={[styles.txtBtnConfrm, { fontFamily: 'ProximaNova' }]}>{i18n.t('add')} </Text>
           </TouchableOpacity>
         </KeyboardAvoidingView>

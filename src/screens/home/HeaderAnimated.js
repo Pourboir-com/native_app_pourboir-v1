@@ -21,6 +21,7 @@ import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 
 import { COLORS } from '../../constants/colors';
 import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
+import { Feather, Entypo } from "@expo/vector-icons";
 
 import i18n from '../../li8n';
 
@@ -124,6 +125,9 @@ export default HomeScreen = (props) => {
 
   });
 
+  const [isFocused, setIsFocused] = React.useState(false);
+  const [searchVal, setSearchVal] = React.useState('')
+
 
   return (
     <>
@@ -189,7 +193,7 @@ export default HomeScreen = (props) => {
         >
           <View style={{
             flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start',
-            
+
           }}>
             <TouchableOpacity
               onPress={() => props.setsearchIconPress(!props.searchIconPress)}
@@ -197,8 +201,24 @@ export default HomeScreen = (props) => {
               <SvgHeaderSearchIcon />
             </TouchableOpacity>
             <TextInput
+              value={searchVal}
+              onFocus={() => { setIsFocused(true) }}
+              onBlur={() => { setIsFocused(false) }}
+              onChangeText={(e) => { setSearchVal(e) }}
               placeholder={i18n.t('find_your_restaurant')}
               style={{ flex: 1, paddingHorizontal: 25 }} />
+
+            {
+              isFocused &&
+              <TouchableOpacity
+                onPress={() => { setSearchVal('') }}
+                style={{ paddingHorizontal: 8 }}>
+                <Entypo
+                  name="circle-with-cross"
+                  color={'#FCDF6F'}
+                  size={25} />
+              </TouchableOpacity>
+            }
           </View>
         </Animated.View>
       </Animated.View>

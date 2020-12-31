@@ -11,6 +11,7 @@ import { Colors } from '../../constants/Theme';
 import RatingStar from '../../components/RatingComponent';
 import GlobalHeader from '../../components/GlobalHeader';
 import { StatusBar } from 'expo-status-bar';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import i18n from '../../li8n';
 
@@ -51,6 +52,8 @@ const ReviewDetails = ({ navigation, route }) => {
         {/* <StatusBar 
         backgroundColor={Colors.yellow}
         hidden={true} /> */}
+
+
         <StatusBar translucent={true} style='light' />
         <GlobalHeader
             arrow={true}
@@ -72,13 +75,21 @@ const ReviewDetails = ({ navigation, route }) => {
                 zIndex: 9,
             }}
         >
+
             <View style={styles.viewImg}>
+
                 <ImageBackground
                     source={{ uri: img }}
                     style={{ flex: 1, justifyContent: "space-between" }}
                 >
+                <LinearGradient
+                    style={{ zIndex: 101, position: 'absolute', width: '100%', height: '100%' }}
+                    colors={['black','transparent','black']}
+                >
+                </LinearGradient>
 
-                    <View style={styles.viewBottom}>
+
+                    <View style={[styles.viewBottom,{zIndex:102}]}>
                         <View style={{ flexDirection: "row" }}>
                             {obj.map((v, i) => {
                                 return (
@@ -118,12 +129,12 @@ const ReviewDetails = ({ navigation, route }) => {
             <View style={{ flexDirection: "row", marginTop: 220, marginHorizontal: 15 }}>
                 <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('waiters')}</Text>
                 <View>
-                    <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length*2}</Text>
+                    <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length * 2}</Text>
                 </View>
             </View>
 
             <FlatList
-                data={[...services,...services]}
+                data={[...services, ...services]}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item._id}
                 renderItem={(itemData) => (

@@ -9,6 +9,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Platform
 } from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
 
@@ -20,6 +21,7 @@ import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 
 import { COLORS } from '../../constants/colors';
 import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
+import { Feather, Entypo } from "@expo/vector-icons";
 
 import i18n from '../../li8n';
 
@@ -75,11 +77,13 @@ export default HomeScreen = (props) => {
     const renderUserIcon = () => {
       // return <Ionicons name="ios-contact" size={30} onPress={(): void => propsUserIcon.navigation.navigate('SelectSignIn')} />;
       return (
-        <View style={{ margin: 10 }}>
+        <View style={[{ margin: 10, },
+        Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 2 } : { marginTop: 5 }
+        ]}>
           <TouchableOpacity
             onPress={() =>
               props.navigation.navigate('Setting')}>
-            <SvgHeaderUserIcon height={HEADER_BAR_HEIGHT} width />
+            <SvgHeaderUserIcon height={HEADER_BAR_HEIGHT} />
           </TouchableOpacity>
 
         </View>
@@ -87,7 +91,9 @@ export default HomeScreen = (props) => {
     };
     const renderTitle = () => {
       return (
-        <View style={{ margin: 5 }}>
+        <View style={[{ margin: 5, },
+        Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 2 } : { marginTop: 5 }
+        ]}>
           <Animated.View
             style={{
               alignItems: 'flex-start',
@@ -118,6 +124,9 @@ export default HomeScreen = (props) => {
     });
 
   });
+
+  const [isFocused, setIsFocused] = React.useState(false);
+  const [searchVal, setSearchVal] = React.useState('')
 
 
   return (
@@ -169,20 +178,47 @@ export default HomeScreen = (props) => {
             borderRadius: borderRadiusIcon,
             backgroundColor: searchBarColor,
             marginTop: 2,
-            // marginBottom: 10,
-            // margin:20
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 3,
+            },
+            shadowOpacity: 0.2,
+            shadowRadius: 0.1,
+            elevation: 5,
+            overflow: 'hidden',
+            backgroundColor: "white"
 
           }}
         >
-          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+          <View style={{
+            flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start',
+
+          }}>
             <TouchableOpacity
               onPress={() => props.setsearchIconPress(!props.searchIconPress)}
               style={{ paddingLeft: HEADER_BAR_HEIGHT / 4 }}>
               <SvgHeaderSearchIcon />
             </TouchableOpacity>
             <TextInput
+              value={searchVal}
+              onFocus={() => { setIsFocused(true) }}
+              onBlur={() => { setIsFocused(false) }}
+              onChangeText={(e) => { setSearchVal(e) }}
               placeholder={i18n.t('find_your_restaurant')}
               style={{ flex: 1, paddingHorizontal: 25 }} />
+
+            {
+              isFocused &&
+              <TouchableOpacity
+                onPress={() => { setSearchVal('') }}
+                style={{ paddingHorizontal: 8 }}>
+                <Entypo
+                  name="circle-with-cross"
+                  color={'#FCDF6F'}
+                  size={25} />
+              </TouchableOpacity>
+            }
           </View>
         </Animated.View>
       </Animated.View>

@@ -100,7 +100,10 @@ export default HomeScreen = (props) => {
           </>
           :
           <>
-            <ImageBackground style={{ backgroundColor: "red", width: '100%', height: 100 }} source={require('../../assets/images/Group3.png')}>
+            <ImageBackground 
+            style={{ backgroundColor: "red", width: '100%', height: 110 }}
+            resizeMode='cover'
+             source={require('../../assets/images/Group3.png')}>
               <GlobalHeader
                 arrow={true}
                 headingText={i18n.t('your_restaurant')}

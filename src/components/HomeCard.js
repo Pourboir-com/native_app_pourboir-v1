@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image, 
 import { MaterialIcons, FontAwesome, Entypo } from "@expo/vector-icons";
 import { Colors } from '../constants/Theme';
 import RatingStar from './RatingComponent';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { loadAsync } from 'expo-font';
 
@@ -30,12 +31,17 @@ const HomeCard = ({ navigation, img, rating, name, distance, services, loading, 
                     distance: distance,
                     services: services,
                 })}
-                style={[styles.viewItemConatier]}>
+                style={[styles.viewItemConatier, { backgroundColor: 'black' }]}>
                 <ImageBackground style={styles.imgCard} source={{ uri: img }}>
+                    <LinearGradient
+                        style={{ zIndex: 100, position: 'absolute', width: '100%', height: '20%' }}
+                        colors={['rgba(0,0,0,0.5)', 'transparent']}
+                    >
+                    </LinearGradient>
                     {
                         crossIcon &&
                         <TouchableOpacity
-                            style={styles.btnCross}
+                            style={[styles.btnCross, { zIndex: 99999 }]}
                             onPress={deleteCall}
                         >
                             <View style={{ borderRadius: 20, overflow: "hidden" }}>
@@ -48,12 +54,14 @@ const HomeCard = ({ navigation, img, rating, name, distance, services, loading, 
                             </View>
                         </TouchableOpacity>
                     }
-                    <View style={{}}>
-                        <View style={{ flexDirection: "row" }}>
+
+                    <View style={{ zIndex: 101, padding: 12 }}>
+
+                        <View style={{ flexDirection: "row", zIndex: 9999 }}>
                             {obj.map((v, i) => {
                                 return (
-                                    <TouchableOpacity onPress={() => { onPressStar(v) }}>
-                                        <RatingStar starSize={17}
+                                    <TouchableOpacity style={{ marginRight: 3 }} onPress={() => { onPressStar(v) }}>
+                                        <RatingStar starSize={16}
                                             type={v <= starSelect ? "filled" :
                                                 v === starSelect + 0.5 ? "half" : "empty"
                                             }
@@ -67,27 +75,34 @@ const HomeCard = ({ navigation, img, rating, name, distance, services, loading, 
                         <Text style={{ color: "red" }}>
                         </Text>
                     </View>
-                    <View style={{}}>
+                    <View style={{ zIndex: 101, padding: 12 }}>
                         <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>{name}</Text>
                         <View style={styles.view2Card}>
                             <Text style={[styles.txt2Card, { fontFamily: 'ProximaNova' }]}>{distance}</Text>
                             <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                <Text style={{ color: Colors.yellow, fontFamily: 'ProximaNovaBold', fontSize:12 }}>{services.length}</Text>
+                                <Text style={{ color: Colors.yellow, fontFamily: 'ProximaNovaBold', fontSize: 12 }}>{services.length}</Text>
                                 <Text style={[styles.txt2Card, { fontFamily: 'ProximaNova' }]}> serveurs</Text>
                             </View>
                         </View>
                     </View>
+                    <LinearGradient
+                        // Button Linear Gradient
+                        style={{ zIndex: 100, position: 'absolute', width: '100%', height: '50%', bottom: 0 }}
+                        colors={['transparent', 'rgba(0,0,0,0.8)']}
+                    // style={{ flex: 1 }}
+                    >
+                    </LinearGradient>
                 </ImageBackground>
             </TouchableOpacity>
         }
-    </View>
+    </View >
 }
 export default HomeCard;
 
 const styles = StyleSheet.create({
     view2Card: {
         flexDirection: "row", width: "100%", alignItems: "center", justifyContent: "space-between",
-        marginTop:5
+        marginTop: 5
     },
     txtName: {
         color: "#fff", fontSize: 18,
@@ -109,7 +124,7 @@ const styles = StyleSheet.create({
         // fontFamily:'ProximaNova'
     },
     imgCard: {
-        flex: 1, padding: 12, justifyContent: 'space-between'
+        flex: 1, justifyContent: 'space-between'
     },
     viewItemConatier: {
         width: Dimensions.get('window').width * 0.45,

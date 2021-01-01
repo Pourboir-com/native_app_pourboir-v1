@@ -274,7 +274,8 @@ const styles = StyleSheet.create({
     },
     txtHeading: {
         fontSize: 24,
-        marginTop: 10,
+        marginTop: 17,
+        marginBottom:3,
         width: "90%",
         alignSelf: "center",
         color: "#1E272E"

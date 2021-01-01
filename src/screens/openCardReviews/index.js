@@ -11,6 +11,7 @@ import { Colors } from '../../constants/Theme';
 import RatingStar from '../../components/RatingComponent';
 import GlobalHeader from '../../components/GlobalHeader';
 import { StatusBar } from 'expo-status-bar';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import i18n from '../../li8n';
 
@@ -51,6 +52,8 @@ const ReviewDetails = ({ navigation, route }) => {
         {/* <StatusBar 
         backgroundColor={Colors.yellow}
         hidden={true} /> */}
+
+
         <StatusBar translucent={true} style='light' />
         <GlobalHeader
             arrow={true}
@@ -72,13 +75,21 @@ const ReviewDetails = ({ navigation, route }) => {
                 zIndex: 9,
             }}
         >
+
             <View style={styles.viewImg}>
+
                 <ImageBackground
                     source={{ uri: img }}
                     style={{ flex: 1, justifyContent: "space-between" }}
                 >
+                    <LinearGradient
+                        style={{ zIndex: 101, position: 'absolute', width: '100%', height: '100%' }}
+                        colors={['black', 'transparent', 'black']}
+                    >
+                    </LinearGradient>
 
-                    <View style={styles.viewBottom}>
+
+                    <View style={[styles.viewBottom, { zIndex: 102 }]}>
                         <View style={{ flexDirection: "row" }}>
                             {obj.map((v, i) => {
                                 return (
@@ -117,13 +128,13 @@ const ReviewDetails = ({ navigation, route }) => {
             showsVerticalScrollIndicator={false}>
             <View style={{ flexDirection: "row", marginTop: 220, marginHorizontal: 15 }}>
                 <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('waiters')}</Text>
-                <View>
-                    <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length*2}</Text>
+                <View style={styles.viewNumRaters}>
+                    <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length * 2}</Text>
                 </View>
             </View>
 
             <FlatList
-                data={[...services,...services]}
+                data={[...services, ...services]}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item._id}
                 renderItem={(itemData) => (
@@ -134,16 +145,16 @@ const ReviewDetails = ({ navigation, route }) => {
                                 source={{ uri: itemData.item.imgAvatar }}
                             />
                             <View style={{ marginLeft: 10 }}>
-                                <Text style={{ fontFamily: 'ProximaNova', fontSize: 18, color: Colors.fontLight }}>{itemData.item.userName}</Text>
+                                <Text style={styles.txtItemName}>{itemData.item.userName}</Text>
                                 <View style={{ flexDirection: "row" }}>
                                     {obj.map((v, i) => {
                                         return (
-                                            <TouchableOpacity style={{ marginRight: 2 }} onPress={() => { onPressStar(v) }}>
+                                            <TouchableOpacity style={{ marginRight: 3 }} onPress={() => { onPressStar(v) }}>
                                                 <RatingStar starSize={15}
                                                     type={v <= starSelect ? "filled" :
                                                         v === starSelect + 0.5 ? "half" : "empty"
                                                     }
-                                                    notRatedStarColor='rgba(0,0,0,0.2)'
+                                                    notRatedStarColor='rgba(0,0,0,0.1)'
                                                 />
                                             </TouchableOpacity>
                                         )
@@ -201,6 +212,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#f9f9f9"
     },
+    txtItemName: {
+        fontFamily: 'ProximaNova', fontSize: 18, color: Colors.fontLight,
+        letterSpacing: 0.5
+    },
     btnAdd: {
         backgroundColor: Colors.yellow, padding: 4, borderRadius: 6, marginLeft: 10
     },
@@ -222,8 +237,14 @@ const styles = StyleSheet.create({
         justifyContent: "center", alignItems: "center", borderRadius: 10, marginBottom: 15, marginTop: 1
     },
     txtNumRaters: {
-        backgroundColor: Colors.yellow, paddingVertical: 3, paddingHorizontal: 9,
-        marginLeft: 10, fontSize: 18, borderRadius: 15
+        // backgroundColor: Colors.yellow, paddingVertical: 3, paddingHorizontal: 9,
+        // marginLeft: 10, 
+        fontSize: 18,
+        //  borderRadius: 15
+    },
+    viewNumRaters: {
+        overflow: "hidden", backgroundColor: Colors.yellow, marginLeft: 10,
+        borderRadius:15, paddingHorizontal:9, alignItems:"center", justifyContent:"center"
     },
     txtHeading: {
         alignSelf: "center", fontSize: 24

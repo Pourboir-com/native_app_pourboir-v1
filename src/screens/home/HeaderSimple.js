@@ -5,7 +5,7 @@ import {
     StyleSheet,
     TextInput,
 } from 'react-native'
-import { Feather, Entypo } from "@expo/vector-icons";
+import { Feather, Entypo, AntDesign } from "@expo/vector-icons";
 
 import { Colors } from '../../constants/Theme';
 
@@ -38,7 +38,7 @@ export default function HeaderSimple(props) {
                     style={{ paddingHorizontal: 8 }}>
 
                     <Feather name="search" color={Colors.yellow} size={25} />
-                    
+
                 </TouchableOpacity>
 
                 <TextInput
@@ -47,10 +47,18 @@ export default function HeaderSimple(props) {
 
                 <TouchableOpacity
                     style={{ paddingHorizontal: 8 }}>
-                    <Entypo
-                        name="circle-with-cross"
-                        color={Colors.yellow}
-                        size={25} />
+                    <View style={{ 
+                        backgroundColor: Colors.yellow,
+                    borderRadius:20,alignItems:"center",justifyContent:"center",
+                    padding:4
+                     }}>
+                        {/* <Entypo
+                            name="cross"
+                            color={'#1E272E'}
+                            size={25}
+                        /> */}
+                        <AntDesign name="close" size={16} color="#485460" />
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>
@@ -61,7 +69,8 @@ const styles = StyleSheet.create({
 
     viewInputSearch: {
         flexDirection: "row", alignItems: "center", backgroundColor: "#fff", width: "90%",
-        marginTop: 45, alignSelf: "center", borderRadius: 7, overflow: "hidden"
+        marginTop: 45, alignSelf: "center", borderRadius: 20, 
+        // overflow: "hidden"
     },
     viewHeader2: {
         width: "100%", height: 110,

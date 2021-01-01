@@ -1,5 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState,  } from "react";
+import React, { useState, } from "react";
+import { ImageBackground } from "react-native";
+
 import { Colors } from "../../constants/Theme";
 import GlobalHeader from '../../components/GlobalHeader';
 
@@ -14,14 +16,19 @@ export default Remove = (props) => {
 
     return (
         <>
-            <GlobalHeader
-                arrow={true}
-                headingText={i18n.t('your_restaurant')}
-                fontSize={17}
-                color={Colors.fontDark}
-                navigation={navigation}
-                setting={true}
-            />
+            <ImageBackground style={{ width: '100%', height: 100 }} source={require('../../assets/images/Group3.png')}>
+
+                <GlobalHeader
+                    arrow={true}
+                    headingText={i18n.t('your_restaurant')}
+                    fontSize={17}
+                    color={Colors.fontDark}
+                    navigation={navigation}
+                    setting={true}
+                    backgroundColor={'transparent'}
+                />
+            </ImageBackground>
+
             <HomeScreenContent
                 loading={loading}
                 setLoading={setLoading}

@@ -64,7 +64,9 @@ const RateService = ({ navigation }) => {
     };
 
     // Star arrayyyyyyyy
-    const [starSelect, setstarSelect] = useState(3.5)
+    const [starSelect, setstarSelect] = useState(0);
+    const [remarks, setRemarks] = useState('');
+
     const obj = [1, 2, 3, 4, 5];
 
     const onPressStar = (v) => {
@@ -195,12 +197,18 @@ const RateService = ({ navigation }) => {
                 <View style={styles.viewTip}>
                     <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('your_tip_to_waiter')}</Text>
                     <TextInput
+                        value={remarks}
+                        onChangeText={(e) => { setRemarks(e) }}
                         //  onFocus={() => setonHandleFocus(!onHandleFocus)}
                         style={[styles.inputStyle, { fontFamily: 'ProximaNova' }]} />
                 </View>
 
             </View>
-            <TouchableOpacity onPress={handleModalOpen} style={styles.btnValider}>
+            <TouchableOpacity onPress={handleModalOpen}
+
+                style={[styles.btnValider,
+                starSelect !== 0 && remarks !== '' ? { backgroundColor: Colors.yellow } : null
+                ]}>
                 <Text style={{ fontSize: 16, fontFamily: 'ProximaNova', color: Colors.fontLight }}>{i18n.t('validate')}</Text>
             </TouchableOpacity>
         </ScrollView>
@@ -231,7 +239,7 @@ const styles = StyleSheet.create({
         borderRadius: 15, alignItems: "center", borderWidth: 1, borderColor: 'rgba(0,0,0,0.05)'
     },
     txtCard: {
-        fontSize: 18, marginTop: 15
+        fontSize: 18, marginTop: 15, letterSpacing:1
     },
     viewFlatlist: {
         backgroundColor: "transparent", width: "100%", flex: 1, marginTop: -40

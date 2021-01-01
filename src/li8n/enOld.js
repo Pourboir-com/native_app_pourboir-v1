@@ -28,9 +28,9 @@ export default {
     // No location
     activate_your_geolocation: 'Activate your geolocation',
     activate_geoloc: 'Activate geolocation',
-
+    
     // Settings
-    setting: 'Settings',
+    setting: 'Setting',
     rate_application:'Rate the application',
     contact_us:'Contact us',
     // are_you_a_waiter   open card reviews

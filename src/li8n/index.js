@@ -1,5 +1,5 @@
-import en from './en.js';
-import fr from './fr.js';
+import en from './enOld.js';
+import fr from './frOld.js';
 
 // import * as Localization from 'expo-localization';
 // import i18n from 'i18n-js';

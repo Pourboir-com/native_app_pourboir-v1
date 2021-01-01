@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
 
     viewInputSearch: {
         flexDirection: "row", alignItems: "center", backgroundColor: "#fff", width: "90%",
-        marginTop: 45, alignSelf: "center", borderRadius: 7, overflow: "hidden"
+        marginTop: 45, alignSelf: "center", borderRadius: 20, 
+        // overflow: "hidden"
     },
     viewHeader2: {
         width: "100%", height: 110,

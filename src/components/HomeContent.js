@@ -108,7 +108,7 @@ export default function HomeScreenContent({ searchIconPress, setSearchIconPress,
                         bounces={true}
                         alwaysBounceVertical={true}
                         showsVerticalScrollIndicator={false}
-                        style={{backgroundColor:'#f9f9f9'}}
+                        style={{ backgroundColor: '#f9f9f9' }}
                     >
                         { loading ? null :
                             !route.params.crossIcon &&
@@ -116,7 +116,11 @@ export default function HomeScreenContent({ searchIconPress, setSearchIconPress,
                                 {i18n.t("around_you")}
                             </Text>
                         }
-                        <View style={{ flexDirection: "row" }}>
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                marginTop: 2,
+                            }}>
                             <FlatList
                                 data={loading ? dummyArray : ItemsEven}
                                 showsVerticalScrollIndicator={false}
@@ -275,8 +279,8 @@ const styles = StyleSheet.create({
     },
     txtHeading: {
         fontSize: 24,
-        marginTop: 17,
-        marginBottom:3,
+        marginTop: 20,
+        marginBottom: 3,
         width: "90%",
         alignSelf: "center",
         color: "#1E272E"

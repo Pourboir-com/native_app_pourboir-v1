@@ -21,7 +21,7 @@ import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 
 import { COLORS } from '../../constants/colors';
 import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
-import { Feather, Entypo } from "@expo/vector-icons";
+import { Feather, Entypo, AntDesign } from "@expo/vector-icons";
 
 import i18n from '../../li8n';
 
@@ -210,13 +210,31 @@ export default HomeScreen = (props) => {
 
             {
               isFocused &&
+              // <TouchableOpacity
+              //   onPress={() => { setSearchVal('') }}
+              //   style={{ paddingHorizontal: 8 }}>
+              //   {/* <Entypo
+              //     name="circle-with-cross"
+              //     color={'#FCDF6F'}
+              //     size={25} /> */}
+              //   <AntDesign name="close" size={16} color="#485460" />
+
+              // </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => { setSearchVal('') }}
                 style={{ paddingHorizontal: 8 }}>
-                <Entypo
-                  name="circle-with-cross"
-                  color={'#FCDF6F'}
-                  size={25} />
+                <View style={{
+                  backgroundColor: "#FCDF6F",
+                  borderRadius: 20, alignItems: "center", justifyContent: "center",
+                  padding: 4
+                }}>
+                  {/* <Entypo
+                      name="cross"
+                      color={'#1E272E'}
+                      size={25}
+                  /> */}
+                  <AntDesign name="close" size={16} color="#485460" />
+                </View>
               </TouchableOpacity>
             }
           </View>

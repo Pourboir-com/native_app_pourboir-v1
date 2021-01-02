@@ -25,10 +25,10 @@ import { Feather, Entypo, AntDesign } from "@expo/vector-icons";
 
 import i18n from '../../li8n';
 
-
 const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3 + getStatusBarHeight();
 
 export default HomeScreen = (props) => {
+
   const scrollRef = useRef(null);
 
   const navigation = useNavigation();
@@ -38,7 +38,8 @@ export default HomeScreen = (props) => {
 
   const headerHeight = scrollYAnimatedValue.interpolate({
     inputRange: [0, HEADER_HEIGHT],
-    outputRange: [0, -HEADER_HEIGHT + HEADER_BAR_HEIGHT + getStatusBarHeight() + spacing(1)],
+    // outputRange: [0, -HEADER_HEIGHT + HEADER_BAR_HEIGHT + getStatusBarHeight() + spacing(1)],
+    outputRange: [0, -HEADER_HEIGHT + (1.5 * HEADER_BAR_HEIGHT) + getStatusBarHeight()],
     extrapolate: Extrapolate.CLAMP,
   });
   const searchBarOpacity = scrollYAnimatedValue.interpolate({
@@ -57,12 +58,18 @@ export default HomeScreen = (props) => {
   });
   const searchBarTop = scrollYAnimatedValue.interpolate({
     inputRange: [0, HEADER_HEIGHT],
-    outputRange: [HEADER_HEIGHT - 1.7 * HEADER_BAR_HEIGHT, getStatusBarHeight()],
+    outputRange: [100, spacing(1) + getStatusBarHeight()],
+    outputRange: [spacing(1) * 2 + getStatusBarHeight() * 2, spacing(1) + getStatusBarHeight()],
+    outputRange: [spacing(1) + getStatusBarHeight(), HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT],
+    outputRange: [HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT, getStatusBarHeight() <= 24 ? spacing(1) + getStatusBarHeight() : getStatusBarHeight() - (getStatusBarHeight() - 24)],
+
     extrapolate: Extrapolate.CLAMP,
   });
   const titleHeaderMarginLeft = scrollYAnimatedValue.interpolate({
     inputRange: [0, HEADER_HEIGHT],
-    outputRange: [0, HEADER_BAR_HEIGHT + spacing(1)],
+    // outputRange: [0, HEADER_BAR_HEIGHT + spacing(1.5)],
+    outputRange: [0, getStatusBarHeight() <= 24 ? LAYOUT.window.width * 0.4 : LAYOUT.window.width * 0.5],
+
     extrapolate: Extrapolate.CLAMP,
   });
 
@@ -73,12 +80,13 @@ export default HomeScreen = (props) => {
   });
 
   useLayoutEffect(() => {
+    // alert(())
 
     const renderUserIcon = () => {
       // return <Ionicons name="ios-contact" size={30} onPress={(): void => propsUserIcon.navigation.navigate('SelectSignIn')} />;
       return (
-        <View style={[{ margin: 10, },
-        Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 2 } : { marginTop: 5 }
+        <View style={[{ top: spacing(1), position: "absolute", right: spacing(2.5), },
+          // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
         ]}>
           <TouchableOpacity
             onPress={() =>
@@ -90,19 +98,23 @@ export default HomeScreen = (props) => {
       );
     };
     const renderTitle = () => {
+
       return (
-        <View style={[{ margin: 5, },
-        Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 2 } : { marginTop: 5 }
+        <View style={[{ top: spacing(1), position: "absolute", left: spacing(2.5), },
+          // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
         ]}>
           <Animated.View
             style={{
-              alignItems: 'flex-start',
+              alignItems: 'center',
               justifyContent: 'center',
               marginLeft: titleHeaderMarginLeft,
+
             }}
           >
             <Text style={{
               fontSize: 20, color: COLORS[colorScheme].text.primary,
+              height: HEADER_BAR_HEIGHT,
+              textAlignVertical: 'center',
               fontFamily: 'ProximaNovaBold',
               fontWeight: 'bold'
             }} ellipsizeMode="tail" numberOfLines={1}>
@@ -114,10 +126,10 @@ export default HomeScreen = (props) => {
     };
 
     navigation.setOptions({
-      headerTitle: renderTitle,
+      headerLeft: renderTitle,
       headerRight: renderUserIcon,
       headerShown: true,
-      headerLeft: null,
+      headerTitle: null,
       headerTransparent: true,
       headerTitleAlign: 'left',
       headerRightContainerStyle: { paddingRight: spacing(2) }
@@ -172,12 +184,12 @@ export default HomeScreen = (props) => {
           style={{
             position: 'absolute',
             top: searchBarTop,
+            marginTop: 0,
             height: HEADER_BAR_HEIGHT,
             width: searchBarWidth,
-            left: spacing(1.5),
+            left: spacing(2.5),
             borderRadius: borderRadiusIcon,
             backgroundColor: searchBarColor,
-            marginTop: 2,
             shadowColor: "#000",
             shadowOffset: {
               width: 0,
@@ -187,7 +199,7 @@ export default HomeScreen = (props) => {
             shadowRadius: 0.1,
             elevation: 5,
             overflow: 'hidden',
-            backgroundColor: "white"
+            backgroundColor: "white",
 
           }}
         >

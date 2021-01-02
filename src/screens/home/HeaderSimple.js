@@ -8,9 +8,11 @@ import {
 import { Feather, Entypo, AntDesign } from "@expo/vector-icons";
 
 import { Colors } from '../../constants/Theme';
-
+import { Keyboard } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { spacing } from '../../constants/layout';
+
+import { HEADER_BAR_HEIGHT, LAYOUT } from '../../constants/layout';
 
 
 export default function HeaderSimple(props) {
@@ -24,13 +26,13 @@ export default function HeaderSimple(props) {
         navigation.setOptions({
             headerTitle: '',
             headerRight: null,
-            headerShown: true,
+            headerShown: false,
             headerLeft: null,
             headerTransparent: true,
             headerTitleAlign: 'left',
-            headerRightContainerStyle: { paddingRight: spacing(2) }
         });
     });
+
 
     return (
         <View style={styles.viewHeader2}>
@@ -47,20 +49,35 @@ export default function HeaderSimple(props) {
                 <TextInput
 
                     value={searchVal}
-                    onFocus={() => { setIsFocused(true) }}
+                    onFocus={() => {
+                        setIsFocused(true)
+                    }}
                     onBlur={() => { setIsFocused(false) }}
                     onChangeText={(e) => { setSearchVal(e) }}
+                    style={{
+                        shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 3,
+                        },
+                        shadowOpacity: 0.2,
+                        shadowRadius: 0.1,
+                        elevation: 5,
+                        zIndex: 120
 
+                    }}
                     placeholder="Search"
-                    style={styles.inputSearch} />
+                    style={styles.inputSearch}
+
+                />
 
                 <TouchableOpacity
                     onPress={() => { setSearchVal('') }}
-                    style={{ paddingHorizontal: 8 }}>
+                    style={{ paddingHorizontal: 8, }}>
                     <View style={{
                         backgroundColor: Colors.yellow,
                         borderRadius: 20, alignItems: "center", justifyContent: "center",
-                        padding: 4
+                        padding: 4,
                     }}>
                         {/* <Entypo
                             name="cross"
@@ -89,7 +106,7 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 20
     },
     inputSearch: {
-        height: 45, backgroundColor: "#fff",
+        height: HEADER_BAR_HEIGHT, backgroundColor: "#fff",
         paddingHorizontal: 5, paddingVertical: 0, flex: 1
     },
 

@@ -198,9 +198,23 @@ const RateService = ({ navigation }) => {
                     <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('your_tip_to_waiter')}</Text>
                     <TextInput
                         value={remarks}
-                        onChangeText={(e) => { setRemarks(e) }}
+                        onChangeText={(e) => {
+                            if (remarks.length - 1 === e.length) {
+                                setRemarks(e)
+                            }
+                            else {
+                                if (e.length > 0) {
+                                    let str = e.replace("$", "")
+                                    setRemarks(str + "$")
+                                }
+                                else {
+                                    setRemarks(e)
+                                }
+                            }
+                        }}
+
                         //  onFocus={() => setonHandleFocus(!onHandleFocus)}
-                        style={[styles.inputStyle, { fontFamily: 'ProximaNova' }]} />
+                        style={[styles.inputStyle, { fontFamily: 'ProximaNova', textAlign: 'center' }]} />
                 </View>
 
             </View>
@@ -239,7 +253,7 @@ const styles = StyleSheet.create({
         borderRadius: 15, alignItems: "center", borderWidth: 1, borderColor: 'rgba(0,0,0,0.05)'
     },
     txtCard: {
-        fontSize: 18, marginTop: 15, letterSpacing:1
+        fontSize: 18, marginTop: 15, letterSpacing: 1
     },
     viewFlatlist: {
         backgroundColor: "transparent", width: "100%", flex: 1, marginTop: -40

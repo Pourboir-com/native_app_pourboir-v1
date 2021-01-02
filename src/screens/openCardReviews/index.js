@@ -126,10 +126,12 @@ const ReviewDetails = ({ navigation, route }) => {
             }}
             scrollEventThrottle={1}
             showsVerticalScrollIndicator={false}>
-            <View style={{ flexDirection: "row", marginTop: 220, marginHorizontal: 15 }}>
+            <View style={{ flexDirection: "row", marginTop: 220, marginHorizontal: 15, marginBottom:10, alignItems:'center' }}>
                 <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('waiters')}</Text>
                 <View style={styles.viewNumRaters}>
-                    <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length * 2}</Text>
+                    <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>2</Text>
+                    
+                    {/* <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length * 2}</Text> */}
                 </View>
             </View>
 
@@ -243,11 +245,19 @@ const styles = StyleSheet.create({
         //  borderRadius: 15
     },
     viewNumRaters: {
-        overflow: "hidden", backgroundColor: Colors.yellow, marginLeft: 10,
-        borderRadius:15, paddingHorizontal:9, alignItems:"center", justifyContent:"center"
+        overflow: "hidden", backgroundColor: Colors.yellow, marginLeft: 23,
+        borderRadius:8,
+        // paddingHorizontal:8, 
+        paddingTop:1,
+        paddingLeft:7,
+        paddingRight:8,
+        width:25,
+        height:25,
+        paddingVertical:1,
+        alignItems:"center", justifyContent:"center"
     },
     txtHeading: {
-        alignSelf: "center", fontSize: 24
+        alignSelf: "center", fontSize: 24, lineHeight:32
     },
     viewHeader: {
         flexDirection: "row", marginTop: 30, paddingHorizontal: 10

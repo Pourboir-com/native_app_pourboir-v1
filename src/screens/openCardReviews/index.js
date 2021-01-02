@@ -63,7 +63,7 @@ const ReviewDetails = ({ navigation, route }) => {
             bold={true}
             BackIconColor={'#fff'}
             backgroundColor={'transparent'}
-            position="absoulte"
+            position="absolute"
             navigation={navigation}
         />
         <Animated.View

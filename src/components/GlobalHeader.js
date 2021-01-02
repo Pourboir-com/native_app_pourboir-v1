@@ -71,7 +71,7 @@ const GlobalHeader = (props) => {
         zIndex: 10,
         backgroundColor: props.backgroundColor ? props.backgroundColor : Colors.yellow,
         // backgroundColor:"red",
-        position: props.position == 'absoulte' ? 'absolute' : 'relative',
+        position: props.position == 'absolute' ? 'absolute' : 'relative',
         elevation: 0,
         shadowOpacity: 0,
         shadowRadius: 0,

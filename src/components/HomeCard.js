@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         width: "90%", height: 15, backgroundColor: "#F6F6F6", marginTop: 10
     },
     btnCross: {
-        backgroundColor: "red", position: "absolute", alignSelf: "flex-end",
+        backgroundColor: "#f9f9f9", position: "absolute", alignSelf: "flex-end",
         borderRadius: 20, margin: -4, right: 0, width: 30, height: 30,
         justifyContent: "center", alignItems: "center", borderColor: '#f9f9f9', borderWidth: 5
     },

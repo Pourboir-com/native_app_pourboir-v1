@@ -1,7 +1,7 @@
 export default {
     // home
     your_restaurant:'Your restaurants',
-    hello: 'Hello',
+    hello: 'Bonjour',
     find_your_restaurant: 'Find your restaurant',
     around_you: 'Around you',
     serveurs: 'servers',

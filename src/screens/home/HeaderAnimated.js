@@ -82,6 +82,7 @@ export default HomeScreen = (props) => {
     outputRange: [10, HEADER_BAR_HEIGHT],
     extrapolate: Extrapolate.CLAMP,
   });
+  
 
   useLayoutEffect(() => {
     // alert(())
@@ -101,6 +102,8 @@ export default HomeScreen = (props) => {
         </View>
       );
     };
+    alert(getStatusBarHeight());
+
     const renderTitle = () => {
 
       return (

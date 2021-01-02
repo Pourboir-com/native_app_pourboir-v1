@@ -204,8 +204,8 @@ const RateService = ({ navigation }) => {
                             }
                             else {
                                 if (e.length > 0) {
-                                    let str = e.replace("$", "")
-                                    setRemarks(str + "$")
+                                    let str = e.replace("€", "")
+                                    setRemarks(str + "€")
                                 }
                                 else {
                                     setRemarks(e)

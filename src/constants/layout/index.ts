@@ -18,8 +18,14 @@ export const spacing = (value: number): number => {
   return value * 8;
 };
 
+// export const HEADER_BAR_HEIGHT = Platform.select({
+//   ios: 56,
+//   android: 50,
+//   default: 64,
+// });
+
 export const HEADER_BAR_HEIGHT = Platform.select({
-  ios: 56,
-  android: 50,
-  default: 64,
+  ios: 40,
+  android: 40,
+  default: 40,
 });

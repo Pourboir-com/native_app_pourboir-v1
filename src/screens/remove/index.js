@@ -9,12 +9,14 @@ import HomeScreenContent from '../../components/HomeContent'
 
 import i18n from "../../li8n";
 import { View } from "react-native";
+import { Dimensions } from "react-native";
 export default Remove = (props) => {
     const [loading, setLoading] = useState(false);
     const [searchIconPress, setSearchIconPress] = useState(false);
 
     const navigation = useNavigation();
 
+    // alert(Dimensions.get('window').width)
     return (
         <>
             <View style={{
@@ -23,8 +25,8 @@ export default Remove = (props) => {
             }}>
                 <View style={{
                     width: '100%', height: 100,
-                    borderBottomLeftRadius: 25,
-                    borderBottomRightRadius: 25,
+                    borderBottomLeftRadius: Dimensions.get('window').width*0.06,
+                    borderBottomRightRadius:Dimensions.get('window').width*0.06,
                     overflow: 'hidden',
                     backgroundColor: '#f9f9f9'
                 }}>

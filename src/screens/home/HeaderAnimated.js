@@ -49,7 +49,7 @@ export default HomeScreen = (props) => {
   });
   const searchBarWidth = scrollYAnimatedValue.interpolate({
     inputRange: [0, HEADER_HEIGHT / 2],
-    outputRange: [LAYOUT.window.width - spacing(3.5), HEADER_BAR_HEIGHT],
+    outputRange: [LAYOUT.window.width - spacing(5), HEADER_BAR_HEIGHT],
     extrapolate: Extrapolate.CLAMP,
   });
   const searchBarColor = Animated.interpolateColors(scrollYAnimatedValue, {
@@ -67,8 +67,8 @@ export default HomeScreen = (props) => {
   });
   const titleHeaderMarginLeft = scrollYAnimatedValue.interpolate({
     inputRange: [0, HEADER_HEIGHT],
-    // outputRange: [0, HEADER_BAR_HEIGHT + spacing(1.5)],
-    outputRange: [0, getStatusBarHeight() <= 24 ? LAYOUT.window.width * 0.4 : LAYOUT.window.width * 0.5],
+    outputRange: [0, HEADER_BAR_HEIGHT + spacing(2.5)],
+    // outputRange: [0, (LAYOUT.window.width * 0.5) ],
 
     extrapolate: Extrapolate.CLAMP,
   });
@@ -108,6 +108,7 @@ export default HomeScreen = (props) => {
               alignItems: 'center',
               justifyContent: 'center',
               marginLeft: titleHeaderMarginLeft,
+              // width: titleHeaderMarginLeft
 
             }}
           >
@@ -115,6 +116,8 @@ export default HomeScreen = (props) => {
               fontSize: 20, color: COLORS[colorScheme].text.primary,
               height: HEADER_BAR_HEIGHT,
               textAlignVertical: 'center',
+              textAlign: 'center',
+
               fontFamily: 'ProximaNovaBold',
               fontWeight: 'bold'
             }} ellipsizeMode="tail" numberOfLines={1}>

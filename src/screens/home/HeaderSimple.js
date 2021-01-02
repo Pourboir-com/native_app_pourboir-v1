@@ -17,6 +17,9 @@ export default function HeaderSimple(props) {
 
     const navigation = useNavigation();
 
+    const [isFocused, setIsFocused] = React.useState(false);
+    const [searchVal, setSearchVal] = React.useState('')
+
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerTitle: '',
@@ -42,16 +45,23 @@ export default function HeaderSimple(props) {
                 </TouchableOpacity>
 
                 <TextInput
+
+                    value={searchVal}
+                    onFocus={() => { setIsFocused(true) }}
+                    onBlur={() => { setIsFocused(false) }}
+                    onChangeText={(e) => { setSearchVal(e) }}
+
                     placeholder="Search"
                     style={styles.inputSearch} />
 
                 <TouchableOpacity
+                    onPress={() => { setSearchVal('') }}
                     style={{ paddingHorizontal: 8 }}>
-                    <View style={{ 
+                    <View style={{
                         backgroundColor: Colors.yellow,
-                    borderRadius:20,alignItems:"center",justifyContent:"center",
-                    padding:4
-                     }}>
+                        borderRadius: 20, alignItems: "center", justifyContent: "center",
+                        padding: 4
+                    }}>
                         {/* <Entypo
                             name="cross"
                             color={'#1E272E'}
@@ -69,7 +79,7 @@ const styles = StyleSheet.create({
 
     viewInputSearch: {
         flexDirection: "row", alignItems: "center", backgroundColor: "#fff", width: "90%",
-        marginTop: 45, alignSelf: "center", borderRadius: 20, 
+        marginTop: 45, alignSelf: "center", borderRadius: 10,
         // overflow: "hidden"
     },
     viewHeader2: {

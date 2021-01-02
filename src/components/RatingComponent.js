@@ -12,9 +12,10 @@ const RatingStar = ({ starSize, filled, containerPadding, containerBgColor, notR
         backgroundColor: containerBgColor ? containerBgColor : 'transparent',
     }, padding ? { alignItems: 'center' } : {}}>
         <FontAwesome
-            style={padding ? { marginLeft: '6%', marginRight: '6%' } : {}}
+            style={padding ? { marginLeft: '6%', marginRight: '6%', } : {}}
             name={type === 'half' ? 'star-half-empty' : 'star'}
             size={starSize ? starSize : 20}
+
             color={type === 'filled' || type === 'half' ? Colors.yellow : notRatedStarColor}
         />
     </View>

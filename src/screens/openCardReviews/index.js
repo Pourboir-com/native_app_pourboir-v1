@@ -146,11 +146,11 @@ const ReviewDetails = ({ navigation, route }) => {
                             />
                             <View style={{ marginLeft: 10 }}>
                                 <Text style={styles.txtItemName}>{itemData.item.userName}</Text>
-                                <View style={{ flexDirection: "row" }}>
+                                <View style={{ flexDirection: "row", marginTop:8 }}>
                                     {obj.map((v, i) => {
                                         return (
                                             <TouchableOpacity style={{ marginRight: 3 }} onPress={() => { onPressStar(v) }}>
-                                                <RatingStar starSize={15}
+                                                <RatingStar starSize={16}
                                                     type={v <= starSelect ? "filled" :
                                                         v === starSelect + 0.5 ? "half" : "empty"
                                                     }
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     },
     txtItemName: {
         fontFamily: 'ProximaNova', fontSize: 18, color: Colors.fontLight,
-        letterSpacing: 0.5
+        letterSpacing: 0, lineHeight:24
     },
     btnAdd: {
         backgroundColor: Colors.yellow, padding: 4, borderRadius: 6, marginLeft: 10

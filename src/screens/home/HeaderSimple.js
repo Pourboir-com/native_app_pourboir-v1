@@ -84,7 +84,7 @@ export default function HeaderSimple(props) {
                             color={'#1E272E'}
                             size={25}
                         /> */}
-                        <AntDesign name="close" size={16} color="#485460" />
+                        <AntDesign name="close" size={14} color="#485460" />
                     </View>
                 </TouchableOpacity>
             </View>

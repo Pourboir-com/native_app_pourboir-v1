@@ -43,6 +43,7 @@ const GlobalHeader = (props) => {
 
   React.useEffect(() => {
 
+
     const handleBackButtonClick = () => {
       if (props.setting) {
         props.navigation.navigate('Setting')

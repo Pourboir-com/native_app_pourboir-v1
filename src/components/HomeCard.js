@@ -118,7 +118,7 @@ export default HomeCard;
 const styles = StyleSheet.create({
     view2Card: {
         flexDirection: "row", width: "100%", alignItems: "center", justifyContent: "space-between",
-        marginTop: 5
+        marginTop: 6
     },
     txtName: {
         color: "#fff", fontSize: 18,

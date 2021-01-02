@@ -199,8 +199,7 @@ const RateService = ({ navigation }) => {
                     <TextInput
                         keyboardType='numeric'
                         value={remarks}
-                        onChangeText={(e) => {
-                            
+                        onChangeText={(e) => {                            
                             if (remarks.length - 1 === e.length) {
                                 setRemarks(e)
                             }

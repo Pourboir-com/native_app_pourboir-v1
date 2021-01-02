@@ -60,10 +60,10 @@ export default HomeScreen = (props) => {
   });
   const searchBarTop = scrollYAnimatedValue.interpolate({
     inputRange: [0, HEADER_HEIGHT],
-    outputRange: [100, spacing(1) + getStatusBarHeight()],
+    outputRange: [50, spacing(1) + getStatusBarHeight()],
     outputRange: [spacing(1) * 2 + getStatusBarHeight() * 2, spacing(1) + getStatusBarHeight()],
     outputRange: [spacing(1) + getStatusBarHeight(), HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT],
-    outputRange: [HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT, getStatusBarHeight() <= 24 ? spacing(1) + getStatusBarHeight() : getStatusBarHeight() - (getStatusBarHeight() - 24)],
+    outputRange: [HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT, spacing(1) + getStatusBarHeight()],
 
     extrapolate: Extrapolate.CLAMP,
   });
@@ -255,7 +255,7 @@ export default HomeScreen = (props) => {
                   color={'#1E272E'}
                   size={25}
               /> */}
-                      <AntDesign name="close" size={16} color="#485460" />
+                      <AntDesign name="close" size={14} color="#485460" />
                     </View>
                   </TouchableOpacity>
                 }
@@ -360,7 +360,7 @@ export default HomeScreen = (props) => {
                       color={'#1E272E'}
                       size={25}
                   /> */}
-                        <AntDesign name="close" size={16} color="#485460" />
+                        <AntDesign name="close" size={14} color="#485460" />
                       </View>
                     </TouchableOpacity>
                   }

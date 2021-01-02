@@ -148,7 +148,7 @@ const ReviewDetails = ({ navigation, route }) => {
                             />
                             <View style={{ marginLeft: 10 }}>
                                 <Text style={styles.txtItemName}>{itemData.item.userName}</Text>
-                                <View style={{ flexDirection: "row", marginTop:8 }}>
+                                <View style={{ flexDirection: "row", marginTop:5 }}>
                                     {obj.map((v, i) => {
                                         return (
                                             <TouchableOpacity style={{ marginRight: 3 }} onPress={() => { onPressStar(v) }}>

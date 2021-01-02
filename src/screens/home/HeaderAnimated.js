@@ -52,6 +52,8 @@ export default HomeScreen = (props) => {
   const searchBarWidth = scrollYAnimatedValue.interpolate({
     inputRange: [0, HEADER_HEIGHT / 2],
     outputRange: [LAYOUT.window.width - spacing(5), HEADER_BAR_HEIGHT],
+    // outputRange: [LAYOUT.window.width - spacing(5), LAYOUT.window.width - spacing(5)],
+
     extrapolate: Extrapolate.CLAMP,
   });
   const searchBarColor = Animated.interpolateColors(scrollYAnimatedValue, {
@@ -63,7 +65,7 @@ export default HomeScreen = (props) => {
     outputRange: [50, spacing(1) + getStatusBarHeight()],
     outputRange: [spacing(1) * 2 + getStatusBarHeight() * 2, spacing(1) + getStatusBarHeight()],
     outputRange: [spacing(1) + getStatusBarHeight(), HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT],
-    outputRange: [HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT, spacing(1) + getStatusBarHeight()],
+    outputRange: [HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT, spacing(1) + getStatusBarHeight() - ((getStatusBarHeight() - 24)*3)],
 
     extrapolate: Extrapolate.CLAMP,
   });

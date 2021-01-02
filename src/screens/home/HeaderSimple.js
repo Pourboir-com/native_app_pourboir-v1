@@ -40,7 +40,7 @@ export default function HeaderSimple(props) {
                         props.setSearchIconPress(!props.searchIconPress)}
                     style={{ paddingHorizontal: 8 }}>
 
-                    <Feather name="search" color={Colors.yellow} size={25} />
+                    <Feather name="search" color={Colors.yellow} size={21} />
 
                 </TouchableOpacity>
 

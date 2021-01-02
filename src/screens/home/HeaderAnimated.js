@@ -65,7 +65,7 @@ export default HomeScreen = (props) => {
     outputRange: [100, spacing(1) + getStatusBarHeight()],
     outputRange: [spacing(1) * 2 + getStatusBarHeight() * 2, spacing(1) + getStatusBarHeight()],
     outputRange: [spacing(1) + getStatusBarHeight(), HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT],
-    outputRange: [HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT, spacing(1) + getStatusBarHeight() - ((getStatusBarHeight() - 24)*3)],
+    outputRange: [HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT + ((getStatusBarHeight() - 24)*3), spacing(1) + getStatusBarHeight() - ((getStatusBarHeight() - 24)*3)],
 
     extrapolate: Extrapolate.CLAMP,
   });

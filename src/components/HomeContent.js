@@ -108,6 +108,7 @@ export default function HomeScreenContent({ searchIconPress, setSearchIconPress,
                         bounces={true}
                         alwaysBounceVertical={true}
                         showsVerticalScrollIndicator={false}
+                        style={{backgroundColor:'#f9f9f9'}}
                     >
                         { loading ? null :
                             !route.params.crossIcon &&

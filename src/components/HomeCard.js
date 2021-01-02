@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, StatusBar, ImageBackground, ScrollView, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native';
-import { MaterialIcons, FontAwesome, Entypo } from "@expo/vector-icons";
+import { MaterialIcons, FontAwesome, Entypo, Ionicons } from "@expo/vector-icons";
 import { Colors } from '../constants/Theme';
 import RatingStar from './RatingComponent';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -41,15 +41,31 @@ const HomeCard = ({ navigation, img, rating, name, distance, services, loading, 
                     {
                         crossIcon &&
                         <TouchableOpacity
-                            style={[styles.btnCross, { zIndex: 99999 }]}
+                            style={[styles.btnCross, { zIndex: 99999, }]}
                             onPress={deleteCall}
                         >
                             <View style={{ borderRadius: 20, overflow: "hidden" }}>
-                                <Entypo
+                                {/* <Entypo
                                     name="cross"
-                                    size={20}
+                                    size={8}
                                     color="#485460"
                                     style={{ backgroundColor: Colors.yellow, borderRadius: 20 }}
+                                /> */}
+                                <Entypo
+                                    name="cross"
+                                    size={16}
+                                    color="#485460"
+                                    style={{
+                                        backgroundColor: Colors.yellow,
+                                        borderRadius: 20, height: 35, width: 35,
+                                        borderWidth: 5, borderColor: '#f9f9f9',
+                                        textAlign: 'center',
+                                        justifyContent: 'center',
+                                        fontWeight: 'bold',
+                                        color:'#485460',
+                                        textAlignVertical: 'center'
+                                    }}
+
                                 />
                             </View>
                         </TouchableOpacity>
@@ -115,9 +131,9 @@ const styles = StyleSheet.create({
         width: "90%", height: 15, backgroundColor: "#F6F6F6", marginTop: 10
     },
     btnCross: {
-        backgroundColor: "#f9f9f9", position: "absolute", alignSelf: "flex-end",
-        borderRadius: 20, margin: -1, right: 0, width: 30, height: 30,
-        justifyContent: "center", alignItems: "center"
+        backgroundColor: "red", position: "absolute", alignSelf: "flex-end",
+        borderRadius: 20, margin: -4, right: 0, width: 30, height: 30,
+        justifyContent: "center", alignItems: "center", borderColor: '#f9f9f9', borderWidth: 5
     },
     txt2Card: {
         color: "#EDEFEE", fontSize: 12,

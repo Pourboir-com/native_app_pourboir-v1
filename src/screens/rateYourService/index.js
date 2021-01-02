@@ -197,8 +197,10 @@ const RateService = ({ navigation }) => {
                 <View style={styles.viewTip}>
                     <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('your_tip_to_waiter')}</Text>
                     <TextInput
+                        keyboardType='numeric'
                         value={remarks}
                         onChangeText={(e) => {
+                            
                             if (remarks.length - 1 === e.length) {
                                 setRemarks(e)
                             }

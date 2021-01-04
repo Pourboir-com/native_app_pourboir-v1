@@ -28,6 +28,7 @@ const imgBg = require('../../assets/images/Group5.png')
 
 const RateService = ({ navigation }) => {
 
+    const scrollRef = React.useRef(null);
     // const [onHandleFocus, setonHandleFocus] = useState(false)
 
 
@@ -80,7 +81,7 @@ const RateService = ({ navigation }) => {
     return <View
         style={[styles.container,
         Platform.OS === 'ios' ?
-            isKeyboardVisible ? { marginBottom: Dimensions.get('window').height * 0.4 }
+            isKeyboardVisible ? { marginBottom: Dimensions.get('window').height * 0.35 }
                 : null : null,
         ]}
     >
@@ -108,10 +109,14 @@ const RateService = ({ navigation }) => {
             </ImageBackground>
         </View>
         <ScrollView
+            ref={scrollRef}
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
             bounces={false}
-            showsVerticalScrollIndicator={false} style={styles.viewFlatlist}>
+            showsVerticalScrollIndicator={false}
+            style={styles.viewFlatlist}
+            // contentContainerStyle={{ flex: 1 }}
+        >
             <TouchableOpacity
                 onPress={() => navigation.navigate('socialLogin')}
                 style={styles.viewListCard}
@@ -209,6 +214,7 @@ const RateService = ({ navigation }) => {
                 <View style={styles.viewTip}>
                     <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('your_tip_to_waiter')}</Text>
                     <TextInput
+
                         keyboardType='numeric'
                         value={remarks}
                         onFocus={() => {
@@ -218,7 +224,7 @@ const RateService = ({ navigation }) => {
                             setKeyboardVisible(false)
                         }}
                         onChangeText={(e) => {
-
+                            scrollRef.current.scrollToEnd()
                             if (remarks.length - 1 === e.length) {
                                 setRemarks(e)
                             }
@@ -252,8 +258,6 @@ const RateService = ({ navigation }) => {
             isVisible={isVisible}
             handleModalClose={handleModalClose}
         />
-
-
     </View>
 }
 export default RateService;

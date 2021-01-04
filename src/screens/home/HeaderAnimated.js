@@ -165,6 +165,10 @@ export default HomeScreen = (props) => {
       {
         loading ? < View>
           <Animated.ScrollView
+            alwaysBounceHorizontal={false}
+            alwaysBounceVertical={false}
+            bounces={false}
+
             ref={scrollRef}
             contentContainerStyle={{ paddingTop: props.searchIconPress ? 0 : HEADER_HEIGHT, minHeight: props.searchIconPress ? 0 : LAYOUT.window.height + HEADER_HEIGHT }}
             scrollEventThrottle={1}
@@ -268,6 +272,12 @@ export default HomeScreen = (props) => {
         </View> :
           <>
             <Animated.ScrollView
+
+              alwaysBounceHorizontal={false}
+              alwaysBounceVertical={false}
+              bounces={false}
+
+
               ref={scrollRef}
               contentContainerStyle={{ paddingTop: props.searchIconPress ? 0 : HEADER_HEIGHT, minHeight: props.searchIconPress ? 0 : LAYOUT.window.height + HEADER_HEIGHT }}
               scrollEventThrottle={1}

@@ -105,9 +105,14 @@ export default function HomeScreenContent({ searchIconPress, setSearchIconPress,
                 </View>
             ) : (
                     <ScrollView
-                        bounces={true}
+                        // bounces={true}
                         alwaysBounceVertical={true}
                         showsVerticalScrollIndicator={false}
+
+                        alwaysBounceHorizontal={false}
+                        alwaysBounceVertical={false}
+                        bounces={false}
+
                         style={{ backgroundColor: '#f9f9f9' }}
                     >
                         { loading ? null :
@@ -124,6 +129,11 @@ export default function HomeScreenContent({ searchIconPress, setSearchIconPress,
                             <FlatList
                                 data={loading ? dummyArray : ItemsEven}
                                 showsVerticalScrollIndicator={false}
+
+                                alwaysBounceHorizontal={false}
+                                alwaysBounceVertical={false}
+                                bounces={false}
+
                                 keyExtractor={(item, index) => index.toString()}
                                 renderItem={(itemData) => (
                                     <HomeCard
@@ -144,6 +154,11 @@ export default function HomeScreenContent({ searchIconPress, setSearchIconPress,
                                 data={loading ? dummyArray : ItemsOdd}
                                 showsVerticalScrollIndicator={false}
                                 style={{ marginTop: 15 }}
+
+                                alwaysBounceHorizontal={false}
+                                alwaysBounceVertical={false}
+                                bounces={false}
+
                                 keyExtractor={(item, index) => index.toString()}
                                 renderItem={(itemData, index) => (
                                     <HomeCard

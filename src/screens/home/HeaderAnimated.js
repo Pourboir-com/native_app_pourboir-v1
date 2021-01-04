@@ -105,7 +105,6 @@ export default HomeScreen = (props) => {
         </View>
       );
     };
-    alert(getStatusBarHeight());
 
     const renderTitle = () => {
 

@@ -22,18 +22,34 @@ const imgBg = require('../../assets/images/Group7.png')
 import i18n from '../../li8n';
 
 const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
+
+  let contentEnd;
+  const scrollRef = React.useRef(null);
   const [onHandleFocus, setonHandleFocus] = useState(false);
   const [remarks, setRemarks] = useState('');
+
   return (
     <Overlay
       overlayStyle={[styles.container,
+
+      onHandleFocus ? { flex: 1 } : {},
       Platform.OS === 'ios' ?
         onHandleFocus ? { marginBottom: Dimensions.get('window').height * 0.4 }
-          : null : null
+          : null : null,
       ]}
       isVisible={isVisible}
       onBackdropPress={handleModalClose}>
-      <ScrollView>
+      <ScrollView
+        ref={scrollRef}
+        alwaysBounceHorizontal={false}
+        alwaysBounceVertical={false}
+        bounces={false}
+        style={onHandleFocus ? { flex: 1 } : {}}
+        // style={{ flex: 1 }}
+        onContentSizeChange={(contentWidth, contentHeight) => {
+          contentEnd = contentHeight;
+        }}
+      >
         <KeyboardAvoidingView style={{
           alignItems: 'center',
           justifyContent: 'center',
@@ -44,7 +60,11 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
             source={imgBg}
             resizeMode="stretch"
           >
-            <View style={styles.viewImg}>
+            <View
+              // onLayout={(e) => {
+              //   contentEnd = e.nativeEvent.layout.y;
+              // }}
+              style={styles.viewImg}>
               <TouchableOpacity
                 onPress={handleModalClose}
                 style={{ alignSelf: 'flex-end', margin: 10 }}>
@@ -69,9 +89,16 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
             placeholder={i18n.t('name_of_your_server')}
             placeholderTextColor="rgba(0,0,0,0.3)"
             value={remarks}
-            onChangeText={(e) => { setRemarks(e) }}
+            onChangeText={(e) => {
+              scrollRef.current.scrollToEnd()
+              setRemarks(e)
+            }}
             style={[styles.inputStyle, { fontFamily: 'ProximaNova', fontWeight: 'bold' }]}
-            onFocus={() => { setonHandleFocus(!onHandleFocus) }}
+            onFocus={() => {
+              setonHandleFocus(true)
+            }}
+            onBlur={() => { setonHandleFocus(false) }}
+
           />
           <TouchableOpacity style={[styles.btnConfrm,
           remarks !== '' ? { backgroundColor: Colors.yellow } : null
@@ -80,7 +107,7 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
           </TouchableOpacity>
         </KeyboardAvoidingView>
       </ScrollView>
-    </Overlay>
+    </Overlay >
   );
 };
 
@@ -90,11 +117,10 @@ export default HelpUsImproveModal;
 const styles = StyleSheet.create({
   container: {
     width: '88%',
-    // alignItems: 'center',
-    // justifyContent: 'center',
     padding: 0,
     overflow: "hidden",
     borderRadius: 15,
+
   },
   imgBgStyle: {
     width: "100%", height: 240,

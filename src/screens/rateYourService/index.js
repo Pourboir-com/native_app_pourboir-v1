@@ -10,7 +10,8 @@ import {
     TouchableOpacity,
     FlatList,
     KeyboardAvoidingView,
-    Keyboard
+    Keyboard,
+    Platform
 } from 'react-native';
 import { FontAwesome } from "@expo/vector-icons";
 import GlobalHeader from '../../components/GlobalHeader';
@@ -27,27 +28,31 @@ const imgBg = require('../../assets/images/Group5.png')
 
 const RateService = ({ navigation }) => {
 
+    const scrollRef = React.useRef(null);
     // const [onHandleFocus, setonHandleFocus] = useState(false)
-    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-    useEffect(() => {
-        const keyboardDidShowListener = Keyboard.addListener(
-            'keyboardDidShow',
-            () => {
-                setKeyboardVisible(true); // or some other action
-            }
-        );
-        const keyboardDidHideListener = Keyboard.addListener(
-            'keyboardDidHide',
-            () => {
-                setKeyboardVisible(false); // or some other action
-            }
-        );
 
-        return () => {
-            keyboardDidHideListener.remove();
-            keyboardDidShowListener.remove();
-        };
-    }, []);
+
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+    // useEffect(() => {
+    //     const keyboardDidShowListener = Keyboard.addListener(
+    //         'keyboardDidShow',
+    //         () => {
+    //             setKeyboardVisible(true); // or some other action
+    //         }
+    //     );
+    //     const keyboardDidHideListener = Keyboard.addListener(
+    //         'keyboardDidHide',
+    //         () => {
+    //             setKeyboardVisible(false); // or some other action
+    //         }
+    //     );
+
+    //     return () => {
+    //         keyboardDidHideListener.remove();
+    //         keyboardDidShowListener.remove();
+    //     };
+    // }, []);
 
     const [isVisible, setisVisible] = useState(false);
 
@@ -74,7 +79,11 @@ const RateService = ({ navigation }) => {
     }
 
     return <View
-        style={styles.container}
+        style={[styles.container,
+        Platform.OS === 'ios' ?
+            isKeyboardVisible ? { marginBottom: Dimensions.get('window').height * 0.4 }
+                : null : null,
+        ]}
     >
         <StatusBar translucent={true} style='light' />
         <View style={styles.viewProfile}>
@@ -99,7 +108,15 @@ const RateService = ({ navigation }) => {
                 }
             </ImageBackground>
         </View>
-        <ScrollView showsVerticalScrollIndicator={false} style={styles.viewFlatlist}>
+        <ScrollView
+            ref={scrollRef}
+            alwaysBounceHorizontal={false}
+            alwaysBounceVertical={false}
+            bounces={false}
+            showsVerticalScrollIndicator={false}
+            style={styles.viewFlatlist}
+            // contentContainerStyle={{ flex: 1 }}
+        >
             <TouchableOpacity
                 onPress={() => navigation.navigate('socialLogin')}
                 style={styles.viewListCard}
@@ -197,9 +214,17 @@ const RateService = ({ navigation }) => {
                 <View style={styles.viewTip}>
                     <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('your_tip_to_waiter')}</Text>
                     <TextInput
+
                         keyboardType='numeric'
                         value={remarks}
-                        onChangeText={(e) => {                            
+                        onFocus={() => {
+                            setKeyboardVisible(true)
+                        }}
+                        onBlur={() => {
+                            setKeyboardVisible(false)
+                        }}
+                        onChangeText={(e) => {
+                            scrollRef.current.scrollToEnd()
                             if (remarks.length - 1 === e.length) {
                                 setRemarks(e)
                             }
@@ -224,7 +249,8 @@ const RateService = ({ navigation }) => {
                 style={[styles.btnValider,
                 starSelect !== 0 && remarks !== '' ? { backgroundColor: Colors.yellow } : null
                 ]}>
-                <Text style={{ fontSize: 16, fontFamily: 'ProximaNova', color: Colors.fontLight }}>{i18n.t('validate')}</Text>
+                <Text
+                    style={{ fontSize: 16, fontFamily: 'ProximaNova', color: Colors.fontLight }}>{i18n.t('validate')}</Text>
             </TouchableOpacity>
         </ScrollView>
 
@@ -232,8 +258,6 @@ const RateService = ({ navigation }) => {
             isVisible={isVisible}
             handleModalClose={handleModalClose}
         />
-
-
     </View>
 }
 export default RateService;

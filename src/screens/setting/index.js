@@ -89,7 +89,11 @@ const Setting = ({ navigation }) => {
             </ImageBackground>
         </View>
         <View style={styles.viewBtnConatiner}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView 
+            alwaysBounceHorizontal={false}
+            alwaysBounceVertical={false}
+            bounces={false}
+            showsVerticalScrollIndicator={false}>
                 <TouchableOpacity style={styles.viewItem}>
                     <View style={styles.viewIcon}>
                         <FontAwesome name="star" size={20} color={Colors.yellow} />
@@ -163,7 +167,7 @@ const styles = StyleSheet.create({
         justifyContent: "center", alignItems: "center",
     },
     viewBtnConatiner: {
-        width: "90%", alignSelf: "center", borderRadius: 15, marginTop: -45, overflow: "hidden", backgroundColor: "#EEF0EF",
+        width: "90%", alignSelf: "center", borderRadius: 15, marginTop: -45, overflow: "hidden", backgroundColor: "transparent",
     },
     viewItem: {
         width: "100%", height: 55, backgroundColor: "#fff", marginBottom: 1, flexDirection: "row",

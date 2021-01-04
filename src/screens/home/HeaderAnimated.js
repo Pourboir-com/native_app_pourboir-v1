@@ -114,21 +114,19 @@ export default HomeScreen = (props) => {
         ]}>
           <Animated.View
             style={{
-              alignItems: 'center',
-              justifyContent: 'center',
               marginLeft: titleHeaderMarginLeft,
-              // width: titleHeaderMarginLeft
-
-            }}
-          >
-            <Text style={{
-              fontSize: 20, color: COLORS[colorScheme].text.primary,
               height: HEADER_BAR_HEIGHT,
-              textAlignVertical: 'center',
-              textAlign: 'center',
+              justifyContent: 'center',
+              // backgroundColor: "blue"
+            }}>
 
+            <Text style={{
+              fontSize: 20,
+              color: COLORS[colorScheme].text.primary,
               fontFamily: 'ProximaNovaBold',
-              fontWeight: 'bold'
+              textAlign: 'center',
+              fontWeight: 'bold',
+              // backgroundColor: "red",
             }} ellipsizeMode="tail" numberOfLines={1}>
               {i18n.t('hello')}
             </Text>
@@ -169,6 +167,10 @@ export default HomeScreen = (props) => {
       {
         loading ? < View>
           <Animated.ScrollView
+            alwaysBounceHorizontal={false}
+            alwaysBounceVertical={false}
+            bounces={false}
+
             ref={scrollRef}
             contentContainerStyle={{ paddingTop: props.searchIconPress ? 0 : HEADER_HEIGHT, minHeight: props.searchIconPress ? 0 : LAYOUT.window.height + HEADER_HEIGHT }}
             scrollEventThrottle={1}
@@ -272,6 +274,12 @@ export default HomeScreen = (props) => {
         </View> :
           <>
             <Animated.ScrollView
+
+              alwaysBounceHorizontal={false}
+              alwaysBounceVertical={false}
+              bounces={false}
+
+
               ref={scrollRef}
               contentContainerStyle={{ paddingTop: props.searchIconPress ? 0 : HEADER_HEIGHT, minHeight: props.searchIconPress ? 0 : LAYOUT.window.height + HEADER_HEIGHT }}
               scrollEventThrottle={1}

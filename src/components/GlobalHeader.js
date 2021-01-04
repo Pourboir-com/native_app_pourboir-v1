@@ -37,7 +37,7 @@ const GlobalHeader = (props) => {
       headerLeft: null,
       headerTransparent: true,
       headerTitleAlign: 'left',
-      headerRightContainerStyle: { paddingRight: spacing(2) }
+      // headerRightContainerStyle: { paddingRight: spacing(2) }
     });
   });
 

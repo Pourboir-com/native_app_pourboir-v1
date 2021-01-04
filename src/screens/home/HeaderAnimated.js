@@ -112,21 +112,19 @@ export default HomeScreen = (props) => {
         ]}>
           <Animated.View
             style={{
-              alignItems: 'center',
-              justifyContent: 'center',
               marginLeft: titleHeaderMarginLeft,
-              // width: titleHeaderMarginLeft
-
-            }}
-          >
-            <Text style={{
-              fontSize: 20, color: COLORS[colorScheme].text.primary,
               height: HEADER_BAR_HEIGHT,
-              textAlignVertical: 'center',
-              textAlign: 'center',
+              justifyContent: 'center',
+              // backgroundColor: "blue"
+            }}>
 
+            <Text style={{
+              fontSize: 20,
+              color: COLORS[colorScheme].text.primary,
               fontFamily: 'ProximaNovaBold',
-              fontWeight: 'bold'
+              textAlign: 'center',
+              fontWeight: 'bold',
+              // backgroundColor: "red",
             }} ellipsizeMode="tail" numberOfLines={1}>
               {i18n.t('hello')}
             </Text>

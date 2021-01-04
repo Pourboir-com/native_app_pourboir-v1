@@ -81,7 +81,7 @@ const RateService = ({ navigation }) => {
     return <View
         style={[styles.container,
         Platform.OS === 'ios' ?
-            isKeyboardVisible ? { marginBottom: Dimensions.get('window').height * 0.35 }
+            isKeyboardVisible ? { marginBottom: Dimensions.get('window').height * 0.4 }
                 : null : null,
         ]}
     >

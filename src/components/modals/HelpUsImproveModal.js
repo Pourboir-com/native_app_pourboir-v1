@@ -122,8 +122,7 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
             // value={remarks}
             onChangeText={(e) => {
               scrollRef.current.scrollToEnd({ animated: true });
-              // setRemarks(e)
-              textRef.current.value  = 'uasss'
+              setRemarks(e)
             }}
 
             style={[styles.inputStyle, { fontFamily: 'ProximaNova', fontWeight: 'bold', textAlign: "center", }]}

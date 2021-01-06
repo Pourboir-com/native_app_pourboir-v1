@@ -51,11 +51,13 @@ const Setting = ({ navigation }) => {
                 <GlobalHeader
                     arrow={true}
                     headingText="Parametre"
-                    fontSize={18}
+                    fontSize={17}
                     color="#000"
                     backgroundColor={'transparent'}
                     navigation={navigation}
                 />
+
+              
                 <TouchableOpacity
                     onPress={() => _pickImage()}
                     style={styles.viewImg}
@@ -85,36 +87,36 @@ const Setting = ({ navigation }) => {
                 {/* <View style={styles.viewImg}>
               <FontAwesome name="user-circle-o" size={120} color="#fff" />
             </View> */}
-                <Text style={[styles.txtName,{fontFamily:'ProximaNovaBold'}]}>Christine Zhou</Text>
+                <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>Christine Zhou</Text>
             </ImageBackground>
         </View>
         <View style={styles.viewBtnConatiner}>
-            <ScrollView 
-            alwaysBounceHorizontal={false}
-            alwaysBounceVertical={false}
-            bounces={false}
-            showsVerticalScrollIndicator={false}>
+            <ScrollView
+                alwaysBounceHorizontal={false}
+                alwaysBounceVertical={false}
+                bounces={false}
+                showsVerticalScrollIndicator={false}>
                 <TouchableOpacity style={styles.viewItem}>
                     <View style={styles.viewIcon}>
                         <FontAwesome name="star" size={20} color={Colors.yellow} />
                     </View>
-                    <Text style={{fontFamily:'ProximaNova', color:Colors.fontDark, fontSize:16}}>{i18n.t('rate_application')}</Text>
+                    <Text style={{ fontFamily: 'ProximaNova', color: Colors.fontDark, fontSize: 16 }}>{i18n.t('rate_application')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.viewItem}>
                     <View style={styles.viewIcon}>
                         <FontAwesome name="envelope" size={16} color={Colors.yellow} />
                     </View>
-                    <Text style={{fontFamily:'ProximaNova', color:Colors.fontDark, fontSize:16}}>{i18n.t('contact_us')}</Text>
+                    <Text style={{ fontFamily: 'ProximaNova', color: Colors.fontDark, fontSize: 16 }}>{i18n.t('contact_us')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('Remove', {
-                        crossIcon:true
+                        crossIcon: true
                     })}
                     style={[styles.viewItem, { marginBottom: 0 }]}>
                     <View style={styles.viewIcon}>
                         <FontAwesome name="cutlery" size={16} color={Colors.yellow} />
                     </View>
-                    <Text style={{fontFamily:'ProximaNova', color:Colors.fontDark, fontSize:16}}>{i18n.t('are_you_waiter')}</Text>
+                    <Text style={{ fontFamily: 'ProximaNova', color: Colors.fontDark, fontSize: 16 }}>{i18n.t('are_you_waiter')}</Text>
 
                     <View
                         style={{
@@ -129,12 +131,12 @@ const Setting = ({ navigation }) => {
             </ScrollView>
         </View>
         <View >
-            <Text style={[styles.versionText,{fontFamily:'ProximaNova'}]}>
+            <Text style={[styles.versionText, { fontFamily: 'ProximaNova' }]}>
                 Version 2.17.4.0.1.0
             </Text>
         </View>
         <TouchableOpacity style={styles.btnValider}>
-            <Text style={{fontFamily:'ProximaNova', fontSize:16}}>{i18n.t('sign_out')}</Text>
+            <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>{i18n.t('sign_out')}</Text>
         </TouchableOpacity>
     </View>
 }
@@ -148,7 +150,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#EEF0EF"
     },
     versionText: {
-        marginTop: 20, color: Colors.fontLight, fontSize:12
+        marginTop: 20, color: Colors.fontLight, fontSize: 12
     },
     viewPencil: {
         width: 25, height: 25, backgroundColor: "#1E272E", borderRadius: 20, justifyContent: "center",
@@ -191,7 +193,8 @@ const styles = StyleSheet.create({
         alignSelf: "center"
     },
     viewProfile: {
-        backgroundColor: Colors.yellow, width: "100%", height: Dimensions.get('window').height * 0.6, marginTop: -20,
+        backgroundColor: Colors.yellow, width: "100%", height: Dimensions.get('window').height * 0.6,
+        // marginTop: -20,
         borderBottomLeftRadius: 40, borderBottomRightRadius: 40
     }
 })

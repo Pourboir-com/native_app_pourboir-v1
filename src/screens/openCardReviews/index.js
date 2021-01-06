@@ -58,7 +58,7 @@ const ReviewDetails = ({ navigation, route }) => {
         <GlobalHeader
             arrow={true}
             headingText={name}
-            fontSize={20}
+            fontSize={17}
             color={'#fff'}
             bold={true}
             BackIconColor={'#fff'}

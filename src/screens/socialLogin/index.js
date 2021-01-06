@@ -12,12 +12,18 @@ const imgWaiter = require('../../assets/images/waiter2.png')
 const SocialLogin = ({ navigation }) => {
     const [loading, setLoading] = useState(true);
 
-    useEffect(async () => {
-        await loadAsync({
-            // Load a font `Montserrat` from a static resource
-            ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
-            ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf')
-        });
+    useEffect(() => {
+
+        
+        async function loadFont() {
+            await loadAsync({
+              // Load a font `Montserrat` from a static resource
+              ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
+              ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf')
+            });
+          }
+          
+          loadFont()
 
         setTimeout(() => {
             setLoading(false)

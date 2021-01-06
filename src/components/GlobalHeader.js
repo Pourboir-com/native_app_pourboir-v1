@@ -113,7 +113,7 @@ const GlobalHeader = (props) => {
 
               {props.arrow === true && (
                 <TouchableOpacity
-                  style={{ paddingRight: 5, paddingVertical: 10, padding: 10, zIndex: 1000,  }}
+                  style={{ paddingRight: 5, paddingVertical: 10, padding: 10, zIndex: 1000, }}
 
                   onPress={() =>
                     goBackHandler(props)
@@ -122,10 +122,10 @@ const GlobalHeader = (props) => {
                     Back
                     </Text> */}
                   <MaterialIcons
-                    onPress={() =>
-                      goBackHandler(props)}
+                    // onPress={() =>
+                    //   goBackHandler(props)}
 
-                    style={{ padding:10 }}
+                    style={{ padding:10, zIndex: 9999999,width:'100%' }}
                     name={'arrow-back'}
                     size={props.Arrowsize ? props.Arrowsize : 24}
                     color={props.BackIconColor ? props.BackIconColor : '#000'}

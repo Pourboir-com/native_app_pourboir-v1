@@ -32,7 +32,8 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
     <Overlay
       overlayStyle={[styles.container,
 
-      onHandleFocus ? { flex: 1 } : {},
+      onHandleFocus && Platform.OS === 'ios' ? { flex: 1 } : {},
+
       Platform.OS === 'ios' ?
         onHandleFocus ? { marginBottom: Dimensions.get('window').height * 0.4 }
           : null : null,
@@ -44,7 +45,9 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
         alwaysBounceHorizontal={false}
         alwaysBounceVertical={false}
         bounces={false}
-        style={onHandleFocus ? { flex: 1 } : {}}
+
+        style={onHandleFocus  && Platform.OS === 'ios' ? { flex: 1 } : {}}
+
         // style={{ flex: 1 }}
         onContentSizeChange={(contentWidth, contentHeight) => {
           contentEnd = contentHeight;

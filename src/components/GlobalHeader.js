@@ -87,7 +87,7 @@ const GlobalHeader = (props) => {
             width: '100%',
             alignItems: 'center',
             justifyContent: 'center',
-            paddingTop: 35,
+            paddingTop: 27,
             zIndex: -10,
             borderRadius: 20,
             flexDirection: 'row',

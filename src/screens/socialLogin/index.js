@@ -58,17 +58,17 @@ const SocialLogin = ({ navigation }) => {
 
 
                 <Text style={[styles.txtCreatingAcc, {
-                    fontSize: 14, fontFamily: 'ProximaNova'
+                    fontSize: 14, fontFamily: 'ProximaNova', lineHeight: 24
                 }]}>
                     {i18n.t('by_creatin_your_acc')}
                 </Text>
                 <View style={styles.viewbtns}>
                     <TouchableOpacity>
-                        <Text style={{ color: "#0050A0", fontSize: 14, fontFamily: 'ProximaNova' }}>{i18n.t('terms_of_use')}</Text>
+                        <Text style={{ color: "#0050A0", fontSize: 14, fontFamily: 'ProximaNova', lineHeight: 24 }}>{i18n.t('terms_of_use')}</Text>
                     </TouchableOpacity>
                     <View style={{ width: 1, height: 10, backgroundColor: "grey", marginHorizontal: 10 }} />
                     <TouchableOpacity>
-                        <Text style={{ color: "#0050A0", fontSize: 14, fontFamily: 'ProximaNova' }}>{i18n.t('privacy_policy')}</Text>
+                        <Text style={{ color: "#0050A0", fontSize: 14, fontFamily: 'ProximaNova', lineHeight: 24 }}>{i18n.t('privacy_policy')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

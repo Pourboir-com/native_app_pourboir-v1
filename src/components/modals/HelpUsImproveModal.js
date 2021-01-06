@@ -9,7 +9,8 @@ import {
   ImageBackground,
   SafeAreaView, KeyboardAvoidingView,
   ScrollView,
-  Dimensions, Platform
+  Dimensions, Platform,
+  Keyboard
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 // import Entypo from 'react-native-vector-icons/Entypo';
@@ -27,6 +28,28 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
   const scrollRef = React.useRef(null);
   const [onHandleFocus, setonHandleFocus] = useState(false);
   const [remarks, setRemarks] = useState('');
+
+
+  React.useEffect(() => {
+
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        // setKeyboardVisible(true); // or some other action
+
+        setTimeout(()=>{
+          scrollRef.current.scrollToEnd({animated:true});
+        },100)
+        // alert('we')
+
+      }
+    );
+
+    return () => {
+      // keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   return (
     <Overlay
@@ -46,7 +69,7 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
         alwaysBounceVertical={false}
         bounces={false}
 
-        style={onHandleFocus  && Platform.OS === 'ios' ? { flex: 1 } : {}}
+        style={onHandleFocus && Platform.OS === 'ios' ? { flex: 1 } : {}}
 
         // style={{ flex: 1 }}
         onContentSizeChange={(contentWidth, contentHeight) => {
@@ -91,14 +114,19 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
             selectionColor={Colors.yellow}
             placeholder={i18n.t('name_of_your_server')}
             placeholderTextColor="rgba(0,0,0,0.3)"
+
             value={remarks}
             onChangeText={(e) => {
-              scrollRef.current.scrollToEnd()
+              scrollRef.current.scrollToEnd({animated:true});
               setRemarks(e)
             }}
-            style={[styles.inputStyle, { fontFamily: 'ProximaNova', fontWeight: 'bold' }]}
+
+            style={[styles.inputStyle, { fontFamily: 'ProximaNova', fontWeight: 'bold', textAlign: "center", }]}
             onFocus={() => {
               setonHandleFocus(true)
+              setTimeout(() => {
+                scrollRef.current.scrollToEnd({ animated: true })
+            }, 100)
             }}
             onBlur={() => { setonHandleFocus(false) }}
 

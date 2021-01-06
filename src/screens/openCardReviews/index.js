@@ -126,11 +126,11 @@ const ReviewDetails = ({ navigation, route }) => {
             }}
             scrollEventThrottle={1}
             showsVerticalScrollIndicator={false}>
-            <View style={{ flexDirection: "row", marginTop: 220, marginHorizontal: 15, marginBottom:10, alignItems:'center' }}>
+            <View style={{ flexDirection: "row", marginTop: 220, marginHorizontal: 15, marginBottom: 10, alignItems: 'center' }}>
                 <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('waiters')}</Text>
                 <View style={styles.viewNumRaters}>
                     <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>2</Text>
-                    
+
                     {/* <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length * 2}</Text> */}
                 </View>
             </View>
@@ -148,7 +148,7 @@ const ReviewDetails = ({ navigation, route }) => {
                             />
                             <View style={{ marginLeft: 10 }}>
                                 <Text style={styles.txtItemName}>{itemData.item.userName}</Text>
-                                <View style={{ flexDirection: "row", marginTop:5 }}>
+                                <View style={{ flexDirection: "row", marginTop: 8 }}>
                                     {obj.map((v, i) => {
                                         return (
                                             <TouchableOpacity style={{ marginRight: 3 }} onPress={() => { onPressStar(v) }}>
@@ -198,10 +198,13 @@ const ReviewDetails = ({ navigation, route }) => {
         />
         {/* <KeyboardAvoidingView>
         <ScrollView> */}
-        <HelpUsImproveModal
-            isVisible={helpUsModalVisible}
-            handleModalClose={handleModalClose}
-        />
+        {
+            helpUsModalVisible &&
+            <HelpUsImproveModal
+                isVisible={helpUsModalVisible}
+                handleModalClose={handleModalClose}
+            />
+        }
         {/* </ScrollView>
         </KeyboardAvoidingView> */}
 
@@ -216,7 +219,7 @@ const styles = StyleSheet.create({
     },
     txtItemName: {
         fontFamily: 'ProximaNova', fontSize: 18, color: Colors.fontLight,
-        letterSpacing: 0, lineHeight:24
+        letterSpacing: 0, lineHeight: 24
     },
     btnAdd: {
         backgroundColor: Colors.yellow, padding: 4, borderRadius: 6, marginLeft: 10
@@ -246,18 +249,18 @@ const styles = StyleSheet.create({
     },
     viewNumRaters: {
         overflow: "hidden", backgroundColor: Colors.yellow, marginLeft: 23,
-        borderRadius:8,
+        borderRadius: 8,
         // paddingHorizontal:8, 
-        paddingTop:1,
-        paddingLeft:7,
-        paddingRight:8,
-        width:25,
-        height:25,
-        paddingVertical:1,
-        alignItems:"center", justifyContent:"center"
+        paddingTop: 1,
+        paddingLeft: 7,
+        paddingRight: 8,
+        width: 25,
+        height: 25,
+        paddingVertical: 1,
+        alignItems: "center", justifyContent: "center"
     },
     txtHeading: {
-        alignSelf: "center", fontSize: 24, lineHeight:32
+        alignSelf: "center", fontSize: 24, lineHeight: 32
     },
     viewHeader: {
         flexDirection: "row", marginTop: 30, paddingHorizontal: 10

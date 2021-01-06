@@ -78,6 +78,20 @@ const RateService = ({ navigation }) => {
         setstarSelect(v);
     }
 
+    // const _keyboardDidShow = () => {
+    //     scrollRef.current.scrollToEnd({ animated: true })
+    // };
+
+    // React.useEffect(() => {
+    //     Keyboard.addListener("keyboardDidShow", _keyboardDidShow);
+
+    //     // cleanup function
+    //     return () => {
+    //         Keyboard.removeListener("keyboardDidShow", _keyboardDidShow);
+    //     };
+    // });
+
+
     return <ScrollView
         ref={scrollRef}
         alwaysBounceHorizontal={false}

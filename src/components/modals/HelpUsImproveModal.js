@@ -30,20 +30,6 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
   const [remarks, setRemarks] = useState('');
 
 
-  const _keyboardDidShow = () => {
-    scrollRef.current.scrollToEnd()
-  };
-
-  React.useEffect(() => {
-    Keyboard.addListener("keyboardDidShow", _keyboardDidShow);
-
-    // cleanup function
-    return () => {
-      Keyboard.removeListener("keyboardDidShow", _keyboardDidShow);
-    };
-  }, []);
-
-
   return (
     <Overlay
       overlayStyle={[styles.container,

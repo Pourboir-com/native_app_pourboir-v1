@@ -34,25 +34,24 @@ const RateService = ({ navigation }) => {
 
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
-    // useEffect(() => {
-    //     const keyboardDidShowListener = Keyboard.addListener(
-    //         'keyboardDidShow',
-    //         () => {
-    //             setKeyboardVisible(true); // or some other action
-    //         }
-    //     );
-    //     const keyboardDidHideListener = Keyboard.addListener(
-    //         'keyboardDidHide',
-    //         () => {
-    //             setKeyboardVisible(false); // or some other action
-    //         }
-    //     );
 
-    //     return () => {
-    //         keyboardDidHideListener.remove();
-    //         keyboardDidShowListener.remove();
-    //     };
-    // }, []);
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            () => {
+                // setKeyboardVisible(true); // or some other action
+                scrollRef.current.scrollToEnd()
+                
+            }
+        );
+
+        return () => {
+            // keyboardDidHideListener.remove();
+            keyboardDidShowListener.remove();
+        };
+    }, []);
+
+
 
     const [isVisible, setisVisible] = useState(false);
 
@@ -239,14 +238,12 @@ const RateService = ({ navigation }) => {
                 <View style={styles.viewTip}>
                     <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>{i18n.t('your_tip_to_waiter')}</Text>
                     <TextInput
-
+                        
                         keyboardType='numeric'
                         value={remarks}
                         onFocus={() => {
                             setKeyboardVisible(true)
-                            setTimeout(() => {
                                 scrollRef.current.scrollToEnd({ animated: true })
-                            }, 1)
                         }}
                         onBlur={() => {
                             setKeyboardVisible(false)

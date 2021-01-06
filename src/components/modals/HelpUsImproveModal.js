@@ -30,6 +30,25 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
   const [remarks, setRemarks] = useState('');
 
 
+  // React.useEffect(() => {
+
+  //   const keyboardDidShowListener = Keyboard.addListener(
+  //     'keyboardDidShow',
+  //     () => {
+  //       // setKeyboardVisible(true); // or some other action
+  //       scrollRef.current.scrollToEnd();
+
+  //       // alert('we')
+
+  //     }
+  //   );
+
+  //   return () => {
+  //     // keyboardDidHideListener.remove();
+  //     keyboardDidShowListener.remove();
+  //   };
+  // }, []);
+
   return (
     <Overlay
       overlayStyle={[styles.container,
@@ -93,14 +112,19 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
             selectionColor={Colors.yellow}
             placeholder={i18n.t('name_of_your_server')}
             placeholderTextColor="rgba(0,0,0,0.3)"
+
             value={remarks}
             onChangeText={(e) => {
               scrollRef.current.scrollToEnd()
               setRemarks(e)
             }}
-            style={[styles.inputStyle, { fontFamily: 'ProximaNova', fontWeight: 'bold' }]}
+
+            style={[styles.inputStyle, { fontFamily: 'ProximaNova', fontWeight: 'bold', textAlign: "center", }]}
             onFocus={() => {
               setonHandleFocus(true)
+              setTimeout(() => {
+                scrollRef.current.scrollToEnd({ animated: true })
+            }, 1)
             }}
             onBlur={() => { setonHandleFocus(false) }}
 

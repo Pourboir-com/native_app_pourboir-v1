@@ -29,6 +29,9 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
   const [onHandleFocus, setonHandleFocus] = useState(false);
   const [remarks, setRemarks] = useState('');
 
+  const textRef = React.useRef(null)
+
+  const [placeholder,setPlaceholder] = React.useState(i18n.t('name_of_your_server'))
 
   React.useEffect(() => {
 
@@ -37,9 +40,9 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
       () => {
         // setKeyboardVisible(true); // or some other action
 
-        setTimeout(()=>{
-          scrollRef.current.scrollToEnd({animated:true});
-        },100)
+        setTimeout(() => {
+          scrollRef.current.scrollToEnd({ animated: true });
+        }, 100)
         // alert('we')
 
       }
@@ -111,14 +114,16 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
             {i18n.t('will_contact_shortly')}
           </Text>
           <TextInput
+            ref={textRef}
             selectionColor={Colors.yellow}
-            placeholder={i18n.t('name_of_your_server')}
+            placeholder={placeholder}
             placeholderTextColor="rgba(0,0,0,0.3)"
 
-            value={remarks}
+            // value={remarks}
             onChangeText={(e) => {
-              scrollRef.current.scrollToEnd({animated:true});
-              setRemarks(e)
+              scrollRef.current.scrollToEnd({ animated: true });
+              // setRemarks(e)
+              textRef.current.value  = 'uasss'
             }}
 
             style={[styles.inputStyle, { fontFamily: 'ProximaNova', fontWeight: 'bold', textAlign: "center", }]}
@@ -126,7 +131,7 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
               setonHandleFocus(true)
               setTimeout(() => {
                 scrollRef.current.scrollToEnd({ animated: true })
-            }, 100)
+              }, 100)
             }}
             onBlur={() => { setonHandleFocus(false) }}
 

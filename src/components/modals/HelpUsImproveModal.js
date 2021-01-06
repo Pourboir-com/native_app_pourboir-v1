@@ -30,24 +30,26 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
   const [remarks, setRemarks] = useState('');
 
 
-  // React.useEffect(() => {
+  React.useEffect(() => {
 
-  //   const keyboardDidShowListener = Keyboard.addListener(
-  //     'keyboardDidShow',
-  //     () => {
-  //       // setKeyboardVisible(true); // or some other action
-  //       scrollRef.current.scrollToEnd();
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        // setKeyboardVisible(true); // or some other action
 
-  //       // alert('we')
+        setTimeout(()=>{
+          scrollRef.current.scrollToEnd({animated:true});
+        },100)
+        // alert('we')
 
-  //     }
-  //   );
+      }
+    );
 
-  //   return () => {
-  //     // keyboardDidHideListener.remove();
-  //     keyboardDidShowListener.remove();
-  //   };
-  // }, []);
+    return () => {
+      // keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   return (
     <Overlay
@@ -115,7 +117,7 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
 
             value={remarks}
             onChangeText={(e) => {
-              scrollRef.current.scrollToEnd()
+              scrollRef.current.scrollToEnd({animated:true});
               setRemarks(e)
             }}
 
@@ -124,7 +126,7 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
               setonHandleFocus(true)
               setTimeout(() => {
                 scrollRef.current.scrollToEnd({ animated: true })
-            }, 1)
+            }, 100)
             }}
             onBlur={() => { setonHandleFocus(false) }}
 

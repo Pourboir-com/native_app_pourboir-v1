@@ -125,7 +125,7 @@ const GlobalHeader = (props) => {
                     // onPress={() =>
                     //   goBackHandler(props)}
 
-                    style={{ padding:10, zIndex: 9999999,width:'100%' }}
+                    style={{ padding: 10, zIndex: 9999999, width: '100%' }}
                     name={'arrow-back'}
                     size={props.Arrowsize ? props.Arrowsize : 24}
                     color={props.BackIconColor ? props.BackIconColor : '#000'}

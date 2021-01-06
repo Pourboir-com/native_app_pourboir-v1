@@ -73,17 +73,17 @@ export default HomeScreen = (props) => {
     outputColorRange: [COLORS[colorScheme].common.white, COLORS[colorScheme].secondary.main],
   });
   const searchBarTop = scrollYAnimatedValue.interpolate({
-    inputRange: [0, HEADER_HEIGHT],
-    outputRange: [100, spacing(1) + getStatusBarHeight()],
-    outputRange: [spacing(1) * 2 + getStatusBarHeight() * 2, spacing(1) + getStatusBarHeight()],
-    outputRange: [spacing(1) + getStatusBarHeight(), HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT],
+    inputRange: [0, HEADER_HEIGHT - getStatusBarHeight()],
+    // outputRange: [100, spacing(1) + getStatusBarHeight()],
+    // outputRange: [spacing(1) * 2 + getStatusBarHeight() * 2, spacing(1) + getStatusBarHeight()],
     // outputRange: [HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT + ((getStatusBarHeight() - 24) * 3), spacing(1) + getStatusBarHeight() - ((getStatusBarHeight() - 24) * 3)],
-    outputRange: [HEADER_HEIGHT - (1.5 * HEADER_BAR_HEIGHT) - getStatusBarHeight(), spacing(1)],
+    // outputRange: [HEADER_HEIGHT - (1.5 * HEADER_BAR_HEIGHT) - getStatusBarHeight(), spacing(1)],
+    outputRange: [HEADER_HEIGHT - (1.5 * HEADER_BAR_HEIGHT), getStatusBarHeight() + spacing(1)],
 
     extrapolate: Extrapolate.CLAMP,
   });
   const titleHeaderMarginLeft = scrollYAnimatedValue.interpolate({
-    inputRange: [0, HEADER_HEIGHT],
+    inputRange: [0, HEADER_HEIGHT / 2],
     outputRange: [0, HEADER_BAR_HEIGHT + spacing(2.5)],
     // outputRange: [0, (LAYOUT.window.width * 0.5) ],
 
@@ -150,7 +150,8 @@ export default HomeScreen = (props) => {
       headerTitle: null,
       headerTransparent: true,
       headerTitleAlign: 'left',
-      // headerRightContainerStyle: { paddingRight: spacing(2) }
+      headerRightContainerStyle: { position: 'absolute' },
+      headerLeftContainerStyle: { position: 'absolute' }
     });
 
   });
@@ -228,7 +229,7 @@ export default HomeScreen = (props) => {
               style={{
                 position: 'absolute',
                 top: searchBarTop,
-                marginTop: getStatusBarHeight(),
+                marginTop: 0,
                 // height: HEADER_BAR_HEIGHT,
                 height: searchBarHeight,
                 width: searchBarWidth,
@@ -340,7 +341,7 @@ export default HomeScreen = (props) => {
                 style={{
                   position: 'absolute',
                   top: searchBarTop,
-                  marginTop: getStatusBarHeight(),
+                  marginTop: 0,
                   // height: HEADER_BAR_HEIGHT,
                   height: searchBarHeight,
                   width: searchBarWidth,

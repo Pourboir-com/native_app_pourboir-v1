@@ -9,7 +9,8 @@ import {
   ImageBackground,
   SafeAreaView, KeyboardAvoidingView,
   ScrollView,
-  Dimensions, Platform
+  Dimensions, Platform,
+  Keyboard
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 // import Entypo from 'react-native-vector-icons/Entypo';
@@ -27,6 +28,21 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
   const scrollRef = React.useRef(null);
   const [onHandleFocus, setonHandleFocus] = useState(false);
   const [remarks, setRemarks] = useState('');
+
+
+  const _keyboardDidShow = () => {
+    scrollRef.current.scrollToEnd()
+  };
+
+  React.useEffect(() => {
+    Keyboard.addListener("keyboardDidShow", _keyboardDidShow);
+
+    // cleanup function
+    return () => {
+      Keyboard.removeListener("keyboardDidShow", _keyboardDidShow);
+    };
+  }, []);
+
 
   return (
     <Overlay
@@ -46,7 +62,7 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
         alwaysBounceVertical={false}
         bounces={false}
 
-        style={onHandleFocus  && Platform.OS === 'ios' ? { flex: 1 } : {}}
+        style={onHandleFocus && Platform.OS === 'ios' ? { flex: 1 } : {}}
 
         // style={{ flex: 1 }}
         onContentSizeChange={(contentWidth, contentHeight) => {

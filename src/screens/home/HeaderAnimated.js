@@ -78,7 +78,7 @@ export default HomeScreen = (props) => {
     outputRange: [spacing(1) * 2 + getStatusBarHeight() * 2, spacing(1) + getStatusBarHeight()],
     outputRange: [spacing(1) + getStatusBarHeight(), HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT],
     // outputRange: [HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT + ((getStatusBarHeight() - 24) * 3), spacing(1) + getStatusBarHeight() - ((getStatusBarHeight() - 24) * 3)],
-    outputRange: [HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT, spacing(1) + getStatusBarHeight()],
+    outputRange: [HEADER_HEIGHT - (1.5 * HEADER_BAR_HEIGHT) - getStatusBarHeight(), spacing(1)],
 
     extrapolate: Extrapolate.CLAMP,
   });
@@ -102,7 +102,7 @@ export default HomeScreen = (props) => {
     const renderUserIcon = () => {
       // return <Ionicons name="ios-contact" size={30} onPress={(): void => propsUserIcon.navigation.navigate('SelectSignIn')} />;
       return (
-        <View style={[{ position: "absolute", right: spacing(2.5), top: spacing(1) },
+        <View style={[{ position: "absolute", right: spacing(2.5), top: spacing(1), },
           // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
         ]}>
           <TouchableOpacity
@@ -171,6 +171,16 @@ export default HomeScreen = (props) => {
 
   return (
     <>
+      {/* <View style={[{ position: "absolute", left: spacing(2.5), top: spacing(1), zIndex: 999999999, marginTop: getStatusBarHeight() },
+        // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
+      ]}>
+        <TouchableOpacity
+          onPress={() =>
+            props.navigation.navigate('Setting')}>
+          <SvgHeaderUserIcon height={HEADER_BAR_HEIGHT} />
+        </TouchableOpacity>
+
+      </View> */}
       {/* <StatusBar backgroundColor={Colors.yellow}    /> */}
       {
         loading ? < View>
@@ -218,7 +228,7 @@ export default HomeScreen = (props) => {
               style={{
                 position: 'absolute',
                 top: searchBarTop,
-                marginTop: 0,
+                marginTop: getStatusBarHeight(),
                 // height: HEADER_BAR_HEIGHT,
                 height: searchBarHeight,
                 width: searchBarWidth,
@@ -330,7 +340,7 @@ export default HomeScreen = (props) => {
                 style={{
                   position: 'absolute',
                   top: searchBarTop,
-                  marginTop: 0,
+                  marginTop: getStatusBarHeight(),
                   // height: HEADER_BAR_HEIGHT,
                   height: searchBarHeight,
                   width: searchBarWidth,

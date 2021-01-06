@@ -101,7 +101,7 @@ const GlobalHeader = (props) => {
         {props.left ? null :
           <Left style={{ flex: props.leftText ? 2 : 1, marginBottom: 10 }}>
             <View style={styles.viewLeft}>
-              {props.leftText && (
+              {/* {props.leftText && (
                 <Text
                   style={{
                     color: props.color ? props.color : Colors.fontLight,
@@ -109,23 +109,27 @@ const GlobalHeader = (props) => {
                     alignSelf: "flex-start"
                   }}
                 >{props.leftText}</Text>
-              )}
+              )} */}
 
               {props.arrow === true && (
                 <TouchableOpacity
-                  style={{ paddingRight: 5, paddingVertical: 10, padding: 10, backgroundColor:'red' }}
+                  style={{ paddingRight: 5, paddingVertical: 10, padding: 10, zIndex: 1000,  }}
 
                   onPress={() =>
                     goBackHandler(props)
                   }>
-                    <Text>
-                      Back
-                    </Text>
-                  {/* <MaterialIcons
+                  {/* <Text>
+                    Back
+                    </Text> */}
+                  <MaterialIcons
+                    onPress={() =>
+                      goBackHandler(props)}
+
+                    style={{ padding:10 }}
                     name={'arrow-back'}
                     size={props.Arrowsize ? props.Arrowsize : 24}
                     color={props.BackIconColor ? props.BackIconColor : '#000'}
-                  /> */}
+                  />
                 </TouchableOpacity>
               )}
             </View>

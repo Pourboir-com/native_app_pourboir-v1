@@ -55,7 +55,17 @@ export default HomeScreen = (props) => {
     inputRange: [0, HEADER_HEIGHT / 2],
     outputRange: [LAYOUT.window.width - spacing(5), HEADER_BAR_HEIGHT],
     // outputRange: [LAYOUT.window.width - spacing(5), LAYOUT.window.width - spacing(5)],
-
+    extrapolate: Extrapolate.CLAMP,
+  });
+  const searchBarHeight = scrollYAnimatedValue.interpolate({
+    inputRange: [0, HEADER_HEIGHT],
+    // outputRange: [50, HEADER_BAR_HEIGHT],
+    outputRange: [HEADER_BAR_HEIGHT, HEADER_BAR_HEIGHT],
+    extrapolate: Extrapolate.CLAMP,
+  });
+  const searchBarLocation = scrollYAnimatedValue.interpolate({
+    inputRange: [0, HEADER_HEIGHT],
+    outputRange: [10, spacing(2.5)],
     extrapolate: Extrapolate.CLAMP,
   });
   const searchBarColor = Animated.interpolateColors(scrollYAnimatedValue, {
@@ -209,9 +219,12 @@ export default HomeScreen = (props) => {
                 position: 'absolute',
                 top: searchBarTop,
                 marginTop: 0,
-                height: HEADER_BAR_HEIGHT,
+                // height: HEADER_BAR_HEIGHT,
+                height: searchBarHeight,
                 width: searchBarWidth,
                 left: spacing(2.5),
+                // left: 10,
+                // left: searchBarLocation,
                 borderRadius: borderRadiusIcon,
                 backgroundColor: searchBarColor,
                 shadowColor: "#000",
@@ -223,7 +236,6 @@ export default HomeScreen = (props) => {
                 shadowRadius: 0.1,
                 elevation: 5,
                 overflow: 'hidden',
-                backgroundColor: "white",
 
               }}
             >
@@ -245,6 +257,7 @@ export default HomeScreen = (props) => {
                   }}
                   onChangeText={(e) => { setSearchVal(e) }}
                   placeholder={i18n.t('find_your_restaurant')}
+                  placeholderTextColor={'#485460'}
                   style={{ flex: 1, paddingHorizontal: 25 }} />
 
                 {
@@ -318,9 +331,12 @@ export default HomeScreen = (props) => {
                   position: 'absolute',
                   top: searchBarTop,
                   marginTop: 0,
-                  height: HEADER_BAR_HEIGHT,
+                  // height: HEADER_BAR_HEIGHT,
+                  height: searchBarHeight,
                   width: searchBarWidth,
                   left: spacing(2.5),
+                  // left: 10,
+                  // left: searchBarLocation,
                   borderRadius: borderRadiusIcon,
                   backgroundColor: searchBarColor,
                   shadowColor: "#000",
@@ -332,7 +348,6 @@ export default HomeScreen = (props) => {
                   shadowRadius: 0.1,
                   elevation: 5,
                   overflow: 'hidden',
-                  backgroundColor: "white",
 
                 }}
               >

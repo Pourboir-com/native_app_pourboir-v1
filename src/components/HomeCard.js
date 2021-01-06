@@ -31,7 +31,7 @@ const HomeCard = ({ navigation, img, rating, name, distance, services, loading, 
                     distance: distance,
                     services: services,
                 })}
-                style={[styles.viewItemConatier, { backgroundColor: 'black' }]}>
+                style={[styles.viewItemConatier, ]}>
                 <ImageBackground style={styles.imgCard} source={{ uri: img }}>
                     <LinearGradient
                         style={{ zIndex: 100, position: 'absolute', width: '100%', height: '20%' }}
@@ -41,15 +41,15 @@ const HomeCard = ({ navigation, img, rating, name, distance, services, loading, 
                     {
                         crossIcon &&
                         <TouchableOpacity
-                            style={[styles.btnCross, { zIndex: 99999, }]}
+                            style={[styles.btnCross, { zIndex: 1000, marginRight: -5, marginTop: -5 }]}
                             onPress={deleteCall}
                         >
                             <View
                                 style={{
                                     height: 35,
                                     width: 35,
-                                    borderWidth:5,
-                                    borderColor:'#f9f9f9',
+                                    borderWidth: 5,
+                                    borderColor: '#f9f9f9',
                                     justifyContent: 'center',
                                     borderRadius:35,
                                     backgroundColor: Colors.yellow,
@@ -136,17 +136,11 @@ const styles = StyleSheet.create({
         width: "90%", height: 15, backgroundColor: "#F6F6F6", marginTop: 10
     },
     btnCross: {
-        // backgroundColor: "#f9f9f9",
         position: "absolute",
         alignSelf: "flex-end",
-        margin: -4,
         right: 0,
         justifyContent: "center",
         alignItems: "center",
-        overflow: "hidden",
-        height:35,
-        width:35,
-        borderRadius:35
     },
     txt2Card: {
         color: "#EDEFEE", fontSize: 12,
@@ -159,9 +153,10 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width * 0.45,
         height: Dimensions.get('window').width * 0.56,
         margin: Dimensions.get('window').width * 0.02, backgroundColor: "rgba(0,0,0,0.1)",
-        borderRadius: 12, overflow: "hidden",
-        marginTop:0,
-        marginBottom: Dimensions.get('window').width * 0.04
+        borderRadius: 12,
+        overflow: "hidden",
+        marginTop: 0,
+        marginBottom: Dimensions.get('window').width * 0.04,
     },
     viewDummyCard: {
         width: Dimensions.get('window').width * 0.45,

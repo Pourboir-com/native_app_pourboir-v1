@@ -78,14 +78,20 @@ const RateService = ({ navigation }) => {
         setstarSelect(v);
     }
 
-    return <View
+    return <ScrollView
+        ref={scrollRef}
+        alwaysBounceHorizontal={false}
+        alwaysBounceVertical={false}
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+
         style={[styles.container,
         Platform.OS === 'ios' ?
             isKeyboardVisible ? { marginBottom: Dimensions.get('window').height * 0.4 }
                 : null : null,
         ]}
     >
-        <StatusBar translucent={true} style='light' />
+        <StatusBar translucent={true} style='dark' />
         <View style={styles.viewProfile}>
             <ImageBackground
                 style={{ width: '100%', height: 'auto', paddingBottom: 70 }}
@@ -98,24 +104,29 @@ const RateService = ({ navigation }) => {
                     backgroundColor={'transparent'}
                     navigation={navigation}
                 />
-                {isKeyboardVisible ? null
+                {/* {isKeyboardVisible ? null
                     : <View>
                         <View style={styles.viewImg}>
                             <FontAwesome name="user-circle-o" size={100} color="#fff" />
                         </View>
                         <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>Amy Farha</Text>
                     </View>
-                }
+                } */}
+                <View>
+                    <View style={styles.viewImg}>
+                        <FontAwesome name="user-circle-o" size={100} color="#fff" />
+                    </View>
+                    <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>Amy Farha</Text>
+                </View>
             </ImageBackground>
         </View>
         <ScrollView
-            ref={scrollRef}
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
             bounces={false}
             showsVerticalScrollIndicator={false}
             style={styles.viewFlatlist}
-            // contentContainerStyle={{ flex: 1 }}
+        // contentContainerStyle={{ flex: 1 }}
         >
             <TouchableOpacity
                 onPress={() => navigation.navigate('socialLogin')}
@@ -219,12 +230,15 @@ const RateService = ({ navigation }) => {
                         value={remarks}
                         onFocus={() => {
                             setKeyboardVisible(true)
+                            setTimeout(() => {
+                                scrollRef.current.scrollToEnd({ animated: true })
+                            }, 1)
                         }}
                         onBlur={() => {
                             setKeyboardVisible(false)
                         }}
                         onChangeText={(e) => {
-                            scrollRef.current.scrollToEnd()
+                            scrollRef.current.scrollToEnd({ animated: true })
                             if (remarks.length - 1 === e.length) {
                                 setRemarks(e)
                             }
@@ -258,7 +272,7 @@ const RateService = ({ navigation }) => {
             isVisible={isVisible}
             handleModalClose={handleModalClose}
         />
-    </View>
+    </ScrollView>
 }
 export default RateService;
 

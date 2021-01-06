@@ -20,18 +20,18 @@ export default Remove = (props) => {
     return (
         <>
             <View style={{
-                width: '100%', height: 100,
+                width: '100%', height: 110,
                 backgroundColor: '#f9f9f9'
             }}>
                 <View style={{
-                    width: '100%', height: 100,
+                    width: '100%', height: 110,
                     borderBottomLeftRadius: Dimensions.get('window').width*0.06,
                     borderBottomRightRadius:Dimensions.get('window').width*0.06,
                     overflow: 'hidden',
                     backgroundColor: '#f9f9f9'
                 }}>
                     <ImageBackground style={{
-                        width: '100%', height: 100,
+                        width: '100%', height: 110,
                     }} source={require('../../assets/images/Group3.png')}>
 
                         <GlobalHeader

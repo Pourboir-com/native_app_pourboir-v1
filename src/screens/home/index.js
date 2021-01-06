@@ -45,7 +45,7 @@ export default HomeScreen = (props) => {
         ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf')
       });
     }
-    
+
     loadFont()
 
     setTimeout(() => {
@@ -120,12 +120,15 @@ export default HomeScreen = (props) => {
               />
             </ImageBackground>
             <StatusBar translucent={true} style='dark' />
-            <HomeScreenContent
-              loading={loading}
-              setLoading={setLoading}
-              searchIconPress={searchIconPress}
-              setSearchIconPress={setSearchIconPress}
-              route={props.route}
+            <GlobalHeader
+              arrow={true}
+              headingText={i18n.t('your_restaurant')}
+              fontSize={17}
+              color={Colors.fontDark}
+              navigation={navigation}
+              setting={true}
+              backgroundColor={'transparent'}
+              borderRadius={true}
             />
           </>
       }

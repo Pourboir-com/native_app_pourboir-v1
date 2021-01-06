@@ -331,7 +331,8 @@ const styles = StyleSheet.create({
         alignSelf: "center"
     },
     viewProfile: {
-        backgroundColor: Colors.yellow, width: "100%", marginTop: -20,
+        backgroundColor: Colors.yellow, width: "100%", 
+        // marginTop: -20,
         borderBottomLeftRadius: 40, borderBottomRightRadius: 40
     }
 })

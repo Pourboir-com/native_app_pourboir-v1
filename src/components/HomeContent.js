@@ -117,14 +117,15 @@ export default function HomeScreenContent({ searchIconPress, setSearchIconPress,
                     >
                         { loading ? null :
                             !route.params.crossIcon &&
-                            <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
+                            <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold',  }]}>
                                 {i18n.t("around_you")}
                             </Text>
                         }
                         <View
                             style={{
                                 flexDirection: "row",
-                                marginTop: 2,
+                                marginTop: 17
+
                             }}>
                             <FlatList
                                 data={loading ? dummyArray : ItemsEven}
@@ -295,7 +296,7 @@ const styles = StyleSheet.create({
     txtHeading: {
         fontSize: 24,
         marginTop: 20,
-        marginBottom: 3,
+        marginBottom: 0,
         width: "90%",
         alignSelf: "center",
         color: "#1E272E"

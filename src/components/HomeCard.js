@@ -159,7 +159,9 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width * 0.45,
         height: Dimensions.get('window').width * 0.56,
         margin: Dimensions.get('window').width * 0.02, backgroundColor: "rgba(0,0,0,0.1)",
-        borderRadius: 12, overflow: "hidden"
+        borderRadius: 12, overflow: "hidden",
+        marginTop:0,
+        marginBottom: Dimensions.get('window').width * 0.04
     },
     viewDummyCard: {
         width: Dimensions.get('window').width * 0.45,

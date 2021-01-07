@@ -81,14 +81,10 @@ const GlobalHeader = (props) => {
       <View
         style={[
           {
-            shadowOffset: { height: 0, width: 0 },
-            shadowOpacity: 0,
-            elevation: 0,
             width: '100%',
             alignItems: 'center',
             justifyContent: 'center',
             paddingTop: 27,
-            zIndex: -10,
             borderRadius: 20,
             flexDirection: 'row',
             // backgroundColor: props.backgroundColor
@@ -100,8 +96,8 @@ const GlobalHeader = (props) => {
         ]}>
 
         {props.left ? null :
-          <Left style={{ flex: props.leftText ? 2 : 1}}>
-            <View style={styles.viewLeft}>
+          <Left style={{ flex: props.leftText ? 2 : 1,  }}>
+            <View style={[styles.viewLeft, ]}>
               {/* {props.leftText && (
                 <Text
                   style={{
@@ -114,24 +110,21 @@ const GlobalHeader = (props) => {
 
               {props.arrow === true && (
                 <TouchableOpacity
-                  style={{ paddingRight: 5, paddingVertical: 10, padding: 10, zIndex: 1000,marginBottom: 22 }}
-
+                style={{ padding:10}}
                   onPress={() =>
                     goBackHandler(props)
                   }>
-                  {/* <Text>
-                    Back
-                    </Text> */}
                   <MaterialIcons
-                    // onPress={() =>
-                    //   goBackHandler(props)}
-
-                    style={{ padding: 10, zIndex: 9999999, width: '100%' }}
+                    onPress={(e) =>{
+                      goBackHandler(props)
+                    }}
+                    style={{
+                      marginBottom: 22, width: '100%' }}
                     name={'arrow-back'}
                     size={props.Arrowsize ? props.Arrowsize : 24}
                     color={props.BackIconColor ? props.BackIconColor : '#000'}
                   />
-                </TouchableOpacity>
+                 </TouchableOpacity>
               )}
             </View>
           </Left>

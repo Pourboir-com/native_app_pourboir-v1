@@ -17,7 +17,7 @@ import i18n from '../../li8n';
 
 const ReviewDetails = ({ navigation, route }) => {
     const scrollY = new Animated.Value(0)
-    const diffClamp = Animated.diffClamp(scrollY, 0, 50)
+    const diffClamp = Animated.diffClamp(scrollY, 0, 55)
     const translateY = diffClamp.interpolate({
         inputRange: [0, 50],
         outputRange: [0, -50]
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     },
     viewNumRaters: {
         overflow: "hidden", backgroundColor: Colors.yellow, marginLeft: 23,
-        borderRadius: 8,
+        borderRadius: 9,
         // paddingHorizontal:8, 
         paddingTop: 1,
         paddingLeft: 7,

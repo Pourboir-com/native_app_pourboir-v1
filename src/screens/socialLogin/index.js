@@ -17,8 +17,10 @@ import { config, BASE_URL } from '../../constants';
 import { userSignUp } from '../../util';
 import { useMutation } from 'react-query';
 import { GOOGLE_SIGNUP } from '../../queries';
+import axios from 'axios';
 const imgLogo = require('../../assets/images/imgLogo.png');
 const imgWaiter = require('../../assets/images/waiter2.png');
+import * as Network from 'expo-network';
 
 const SocialLogin = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
@@ -43,9 +45,15 @@ const SocialLogin = ({ navigation }) => {
     if (type === 'success') {
       // Then you can use the Google REST API
       let userInfoResponse = await userSignUp(accessToken);
-      await googleSignup(userInfoResponse.data);
+      await googleSignup(userInfoResponse.data, {
+        onSuccess: () => {
+          navigation.navigate('Home', { crossIcon: false });
+        },
+        onError: error => {
+          console.log(error);
+        },
+      });
     }
-    navigation.navigate('Home', { crossIcon: false });
   };
   return (
     <View

@@ -1,5 +1,5 @@
 import Constants from 'expo-constants';
-
+// import * as Network from 'expo-network';
 function getEnvVars(env = '') {
   if (env === null || env === undefined || env === '') return 'development';
   if (env.indexOf('dev') !== -1) return 'development';
@@ -7,8 +7,8 @@ function getEnvVars(env = '') {
   if (env.indexOf('prod') !== -1) return 'production';
 }
 export const releaseEnvironment = getEnvVars(Constants.manifest.releaseChannel);
-const api_url = () => {
-  let api_url = 'http://192.168.0.109:8080';
+const apiUrl = () => {
+  let api_url = `http://192.168.43.87:8080/api`;
   if (releaseEnvironment == 'production') {
     api_url = 'https://production.dancingnomads.com';
   } else if (releaseEnvironment == 'staging') {
@@ -17,4 +17,4 @@ const api_url = () => {
   return api_url;
 };
 
-export const BASE_URL = api_url();
+export const BASE_URL = apiUrl();

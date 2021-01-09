@@ -1,131 +1,224 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { FontAwesome } from "@expo/vector-icons";
+import React, { useEffect, useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { Colors } from '../../constants/Theme';
-
+import * as Google from 'expo-google-app-auth';
 import i18n from '../../li8n';
 import { loadAsync } from 'expo-font';
-
-const imgLogo = require('../../assets/images/imgLogo.png')
-const imgWaiter = require('../../assets/images/waiter2.png')
+import { config, BASE_URL } from '../../constants';
+import { userSignUp } from '../../util';
+import { useMutation } from 'react-query';
+import { GOOGLE_SIGNUP } from '../../queries';
+const imgLogo = require('../../assets/images/imgLogo.png');
+const imgWaiter = require('../../assets/images/waiter2.png');
 
 const SocialLogin = ({ navigation }) => {
-    const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [googleSignup] = useMutation(GOOGLE_SIGNUP);
+  useEffect(() => {
+    async function loadFont() {
+      await loadAsync({
+        // Load a font `Montserrat` from a static resource
+        ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
+        ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
+      });
+    }
+    loadFont();
+    setLoading(false);
+  }, []);
 
-    useEffect(() => {
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    // First- obtain access token from Expo's Google API
+    const { type, accessToken, user } = await Google.logInAsync(config);
+    setLoading(false);
+    if (type === 'success') {
+      // Then you can use the Google REST API
+      let userInfoResponse = await userSignUp(accessToken);
+      await googleSignup(userInfoResponse.data);
+    }
+    navigation.navigate('Home', { crossIcon: false });
+  };
+  return (
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: loading ? '#fff' : Colors.yellow },
+      ]}
+    >
+      {loading ? (
+        <ActivityIndicator size={70} color={Colors.yellow} />
+      ) : (
+        <View style={{ width: '100%', alignItems: 'center' }}>
+          <Image
+            style={styles.imgLogoStyle}
+            source={imgLogo}
+            resizeMode="contain"
+          />
+          <View style={styles.viewImg}>
+            <Image
+              style={styles.imgStyle}
+              source={imgWaiter}
+              resizeMode="contain"
+            />
+          </View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Home', { crossIcon: false })}
+            style={styles.btnFb}
+          >
+            <FontAwesome name="facebook" color="#fff" size={20} />
+            <Text
+              style={[
+                styles.textFb,
+                {
+                  fontSize: 16,
+                  fontFamily: 'ProximaNova',
+                },
+              ]}
+            >
+              {i18n.t('continue_with_fb')}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleGoogleSignIn}
+            style={styles.btnGoogle}
+          >
+            <FontAwesome name="google" color="#fff" size={20} />
+            <Text
+              style={[
+                styles.textFb,
+                {
+                  fontSize: 16,
+                  fontFamily: 'ProximaNova',
+                },
+              ]}
+            >
+              {i18n.t('continue_with_google')}
+            </Text>
+          </TouchableOpacity>
 
-        
-        async function loadFont() {
-            await loadAsync({
-              // Load a font `Montserrat` from a static resource
-              ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
-              ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf')
-            });
-          }
-          
-          loadFont()
-
-        setTimeout(() => {
-            setLoading(false)
-        }, 2500)
-
-        // setTimeout(() => {
-        //     navigation.navigate('Home', { crossIcon: false })
-        // }, 4000)
-
-    }, [])
-    return <View style={[styles.container, { backgroundColor: loading ? '#fff' : Colors.yellow }]}>
-        {loading ? <ActivityIndicator size={70} color={Colors.yellow} /> :
-            <View style={{ width: "100%", alignItems: "center" }}>
-                <Image
-                    style={styles.imgLogoStyle}
-                    source={imgLogo}
-                    resizeMode="contain"
-                />
-                <View style={styles.viewImg}>
-                    <Image
-                        style={styles.imgStyle}
-                        source={imgWaiter}
-                        resizeMode="contain"
-                    />
-                </View>
-                <TouchableOpacity onPress={() => navigation.navigate('Home', { crossIcon: false })} style={styles.btnFb}>
-                    <FontAwesome name="facebook" color="#fff" size={20} />
-                    <Text style={[styles.textFb, {
-                        fontSize: 16, fontFamily: 'ProximaNova'
-                    }]}>{i18n.t('continue_with_fb')}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('NoLocation')} style={styles.btnGoogle}>
-                    <FontAwesome name="google" color="#fff" size={20} />
-                    <Text style={[styles.textFb, {
-                        fontSize: 16, fontFamily: 'ProximaNova'
-                    }]}>{i18n.t('continue_with_google')}</Text>
-                </TouchableOpacity>
-
-
-                <Text style={[styles.txtCreatingAcc, {
-                    fontSize: 14, fontFamily: 'ProximaNova', lineHeight: 24
-                }]}>
-                    {i18n.t('by_creatin_your_acc')}
-                </Text>
-                <View style={styles.viewbtns}>
-                    <TouchableOpacity>
-                        <Text style={{ color: "#0050A0", fontSize: 14, fontFamily: 'ProximaNova', lineHeight: 24 }}>{i18n.t('terms_of_use')}</Text>
-                    </TouchableOpacity>
-                    <View style={{ width: 1, height: 10, backgroundColor: "grey", marginHorizontal: 10 }} />
-                    <TouchableOpacity>
-                        <Text style={{ color: "#0050A0", fontSize: 14, fontFamily: 'ProximaNova', lineHeight: 24 }}>{i18n.t('privacy_policy')}</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        }
-    </View >
-}
+          <Text
+            style={[
+              styles.txtCreatingAcc,
+              {
+                fontSize: 14,
+                fontFamily: 'ProximaNova',
+                lineHeight: 24,
+              },
+            ]}
+          >
+            {i18n.t('by_creatin_your_acc')}
+          </Text>
+          <View style={styles.viewbtns}>
+            <TouchableOpacity>
+              <Text
+                style={{
+                  color: '#0050A0',
+                  fontSize: 14,
+                  fontFamily: 'ProximaNova',
+                  lineHeight: 24,
+                }}
+              >
+                {i18n.t('terms_of_use')}
+              </Text>
+            </TouchableOpacity>
+            <View
+              style={{
+                width: 1,
+                height: 10,
+                backgroundColor: 'grey',
+                marginHorizontal: 10,
+              }}
+            />
+            <TouchableOpacity>
+              <Text
+                style={{
+                  color: '#0050A0',
+                  fontSize: 14,
+                  fontFamily: 'ProximaNova',
+                  lineHeight: 24,
+                }}
+              >
+                {i18n.t('privacy_policy')}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+    </View>
+  );
+};
 export default SocialLogin;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: "center"
-    },
-    txtCreatingAcc: {
-        color: Colors.fontLight, fontSize: 12, marginTop: 10
-    },
-    viewImg: {
-        width: "100%",
-        alignSelf: "center",
-        height: Dimensions.get('window').height * 0.5,
-        marginBottom: 10,
-        // backgroundColor:'black'
-    },
-    viewbtns: {
-        flexDirection: "row", width: "90%", justifyContent: "center", alignItems: "center"
-    },
-    imgStyle: {
-        // flex:1,
-        // backgroundColor:'red',
-        width: Dimensions.get('window').width * 1,
-        marginLeft: Dimensions.get('window').width * 0.05,
-        height: Dimensions.get('window').height * 0.5,
-        alignSelf: 'center',
-        // marginBottom:20
-    },
-    imgLogoStyle: {
-        width: 200,
-        height: 50,
-        marginTop: 20
-        // height:'auto'
-    },
-    btnFb: {
-        width: '90%', flexDirection: "row", backgroundColor: "#4267B2", borderRadius: 10,
-        justifyContent: "center", alignItems: "center", height: 50, marginBottom: 15,
-    },
-    btnGoogle: {
-        width: '90%', flexDirection: "row", backgroundColor: "#DD4B39", borderRadius: 10,
-        justifyContent: "center", alignItems: "center", height: 50, marginBottom: 15
-    },
-    textFb: {
-        color: "#fff", marginLeft: 10
-    }
-})
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  txtCreatingAcc: {
+    color: Colors.fontLight,
+    fontSize: 12,
+    marginTop: 10,
+  },
+  viewImg: {
+    width: '100%',
+    alignSelf: 'center',
+    height: Dimensions.get('window').height * 0.5,
+    marginBottom: 10,
+    // backgroundColor:'black'
+  },
+  viewbtns: {
+    flexDirection: 'row',
+    width: '90%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imgStyle: {
+    // flex:1,
+    // backgroundColor:'red',
+    width: Dimensions.get('window').width * 1,
+    marginLeft: Dimensions.get('window').width * 0.05,
+    height: Dimensions.get('window').height * 0.5,
+    alignSelf: 'center',
+    // marginBottom:20
+  },
+  imgLogoStyle: {
+    width: 200,
+    height: 50,
+    marginTop: 20,
+    // height:'auto'
+  },
+  btnFb: {
+    width: '90%',
+    flexDirection: 'row',
+    backgroundColor: '#4267B2',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    marginBottom: 15,
+  },
+  btnGoogle: {
+    width: '90%',
+    flexDirection: 'row',
+    backgroundColor: '#DD4B39',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    marginBottom: 15,
+  },
+  textFb: {
+    color: '#fff',
+    marginLeft: 10,
+  },
+});

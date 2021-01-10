@@ -9,7 +9,7 @@ import {
   FlatList,
   TouchableOpacity,
   Animated,
-  Image
+  Image,
 } from "react-native";
 import { Feather, Entypo } from "@expo/vector-icons";
 
@@ -22,19 +22,18 @@ import Header from "./HeaderAnimated";
 import HeaderSimple from "./HeaderSimple";
 import GlobalHeader from '../../components/GlobalHeader';
 
-import HomeScreenContent from '../../components/HomeContent'
+import HomeScreenContent from '../../components/HomeContent';
 import { StatusBar } from 'expo-status-bar';
 
 import i18n from "../../li8n";
 import { ImageBackground } from "react-native";
 import { loadAsync } from 'expo-font';
 
-export default HomeScreen = (props) => {
+export default HomeScreen = props => {
   const [loading, setLoading] = useState(false);
   const [searchIconPress, setSearchIconPress] = useState(false);
 
   const navigation = useNavigation();
-
 
   useEffect(() => {
 
@@ -42,22 +41,21 @@ export default HomeScreen = (props) => {
       await loadAsync({
         // Load a font `Montserrat` from a static resource
         ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
-        ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf')
+        ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
       });
     }
 
-    loadFont()
+    loadFont();
 
     setTimeout(() => {
-      setLoading(false)
-    }, 2500)
+      setLoading(false);
+    }, 2500);
 
     // setTimeout(() => {
     //     navigation.navigate('Home', { crossIcon: false })
     // }, 4000)
 
-  }, [])
-
+  }, []);
 
   return (
     <>
@@ -84,24 +82,24 @@ export default HomeScreen = (props) => {
                 }
               </Header>
             ) : (
-                <>
+              <>
 
-                  <HeaderSimple
-                    setSearchIconPress={setSearchIconPress}
+                <HeaderSimple
+                  setSearchIconPress={setSearchIconPress}
+                  searchIconPress={searchIconPress}
+                />
+                <StatusBar translucent={true} style='dark' />
+                {
+                  <HomeScreenContent
+                    loading={loading}
+                    setLoading={setLoading}
                     searchIconPress={searchIconPress}
+                    setSearchIconPress={setSearchIconPress}
+                    route={props.route}
                   />
-                  <StatusBar translucent={true} style='dark' />
-                  {
-                    <HomeScreenContent
-                      loading={loading}
-                      setLoading={setLoading}
-                      searchIconPress={searchIconPress}
-                      setSearchIconPress={setSearchIconPress}
-                      route={props.route}
-                    />
-                  }
-                </>
-              )}
+                }
+              </>
+            )}
           </>
           :
           <>

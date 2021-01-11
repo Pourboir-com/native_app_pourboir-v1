@@ -34,9 +34,9 @@ const GlobalHeader = props => {
     props.navigation.setOptions({
       headerTitle: '',
       headerRight: null,
-      headerShown: true,
+      headerShown: false,
       headerLeft: null,
-      headerTransparent: true,
+      headerTransparent: false,
       headerTitleAlign: 'left',
       // headerRightContainerStyle: { paddingRight: spacing(2) }
     });
@@ -79,25 +79,55 @@ const GlobalHeader = props => {
         height: props.height ? props.height : 110,
       }}
     >
+
       <View
         style={[
           {
             width: '100%',
             alignItems: 'center',
             justifyContent: 'center',
-            paddingTop: 27,
+            // paddingTop: 27,
             borderRadius: 20,
             flexDirection: 'row',
           },
           Platform.OS === 'ios' ? { borderBottomWidth: 0 } : {},
         ]}
       >
-        {props.left ? null : (
+        {/* <View style={{ backgroundColor: 'red' }}> */}
+          {props.left ? null : (
+            <TouchableOpacity 
+            disabled={!props.arrow}
+            onPress={()=>{ goBackHandler(props);}}
+            style={{ flex: props.leftText ? 2 : 1,}}>
+              <View style={[styles.viewLeft,]}>
+                {props.arrow === true && (
+                  // <TouchableOpacity
+                  //   style={{ padding: 10 }}
+                  //   onPress={() => goBackHandler(props)}
+                  // >
+                    <MaterialIcons
+                      // onPress={e => {
+                      //   goBackHandler(props);
+                      // }}
+                      style={{
+                        marginTop: -20,
+                      }}
+                      name="arrow-back"
+                      size={props.Arrowsize ? props.Arrowsize : 24}
+                      color={props.BackIconColor ? props.BackIconColor : '#000'}
+                    />
+                  // </TouchableOpacity>
+                )}
+              </View>
+            </TouchableOpacity>
+          )}
+        {/* </View> */}
+        {/* {props.left ? null : (
           <Left style={{ flex: props.leftText ? 2 : 1 }}>
             <View style={[styles.viewLeft]}>
               {props.arrow === true && (
                 <TouchableOpacity
-                  style={{padding: 10}}
+                  style={{ padding: 10 }}
                   onPress={() => goBackHandler(props)}
                 >
                   <MaterialIcons
@@ -117,7 +147,7 @@ const GlobalHeader = props => {
               )}
             </View>
           </Left>
-        )}
+        )} */}
 
         <Body
           style={{

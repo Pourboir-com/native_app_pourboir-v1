@@ -25,16 +25,17 @@ export default function HomeScreenContent({
   route,
 }) {
   const NoListImg = require('../assets/images/emptyRestaurantList.png');
-  
+
   const {
     data: restaurantData,
     isLoading: restaurantLoading,
     refetch: refetchRestaurant,
   } = useQuery(['GET_RESTAURANT', {}], GET_RESTAURANT, { ...reactQueryConfig });
 
-
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState( restaurantData ? restaurantData.restaurants.results : []);
+  const [data, setData] = useState(
+    restaurantData ? restaurantData.restaurants.results : [],
+  );
 
   const navigation = useNavigation();
 

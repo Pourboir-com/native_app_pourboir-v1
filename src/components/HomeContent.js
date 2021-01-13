@@ -19,21 +19,30 @@ import { reactQueryConfig } from '../constants';
 import i18n from '../li8n';
 import { isLoading } from 'expo-font';
 import { distributeInArray } from '../util';
+import { getAsyncStorageValues } from '../constants';
 export default function HomeScreenContent({
   searchIconPress,
   setSearchIconPress,
   route,
 }) {
   const NoListImg = require('../assets/images/emptyRestaurantList.png');
-
+  const [saveLocation, setSaveLocation] = useState('');
+  useEffect(() => {
+    (async () => {
+      const { location } = await getAsyncStorageValues();
+      setSaveLocation(location);
+    })();
+  }, []);
   const {
     data: restaurantData,
     isLoading: restaurantLoading,
     refetch: refetchRestaurant,
-  } = useQuery(['GET_RESTAURANT', {}], GET_RESTAURANT, {
+    isFetching: resIsFetching,
+  } = useQuery(['GET_RESTAURANT', { location: saveLocation }], GET_RESTAURANT, {
     ...reactQueryConfig,
+    enabled: saveLocation,
     onSuccess: res => {
-      setData(res.restaurants.results);
+      setData(res?.restaurants?.results || []);
     },
   });
 
@@ -51,15 +60,13 @@ export default function HomeScreenContent({
 
   const onDeleteCard = (index, even) => {
     let indexToRemove = even ? index * 2 : index * 2 + 1;
-
     let tempArr = data;
-
     tempArr.splice(indexToRemove, 1);
 
     setData([...tempArr]);
   };
 
-  if (!data.length && !restaurantLoading) {
+  if (!data.length && !restaurantLoading && !resIsFetching) {
     return (
       <View style={styles.viewEmptyList}>
         <View
@@ -105,12 +112,12 @@ export default function HomeScreenContent({
         {loading
           ? null
           : !route.params.crossIcon && (
-            <Text
-              style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
-            >
-              {i18n.t('around_you')}
-            </Text>
-          )}
+              <Text
+                style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
+              >
+                {i18n.t('around_you')}
+              </Text>
+            )}
         <View
           style={{
             flexDirection: 'row',
@@ -172,7 +179,6 @@ export default function HomeScreenContent({
           />
         </View>
       </ScrollView>
-
     </>
   );
 }

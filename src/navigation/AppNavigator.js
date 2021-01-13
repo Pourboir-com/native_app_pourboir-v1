@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import splashScreen from '../screens/splashscreen';
@@ -8,15 +8,16 @@ import Remove from '../screens/remove';
 
 import RateYourService from '../screens/rateYourService';
 import Setting from '../screens/setting';
-import OpenCardReviews from '../screens/openCardReviews'
-import NoLocation from '../screens/NoLocationFound'
-import SelectLanguage from "../screens/selectLanguage"
+import OpenCardReviews from '../screens/openCardReviews';
+import NoLocation from '../screens/NoLocationFound';
+import SelectLanguage from "../screens/selectLanguage";
 
 import { spacing } from "../constants/layout";
 
 const Stack = createStackNavigator();
 
 function AppNavigator() {
+
   return (
     <Stack.Navigator initialRouteName="splashScreen" screenOptions={{ headerShown: false }} >
       <Stack.Screen name="splashScreen" component={splashScreen}

@@ -20,11 +20,11 @@ import { GOOGLE_SIGNUP } from '../../queries';
 import axios from 'axios';
 const imgLogo = require('../../assets/images/imgLogo.png');
 const imgWaiter = require('../../assets/images/waiter2.png');
-import * as Network from 'expo-network';
 
 const SocialLogin = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [googleSignup] = useMutation(GOOGLE_SIGNUP);
+
   useEffect(() => {
     async function loadFont() {
       await loadAsync({

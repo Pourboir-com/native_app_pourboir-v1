@@ -36,7 +36,7 @@ const HomeCard = ({
 }) => {
   // const {crossIcon} = routes.params;
   // Star arrayyyyyyyy
-  const [starSelect, setstarSelect] = useState(3.5);
+  const [starSelect, setstarSelect] = useState(rating);
   const obj = [1, 2, 3, 4, 5];
   const onPressStar = v => {
     setstarSelect(v);
@@ -141,7 +141,11 @@ const HomeCard = ({
               <Text style={{ color: 'red' }}></Text>
             </View>
             <View style={{ zIndex: 101, padding: 12 }}>
-              <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
+              <Text
+                ellipsizeMode="tail"
+                numberOfLines={3}
+                style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}
+              >
                 {name}
               </Text>
               <View style={styles.view2Card}>

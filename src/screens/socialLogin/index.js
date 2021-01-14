@@ -17,6 +17,7 @@ import { config, BASE_URL } from '../../constants';
 import { userSignUp } from '../../util';
 import { useMutation } from 'react-query';
 import { GOOGLE_SIGNUP } from '../../queries';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 const imgLogo = require('../../assets/images/imgLogo.png');
 const imgWaiter = require('../../assets/images/waiter2.png');
@@ -46,8 +47,16 @@ const SocialLogin = ({ navigation }) => {
       // Then you can use the Google REST API
       let userInfoResponse = await userSignUp(accessToken);
       await googleSignup(userInfoResponse.data, {
-        onSuccess: () => {
-          navigation.navigate('Home', { crossIcon: false });
+        onSuccess: async () => {
+          navigation.replace('Home', { crossIcon: false });
+          await AsyncStorage.setItem(
+            '@userInfo',
+            JSON.stringify({
+              name: userInfoResponse.data.name,
+              image: userInfoResponse.data.picture,
+              email: userInfoResponse.data.email,
+            }),
+          );
         },
         onError: error => {
           console.log(error);

@@ -1,13 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useLayoutEffect, useRef, useEffect } from 'react';
+import React, { useLayoutEffect, useRef, useEffect, useState } from 'react';
 import {
   Text,
   TextInput,
   View,
   TouchableOpacity,
   Platform,
+  Image,
 } from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
+import { getAsyncStorageValues } from '../../constants';
+import SvgUri from 'expo-svg-uri';
 
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
@@ -23,6 +26,17 @@ import i18n from '../../li8n';
 import { ActivityIndicator } from 'react-native';
 
 export default HomeScreen = props => {
+  const [userImage, setuserImage] = useState();
+  const [userName, setuserName] = useState();
+
+  useEffect(() => {
+    (async () => {
+      const { userInfo } = await getAsyncStorageValues();
+      setuserName(userInfo.name);
+      setuserImage(userInfo.image);
+    })();
+  }, []);
+
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
 
   const scrollRef = useRef(null);
@@ -84,8 +98,8 @@ export default HomeScreen = props => {
     extrapolate: Extrapolate.CLAMP,
   });
   const titleHeaderMarginLeft = scrollYAnimatedValue.interpolate({
-    inputRange: [0, HEADER_HEIGHT / 1.8],
-    outputRange: [0, HEADER_BAR_HEIGHT + spacing(10)],
+    inputRange: [0, HEADER_HEIGHT / 2],
+    outputRange: [0, HEADER_BAR_HEIGHT + spacing(2)],
     // outputRange: [0, (LAYOUT.window.width * 0.5) ],
 
     extrapolate: Extrapolate.CLAMP,
@@ -99,7 +113,6 @@ export default HomeScreen = props => {
 
   useLayoutEffect(() => {
     // alert(())
-
     const renderUserIcon = () => {
       // return <Ionicons name="ios-contact" size={30} onPress={(): void => propsUserIcon.navigation.navigate('SelectSignIn')} />;
       return (
@@ -112,7 +125,12 @@ export default HomeScreen = props => {
           <TouchableOpacity
             onPress={() => props.navigation.navigate('Setting')}
           >
-            <SvgHeaderUserIcon height={HEADER_BAR_HEIGHT} />
+            <Image
+              style={{ borderRadius: 90, width: 40, height: 40 }}
+              source={{
+                uri: userImage,
+              }}
+            />
           </TouchableOpacity>
         </View>
       );
@@ -131,7 +149,6 @@ export default HomeScreen = props => {
               marginLeft: titleHeaderMarginLeft,
               height: HEADER_BAR_HEIGHT,
               justifyContent: 'center',
-              // backgroundColor: "blue"
             }}
           >
             <Text
@@ -141,12 +158,11 @@ export default HomeScreen = props => {
                 fontFamily: 'ProximaNovaBold',
                 textAlign: 'center',
                 fontWeight: 'bold',
-                // backgroundColor: "red",
               }}
               ellipsizeMode="tail"
               numberOfLines={1}
             >
-              {i18n.t('hello')}
+              {userName}
             </Text>
           </Animated.View>
         </View>

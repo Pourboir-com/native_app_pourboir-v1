@@ -1,5 +1,5 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { useState, useEffect } from "react";
+import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,23 +10,23 @@ import {
   TouchableOpacity,
   Animated,
   Image,
-} from "react-native";
-import { Feather, Entypo } from "@expo/vector-icons";
+} from 'react-native';
+import { Feather, Entypo } from '@expo/vector-icons';
 
-import { placesList as LIST } from "../../dummyData/DummyData";
-import { Colors } from "../../constants/Theme";
-import HomeCard from "../../components/HomeCard";
-import { spacing } from "../../constants/layout";
+import { placesList as LIST } from '../../dummyData/DummyData';
+import { Colors } from '../../constants/Theme';
+import HomeCard from '../../components/HomeCard';
+import { spacing } from '../../constants/layout';
 
-import Header from "./HeaderAnimated";
-import HeaderSimple from "./HeaderSimple";
+import Header from './HeaderAnimated';
+import HeaderSimple from './HeaderSimple';
 import GlobalHeader from '../../components/GlobalHeader';
 
 import HomeScreenContent from '../../components/HomeContent';
 import { StatusBar } from 'expo-status-bar';
 
-import i18n from "../../li8n";
-import { ImageBackground } from "react-native";
+import i18n from '../../li8n';
+import { ImageBackground } from 'react-native';
 import { loadAsync } from 'expo-font';
 
 export default HomeScreen = props => {
@@ -36,7 +36,6 @@ export default HomeScreen = props => {
   const navigation = useNavigation();
 
   useEffect(() => {
-
     async function loadFont() {
       await loadAsync({
         // Load a font `Montserrat` from a static resource
@@ -54,70 +53,57 @@ export default HomeScreen = props => {
     // setTimeout(() => {
     //     navigation.navigate('Home', { crossIcon: false })
     // }, 4000)
-
   }, []);
 
   return (
     <>
       {/* <StatusBar /> */}
-      {
-        !props.route.params.crossIcon ?
-          <>
-            {!searchIconPress ? (
-              <Header
-                setsearchIconPress={setSearchIconPress}
-                searchIconPress={searchIconPress}
-                navigation={props.navigation}
-              >
-                <StatusBar translucent={true} style='dark' />
+      {!props.route.params.crossIcon ? (
+        <>
+          {!searchIconPress ? (
+            <Header
+              setsearchIconPress={setSearchIconPress}
+              searchIconPress={searchIconPress}
+              navigation={props.navigation}
+            >
+              <StatusBar translucent={true} style="dark" />
 
-                {
-                  <HomeScreenContent
-                    loading={loading}
-                    setLoading={setLoading}
-                    searchIconPress={searchIconPress}
-                    setSearchIconPress={setSearchIconPress}
-                    route={props.route}
-                  />
-                }
-              </Header>
-            ) : (
-              <>
-
-                <HeaderSimple
-                  setSearchIconPress={setSearchIconPress}
+              {
+                <HomeScreenContent
+                  loading={loading}
+                  setLoading={setLoading}
                   searchIconPress={searchIconPress}
+                  setSearchIconPress={setSearchIconPress}
+                  route={props.route}
                 />
-                <StatusBar translucent={true} style='dark' />
-                {
-                  <HomeScreenContent
-                    loading={loading}
-                    setLoading={setLoading}
-                    searchIconPress={searchIconPress}
-                    setSearchIconPress={setSearchIconPress}
-                    route={props.route}
-                  />
-                }
-              </>
-            )}
-          </>
-          :
-          <>
-            <ImageBackground
-              style={{ backgroundColor: "red", width: '100%', height: 110 }}
-              resizeMode='cover'
-              source={require('../../assets/images/Group3.png')}>
-              <GlobalHeader
-                arrow={true}
-                headingText={i18n.t('your_restaurant')}
-                fontSize={17}
-                color={Colors.fontDark}
-                navigation={navigation}
-                setting={true}
-                backgroundColor={'transparent'}
+              }
+            </Header>
+          ) : (
+            <>
+              <HeaderSimple
+                setSearchIconPress={setSearchIconPress}
+                searchIconPress={searchIconPress}
               />
-            </ImageBackground>
-            <StatusBar translucent={true} style='dark' />
+              <StatusBar translucent={true} style="dark" />
+              {
+                <HomeScreenContent
+                  loading={loading}
+                  setLoading={setLoading}
+                  searchIconPress={searchIconPress}
+                  setSearchIconPress={setSearchIconPress}
+                  route={props.route}
+                />
+              }
+            </>
+          )}
+        </>
+      ) : (
+        <>
+          <ImageBackground
+            style={{ backgroundColor: 'red', width: '100%', height: 110 }}
+            resizeMode="cover"
+            source={require('../../assets/images/Group3.png')}
+          >
             <GlobalHeader
               arrow={true}
               headingText={i18n.t('your_restaurant')}
@@ -126,10 +112,21 @@ export default HomeScreen = props => {
               navigation={navigation}
               setting={true}
               backgroundColor={'transparent'}
-              borderRadius={true}
             />
-          </>
-      }
+          </ImageBackground>
+          <StatusBar translucent={true} style="dark" />
+          <GlobalHeader
+            arrow={true}
+            headingText={i18n.t('your_restaurant')}
+            fontSize={17}
+            color={Colors.fontDark}
+            navigation={navigation}
+            setting={true}
+            backgroundColor={'transparent'}
+            borderRadius={true}
+          />
+        </>
+      )}
     </>
   );
 };
@@ -137,27 +134,27 @@ export default HomeScreen = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: '#f9f9f9',
   },
   inputSearch: {
     height: 45,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     paddingHorizontal: 5,
     paddingVertical: 0,
     flex: 1,
   },
   viewInputSearch: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    width: "90%",
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    width: '90%',
     marginTop: 45,
-    alignSelf: "center",
+    alignSelf: 'center',
     borderRadius: 7,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   viewHeader2: {
-    width: "100%",
+    width: '100%',
     height: 110,
     backgroundColor: Colors.yellow,
     borderBottomLeftRadius: 20,
@@ -166,23 +163,23 @@ const styles = StyleSheet.create({
 
   inputSearch: {
     height: 45,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     paddingHorizontal: 5,
     paddingVertical: 0,
     flex: 1,
   },
   viewInputSearch: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    width: "90%",
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    width: '90%',
     marginTop: 45,
-    alignSelf: "center",
+    alignSelf: 'center',
     borderRadius: 7,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   viewHeader2: {
-    width: "100%",
+    width: '100%',
     height: 110,
     backgroundColor: Colors.yellow,
     borderBottomLeftRadius: 20,
@@ -191,62 +188,62 @@ const styles = StyleSheet.create({
   txt1NoRest: {
     fontSize: 16,
     color: Colors.fontDark,
-    textAlign: "center",
+    textAlign: 'center',
     maxWidth: 190,
     marginTop: 20,
   },
   txt2NoRest: {
     fontSize: 16,
     color: Colors.fontLight,
-    textAlign: "center",
+    textAlign: 'center',
     maxWidth: 320,
     marginTop: 15,
   },
   viewEmptyList: {
     flex: 1,
-    backgroundColor: "#F9F9F9",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#F9F9F9',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btnCross: {
-    backgroundColor: "#fff",
-    position: "absolute",
-    alignSelf: "flex-end",
+    backgroundColor: '#fff',
+    position: 'absolute',
+    alignSelf: 'flex-end',
     borderRadius: 20,
     margin: -1,
     right: 0,
     width: 30,
     height: 30,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   view2Card: {
-    flexDirection: "row",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   txt2Card: {
-    color: "#EDEFEE",
+    color: '#EDEFEE',
     fontSize: 13,
   },
   imgCard: {
     flex: 1,
     padding: 12,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
   },
   viewItemConatier: {
-    width: Dimensions.get("window").width * 0.45,
-    height: Dimensions.get("window").width * 0.56,
-    margin: Dimensions.get("window").width * 0.02,
-    backgroundColor: "red",
+    width: Dimensions.get('window').width * 0.45,
+    height: Dimensions.get('window').width * 0.56,
+    margin: Dimensions.get('window').width * 0.02,
+    backgroundColor: 'red',
     borderRadius: 12,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   txtHeading: {
     fontSize: 22,
     marginTop: 10,
-    width: "90%",
-    alignSelf: "center",
+    width: '90%',
+    alignSelf: 'center',
   },
 });

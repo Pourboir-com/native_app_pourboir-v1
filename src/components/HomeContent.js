@@ -25,14 +25,22 @@ export default function HomeScreenContent({
   setSearchIconPress,
   route,
 }) {
+  const navigation = useNavigation();
   const NoListImg = require('../assets/images/emptyRestaurantList.png');
   const [saveLocation, setSaveLocation] = useState('');
   useEffect(() => {
     (async () => {
-      const { location } = await getAsyncStorageValues();
+      const { location, userInfo } = await getAsyncStorageValues();
       setSaveLocation(location);
+      if (userInfo.email) {
+        navigation.reset(
+          [NavigationActions.navigate({ routeName: 'Home' })],
+          0,
+        );
+      }
     })();
   }, []);
+  
   const {
     data: restaurantData,
     isLoading: restaurantLoading,
@@ -48,9 +56,8 @@ export default function HomeScreenContent({
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  const navigation = useNavigation();
 
-  const dummyArray = [1, 2, 3, 4, 5];
+  const dummyArray = [1, 2, 3];
 
   useEffect(() => {
     setTimeout(() => {
@@ -112,12 +119,12 @@ export default function HomeScreenContent({
         {loading
           ? null
           : !route.params.crossIcon && (
-              <Text
-                style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
-              >
-                {i18n.t('around_you')}
-              </Text>
-            )}
+            <Text
+              style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
+            >
+              {i18n.t('around_you')}
+            </Text>
+          )}
         <View
           style={{
             flexDirection: 'row',

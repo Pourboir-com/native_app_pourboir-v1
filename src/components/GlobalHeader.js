@@ -79,7 +79,6 @@ const GlobalHeader = props => {
         height: props.height ? props.height : 110,
       }}
     >
-
       <View
         style={[
           {
@@ -94,33 +93,36 @@ const GlobalHeader = props => {
         ]}
       >
         {/* <View style={{ backgroundColor: 'red' }}> */}
-          {props.left ? null : (
-            <TouchableOpacity 
+        {props.left ? null : (
+          <TouchableOpacity
             disabled={!props.arrow}
-            onPress={()=>{ goBackHandler(props);}}
-            style={{ flex: props.leftText ? 2 : 1,}}>
-              <View style={[styles.viewLeft,]}>
-                {props.arrow === true && (
-                  // <TouchableOpacity
-                  //   style={{ padding: 10 }}
-                  //   onPress={() => goBackHandler(props)}
-                  // >
-                    <MaterialIcons
-                      // onPress={e => {
-                      //   goBackHandler(props);
-                      // }}
-                      style={{
-                        marginTop: -20,
-                      }}
-                      name="arrow-back"
-                      size={props.Arrowsize ? props.Arrowsize : 24}
-                      color={props.BackIconColor ? props.BackIconColor : '#000'}
-                    />
-                  // </TouchableOpacity>
-                )}
-              </View>
-            </TouchableOpacity>
-          )}
+            onPress={() => {
+              goBackHandler(props);
+            }}
+            style={{ flex: props.leftText ? 2 : 1 }}
+          >
+            <View style={[styles.viewLeft]}>
+              {props.arrow === true && (
+                // <TouchableOpacity
+                //   style={{ padding: 10 }}
+                //   onPress={() => goBackHandler(props)}
+                // >
+                <MaterialIcons
+                  // onPress={e => {
+                  //   goBackHandler(props);
+                  // }}
+                  style={{
+                    marginTop: -10,
+                  }}
+                  name="arrow-back"
+                  size={props.Arrowsize ? props.Arrowsize : 24}
+                  color={props.BackIconColor ? props.BackIconColor : '#000'}
+                />
+                // </TouchableOpacity>
+              )}
+            </View>
+          </TouchableOpacity>
+        )}
         {/* </View> */}
         {/* {props.left ? null : (
           <Left style={{ flex: props.leftText ? 2 : 1 }}>
@@ -153,7 +155,7 @@ const GlobalHeader = props => {
           style={{
             flex: props.centerHide === true ? 0 : 5,
             left: 20,
-            marginTop: -20,
+            marginTop: -10,
             justifyContent: 'center',
             alignItems: props.headingALign ? props.headingALign : 'center',
             alignSelf: 'center',

@@ -41,7 +41,7 @@ export default function HomeScreenContent({
   const [data, setData] = useState([]);
   const navigation = useNavigation();
 
-  const dummyArray = [1, 2, 3];
+  const dummyArray = [1, 2, 3, 4, 5];
 
   useEffect(() => {
     setTimeout(() => {

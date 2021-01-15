@@ -21,18 +21,35 @@ import RatingStar from '../../components/RatingComponent';
 import GlobalHeader from '../../components/GlobalHeader';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useQuery } from 'react-query';
+import { reactQueryConfig } from '../../constants';
+import { GET_WAITERS } from '../../queries';
 
 import i18n from '../../li8n';
 
 const ReviewDetails = ({ navigation, route }) => {
+  const [data, setData] = useState([]);
+  const { img, name, rating, distance, services, place_id } = route.params;
+  const {
+    data: waitersData,
+    isLoading: waitersLoading,
+    refetch: refetchWaiters,
+    isFetching: waitersIsFetching,
+  } = useQuery(['GET_WAITERS', { restaurant_id: place_id }], GET_WAITERS, {
+    ...reactQueryConfig,
+    enabled: place_id,
+    onSuccess: res => {
+      setData(res.data);
+    },
+  });
+
   const scrollY = new Animated.Value(0);
   const diffClamp = Animated.diffClamp(scrollY, 0, 55);
   const translateY = diffClamp.interpolate({
     inputRange: [0, 50],
     outputRange: [0, -50],
   });
-  // console.log('routesssss',route.params)
-  const { img, name, rating, distance, services } = route.params;
+
   const [confirmModalVisible, setconfirmModalVisible] = useState(false);
   const [helpUsModalVisible, sethelpUsModalVisible] = useState(false);
 
@@ -180,7 +197,7 @@ const ReviewDetails = ({ navigation, route }) => {
         </View>
 
         <FlatList
-          data={[...services, ...services]}
+          data={waitersLoading ? null : data}
           showsVerticalScrollIndicator={false}
           keyExtractor={item => item._id}
           renderItem={itemData => (
@@ -195,7 +212,7 @@ const ReviewDetails = ({ navigation, route }) => {
                 />
                 <View style={{ marginLeft: 10 }}>
                   <Text style={styles.txtItemName}>
-                    {itemData.item.userName}
+                    {itemData.item.full_name}
                   </Text>
                   <View style={{ flexDirection: 'row', marginTop: 8 }}>
                     {obj.map((v, i) => {
@@ -270,6 +287,8 @@ const ReviewDetails = ({ navigation, route }) => {
         <ScrollView> */}
       {helpUsModalVisible && (
         <HelpUsImproveModal
+          place_id={place_id}
+          refetchWaiters={refetchWaiters}
           isVisible={helpUsModalVisible}
           handleModalClose={handleModalClose}
         />

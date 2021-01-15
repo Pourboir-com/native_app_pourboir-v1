@@ -33,6 +33,7 @@ const HomeCard = ({
   loading,
   crossIcon,
   deleteCall,
+  place_id,
 }) => {
   // const {crossIcon} = routes.params;
   // Star arrayyyyyyyy
@@ -45,7 +46,7 @@ const HomeCard = ({
     <View>
       {loading ? (
         <View style={styles.viewDummyCard}>
-          <View style={styles.view1dumy}></View>
+          <View style={styles.view1dumy}/>
           <View style={styles.view2dumy} />
           <View style={styles.view2dumy} />
           <View style={styles.view2dumy} />
@@ -59,6 +60,7 @@ const HomeCard = ({
               name: name,
               distance: distance,
               services: services,
+              place_id: place_id,
             })
           }
           style={[styles.viewItemConatier]}

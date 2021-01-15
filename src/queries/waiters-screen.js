@@ -11,3 +11,10 @@ export const ADDING_WAITERS = async e => {
   });
   return await res.json();
 };
+
+export const GET_WAITERS = async (get, e = {}) => {
+  let res = await fetch(BASE_URL + `/v1/restaurant-waiters?restaurant_id=${e.restaurant_id}`, {
+    method: 'get',
+  });
+  return await res.json();
+};

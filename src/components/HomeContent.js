@@ -147,6 +147,7 @@ export default function HomeScreenContent({
                 services={restaurantLoading ? null : '3'}
                 loading={restaurantLoading}
                 crossIcon={route.params.crossIcon}
+                place_id={restaurantLoading ? null : itemData.item.place_id}
                 deleteCall={() => onDeleteCard(itemData.index, true)}
               />
             )}
@@ -174,6 +175,7 @@ export default function HomeScreenContent({
                 services={restaurantLoading ? null : '3'}
                 loading={restaurantLoading}
                 crossIcon={route.params.crossIcon}
+                place_id={restaurantLoading ? null : itemData.item.place_id}
                 deleteCall={() => onDeleteCard(itemData.index, false)}
               />
             )}

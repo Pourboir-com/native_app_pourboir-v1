@@ -55,6 +55,7 @@ const SocialLogin = ({ navigation }) => {
               name: userInfoResponse.data.name,
               image: userInfoResponse.data.picture,
               email: userInfoResponse.data.email,
+              accessToken: accessToken,
             }),
           );
         },

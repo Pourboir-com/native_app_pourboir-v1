@@ -120,12 +120,16 @@ export default HomeScreen = props => {
           <TouchableOpacity
             onPress={() => props.navigation.navigate('Setting')}
           >
-            <Image
-              style={{ borderRadius: 90, width: 40, height: 40 }}
-              source={{
-                uri: userImage,
-              }}
-            />
+            {userImage === '' ? (
+              <SvgHeaderUserIcon height={40} width={40} />
+            ) : (
+              <Image
+                style={{ borderRadius: 90, width: 40, height: 40 }}
+                source={{
+                  uri: userImage,
+                }}
+              />
+            )}
           </TouchableOpacity>
         </View>
       );
@@ -157,7 +161,7 @@ export default HomeScreen = props => {
               ellipsizeMode="tail"
               numberOfLines={1}
             >
-              {userName}
+              {userName === '' ? 'Bonjour' : userName}
             </Text>
           </Animated.View>
         </View>

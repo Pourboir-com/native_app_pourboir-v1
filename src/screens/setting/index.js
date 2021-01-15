@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -15,18 +15,17 @@ import GlobalHeader from '../../components/GlobalHeader';
 import { Colors } from '../../constants/Theme';
 import * as ImagePicker from 'expo-image-picker';
 import { getAsyncStorageValues } from '../../constants';
+import * as Google from 'expo-google-app-auth';
+import { config } from '../../constants';
+import i18n from '../../li8n';
+import { t } from 'i18n-js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const imgBg = require('../../assets/images/Group5.png');
 
-import i18n from '../../li8n';
-import { t } from 'i18n-js';
-
 const Setting = ({ navigation }) => {
   const [crossIcon, setcrossIcon] = useState(true);
-  const [image, setImage] = useState(
-    // null
-    'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png',
-  );
+  const [image, setImage] = useState();
   const [userName, setuserName] = useState();
   useEffect(() => {
     (async () => {
@@ -35,6 +34,25 @@ const Setting = ({ navigation }) => {
       setImage(userInfo.image);
     })();
   }, []);
+
+  const handleGoogleSignOut = async () => {
+    const { userInfo } = await getAsyncStorageValues();
+    const accessToken = userInfo.accessToken;
+    /* Log-Out */
+    if (accessToken) {
+      await Google.logOutAsync({ accessToken, ...config });
+      navigation.replace('socialLogin');
+      await AsyncStorage.setItem(
+        '@userInfo',
+        JSON.stringify({
+          name: '',
+          image: '',
+          email: '',
+          accessToken: '',
+        }),
+      );
+    }
+  };
 
   const ratingCompleted = rating => {
     console.log('Rating is: ' + rating);
@@ -84,8 +102,19 @@ const Setting = ({ navigation }) => {
           />
 
           <TouchableOpacity onPress={() => _pickImage()} style={styles.viewImg}>
-            {image === null || image === undefined ? (
-              <FontAwesome name="user-circle-o" size={110} color="#fff" />
+            {image === null || image === undefined || image === '' ? (
+              // <FontAwesome name="user-circle-o" size={110} color="#fff" />
+              <Image
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: 60,
+                }}
+                source={{
+                  uri:
+                    'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png',
+                }}
+              />
             ) : (
               <Image
                 style={{
@@ -114,7 +143,7 @@ const Setting = ({ navigation }) => {
               <FontAwesome name="user-circle-o" size={120} color="#fff" />
             </View> */}
           <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
-            {userName}
+            {userName === '' ? 'Bonjour' : userName}
           </Text>
         </ImageBackground>
       </View>
@@ -192,7 +221,7 @@ const Setting = ({ navigation }) => {
           Version 2.17.4.0.1.0
         </Text>
       </View>
-      <TouchableOpacity style={styles.btnValider}>
+      <TouchableOpacity onPress={handleGoogleSignOut} style={styles.btnValider}>
         <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
           {i18n.t('sign_out')}
         </Text>

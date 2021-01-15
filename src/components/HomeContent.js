@@ -30,17 +30,11 @@ export default function HomeScreenContent({
   const [saveLocation, setSaveLocation] = useState('');
   useEffect(() => {
     (async () => {
-      const { location, userInfo } = await getAsyncStorageValues();
+      const { location } = await getAsyncStorageValues();
       setSaveLocation(location);
-      if (userInfo.email) {
-        navigation.reset(
-          [NavigationActions.navigate({ routeName: 'Home' })],
-          0,
-        );
-      }
     })();
   }, []);
-  
+
   const {
     data: restaurantData,
     isLoading: restaurantLoading,

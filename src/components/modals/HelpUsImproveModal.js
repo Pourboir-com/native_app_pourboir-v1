@@ -18,6 +18,8 @@ import { Overlay } from 'react-native-elements';
 // import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
+import { useMutation } from 'react-query';
+import { ADDING_WAITERS } from '../../queries';
 
 const imgSitting = require('../../assets/images/sittingtable.png');
 const imgBg = require('../../assets/images/Group7.png');
@@ -25,10 +27,11 @@ const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 
 const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
+  const [addingWaiters] = useMutation(ADDING_WAITERS);
   let contentEnd;
   const scrollRef = React.useRef(null);
   const [onHandleFocus, setonHandleFocus] = useState(false);
-  const [remarks, setRemarks] = useState('');
+  const [waiterName, setWaiterName] = useState('');
 
   const textRef = React.useRef(null);
 
@@ -54,6 +57,20 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
       keyboardDidShowListener.remove();
     };
   }, []);
+
+  const handleAddingWaiters = async () => {
+    let waiter = {
+      restaurant_id: '1',
+      full_name: waiterName,
+    };
+    await addingWaiters(waiter, {
+      onSuccess: () => {
+        console.log('Waiter Added Successfully!');
+        setWaiterName('');
+        handleModalClose();
+      },
+    });
+  };
 
   return (
     <Overlay
@@ -124,10 +141,10 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
             selectionColor={Colors.yellow}
             placeholder={placeholder}
             placeholderTextColor="rgba(0,0,0,0.3)"
-            // value={remarks}
+            value={waiterName}
             onChangeText={e => {
               scrollRef.current.scrollToEnd({ animated: true });
-              setRemarks(e);
+              setWaiterName(e);
             }}
             style={[
               styles.inputStyle,
@@ -148,9 +165,10 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose }) => {
             }}
           />
           <TouchableOpacity
+            onPress={handleAddingWaiters}
             style={[
               styles.btnConfrm,
-              remarks !== '' ? { backgroundColor: Colors.yellow } : null,
+              waiterName !== '' ? { backgroundColor: Colors.yellow } : null,
             ]}
           >
             <Text style={[styles.txtBtnConfrm, { fontFamily: 'ProximaNova' }]}>

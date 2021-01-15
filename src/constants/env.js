@@ -8,11 +8,11 @@ function getEnvVars(env = '') {
 }
 export const releaseEnvironment = getEnvVars(Constants.manifest.releaseChannel);
 const apiUrl = () => {
-  let api_url = `http://192.168.10.12:8080/api`;
+  let api_url = `http://192.168.0.103:8080/api`;
   if (releaseEnvironment == 'production') {
     api_url = 'https://production.dancingnomads.com';
   } else if (releaseEnvironment == 'staging') {
-    api_url = 'https://stageme.dancingnomads.com';
+    api_url = 'http://34.211.185.52:8080/api';
   }
   return api_url;
 };

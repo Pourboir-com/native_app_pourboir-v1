@@ -10,18 +10,13 @@ import {
 } from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
 import { getAsyncStorageValues } from '../../constants';
-import SvgUri from 'expo-svg-uri';
-
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
-
 import { SvgHeaderSearchIcon } from '../../components/svg/header_search_icon';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
-
 import { COLORS } from '../../constants/colors';
 import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
 import { Feather, Entypo, AntDesign } from '@expo/vector-icons';
-
 import i18n from '../../li8n';
 import { ActivityIndicator } from 'react-native';
 

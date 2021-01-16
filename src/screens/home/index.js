@@ -160,31 +160,6 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
-
-  inputSearch: {
-    height: 45,
-    backgroundColor: '#fff',
-    paddingHorizontal: 5,
-    paddingVertical: 0,
-    flex: 1,
-  },
-  viewInputSearch: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    width: '90%',
-    marginTop: 45,
-    alignSelf: 'center',
-    borderRadius: 7,
-    overflow: 'hidden',
-  },
-  viewHeader2: {
-    width: '100%',
-    height: 110,
-    backgroundColor: Colors.yellow,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-  },
   txt1NoRest: {
     fontSize: 16,
     color: Colors.fontDark,

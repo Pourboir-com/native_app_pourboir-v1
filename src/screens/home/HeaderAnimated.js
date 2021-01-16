@@ -117,20 +117,24 @@ export default HomeScreen = props => {
             // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
           ]}
         >
-          <TouchableOpacity
-            onPress={() => props.navigation.navigate('Setting')}
-          >
-            {userImage === '' ? (
+          {userImage === '' ? (
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('socialLogin')}
+            >
               <SvgHeaderUserIcon height={40} width={40} />
-            ) : (
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('Setting')}
+            >
               <Image
                 style={{ borderRadius: 90, width: 40, height: 40 }}
                 source={{
                   uri: userImage,
                 }}
               />
-            )}
-          </TouchableOpacity>
+            </TouchableOpacity>
+          )}
         </View>
       );
     };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -19,6 +19,8 @@ import { useMutation } from 'react-query';
 import { GOOGLE_SIGNUP } from '../../queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import Context from '../../contextApi/context';
+import * as actionTypes from '../../contextApi/actionTypes';
 const imgLogo = require('../../assets/images/imgLogo.png');
 const imgWaiter = require('../../assets/images/waiter2.png');
 
@@ -37,6 +39,7 @@ const SocialLogin = ({ navigation }) => {
     loadFont();
     setLoading(false);
   }, []);
+  const { dispatch } = useContext(Context);
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
@@ -49,6 +52,18 @@ const SocialLogin = ({ navigation }) => {
       await googleSignup(userInfoResponse.data, {
         onSuccess: async () => {
           navigation.replace('Home', { crossIcon: false });
+          let userDetails = {
+            name: userInfoResponse.data.name,
+            image: userInfoResponse.data.picture,
+            email: userInfoResponse.data.email,
+            accessToken: accessToken,
+          };
+
+          dispatch({
+            type: actionTypes.USER_DETAILS,
+            payload: userDetails,
+          });
+
           await AsyncStorage.setItem(
             '@userInfo',
             JSON.stringify({

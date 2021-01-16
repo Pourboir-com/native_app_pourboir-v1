@@ -1,5 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useLayoutEffect, useRef, useEffect, useState } from 'react';
+import React, {
+  useLayoutEffect,
+  useRef,
+  useEffect,
+  useState,
+  useContext,
+} from 'react';
 import {
   Text,
   TextInput,
@@ -9,7 +15,6 @@ import {
   Image,
 } from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
-import { getAsyncStorageValues } from '../../constants';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
 import { SvgHeaderSearchIcon } from '../../components/svg/header_search_icon';
@@ -19,18 +24,19 @@ import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
 import { Feather, Entypo, AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
 import { ActivityIndicator } from 'react-native';
+import Context from '../../contextApi/context';
 
 export default HomeScreen = props => {
-  const [userImage, setuserImage] = useState();
-  const [userName, setuserName] = useState();
+  const { state } = useContext(Context);
+  const [userImage, setuserImage] = useState('');
+  const [userName, setuserName] = useState('');
 
   useEffect(() => {
-    (async () => {
-      const { userInfo } = await getAsyncStorageValues();
-      setuserName(userInfo.name);
-      setuserImage(userInfo.image);
-    })();
-  }, []);
+    if (state) {
+      setuserImage(state.userDetails.image);
+      setuserName(state.userDetails.name);
+    }
+  }, [state]);
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
 

@@ -25,6 +25,7 @@ import { useQuery } from 'react-query';
 import { reactQueryConfig } from '../../constants';
 import { GET_WAITERS } from '../../queries';
 
+
 import i18n from '../../li8n';
 
 const ReviewDetails = ({ navigation, route }) => {

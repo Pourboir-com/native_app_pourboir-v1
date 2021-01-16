@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -19,21 +19,24 @@ import * as Google from 'expo-google-app-auth';
 import { config } from '../../constants';
 import i18n from '../../li8n';
 import { t } from 'i18n-js';
+import Context from '../../contextApi/context';
+import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const imgBg = require('../../assets/images/Group5.png');
 
 const Setting = ({ navigation }) => {
+  const { state, dispatch } = useContext(Context);
   const [crossIcon, setcrossIcon] = useState(true);
-  const [image, setImage] = useState();
-  const [userName, setuserName] = useState();
-  useEffect(() => {
-    (async () => {
-      const { userInfo } = await getAsyncStorageValues();
-      setuserName(userInfo.name);
-      setImage(userInfo.image);
-    })();
-  }, []);
+  const [image, setImage] = useState(state ? state.userDetails.image : '');
+  const [userName, setuserName] = useState(state ? state.userDetails.name : '');
+  // useEffect(() => {
+  //   (async () => {
+  //     const { userInfo } = await getAsyncStorageValues();
+  //     setuserName(userInfo.name);
+  //     setImage(userInfo.image);
+  //   })();
+  // }, []);
 
   const handleGoogleSignOut = async () => {
     const { userInfo } = await getAsyncStorageValues();
@@ -42,6 +45,16 @@ const Setting = ({ navigation }) => {
     if (accessToken) {
       await Google.logOutAsync({ accessToken, ...config });
       navigation.replace('socialLogin');
+      let userDetails = {
+        name: '',
+        image: '',
+        email: '',
+        accessToken: '',
+      };
+      dispatch({
+        type: actionTypes.USER_DETAILS,
+        payload: userDetails,
+      });
       await AsyncStorage.setItem(
         '@userInfo',
         JSON.stringify({

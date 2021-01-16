@@ -14,6 +14,7 @@ import { useFonts } from 'expo-font';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const imgSplash = require('../../assets/images/splash.png');
+import * as Font from'expo-font'
 
 export default function SplashScreen(props) {
   let [fontsLoaded] = useFonts({

@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useContext, useReducer } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import RootNavigator from './src/navigation/AppNavigator';
+import Context from './src/contextApi/context';
+import Reducer from './src/contextApi/reducer';
 
 export default function App() {
+  const initialState = useContext(Context);
+  const [state, dispatch] = useReducer(Reducer, initialState);
   return (
-    <NavigationContainer>
-      <RootNavigator />
-    </NavigationContainer>
+    <Context.Provider value={{ state, dispatch }}>
+      <NavigationContainer>
+        <RootNavigator />
+      </NavigationContainer>
+    </Context.Provider>
   );
 }

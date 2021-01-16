@@ -28,15 +28,15 @@ import Context from '../../contextApi/context';
 
 export default HomeScreen = props => {
   const { state } = useContext(Context);
-  const [userImage, setuserImage] = useState('');
-  const [userName, setuserName] = useState('');
+  const [userImage, setuserImage] = useState(state ? state.userDetails.image : '');
+  const [userName, setuserName] = useState(state ? state.userDetails.name : '');
 
-  useEffect(() => {
-    if (state) {
-      setuserImage(state.userDetails.image);
-      setuserName(state.userDetails.name);
-    }
-  }, [state]);
+  // useEffect(() => {
+  //   if (state) {
+  //     setuserImage(state.userDetails.image);
+  //     setuserName(state.userDetails.name);
+  //   }
+  // }, [state]);
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
 

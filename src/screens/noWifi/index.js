@@ -13,34 +13,35 @@ const fetchFont = () => {
 
 const NoWiFi = () => {
   const [fontLoaded, setFontLoaded] = useState(false);
-  if (!fontLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFont}
-        onFinish={() => {
-          setFontLoaded(true);
-        }}
-        onError={() => console.log('ERROR')}
-      />
-    );
-  } else {
-    return (
-      <View style={styles.container}>
-        <Image source={WiFi} />
-        <Text
-          style={{
-            marginTop: 30,
-            fontFamily: 'ProximaNovaBold',
-            fontSize: 16,
-            maxWidth: 190,
-            textAlign: 'center',
+
+  return (
+    <>
+      {!fontLoaded ? (
+        <AppLoading
+          startAsync={fetchFont}
+          onFinish={() => {
+            setFontLoaded(true);
           }}
-        >
-          {i18n.t('must_loggedIn')}
-        </Text>
-      </View>
-    );
-  }
+          onError={() => console.log('ERROR')}
+        />
+      ) : (
+        <View style={styles.container}>
+          <Image source={WiFi} />
+          <Text
+            style={{
+              marginTop: 30,
+              fontFamily: 'ProximaNovaBold',
+              fontSize: 16,
+              maxWidth: 190,
+              textAlign: 'center',
+            }}
+          >
+            {i18n.t('must_loggedIn')}
+          </Text>
+        </View>
+      )}
+    </>
+  );
 };
 export default NoWiFi;
 

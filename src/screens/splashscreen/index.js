@@ -34,12 +34,7 @@ export default function SplashScreen(props) {
           log: location?.coords.longitude,
         }),
       );
-      props.navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: 'socialLogin' }],
-        }),
-      );
+      props.navigation.replace('Home', { crossIcon: false });
     } else {
       try {
         let values = await Location.requestPermissionsAsync();
@@ -61,12 +56,7 @@ export default function SplashScreen(props) {
               log: location?.coords.longitude,
             }),
           );
-          props.navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [{ name: 'socialLogin' }],
-            }),
-          );
+          props.navigation.replace('Home', { crossIcon: false });
         }
       } catch (error) {
         props.navigation.dispatch(

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -16,24 +16,44 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const imgSplash = require('../../assets/images/splash.png');
 import * as Font from 'expo-font';
 import NetInfo from '@react-native-community/netinfo';
+import { getAsyncStorageValues } from '../../constants';
+import Context from '../../contextApi/context';
+import * as actionTypes from '../../contextApi/actionTypes';
 
 export default function SplashScreen(props) {
   const [Internet, setInternet] = React.useState(false);
   const [location, setLocation] = React.useState(false);
+  const { dispatch } = useContext(Context);
 
   // let [fontsLoaded] = useFonts({
   //   Proximabold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
   // });
 
-  const checkInternet = () => {
-    NetInfo.fetch().then(state => {
-      if (state.isConnected) {
-        setInternet(true);
-      } else {
-        setInternet(false);
-      }
-    });
-  };
+  useEffect(() => {
+    (async () => {
+      const { userInfo } = await getAsyncStorageValues();
+      let userDetails = {
+        name: userInfo.name,
+        image: userInfo.picture,
+        email: userInfo.email,
+        accessToken: userInfo.accessToken,
+      };
+      dispatch({
+        type: actionTypes.USER_DETAILS,
+        payload: userDetails,
+      });
+    })();
+  }, []);
+
+  // const checkInternet = () => {
+  //   NetInfo.fetch().then(state => {
+  //     if (state.isConnected) {
+  //       setInternet(true);
+  //     } else {
+  //       setInternet(false);
+  //     }
+  //   });
+  // };
 
   const [springValue] = React.useState(new Animated.Value(0.5));
   const locationFunction = async () => {

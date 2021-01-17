@@ -25,18 +25,22 @@ import { Feather, Entypo, AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
 import { ActivityIndicator } from 'react-native';
 import Context from '../../contextApi/context';
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 export default HomeScreen = props => {
+  const [fontLoaded, setFontLoaded] = useState(false);
   const { state } = useContext(Context);
-  const [userImage, setuserImage] = useState(state ? state.userDetails.image : '');
+  const [userImage, setuserImage] = useState(
+    state ? state.userDetails.image : '',
+  );
   const [userName, setuserName] = useState(state ? state.userDetails.name : '');
 
-  // useEffect(() => {
-  //   if (state) {
-  //     setuserImage(state.userDetails.image);
-  //     setuserName(state.userDetails.name);
-  //   }
-  // }, [state]);
+  const fetchFont = () => {
+    return Font.loadAsync({
+      ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
+    });
+  };
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
 
@@ -134,7 +138,7 @@ export default HomeScreen = props => {
               onPress={() => props.navigation.navigate('Setting')}
             >
               <Image
-                style={{ borderRadius: 90, width: 40, height: 40 }}
+                style={{ borderRadius: 90, width: 40, height: 40 , backgroundColor:'red' }}
                 source={{
                   uri: userImage,
                 }}
@@ -147,34 +151,46 @@ export default HomeScreen = props => {
 
     const renderTitle = () => {
       return (
-        <View
-          style={[
-            { position: 'absolute', left: spacing(2.5), top: spacing(1) },
-            // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
-          ]}
-        >
-          <Animated.View
-            style={{
-              marginLeft: titleHeaderMarginLeft,
-              height: HEADER_BAR_HEIGHT,
-              justifyContent: 'center',
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                color: COLORS[colorScheme].text.primary,
-                fontFamily: 'ProximaNovaBold',
-                textAlign: 'center',
-                fontWeight: 'bold',
+        <>
+          {/* {!fontLoaded ? (
+            <AppLoading
+              startAsync={fetchFont}
+              onFinish={() => {
+                setFontLoaded(true);
               }}
-              ellipsizeMode="tail"
-              numberOfLines={1}
+              onError={() => console.log('ERROR')}
+            />
+          ) : ( */}
+          <View
+            style={[
+              { position: 'absolute', left: spacing(2.5), top: spacing(1) },
+              // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
+            ]}
+          >
+            <Animated.View
+              style={{
+                marginLeft: titleHeaderMarginLeft,
+                height: HEADER_BAR_HEIGHT,
+                justifyContent: 'center',
+              }}
             >
-              {userName === '' ? 'Bonjour' : userName}
-            </Text>
-          </Animated.View>
-        </View>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: COLORS[colorScheme].text.primary,
+                  fontFamily: 'ProximaNovaBold',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                }}
+                ellipsizeMode="tail"
+                numberOfLines={1}
+              >
+                {userName === '' ? 'Bonjour' : userName}
+              </Text>
+            </Animated.View>
+          </View>
+          {/* )} */}
+        </>
       );
     };
 
@@ -188,7 +204,7 @@ export default HomeScreen = props => {
       headerRightContainerStyle: { position: 'absolute' },
       headerLeftContainerStyle: { position: 'absolute' },
     });
-  });
+  }, [userImage, userName]);
 
   // useEffect(() => {
 

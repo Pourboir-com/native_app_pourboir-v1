@@ -23,22 +23,35 @@ import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 const imgLogo = require('../../assets/images/imgLogo.png');
 const imgWaiter = require('../../assets/images/waiter2.png');
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
+
 
 const SocialLogin = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
+  const [fontLoaded, setFontLoaded] = useState(false);
+
   const [googleSignup] = useMutation(GOOGLE_SIGNUP);
 
-  useEffect(() => {
-    async function loadFont() {
-      await loadAsync({
-        // Load a font `Montserrat` from a static resource
-        ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
-        ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
-      });
-    }
-    loadFont();
-    setLoading(false);
-  }, []);
+  const fetchFont = () => {
+    return Font.loadAsync({
+      ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
+      ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
+    });
+  };
+
+  // useEffect(() => {
+  //   async function loadFont() {
+  //     await loadAsync({
+  //       // Load a font `Montserrat` from a static resource
+  //       ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
+  //       ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
+  //     });
+  //   }
+  //   loadFont();
+  //   setLoading(false);
+  // }, []);
+
   const { dispatch } = useContext(Context);
 
   const handleGoogleSignIn = async () => {
@@ -84,11 +97,20 @@ const SocialLogin = ({ navigation }) => {
     <View
       style={[
         styles.container,
-        { backgroundColor: loading ? '#fff' : Colors.yellow },
+        { backgroundColor: fontLoaded ? Colors.yellow : '#fff' },
       ]}
     >
-      {loading ? (
-        <ActivityIndicator size={70} color={Colors.yellow} />
+      {!fontLoaded ? (
+        <>
+          <AppLoading
+            startAsync={fetchFont}
+            onFinish={() => {
+              setFontLoaded(true);
+            }}
+            onError={() => console.log('ERROR')}
+          />
+          <ActivityIndicator size={70} color={Colors.yellow} />
+        </>
       ) : (
         <View style={{ width: '100%', alignItems: 'center' }}>
           <Image

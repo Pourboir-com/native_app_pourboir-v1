@@ -162,7 +162,7 @@ const HomeCard = ({
                       fontSize: 12,
                     }}
                   >
-                    {services.length}
+                    {services}
                   </Text>
                   <Text
                     style={[styles.txt2Card, { fontFamily: 'ProximaNova' }]}

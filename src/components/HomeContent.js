@@ -45,6 +45,7 @@ export default function HomeScreenContent({
     enabled: saveLocation,
     onSuccess: res => {
       setData(res?.restaurants?.results || []);
+      console.log(res.restaurants.results)
     },
   });
 
@@ -143,8 +144,8 @@ export default function HomeScreenContent({
                 img={restaurantLoading ? null : itemData.item.photos[0]}
                 rating={restaurantLoading ? null : itemData.item.rating}
                 name={restaurantLoading ? null : itemData.item.name}
-                distance={restaurantLoading ? null : itemData.item.distance}
-                services={restaurantLoading ? null : '3'}
+                distance={restaurantLoading ? null : '300m'}
+                services={restaurantLoading ? null : itemData.item.servers}
                 loading={restaurantLoading}
                 crossIcon={route.params.crossIcon}
                 place_id={restaurantLoading ? null : itemData.item.place_id}
@@ -171,8 +172,8 @@ export default function HomeScreenContent({
                 img={restaurantLoading ? null : itemData.item.photos[0]}
                 rating={restaurantLoading ? null : itemData.item.rating}
                 name={restaurantLoading ? null : itemData.item.name}
-                distance={restaurantLoading ? null : itemData.item.distance}
-                services={restaurantLoading ? null : '3'}
+                distance={restaurantLoading ? null : '300m'}
+                services={restaurantLoading ? null : itemData.item.servers}
                 loading={restaurantLoading}
                 crossIcon={route.params.crossIcon}
                 place_id={restaurantLoading ? null : itemData.item.place_id}

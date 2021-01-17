@@ -14,12 +14,26 @@ import { useFonts } from 'expo-font';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const imgSplash = require('../../assets/images/splash.png');
-import * as Font from'expo-font'
+import * as Font from 'expo-font';
+import NetInfo from '@react-native-community/netinfo';
 
 export default function SplashScreen(props) {
-  let [fontsLoaded] = useFonts({
-    Proximabold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
-  });
+  const [Internet, setInternet] = React.useState(false);
+  const [location, setLocation] = React.useState(false);
+
+  // let [fontsLoaded] = useFonts({
+  //   Proximabold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
+  // });
+
+  const checkInternet = () => {
+    NetInfo.fetch().then(state => {
+      if (state.isConnected) {
+        setInternet(true);
+      } else {
+        setInternet(false);
+      }
+    });
+  };
 
   const [springValue] = React.useState(new Animated.Value(0.5));
   const locationFunction = async () => {
@@ -35,7 +49,14 @@ export default function SplashScreen(props) {
           log: location?.coords.longitude,
         }),
       );
-      props.navigation.replace('Home', { crossIcon: false });
+      console.log(Internet);
+      NetInfo.fetch().then(state => {
+        if (state.isConnected) {
+          props.navigation.replace('Home', { crossIcon: false });
+        } else {
+          props.navigation.replace('NoWiFi');
+        }
+      });
     } else {
       try {
         let values = await Location.requestPermissionsAsync();
@@ -57,7 +78,14 @@ export default function SplashScreen(props) {
               log: location?.coords.longitude,
             }),
           );
-          props.navigation.replace('Home', { crossIcon: false });
+
+          NetInfo.fetch().then(state => {
+            if (state.isConnected) {
+              props.navigation.replace('Home', { crossIcon: false });
+            } else {
+              props.navigation.replace('NoWiFi');
+            }
+          });
         }
       } catch (error) {
         props.navigation.dispatch(
@@ -71,7 +99,6 @@ export default function SplashScreen(props) {
   };
   React.useEffect(() => {
     locationFunction();
-
     // const spring = () => {
     Animated.spring(springValue, {
       toValue: 1,
@@ -92,18 +119,18 @@ export default function SplashScreen(props) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // backgroundColor: '#fee684',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 30,
-    fontFamily: 'Proximabold',
-  },
-  tagline: {
-    fontFamily: 'Proximabold',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     // backgroundColor: '#fee684',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   text: {
+//     fontSize: 30,
+//     fontFamily: 'Proximabold',
+//   },
+//   tagline: {
+//     fontFamily: 'Proximabold',
+//   },
+// });

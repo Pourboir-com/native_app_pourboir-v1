@@ -25,11 +25,9 @@ export default function App() {
   const [state, dispatch] = useReducer(Reducer, initialState);
   return (
     <Context.Provider value={{ state, dispatch }}>
-      {/* <NavigationContainer>
+      <NavigationContainer>
         <RootNavigator />
-      </NavigationContainer> */}
-      <NoWiFi/>
-
+      </NavigationContainer>
     </Context.Provider>
   );
 }

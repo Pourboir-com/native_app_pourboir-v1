@@ -11,7 +11,6 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  Platform,
   Image,
 } from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
@@ -21,32 +20,28 @@ import { SvgHeaderSearchIcon } from '../../components/svg/header_search_icon';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import { COLORS } from '../../constants/colors';
 import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
-import { Feather, Entypo, AntDesign } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
-import { ActivityIndicator } from 'react-native';
 import Context from '../../contextApi/context';
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
+// import * as Font from 'expo-font';
+// import AppLoading from 'expo-app-loading';
 
 export default HomeScreen = props => {
-  const [fontLoaded, setFontLoaded] = useState(false);
+  // const [fontLoaded, setFontLoaded] = useState(false);
   const { state } = useContext(Context);
   const [userImage, setuserImage] = useState(
     state ? state.userDetails.image : '',
   );
   const [userName, setuserName] = useState(state ? state.userDetails.name : '');
 
-  const fetchFont = () => {
-    return Font.loadAsync({
-      ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
-    });
-  };
+  // const fetchFont = () => {
+  //   return Font.loadAsync({
+  //     ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
+  //   });
+  // };
   useEffect(() => {
     setuserName(state.userDetails.name);
     setuserImage(state.userDetails.image);
-    console.log(state.userDetails.image);
-    console.log(state.userDetails.name);
-
   }, [state]);
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();

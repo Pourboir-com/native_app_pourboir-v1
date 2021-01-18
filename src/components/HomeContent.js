@@ -11,13 +11,11 @@ import {
 } from 'react-native';
 import { GET_RESTAURANT } from '../queries';
 
-import { placesList as LIST } from '../dummyData/DummyData';
 import { Colors } from '../constants/Theme';
 import HomeCard from './HomeCard';
-import { useQuery, useMutation } from 'react-query';
+import { useQuery } from 'react-query';
 import { reactQueryConfig } from '../constants';
 import i18n from '../li8n';
-import { isLoading } from 'expo-font';
 import { distributeInArray } from '../util';
 import { getAsyncStorageValues } from '../constants';
 import * as Font from 'expo-font';
@@ -86,7 +84,7 @@ export default function HomeScreenContent({
             onFinish={() => {
               setFontLoaded(true);
             }}
-            onError={() => console.log("ERROR")}
+            onError={() => console.log('ERROR')}
           />
         ) : (
           <View style={styles.viewEmptyList}>
@@ -131,7 +129,7 @@ export default function HomeScreenContent({
           onFinish={() => {
             setFontLoaded(true);
           }}
-          onError={() => console.log("ERROR")}
+          onError={() => console.log('ERROR')}
         />
       ) : (
         <ScrollView

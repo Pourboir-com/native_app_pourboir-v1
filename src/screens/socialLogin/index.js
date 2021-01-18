@@ -60,7 +60,7 @@ const SocialLogin = ({ navigation }) => {
               accessToken: accessToken,
             }),
           );
-          
+
           let userDetails = {
             name: userInfoResponse.data.name,
             image: userInfoResponse.data.picture,
@@ -88,7 +88,7 @@ const SocialLogin = ({ navigation }) => {
           onFinish={() => {
             setFontLoaded(true);
           }}
-          onError={() => console.log("ERROR")}
+          onError={() => console.log('ERROR')}
         />
       </>
     );

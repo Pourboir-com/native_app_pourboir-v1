@@ -1,22 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  StatusBar,
   ImageBackground,
-  ScrollView,
-  Image,
   Dimensions,
   TouchableOpacity,
-  FlatList,
 } from 'react-native';
-import {
-  MaterialIcons,
-  FontAwesome,
-  Entypo,
-  Ionicons,
-} from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 import { Colors } from '../constants/Theme';
 import RatingStar from './RatingComponent';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -58,7 +49,7 @@ const HomeCard = ({
           onFinish={() => {
             setFontLoaded(true);
           }}
-          onError={() => console.log("ERROR")}
+          onError={() => console.log('ERROR')}
         />
       </>
     );

@@ -52,15 +52,19 @@ const SocialLogin = ({ navigation }) => {
       await googleSignup(userInfoResponse.data, {
         onSuccess: async res => {
           navigation.replace('Home', { crossIcon: false });
+          let userDetails = {
+            name: res?.user?.full_name,
+            image: res?.user?.picture,
+            email: res?.user?.email,
+            accessToken: accessToken,
+          };
           dispatch({
             type: actionTypes.USER_DETAILS,
-            payload: { ...(res?.data?.user || {}) },
+            payload: userDetails,
           });
           await AsyncStorage.setItem(
             '@userInfo',
-            JSON.stringify({
-              ...(res?.data?.user || {}),
-            }),
+            JSON.stringify(userDetails),
           );
         },
         onError: error => {

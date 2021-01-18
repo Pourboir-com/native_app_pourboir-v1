@@ -16,7 +16,7 @@ import HomeCard from './HomeCard';
 import { useQuery } from 'react-query';
 import { reactQueryConfig } from '../constants';
 import i18n from '../li8n';
-import { distributeInArray } from '../util';
+import { distributeInArray,restaurantDistance } from '../util';
 import { getAsyncStorageValues } from '../constants';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
@@ -174,7 +174,7 @@ export default function HomeScreenContent({
                   img={restaurantLoading ? null : itemData.item.photos[0]}
                   rating={restaurantLoading ? null : itemData.item.rating}
                   name={restaurantLoading ? null : itemData.item.name}
-                  distance={restaurantLoading ? null : '300m'}
+                  distance={restaurantLoading ? null : restaurantDistance(itemData)}
                   services={restaurantLoading ? null : itemData.item.servers}
                   loading={restaurantLoading}
                   crossIcon={route.params.crossIcon}
@@ -203,7 +203,7 @@ export default function HomeScreenContent({
                   img={restaurantLoading ? null : itemData.item.photos[0]}
                   rating={restaurantLoading ? null : itemData.item.rating}
                   name={restaurantLoading ? null : itemData.item.name}
-                  distance={restaurantLoading ? null : '300m'}
+                  distance={restaurantLoading ? null : restaurantDistance(itemData)}
                   services={restaurantLoading ? null : itemData.item.servers}
                   loading={restaurantLoading}
                   crossIcon={route.params.crossIcon}

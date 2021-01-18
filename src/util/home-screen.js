@@ -7,3 +7,7 @@ export const distributeInArray = restaurants => {
 	  secondArray,
   };
 };
+
+export const restaurantDistance = item => {
+  return Number(item?.item?.distance?.rows[0]?.elements[0]?.distance?.text.split('km').join(''))*1000;
+};

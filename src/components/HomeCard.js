@@ -25,7 +25,7 @@ const HomeCard = ({
   crossIcon,
   deleteCall,
   place_id,
-  refetchRestaurant
+  refetchRestaurant,
 }) => {
   const [fontLoaded, setFontLoaded] = useState(false);
   // const {crossIcon} = routes.params;
@@ -168,7 +168,7 @@ const HomeCard = ({
                   <Text
                     style={[styles.txt2Card, { fontFamily: 'ProximaNova' }]}
                   >
-                    {distance}
+                    {distance}m
                   </Text>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text

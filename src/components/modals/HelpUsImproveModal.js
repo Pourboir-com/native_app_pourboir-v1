@@ -20,11 +20,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 import { useMutation } from 'react-query';
 import { ADDING_WAITERS } from '../../queries';
-
+import i18n from '../../li8n';
 const imgSitting = require('../../assets/images/sittingtable.png');
 const imgBg = require('../../assets/images/Group7.png');
 
-import i18n from '../../li8n';
 
 const HelpUsImproveModal = ({ isVisible, handleModalClose, place_id, refetchWaiters }) => {
   const [addingWaiters] = useMutation(ADDING_WAITERS);
@@ -62,6 +61,7 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose, place_id, refetchWait
     let waiter = {
       restaurant_id: place_id,
       full_name: waiterName,
+      created_by:
     };
     await addingWaiters(waiter, {
       onSuccess: async () => {

@@ -18,10 +18,10 @@ export default function SplashScreen(props) {
     (async () => {
       const { userInfo } = await getAsyncStorageValues();
       let userDetails = {
-        name: userInfo.name,
-        image: userInfo.image,
-        email: userInfo.email,
-        accessToken: userInfo.accessToken,
+        name: userInfo?.name,
+        image: userInfo?.image,
+        email: userInfo?.email,
+        accessToken: userInfo?.accessToken,
       };
       dispatch({
         type: actionTypes.USER_DETAILS,

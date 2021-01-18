@@ -21,17 +21,23 @@ import { Colors } from '../../constants/Theme';
 import { useMutation } from 'react-query';
 import { ADDING_WAITERS } from '../../queries';
 import i18n from '../../li8n';
+import { getAsyncStorageValues } from '../../constants/async-storage';
 const imgSitting = require('../../assets/images/sittingtable.png');
 const imgBg = require('../../assets/images/Group7.png');
 
-
-const HelpUsImproveModal = ({ isVisible, handleModalClose, place_id, refetchWaiters, refetchRestaurant}) => {
+const HelpUsImproveModal = ({
+  isVisible,
+  handleModalClose,
+  place_id,
+  refetchWaiters,
+  refetchRestaurant,
+}) => {
   const [addingWaiters] = useMutation(ADDING_WAITERS);
   let contentEnd;
   const scrollRef = React.useRef(null);
   const [onHandleFocus, setonHandleFocus] = useState(false);
   const [waiterName, setWaiterName] = useState('');
-
+  const { userInfo } = getAsyncStorageValues();
   const textRef = React.useRef(null);
 
   const [placeholder, setPlaceholder] = React.useState(
@@ -61,7 +67,7 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose, place_id, refetchWait
     let waiter = {
       restaurant_id: place_id,
       full_name: waiterName,
-      created_by:
+      created_by: userInfo.created_by,
     };
     await addingWaiters(waiter, {
       onSuccess: async () => {
@@ -77,9 +83,7 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose, place_id, refetchWait
     <Overlay
       overlayStyle={[
         styles.container,
-
         onHandleFocus && Platform.OS === 'ios' ? { flex: 1 } : {},
-
         Platform.OS === 'ios'
           ? onHandleFocus
             ? { marginBottom: Dimensions.get('window').height * 0.4 }

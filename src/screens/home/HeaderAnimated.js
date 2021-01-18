@@ -41,6 +41,13 @@ export default HomeScreen = props => {
       ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
     });
   };
+  useEffect(() => {
+    setuserName(state.userDetails.name);
+    setuserImage(state.userDetails.image);
+    console.log(state.userDetails.image);
+    console.log(state.userDetails.name);
+
+  }, [state]);
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
 
@@ -138,7 +145,11 @@ export default HomeScreen = props => {
               onPress={() => props.navigation.navigate('Setting')}
             >
               <Image
-                style={{ borderRadius: 90, width: 40, height: 40 , backgroundColor:'red' }}
+                style={{
+                  borderRadius: 90,
+                  width: 40,
+                  height: 40,
+                }}
                 source={{
                   uri: userImage,
                 }}

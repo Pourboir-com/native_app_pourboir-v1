@@ -204,7 +204,7 @@ export default HomeScreen = props => {
       headerRightContainerStyle: { position: 'absolute' },
       headerLeftContainerStyle: { position: 'absolute' },
     });
-  }, [userImage, userName]);
+  });
 
   // useEffect(() => {
 

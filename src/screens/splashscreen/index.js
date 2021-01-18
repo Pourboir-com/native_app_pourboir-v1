@@ -29,21 +29,21 @@ export default function SplashScreen(props) {
   //   Proximabold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
   // });
 
-  useEffect(() => {
-    (async () => {
-      const { userInfo } = await getAsyncStorageValues();
-      let userDetails = {
-        name: userInfo.name,
-        image: userInfo.picture,
-        email: userInfo.email,
-        accessToken: userInfo.accessToken,
-      };
-      dispatch({
-        type: actionTypes.USER_DETAILS,
-        payload: userDetails,
-      });
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const { userInfo } = await getAsyncStorageValues();
+  //     let userDetails = {
+  //       name: userInfo.name,
+  //       image: userInfo.picture,
+  //       email: userInfo.email,
+  //       accessToken: userInfo.accessToken,
+  //     };
+  //     dispatch({
+  //       type: actionTypes.USER_DETAILS,
+  //       payload: userDetails,
+  //     });
+  //   })();
+  // }, []);
 
   // const checkInternet = () => {
   //   NetInfo.fetch().then(state => {

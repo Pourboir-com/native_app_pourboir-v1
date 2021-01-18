@@ -23,22 +23,21 @@ import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 const imgLogo = require('../../assets/images/imgLogo.png');
 const imgWaiter = require('../../assets/images/waiter2.png');
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 const SocialLogin = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
+  const [fontLoaded, setFontLoaded] = useState(false);
+
   const [googleSignup] = useMutation(GOOGLE_SIGNUP);
 
-  useEffect(() => {
-    async function loadFont() {
-      await loadAsync({
-        // Load a font `Montserrat` from a static resource
-        ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
-        ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
-      });
-    }
-    loadFont();
-    setLoading(false);
-  }, []);
+  const fetchFont = () => {
+    return Font.loadAsync({
+      ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
+    });
+  };
+
   const { dispatch } = useContext(Context);
 
   const handleGoogleSignIn = async () => {
@@ -52,6 +51,16 @@ const SocialLogin = ({ navigation }) => {
       await googleSignup(userInfoResponse.data, {
         onSuccess: async () => {
           navigation.replace('Home', { crossIcon: false });
+          await AsyncStorage.setItem(
+            '@userInfo',
+            JSON.stringify({
+              name: userInfoResponse.data.name,
+              image: userInfoResponse.data.picture,
+              email: userInfoResponse.data.email,
+              accessToken: accessToken,
+            }),
+          );
+
           let userDetails = {
             name: userInfoResponse.data.name,
             image: userInfoResponse.data.picture,
@@ -63,16 +72,6 @@ const SocialLogin = ({ navigation }) => {
             type: actionTypes.USER_DETAILS,
             payload: userDetails,
           });
-
-          await AsyncStorage.setItem(
-            '@userInfo',
-            JSON.stringify({
-              name: userInfoResponse.data.name,
-              image: userInfoResponse.data.picture,
-              email: userInfoResponse.data.email,
-              accessToken: accessToken,
-            }),
-          );
         },
         onError: error => {
           console.log(error);
@@ -80,114 +79,131 @@ const SocialLogin = ({ navigation }) => {
       });
     }
   };
-  return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor: loading ? '#fff' : Colors.yellow },
-      ]}
-    >
-      {loading ? (
-        <ActivityIndicator size={70} color={Colors.yellow} />
-      ) : (
-        <View style={{ width: '100%', alignItems: 'center' }}>
-          <Image
-            style={styles.imgLogoStyle}
-            source={imgLogo}
-            resizeMode="contain"
-          />
-          <View style={styles.viewImg}>
+
+  if (!fontLoaded) {
+    return (
+      <>
+        <AppLoading
+          startAsync={fetchFont}
+          onFinish={() => {
+            setFontLoaded(true);
+          }}
+          onError={() => console.log('ERROR')}
+        />
+      </>
+    );
+  } else {
+    return (
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: !loading ? '#fff' : Colors.yellow },
+        ]}
+      >
+        {!loading ? (
+          <View>
+            <ActivityIndicator size={70} color={Colors.yellow} />
+          </View>
+        ) : (
+          <View style={{ width: '100%', alignItems: 'center' }}>
             <Image
-              style={styles.imgStyle}
-              source={imgWaiter}
+              style={styles.imgLogoStyle}
+              source={imgLogo}
               resizeMode="contain"
             />
-          </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Home', { crossIcon: false })}
-            style={styles.btnFb}
-          >
-            <FontAwesome name="facebook" color="#fff" size={20} />
-            <Text
-              style={[
-                styles.textFb,
-                {
-                  fontSize: 16,
-                  fontFamily: 'ProximaNova',
-                },
-              ]}
+            <View style={styles.viewImg}>
+              <Image
+                style={styles.imgStyle}
+                source={imgWaiter}
+                resizeMode="contain"
+              />
+            </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Home', { crossIcon: false })}
+              style={styles.btnFb}
             >
-              {i18n.t('continue_with_fb')}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={handleGoogleSignIn}
-            style={styles.btnGoogle}
-          >
-            <FontAwesome name="google" color="#fff" size={20} />
-            <Text
-              style={[
-                styles.textFb,
-                {
-                  fontSize: 16,
-                  fontFamily: 'ProximaNova',
-                },
-              ]}
+              <FontAwesome name="facebook" color="#fff" size={20} />
+              <Text
+                style={[
+                  styles.textFb,
+                  {
+                    fontSize: 16,
+                    fontFamily: 'ProximaNova',
+                  },
+                ]}
+              >
+                {i18n.t('continue_with_fb')}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={handleGoogleSignIn}
+              style={styles.btnGoogle}
             >
-              {i18n.t('continue_with_google')}
-            </Text>
-          </TouchableOpacity>
+              <FontAwesome name="google" color="#fff" size={20} />
+              <Text
+                style={[
+                  styles.textFb,
+                  {
+                    fontSize: 16,
+                    fontFamily: 'ProximaNova',
+                  },
+                ]}
+              >
+                {i18n.t('continue_with_google')}
+              </Text>
+            </TouchableOpacity>
 
-          <Text
-            style={[
-              styles.txtCreatingAcc,
-              {
-                fontSize: 14,
-                fontFamily: 'ProximaNova',
-                lineHeight: 24,
-              },
-            ]}
-          >
-            {i18n.t('by_creatin_your_acc')}
-          </Text>
-          <View style={styles.viewbtns}>
-            <TouchableOpacity>
-              <Text
-                style={{
-                  color: '#0050A0',
+            <Text
+              style={[
+                styles.txtCreatingAcc,
+                {
                   fontSize: 14,
                   fontFamily: 'ProximaNova',
                   lineHeight: 24,
-                }}
-              >
-                {i18n.t('terms_of_use')}
-              </Text>
-            </TouchableOpacity>
-            <View
-              style={{
-                width: 1,
-                height: 10,
-                backgroundColor: 'grey',
-                marginHorizontal: 10,
-              }}
-            />
-            <TouchableOpacity>
-              <Text
+                },
+              ]}
+            >
+              {i18n.t('by_creatin_your_acc')}
+            </Text>
+            <View style={styles.viewbtns}>
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    color: '#0050A0',
+                    fontSize: 14,
+                    fontFamily: 'ProximaNova',
+                    lineHeight: 24,
+                  }}
+                >
+                  {i18n.t('terms_of_use')}
+                </Text>
+              </TouchableOpacity>
+              <View
                 style={{
-                  color: '#0050A0',
-                  fontSize: 14,
-                  fontFamily: 'ProximaNova',
-                  lineHeight: 24,
+                  width: 1,
+                  height: 10,
+                  backgroundColor: 'grey',
+                  marginHorizontal: 10,
                 }}
-              >
-                {i18n.t('privacy_policy')}
-              </Text>
-            </TouchableOpacity>
+              />
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    color: '#0050A0',
+                    fontSize: 14,
+                    fontFamily: 'ProximaNova',
+                    lineHeight: 24,
+                  }}
+                >
+                  {i18n.t('privacy_policy')}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      )}
-    </View>
-  );
+        )}
+      </View>
+    );
+  }
 };
 export default SocialLogin;
 

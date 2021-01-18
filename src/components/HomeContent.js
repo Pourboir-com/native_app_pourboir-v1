@@ -11,21 +11,23 @@ import {
 } from 'react-native';
 import { GET_RESTAURANT } from '../queries';
 
-import { placesList as LIST } from '../dummyData/DummyData';
 import { Colors } from '../constants/Theme';
 import HomeCard from './HomeCard';
-import { useQuery, useMutation } from 'react-query';
+import { useQuery } from 'react-query';
 import { reactQueryConfig } from '../constants';
 import i18n from '../li8n';
-import { isLoading } from 'expo-font';
 import { distributeInArray } from '../util';
 import { getAsyncStorageValues } from '../constants';
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
+
 export default function HomeScreenContent({
   searchIconPress,
   setSearchIconPress,
   route,
 }) {
   const navigation = useNavigation();
+  const [fontLoaded, setFontLoaded] = useState(false);
   const NoListImg = require('../assets/images/emptyRestaurantList.png');
   const [saveLocation, setSaveLocation] = useState('');
   useEffect(() => {
@@ -66,122 +68,154 @@ export default function HomeScreenContent({
 
     setData([...tempArr]);
   };
+  const fetchFont = () => {
+    return Font.loadAsync({
+      ProximaNova: require('../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
+      ProximaNovaBold: require('../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
+    });
+  };
 
   if (!data.length && !restaurantLoading && !resIsFetching) {
     return (
-      <View style={styles.viewEmptyList}>
-        <View
-          style={{
-            backgroundColor: '#fff',
-            width: 160,
-            height: 160,
-            borderRadius: 100,
-          }}
-        >
-          <Image
-            source={NoListImg}
-            style={{
-              width: 260,
-              height: 220,
-              marginTop: -55,
-              marginLeft: -50,
+      <>
+        {!fontLoaded ? (
+          <AppLoading
+            startAsync={fetchFont}
+            onFinish={() => {
+              setFontLoaded(true);
             }}
-            resizeMode="contain"
+            onError={() => console.log('ERROR')}
           />
-        </View>
-        <Text style={[styles.txt1NoRest, { fontFamily: 'ProximaNovaBold' }]}>
-          {i18n.t('you_have_no_restaurant')}
-        </Text>
-        <Text style={[styles.txt2NoRest, { fontFamily: 'ProximaNova' }]}>
-          {i18n.t('search_for_rest_and_add')}
-        </Text>
-      </View>
+        ) : (
+          <View style={styles.viewEmptyList}>
+            <View
+              style={{
+                backgroundColor: '#fff',
+                width: 160,
+                height: 160,
+                borderRadius: 100,
+              }}
+            >
+              <Image
+                source={NoListImg}
+                style={{
+                  width: 260,
+                  height: 220,
+                  marginTop: -55,
+                  marginLeft: -50,
+                }}
+                resizeMode="contain"
+              />
+            </View>
+            <Text
+              style={[styles.txt1NoRest, { fontFamily: 'ProximaNovaBold' }]}
+            >
+              {i18n.t('you_have_no_restaurant')}
+            </Text>
+            <Text style={[styles.txt2NoRest, { fontFamily: 'ProximaNova' }]}>
+              {i18n.t('search_for_rest_and_add')}
+            </Text>
+          </View>
+        )}
+      </>
     );
   }
 
   return (
     <>
-      <ScrollView
-        // bounces={true}
-        //   alwaysBounceVertical={true}
-        showsVerticalScrollIndicator={false}
-        alwaysBounceHorizontal={false}
-        alwaysBounceVertical={false}
-        bounces={false}
-        style={{ backgroundColor: '#f9f9f9' }}
-      >
-        {loading
-          ? null
-          : !route.params.crossIcon && (
-            <Text
-              style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
-            >
-              {i18n.t('around_you')}
-            </Text>
-          )}
-        <View
-          style={{
-            flexDirection: 'row',
-            marginTop: 17,
+      {!fontLoaded ? (
+        <AppLoading
+          startAsync={fetchFont}
+          onFinish={() => {
+            setFontLoaded(true);
           }}
+          onError={() => console.log('ERROR')}
+        />
+      ) : (
+        <ScrollView
+          // bounces={true}
+          //   alwaysBounceVertical={true}
+          showsVerticalScrollIndicator={false}
+          alwaysBounceHorizontal={false}
+          alwaysBounceVertical={false}
+          bounces={false}
+          style={{ backgroundColor: '#f9f9f9' }}
         >
-          <FlatList
-            data={
-              restaurantLoading
-                ? dummyArray
-                : distributeInArray(data).firstArray
-            }
-            showsVerticalScrollIndicator={false}
-            alwaysBounceHorizontal={false}
-            alwaysBounceVertical={false}
-            bounces={false}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={itemData => (
-              <HomeCard
-                navigation={navigation}
-                // id={itemData.item.id}
-                img={restaurantLoading ? null : itemData.item.photos[0]}
-                rating={restaurantLoading ? null : itemData.item.rating}
-                name={restaurantLoading ? null : itemData.item.name}
-                distance={restaurantLoading ? null : itemData.item.distance}
-                services={restaurantLoading ? null : '3'}
-                loading={restaurantLoading}
-                crossIcon={route.params.crossIcon}
-                place_id={restaurantLoading ? null : itemData.item.place_id}
-                deleteCall={() => onDeleteCard(itemData.index, true)}
-              />
+          {loading
+            ? null
+            : !route.params.crossIcon && (
+              <Text
+                style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
+              >
+                {i18n.t('around_you')}
+              </Text>
             )}
-          />
-          <FlatList
-            data={
-              restaurantLoading
-                ? dummyArray
-                : distributeInArray(data).secondArray
-            }
-            showsVerticalScrollIndicator={false}
-            style={{ marginTop: 15 }}
-            alwaysBounceHorizontal={false}
-            alwaysBounceVertical={false}
-            bounces={false}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={itemData => (
-              <HomeCard
-                navigation={navigation}
-                // key={item._id}
-                img={restaurantLoading ? null : itemData.item.photos[0]}
-                rating={restaurantLoading ? null : itemData.item.rating}
-                name={restaurantLoading ? null : itemData.item.name}
-                distance={restaurantLoading ? null : itemData.item.distance}
-                services={restaurantLoading ? null : '3'}
-                loading={restaurantLoading}
-                crossIcon={route.params.crossIcon}
-                place_id={restaurantLoading ? null : itemData.item.place_id}
-                deleteCall={() => onDeleteCard(itemData.index, false)}
-              />
-            )}
-          />
-        </View>
-      </ScrollView>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: 17,
+            }}
+          >
+            <FlatList
+              data={
+                restaurantLoading
+                  ? dummyArray
+                  : distributeInArray(data).firstArray
+              }
+              showsVerticalScrollIndicator={false}
+              alwaysBounceHorizontal={false}
+              alwaysBounceVertical={false}
+              bounces={false}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={itemData => (
+                <HomeCard
+                  navigation={navigation}
+                  // id={itemData.item.id}
+                  img={restaurantLoading ? null : itemData.item.photos[0]}
+                  rating={restaurantLoading ? null : itemData.item.rating}
+                  name={restaurantLoading ? null : itemData.item.name}
+                  distance={restaurantLoading ? null : '300m'}
+                  services={restaurantLoading ? null : itemData.item.servers}
+                  loading={restaurantLoading}
+                  crossIcon={route.params.crossIcon}
+                  place_id={restaurantLoading ? null : itemData.item.place_id}
+                  deleteCall={() => onDeleteCard(itemData.index, true)}
+                  refetchRestaurant={refetchRestaurant}
+                />
+              )}
+            />
+            <FlatList
+              data={
+                restaurantLoading
+                  ? dummyArray
+                  : distributeInArray(data).secondArray
+              }
+              showsVerticalScrollIndicator={false}
+              style={{ marginTop: 15 }}
+              alwaysBounceHorizontal={false}
+              alwaysBounceVertical={false}
+              bounces={false}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={itemData => (
+                <HomeCard
+                  navigation={navigation}
+                  // key={item._id}
+                  img={restaurantLoading ? null : itemData.item.photos[0]}
+                  rating={restaurantLoading ? null : itemData.item.rating}
+                  name={restaurantLoading ? null : itemData.item.name}
+                  distance={restaurantLoading ? null : '300m'}
+                  services={restaurantLoading ? null : itemData.item.servers}
+                  loading={restaurantLoading}
+                  crossIcon={route.params.crossIcon}
+                  place_id={restaurantLoading ? null : itemData.item.place_id}
+                  deleteCall={() => onDeleteCard(itemData.index, false)}
+                  refetchRestaurant={refetchRestaurant}
+                />
+              )}
+            />
+          </View>
+        </ScrollView>
+      )}
     </>
   );
 }

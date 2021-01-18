@@ -1,24 +1,44 @@
-import React from 'react';
-import {
-  StyleSheet,
-  View,
-  ImageBackground,
-  Image,
-  Animated,
-  Dimensions,
-  StatusBar,
-} from 'react-native';
+import React, { useEffect, useContext } from 'react';
+import { ImageBackground, Animated, Dimensions } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
-import Svg, { Circle, Rect } from 'react-native-svg';
-import { useFonts } from 'expo-font';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const imgSplash = require('../../assets/images/splash.png');
+import NetInfo from '@react-native-community/netinfo';
+import { getAsyncStorageValues } from '../../constants';
+import Context from '../../contextApi/context';
+import * as actionTypes from '../../contextApi/actionTypes';
 
 export default function SplashScreen(props) {
-  let [fontsLoaded] = useFonts({
-    Proximabold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
-  });
+  // const [Internet, setInternet] = React.useState(false);
+  // const [location, setLocation] = React.useState(false);
+  const { dispatch } = useContext(Context);
+
+  useEffect(() => {
+    (async () => {
+      const { userInfo } = await getAsyncStorageValues();
+      let userDetails = {
+        name: userInfo.name,
+        image: userInfo.image,
+        email: userInfo.email,
+        accessToken: userInfo.accessToken,
+      };
+      dispatch({
+        type: actionTypes.USER_DETAILS,
+        payload: userDetails,
+      });
+    })();
+  }, []);
+
+  // const checkInternet = () => {
+  //   NetInfo.fetch().then(state => {
+  //     if (state.isConnected) {
+  //       setInternet(true);
+  //     } else {
+  //       setInternet(false);
+  //     }
+  //   });
+  // };
 
   const [springValue] = React.useState(new Animated.Value(0.5));
   const locationFunction = async () => {
@@ -34,7 +54,13 @@ export default function SplashScreen(props) {
           log: location?.coords.longitude,
         }),
       );
-      props.navigation.replace('Home', { crossIcon: false });
+      NetInfo.fetch().then(state => {
+        if (state.isConnected) {
+          props.navigation.replace('Home', { crossIcon: false });
+        } else {
+          props.navigation.replace('NoWiFi');
+        }
+      });
     } else {
       try {
         let values = await Location.requestPermissionsAsync();
@@ -56,7 +82,14 @@ export default function SplashScreen(props) {
               log: location?.coords.longitude,
             }),
           );
-          props.navigation.replace('Home', { crossIcon: false });
+
+          NetInfo.fetch().then(state => {
+            if (state.isConnected) {
+              props.navigation.replace('Home', { crossIcon: false });
+            } else {
+              props.navigation.replace('NoWiFi');
+            }
+          });
         }
       } catch (error) {
         props.navigation.dispatch(
@@ -70,7 +103,6 @@ export default function SplashScreen(props) {
   };
   React.useEffect(() => {
     locationFunction();
-
     // const spring = () => {
     Animated.spring(springValue, {
       toValue: 1,
@@ -90,19 +122,3 @@ export default function SplashScreen(props) {
     ></ImageBackground>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // backgroundColor: '#fee684',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 30,
-    fontFamily: 'Proximabold',
-  },
-  tagline: {
-    fontFamily: 'Proximabold',
-  },
-});

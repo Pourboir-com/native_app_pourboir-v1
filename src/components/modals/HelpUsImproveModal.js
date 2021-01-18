@@ -25,7 +25,7 @@ const imgSitting = require('../../assets/images/sittingtable.png');
 const imgBg = require('../../assets/images/Group7.png');
 
 
-const HelpUsImproveModal = ({ isVisible, handleModalClose, place_id, refetchWaiters }) => {
+const HelpUsImproveModal = ({ isVisible, handleModalClose, place_id, refetchWaiters, refetchRestaurant}) => {
   const [addingWaiters] = useMutation(ADDING_WAITERS);
   let contentEnd;
   const scrollRef = React.useRef(null);
@@ -67,6 +67,7 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose, place_id, refetchWait
       onSuccess: async () => {
         handleModalClose();
         await refetchWaiters();
+        await refetchRestaurant();
         setWaiterName('');
       },
     });

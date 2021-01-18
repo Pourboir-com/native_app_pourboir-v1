@@ -60,4 +60,5 @@ export default {
     'We will contact you by email to offer you a coupon very soon.',
 
   //Global Header
+  must_loggedIn: 'You must be logged in to use Pourboir!',
 };

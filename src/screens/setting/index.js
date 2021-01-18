@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   ScrollView,
   ImageBackground,
-  StatusBar,
 } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import GlobalHeader from '../../components/GlobalHeader';
@@ -18,7 +17,6 @@ import { getAsyncStorageValues } from '../../constants';
 import * as Google from 'expo-google-app-auth';
 import { config } from '../../constants';
 import i18n from '../../li8n';
-import { t } from 'i18n-js';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -27,16 +25,13 @@ const imgBg = require('../../assets/images/Group5.png');
 
 const Setting = ({ navigation }) => {
   const { state, dispatch } = useContext(Context);
-  const [crossIcon, setcrossIcon] = useState(true);
   const [image, setImage] = useState(state ? state.userDetails.image : '');
   const [userName, setuserName] = useState(state ? state.userDetails.name : '');
-  // useEffect(() => {
-  //   (async () => {
-  //     const { userInfo } = await getAsyncStorageValues();
-  //     setuserName(userInfo.name);
-  //     setImage(userInfo.image);
-  //   })();
-  // }, []);
+
+  useEffect(() => {
+    setuserName(state.userDetails.name);
+    setImage(state.userDetails.image);
+  }, [state]);
 
   const handleGoogleSignOut = async () => {
     const { userInfo } = await getAsyncStorageValues();
@@ -67,10 +62,6 @@ const Setting = ({ navigation }) => {
     }
   };
 
-  const ratingCompleted = rating => {
-    console.log('Rating is: ' + rating);
-  };
-
   const _pickImage = async () => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -82,14 +73,9 @@ const Setting = ({ navigation }) => {
       if (!result.cancelled) {
         setImage(result.uri);
       }
-
-      console.log(result);
     } catch (E) {
       console.log(E);
     }
-  };
-  const homeNavigation = navigation => {
-    navigation.navigate('Home');
   };
 
   return (

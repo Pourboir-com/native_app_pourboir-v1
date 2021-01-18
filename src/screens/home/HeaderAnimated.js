@@ -11,7 +11,6 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  Platform,
   Image,
 } from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
@@ -21,22 +20,29 @@ import { SvgHeaderSearchIcon } from '../../components/svg/header_search_icon';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import { COLORS } from '../../constants/colors';
 import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
-import { Feather, Entypo, AntDesign } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
-import { ActivityIndicator } from 'react-native';
 import Context from '../../contextApi/context';
+// import * as Font from 'expo-font';
+// import AppLoading from 'expo-app-loading';
 
 export default HomeScreen = props => {
+  // const [fontLoaded, setFontLoaded] = useState(false);
   const { state } = useContext(Context);
-  const [userImage, setuserImage] = useState(state ? state.userDetails.image : '');
+  const [userImage, setuserImage] = useState(
+    state ? state.userDetails.image : '',
+  );
   const [userName, setuserName] = useState(state ? state.userDetails.name : '');
 
-  // useEffect(() => {
-  //   if (state) {
-  //     setuserImage(state.userDetails.image);
-  //     setuserName(state.userDetails.name);
-  //   }
-  // }, [state]);
+  // const fetchFont = () => {
+  //   return Font.loadAsync({
+  //     ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
+  //   });
+  // };
+  useEffect(() => {
+    setuserName(state.userDetails.name);
+    setuserImage(state.userDetails.image);
+  }, [state]);
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
 
@@ -134,7 +140,11 @@ export default HomeScreen = props => {
               onPress={() => props.navigation.navigate('Setting')}
             >
               <Image
-                style={{ borderRadius: 90, width: 40, height: 40 }}
+                style={{
+                  borderRadius: 90,
+                  width: 40,
+                  height: 40,
+                }}
                 source={{
                   uri: userImage,
                 }}
@@ -147,34 +157,46 @@ export default HomeScreen = props => {
 
     const renderTitle = () => {
       return (
-        <View
-          style={[
-            { position: 'absolute', left: spacing(2.5), top: spacing(1) },
-            // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
-          ]}
-        >
-          <Animated.View
-            style={{
-              marginLeft: titleHeaderMarginLeft,
-              height: HEADER_BAR_HEIGHT,
-              justifyContent: 'center',
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                color: COLORS[colorScheme].text.primary,
-                fontFamily: 'ProximaNovaBold',
-                textAlign: 'center',
-                fontWeight: 'bold',
+        <>
+          {/* {!fontLoaded ? (
+            <AppLoading
+              startAsync={fetchFont}
+              onFinish={() => {
+                setFontLoaded(true);
               }}
-              ellipsizeMode="tail"
-              numberOfLines={1}
+              onError={() => console.log('ERROR')}
+            />
+          ) : ( */}
+          <View
+            style={[
+              { position: 'absolute', left: spacing(2.5), top: spacing(1) },
+              // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
+            ]}
+          >
+            <Animated.View
+              style={{
+                marginLeft: titleHeaderMarginLeft,
+                height: HEADER_BAR_HEIGHT,
+                justifyContent: 'center',
+              }}
             >
-              {userName === '' ? 'Bonjour' : userName}
-            </Text>
-          </Animated.View>
-        </View>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: COLORS[colorScheme].text.primary,
+                  fontFamily: 'ProximaNovaBold',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                }}
+                ellipsizeMode="tail"
+                numberOfLines={1}
+              >
+                {userName === '' ? 'Bonjour' : userName}
+              </Text>
+            </Animated.View>
+          </View>
+          {/* )} */}
+        </>
       );
     };
 

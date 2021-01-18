@@ -14,7 +14,7 @@ import { ImageBackground } from 'react-native';
 import { loadAsync } from 'expo-font';
 
 const HomeScreen = props => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [searchIconPress, setSearchIconPress] = useState(false);
 
   const navigation = useNavigation();
@@ -30,13 +30,10 @@ const HomeScreen = props => {
 
     loadFont();
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 2500);
-
     // setTimeout(() => {
-    //     navigation.navigate('Home', { crossIcon: false })
-    // }, 4000)
+    //   setLoading(false);
+    // }, 2500);
+
   }, []);
 
   return (
@@ -54,8 +51,8 @@ const HomeScreen = props => {
 
               {
                 <HomeScreenContent
-                  loading={loading}
-                  setLoading={setLoading}
+                  // loading={loading}
+                  // setLoading={setLoading}
                   searchIconPress={searchIconPress}
                   setSearchIconPress={setSearchIconPress}
                   route={props.route}
@@ -71,8 +68,8 @@ const HomeScreen = props => {
               <StatusBar translucent={true} style="dark" />
               {
                 <HomeScreenContent
-                  loading={loading}
-                  setLoading={setLoading}
+                  // loading={loading}
+                  // setLoading={setLoading}
                   searchIconPress={searchIconPress}
                   setSearchIconPress={setSearchIconPress}
                   route={props.route}

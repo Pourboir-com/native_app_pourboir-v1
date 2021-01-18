@@ -180,6 +180,7 @@ export default function HomeScreenContent({
                   crossIcon={route.params.crossIcon}
                   place_id={restaurantLoading ? null : itemData.item.place_id}
                   deleteCall={() => onDeleteCard(itemData.index, true)}
+                  refetchRestaurant={refetchRestaurant}
                 />
               )}
             />
@@ -208,6 +209,7 @@ export default function HomeScreenContent({
                   crossIcon={route.params.crossIcon}
                   place_id={restaurantLoading ? null : itemData.item.place_id}
                   deleteCall={() => onDeleteCard(itemData.index, false)}
+                  refetchRestaurant={refetchRestaurant}
                 />
               )}
             />

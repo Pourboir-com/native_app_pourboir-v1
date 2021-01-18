@@ -25,12 +25,19 @@ import { useQuery } from 'react-query';
 import { reactQueryConfig } from '../../constants';
 import { GET_WAITERS } from '../../queries';
 
-
 import i18n from '../../li8n';
 
 const ReviewDetails = ({ navigation, route }) => {
   const [data, setData] = useState([]);
-  const { img, name, rating, distance, services, place_id } = route.params;
+  const {
+    img,
+    name,
+    rating,
+    distance,
+    services,
+    place_id,
+    refetchRestaurant,
+  } = route.params;
   const {
     data: waitersData,
     isLoading: waitersLoading,
@@ -292,6 +299,7 @@ const ReviewDetails = ({ navigation, route }) => {
           refetchWaiters={refetchWaiters}
           isVisible={helpUsModalVisible}
           handleModalClose={handleModalClose}
+          refetchRestaurant={refetchRestaurant}
         />
       )}
       {/* </ScrollView>

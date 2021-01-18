@@ -26,7 +26,7 @@ const imgBg = require('../../assets/images/Group7.png');
 
 import i18n from '../../li8n';
 
-const HelpUsImproveModal = ({ isVisible, handleModalClose, place_id, refetchWaiters }) => {
+const HelpUsImproveModal = ({ isVisible, handleModalClose, place_id, refetchWaiters, refetchRestaurant}) => {
   const [addingWaiters] = useMutation(ADDING_WAITERS);
   let contentEnd;
   const scrollRef = React.useRef(null);
@@ -67,6 +67,7 @@ const HelpUsImproveModal = ({ isVisible, handleModalClose, place_id, refetchWait
       onSuccess: async () => {
         handleModalClose();
         await refetchWaiters();
+        await refetchRestaurant();
         setWaiterName('');
       },
     });

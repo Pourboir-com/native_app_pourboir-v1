@@ -25,6 +25,7 @@ const HomeCard = ({
   crossIcon,
   deleteCall,
   place_id,
+  refetchRestaurant
 }) => {
   const [fontLoaded, setFontLoaded] = useState(false);
   // const {crossIcon} = routes.params;
@@ -73,6 +74,7 @@ const HomeCard = ({
                 distance: distance,
                 services: services,
                 place_id: place_id,
+                refetchRestaurant,
               })
             }
             style={[styles.viewItemConatier]}

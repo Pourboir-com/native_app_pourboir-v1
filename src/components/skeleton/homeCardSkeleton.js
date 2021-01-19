@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-
-const ReviewsSkeleton = () => {
+const HomeCardSkeleton = () => {
   return (
     <View style={styles.viewItemContainer}>
       <SkeletonPlaceholder highlightColor="#fff">
@@ -19,7 +18,7 @@ const ReviewsSkeleton = () => {
     </View>
   );
 };
-export { ReviewsSkeleton };
+export { HomeCardSkeleton };
 
 const styles = StyleSheet.create({
   Items: {

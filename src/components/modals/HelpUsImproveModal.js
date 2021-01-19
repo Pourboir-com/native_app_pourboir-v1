@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -37,8 +37,15 @@ const HelpUsImproveModal = ({
   const scrollRef = React.useRef(null);
   const [onHandleFocus, setonHandleFocus] = useState(false);
   const [waiterName, setWaiterName] = useState('');
-  const { userInfo } = getAsyncStorageValues();
+  const [createdBy, setcreatedBy] = useState();
   const textRef = React.useRef(null);
+
+  useEffect(() => {
+    (async () => {
+      const { userInfo } = await getAsyncStorageValues();
+      setcreatedBy(userInfo.created_by);
+    })();
+  }, []);
 
   const [placeholder, setPlaceholder] = React.useState(
     i18n.t('name_of_your_server'),
@@ -67,7 +74,7 @@ const HelpUsImproveModal = ({
     let waiter = {
       restaurant_id: place_id,
       full_name: waiterName,
-      created_by: userInfo.created_by,
+      created_by: createdBy,
     };
     await addingWaiters(waiter, {
       onSuccess: async () => {

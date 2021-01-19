@@ -24,7 +24,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useQuery } from 'react-query';
 import { reactQueryConfig } from '../../constants';
 import { GET_WAITERS } from '../../queries';
-
+import { ReviewsSkeleton } from '../../components/skeleton';
 
 import i18n from '../../li8n';
 
@@ -204,60 +204,66 @@ const ReviewDetails = ({ navigation, route }) => {
             {/* <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length * 2}</Text> */}
           </View>
         </View>
-
-        <FlatList
-          data={waitersLoading ? null : data}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={item => item._id}
-          renderItem={itemData => (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('RateYourService', {
-                  name: itemData?.item?.full_name,
-                  Image: itemData?.item?.imgAvatar,
-                })
-              }
-              style={styles.viewItemConatier}
-            >
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Image
-                  style={{ width: 45, height: 45, borderRadius: 30 }}
-                  source={{ uri: itemData.item.imgAvatar }}
-                />
-                <View style={{ marginLeft: 10 }}>
-                  <Text style={styles.txtItemName}>
-                    {itemData.item.full_name}
-                  </Text>
-                  <View style={{ flexDirection: 'row', marginTop: 8 }}>
-                    {obj.map((v, i) => {
-                      return (
-                        <TouchableOpacity
-                          style={{ marginRight: 3 }}
-                          onPress={() => {
-                            onPressStar(v);
-                          }}
-                        >
-                          <RatingStar
-                            starSize={16}
-                            type={
-                              v <= starSelect
-                                ? 'filled'
-                                : v === starSelect + 0.5
-                                  ? 'half'
-                                  : 'empty'
-                            }
-                            notRatedStarColor="rgba(0,0,0,0.1)"
-                          />
-                        </TouchableOpacity>
-                      );
-                    })}
+        {waitersLoading || waitersIsFetching ? (
+          <>
+            <ReviewsSkeleton />
+            <ReviewsSkeleton />
+          </>
+        ) : (
+          <FlatList
+            data={waitersLoading ? null : data}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={item => item._id}
+            renderItem={itemData => (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('RateYourService', {
+                    name: itemData?.item?.full_name,
+                    Image: itemData?.item?.imgAvatar,
+                  })
+                }
+                style={styles.viewItemConatier}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Image
+                    style={{ width: 45, height: 45, borderRadius: 30 }}
+                    source={{ uri: itemData.item.imgAvatar }}
+                  />
+                  <View style={{ marginLeft: 10 }}>
+                    <Text style={styles.txtItemName}>
+                      {itemData.item.full_name}
+                    </Text>
+                    <View style={{ flexDirection: 'row', marginTop: 8 }}>
+                      {obj.map((v, i) => {
+                        return (
+                          <TouchableOpacity
+                            style={{ marginRight: 3 }}
+                            onPress={() => {
+                              onPressStar(v);
+                            }}
+                          >
+                            <RatingStar
+                              starSize={16}
+                              type={
+                                v <= starSelect
+                                  ? 'filled'
+                                  : v === starSelect + 0.5
+                                    ? 'half'
+                                    : 'empty'
+                              }
+                              notRatedStarColor="rgba(0,0,0,0.1)"
+                            />
+                          </TouchableOpacity>
+                        );
+                      })}
+                    </View>
                   </View>
                 </View>
-              </View>
-              <MaterialIcons name="chevron-right" size={28} color="grey" />
-            </TouchableOpacity>
-          )}
-        />
+                <MaterialIcons name="chevron-right" size={28} color="grey" />
+              </TouchableOpacity>
+            )}
+          />
+        )}
         <View style={styles.viewAddReview}>
           <Text style={[styles.txtCantFind, { fontFamily: 'ProximaNova' }]}>
             {i18n.t('cant_find_your_server')}

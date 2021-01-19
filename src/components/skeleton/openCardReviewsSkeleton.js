@@ -5,7 +5,7 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 const ReviewsSkeleton = () => {
   return (
     <View style={styles.viewItemContainer}>
-      <SkeletonPlaceholder highlightColor="#fff">
+      <SkeletonPlaceholder backgroundColor='#f6f6f9' highlightColor="#E0E0E0">
         <View style={styles.Items}>
           <View style={{ width: 60, height: 60, borderRadius: 50 }} />
           <View style={{ marginLeft: 20 }}>

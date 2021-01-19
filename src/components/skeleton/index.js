@@ -1,2 +1,2 @@
 export * from './openCardReviewsSkeleton';
-export * from './openCardReviewsSkeleton';
+export * from './homeCardSkeleton';

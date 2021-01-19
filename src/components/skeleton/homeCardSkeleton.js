@@ -1,19 +1,14 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 const HomeCardSkeleton = () => {
   return (
-    <View style={styles.viewItemContainer}>
-      <SkeletonPlaceholder highlightColor="#fff">
-        <View style={styles.Items}>
-          <View style={{ width: 60, height: 60, borderRadius: 50 }} />
-          <View style={{ marginLeft: 20 }}>
-            <View style={{ width: 120, height: 20, borderRadius: 4 }} />
-            <View
-              style={{ marginTop: 6, width: 80, height: 20, borderRadius: 4 }}
-            />
-          </View>
-        </View>
+    <View style={styles.viewDummyCard}>
+      <SkeletonPlaceholder backgroundColor='#f6f6f9' highlightColor='#E0E0E0'>
+        <View style={styles.view1dumy} />
+        <View style={styles.view2dumy} />
+        <View style={styles.view3dumy} />
+        <View style={styles.view4dumy} />
       </SkeletonPlaceholder>
     </View>
   );
@@ -21,17 +16,33 @@ const HomeCardSkeleton = () => {
 export { HomeCardSkeleton };
 
 const styles = StyleSheet.create({
-  Items: {
-    alignItems: 'center',
-    flexDirection: 'row',
+  view1dumy: {
+    width: '80%',
+    height: 20,
+    marginBottom: 70,
   },
-  viewItemContainer: {
-    alignSelf: 'center',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderRadius: 10,
-    width: '90%',
+  view2dumy: {
+    width: '100%',
+    height: 15,
+    marginTop: 10,
+  },
+  view3dumy: {
+    width: '80%',
+    height: 15,
+    marginTop: 10,
+  },
+  view4dumy: {
+    width: '30%',
+    height: 15,
+    marginTop: 10,
+  },
+  viewDummyCard: {
+    width: Dimensions.get('window').width * 0.45,
+    height: 210,
+    margin: Dimensions.get('window').width * 0.02,
     backgroundColor: '#fff',
-    marginVertical: 10,
+    borderRadius: 12,
+    overflow: 'hidden',
+    padding: 20,
   },
 });

@@ -13,6 +13,7 @@ import RatingStar from './RatingComponent';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import { HomeCardSkeleton } from '../components/skeleton';
 
 const HomeCard = ({
   navigation,
@@ -58,12 +59,9 @@ const HomeCard = ({
     return (
       <>
         {loading ? (
-          <View style={styles.viewDummyCard}>
-            <View style={styles.view1dumy} />
-            <View style={styles.view2dumy} />
-            <View style={styles.view2dumy} />
-            <View style={styles.view2dumy} />
-          </View>
+          <>
+            <HomeCardSkeleton />
+          </>
         ) : (
           <TouchableOpacity
             onPress={() =>
@@ -223,18 +221,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     // fontFamily:'ProximaNovaBold'
   },
-  view1dumy: {
-    width: '90%',
-    height: 20,
-    backgroundColor: '#F6F6F6',
-    marginBottom: 70,
-  },
-  view2dumy: {
-    width: '90%',
-    height: 15,
-    backgroundColor: '#F6F6F6',
-    marginTop: 10,
-  },
   btnCross: {
     position: 'absolute',
     alignSelf: 'flex-end',
@@ -260,15 +246,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginTop: 0,
     marginBottom: Dimensions.get('window').width * 0.04,
-  },
-  viewDummyCard: {
-    width: Dimensions.get('window').width * 0.45,
-    height: 210,
-    margin: Dimensions.get('window').width * 0.02,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    overflow: 'hidden',
-    padding: 20,
   },
   txtHeading: {
     fontSize: 22,

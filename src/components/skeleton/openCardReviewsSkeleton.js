@@ -7,11 +7,11 @@ const ReviewsSkeleton = () => {
     <View style={styles.viewItemContainer}>
       <SkeletonPlaceholder backgroundColor='#f6f6f9' highlightColor="#E0E0E0">
         <View style={styles.Items}>
-          <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+          <View style={{ width: 45, height: 45, borderRadius: 50 }} />
           <View style={{ marginLeft: 20 }}>
-            <View style={{ width: 120, height: 20, borderRadius: 4 }} />
+            <View style={{ width: 120, height: 15, borderRadius: 4 }} />
             <View
-              style={{ marginTop: 6, width: 80, height: 20, borderRadius: 4 }}
+              style={{ marginTop: 12, width: 80, height: 15, borderRadius: 4 }}
             />
           </View>
         </View>

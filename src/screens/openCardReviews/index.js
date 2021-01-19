@@ -25,6 +25,7 @@ import { useQuery } from 'react-query';
 import { reactQueryConfig } from '../../constants';
 import { GET_WAITERS } from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
+import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 
 import i18n from '../../li8n';
 
@@ -225,10 +226,15 @@ const ReviewDetails = ({ navigation, route }) => {
                 style={styles.viewItemConatier}
               >
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Image
-                    style={{ width: 45, height: 45, borderRadius: 30 }}
-                    source={{ uri: itemData.item.imgAvatar }}
-                  />
+                  {itemData.item.imgAvatar ? (
+                    <Image
+                      style={{ width: 45, height: 45, borderRadius: 30 }}
+                      source={{ uri: itemData.item.imgAvatar }}
+                    />
+                  ) : (
+                    <SvgHeaderUserIcon height={45} width={45} />
+                  )}
+
                   <View style={{ marginLeft: 10 }}>
                     <Text style={styles.txtItemName}>
                       {itemData.item.full_name}

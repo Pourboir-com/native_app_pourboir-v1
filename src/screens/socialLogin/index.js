@@ -66,7 +66,7 @@ const SocialLogin = ({ navigation }) => {
             '@userInfo',
             JSON.stringify({
               ...userDetails,
-              created_by: res?.user?.created_by,
+              created_by: res?.user?._id,
             }),
           );
         },

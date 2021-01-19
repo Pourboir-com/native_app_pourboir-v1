@@ -29,6 +29,9 @@ import Context from '../../contextApi/context';
 export default HomeScreen = props => {
   // const [fontLoaded, setFontLoaded] = useState(false);
   const { state } = useContext(Context);
+  const [loading, setLoading] = React.useState(false);
+  const [isFocused, setIsFocused] = React.useState(false);
+  const [searchVal, setSearchVal] = React.useState('');
   const [userImage, setuserImage] = useState(
     state ? state.userDetails.image : '',
   );
@@ -220,10 +223,6 @@ export default HomeScreen = props => {
 
   // }, [isFocused])
 
-  const [loading, setLoading] = React.useState(false);
-
-  const [isFocused, setIsFocused] = React.useState(false);
-  const [searchVal, setSearchVal] = React.useState('');
 
   return (
     <>

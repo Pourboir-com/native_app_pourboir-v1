@@ -26,7 +26,7 @@ import i18n from '../../li8n';
 
 const imgBg = require('../../assets/images/Group5.png');
 
-const RateService = ({ navigation }) => {
+const RateService = ({ navigation, route }) => {
   const scrollRef = React.useRef(null);
   // const [onHandleFocus, setonHandleFocus] = useState(false)
 
@@ -48,6 +48,8 @@ const RateService = ({ navigation }) => {
   }, []);
 
   const [isVisible, setisVisible] = useState(false);
+
+  const { name, Image } = route.params;
 
   const ratingCompleted = rating => {
     console.log('Rating is: ' + rating);
@@ -125,10 +127,14 @@ const RateService = ({ navigation }) => {
                 } */}
           <View>
             <View style={styles.viewImg}>
-              <FontAwesome name="user-circle-o" size={100} color="#fff" />
+              {Image ? (
+                <Image source={{ uri: Image }} />
+              ) : (
+                <FontAwesome name="user-circle-o" size={100} color="#fff" />
+              )}
             </View>
             <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
-              Amy Farha
+              {name}
             </Text>
           </View>
         </ImageBackground>

@@ -53,10 +53,8 @@ const Setting = ({ navigation }) => {
       await AsyncStorage.setItem(
         '@userInfo',
         JSON.stringify({
-          name: '',
-          image: '',
-          email: '',
-          accessToken: '',
+          ...userDetails,
+          created_by: '',
         }),
       );
     }

@@ -156,7 +156,7 @@ const ReviewDetails = ({ navigation, route }) => {
                     fontSize: 16,
                   }}
                 >
-                  {distance}
+                  {distance}m
                 </Text>
                 <TouchableOpacity
                   style={{
@@ -210,7 +210,12 @@ const ReviewDetails = ({ navigation, route }) => {
           keyExtractor={item => item._id}
           renderItem={itemData => (
             <TouchableOpacity
-              onPress={() => navigation.navigate('RateYourService')}
+              onPress={() =>
+                navigation.navigate('RateYourService', {
+                  name: itemData?.item?.full_name,
+                  Image: itemData?.item?.imgAvatar,
+                })
+              }
               style={styles.viewItemConatier}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>

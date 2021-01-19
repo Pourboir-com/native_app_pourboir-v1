@@ -64,7 +64,10 @@ const SocialLogin = ({ navigation }) => {
           });
           await AsyncStorage.setItem(
             '@userInfo',
-            JSON.stringify(userDetails),
+            JSON.stringify({
+              ...userDetails,
+              created_by: res?.user?.created_by,
+            }),
           );
         },
         onError: error => {

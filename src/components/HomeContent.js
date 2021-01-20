@@ -16,10 +16,11 @@ import HomeCard from './HomeCard';
 import { useQuery } from 'react-query';
 import { reactQueryConfig } from '../constants';
 import i18n from '../li8n';
-import { distributeInArray,restaurantDistance } from '../util';
+import { distributeInArray, restaurantDistance } from '../util';
 import { getAsyncStorageValues } from '../constants';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import { HomeCardSkeleton } from '../components/skeleton';
 
 export default function HomeScreenContent({
   searchIconPress,
@@ -121,103 +122,116 @@ export default function HomeScreenContent({
     );
   }
 
-  return (
-    <>
-      {!fontLoaded ? (
-        <AppLoading
-          startAsync={fetchFont}
-          onFinish={() => {
-            setFontLoaded(true);
-          }}
-          onError={() => console.log('ERROR')}
-        />
-      ) : (
-        <ScrollView
-          // bounces={true}
-          //   alwaysBounceVertical={true}
-          showsVerticalScrollIndicator={false}
-          alwaysBounceHorizontal={false}
-          alwaysBounceVertical={false}
-          bounces={false}
-          style={{ backgroundColor: '#f9f9f9' }}
-        >
-          {loading
-            ? null
-            : !route.params.crossIcon && (
-              <Text
-                style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
-              >
-                {i18n.t('around_you')}
-              </Text>
-            )}
-          <View
-            style={{
-              flexDirection: 'row',
-              marginTop: 17,
-            }}
+  if (!fontLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFont}
+        onFinish={() => {
+          setFontLoaded(true);
+        }}
+        onError={() => console.log('ERROR')}
+      />
+    );
+  } else {
+    return (
+      <>
+        {loading || resIsFetching ? (
+          <HomeCardSkeleton />
+        ) : (
+          <ScrollView
+            // bounces={true}
+            //   alwaysBounceVertical={true}
+            showsVerticalScrollIndicator={false}
+            alwaysBounceHorizontal={false}
+            alwaysBounceVertical={false}
+            bounces={false}
+            style={{ backgroundColor: '#f9f9f9' }}
           >
-            <FlatList
-              data={
-                restaurantLoading
-                  ? dummyArray
-                  : distributeInArray(data).firstArray
-              }
-              showsVerticalScrollIndicator={false}
-              alwaysBounceHorizontal={false}
-              alwaysBounceVertical={false}
-              bounces={false}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={itemData => (
-                <HomeCard
-                  navigation={navigation}
-                  // id={itemData.item.id}
-                  img={restaurantLoading ? null : itemData.item.photos[0]}
-                  rating={restaurantLoading ? null : itemData.item.rating}
-                  name={restaurantLoading ? null : itemData.item.name}
-                  distance={restaurantLoading ? null : restaurantDistance(itemData)}
-                  services={restaurantLoading ? null : itemData.item.servers}
-                  loading={restaurantLoading}
-                  crossIcon={route.params.crossIcon}
-                  place_id={restaurantLoading ? null : itemData.item.place_id}
-                  deleteCall={() => onDeleteCard(itemData.index, true)}
-                  refetchRestaurant={refetchRestaurant}
-                />
+            {loading
+              ? null
+              : !route.params.crossIcon && (
+                <Text
+                  style={[
+                    styles.txtHeading,
+                    { fontFamily: 'ProximaNovaBold' },
+                  ]}
+                >
+                  {i18n.t('around_you')}
+                </Text>
               )}
-            />
-            <FlatList
-              data={
-                restaurantLoading
-                  ? dummyArray
-                  : distributeInArray(data).secondArray
-              }
-              showsVerticalScrollIndicator={false}
-              style={{ marginTop: 15 }}
-              alwaysBounceHorizontal={false}
-              alwaysBounceVertical={false}
-              bounces={false}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={itemData => (
-                <HomeCard
-                  navigation={navigation}
-                  // key={item._id}
-                  img={restaurantLoading ? null : itemData.item.photos[0]}
-                  rating={restaurantLoading ? null : itemData.item.rating}
-                  name={restaurantLoading ? null : itemData.item.name}
-                  distance={restaurantLoading ? null : restaurantDistance(itemData)}
-                  services={restaurantLoading ? null : itemData.item.servers}
-                  loading={restaurantLoading}
-                  crossIcon={route.params.crossIcon}
-                  place_id={restaurantLoading ? null : itemData.item.place_id}
-                  deleteCall={() => onDeleteCard(itemData.index, false)}
-                  refetchRestaurant={refetchRestaurant}
-                />
-              )}
-            />
-          </View>
-        </ScrollView>
-      )}
-    </>
-  );
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 17,
+              }}
+            >
+              <FlatList
+                data={
+                  restaurantLoading
+                    ? dummyArray
+                    : distributeInArray(data).firstArray
+                }
+                showsVerticalScrollIndicator={false}
+                alwaysBounceHorizontal={false}
+                alwaysBounceVertical={false}
+                bounces={false}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={itemData => (
+                  <HomeCard
+                    navigation={navigation}
+                    key={itemData.item.place_id}
+                    img={restaurantLoading ? null : itemData.item.photos[0]}
+                    rating={restaurantLoading ? null : itemData.item.rating}
+                    name={restaurantLoading ? null : itemData.item.name}
+                    distance={
+                      restaurantLoading ? null : restaurantDistance(itemData)
+                    }
+                    services={restaurantLoading ? null : itemData.item.servers}
+                    loading={restaurantLoading}
+                    crossIcon={route.params.crossIcon}
+                    place_id={restaurantLoading ? null : itemData.item.place_id}
+                    deleteCall={() => onDeleteCard(itemData.index, true)}
+                    refetchRestaurant={refetchRestaurant}
+                  />
+                )}
+              />
+              <FlatList
+                data={
+                  restaurantLoading
+                    ? dummyArray
+                    : distributeInArray(data).secondArray
+                }
+                showsVerticalScrollIndicator={false}
+                style={{ marginTop: 15 }}
+                alwaysBounceHorizontal={false}
+                alwaysBounceVertical={false}
+                bounces={false}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={itemData => (
+                  <HomeCard
+                    navigation={navigation}
+                    key={itemData.item.place_id}
+                    img={restaurantLoading ? null : itemData.item.photos[0]}
+                    rating={restaurantLoading ? null : itemData.item.rating}
+                    name={restaurantLoading ? null : itemData.item.name}
+                    distance={
+                      restaurantLoading ? null : restaurantDistance(itemData)
+                    }
+                    services={restaurantLoading ? null : itemData.item.servers}
+                    loading={restaurantLoading}
+                    crossIcon={route.params.crossIcon}
+                    place_id={restaurantLoading ? null : itemData.item.place_id}
+                    deleteCall={() => onDeleteCard(itemData.index, false)}
+                    refetchRestaurant={refetchRestaurant}
+                  />
+                )}
+              />
+            </View>
+          </ScrollView>
+        )}
+      </>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

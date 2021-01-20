@@ -31,6 +31,7 @@ const HelpUsImproveModal = ({
   place_id,
   refetchWaiters,
   refetchRestaurant,
+  navigation,
 }) => {
   const [addingWaiters] = useMutation(ADDING_WAITERS);
   let contentEnd;
@@ -76,14 +77,21 @@ const HelpUsImproveModal = ({
       full_name: waiterName,
       created_by: createdBy,
     };
-    await addingWaiters(waiter, {
-      onSuccess: async () => {
-        handleModalClose();
-        await refetchWaiters();
-        await refetchRestaurant();
-        setWaiterName('');
-      },
-    });
+    if (createdBy) {
+      if (waiterName) {
+        await addingWaiters(waiter, {
+          onSuccess: async () => {
+            handleModalClose();
+            await refetchWaiters();
+            await refetchRestaurant();
+            setWaiterName('');
+          },
+        });
+      }
+    } else {
+      handleModalClose();
+      navigation.navigate('socialLogin');
+    }
   };
 
   return (

@@ -318,6 +318,7 @@ const ReviewDetails = ({ navigation, route }) => {
           isVisible={helpUsModalVisible}
           handleModalClose={handleModalClose}
           refetchRestaurant={refetchRestaurant}
+          navigation={navigation}
         />
       )}
       {/* </ScrollView>

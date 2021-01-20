@@ -157,6 +157,7 @@ export default function HomeScreenContent({
                 alwaysBounceHorizontal={false}
                 alwaysBounceVertical={false}
                 bounces={false}
+                keyExtractor={(item, index) => index.toString()}
                 renderItem={() => <HomeCardSkeleton />}
               />
               <FlatList
@@ -166,6 +167,7 @@ export default function HomeScreenContent({
                 alwaysBounceHorizontal={false}
                 alwaysBounceVertical={false}
                 bounces={false}
+                keyExtractor={(item, index) => index.toString()}
                 renderItem={() => <HomeCardSkeleton />}
               />
             </View>

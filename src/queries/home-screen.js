@@ -7,3 +7,13 @@ export const GET_RESTAURANT = async (get, e = {}) => {
   });
   return await res.json();
 };
+
+export const SEARCH_RESTAURANT = async (get, e = {}) => {
+  let res = await fetch(
+    BASE_URL + `/v1/restaurants?location=${e.location}?search=${e.search}`,
+    {
+      method: 'get',
+    },
+  );
+  return await res.json();
+};

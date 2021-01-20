@@ -130,6 +130,7 @@ const ReviewDetails = ({ navigation, route }) => {
                   return (
                     <TouchableOpacity
                       style={{ marginRight: 3 }}
+                      key={i}
                       onPress={() => {
                         onPressStar(v);
                       }}
@@ -217,6 +218,7 @@ const ReviewDetails = ({ navigation, route }) => {
             keyExtractor={item => item._id}
             renderItem={itemData => (
               <TouchableOpacity
+                key={itemData?.item?._id}
                 onPress={() =>
                   navigation.navigate('RateYourService', {
                     name: itemData?.item?.full_name,
@@ -244,6 +246,7 @@ const ReviewDetails = ({ navigation, route }) => {
                         return (
                           <TouchableOpacity
                             style={{ marginRight: 3 }}
+                            key={i}
                             onPress={() => {
                               onPressStar(v);
                             }}

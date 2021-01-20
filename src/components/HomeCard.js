@@ -126,6 +126,7 @@ const HomeCard = ({
                   return (
                     <TouchableOpacity
                       style={{ marginRight: 3 }}
+                      key={i}
                       onPress={() => {
                         onPressStar(v);
                       }}

@@ -51,16 +51,9 @@ export default function HomeScreenContent({
     },
   });
 
-  const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
   const dummyArray = [1, 2, 3];
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  });
 
   const onDeleteCard = (index, even) => {
     let indexToRemove = even ? index * 2 : index * 2 + 1;
@@ -135,8 +128,48 @@ export default function HomeScreenContent({
   } else {
     return (
       <>
-        {loading || resIsFetching ? (
-          <HomeCardSkeleton />
+        {restaurantLoading || resIsFetching ? (
+          <ScrollView
+            // bounces={true}
+            //   alwaysBounceVertical={true}
+            showsVerticalScrollIndicator={false}
+            alwaysBounceHorizontal={false}
+            alwaysBounceVertical={false}
+            bounces={false}
+            style={{ backgroundColor: '#f9f9f9' }}
+          >
+            {!route.params.crossIcon && (
+              <Text
+                style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
+              >
+                {i18n.t('around_you')}
+              </Text>
+            )}
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 17,
+              }}
+            >
+              <FlatList
+                data={dummyArray}
+                showsVerticalScrollIndicator={false}
+                alwaysBounceHorizontal={false}
+                alwaysBounceVertical={false}
+                bounces={false}
+                renderItem={() => <HomeCardSkeleton />}
+              />
+              <FlatList
+                data={dummyArray}
+                showsVerticalScrollIndicator={false}
+                style={{ marginTop: 15 }}
+                alwaysBounceHorizontal={false}
+                alwaysBounceVertical={false}
+                bounces={false}
+                renderItem={() => <HomeCardSkeleton />}
+              />
+            </View>
+          </ScrollView>
         ) : (
           <ScrollView
             // bounces={true}
@@ -147,18 +180,13 @@ export default function HomeScreenContent({
             bounces={false}
             style={{ backgroundColor: '#f9f9f9' }}
           >
-            {loading
-              ? null
-              : !route.params.crossIcon && (
-                <Text
-                  style={[
-                    styles.txtHeading,
-                    { fontFamily: 'ProximaNovaBold' },
-                  ]}
-                >
-                  {i18n.t('around_you')}
-                </Text>
-              )}
+            {!route.params.crossIcon && (
+              <Text
+                style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
+              >
+                {i18n.t('around_you')}
+              </Text>
+            )}
             <View
               style={{
                 flexDirection: 'row',

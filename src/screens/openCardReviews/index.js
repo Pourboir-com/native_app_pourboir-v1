@@ -223,6 +223,8 @@ const ReviewDetails = ({ navigation, route }) => {
                   navigation.navigate('RateYourService', {
                     name: itemData?.item?.full_name,
                     Image: itemData?.item?.imgAvatar,
+                    restaurant_id: place_id,
+                    waiter_id: itemData?.item?._id,
                   })
                 }
                 style={styles.viewItemConatier}

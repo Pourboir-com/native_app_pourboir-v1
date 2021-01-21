@@ -15,12 +15,12 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import GlobalHeader from '../../components/GlobalHeader';
-import { rateList as RATELIST } from '../../dummyData/DummyData';
 import { Colors } from '../../constants/Theme';
 import ThankRatingModal from '../../components/modals/ThanksRatingModal';
 import RatingStar from '../../components/RatingComponent';
-import { getAsyncStorageValues } from '../../constants';
 import Context from '../../contextApi/context';
+import { ADD_RATINGS } from '../../queries';
+import { useMutation } from 'react-query';
 
 import { StatusBar } from 'expo-status-bar';
 
@@ -37,6 +37,7 @@ const RateService = ({ navigation, route }) => {
   const [isVisible, setisVisible] = useState(false);
   const [user, setUser] = useState();
   const { state } = useContext(Context);
+  const [addRatings] = useMutation(ADD_RATINGS);
 
   const scrollRef = React.useRef(null);
   // const [onHandleFocus, setonHandleFocus] = useState(false)
@@ -62,16 +63,35 @@ const RateService = ({ navigation, route }) => {
     setUser(state.userDetails.email);
   }, [state]);
 
-  const { name, Image } = route.params;
+  const { name, Image, restaurant_id, waiter_id } = route.params;
 
   const handleModalClose = () => {
     setisVisible(false);
     navigation.navigate('OpenCardReviews');
   };
 
-  const handleModalOpen = () => {
+  const handleAddRatings = () => {
     if (user !== '') {
+      // let ratingDetails = {
+      //   rating: {
+      //     hospitality: hospitality,
+      //     speed: speed,
+      //     service: service,
+      //     professionalism: professionalism,
+      //   },
+      //   tip: remarks,
+      //   restaurant_id: restaurant_id,
+      //   waiter_id: waiter_id,
+      // };
       setisVisible(true);
+      // await addingWaiters(waiter, {
+      //   onSuccess: async () => {
+      //     handleModalClose();
+      //     await refetchWaiters();
+      //     await refetchRestaurant();
+      //     setWaiterName('');
+      //   },
+      // });
     } else {
       navigation.navigate('socialLogin', { vote: true });
     }
@@ -326,7 +346,7 @@ const RateService = ({ navigation, route }) => {
           </View>
         </View>
         <TouchableOpacity
-          onPress={handleModalOpen}
+          onPress={handleAddRatings}
           disabled={
             hospitality !== 0 &&
             speed !== 0 &&

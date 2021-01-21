@@ -24,9 +24,14 @@ import * as actionTypes from '../../contextApi/actionTypes';
 const imgLogo = require('../../assets/images/imgLogo.png');
 const imgWaiter = require('../../assets/images/waiter2.png');
 
-const SocialLogin = ({ navigation }) => {
+const SocialLogin = ({ navigation, route }) => {
   const [loading, setLoading] = useState(true);
   const [googleSignup] = useMutation(GOOGLE_SIGNUP);
+  const [vote, setVote] = useState(false);
+
+  useEffect(() => {
+    setVote(route?.params?.vote ? route?.params?.vote : false);
+  }, [route.params]);
 
   useEffect(() => {
     async function loadFont() {
@@ -40,7 +45,6 @@ const SocialLogin = ({ navigation }) => {
     setLoading(false);
   }, []);
   const { dispatch } = useContext(Context);
-
   const handleGoogleSignIn = async () => {
     setLoading(true);
     // First- obtain access token from Expo's Google API
@@ -51,7 +55,12 @@ const SocialLogin = ({ navigation }) => {
       let userInfoResponse = await userSignUp(accessToken);
       await googleSignup(userInfoResponse.data, {
         onSuccess: async res => {
-          navigation.replace('Home', { crossIcon: false });
+          if (vote) {
+            navigation.navigate('RateYourService');
+            setVote(false);
+          } else {
+            navigation.replace('Home', { crossIcon: false });
+          }
           let userDetails = {
             name: res?.user?.full_name,
             image: res?.user?.picture,

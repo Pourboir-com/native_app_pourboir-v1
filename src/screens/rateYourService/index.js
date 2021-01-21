@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -19,6 +19,8 @@ import { rateList as RATELIST } from '../../dummyData/DummyData';
 import { Colors } from '../../constants/Theme';
 import ThankRatingModal from '../../components/modals/ThanksRatingModal';
 import RatingStar from '../../components/RatingComponent';
+import { getAsyncStorageValues } from '../../constants';
+import Context from '../../contextApi/context';
 
 import { StatusBar } from 'expo-status-bar';
 
@@ -32,6 +34,9 @@ const RateService = ({ navigation, route }) => {
   const [service, setService] = useState();
   const [professionalism, setProfessionalism] = useState();
   const [remarks, setRemarks] = useState('');
+  const [isVisible, setisVisible] = useState(false);
+  const [user, setUser] = useState();
+  const { state } = useContext(Context);
 
   const scrollRef = React.useRef(null);
   // const [onHandleFocus, setonHandleFocus] = useState(false)
@@ -53,7 +58,9 @@ const RateService = ({ navigation, route }) => {
     };
   }, []);
 
-  const [isVisible, setisVisible] = useState(false);
+  useEffect(() => {
+    setUser(state.userDetails.email);
+  }, [state]);
 
   const { name, Image } = route.params;
 
@@ -62,7 +69,11 @@ const RateService = ({ navigation, route }) => {
   };
 
   const handleModalOpen = () => {
-    setisVisible(true);
+    if (user !=='') {
+      setisVisible(true);
+    } else {
+      navigation.navigate('socialLogin', { vote: true });
+    }
   };
 
   const obj = [1, 2, 3, 4, 5];
@@ -311,15 +322,22 @@ const RateService = ({ navigation, route }) => {
         </View>
         <TouchableOpacity
           onPress={handleModalOpen}
-          style={[
-            styles.btnValider,
+          disabled={
             hospitality !== 0 &&
             speed !== 0 &&
             professionalism !== 0 &&
             service !== 0 &&
             remarks !== ''
-              ? { backgroundColor: Colors.yellow }
-              : null,
+              ? false
+              : true
+          }
+          style={[
+            styles.btnValider,
+            hospitality !== 0 &&
+              speed !== 0 &&
+              professionalism !== 0 &&
+              service !== 0 &&
+              remarks !== '' && { backgroundColor: Colors.yellow },
           ]}
         >
           <Text

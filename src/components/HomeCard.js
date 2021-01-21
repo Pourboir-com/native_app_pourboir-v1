@@ -121,7 +121,7 @@ const HomeCard = ({
             )}
 
             <View style={{ zIndex: 101, padding: 12 }}>
-              <View style={{ flexDirection: 'row', zIndex: 9999 }}>
+              <View pointerEvents="none" style={{ flexDirection: 'row', zIndex: 9999 }}>
                 {obj.map((v, i) => {
                   return (
                     <TouchableOpacity

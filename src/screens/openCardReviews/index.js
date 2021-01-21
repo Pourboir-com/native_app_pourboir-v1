@@ -125,7 +125,7 @@ const ReviewDetails = ({ navigation, route }) => {
             ></LinearGradient>
 
             <View style={[styles.viewBottom, { zIndex: 102 }]}>
-              <View style={{ flexDirection: 'row' }}>
+              <View pointerEvents="none" style={{ flexDirection: 'row' }}>
                 {obj.map((v, i) => {
                   return (
                     <TouchableOpacity
@@ -241,7 +241,7 @@ const ReviewDetails = ({ navigation, route }) => {
                     <Text style={styles.txtItemName}>
                       {itemData.item.full_name}
                     </Text>
-                    <View style={{ flexDirection: 'row', marginTop: 8 }}>
+                    <View pointerEvents="none" style={{ flexDirection: 'row', marginTop: 8 }}>
                       {obj.map((v, i) => {
                         return (
                           <TouchableOpacity

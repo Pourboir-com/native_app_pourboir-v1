@@ -13,7 +13,6 @@ export default function HeaderSimple(props) {
   const navigation = useNavigation();
 
   const [isFocused, setIsFocused] = React.useState(false);
-  const [searchVal, setSearchVal] = React.useState('');
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -37,7 +36,7 @@ export default function HeaderSimple(props) {
         </TouchableOpacity>
 
         <TextInput
-          value={searchVal}
+          value={props.searchVal}
           onFocus={() => {
             setIsFocused(true);
           }}
@@ -45,7 +44,7 @@ export default function HeaderSimple(props) {
             setIsFocused(false);
           }}
           onChangeText={e => {
-            setSearchVal(e);
+            props.setSearchVal(e);
           }}
           style={{
             shadowColor: '#000',
@@ -64,7 +63,7 @@ export default function HeaderSimple(props) {
 
         <TouchableOpacity
           onPress={() => {
-            setSearchVal('');
+            props.setSearchVal('');
           }}
           style={{ paddingHorizontal: 8 }}
         >

@@ -9,49 +9,29 @@ import {
   FlatList,
   Image,
 } from 'react-native';
-import { GET_RESTAURANT } from '../queries';
-
 import { Colors } from '../constants/Theme';
 import HomeCard from './HomeCard';
-import { useQuery } from 'react-query';
-import { reactQueryConfig } from '../constants';
 import i18n from '../li8n';
 import { distributeInArray, restaurantDistance } from '../util';
-import { getAsyncStorageValues } from '../constants';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import { HomeCardSkeleton } from '../components/skeleton';
+import NoListImg from '../assets/images/emptyRestaurantList.png';
 
 export default function HomeScreenContent({
-  searchIconPress,
-  setSearchIconPress,
+  restaurantLoading,
+  refetchRestaurant,
+  resIsFetching,
+  Data,
   route,
 }) {
-  const navigation = useNavigation();
-  const [fontLoaded, setFontLoaded] = useState(false);
-  const NoListImg = require('../assets/images/emptyRestaurantList.png');
-  const [saveLocation, setSaveLocation] = useState('');
-  useEffect(() => {
-    (async () => {
-      const { location } = await getAsyncStorageValues();
-      setSaveLocation(location);
-    })();
-  }, []);
-
-  const {
-    data: restaurantData,
-    isLoading: restaurantLoading,
-    refetch: refetchRestaurant,
-    isFetching: resIsFetching,
-  } = useQuery(['GET_RESTAURANT', { location: saveLocation }], GET_RESTAURANT, {
-    ...reactQueryConfig,
-    enabled: saveLocation,
-    onSuccess: res => {
-      setData(res?.restaurants?.results || []);
-    },
-  });
-
   const [data, setData] = useState([]);
+  const [fontLoaded, setFontLoaded] = useState(false);
+  const navigation = useNavigation();
+
+  useEffect(()=>{
+    setData(Data);
+  }, [Data]);
 
   const dummyArray = [1, 2, 3];
 

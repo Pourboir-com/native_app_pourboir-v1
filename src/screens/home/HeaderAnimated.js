@@ -6,13 +6,7 @@ import React, {
   useState,
   useContext,
 } from 'react';
-import {
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
@@ -26,12 +20,11 @@ import Context from '../../contextApi/context';
 // import * as Font from 'expo-font';
 // import AppLoading from 'expo-app-loading';
 
-export default HomeScreen = props => {
+const HomeScreen = props => {
   // const [fontLoaded, setFontLoaded] = useState(false);
   const { state } = useContext(Context);
   const [loading, setLoading] = React.useState(false);
   const [isFocused, setIsFocused] = React.useState(false);
-  const [searchVal, setSearchVal] = React.useState('');
   const [userImage, setuserImage] = useState(
     state ? state.userDetails.image : '',
   );
@@ -42,6 +35,7 @@ export default HomeScreen = props => {
   //     ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
   //   });
   // };
+
   useEffect(() => {
     setuserName(state.userDetails.name);
     setuserImage(state.userDetails.image);
@@ -223,7 +217,6 @@ export default HomeScreen = props => {
 
   // }, [isFocused])
 
-
   return (
     <>
       {/* <View style={[{ position: "absolute", left: spacing(2.5), top: spacing(1), zIndex: 999999999, marginTop: getStatusBarHeight() },
@@ -344,7 +337,7 @@ export default HomeScreen = props => {
                   <SvgHeaderSearchIcon />
                 </TouchableOpacity>
                 <TextInput
-                  value={searchVal}
+                  value={props.searchVal}
                   onFocus={() => {
                     setIsFocused(true);
                   }}
@@ -353,7 +346,7 @@ export default HomeScreen = props => {
                     setIsFocused(false);
                   }}
                   onChangeText={e => {
-                    setSearchVal(e);
+                    props.setSearchVal(e);
                   }}
                   placeholder={i18n.t('find_your_restaurant')}
                   placeholderTextColor={'#485460'}
@@ -363,7 +356,7 @@ export default HomeScreen = props => {
                 {isFocused && (
                   <TouchableOpacity
                     onPress={() => {
-                      setSearchVal('');
+                      props.setSearchVal('');
                     }}
                     style={{ paddingHorizontal: 8 }}
                   >
@@ -496,7 +489,7 @@ export default HomeScreen = props => {
                   <SvgHeaderSearchIcon />
                 </TouchableOpacity>
                 <TextInput
-                  value={searchVal}
+                  value={props.searchVal}
                   onFocus={() => {
                     setIsFocused(true);
                   }}
@@ -505,7 +498,7 @@ export default HomeScreen = props => {
                     setIsFocused(false);
                   }}
                   onChangeText={e => {
-                    setSearchVal(e);
+                    props.setSearchVal(e);
                   }}
                   placeholder={i18n.t('find_your_restaurant')}
                   style={{ flex: 1, paddingHorizontal: 25 }}
@@ -514,7 +507,7 @@ export default HomeScreen = props => {
                 {isFocused && (
                   <TouchableOpacity
                     onPress={() => {
-                      setSearchVal('');
+                      props.setSearchVal('');
                     }}
                     style={{ paddingHorizontal: 8 }}
                   >
@@ -544,3 +537,5 @@ export default HomeScreen = props => {
     </>
   );
 };
+
+export default HomeScreen;

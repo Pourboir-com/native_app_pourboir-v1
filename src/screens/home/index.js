@@ -12,11 +12,17 @@ import { StatusBar } from 'expo-status-bar';
 import i18n from '../../li8n';
 import { ImageBackground } from 'react-native';
 import { loadAsync } from 'expo-font';
+import { getAsyncStorageValues } from '../../constants';
+import { GET_RESTAURANT } from '../../queries';
+import { reactQueryConfig } from '../../constants';
+import { useQuery } from 'react-query';
 
 const HomeScreen = props => {
   // const [loading, setLoading] = useState(false);
+  const [searchVal, setSearchVal] = useState('');
   const [searchIconPress, setSearchIconPress] = useState(false);
-
+  const [data, setData] = useState([]);
+  const [saveLocation, setSaveLocation] = useState('');
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -33,8 +39,38 @@ const HomeScreen = props => {
     // setTimeout(() => {
     //   setLoading(false);
     // }, 2500);
-
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      const { location } = await getAsyncStorageValues();
+      setSaveLocation(location);
+    })();
+  }, []);
+
+  const {
+    data: restaurantData,
+    isLoading: restaurantLoading,
+    refetch: refetchRestaurant,
+    isFetching: resIsFetching,
+  } = useQuery(
+    [
+      'GET_RESTAURANT',
+      {
+        location: saveLocation,
+        // search: searchVal.split(' ').join('').length >= 3 ? searchVal : '',
+      },
+    ],
+    GET_RESTAURANT,
+    {
+      ...reactQueryConfig,
+      enabled: saveLocation,
+      // searchVal,
+      onSuccess: res => {
+        setData(res?.restaurants?.results || []);
+      },
+    },
+  );
 
   return (
     <>
@@ -45,16 +81,18 @@ const HomeScreen = props => {
             <Header
               setsearchIconPress={setSearchIconPress}
               searchIconPress={searchIconPress}
+              searchVal={searchVal}
+              setSearchVal={setSearchVal}
               navigation={props.navigation}
             >
               <StatusBar translucent={true} style="dark" />
 
               {
                 <HomeScreenContent
-                  // loading={loading}
-                  // setLoading={setLoading}
-                  searchIconPress={searchIconPress}
-                  setSearchIconPress={setSearchIconPress}
+                  restaurantLoading={restaurantLoading}
+                  refetchRestaurant={refetchRestaurant}
+                  resIsFetching={resIsFetching}
+                  Data={data}
                   route={props.route}
                 />
               }
@@ -64,14 +102,16 @@ const HomeScreen = props => {
               <HeaderSimple
                 setSearchIconPress={setSearchIconPress}
                 searchIconPress={searchIconPress}
+                searchVal={searchVal}
+                setSearchVal={setSearchVal}
               />
               <StatusBar translucent={true} style="dark" />
               {
                 <HomeScreenContent
-                  // loading={loading}
-                  // setLoading={setLoading}
-                  searchIconPress={searchIconPress}
-                  setSearchIconPress={setSearchIconPress}
+                  restaurantLoading={restaurantLoading}
+                  refetchRestaurant={refetchRestaurant}
+                  resIsFetching={resIsFetching}
+                  Data={data}
                   route={props.route}
                 />
               }

@@ -66,6 +66,7 @@ const RateService = ({ navigation, route }) => {
 
   const handleModalClose = () => {
     setisVisible(false);
+    navigation.navigate('OpenCardReviews');
   };
 
   const handleModalOpen = () => {

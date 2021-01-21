@@ -58,14 +58,13 @@ const HomeScreen = props => {
       'GET_RESTAURANT',
       {
         location: saveLocation,
-        // search: searchVal.split(' ').join('').length >= 3 ? searchVal : '',
+        search: searchVal.split(' ').join('').length >= 3 ? searchVal : '',
       },
     ],
     GET_RESTAURANT,
     {
       ...reactQueryConfig,
       enabled: saveLocation,
-      // searchVal,
       onSuccess: res => {
         setData(res?.restaurants?.results || []);
       },

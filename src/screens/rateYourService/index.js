@@ -70,12 +70,16 @@ const RateService = ({ navigation, route }) => {
   };
 
   const handleModalOpen = () => {
-    if (user !=='') {
+    if (user !== '') {
       setisVisible(true);
     } else {
       navigation.navigate('socialLogin', { vote: true });
     }
   };
+
+  // const addRating = () => {
+
+  // };
 
   const obj = [1, 2, 3, 4, 5];
 

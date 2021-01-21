@@ -200,7 +200,7 @@ const ReviewDetails = ({ navigation, route }) => {
           </Text>
           <View style={styles.viewNumRaters}>
             <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>
-              2
+              {data.length}
             </Text>
 
             {/* <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length * 2}</Text> */}

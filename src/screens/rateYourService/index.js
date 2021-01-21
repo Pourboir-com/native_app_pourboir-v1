@@ -27,6 +27,12 @@ import i18n from '../../li8n';
 const imgBg = require('../../assets/images/Group5.png');
 
 const RateService = ({ navigation, route }) => {
+  const [hospitality, setHospitality] = useState();
+  const [speed, setSpeed] = useState();
+  const [service, setService] = useState();
+  const [professionalism, setProfessionalism] = useState();
+  const [remarks, setRemarks] = useState('');
+
   const scrollRef = React.useRef(null);
   // const [onHandleFocus, setonHandleFocus] = useState(false)
 
@@ -51,10 +57,6 @@ const RateService = ({ navigation, route }) => {
 
   const { name, Image } = route.params;
 
-  const ratingCompleted = rating => {
-    console.log('Rating is: ' + rating);
-  };
-
   const handleModalClose = () => {
     setisVisible(false);
   };
@@ -63,15 +65,7 @@ const RateService = ({ navigation, route }) => {
     setisVisible(true);
   };
 
-  // Star arrayyyyyyyy
-  const [starSelect, setstarSelect] = useState(0);
-  const [remarks, setRemarks] = useState('');
-
   const obj = [1, 2, 3, 4, 5];
-
-  const onPressStar = v => {
-    setstarSelect(v);
-  };
 
   // const _keyboardDidShow = () => {
   //     scrollRef.current.scrollToEnd({ animated: true })
@@ -148,7 +142,7 @@ const RateService = ({ navigation, route }) => {
         // contentContainerStyle={{ flex: 1 }}
       >
         <TouchableOpacity
-          onPress={() => navigation.navigate('socialLogin')}
+          // onPress={() => navigation.navigate('socialLogin')}
           style={styles.viewListCard}
         >
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
@@ -158,17 +152,18 @@ const RateService = ({ navigation, route }) => {
             {obj.map((v, i) => {
               return (
                 <TouchableOpacity
+                  key={i}
                   onPress={() => {
-                    onPressStar(v);
+                    setHospitality(v);
                   }}
                 >
                   <RatingStar
                     padding={true}
                     starSize={25}
                     type={
-                      v <= starSelect
+                      v <= hospitality
                         ? 'filled'
-                        : v === starSelect + 0.5
+                        : v === hospitality + 0.5
                           ? 'half'
                           : 'empty'
                     }
@@ -180,7 +175,7 @@ const RateService = ({ navigation, route }) => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('socialLogin')}
+          // onPress={() => navigation.navigate('socialLogin')}
           style={styles.viewListCard}
         >
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
@@ -190,17 +185,18 @@ const RateService = ({ navigation, route }) => {
             {obj.map((v, i) => {
               return (
                 <TouchableOpacity
+                  key={i}
                   onPress={() => {
-                    onPressStar(v);
+                    setSpeed(v);
                   }}
                 >
                   <RatingStar
                     padding={true}
                     starSize={25}
                     type={
-                      v <= starSelect
+                      v <= speed
                         ? 'filled'
-                        : v === starSelect + 0.5
+                        : v === speed + 0.5
                           ? 'half'
                           : 'empty'
                     }
@@ -212,7 +208,7 @@ const RateService = ({ navigation, route }) => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('socialLogin')}
+          // onPress={() => navigation.navigate('socialLogin')}
           style={styles.viewListCard}
         >
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
@@ -222,17 +218,18 @@ const RateService = ({ navigation, route }) => {
             {obj.map((v, i) => {
               return (
                 <TouchableOpacity
+                  key={i}
                   onPress={() => {
-                    onPressStar(v);
+                    setService(v);
                   }}
                 >
                   <RatingStar
                     padding={true}
                     starSize={25}
                     type={
-                      v <= starSelect
+                      v <= service
                         ? 'filled'
-                        : v === starSelect + 0.5
+                        : v === service + 0.5
                           ? 'half'
                           : 'empty'
                     }
@@ -244,7 +241,7 @@ const RateService = ({ navigation, route }) => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('socialLogin')}
+          // onPress={() => navigation.navigate('socialLogin')}
           style={styles.viewListCard}
         >
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
@@ -254,17 +251,18 @@ const RateService = ({ navigation, route }) => {
             {obj.map((v, i) => {
               return (
                 <TouchableOpacity
+                  key={i}
                   onPress={() => {
-                    onPressStar(v);
+                    setProfessionalism(v);
                   }}
                 >
                   <RatingStar
                     padding={true}
                     starSize={25}
                     type={
-                      v <= starSelect
+                      v <= professionalism
                         ? 'filled'
-                        : v === starSelect + 0.5
+                        : v === professionalism + 0.5
                           ? 'half'
                           : 'empty'
                     }
@@ -315,7 +313,11 @@ const RateService = ({ navigation, route }) => {
           onPress={handleModalOpen}
           style={[
             styles.btnValider,
-            starSelect !== 0 && remarks !== ''
+            hospitality !== 0 &&
+            speed !== 0 &&
+            professionalism !== 0 &&
+            service !== 0 &&
+            remarks !== ''
               ? { backgroundColor: Colors.yellow }
               : null,
           ]}

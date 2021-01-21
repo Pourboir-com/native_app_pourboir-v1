@@ -10,13 +10,12 @@ import HomeScreenContent from '../../components/HomeContent';
 import i18n from '../../li8n';
 import { View } from 'react-native';
 import { Dimensions } from 'react-native';
-export default Remove = props => {
+const Remove = props => {
   const [loading, setLoading] = useState(false);
   const [searchIconPress, setSearchIconPress] = useState(false);
 
   const navigation = useNavigation();
 
-  // alert(Dimensions.get('window').width)
   return (
     <>
       <View
@@ -57,13 +56,14 @@ export default Remove = props => {
         </View>
       </View>
 
-      <HomeScreenContent
+      {/* <HomeScreenContent
         loading={loading}
         setLoading={setLoading}
         searchIconPress={searchIconPress}
         setSearchIconPress={setSearchIconPress}
         route={props.route}
-      />
+      /> */}
     </>
   );
 };
+export default Remove;

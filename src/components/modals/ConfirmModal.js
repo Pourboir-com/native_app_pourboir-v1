@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     color: Colors.fontDark,
     marginTop: 10,
     textAlign: 'center',
-    width: 260,
+    maxWidth: '80%',
   },
   imgStyle: {
     width: 220,

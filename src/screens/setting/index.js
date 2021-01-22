@@ -27,6 +27,7 @@ const Setting = ({ navigation }) => {
   const { state, dispatch } = useContext(Context);
   const [image, setImage] = useState(state ? state.userDetails.image : '');
   const [userName, setuserName] = useState(state ? state.userDetails.name : '');
+  const [buttonDisable, setbuttonDisable] = useState(false);
 
   useEffect(() => {
     setuserName(state.userDetails.name);
@@ -38,6 +39,7 @@ const Setting = ({ navigation }) => {
     const accessToken = userInfo.accessToken;
     /* Log-Out */
     if (accessToken) {
+      setbuttonDisable(true);
       await Google.logOutAsync({ accessToken, ...config });
       navigation.replace('socialLogin');
       let userDetails = {
@@ -218,7 +220,11 @@ const Setting = ({ navigation }) => {
           Version 2.17.4.0.1.0
         </Text>
       </View>
-      <TouchableOpacity onPress={handleGoogleSignOut} style={styles.btnValider}>
+      <TouchableOpacity
+        disabled={buttonDisable}
+        onPress={handleGoogleSignOut}
+        style={styles.btnValider}
+      >
         <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
           {i18n.t('sign_out')}
         </Text>

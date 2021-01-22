@@ -54,6 +54,7 @@ const ReviewDetails = ({ navigation, route }) => {
     enabled: place_id,
     onSuccess: res => {
       setData(res.data);
+      console.log(res.data)
     },
   });
 
@@ -215,7 +216,7 @@ const ReviewDetails = ({ navigation, route }) => {
                 key={itemData?.item?._id}
                 onPress={() =>
                   navigation.navigate('RateYourService', {
-                    name: itemData?.item?.full_name,
+                    name: itemData?.item?.user_id ? itemData?.item?.user_id?.full_name : itemData?.item.full_name,
                     Image: itemData?.item?.imgAvatar,
                     restaurant_id: place_id,
                     waiter_id: itemData?.item?._id,
@@ -236,7 +237,7 @@ const ReviewDetails = ({ navigation, route }) => {
 
                   <View style={{ marginLeft: 10 }}>
                     <Text style={styles.txtItemName}>
-                      {itemData.item.full_name}
+                      {itemData?.item?.user_id ? itemData?.item?.user_id?.full_name : itemData?.item.full_name}
                     </Text>
                     <View pointerEvents="none" style={{ flexDirection: 'row', marginTop: 8 }}>
                       {obj.map((v, i) => {
@@ -307,6 +308,7 @@ const ReviewDetails = ({ navigation, route }) => {
         refetchWaiters={refetchWaiters}
         refetchRestaurant={refetchRestaurant}
         place_id={place_id}
+        navigation={navigation}
         name={name}
       />
       {/* <KeyboardAvoidingView>

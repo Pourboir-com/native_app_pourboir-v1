@@ -11,3 +11,4 @@ export const GET_RESTAURANT = async (get, e = {}) => {
   );
   return await res.json();
 };
+// &pageToken=${e.pageToken}&maxResults=${e.maxResults}

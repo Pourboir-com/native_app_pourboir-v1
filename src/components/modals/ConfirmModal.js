@@ -22,6 +22,7 @@ const ConfirmationModal = ({
   handleModalClose,
   name,
   place_id,
+  navigation,
   refetchWaiters,
   refetchRestaurant,
 }) => {
@@ -43,6 +44,9 @@ const ConfirmationModal = ({
         },
       });
     }
+    // else {
+    //   navigation.navigate('socialLogin');
+    // }
   };
 
   return (

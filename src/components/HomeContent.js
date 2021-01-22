@@ -23,6 +23,7 @@ export default function HomeScreenContent({
   refetchRestaurant,
   resIsFetching,
   Data,
+  handleLoadMore,
   route,
 }) {
   const [data, setData] = useState([]);
@@ -182,6 +183,8 @@ export default function HomeScreenContent({
                     : distributeInArray(data).firstArray
                 }
                 showsVerticalScrollIndicator={false}
+                onEndReached={handleLoadMore}
+                onEndReachedThreshold={0.5}
                 alwaysBounceHorizontal={false}
                 alwaysBounceVertical={false}
                 bounces={false}
@@ -214,6 +217,8 @@ export default function HomeScreenContent({
                 showsVerticalScrollIndicator={false}
                 style={{ marginTop: 15 }}
                 alwaysBounceHorizontal={false}
+                onEndReached={handleLoadMore}
+                onEndReachedThreshold={0.5}
                 alwaysBounceVertical={false}
                 bounces={false}
                 keyExtractor={(item, index) => index.toString()}

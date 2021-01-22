@@ -23,6 +23,7 @@ const HomeScreen = props => {
   const [searchIconPress, setSearchIconPress] = useState(false);
   const [data, setData] = useState([]);
   const [saveLocation, setSaveLocation] = useState('');
+  const [nextPageToken, setnextPageToken] = useState();
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -59,6 +60,8 @@ const HomeScreen = props => {
       {
         location: saveLocation,
         search: searchVal.split(' ').join('').length >= 3 ? searchVal : '',
+        // pageToken: nextPageToken,
+        // maxResults: 20,
       },
     ],
     GET_RESTAURANT,
@@ -70,6 +73,11 @@ const HomeScreen = props => {
       },
     },
   );
+
+  const handleLoadMore = () => {
+    setnextPageToken(restaurantData.restaurants.next_page_token);
+    console.log('next page load');
+  };
 
   return (
     <>
@@ -93,6 +101,7 @@ const HomeScreen = props => {
                   resIsFetching={resIsFetching}
                   Data={data}
                   route={props.route}
+                  handleLoadMore={handleLoadMore}
                 />
               }
             </Header>
@@ -112,6 +121,7 @@ const HomeScreen = props => {
                   resIsFetching={resIsFetching}
                   Data={data}
                   route={props.route}
+                  handleLoadMore={handleLoadMore}
                 />
               }
             </>

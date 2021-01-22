@@ -31,6 +31,10 @@ import i18n from '../../li8n';
 
 const ReviewDetails = ({ navigation, route }) => {
   const [data, setData] = useState([]);
+  const [confirmModalVisible, setconfirmModalVisible] = useState(false);
+  const [helpUsModalVisible, sethelpUsModalVisible] = useState(false);
+  const [starSelect, setstarSelect] = useState();
+
   const {
     img,
     name,
@@ -60,9 +64,6 @@ const ReviewDetails = ({ navigation, route }) => {
     outputRange: [0, -50],
   });
 
-  const [confirmModalVisible, setconfirmModalVisible] = useState(false);
-  const [helpUsModalVisible, sethelpUsModalVisible] = useState(false);
-
   const handleModalClose = () => {
     setconfirmModalVisible(false);
     sethelpUsModalVisible(false);
@@ -78,11 +79,7 @@ const ReviewDetails = ({ navigation, route }) => {
   };
 
   // Star arrayyyyyyyy
-  const [starSelect, setstarSelect] = useState(3.5);
   const obj = [1, 2, 3, 4, 5];
-  const onPressStar = v => {
-    setstarSelect(v);
-  };
 
   return (
     <View style={styles.container}>
@@ -131,16 +128,13 @@ const ReviewDetails = ({ navigation, route }) => {
                     <TouchableOpacity
                       style={{ marginRight: 3 }}
                       key={i}
-                      onPress={() => {
-                        onPressStar(v);
-                      }}
                     >
                       <RatingStar
                         starSize={17}
                         type={
-                          v <= starSelect
+                          v <= rating
                             ? 'filled'
-                            : v === starSelect + 0.5
+                            : v === rating + 0.5
                               ? 'half'
                               : 'empty'
                         }
@@ -249,16 +243,13 @@ const ReviewDetails = ({ navigation, route }) => {
                           <TouchableOpacity
                             style={{ marginRight: 3 }}
                             key={i}
-                            onPress={() => {
-                              onPressStar(v);
-                            }}
                           >
                             <RatingStar
                               starSize={16}
                               type={
-                                v <= starSelect
+                                v <= itemData.item.rating
                                   ? 'filled'
-                                  : v === starSelect + 0.5
+                                  : v === itemData.item.rating + 0.5
                                     ? 'half'
                                     : 'empty'
                               }

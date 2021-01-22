@@ -66,6 +66,7 @@ const SocialLogin = ({ navigation, route }) => {
             image: res?.user?.picture,
             email: res?.user?.email,
             accessToken: accessToken,
+            user_id: res?.user?._id,
           };
           dispatch({
             type: actionTypes.USER_DETAILS,
@@ -75,7 +76,6 @@ const SocialLogin = ({ navigation, route }) => {
             '@userInfo',
             JSON.stringify({
               ...userDetails,
-              created_by: res?.user?._id,
             }),
           );
         },

@@ -22,6 +22,7 @@ export default function SplashScreen(props) {
         image: userInfo?.image,
         email: userInfo?.email,
         accessToken: userInfo?.accessToken,
+        user_id: userInfo?.user_id,
       };
       dispatch({
         type: actionTypes.USER_DETAILS,

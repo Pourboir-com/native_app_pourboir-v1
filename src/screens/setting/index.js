@@ -45,6 +45,7 @@ const Setting = ({ navigation }) => {
         image: '',
         email: '',
         accessToken: '',
+        user_id: '',
       };
       dispatch({
         type: actionTypes.USER_DETAILS,
@@ -54,7 +55,6 @@ const Setting = ({ navigation }) => {
         '@userInfo',
         JSON.stringify({
           ...userDetails,
-          created_by: '',
         }),
       );
     }

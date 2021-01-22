@@ -21,7 +21,6 @@ import RatingStar from '../../components/RatingComponent';
 import Context from '../../contextApi/context';
 import { ADD_RATINGS } from '../../queries';
 import { useMutation } from 'react-query';
-
 import { StatusBar } from 'expo-status-bar';
 
 import i18n from '../../li8n';
@@ -29,6 +28,7 @@ import i18n from '../../li8n';
 const imgBg = require('../../assets/images/Group5.png');
 
 const RateService = ({ navigation, route }) => {
+  const { state } = useContext(Context);
   const [hospitality, setHospitality] = useState();
   const [speed, setSpeed] = useState();
   const [service, setService] = useState();
@@ -36,7 +36,6 @@ const RateService = ({ navigation, route }) => {
   const [remarks, setRemarks] = useState('');
   const [isVisible, setisVisible] = useState(false);
   const [user, setUser] = useState();
-  const { state } = useContext(Context);
   const [addRatings] = useMutation(ADD_RATINGS);
 
   const scrollRef = React.useRef(null);
@@ -70,28 +69,25 @@ const RateService = ({ navigation, route }) => {
     navigation.navigate('OpenCardReviews');
   };
 
-  const handleAddRatings = () => {
+  const handleAddRatings = async () => {
     if (user !== '') {
-      // let ratingDetails = {
-      //   rating: {
-      //     hospitality: hospitality,
-      //     speed: speed,
-      //     service: service,
-      //     professionalism: professionalism,
-      //   },
-      //   tip: remarks,
-      //   restaurant_id: restaurant_id,
-      //   waiter_id: waiter_id,
-      // };
-      setisVisible(true);
-      // await addingWaiters(waiter, {
-      //   onSuccess: async () => {
-      //     handleModalClose();
-      //     await refetchWaiters();
-      //     await refetchRestaurant();
-      //     setWaiterName('');
-      //   },
-      // });
+      let ratingDetails = {
+        rating: {
+          hospitality: hospitality,
+          speed: speed,
+          service: service,
+          professionalism: professionalism,
+        },
+        tip: remarks,
+        user_id: state.userDetails.user_id,
+        waiter_id: waiter_id,
+        restaurant_id: restaurant_id,
+      };
+      await addRatings(ratingDetails, {
+        onSuccess: () => {
+          setisVisible(true);
+        },
+      });
     } else {
       navigation.navigate('socialLogin', { vote: true });
     }
@@ -326,16 +322,16 @@ const RateService = ({ navigation, route }) => {
               }}
               onChangeText={e => {
                 scrollRef.current.scrollToEnd({ animated: true });
-                if (remarks.length - 1 === e.length) {
-                  setRemarks(e);
-                } else {
-                  if (e.length > 0) {
-                    let str = e.replace('€', '');
-                    setRemarks(str + '€');
-                  } else {
-                    setRemarks(e);
-                  }
-                }
+                // if (remarks.length - 1 === e.length) {
+                //   setRemarks(e);
+                // } else {
+                //   if (e.length > 0) {
+                //     let str = e.replace('€', '');
+                //     setRemarks(str + '€');
+                //   } else {
+                setRemarks(e);
+                //   }
+                // }
               }}
               //  onFocus={() => setonHandleFocus(!onHandleFocus)}
               style={[

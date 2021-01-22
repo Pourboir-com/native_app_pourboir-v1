@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -7,7 +7,6 @@ import {
   TextInput,
   Image,
   ImageBackground,
-  SafeAreaView,
   KeyboardAvoidingView,
   ScrollView,
   Dimensions,
@@ -21,7 +20,7 @@ import { Colors } from '../../constants/Theme';
 import { useMutation } from 'react-query';
 import { ADDING_WAITERS } from '../../queries';
 import i18n from '../../li8n';
-import { getAsyncStorageValues } from '../../constants/async-storage';
+import Context from '../../contextApi/context';
 const imgSitting = require('../../assets/images/sittingtable.png');
 const imgBg = require('../../assets/images/Group7.png');
 
@@ -38,15 +37,8 @@ const HelpUsImproveModal = ({
   const scrollRef = React.useRef(null);
   const [onHandleFocus, setonHandleFocus] = useState(false);
   const [waiterName, setWaiterName] = useState('');
-  const [createdBy, setcreatedBy] = useState();
   const textRef = React.useRef(null);
-
-  useEffect(() => {
-    (async () => {
-      const { userInfo } = await getAsyncStorageValues();
-      setcreatedBy(userInfo.created_by);
-    })();
-  }, []);
+  const { state } = useContext(Context);
 
   const [placeholder, setPlaceholder] = React.useState(
     i18n.t('name_of_your_server'),
@@ -75,9 +67,9 @@ const HelpUsImproveModal = ({
     let waiter = {
       restaurant_id: place_id,
       full_name: waiterName,
-      created_by: createdBy,
+      created_by: state.userDetails.user_id,
     };
-    if (createdBy) {
+    if (state.userDetails.user_id) {
       if (waiterName) {
         await addingWaiters(waiter, {
           onSuccess: async () => {
@@ -185,6 +177,7 @@ const HelpUsImproveModal = ({
             }}
           />
           <TouchableOpacity
+            disabled={waiterName ? false : true}
             onPress={handleAddingWaiters}
             style={[
               styles.btnConfrm,

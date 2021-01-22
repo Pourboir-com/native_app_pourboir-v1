@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
   Image,
-  ImageBackground
+  ImageBackground,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 
-const imgWaiter = require('../../assets/images/ThanksGiving.png')
-const imgBg = require('../../assets/images/Group7.png')
+const imgWaiter = require('../../assets/images/ThanksGiving.png');
+const imgBg = require('../../assets/images/Group7.png');
 
 import i18n from '../../li8n';
 
@@ -22,7 +21,8 @@ const ThanksRatingModal = ({ isVisible, handleModalClose }) => {
     <Overlay
       overlayStyle={styles.container}
       isVisible={isVisible}
-      onBackdropPress={handleModalClose}>
+      onBackdropPress={handleModalClose}
+    >
       <ImageBackground
         style={styles.imgBgStyle}
         source={imgBg}
@@ -31,10 +31,21 @@ const ThanksRatingModal = ({ isVisible, handleModalClose }) => {
         <View style={styles.viewImg}>
           <TouchableOpacity
             onPress={handleModalClose}
-            style={{ alignSelf: 'flex-end', margin: 10 }}>
+            style={{ alignSelf: 'flex-end', margin: 10 }}
+          >
             <AntDesign name="close" size={29} color="#485460" />
           </TouchableOpacity>
-          <View style={{width:140, height:140,borderRadius:100, backgroundColor:"rgba(255, 255, 255, 0.5)", alignSelf:"center",marginBottom:-70,bottom:-20}} />
+          <View
+            style={{
+              width: 140,
+              height: 140,
+              borderRadius: 100,
+              backgroundColor: 'rgba(255, 255, 255, 0.5)',
+              alignSelf: 'center',
+              marginBottom: -70,
+              bottom: -20,
+            }}
+          />
           <Image
             source={imgWaiter}
             style={styles.imgStyle}
@@ -43,17 +54,15 @@ const ThanksRatingModal = ({ isVisible, handleModalClose }) => {
         </View>
       </ImageBackground>
 
-      <Text
-        style={[styles.txtConfrm,{fontFamily:'ProximaNovaBold'}]}>
+      <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
         {i18n.t('thanks_for_vote')}
       </Text>
-      <Text style={[styles.txtName,{fontFamily:'ProximaNova'}]}>
+      <Text style={[styles.txtName, { fontFamily: 'ProximaNova' }]}>
         {i18n.t('will_contact_by_email')}
       </Text>
     </Overlay>
   );
 };
-
 
 export default ThanksRatingModal;
 
@@ -63,39 +72,51 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 0,
-    overflow: "hidden",
-    borderRadius: 15
+    overflow: 'hidden',
+    borderRadius: 15,
   },
   imgBgStyle: {
-    width: "100%", height: 240,
+    width: '100%',
+    height: 240,
     // overflow:"hidden"
   },
   txtBtnConfrm: {
-    fontSize: 16, color: Colors.fontDark
+    fontSize: 16,
+    color: Colors.fontDark,
   },
   btnConfrm: {
     backgroundColor: Colors.yellow,
     borderRadius: 10,
-    width: "80%",
-    justifyContent: "center", alignItems: "center",
-    marginVertical: 25, height: 45
+    width: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 25,
+    height: 45,
   },
   txtConfrm: {
     fontSize: 24,
     color: Colors.fontDark,
-    marginTop: 20, textAlign: "center"
+    marginTop: 20,
+    textAlign: 'center',
   },
   txtName: {
     fontSize: 16,
     color: Colors.fontLight,
-    marginTop: 12, width: 270, textAlign: "center", marginBottom: 30
+    marginTop: 12,
+    width: 270,
+    textAlign: 'center',
+    marginBottom: 30,
   },
   imgStyle: {
-    width: 210, height: 200, alignSelf: "center", marginTop: -109,
-    marginRight: -20
+    width: 210,
+    height: 200,
+    alignSelf: 'center',
+    marginTop: -109,
+    marginRight: -20,
   },
   viewImg: {
-    width: "100%", height: 240,
+    width: '100%',
+    height: 240,
     // backgroundColor:"red"
-  }
+  },
 });

@@ -62,7 +62,7 @@ const RateService = ({ navigation, route }) => {
     setUser(state.userDetails.email);
   }, [state]);
 
-  const { name, Image, restaurant_id, waiter_id } = route.params;
+  const { name, Image, restaurant_id, waiter_id, refetchWaiters } = route.params;
 
   const handleModalClose = () => {
     setisVisible(false);
@@ -84,8 +84,9 @@ const RateService = ({ navigation, route }) => {
         restaurant_id: restaurant_id,
       };
       await addRatings(ratingDetails, {
-        onSuccess: () => {
+        onSuccess: async () => {
           setisVisible(true);
+          await refetchWaiters();
         },
       });
     } else {

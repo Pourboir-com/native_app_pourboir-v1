@@ -200,7 +200,7 @@ const ReviewDetails = ({ navigation, route }) => {
             {/* <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length * 2}</Text> */}
           </View>
         </View>
-        {waitersLoading || waitersIsFetching ? (
+        {waitersLoading ? (
           <>
             <ReviewsSkeleton />
             <ReviewsSkeleton />
@@ -219,6 +219,7 @@ const ReviewDetails = ({ navigation, route }) => {
                     Image: itemData?.item?.imgAvatar,
                     restaurant_id: place_id,
                     waiter_id: itemData?.item?._id,
+                    refetchWaiters: refetchWaiters,
                   })
                 }
                 style={styles.viewItemConatier}
@@ -303,6 +304,9 @@ const ReviewDetails = ({ navigation, route }) => {
       <ConfirmationModal
         isVisible={confirmModalVisible}
         handleModalClose={handleModalClose}
+        refetchWaiters={refetchWaiters}
+        refetchRestaurant={refetchRestaurant}
+        place_id={place_id}
         name={name}
       />
       {/* <KeyboardAvoidingView>

@@ -141,7 +141,9 @@ const Setting = ({ navigation }) => {
           {/* <View style={styles.viewImg}>
               <FontAwesome name="user-circle-o" size={120} color="#fff" />
             </View> */}
-          <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
+          <Text
+            style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}
+          >
             {userName === '' ? 'Bonjour' : userName}
           </Text>
         </ImageBackground>

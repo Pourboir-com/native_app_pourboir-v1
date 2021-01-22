@@ -61,8 +61,9 @@ const SocialLogin = ({ navigation, route }) => {
           } else {
             navigation.replace('Home', { crossIcon: false });
           }
+          console.log(res.user);
           let userDetails = {
-            name: res?.user?.full_name,
+            name: res?.user?.given_name,
             image: res?.user?.picture,
             email: res?.user?.email,
             accessToken: accessToken,

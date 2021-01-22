@@ -62,7 +62,13 @@ const RateService = ({ navigation, route }) => {
     setUser(state.userDetails.email);
   }, [state]);
 
-  const { name, Image, restaurant_id, waiter_id, refetchWaiters } = route.params;
+  const {
+    name,
+    Image,
+    restaurant_id,
+    waiter_id,
+    refetchWaiters,
+  } = route.params;
 
   const handleModalClose = () => {
     setisVisible(false);
@@ -160,7 +166,11 @@ const RateService = ({ navigation, route }) => {
                 <FontAwesome name="user-circle-o" size={100} color="#fff" />
               )}
             </View>
-            <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
+            <Text
+              ellipsizeMode="tail"
+              numberOfLines={1}
+              style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}
+            >
               {name}
             </Text>
           </View>
@@ -450,6 +460,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 24,
     color: Colors.fontDark,
+    maxWidth: '80%',
   },
   viewImg: {
     width: 100,

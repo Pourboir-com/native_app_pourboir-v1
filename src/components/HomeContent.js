@@ -109,7 +109,7 @@ export default function HomeScreenContent({
   } else {
     return (
       <>
-        {restaurantLoading || resIsFetching ? (
+        {restaurantLoading ? (
           <ScrollView
             // bounces={true}
             //   alwaysBounceVertical={true}

@@ -54,7 +54,7 @@ const ReviewDetails = ({ navigation, route }) => {
     enabled: place_id,
     onSuccess: res => {
       setData(res.data);
-      console.log(res.data)
+      console.log(res.data);
     },
   });
 
@@ -126,10 +126,7 @@ const ReviewDetails = ({ navigation, route }) => {
               <View pointerEvents="none" style={{ flexDirection: 'row' }}>
                 {obj.map((v, i) => {
                   return (
-                    <TouchableOpacity
-                      style={{ marginRight: 3 }}
-                      key={i}
-                    >
+                    <TouchableOpacity style={{ marginRight: 3 }} key={i}>
                       <RatingStar
                         starSize={17}
                         type={
@@ -216,7 +213,9 @@ const ReviewDetails = ({ navigation, route }) => {
                 key={itemData?.item?._id}
                 onPress={() =>
                   navigation.navigate('RateYourService', {
-                    name: itemData?.item?.user_id ? itemData?.item?.user_id?.full_name : itemData?.item.full_name,
+                    name: itemData?.item?.user_id
+                      ? itemData?.item?.user_id?.full_name
+                      : itemData?.item.full_name,
                     Image: itemData?.item?.imgAvatar,
                     restaurant_id: place_id,
                     waiter_id: itemData?.item?._id,
@@ -236,16 +235,22 @@ const ReviewDetails = ({ navigation, route }) => {
                   )}
 
                   <View style={{ marginLeft: 10 }}>
-                    <Text style={styles.txtItemName}>
-                      {itemData?.item?.user_id ? itemData?.item?.user_id?.full_name : itemData?.item.full_name}
+                    <Text
+                      ellipsizeMode="tail"
+                      numberOfLines={1}
+                      style={styles.txtItemName}
+                    >
+                      {itemData?.item?.user_id
+                        ? itemData?.item?.user_id?.given_name
+                        : itemData?.item.full_name}
                     </Text>
-                    <View pointerEvents="none" style={{ flexDirection: 'row', marginTop: 8 }}>
+                    <View
+                      pointerEvents="none"
+                      style={{ flexDirection: 'row', marginTop: 8 }}
+                    >
                       {obj.map((v, i) => {
                         return (
-                          <TouchableOpacity
-                            style={{ marginRight: 3 }}
-                            key={i}
-                          >
+                          <TouchableOpacity style={{ marginRight: 3 }} key={i}>
                             <RatingStar
                               starSize={16}
                               type={
@@ -341,6 +346,7 @@ const styles = StyleSheet.create({
     color: Colors.fontLight,
     letterSpacing: 0,
     lineHeight: 24,
+    width: 180,
   },
   btnAdd: {
     backgroundColor: Colors.yellow,

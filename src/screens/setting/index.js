@@ -25,14 +25,13 @@ const imgBg = require('../../assets/images/Group5.png');
 
 const Setting = ({ navigation }) => {
   const { state, dispatch } = useContext(Context);
-  const [image, setImage] = useState(state ? state.userDetails.image : '');
-  const [userName, setuserName] = useState(state ? state.userDetails.name : '');
+  const [image, setImage] = useState();
   const [buttonDisable, setbuttonDisable] = useState(false);
 
-  useEffect(() => {
-    setuserName(state.userDetails.name);
-    setImage(state.userDetails.image);
-  }, [state]);
+  // useEffect(() => {
+  //   setuserName(state.userDetails.name);
+  //   setImage(state.userDetails.image);
+  // }, [state]);
 
   const handleGoogleSignOut = async () => {
     const { userInfo } = await getAsyncStorageValues();
@@ -101,7 +100,7 @@ const Setting = ({ navigation }) => {
           />
 
           <TouchableOpacity onPress={() => _pickImage()} style={styles.viewImg}>
-            {image === null || image === undefined || image === '' ? (
+            {state.userDetails.image === null || state.userDetails.image === undefined || state.userDetails.image === '' ? (
               // <FontAwesome name="user-circle-o" size={110} color="#fff" />
               <Image
                 style={{
@@ -121,7 +120,7 @@ const Setting = ({ navigation }) => {
                   height: '100%',
                   borderRadius: 60,
                 }}
-                source={{ uri: image }}
+                source={{ uri: image ? image : state.userDetails.image }}
                 resizeMode="cover"
               />
             )}
@@ -141,10 +140,8 @@ const Setting = ({ navigation }) => {
           {/* <View style={styles.viewImg}>
               <FontAwesome name="user-circle-o" size={120} color="#fff" />
             </View> */}
-          <Text
-            style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}
-          >
-            {userName === '' ? 'Bonjour' : userName}
+          <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
+            {state.userDetails.name === '' ? 'Bonjour' : state.userDetails.name}
           </Text>
         </ImageBackground>
       </View>

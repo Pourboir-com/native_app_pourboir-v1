@@ -25,10 +25,10 @@ const HomeScreen = props => {
   const { state } = useContext(Context);
   const [loading, setLoading] = React.useState(false);
   const [isFocused, setIsFocused] = React.useState(false);
-  const [userImage, setuserImage] = useState(
-    state ? state.userDetails.image : '',
-  );
-  const [userName, setuserName] = useState(state ? state.userDetails.name : '');
+  // const [userImage, setuserImage] = useState(
+  //   state ? state.userDetails.image : '',
+  // );
+  // const [userName, setuserName] = useState(state ? state.userDetails.name : '');
 
   // const fetchFont = () => {
   //   return Font.loadAsync({
@@ -36,10 +36,10 @@ const HomeScreen = props => {
   //   });
   // };
 
-  useEffect(() => {
-    setuserName(state.userDetails.name);
-    setuserImage(state.userDetails.image);
-  }, [state]);
+  // useEffect(() => {
+  //   setuserName(state.userDetails.name);
+  //   setuserImage(state.userDetails.image);
+  // }, [state]);
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
 
@@ -126,7 +126,7 @@ const HomeScreen = props => {
             // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
           ]}
         >
-          {userImage === '' ? (
+          {state.userDetails.image === '' ? (
             <TouchableOpacity
               onPress={() => props.navigation.navigate('socialLogin')}
             >
@@ -143,7 +143,7 @@ const HomeScreen = props => {
                   height: 40,
                 }}
                 source={{
-                  uri: userImage,
+                  uri: state.userDetails.image,
                 }}
               />
             </TouchableOpacity>
@@ -188,7 +188,7 @@ const HomeScreen = props => {
                 ellipsizeMode="tail"
                 numberOfLines={1}
               >
-                {userName === '' ? 'Bonjour' : userName}
+                {state.userDetails.name === '' ? 'Bonjour' : state.userDetails.name}
               </Text>
             </Animated.View>
           </View>

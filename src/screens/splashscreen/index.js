@@ -16,7 +16,7 @@ export default function SplashScreen(props) {
 
   useEffect(() => {
     (async () => {
-      const { userInfo } = await getAsyncStorageValues();
+      const { userInfo={} } = await getAsyncStorageValues();
       let userDetails = {
         name: userInfo?.name,
         image: userInfo?.image,
@@ -43,6 +43,8 @@ export default function SplashScreen(props) {
 
   const [springValue] = React.useState(new Animated.Value(0.5));
   const locationFunction = async () => {
+    // const Location_Permission = Permissions.askAsync(Permissions.LOCATION);
+    // if(Location_Permission){}
     const isLocation = await Location.hasServicesEnabledAsync();
     if (isLocation) {
       const location = await Location.getCurrentPositionAsync({

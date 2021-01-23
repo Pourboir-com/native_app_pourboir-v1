@@ -35,7 +35,6 @@ const RateService = ({ navigation, route }) => {
   const [professionalism, setProfessionalism] = useState();
   const [remarks, setRemarks] = useState('');
   const [isVisible, setisVisible] = useState(false);
-  const [user, setUser] = useState();
   const [addRatings] = useMutation(ADD_RATINGS);
 
   const scrollRef = React.useRef(null);
@@ -58,10 +57,6 @@ const RateService = ({ navigation, route }) => {
     };
   }, []);
 
-  useEffect(() => {
-    setUser(state.userDetails.email);
-  }, [state]);
-
   const {
     name,
     Image,
@@ -76,7 +71,7 @@ const RateService = ({ navigation, route }) => {
   };
 
   const handleAddRatings = async () => {
-    if (user !== '') {
+    if (state.userDetails.user_id) {
       let ratingDetails = {
         rating: {
           hospitality: hospitality,

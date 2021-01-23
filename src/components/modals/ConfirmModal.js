@@ -35,7 +35,6 @@ const ConfirmationModal = ({
         user_id: state.userDetails.user_id,
         restaurant_id: place_id,
       };
-      console.log(IWaiter);
       await IAMWAITER(IWaiter, {
         onSuccess: async () => {
           handleModalClose();

@@ -126,7 +126,7 @@ const HomeScreen = props => {
             // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
           ]}
         >
-          {state.userDetails.image === '' ? (
+          {!state.userDetails.image  ? (
             <TouchableOpacity
               onPress={() => props.navigation.navigate('socialLogin')}
             >
@@ -188,7 +188,7 @@ const HomeScreen = props => {
                 ellipsizeMode="tail"
                 numberOfLines={1}
               >
-                {state.userDetails.name === '' ? 'Bonjour' : state.userDetails.name}
+                {!state.userDetails.name ? 'Bonjour' : state.userDetails.name}
               </Text>
             </Animated.View>
           </View>

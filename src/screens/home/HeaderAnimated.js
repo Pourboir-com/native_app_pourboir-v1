@@ -17,11 +17,11 @@ import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
 import Context from '../../contextApi/context';
-// import * as Font from 'expo-font';
-// import AppLoading from 'expo-app-loading';
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 const HomeScreen = props => {
-  // const [fontLoaded, setFontLoaded] = useState(false);
+  const [fontLoaded, setFontLoaded] = useState(false);
   const { state } = useContext(Context);
   const [loading, setLoading] = React.useState(false);
   const [isFocused, setIsFocused] = React.useState(false);
@@ -30,11 +30,11 @@ const HomeScreen = props => {
   // );
   // const [userName, setuserName] = useState(state ? state.userDetails.name : '');
 
-  // const fetchFont = () => {
-  //   return Font.loadAsync({
-  //     ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
-  //   });
-  // };
+  const fetchFont = () => {
+    return Font.loadAsync({
+      ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
+    });
+  };
 
   // useEffect(() => {
   //   setuserName(state.userDetails.name);
@@ -126,7 +126,7 @@ const HomeScreen = props => {
             // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
           ]}
         >
-          {!state.userDetails.image  ? (
+          {!state.userDetails.image ? (
             <TouchableOpacity
               onPress={() => props.navigation.navigate('socialLogin')}
             >
@@ -155,7 +155,7 @@ const HomeScreen = props => {
     const renderTitle = () => {
       return (
         <>
-          {/* {!fontLoaded ? (
+          {!fontLoaded ? (
             <AppLoading
               startAsync={fetchFont}
               onFinish={() => {
@@ -163,36 +163,36 @@ const HomeScreen = props => {
               }}
               onError={() => console.log('ERROR')}
             />
-          ) : ( */}
-          <View
-            style={[
-              { position: 'absolute', left: spacing(2.5), top: spacing(1) },
-              // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
-            ]}
-          >
-            <Animated.View
-              style={{
-                marginLeft: titleHeaderMarginLeft,
-                height: HEADER_BAR_HEIGHT,
-                justifyContent: 'center',
-              }}
+          ) : (
+            <View
+              style={[
+                { position: 'absolute', left: spacing(2.5), top: spacing(1) },
+                // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
+              ]}
             >
-              <Text
+              <Animated.View
                 style={{
-                  fontSize: 20,
-                  color: COLORS[colorScheme].text.primary,
-                  fontFamily: 'ProximaNovaBold',
-                  textAlign: 'center',
-                  fontWeight: 'bold',
+                  marginLeft: titleHeaderMarginLeft,
+                  height: HEADER_BAR_HEIGHT,
+                  justifyContent: 'center',
                 }}
-                ellipsizeMode="tail"
-                numberOfLines={1}
               >
-                {!state.userDetails.name ? 'Bonjour' : state.userDetails.name}
-              </Text>
-            </Animated.View>
-          </View>
-          {/* )} */}
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: COLORS[colorScheme].text.primary,
+                    fontFamily: 'ProximaNovaBold',
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                  }}
+                  ellipsizeMode="tail"
+                  numberOfLines={1}
+                >
+                  {!state.userDetails.name ? 'Bonjour' : state.userDetails.name}
+                </Text>
+              </Animated.View>
+            </View>
+          )}
         </>
       );
     };

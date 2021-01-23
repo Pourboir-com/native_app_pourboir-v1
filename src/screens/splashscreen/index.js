@@ -16,7 +16,7 @@ export default function SplashScreen(props) {
 
   useEffect(() => {
     (async () => {
-      const { userInfo={} } = await getAsyncStorageValues();
+      const { userInfo = {} } = await getAsyncStorageValues();
       let userDetails = {
         name: userInfo?.name,
         image: userInfo?.image,
@@ -45,56 +45,9 @@ export default function SplashScreen(props) {
   const locationFunction = async () => {
     // const Location_Permission = Permissions.askAsync(Permissions.LOCATION);
     // if(Location_Permission){}
-    const isLocation = await Location.hasServicesEnabledAsync();
-    if (isLocation) {
-      const location = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Highest,
-      });
-      await AsyncStorage.setItem(
-        '@location',
-        JSON.stringify({
-          lat: location?.coords.latitude,
-          log: location?.coords.longitude,
-        }),
-      );
-      NetInfo.fetch().then(state => {
-        if (state.isConnected) {
-          props.navigation.replace('Home', { crossIcon: false });
-        } else {
-          props.navigation.replace('NoWiFi');
-        }
-      });
-    } else {
-      try {
-        let values = await Location.requestPermissionsAsync();
-        if (values === 'granted') {
-          props.navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [{ name: 'NoLocation' }],
-            }),
-          );
-        } else {
-          const location = await Location.getCurrentPositionAsync({
-            accuracy: Location.Accuracy.Highest,
-          });
-          await AsyncStorage.setItem(
-            '@location',
-            JSON.stringify({
-              lat: location?.coords.latitude,
-              log: location?.coords.longitude,
-            }),
-          );
-
-          NetInfo.fetch().then(state => {
-            if (state.isConnected) {
-              props.navigation.replace('Home', { crossIcon: false });
-            } else {
-              props.navigation.replace('NoWiFi');
-            }
-          });
-        }
-      } catch (error) {
+    try {
+      let values = await Location.requestPermissionsAsync();
+      if (values === 'granted') {
         props.navigation.dispatch(
           CommonActions.reset({
             index: 0,
@@ -102,6 +55,52 @@ export default function SplashScreen(props) {
           }),
         );
       }
+      const isLocation = await Location.hasServicesEnabledAsync();
+      if (isLocation) {
+        const location = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.Highest,
+        });
+        await AsyncStorage.setItem(
+          '@location',
+          JSON.stringify({
+            lat: location?.coords.latitude,
+            log: location?.coords.longitude,
+          }),
+        );
+        NetInfo.fetch().then(state => {
+          if (state.isConnected) {
+            props.navigation.replace('Home', { crossIcon: false });
+          } else {
+            props.navigation.replace('NoWiFi');
+          }
+        });
+      } else {
+        const location = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.Highest,
+        });
+        await AsyncStorage.setItem(
+          '@location',
+          JSON.stringify({
+            lat: location?.coords.latitude,
+            log: location?.coords.longitude,
+          }),
+        );
+
+        NetInfo.fetch().then(state => {
+          if (state.isConnected) {
+            props.navigation.replace('Home', { crossIcon: false });
+          } else {
+            props.navigation.replace('NoWiFi');
+          }
+        });
+      }
+    } catch (error) {
+      props.navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'NoLocation' }],
+        }),
+      );
     }
   };
   React.useEffect(() => {

@@ -34,12 +34,7 @@ const HomeScreen = props => {
         ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
       });
     }
-
     loadFont();
-
-    // setTimeout(() => {
-    //   setLoading(false);
-    // }, 2500);
   }, []);
 
   useEffect(() => {

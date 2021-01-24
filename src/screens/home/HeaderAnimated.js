@@ -38,7 +38,7 @@ const HomeScreen = props => {
 
   useEffect(() => {
     setLoading(!loading);
-  }, [props.saveLocation, props.nextPageToken, props.Data]);
+  }, [props.saveLocation, props.nextPageToken]);
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
 

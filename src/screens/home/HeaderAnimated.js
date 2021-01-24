@@ -36,10 +36,9 @@ const HomeScreen = props => {
     });
   };
 
-  // useEffect(() => {
-  //   setuserName(state.userDetails.name);
-  //   setuserImage(state.userDetails.image);
-  // }, [state]);
+  useEffect(() => {
+    setLoading(!loading);
+  }, [props.saveLocation, props.nextPageToken, props.Data]);
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
 

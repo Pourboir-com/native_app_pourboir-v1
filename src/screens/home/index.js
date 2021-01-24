@@ -89,6 +89,8 @@ const HomeScreen = props => {
                 searchVal={searchVal}
                 setSearchVal={setSearchVal}
                 navigation={props.navigation}
+                saveLocation={saveLocation}
+                nextPageToken={nextPageToken}
               >
                 <StatusBar translucent={true} style="dark" />
 

@@ -7,6 +7,7 @@ import {
   Dimensions,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
   ImageBackground,
 } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -24,9 +25,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const imgBg = require('../../assets/images/Group5.png');
 
 const Setting = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
   const { state, dispatch } = useContext(Context);
   const [image, setImage] = useState();
-  const [buttonDisable, setbuttonDisable] = useState(false);
 
   // useEffect(() => {
   //   setuserName(state.userDetails.name);
@@ -38,7 +39,7 @@ const Setting = ({ navigation }) => {
     const accessToken = userInfo.accessToken;
     /* Log-Out */
     if (accessToken) {
-      setbuttonDisable(true);
+      setLoading(true);
       await Google.logOutAsync({ accessToken, ...config });
       navigation.replace('socialLogin');
       let userDetails = {
@@ -58,6 +59,7 @@ const Setting = ({ navigation }) => {
           ...userDetails,
         }),
       );
+      setLoading(false);
     }
   };
 
@@ -100,30 +102,32 @@ const Setting = ({ navigation }) => {
           />
 
           <TouchableOpacity onPress={() => _pickImage()} style={styles.viewImg}>
-            {state.userDetails.image === null || state.userDetails.image === undefined || state.userDetails.image === '' ? (
+            {state.userDetails.image === null ||
+            state.userDetails.image === undefined ||
+            state.userDetails.image === '' ? (
               // <FontAwesome name="user-circle-o" size={110} color="#fff" />
-              <Image
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: 60,
-                }}
-                source={{
-                  uri:
+                <Image
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: 60,
+                  }}
+                  source={{
+                    uri:
                     'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png',
-                }}
-              />
-            ) : (
-              <Image
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: 60,
-                }}
-                source={{ uri: image ? image : state.userDetails.image }}
-                resizeMode="cover"
-              />
-            )}
+                  }}
+                />
+              ) : (
+                <Image
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: 60,
+                  }}
+                  source={{ uri: image ? image : state.userDetails.image }}
+                  resizeMode="cover"
+                />
+              )}
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => _pickImage()}
@@ -220,13 +224,17 @@ const Setting = ({ navigation }) => {
         </Text>
       </View>
       <TouchableOpacity
-        disabled={buttonDisable}
+        disabled={loading}
         onPress={handleGoogleSignOut}
         style={styles.btnValider}
       >
-        <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
-          {i18n.t('sign_out')}
-        </Text>
+        {loading ? (
+          <ActivityIndicator size={40} color='#000' />
+        ) : (
+          <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
+            {i18n.t('sign_out')}
+          </Text>
+        )}
       </TouchableOpacity>
     </View>
   );

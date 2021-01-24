@@ -13,7 +13,7 @@ import { Colors } from '../../constants/Theme';
 import * as Google from 'expo-google-app-auth';
 import i18n from '../../li8n';
 import { loadAsync } from 'expo-font';
-import { config, BASE_URL } from '../../constants';
+import { config } from '../../constants';
 import { userSignUp } from '../../util';
 import { useMutation } from 'react-query';
 import { GOOGLE_SIGNUP } from '../../queries';
@@ -62,7 +62,6 @@ const SocialLogin = ({ navigation, route }) => {
           } else {
             navigation.replace('Home', { crossIcon: false });
           }
-          console.log(res.user);
           let userDetails = {
             name: res?.user?.given_name,
             image: res?.user?.picture,
@@ -87,31 +86,31 @@ const SocialLogin = ({ navigation, route }) => {
       });
     }
   };
-  const facebookLogin = async () => {
-    try {
-      await Facebook.initializeAsync({
-        appId: '771555200360518',
-      });
-      const {
-        type,
-        token,
-        expirationDate,
-        permissions,
-        declinedPermissions,
-      } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['Pourboir'],
-      });
-      if (type === 'success') {
-        // Get the user's name using Facebook's Graph API
-        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-        alert('Logged in!', `Hi ${(await response.json()).name}!`);
-      } else {
-        // type === 'cancel'
-      }
-    } catch ({ message }) {
-      alert(`Facebook Login Error: ${message}`);
-    }
-  };
+  // const facebookLogin = async () => {
+  //   try {
+  //     await Facebook.initializeAsync({
+  //       appId: '771555200360518',
+  //     });
+  //     const {
+  //       type,
+  //       token,
+  //       expirationDate,
+  //       permissions,
+  //       declinedPermissions,
+  //     } = await Facebook.logInWithReadPermissionsAsync({
+  //       permissions: ['public_profile'],
+  //     });
+  //     if (type === 'success') {
+  //       // Get the user's name using Facebook's Graph API
+  //       const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+  //       alert('Logged in!', `Hi ${(await response.json()).name}!`);
+  //     } else {
+  //       // type === 'cancel'
+  //     }
+  //   } catch ({ message }) {
+  //     alert(`Facebook Login Error: ${message}`);
+  //   }
+  // };
 
   return (
     <View
@@ -137,8 +136,8 @@ const SocialLogin = ({ navigation, route }) => {
             />
           </View>
           <TouchableOpacity
-            // onPress={() => navigation.navigate('Home', { crossIcon: false })}
-            onPress={facebookLogin}
+            onPress={() => navigation.navigate('Home', { crossIcon: false })}
+            // onPress={facebookLogin}
             style={styles.btnFb}
           >
             <FontAwesome name="facebook" color="#fff" size={20} />

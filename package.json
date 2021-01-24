@@ -25,6 +25,7 @@
     "expo": "~39.0.2",
     "expo-app-loading": "^1.0.1",
     "expo-constants": "^9.3.5",
+    "expo-facebook": "^10.0.0",
     "expo-font": "^8.3.0",
     "expo-google-app-auth": "^8.1.4",
     "expo-image-picker": "^9.2.1",

@@ -23,6 +23,7 @@ import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 const imgLogo = require('../../assets/images/imgLogo.png');
 const imgWaiter = require('../../assets/images/waiter2.png');
+import * as Facebook from 'expo-facebook';
 
 const SocialLogin = ({ navigation, route }) => {
   const [loading, setLoading] = useState(true);
@@ -86,6 +87,32 @@ const SocialLogin = ({ navigation, route }) => {
       });
     }
   };
+  const facebookLogin = async () => {
+    try {
+      await Facebook.initializeAsync({
+        appId: '771555200360518',
+      });
+      const {
+        type,
+        token,
+        expirationDate,
+        permissions,
+        declinedPermissions,
+      } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ['Pourboir'],
+      });
+      if (type === 'success') {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+        alert('Logged in!', `Hi ${(await response.json()).name}!`);
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  };
+
   return (
     <View
       style={[
@@ -110,7 +137,8 @@ const SocialLogin = ({ navigation, route }) => {
             />
           </View>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Home', { crossIcon: false })}
+            // onPress={() => navigation.navigate('Home', { crossIcon: false })}
+            onPress={facebookLogin}
             style={styles.btnFb}
           >
             <FontAwesome name="facebook" color="#fff" size={20} />

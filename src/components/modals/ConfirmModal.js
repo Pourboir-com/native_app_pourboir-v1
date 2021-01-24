@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
+  ActivityIndicator,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -28,9 +29,11 @@ const ConfirmationModal = ({
 }) => {
   const { state } = useContext(Context);
   const [IAMWAITER] = useMutation(I_AM_WAITER);
+  const [loading, setLoading] = useState(false);
 
   const handleIAMWAITER = async () => {
     if (state.userDetails.user_id) {
+      setLoading(true);
       let IWaiter = {
         user_id: state.userDetails.user_id,
         restaurant_id: place_id,
@@ -38,6 +41,7 @@ const ConfirmationModal = ({
       await IAMWAITER(IWaiter, {
         onSuccess: async () => {
           handleModalClose();
+          setLoading(false);
           await refetchWaiters();
           await refetchRestaurant();
         },
@@ -83,10 +87,14 @@ const ConfirmationModal = ({
       >
         {name}
       </Text>
-      <TouchableOpacity onPress={handleIAMWAITER} style={styles.btnConfrm}>
-        <Text style={[styles.txtBtnConfrm, { fontFamily: 'ProximaNova' }]}>
-          {i18n.t('i_confirm')}
-        </Text>
+      <TouchableOpacity disabled={loading} onPress={handleIAMWAITER} style={styles.btnConfrm}>
+        {loading ? (
+          <ActivityIndicator size={30} color="#000" />
+        ) : (
+          <Text style={[styles.txtBtnConfrm, { fontFamily: 'ProximaNova' }]}>
+            {i18n.t('i_confirm')}
+          </Text>
+        )}
       </TouchableOpacity>
     </Overlay>
   );

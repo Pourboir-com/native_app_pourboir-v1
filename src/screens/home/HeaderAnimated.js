@@ -155,7 +155,7 @@ const HomeScreen = props => {
     const renderTitle = () => {
       return (
         <>
-          {!fontLoaded ? (
+          {/* {!fontLoaded ? (
             <AppLoading
               startAsync={fetchFont}
               onFinish={() => {
@@ -163,36 +163,36 @@ const HomeScreen = props => {
               }}
               onError={() => console.log('ERROR')}
             />
-          ) : (
-            <View
-              style={[
-                { position: 'absolute', left: spacing(2.5), top: spacing(1) },
-                // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
-              ]}
+          ) : ( */}
+          <View
+            style={[
+              { position: 'absolute', left: spacing(2.5), top: spacing(1) },
+              // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
+            ]}
+          >
+            <Animated.View
+              style={{
+                marginLeft: titleHeaderMarginLeft,
+                height: HEADER_BAR_HEIGHT,
+                justifyContent: 'center',
+              }}
             >
-              <Animated.View
+              <Text
                 style={{
-                  marginLeft: titleHeaderMarginLeft,
-                  height: HEADER_BAR_HEIGHT,
-                  justifyContent: 'center',
+                  fontSize: 20,
+                  color: COLORS[colorScheme].text.primary,
+                  fontFamily: 'ProximaNovaBold',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
                 }}
+                ellipsizeMode="tail"
+                numberOfLines={1}
               >
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: COLORS[colorScheme].text.primary,
-                    fontFamily: 'ProximaNovaBold',
-                    textAlign: 'center',
-                    fontWeight: 'bold',
-                  }}
-                  ellipsizeMode="tail"
-                  numberOfLines={1}
-                >
-                  {!state.userDetails.name ? 'Bonjour' : state.userDetails.name}
-                </Text>
-              </Animated.View>
-            </View>
-          )}
+                {!state.userDetails.name ? 'Bonjour' : state.userDetails.name}
+              </Text>
+            </Animated.View>
+          </View>
+          {/* )} */}
         </>
       );
     };

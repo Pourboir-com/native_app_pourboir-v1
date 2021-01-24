@@ -16,9 +16,10 @@ import { getAsyncStorageValues } from '../../constants';
 import { GET_RESTAURANT } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import { useQuery } from 'react-query';
+import { View, Text } from 'react-native-animatable';
 
 const HomeScreen = props => {
-  // const [loading, setLoading] = useState(false);
+  const [Fontloading, setFontLoading] = useState(false);
   const [searchVal, setSearchVal] = useState('');
   const [searchIconPress, setSearchIconPress] = useState(false);
   const [data, setData] = useState([]);
@@ -33,6 +34,7 @@ const HomeScreen = props => {
         ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
         ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
       });
+      setFontLoading(true);
     }
     loadFont();
   }, []);
@@ -80,16 +82,16 @@ const HomeScreen = props => {
       {!props.route.params.crossIcon ? (
         <>
           {!searchIconPress ? (
-            <Header
-              setsearchIconPress={setSearchIconPress}
-              searchIconPress={searchIconPress}
-              searchVal={searchVal}
-              setSearchVal={setSearchVal}
-              navigation={props.navigation}
-            >
-              <StatusBar translucent={true} style="dark" />
+            Fontloading ? (
+              <Header
+                setsearchIconPress={setSearchIconPress}
+                searchIconPress={searchIconPress}
+                searchVal={searchVal}
+                setSearchVal={setSearchVal}
+                navigation={props.navigation}
+              >
+                <StatusBar translucent={true} style="dark" />
 
-              {
                 <HomeScreenContent
                   restaurantLoading={restaurantLoading}
                   refetchRestaurant={refetchRestaurant}
@@ -98,8 +100,12 @@ const HomeScreen = props => {
                   route={props.route}
                   handleLoadMore={handleLoadMore}
                 />
-              }
-            </Header>
+              </Header>
+            ) : (
+              <View>
+                <Text>Loading..</Text>
+              </View>
+            )
           ) : (
             <>
               <HeaderSimple
@@ -109,16 +115,14 @@ const HomeScreen = props => {
                 setSearchVal={setSearchVal}
               />
               <StatusBar translucent={true} style="dark" />
-              {
-                <HomeScreenContent
-                  restaurantLoading={restaurantLoading}
-                  refetchRestaurant={refetchRestaurant}
-                  resIsFetching={resIsFetching}
-                  Data={data}
-                  route={props.route}
-                  handleLoadMore={handleLoadMore}
-                />
-              }
+              <HomeScreenContent
+                restaurantLoading={restaurantLoading}
+                refetchRestaurant={refetchRestaurant}
+                resIsFetching={resIsFetching}
+                Data={data}
+                route={props.route}
+                handleLoadMore={handleLoadMore}
+              />
             </>
           )}
         </>

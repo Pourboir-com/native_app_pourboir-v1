@@ -8,8 +8,7 @@ import {
   TextInput,
   Dimensions,
   TouchableOpacity,
-  FlatList,
-  KeyboardAvoidingView,
+  ActivityIndicator,
   Keyboard,
   Platform,
 } from 'react-native';
@@ -36,6 +35,7 @@ const RateService = ({ navigation, route }) => {
   const [remarks, setRemarks] = useState('');
   const [isVisible, setisVisible] = useState(false);
   const [addRatings] = useMutation(ADD_RATINGS);
+  const [loading, setLoading] = useState(false);
 
   const scrollRef = React.useRef(null);
   // const [onHandleFocus, setonHandleFocus] = useState(false)
@@ -72,6 +72,7 @@ const RateService = ({ navigation, route }) => {
 
   const handleAddRatings = async () => {
     if (state.userDetails.user_id) {
+      setLoading(true);
       let ratingDetails = {
         rating: {
           hospitality: hospitality,
@@ -86,6 +87,7 @@ const RateService = ({ navigation, route }) => {
       };
       await addRatings(ratingDetails, {
         onSuccess: async () => {
+          setLoading(false);
           setisVisible(true);
           await refetchWaiters();
         },
@@ -350,32 +352,32 @@ const RateService = ({ navigation, route }) => {
         <TouchableOpacity
           onPress={handleAddRatings}
           disabled={
-            hospitality !== 0 &&
-            speed !== 0 &&
-            professionalism !== 0 &&
-            service !== 0 &&
-            remarks !== ''
+            hospitality && speed && professionalism && service && remarks
               ? false
               : true
           }
           style={[
             styles.btnValider,
-            hospitality !== 0 &&
-              speed !== 0 &&
-              professionalism !== 0 &&
-              service !== 0 &&
-              remarks !== '' && { backgroundColor: Colors.yellow },
+            hospitality &&
+              speed &&
+              professionalism &&
+              service &&
+              remarks && { backgroundColor: Colors.yellow },
           ]}
         >
-          <Text
-            style={{
-              fontSize: 16,
-              fontFamily: 'ProximaNova',
-              color: Colors.fontLight,
-            }}
-          >
-            {i18n.t('validate')}
-          </Text>
+          {loading ? (
+            <ActivityIndicator size={35} color="#000" />
+          ) : (
+            <Text
+              style={{
+                fontSize: 16,
+                fontFamily: 'ProximaNova',
+                color: Colors.fontLight,
+              }}
+            >
+              {i18n.t('validate')}
+            </Text>
+          )}
         </TouchableOpacity>
       </ScrollView>
 

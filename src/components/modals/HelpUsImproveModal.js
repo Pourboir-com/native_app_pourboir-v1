@@ -9,6 +9,7 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   ScrollView,
+  ActivityIndicator,
   Dimensions,
   Platform,
   Keyboard,
@@ -32,6 +33,7 @@ const HelpUsImproveModal = ({
   refetchRestaurant,
   navigation,
 }) => {
+  const [loading, setLoading] = useState(false);
   const [addingWaiters] = useMutation(ADDING_WAITERS);
   let contentEnd;
   const scrollRef = React.useRef(null);
@@ -64,16 +66,18 @@ const HelpUsImproveModal = ({
   }, []);
 
   const handleAddingWaiters = async () => {
-    let waiter = {
-      restaurant_id: place_id,
-      full_name: waiterName,
-      created_by: state.userDetails.user_id,
-    };
     if (state.userDetails.user_id) {
+      setLoading(true);
+      let waiter = {
+        restaurant_id: place_id,
+        full_name: waiterName,
+        created_by: state.userDetails.user_id,
+      };
       if (waiterName) {
         await addingWaiters(waiter, {
           onSuccess: async () => {
             handleModalClose();
+            setLoading(false);
             await refetchWaiters();
             await refetchRestaurant();
             setWaiterName('');
@@ -177,16 +181,22 @@ const HelpUsImproveModal = ({
             }}
           />
           <TouchableOpacity
-            disabled={waiterName ? false : true}
+            disabled={loading}
             onPress={handleAddingWaiters}
             style={[
               styles.btnConfrm,
               waiterName !== '' ? { backgroundColor: Colors.yellow } : null,
             ]}
           >
-            <Text style={[styles.txtBtnConfrm, { fontFamily: 'ProximaNova' }]}>
-              {i18n.t('add')}{' '}
-            </Text>
+            {loading ? (
+              <ActivityIndicator size={30} color="#000" />
+            ) : (
+              <Text
+                style={[styles.txtBtnConfrm, { fontFamily: 'ProximaNova' }]}
+              >
+                {i18n.t('add')}{' '}
+              </Text>
+            )}
           </TouchableOpacity>
         </KeyboardAvoidingView>
       </ScrollView>

@@ -6,7 +6,14 @@ import React, {
   useState,
   useContext,
 } from 'react';
-import { Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
+import {
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
@@ -38,7 +45,7 @@ const HomeScreen = props => {
 
   useEffect(() => {
     setLoading(!loading);
-  }, [props.saveLocation, props.nextPageToken]);
+  }, [props.saveLocation, props.nextPageToken, props.Data]);
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
 
@@ -102,8 +109,12 @@ const HomeScreen = props => {
   });
   const titleHeaderMarginLeft = scrollYAnimatedValue.interpolate({
     inputRange: [0, HEADER_HEIGHT / 2],
-    outputRange: [0, HEADER_BAR_HEIGHT + spacing(2)],
+    // outputRange: [0, HEADER_BAR_HEIGHT + spacing(2)],
     // outputRange: [0, (LAYOUT.window.width * 0.5) ],
+    outputRange: [
+      (-Dimensions.get('window').width / 2) + (spacing(5) + spacing(2.5)),
+      0,
+    ],
 
     extrapolate: Extrapolate.CLAMP,
   });
@@ -165,7 +176,12 @@ const HomeScreen = props => {
           ) : ( */}
           <View
             style={[
-              { position: 'absolute', left: spacing(2.5), top: spacing(1) },
+              {
+                position: 'absolute',
+                left: spacing(2.5),
+                top: spacing(1),
+                width: Dimensions.get('window').width - spacing(5),
+              },
               // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
             ]}
           >
@@ -174,6 +190,7 @@ const HomeScreen = props => {
                 marginLeft: titleHeaderMarginLeft,
                 height: HEADER_BAR_HEIGHT,
                 justifyContent: 'center',
+                width: '100%',
               }}
             >
               <Text

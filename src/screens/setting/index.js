@@ -229,7 +229,7 @@ const Setting = ({ navigation }) => {
         style={styles.btnValider}
       >
         {loading ? (
-          <ActivityIndicator size={40} color='#000' />
+          <ActivityIndicator size={35} color='#000' />
         ) : (
           <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
             {i18n.t('sign_out')}

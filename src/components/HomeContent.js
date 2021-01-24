@@ -34,7 +34,7 @@ export default function HomeScreenContent({
     setData(Data);
   }, [Data]);
 
-  const dummyArray = [1, 2, 3];
+  const dummyArray = [1, 2];
 
   const onDeleteCard = (index, even) => {
     let indexToRemove = even ? index * 2 : index * 2 + 1;
@@ -110,7 +110,7 @@ export default function HomeScreenContent({
     return (
       <>
         {restaurantLoading ? (
-          <ScrollView
+          <View
             // bounces={true}
             //   alwaysBounceVertical={true}
             showsVerticalScrollIndicator={false}
@@ -152,7 +152,7 @@ export default function HomeScreenContent({
                 renderItem={() => <HomeCardSkeleton />}
               />
             </View>
-          </ScrollView>
+          </View>
         ) : (
           <ScrollView
             // bounces={true}

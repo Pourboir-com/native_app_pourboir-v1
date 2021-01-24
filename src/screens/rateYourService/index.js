@@ -123,6 +123,7 @@ const RateService = ({ navigation, route }) => {
       alwaysBounceVertical={false}
       bounces={false}
       showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps={'handled'}
       style={[
         styles.container,
         Platform.OS === 'ios'
@@ -178,6 +179,7 @@ const RateService = ({ navigation, route }) => {
         alwaysBounceVertical={false}
         bounces={false}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps={'handled'}
         style={styles.viewFlatlist}
         // contentContainerStyle={{ flex: 1 }}
       >

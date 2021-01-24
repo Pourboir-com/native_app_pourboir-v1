@@ -112,7 +112,7 @@ const HomeScreen = props => {
     // outputRange: [0, HEADER_BAR_HEIGHT + spacing(2)],
     // outputRange: [0, (LAYOUT.window.width * 0.5) ],
     outputRange: [
-      (-Dimensions.get('window').width / 2) + (spacing(5) + spacing(2.5)),
+      -Dimensions.get('window').width / 2 + (spacing(5) + spacing(2.5)),
       0,
     ],
 
@@ -200,11 +200,14 @@ const HomeScreen = props => {
                   fontFamily: 'ProximaNovaBold',
                   textAlign: 'center',
                   fontWeight: 'bold',
+                  // width:'50%'
                 }}
-                ellipsizeMode="tail"
-                numberOfLines={1}
+                // ellipsizeMode="tail"
+                // numberOfLines={1}
               >
-                {!state.userDetails.name ? 'Bonjour' : state.userDetails.name}
+                {!state.userDetails.name
+                  ? 'Bonjour'
+                  : state.userDetails.name.slice(0, 6)}
               </Text>
             </Animated.View>
           </View>
@@ -252,6 +255,8 @@ const HomeScreen = props => {
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
             bounces={false}
+            // persistentScrollbar={true}
+            // keyboardShouldPersistTaps={'handled'}
             ref={scrollRef}
             contentContainerStyle={{
               paddingTop: props.searchIconPress ? 0 : HEADER_HEIGHT,

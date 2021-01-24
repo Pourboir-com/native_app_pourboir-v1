@@ -109,6 +109,7 @@ const HelpUsImproveModal = ({
         alwaysBounceHorizontal={false}
         alwaysBounceVertical={false}
         bounces={false}
+        keyboardShouldPersistTaps={'handled'}
         style={onHandleFocus && Platform.OS === 'ios' ? { flex: 1 } : {}}
         // style={{ flex: 1 }}
         onContentSizeChange={(contentWidth, contentHeight) => {

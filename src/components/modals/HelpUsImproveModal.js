@@ -76,9 +76,9 @@ const HelpUsImproveModal = ({
       if (waiterName) {
         await addingWaiters(waiter, {
           onSuccess: async () => {
+            await refetchWaiters();
             handleModalClose();
             setLoading(false);
-            await refetchWaiters();
             await refetchRestaurant();
             setWaiterName('');
           },

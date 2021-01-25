@@ -29,9 +29,13 @@ const SocialLogin = ({ navigation, route }) => {
   const [loading, setLoading] = useState(true);
   const [googleSignup] = useMutation(GOOGLE_SIGNUP);
   const [vote, setVote] = useState(false);
+  const [confirmWaiter, setconfirmWaiter] = useState(false);
 
   useEffect(() => {
     setVote(route?.params?.vote ? route?.params?.vote : false);
+    setconfirmWaiter(
+      route?.params?.confirmWaiter ? route?.params?.confirmWaiter : false,
+    );
   }, [route.params]);
 
   useEffect(() => {
@@ -59,8 +63,10 @@ const SocialLogin = ({ navigation, route }) => {
           if (vote) {
             navigation.navigate('RateYourService');
             setVote(false);
+          } else if (confirmWaiter) {
+            navigation.navigate('OpenCardReviews');
           } else {
-            navigation.replace('Home', { crossIcon: false });
+            navigation.navigate('Home', { crossIcon: false });
           }
           let userDetails = {
             name: res?.user?.given_name,

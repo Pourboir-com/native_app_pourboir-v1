@@ -43,7 +43,7 @@ const ReviewDetails = ({ navigation, route }) => {
     services,
     place_id,
     refetchRestaurant,
-  } = route.params;
+  } = route?.params;
   const {
     data: waitersData,
     isLoading: waitersLoading,

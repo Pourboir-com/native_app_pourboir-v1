@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { ImageBackground, Animated, Dimensions } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
@@ -11,7 +11,6 @@ import * as actionTypes from '../../contextApi/actionTypes';
 
 export default function SplashScreen(props) {
   const { dispatch } = useContext(Context);
-
   useEffect(() => {
     (async () => {
       const { userInfo = {} } = await getAsyncStorageValues();

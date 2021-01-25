@@ -30,11 +30,11 @@ export default function HomeScreenContent({
   const [fontLoaded, setFontLoaded] = useState(false);
   const navigation = useNavigation();
 
-  useEffect(()=>{
+  useEffect(() => {
     setData(Data);
   }, [Data]);
 
-  const dummyArray = [1, 2];
+  const dummyArray = [1, 2, 3];
 
   const onDeleteCard = (index, even) => {
     let indexToRemove = even ? index * 2 : index * 2 + 1;
@@ -188,7 +188,6 @@ export default function HomeScreenContent({
                 onEndReachedThreshold={0.5}
                 alwaysBounceHorizontal={false}
                 keyboardShouldPersistTaps={'handled'}
-
                 alwaysBounceVertical={false}
                 bounces={false}
                 keyExtractor={(item, index) => index.toString()}

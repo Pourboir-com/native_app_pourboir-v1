@@ -5,6 +5,7 @@ import {
   View,
   ImageBackground,
   ScrollView,
+  Image,
   TextInput,
   Dimensions,
   TouchableOpacity,
@@ -59,7 +60,7 @@ const RateService = ({ navigation, route }) => {
 
   const {
     name,
-    Image,
+    image,
     restaurant_id,
     waiter_id,
     refetchWaiters,
@@ -158,8 +159,11 @@ const RateService = ({ navigation, route }) => {
                 } */}
           <View>
             <View style={styles.viewImg}>
-              {Image ? (
-                <Image source={{ uri: Image }} />
+              {image ? (
+                <Image
+                  style={{ width: 100, height: 100, borderRadius: 50 }}
+                  source={{ uri: image }}
+                />
               ) : (
                 <FontAwesome name="user-circle-o" size={100} color="#fff" />
               )}
@@ -354,7 +358,7 @@ const RateService = ({ navigation, route }) => {
         <TouchableOpacity
           onPress={handleAddRatings}
           disabled={
-            hospitality && speed && professionalism && service && remarks 
+            hospitality && speed && professionalism && service && remarks
               ? false
               : true
           }

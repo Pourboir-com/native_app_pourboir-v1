@@ -216,7 +216,9 @@ const ReviewDetails = ({ navigation, route }) => {
                     name: itemData?.item?.user_id
                       ? itemData?.item?.user_id?.full_name
                       : itemData?.item.full_name,
-                    Image: itemData?.item?.imgAvatar,
+                    image: itemData?.item?.user_id
+                      ? itemData?.item?.user_id?.picture
+                      : itemData?.item?.imgAvatar,
                     restaurant_id: place_id,
                     waiter_id: itemData?.item?._id,
                     refetchWaiters: refetchWaiters,
@@ -225,10 +227,15 @@ const ReviewDetails = ({ navigation, route }) => {
                 style={styles.viewItemConatier}
               >
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  {itemData.item.imgAvatar ? (
+                  {itemData?.item?.user_id ? (
                     <Image
                       style={{ width: 45, height: 45, borderRadius: 30 }}
-                      source={{ uri: itemData.item.imgAvatar }}
+                      source={{ uri: itemData?.item?.user_id.picture }}
+                    />
+                  ) : itemData?.item?.imgAvatar ? (
+                    <Image
+                      style={{ width: 45, height: 45, borderRadius: 30 }}
+                      source={{ uri: itemData?.item?.imgAvatar }}
                     />
                   ) : (
                     <SvgHeaderUserIcon height={45} width={45} />

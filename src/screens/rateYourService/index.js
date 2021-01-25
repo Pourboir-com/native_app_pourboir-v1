@@ -354,7 +354,7 @@ const RateService = ({ navigation, route }) => {
         <TouchableOpacity
           onPress={handleAddRatings}
           disabled={
-            hospitality && speed && professionalism && service && remarks
+            hospitality && speed && professionalism && service && remarks 
               ? false
               : true
           }

@@ -393,7 +393,6 @@ const styles = StyleSheet.create({
     //  borderRadius: 15
   },
   viewNumRaters: {
-    overflow: 'hidden',
     backgroundColor: Colors.yellow,
     marginLeft: 23,
     borderRadius: 9,
@@ -401,7 +400,7 @@ const styles = StyleSheet.create({
     paddingTop: 1,
     paddingLeft: 7,
     paddingRight: 8,
-    width: 25,
+    width: 'auto',
     height: 25,
     paddingVertical: 1,
     alignItems: 'center',

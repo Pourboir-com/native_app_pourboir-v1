@@ -10,7 +10,7 @@ import HomeScreenContent from '../../components/HomeContent';
 import { StatusBar } from 'expo-status-bar';
 
 import i18n from '../../li8n';
-import { ImageBackground } from 'react-native';
+import { ImageBackground, ActivityIndicator } from 'react-native';
 import { loadAsync } from 'expo-font';
 import { getAsyncStorageValues } from '../../constants';
 import { GET_RESTAURANT } from '../../queries';
@@ -105,8 +105,15 @@ const HomeScreen = props => {
                 />
               </Header>
             ) : (
-              <View>
-                <Text>Loading..</Text>
+              <View style={{
+                flex:1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+                <ActivityIndicator
+                  size={70}
+                  color={Colors.yellow}
+                />
               </View>
             )
           ) : (

@@ -86,7 +86,7 @@ const HelpUsImproveModal = ({
       }
     } else {
       handleModalClose();
-      navigation.navigate('socialLogin');
+      navigation.navigate('socialLogin', { HelpUs: true });
     }
   };
 

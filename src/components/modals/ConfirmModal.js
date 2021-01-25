@@ -40,9 +40,9 @@ const ConfirmationModal = ({
       };
       await IAMWAITER(IWaiter, {
         onSuccess: async () => {
+          await refetchWaiters();
           handleModalClose();
           setLoading(false);
-          await refetchWaiters();
           await refetchRestaurant();
         },
       });

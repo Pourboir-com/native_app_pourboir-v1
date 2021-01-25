@@ -30,12 +30,13 @@ const SocialLogin = ({ navigation, route }) => {
   const [googleSignup] = useMutation(GOOGLE_SIGNUP);
   const [vote, setVote] = useState(false);
   const [confirmWaiter, setconfirmWaiter] = useState(false);
-
+  const [HelpUs, setHelpUs] = useState();
   useEffect(() => {
     setVote(route?.params?.vote ? route?.params?.vote : false);
     setconfirmWaiter(
       route?.params?.confirmWaiter ? route?.params?.confirmWaiter : false,
     );
+    setHelpUs(route?.params?.HelpUs ? route?.params?.HelpUs : false);
   }, [route.params]);
 
   useEffect(() => {
@@ -63,7 +64,7 @@ const SocialLogin = ({ navigation, route }) => {
           if (vote) {
             navigation.navigate('RateYourService');
             setVote(false);
-          } else if (confirmWaiter) {
+          } else if (confirmWaiter || HelpUs) {
             navigation.navigate('OpenCardReviews');
           } else {
             navigation.navigate('Home', { crossIcon: false });

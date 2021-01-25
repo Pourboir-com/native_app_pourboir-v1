@@ -109,7 +109,7 @@ export default function HomeScreenContent({
   } else {
     return (
       <>
-        {restaurantLoading ? (
+        {restaurantLoading || resIsFetching ? (
           <View
             // bounces={true}
             //   alwaysBounceVertical={true}

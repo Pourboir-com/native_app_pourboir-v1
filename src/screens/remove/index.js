@@ -15,9 +15,8 @@ import { Dimensions } from 'react-native';
 import Context from '../../contextApi/context';
 
 const Remove = props => {
-  const [loading, setLoading] = useState(false);
-  const [searchIconPress, setSearchIconPress] = useState(false);
   const [saveLocation, setSaveLocation] = useState('');
+  const [data, setData] = useState([]);
   const { state } = useContext(Context);
 
   useEffect(() => {
@@ -25,7 +24,6 @@ const Remove = props => {
       const { location } = await getAsyncStorageValues();
       setSaveLocation(location);
     })();
-    console.log(state.userDetails.user_id);
   }, []);
 
   const navigation = useNavigation();
@@ -41,7 +39,8 @@ const Remove = props => {
         location: saveLocation,
         user_id: state.userDetails.user_id,
         // pageToken: nextPageToken,
-        // maxResults: 20,
+        // max_results: 1,
+        // page_no: 1,
       },
     ],
     GET_YOUR_RES,
@@ -49,8 +48,7 @@ const Remove = props => {
       ...reactQueryConfig,
       enabled: saveLocation,
       onSuccess: res => {
-        console.log('myrestaurant!!');
-        console.log(res || []);
+        setData(res?.restaurants?.results || []);
       },
     },
   );
@@ -95,13 +93,14 @@ const Remove = props => {
         </View>
       </View>
 
-      {/* <HomeScreenContent
-        loading={loading}
-        setLoading={setLoading}
-        searchIconPress={searchIconPress}
-        setSearchIconPress={setSearchIconPress}
+      <HomeScreenContent
         route={props.route}
-      /> */}
+        restaurantLoading={restaurantLoading}
+        refetchRestaurant={refetchRestaurant}
+        resIsFetching={resIsFetching}
+        Data={data}
+        // handleLoadMore={handleLoadMore}
+      />
     </>
   );
 };

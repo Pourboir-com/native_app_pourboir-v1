@@ -78,91 +78,56 @@ const HomeScreen = props => {
 
   return (
     <>
-      {/* <StatusBar /> */}
-      {!props.route.params.crossIcon ? (
-        <>
-          {!searchIconPress ? (
-            Fontloading ? (
-              <Header
-                setsearchIconPress={setSearchIconPress}
-                searchIconPress={searchIconPress}
-                searchVal={searchVal}
-                setSearchVal={setSearchVal}
-                navigation={props.navigation}
-                saveLocation={saveLocation}
-                nextPageToken={nextPageToken}
-                Data={data}
-              >
-                <StatusBar translucent={true} style="dark" />
+      {!searchIconPress ? (
+        Fontloading ? (
+          <Header
+            setsearchIconPress={setSearchIconPress}
+            searchIconPress={searchIconPress}
+            searchVal={searchVal}
+            setSearchVal={setSearchVal}
+            navigation={props.navigation}
+            saveLocation={saveLocation}
+            nextPageToken={nextPageToken}
+            Data={data}
+          >
+            <StatusBar translucent={true} style="dark" />
 
-                <HomeScreenContent
-                  restaurantLoading={restaurantLoading}
-                  refetchRestaurant={refetchRestaurant}
-                  resIsFetching={resIsFetching}
-                  Data={data}
-                  route={props.route}
-                  handleLoadMore={handleLoadMore}
-                />
-              </Header>
-            ) : (
-              <View style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-                <ActivityIndicator
-                  size={70}
-                  color={Colors.yellow}
-                />
-              </View>
-            )
-          ) : (
-            <>
-              <HeaderSimple
-                setSearchIconPress={setSearchIconPress}
-                searchIconPress={searchIconPress}
-                searchVal={searchVal}
-                setSearchVal={setSearchVal}
-              />
-              <StatusBar translucent={true} style="dark" />
-              <HomeScreenContent
-                restaurantLoading={restaurantLoading}
-                refetchRestaurant={refetchRestaurant}
-                resIsFetching={resIsFetching}
-                Data={data}
-                route={props.route}
-                handleLoadMore={handleLoadMore}
-              />
-            </>
-          )}
-        </>
+            <HomeScreenContent
+              restaurantLoading={restaurantLoading}
+              refetchRestaurant={refetchRestaurant}
+              resIsFetching={resIsFetching}
+              Data={data}
+              route={props.route}
+              handleLoadMore={handleLoadMore}
+            />
+          </Header>
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <ActivityIndicator size={70} color={Colors.yellow} />
+          </View>
+        )
       ) : (
         <>
-          <ImageBackground
-            style={{ backgroundColor: 'red', width: '100%', height: 110 }}
-            resizeMode="cover"
-            source={require('../../assets/images/Group3.png')}
-          >
-            <GlobalHeader
-              arrow={true}
-              headingText={i18n.t('your_restaurant')}
-              fontSize={17}
-              color={Colors.fontDark}
-              navigation={navigation}
-              setting={true}
-              backgroundColor={'transparent'}
-            />
-          </ImageBackground>
+          <HeaderSimple
+            setSearchIconPress={setSearchIconPress}
+            searchIconPress={searchIconPress}
+            searchVal={searchVal}
+            setSearchVal={setSearchVal}
+          />
           <StatusBar translucent={true} style="dark" />
-          <GlobalHeader
-            arrow={true}
-            headingText={i18n.t('your_restaurant')}
-            fontSize={17}
-            color={Colors.fontDark}
-            navigation={navigation}
-            setting={true}
-            backgroundColor={'transparent'}
-            borderRadius={true}
+          <HomeScreenContent
+            restaurantLoading={restaurantLoading}
+            refetchRestaurant={refetchRestaurant}
+            resIsFetching={resIsFetching}
+            Data={data}
+            route={props?.route}
+            handleLoadMore={handleLoadMore}
           />
         </>
       )}

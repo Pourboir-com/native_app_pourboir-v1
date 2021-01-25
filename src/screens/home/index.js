@@ -67,7 +67,6 @@ const HomeScreen = props => {
       enabled: saveLocation,
       onSuccess: res => {
         setData(res?.restaurants?.results || []);
-        console.log(res.restaurants);
       },
     },
   );

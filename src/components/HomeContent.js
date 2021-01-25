@@ -161,6 +161,7 @@ export default function HomeScreenContent({
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
             bounces={false}
+            keyboardShouldPersistTaps={'handled'}
             style={{ backgroundColor: '#f9f9f9' }}
           >
             {!route.params.crossIcon && (
@@ -186,6 +187,8 @@ export default function HomeScreenContent({
                 onEndReached={handleLoadMore}
                 onEndReachedThreshold={0.5}
                 alwaysBounceHorizontal={false}
+                keyboardShouldPersistTaps={'handled'}
+
                 alwaysBounceVertical={false}
                 bounces={false}
                 keyExtractor={(item, index) => index.toString()}
@@ -219,6 +222,7 @@ export default function HomeScreenContent({
                 alwaysBounceHorizontal={false}
                 onEndReached={handleLoadMore}
                 onEndReachedThreshold={0.5}
+                keyboardShouldPersistTaps={'handled'}
                 alwaysBounceVertical={false}
                 bounces={false}
                 keyExtractor={(item, index) => index.toString()}

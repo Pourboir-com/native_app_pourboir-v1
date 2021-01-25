@@ -255,8 +255,7 @@ const HomeScreen = props => {
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
             bounces={false}
-            // persistentScrollbar={true}
-            // keyboardShouldPersistTaps={'handled'}
+            keyboardShouldPersistTaps={'handled'}
             ref={scrollRef}
             contentContainerStyle={{
               paddingTop: props.searchIconPress ? 0 : HEADER_HEIGHT,
@@ -408,6 +407,7 @@ const HomeScreen = props => {
           <Animated.ScrollView
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
+            keyboardShouldPersistTaps={'handled'}
             bounces={false}
             ref={scrollRef}
             contentContainerStyle={{

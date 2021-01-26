@@ -90,9 +90,11 @@ const HomeScreen = props => {
 
             <HomeScreenContent
               restaurantLoading={restaurantLoading}
+              searchVal={searchVal}
               refetchRestaurant={refetchRestaurant}
               resIsFetching={resIsFetching}
               Data={data}
+              // isFetch={searchVal === '' ? true : false}
               route={props?.route}
               handleLoadMore={handleLoadMore}
             />

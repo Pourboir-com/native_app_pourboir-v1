@@ -103,6 +103,7 @@ const Remove = props => {
         route={props.route}
         restaurantLoading={restaurantLoading}
         refetchRestaurant={refetchRestaurant}
+        isFetch={true}
         resIsFetching={resIsFetching}
         Data={data}
         // handleLoadMore={handleLoadMore}

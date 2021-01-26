@@ -93,31 +93,62 @@ const SocialLogin = ({ navigation, route }) => {
       });
     }
   };
-  // const facebookLogin = async () => {
-  //   try {
-  //     await Facebook.initializeAsync({
-  //       appId: '771555200360518',
-  //     });
-  //     const {
-  //       type,
-  //       token,
-  //       expirationDate,
-  //       permissions,
-  //       declinedPermissions,
-  //     } = await Facebook.logInWithReadPermissionsAsync({
-  //       permissions: ['public_profile'],
-  //     });
-  //     if (type === 'success') {
-  //       // Get the user's name using Facebook's Graph API
-  //       const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-  //       alert('Logged in!', `Hi ${(await response.json()).name}!`);
-  //     } else {
-  //       // type === 'cancel'
-  //     }
-  //   } catch ({ message }) {
-  //     alert(`Facebook Login Error: ${message}`);
-  //   }
-  // };
+
+  const facebookLogin = async () => {
+    try {
+      await Facebook.initializeAsync({
+        appId: '771555200360518',
+      });
+      const {
+        type,
+        token,
+        expirationDate,
+        permissions,
+        declinedPermissions,
+      } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ['public_profile', 'email'],
+      });
+      if (type === 'success') {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(
+          `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)`,
+        )
+          .then(response => response.json())
+          .then(async data => {
+            if (vote) {
+              navigation.navigate('RateYourService');
+              setVote(false);
+            } else if (confirmWaiter || HelpUs) {
+              navigation.navigate('OpenCardReviews');
+            } else {
+              navigation.navigate('Home', { crossIcon: false });
+            }
+            let userDetails = {
+              name: data?.name,
+              image: data?.picture?.data?.url,
+              email: data?.email,
+              accessToken: token,
+              user_id: data?.id,
+            };
+            dispatch({
+              type: actionTypes.USER_DETAILS,
+              payload: userDetails,
+            });
+            await AsyncStorage.setItem(
+              '@userInfo',
+              JSON.stringify({
+                ...userDetails,
+              }),
+            );
+          })
+          .catch(e => console.log(e));
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  };
 
   return (
     <View

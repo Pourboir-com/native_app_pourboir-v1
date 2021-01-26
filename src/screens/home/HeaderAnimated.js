@@ -115,7 +115,7 @@ const HomeScreen = props => {
         spacing(
           !state.userDetails.name
             ? LAYOUT.window.width * 0.026
-            : LAYOUT.window.width * 0.014,
+            : LAYOUT.window.width * 0.013,
         ),
     ],
     // outputRange: [0, (LAYOUT.window.width * 0.5) ],

@@ -23,6 +23,7 @@ export default function HomeScreenContent({
   refetchRestaurant,
   resIsFetching,
   Data,
+  isFetch,
   handleLoadMore,
   route,
 }) {
@@ -109,7 +110,7 @@ export default function HomeScreenContent({
   } else {
     return (
       <>
-        {restaurantLoading || resIsFetching ? (
+        {(isFetch ? restaurantLoading || resIsFetching : restaurantLoading) ? (
           <View
             // bounces={true}
             //   alwaysBounceVertical={true}

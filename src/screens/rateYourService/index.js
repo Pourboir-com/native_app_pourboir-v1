@@ -39,7 +39,6 @@ const RateService = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
 
   const scrollRef = React.useRef(null);
-  // const [onHandleFocus, setonHandleFocus] = useState(false)
 
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
@@ -106,24 +105,7 @@ const RateService = ({ navigation, route }) => {
     }
   };
 
-  // const addRating = () => {
-
-  // };
-
   const obj = [1, 2, 3, 4, 5];
-
-  // const _keyboardDidShow = () => {
-  //     scrollRef.current.scrollToEnd({ animated: true })
-  // };
-
-  // React.useEffect(() => {
-  //     Keyboard.addListener("keyboardDidShow", _keyboardDidShow);
-
-  //     // cleanup function
-  //     return () => {
-  //         Keyboard.removeListener("keyboardDidShow", _keyboardDidShow);
-  //     };
-  // });
 
   return (
     <ScrollView

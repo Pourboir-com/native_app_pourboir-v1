@@ -21,6 +21,7 @@ import i18n from '../../li8n';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Facebook from 'expo-facebook';
 
 const imgBg = require('../../assets/images/Group5.png');
 
@@ -40,6 +41,7 @@ const Setting = ({ navigation }) => {
     /* Log-Out */
     if (accessToken) {
       setLoading(true);
+      // Facebook.logOutAsync();
       await Google.logOutAsync({ accessToken, ...config });
       navigation.replace('socialLogin');
       let userDetails = {

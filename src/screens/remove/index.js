@@ -49,9 +49,15 @@ const Remove = props => {
       enabled: saveLocation,
       onSuccess: res => {
         setData(res?.restaurants?.results || []);
+        console.log(res?.restaurants?.results);
       },
     },
   );
+
+  // const handleLoadMore = () => {
+  //   // setnextPageToken(restaurantData.restaurants.next_page_token);
+  //   console.log('next page load');
+  // };
 
   return (
     <>

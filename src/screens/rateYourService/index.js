@@ -58,6 +58,19 @@ const RateService = ({ navigation, route }) => {
     };
   }, []);
 
+  const handleModalClose = () => {
+    setisVisible(false);
+    navigation.navigate('OpenCardReviews');
+  };
+
+  useEffect(() => {
+    if (isVisible) {
+      setTimeout(() => {
+        handleModalClose();
+      }, 5000);
+    }
+  }, [isVisible]);
+
   const {
     name,
     image,
@@ -65,11 +78,6 @@ const RateService = ({ navigation, route }) => {
     waiter_id,
     refetchWaiters,
   } = route.params;
-
-  const handleModalClose = () => {
-    setisVisible(false);
-    navigation.navigate('OpenCardReviews');
-  };
 
   const handleAddRatings = async () => {
     if (state.userDetails.user_id) {

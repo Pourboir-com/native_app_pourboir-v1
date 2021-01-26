@@ -1,22 +1,19 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 
 import { Colors } from '../../constants/Theme';
 import Header from './HeaderAnimated';
 import HeaderSimple from './HeaderSimple';
-import GlobalHeader from '../../components/GlobalHeader';
 
 import HomeScreenContent from '../../components/HomeContent';
 import { StatusBar } from 'expo-status-bar';
 
-import i18n from '../../li8n';
-import { ImageBackground, ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { loadAsync } from 'expo-font';
 import { getAsyncStorageValues } from '../../constants';
 import { GET_RESTAURANT } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import { useQuery } from 'react-query';
-import { View, Text } from 'react-native-animatable';
+import { View } from 'react-native-animatable';
 
 const HomeScreen = props => {
   const [Fontloading, setFontLoading] = useState(false);
@@ -25,7 +22,6 @@ const HomeScreen = props => {
   const [data, setData] = useState([]);
   const [saveLocation, setSaveLocation] = useState('');
   const [nextPageToken, setnextPageToken] = useState();
-  const navigation = useNavigation();
 
   useEffect(() => {
     async function loadFont() {
@@ -85,7 +81,7 @@ const HomeScreen = props => {
             searchIconPress={searchIconPress}
             searchVal={searchVal}
             setSearchVal={setSearchVal}
-            navigation={props.navigation}
+            navigation={props?.navigation}
             saveLocation={saveLocation}
             nextPageToken={nextPageToken}
             Data={data}
@@ -97,7 +93,7 @@ const HomeScreen = props => {
               refetchRestaurant={refetchRestaurant}
               resIsFetching={resIsFetching}
               Data={data}
-              route={props.route}
+              route={props?.route}
               handleLoadMore={handleLoadMore}
             />
           </Header>

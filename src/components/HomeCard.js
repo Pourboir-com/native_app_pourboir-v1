@@ -86,7 +86,7 @@ const HomeCard = ({
                   styles.btnCross,
                   { zIndex: 1000, marginRight: -5, marginTop: -5 },
                 ]}
-                onPress={deleteCall}
+                // onPress={deleteCall}
               >
                 <View
                   style={{

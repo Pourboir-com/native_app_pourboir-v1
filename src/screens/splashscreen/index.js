@@ -40,11 +40,13 @@ export default function SplashScreen(props) {
           }),
         );
       }
+
       const isLocation = await Location.hasServicesEnabledAsync();
       if (isLocation) {
         const location = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Highest,
         });
+
         await AsyncStorage.setItem(
           '@location',
           JSON.stringify({

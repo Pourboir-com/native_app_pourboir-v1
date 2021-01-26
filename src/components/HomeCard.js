@@ -70,7 +70,7 @@ const HomeCard = ({
           }
           style={[styles.viewItemConatier]}
         >
-          <ImageBackground style={styles.imgCard} source={{ uri: img }}>
+          <ImageBackground style={styles.imgCard} resizeMode='cover' source={{ uri: img }}>
             <LinearGradient
               style={{
                 zIndex: 100,

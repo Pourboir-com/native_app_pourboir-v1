@@ -109,12 +109,20 @@ const HomeScreen = props => {
   });
   const titleHeaderMarginLeft = scrollYAnimatedValue.interpolate({
     inputRange: [0, HEADER_HEIGHT / 2],
-    // outputRange: [0, HEADER_BAR_HEIGHT + spacing(2)],
-    // outputRange: [0, (LAYOUT.window.width * 0.5) ],
     outputRange: [
-      -Dimensions.get('window').width / 2 + (spacing(5) + spacing(2.5)),
       0,
+      HEADER_BAR_HEIGHT +
+        spacing(
+          !state.userDetails.name
+            ? LAYOUT.window.width * 0.026
+            : LAYOUT.window.width * 0.014,
+        ),
     ],
+    // outputRange: [0, (LAYOUT.window.width * 0.5) ],
+    // outputRange: [
+    //   -Dimensions.get('window').width / 2 + (spacing(5) + spacing(2.5)),
+    //   0,
+    // ],
 
     extrapolate: Extrapolate.CLAMP,
   });
@@ -180,7 +188,7 @@ const HomeScreen = props => {
                 position: 'absolute',
                 left: spacing(2.5),
                 top: spacing(1),
-                width: Dimensions.get('window').width - spacing(5),
+                // width: Dimensions.get('window').width - spacing(5),
               },
               // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
             ]}
@@ -190,7 +198,7 @@ const HomeScreen = props => {
                 marginLeft: titleHeaderMarginLeft,
                 height: HEADER_BAR_HEIGHT,
                 justifyContent: 'center',
-                width: '100%',
+                // width: '100%',
               }}
             >
               <Text
@@ -206,8 +214,8 @@ const HomeScreen = props => {
                 // numberOfLines={1}
               >
                 {!state.userDetails.name
-                  ? 'Bonjour'
-                  : state.userDetails.name.slice(0, 6)}
+                  ? i18n.t('hello')
+                  : i18n.t('hello') + ' ' + state.userDetails.name.slice(0, 6)}
               </Text>
             </Animated.View>
           </View>

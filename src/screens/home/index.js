@@ -83,7 +83,7 @@ const HomeScreen = props => {
             setSearchVal={setSearchVal}
             navigation={props?.navigation}
             refetchRestaurant={refetchRestaurant}
-              resIsFetching={resIsFetching}
+            resIsFetching={resIsFetching}
             saveLocation={saveLocation}
             nextPageToken={nextPageToken}
             Data={data}

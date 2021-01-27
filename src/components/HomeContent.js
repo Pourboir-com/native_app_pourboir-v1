@@ -182,14 +182,14 @@ export default function HomeScreenContent({
               alwaysBounceHorizontal={false}
               refreshControl={
                 <RefreshControl
-                  //refresh control used for the Pull to Refresh
+                //refresh control used for the Pull to Refresh
                   refreshing={resIsFetching}
                   onRefresh={refetchRestaurant}
                 />
               }
               alwaysBounceVertical={false}
               bounces={false}
-              // keyboardShouldPersistTaps={'handled'}
+              keyboardShouldPersistTaps={'handled'}
               style={{ backgroundColor: '#f9f9f9' }}
             >
               {!route.params.crossIcon && (

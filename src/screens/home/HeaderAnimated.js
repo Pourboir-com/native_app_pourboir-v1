@@ -375,13 +375,13 @@ const HomeScreen = props => {
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
             keyboardShouldPersistTaps={'handled'}
-            // refreshControl={
-            //   <RefreshControl
-            //     //refresh control used for the Pull to Refresh
-            //     refreshing={props.resIsFetching}
-            //     onRefresh={props.refetchRestaurant}
-            //   />
-            // }
+            refreshControl={
+              <RefreshControl
+                //refresh control used for the Pull to Refresh
+                refreshing={props.resIsFetching}
+                onRefresh={props.refetchRestaurant}
+              />
+            }
             bounces={false}
             ref={scrollRef}
             contentContainerStyle={{

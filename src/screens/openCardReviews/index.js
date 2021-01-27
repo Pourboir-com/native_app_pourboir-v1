@@ -11,6 +11,7 @@ import {
   FlatList,
   SafeAreaView,
   KeyboardAvoidingView,
+  RefreshControl,
   Animated,
 } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
@@ -107,7 +108,7 @@ const ReviewDetails = ({ navigation, route }) => {
           zIndex: 9,
         }}
       >
-        <View style={styles.viewImg}>
+        <View style={styles.viewImg} >
           <ImageBackground
             source={{ uri: img }}
             style={{ flex: 1, justifyContent: 'space-between' }}

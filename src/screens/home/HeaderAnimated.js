@@ -6,7 +6,7 @@ import React, {
   useState,
   useContext,
 } from 'react';
-import { Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
+import { Text, TextInput, View, TouchableOpacity, Image, RefreshControl } from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
@@ -219,6 +219,13 @@ const HomeScreen = props => {
           <Animated.ScrollView
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
+            refreshControl={
+              <RefreshControl
+                //refresh control used for the Pull to Refresh
+                refreshing={props.resIsFetching}
+                onRefresh={props.refetchRestaurant}
+              />
+            }
             bounces={false}
             keyboardShouldPersistTaps={'handled'}
             ref={scrollRef}
@@ -368,6 +375,13 @@ const HomeScreen = props => {
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
             keyboardShouldPersistTaps={'handled'}
+            // refreshControl={
+            //   <RefreshControl
+            //     //refresh control used for the Pull to Refresh
+            //     refreshing={props.resIsFetching}
+            //     onRefresh={props.refetchRestaurant}
+            //   />
+            // }
             bounces={false}
             ref={scrollRef}
             contentContainerStyle={{

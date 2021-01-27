@@ -7,7 +7,7 @@ import HeaderSimple from './HeaderSimple';
 import HomeScreenContent from '../../components/HomeContent';
 import { StatusBar } from 'expo-status-bar';
 
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, RefreshControl } from 'react-native';
 import { loadAsync } from 'expo-font';
 import { getAsyncStorageValues } from '../../constants';
 import { GET_RESTAURANT } from '../../queries';
@@ -82,12 +82,13 @@ const HomeScreen = props => {
             searchVal={searchVal}
             setSearchVal={setSearchVal}
             navigation={props?.navigation}
+            refetchRestaurant={refetchRestaurant}
+              resIsFetching={resIsFetching}
             saveLocation={saveLocation}
             nextPageToken={nextPageToken}
             Data={data}
           >
             <StatusBar translucent={true} style="dark" />
-
             <HomeScreenContent
               restaurantLoading={restaurantLoading}
               searchVal={searchVal}

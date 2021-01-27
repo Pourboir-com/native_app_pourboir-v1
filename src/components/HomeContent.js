@@ -5,6 +5,7 @@ import {
   Text,
   View,
   ScrollView,
+  RefreshControl,
   Dimensions,
   FlatList,
   Image,
@@ -50,16 +51,15 @@ export default function HomeScreenContent({
     });
   };
 
-  const DeleteRestaurant = async place_id => {
+  const DeleteRestaurant = async waiter_id => {
     if (state.userDetails.user_id) {
       let userInfo = {
-        id: place_id,
+        id: waiter_id,
         user_id: state.userDetails.user_id,
       };
       await deleteRestaurant(userInfo, {
-        onSuccess: async () => {
-          // refetchRestaurant();
-          console.log(userInfo);
+        onSuccess: async => {
+          refetchRestaurant();
         },
       });
     }
@@ -180,9 +180,16 @@ export default function HomeScreenContent({
             //   alwaysBounceVertical={true}
               showsVerticalScrollIndicator={false}
               alwaysBounceHorizontal={false}
+              refreshControl={
+                <RefreshControl
+                  //refresh control used for the Pull to Refresh
+                  refreshing={resIsFetching}
+                  onRefresh={refetchRestaurant}
+                />
+              }
               alwaysBounceVertical={false}
               bounces={false}
-              keyboardShouldPersistTaps={'handled'}
+              // keyboardShouldPersistTaps={'handled'}
               style={{ backgroundColor: '#f9f9f9' }}
             >
               {!route.params.crossIcon && (
@@ -220,7 +227,7 @@ export default function HomeScreenContent({
                       rating={restaurantLoading ? null : itemData.item.rating}
                       name={restaurantLoading ? null : itemData.item.name}
                       DeleteRestaurant={() =>
-                        DeleteRestaurant(itemData?.item?.place_id)
+                        DeleteRestaurant(itemData?.item?.waiter?._id)
                       }
                       distance={
                         restaurantLoading ? null : restaurantDistance(itemData)
@@ -256,7 +263,7 @@ export default function HomeScreenContent({
                       rating={restaurantLoading ? null : itemData.item.rating}
                       name={restaurantLoading ? null : itemData.item.name}
                       DeleteRestaurant={() =>
-                        DeleteRestaurant(itemData?.item?.place_id)
+                        DeleteRestaurant(itemData?.item?.waiter?._id)
                       }
                       distance={
                         restaurantLoading ? null : restaurantDistance(itemData)

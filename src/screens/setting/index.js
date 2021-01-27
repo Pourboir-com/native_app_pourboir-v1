@@ -30,38 +30,43 @@ const Setting = ({ navigation }) => {
   const { state, dispatch } = useContext(Context);
   const [image, setImage] = useState();
 
-  // useEffect(() => {
-  //   setuserName(state.userDetails.name);
-  //   setImage(state.userDetails.image);
-  // }, [state]);
+  const resetState = async () => {
+    navigation.replace('socialLogin');
+    let userDetails = {
+      name: '',
+      image: '',
+      email: '',
+      accessToken: '',
+      user_id: '',
+    };
+    dispatch({
+      type: actionTypes.USER_DETAILS,
+      payload: userDetails,
+    });
+    await AsyncStorage.setItem(
+      '@userInfo',
+      JSON.stringify({
+        ...userDetails,
+      }),
+    );
+    setLoading(false);
+  };
 
-  const handleGoogleSignOut = async () => {
+  const handleSignOut = async () => {
     const { userInfo } = await getAsyncStorageValues();
     const accessToken = userInfo.accessToken;
     /* Log-Out */
     if (accessToken) {
       setLoading(true);
-      Facebook.logOutAsync();
-      await Google.logOutAsync({ accessToken, ...config });
-      navigation.replace('socialLogin');
-      let userDetails = {
-        name: '',
-        image: '',
-        email: '',
-        accessToken: '',
-        user_id: '',
-      };
-      dispatch({
-        type: actionTypes.USER_DETAILS,
-        payload: userDetails,
-      });
-      await AsyncStorage.setItem(
-        '@userInfo',
-        JSON.stringify({
-          ...userDetails,
-        }),
-      );
-      setLoading(false);
+      const auth = await Facebook.getAuthenticationCredentialAsync();
+      if (auth) {
+        // Log out
+        Facebook.logOutAsync();
+        resetState();
+      } else {
+        await Google.logOutAsync({ accessToken, ...config });
+        resetState();
+      }
     }
   };
 
@@ -227,11 +232,11 @@ const Setting = ({ navigation }) => {
       </View>
       <TouchableOpacity
         disabled={loading}
-        onPress={handleGoogleSignOut}
+        onPress={handleSignOut}
         style={styles.btnValider}
       >
         {loading ? (
-          <ActivityIndicator size={35} color='#000' />
+          <ActivityIndicator size={35} color="#000" />
         ) : (
           <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
             {i18n.t('sign_out')}

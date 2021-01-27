@@ -6,14 +6,7 @@ import React, {
   useState,
   useContext,
 } from 'react';
-import {
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-} from 'react-native';
+import { Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
@@ -24,28 +17,20 @@ import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
 import Context from '../../contextApi/context';
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
 
 const HomeScreen = props => {
-  const [fontLoaded, setFontLoaded] = useState(false);
   const { state } = useContext(Context);
-  const [loading, setLoading] = React.useState(false);
-  const [isFocused, setIsFocused] = React.useState(false);
-  // const [userImage, setuserImage] = useState(
-  //   state ? state.userDetails.image : '',
-  // );
-  // const [userName, setuserName] = useState(state ? state.userDetails.name : '');
-
-  const fetchFont = () => {
-    return Font.loadAsync({
-      ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
-    });
-  };
+  const [loading, setLoading] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     setLoading(!loading);
-  }, [props.saveLocation, props.nextPageToken, props.Data]);
+  }, [
+    props.saveLocation,
+    props.nextPageToken,
+    props.Data,
+    state.userDetails.name,
+  ]);
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
 
@@ -173,15 +158,6 @@ const HomeScreen = props => {
     const renderTitle = () => {
       return (
         <>
-          {/* {!fontLoaded ? (
-            <AppLoading
-              startAsync={fetchFont}
-              onFinish={() => {
-                setFontLoaded(true);
-              }}
-              onError={() => console.log('ERROR')}
-            />
-          ) : ( */}
           <View
             style={[
               {
@@ -236,27 +212,8 @@ const HomeScreen = props => {
     });
   });
 
-  // useEffect(() => {
-
-  //   setInterval(() => {
-  //     setLoading(false)
-  //   }, 100)
-
-  // }, [isFocused])
-
   return (
     <>
-      {/* <View style={[{ position: "absolute", left: spacing(2.5), top: spacing(1), zIndex: 999999999, marginTop: getStatusBarHeight() },
-        // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
-      ]}>
-        <TouchableOpacity
-          onPress={() =>
-            props.navigation.navigate('Setting')}>
-          <SvgHeaderUserIcon height={HEADER_BAR_HEIGHT} />
-        </TouchableOpacity>
-
-      </View> */}
-      {/* <StatusBar backgroundColor={Colors.yellow}    /> */}
       {loading ? (
         <View>
           <Animated.ScrollView
@@ -397,11 +354,6 @@ const HomeScreen = props => {
                         padding: 4,
                       }}
                     >
-                      {/* <Entypo
-                  name="cross"
-                  color={'#1E272E'}
-                  size={25}
-              /> */}
                       <AntDesign name="close" size={14} color="#485460" />
                     </View>
                   </TouchableOpacity>

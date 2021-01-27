@@ -137,6 +137,7 @@ export default function HomeScreenContent({
                 data={dummyArray}
                 showsVerticalScrollIndicator={false}
                 alwaysBounceHorizontal={false}
+                scrollEnabled={false}
                 alwaysBounceVertical={false}
                 bounces={false}
                 keyExtractor={(item, index) => index.toString()}
@@ -147,6 +148,7 @@ export default function HomeScreenContent({
                 showsVerticalScrollIndicator={false}
                 style={{ marginTop: 15 }}
                 alwaysBounceHorizontal={false}
+                scrollEnabled={false}
                 alwaysBounceVertical={false}
                 bounces={false}
                 keyExtractor={(item, index) => index.toString()}

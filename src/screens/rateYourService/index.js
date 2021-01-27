@@ -59,7 +59,7 @@ const RateService = ({ navigation, route }) => {
 
   const handleModalClose = () => {
     setisVisible(false);
-    navigation.navigate('OpenCardReviews');
+    navigation.navigate('Home', { crossIcon: false, Animation: true });
   };
 
   useEffect(() => {

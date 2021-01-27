@@ -14,7 +14,7 @@ import * as Google from 'expo-google-app-auth';
 import i18n from '../../li8n';
 import { loadAsync } from 'expo-font';
 import { config } from '../../constants';
-import { userSignUp } from '../../util';
+import { userSignUp, userGivenName } from '../../util';
 import { useMutation } from 'react-query';
 import { GOOGLE_SIGNUP } from '../../queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -70,12 +70,13 @@ const SocialLogin = ({ navigation, route }) => {
             navigation.navigate('Home', { crossIcon: false });
           }
           let userDetails = {
-            name: res?.user?.given_name,
+            name: userGivenName(res?.user?.given_name),
             image: res?.user?.picture,
             email: res?.user?.email,
             accessToken: accessToken,
             user_id: res?.user?._id,
           };
+
           dispatch({
             type: actionTypes.USER_DETAILS,
             payload: userDetails,
@@ -111,35 +112,51 @@ const SocialLogin = ({ navigation, route }) => {
       if (type === 'success') {
         // Get the user's name using Facebook's Graph API
         const response = await fetch(
-          `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)`,
+          `https://graph.facebook.com/me?access_token=${token}&fields=id,name,first_name,last_name,middle_name,email,picture.height(500)`,
         )
           .then(response => response.json())
           .then(async data => {
-            if (vote) {
-              navigation.navigate('RateYourService');
-              setVote(false);
-            } else if (confirmWaiter || HelpUs) {
-              navigation.navigate('OpenCardReviews');
-            } else {
-              navigation.navigate('Home', { crossIcon: false });
-            }
-            let userDetails = {
+            let user = {
               name: data?.name,
-              image: data?.picture?.data?.url,
               email: data?.email,
-              accessToken: token,
-              user_id: data?.id,
+              family_name: data?.last_name,
+              id: data?.id,
+              picture: data?.picture?.data?.url,
+              given_name: data?.middle_name,
             };
-            dispatch({
-              type: actionTypes.USER_DETAILS,
-              payload: userDetails,
+
+            await googleSignup(user, {
+              onSuccess: async res => {
+                if (vote) {
+                  navigation.navigate('RateYourService');
+                  setVote(false);
+                } else if (confirmWaiter || HelpUs) {
+                  navigation.navigate('OpenCardReviews');
+                } else {
+                  navigation.navigate('Home', { crossIcon: false });
+                }
+
+                let userDetails = {
+                  name: res?.user?.given_name,
+                  image: res?.user?.picture,
+                  email: res?.user?.email,
+                  accessToken: token,
+                  user_id: res?.user?._id,
+                };
+
+                dispatch({
+                  type: actionTypes.USER_DETAILS,
+                  payload: userDetails,
+                });
+
+                await AsyncStorage.setItem(
+                  '@userInfo',
+                  JSON.stringify({
+                    ...userDetails,
+                  }),
+                );
+              },
             });
-            await AsyncStorage.setItem(
-              '@userInfo',
-              JSON.stringify({
-                ...userDetails,
-              }),
-            );
           })
           .catch(e => console.log(e));
       } else {
@@ -174,8 +191,8 @@ const SocialLogin = ({ navigation, route }) => {
             />
           </View>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Home', { crossIcon: false })}
-            // onPress={facebookLogin}
+            // onPress={() => navigation.navigate('Home', { crossIcon: false })}
+            onPress={facebookLogin}
             style={styles.btnFb}
           >
             <FontAwesome name="facebook" color="#fff" size={20} />

@@ -215,7 +215,7 @@ const HomeScreen = props => {
               >
                 {!state.userDetails.name
                   ? i18n.t('hello')
-                  : i18n.t('hello') + ' ' + state.userDetails.name.slice(0, 6)}
+                  : i18n.t('hello') + ' ' + state.userDetails.name}
               </Text>
             </Animated.View>
           </View>

@@ -41,7 +41,7 @@ const Setting = ({ navigation }) => {
     /* Log-Out */
     if (accessToken) {
       setLoading(true);
-      // Facebook.logOutAsync();
+      Facebook.logOutAsync();
       await Google.logOutAsync({ accessToken, ...config });
       navigation.replace('socialLogin');
       let userDetails = {

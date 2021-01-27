@@ -10,3 +10,13 @@ export const GET_YOUR_RES = async (get, e = {}) => {
   return await res.json();
 };
 // &max_results=${e.max_results}&page_no=${e.page_no}
+
+export const DELETE_RES = async (get, e = {}) => {
+  let res = await fetch(
+    BASE_URL + `/v1/restaurant-waiters/${e.restaurant_id}?user_id=${e.user_id}`,
+    {
+      method: 'delete',
+    },
+  );
+  return await res.json();
+};

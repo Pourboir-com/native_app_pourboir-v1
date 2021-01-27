@@ -59,7 +59,7 @@ const RateService = ({ navigation, route }) => {
 
   const handleModalClose = () => {
     setisVisible(false);
-    navigation.navigate('Home', { crossIcon: false, Animation: true });
+    navigation.navigate('Home', { crossIcon: false });
   };
 
   useEffect(() => {

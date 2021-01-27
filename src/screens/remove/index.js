@@ -13,11 +13,14 @@ import i18n from '../../li8n';
 import { View } from 'react-native';
 import { Dimensions } from 'react-native';
 import Context from '../../contextApi/context';
+// import { DELETE_RES } from '../../queries';
+// import { useMutation } from 'react-query';
 
 const Remove = props => {
   const [saveLocation, setSaveLocation] = useState('');
   const [data, setData] = useState([]);
   const { state } = useContext(Context);
+  // const [deleteRestaurant] = useMutation(DELETE_RES);
 
   useEffect(() => {
     (async () => {
@@ -53,6 +56,20 @@ const Remove = props => {
       },
     },
   );
+
+  // const DeleteRestaurant = async restaurant_id => {
+  //   if (state.userDetails.user_id) {
+  //     let userInfo = {
+  //       id: restaurant_id,
+  //       user_id: state.userDetails.user_id,
+  //     };
+  //     await deleteRestaurant(userInfo, {
+  //       onSuccess: async () => {
+  //         refetchRestaurant();
+  //       },
+  //     });
+  //   }
+  // };
 
   // const handleLoadMore = () => {
   //   // setnextPageToken(restaurantData.restaurants.next_page_token);
@@ -105,6 +122,7 @@ const Remove = props => {
         refetchRestaurant={refetchRestaurant}
         isFetch={true}
         resIsFetching={resIsFetching}
+        // DeleteRestaurant={DeleteRestaurant}
         Data={data}
         // handleLoadMore={handleLoadMore}
       />

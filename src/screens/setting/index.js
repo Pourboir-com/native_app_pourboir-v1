@@ -22,6 +22,8 @@ import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Facebook from 'expo-facebook';
+import { UPDATE_PICTURE } from '../../queries';
+import { useMutation } from 'react-query';
 
 const imgBg = require('../../assets/images/Group5.png');
 
@@ -29,6 +31,7 @@ const Setting = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const { state, dispatch } = useContext(Context);
   const [image, setImage] = useState();
+  const [updatePicture] = useMutation(UPDATE_PICTURE);
 
   const resetState = async () => {
     navigation.replace('socialLogin');
@@ -51,6 +54,37 @@ const Setting = ({ navigation }) => {
     );
     setLoading(false);
   };
+
+  // const handleChangePicture = async () => {
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [4, 4],
+  //     quality: 1,
+  //   });
+  //   if (!result.cancelled) {
+  //     setImage(result.uri);
+  //     let formData = new FormData();
+
+  //     formData.append('file', {
+  //       uri: result.uri,
+  //       type: 'image/jpeg/jpg',
+  //       name: result.fileName,
+  //       data: result.data,
+  //     });
+
+  //     let UploadData = {
+  //       user_id: state.userDetails.user_id,
+  //       image: formData,
+  //     };
+  //     await updatePicture(UploadData, {
+  //       onSuccess: res => {
+  //         console.log(res);
+  //         console.log('Image');
+  //       },
+  //     });
+  //   }
+  // };
 
   const handleSignOut = async () => {
     const { userInfo } = await getAsyncStorageValues();
@@ -80,6 +114,7 @@ const Setting = ({ navigation }) => {
       });
       if (!result.cancelled) {
         setImage(result.uri);
+        // handleChangePicture();
       }
     } catch (E) {
       console.log(E);
@@ -108,7 +143,10 @@ const Setting = ({ navigation }) => {
             navigation={navigation}
           />
 
-          <TouchableOpacity onPress={() => _pickImage()} style={styles.viewImg}>
+          <TouchableOpacity
+            onPress={()=> _pickImage}
+            style={styles.viewImg}
+          >
             {state.userDetails.image === null ||
             state.userDetails.image === undefined ||
             state.userDetails.image === '' ? (
@@ -137,7 +175,7 @@ const Setting = ({ navigation }) => {
               )}
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => _pickImage()}
+            onPress={()=> _pickImage}
             style={styles.btnPencil}
           >
             <View style={styles.viewPencil}>

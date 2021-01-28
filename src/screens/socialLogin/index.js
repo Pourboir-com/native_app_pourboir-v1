@@ -61,6 +61,7 @@ const SocialLogin = ({ navigation, route }) => {
       let userInfoResponse = await userSignUp(accessToken);
       await googleSignup(userInfoResponse.data, {
         onSuccess: async res => {
+          setLoading(true);
           if (vote) {
             navigation.navigate('RateYourService');
             setVote(false);
@@ -87,6 +88,7 @@ const SocialLogin = ({ navigation, route }) => {
               ...userDetails,
             }),
           );
+          setLoading(false);
         },
         onError: error => {
           console.log(error);
@@ -116,6 +118,8 @@ const SocialLogin = ({ navigation, route }) => {
         )
           .then(response => response.json())
           .then(async data => {
+            setLoading(true);
+
             let user = {
               name: data?.name,
               email: data?.email,
@@ -155,6 +159,8 @@ const SocialLogin = ({ navigation, route }) => {
                     ...userDetails,
                   }),
                 );
+                setLoading(false);
+
               },
             });
           })

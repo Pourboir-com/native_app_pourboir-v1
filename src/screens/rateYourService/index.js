@@ -91,15 +91,16 @@ const RateService = ({ navigation, route }) => {
       setLoading(true);
       let ratingDetails = {
         rating: {
-          hospitality: hospitality,
-          speed: speed,
-          service: service,
-          professionalism: professionalism,
+          hospitality: hospitality || '',
+          speed: speed || '',
+          service: service || '',
+          professionalism: professionalism || '',
         },
-        tip: remarks.replace(/[^0-9]/g, ''),
-        user_id: state.userDetails.user_id,
-        waiter_id: waiter_id,
-        restaurant_id: restaurant_id,
+        tip: remarks.replace(/[^0-9]/g, '') || '',
+        user_id: state.userDetails.user_id || '',
+        waiter_id: waiter_id || '',
+        restaurant_id: restaurant_id || '',
+        currency: currency.currency || '',
       };
       await addRatings(ratingDetails, {
         onSuccess: async () => {

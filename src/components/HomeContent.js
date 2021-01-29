@@ -51,11 +51,10 @@ export default function HomeScreenContent({
     });
   };
 
-  const DeleteRestaurant = async (waiter_id) => {
+  const DeleteRestaurant = async waiter_id => {
     if (state.userDetails.user_id) {
       let Restaurants = [...data];
       Restaurants = Restaurants.filter(item => item?.waiter?._id !== waiter_id);
-      // Restaurants.splice(id, 1);
       setData(Restaurants);
 
       let userInfo = {
@@ -233,8 +232,7 @@ export default function HomeScreenContent({
                       rating={restaurantLoading ? null : itemData.item.rating}
                       name={restaurantLoading ? null : itemData.item.name}
                       DeleteRestaurant={
-                        (data,
-                        i => DeleteRestaurant(itemData?.item?.waiter?._id ))
+                        (data, i => DeleteRestaurant(itemData?.item?.waiter?._id))
                       }
                       distance={
                         restaurantLoading ? null : restaurantDistance(itemData)

@@ -145,7 +145,7 @@ const Setting = ({ navigation }) => {
           />
 
           <TouchableOpacity
-            onPress={handleChangePicture}
+            onPress={_pickImage}
             style={styles.viewImg}
           >
             {state.userDetails.image === null ||
@@ -176,7 +176,7 @@ const Setting = ({ navigation }) => {
               )}
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={handleChangePicture}
+            onPress={_pickImage}
             style={styles.btnPencil}
           >
             <View style={styles.viewPencil}>

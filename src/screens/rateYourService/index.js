@@ -22,7 +22,7 @@ import Context from '../../contextApi/context';
 import { ADD_RATINGS } from '../../queries';
 import { useMutation } from 'react-query';
 import { StatusBar } from 'expo-status-bar';
-
+import NumberFormat from 'react-number-format';
 import i18n from '../../li8n';
 
 const imgBg = require('../../assets/images/Group5.png');
@@ -41,7 +41,6 @@ const RateService = ({ navigation, route }) => {
   const scrollRef = React.useRef(null);
 
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -56,7 +55,6 @@ const RateService = ({ navigation, route }) => {
       keyboardDidShowListener.remove();
     };
   }, []);
-
   const handleModalClose = () => {
     setisVisible(false);
     navigation.navigate('Home', { crossIcon: false });
@@ -88,7 +86,7 @@ const RateService = ({ navigation, route }) => {
           service: service,
           professionalism: professionalism,
         },
-        tip: remarks,
+        tip: remarks.replace(/[^0-9]/g, ''),
         user_id: state.userDetails.user_id,
         waiter_id: waiter_id,
         restaurant_id: restaurant_id,
@@ -314,34 +312,33 @@ const RateService = ({ navigation, route }) => {
             <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
               {i18n.t('your_tip_to_waiter')}
             </Text>
-            <TextInput
-              keyboardType="numeric"
+            <NumberFormat
               value={remarks}
-              onFocus={() => {
-                setKeyboardVisible(true);
-                scrollRef.current.scrollToEnd({ animated: true });
-              }}
-              onBlur={() => {
-                setKeyboardVisible(false);
-              }}
-              onChangeText={e => {
-                scrollRef.current.scrollToEnd({ animated: true });
-                // if (remarks.length - 1 === e.length) {
-                //   setRemarks(e);
-                // } else {
-                //   if (e.length > 0) {
-                //     let str = e.replace('€', '');
-                //     setRemarks(str + '€');
-                //   } else {
-                setRemarks(e);
-                //   }
-                // }
-              }}
-              //  onFocus={() => setonHandleFocus(!onHandleFocus)}
-              style={[
-                styles.inputStyle,
-                { fontFamily: 'ProximaNova', textAlign: 'center' },
-              ]}
+              thousandSeparator={true}
+              prefix={'€ '}
+              renderText={formattedValue => (
+                <TextInput
+                  keyboardType="numeric"
+                  value={formattedValue}
+                  onFocus={() => {
+                    setKeyboardVisible(true);
+                    scrollRef.current.scrollToEnd({ animated: true });
+                  }}
+                  onBlur={() => {
+                    setKeyboardVisible(false);
+                  }}
+                  onChangeText={e => {
+                    scrollRef.current.scrollToEnd({ animated: true });
+                    setRemarks(e);
+                  }}
+                  //  onFocus={() => setonHandleFocus(!onHandleFocus)}
+                  style={[
+                    styles.inputStyle,
+                    { fontFamily: 'ProximaNova', textAlign: 'center' },
+                  ]}
+                />
+              )}
+              displayType={'text'}
             />
           </View>
         </View>

@@ -10,7 +10,7 @@ export const userGivenName = (name) => {
   let given_name;
   let fullName = name.split(' ');
   if (fullName.length>=3) {
-    given_name = fullName[2];
+    given_name = fullName[1];
   }
   else if (fullName.length === 2) {
     given_name = fullName[0];

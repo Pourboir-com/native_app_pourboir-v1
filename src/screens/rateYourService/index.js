@@ -316,6 +316,7 @@ const RateService = ({ navigation, route }) => {
               value={remarks}
               thousandSeparator={true}
               prefix={'€ '}
+              // suffix={' €'}
               renderText={formattedValue => (
                 <TextInput
                   keyboardType="numeric"

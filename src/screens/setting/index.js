@@ -93,15 +93,16 @@ const Setting = ({ navigation, route }) => {
     /* Log-Out */
     if (accessToken) {
       setLoading(true);
-      // const auth = await Facebook.getAuthenticationCredentialAsync();
-      // if (auth) {
-      // Log out
-      Facebook.logOutAsync();
-      // resetState();
-      // } else {
-      await Google.logOutAsync({ accessToken, ...config });
-      resetState();
-      // }
+      const auth = await Facebook.getAuthenticationCredentialAsync();
+      if (auth) {
+        Facebook.logOutAsync();
+        resetState();
+      } else if (!auth) {
+        resetState();
+      } else {
+        await Google.logOutAsync({ accessToken, ...config });
+        resetState();
+      }
     }
   };
 

@@ -43,7 +43,7 @@ export default function HomeScreenContent({
     setData(Data);
   }, [Data]);
 
-  const dummyArray = [1, 2, 3];
+  const dummyArray = [1, 2];
 
   const fetchFont = () => {
     return Font.loadAsync({
@@ -142,7 +142,7 @@ export default function HomeScreenContent({
               alwaysBounceHorizontal={false}
               alwaysBounceVertical={false}
               bounces={false}
-              style={{ backgroundColor: '#f9f9f9' }}
+              style={{ backgroundColor: '#f9f9f9', flex: 1 }}
             >
               {!route.params.crossIcon && (
                 <Text

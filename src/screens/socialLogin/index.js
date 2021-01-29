@@ -26,7 +26,7 @@ const imgWaiter = require('../../assets/images/waiter2.png');
 import * as Facebook from 'expo-facebook';
 
 const SocialLogin = ({ navigation, route }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [googleSignup] = useMutation(GOOGLE_SIGNUP);
   const [vote, setVote] = useState(false);
   const [confirmWaiter, setconfirmWaiter] = useState(false);
@@ -48,20 +48,18 @@ const SocialLogin = ({ navigation, route }) => {
       });
     }
     loadFont();
-    setLoading(false);
   }, []);
   const { dispatch } = useContext(Context);
   const handleGoogleSignIn = async () => {
-    setLoading(true);
     // First- obtain access token from Expo's Google API
     const { type, accessToken, user } = await Google.logInAsync(config);
-    setLoading(false);
     if (type === 'success') {
       // Then you can use the Google REST API
       let userInfoResponse = await userSignUp(accessToken);
       await googleSignup(userInfoResponse.data, {
         onSuccess: async res => {
           setLoading(true);
+
           if (vote) {
             navigation.navigate('RateYourService');
             setVote(false);
@@ -121,12 +119,12 @@ const SocialLogin = ({ navigation, route }) => {
             setLoading(true);
 
             let user = {
-              name: data?.name,
-              email: data?.email,
-              family_name: data?.last_name,
-              id: data?.id,
-              picture: data?.picture?.data?.url,
-              given_name: data?.middle_name,
+              name: data?.name || '',
+              email: data?.email || '',
+              family_name: data?.last_name || '',
+              id: data?.id || '',
+              picture: data?.picture?.data?.url || '',
+              given_name: data?.middle_name || '',
             };
 
             await googleSignup(user, {
@@ -141,7 +139,7 @@ const SocialLogin = ({ navigation, route }) => {
                 }
 
                 let userDetails = {
-                  name: res?.user?.given_name,
+                  name: userGivenName(res?.user?.full_name),
                   image: res?.user?.picture,
                   email: res?.user?.email,
                   accessToken: token,
@@ -160,7 +158,6 @@ const SocialLogin = ({ navigation, route }) => {
                   }),
                 );
                 setLoading(false);
-
               },
             });
           })

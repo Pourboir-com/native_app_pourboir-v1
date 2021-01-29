@@ -9,9 +9,10 @@ export const userSignUp = async accessToken => {
 export const userGivenName = (name) => {
   let given_name;
   let fullName = name.split(' ');
-  if (fullName.length >= 2) {
-    given_name = fullName[1];
-  } else if (fullName.length === 1) {
+  if (fullName.length>=3) {
+    given_name = fullName[2];
+  }
+  else if (fullName.length === 2) {
     given_name = fullName[0];
   } else {
     given_name = name;

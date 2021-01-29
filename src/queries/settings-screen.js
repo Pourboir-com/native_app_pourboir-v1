@@ -6,7 +6,6 @@ export const UPDATE_PICTURE = async e => {
     method: 'put',
     body: e,
     headers: {
-      Accept: 'application/json',
       'Content-Type': 'multipart/form-data',
     },
   });

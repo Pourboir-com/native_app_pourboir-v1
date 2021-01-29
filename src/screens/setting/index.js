@@ -55,36 +55,37 @@ const Setting = ({ navigation }) => {
     setLoading(false);
   };
 
-  // const handleChangePicture = async () => {
-  //   let result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //     allowsEditing: true,
-  //     aspect: [4, 4],
-  //     quality: 1,
-  //   });
-  //   if (!result.cancelled) {
-  //     setImage(result.uri);
-  //     let formData = new FormData();
+  const handleChangePicture = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+    if (!result.cancelled) {
+      setImage(result.uri);
+      console.log(result.uri);
+      let formData = new FormData();
 
-  //     formData.append('file', {
-  //       uri: result.uri,
-  //       type: 'image/jpeg/jpg',
-  //       name: result.fileName,
-  //       data: result.data,
-  //     });
+      formData.append('image', {
+        uri: result.uri,
+        type: 'image/jpeg/jpg',
+        name: result.fileName,
+        data: result.data,
+      });
 
-  //     let UploadData = {
-  //       user_id: state.userDetails.user_id,
-  //       image: formData,
-  //     };
-  //     await updatePicture(UploadData, {
-  //       onSuccess: res => {
-  //         console.log(res);
-  //         console.log('Image');
-  //       },
-  //     });
-  //   }
-  // };
+      let UploadData = {
+        user_id: state.userDetails.user_id,
+        image: formData,
+      };
+      await updatePicture(UploadData, {
+        onSuccess: res => {
+          console.log(res);
+          console.log('Image');
+        },
+      });
+    }
+  };
 
   const handleSignOut = async () => {
     const { userInfo } = await getAsyncStorageValues();
@@ -92,15 +93,15 @@ const Setting = ({ navigation }) => {
     /* Log-Out */
     if (accessToken) {
       setLoading(true);
-      const auth = await Facebook.getAuthenticationCredentialAsync();
-      if (auth) {
-        // Log out
-        Facebook.logOutAsync();
-        resetState();
-      } else {
-        await Google.logOutAsync({ accessToken, ...config });
-        resetState();
-      }
+      // const auth = await Facebook.getAuthenticationCredentialAsync();
+      // if (auth) {
+      // Log out
+      Facebook.logOutAsync();
+      // resetState();
+      // } else {
+      await Google.logOutAsync({ accessToken, ...config });
+      resetState();
+      // }
     }
   };
 
@@ -144,7 +145,7 @@ const Setting = ({ navigation }) => {
           />
 
           <TouchableOpacity
-            onPress={()=> _pickImage}
+            onPress={handleChangePicture}
             style={styles.viewImg}
           >
             {state.userDetails.image === null ||
@@ -175,7 +176,7 @@ const Setting = ({ navigation }) => {
               )}
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={()=> _pickImage}
+            onPress={handleChangePicture}
             style={styles.btnPencil}
           >
             <View style={styles.viewPencil}>

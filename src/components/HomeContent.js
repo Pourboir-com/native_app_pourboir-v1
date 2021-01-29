@@ -51,15 +51,21 @@ export default function HomeScreenContent({
     });
   };
 
-  const DeleteRestaurant = async waiter_id => {
+  const DeleteRestaurant = async (waiter_id) => {
     if (state.userDetails.user_id) {
+      let Restaurants = [...data];
+      Restaurants = Restaurants.filter(item => item?.waiter?._id !== waiter_id);
+      // Restaurants.splice(id, 1);
+      setData(Restaurants);
+
       let userInfo = {
         id: waiter_id,
         user_id: state.userDetails.user_id,
       };
+
       await deleteRestaurant(userInfo, {
         onSuccess: async => {
-          refetchRestaurant();
+          // refetchRestaurant();
         },
       });
     }
@@ -226,8 +232,9 @@ export default function HomeScreenContent({
                       img={restaurantLoading ? null : itemData.item.photos[0]}
                       rating={restaurantLoading ? null : itemData.item.rating}
                       name={restaurantLoading ? null : itemData.item.name}
-                      DeleteRestaurant={() =>
-                        DeleteRestaurant(itemData?.item?.waiter?._id)
+                      DeleteRestaurant={
+                        (data,
+                        i => DeleteRestaurant(itemData?.item?.waiter?._id ))
                       }
                       distance={
                         restaurantLoading ? null : restaurantDistance(itemData)
@@ -262,8 +269,8 @@ export default function HomeScreenContent({
                       img={restaurantLoading ? null : itemData.item.photos[0]}
                       rating={restaurantLoading ? null : itemData.item.rating}
                       name={restaurantLoading ? null : itemData.item.name}
-                      DeleteRestaurant={() =>
-                        DeleteRestaurant(itemData?.item?.waiter?._id)
+                      DeleteRestaurant={(data, i) =>
+                        DeleteRestaurant(itemData?.item?.waiter?._id, i)
                       }
                       distance={
                         restaurantLoading ? null : restaurantDistance(itemData)

@@ -83,6 +83,7 @@ const RateService = ({ navigation, route }) => {
     restaurant_id,
     waiter_id,
     refetchWaiters,
+    refetchRestaurant,
   } = route.params;
 
   const handleAddRatings = async () => {
@@ -104,6 +105,7 @@ const RateService = ({ navigation, route }) => {
         onSuccess: async () => {
           setLoading(false);
           setisVisible(true);
+          refetchRestaurant();
           await refetchWaiters();
         },
       });

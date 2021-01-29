@@ -223,6 +223,7 @@ const ReviewDetails = ({ navigation, route }) => {
                     restaurant_id: place_id,
                     waiter_id: itemData?.item?._id,
                     refetchWaiters: refetchWaiters,
+                    refetchRestaurant: refetchRestaurant,
                   })
                 }
                 style={styles.viewItemConatier}

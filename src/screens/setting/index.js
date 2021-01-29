@@ -33,7 +33,7 @@ const Setting = ({ navigation }) => {
   //   setuserName(state.userDetails.name);
   //   setImage(state.userDetails.image);
   // }, [state]);
-
+  //user signout
   const handleGoogleSignOut = async () => {
     const { userInfo } = await getAsyncStorageValues();
     const accessToken = userInfo.accessToken;

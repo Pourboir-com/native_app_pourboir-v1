@@ -9,6 +9,7 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   ScrollView,
+  ActivityIndicator,
   Dimensions,
   Platform,
   Keyboard,
@@ -32,6 +33,7 @@ const HelpUsImproveModal = ({
   refetchRestaurant,
   navigation,
 }) => {
+  const [loading, setLoading] = useState(false);
   const [addingWaiters] = useMutation(ADDING_WAITERS);
   let contentEnd;
   const scrollRef = React.useRef(null);
@@ -64,17 +66,19 @@ const HelpUsImproveModal = ({
   }, []);
 
   const handleAddingWaiters = async () => {
-    let waiter = {
-      restaurant_id: place_id,
-      full_name: waiterName,
-      created_by: state.userDetails.user_id,
-    };
     if (state.userDetails.user_id) {
+      setLoading(true);
+      let waiter = {
+        restaurant_id: place_id,
+        full_name: waiterName,
+        created_by: state.userDetails.user_id,
+      };
       if (waiterName) {
         await addingWaiters(waiter, {
           onSuccess: async () => {
-            handleModalClose();
             await refetchWaiters();
+            handleModalClose();
+            setLoading(false);
             await refetchRestaurant();
             setWaiterName('');
           },
@@ -82,7 +86,7 @@ const HelpUsImproveModal = ({
       }
     } else {
       handleModalClose();
-      navigation.navigate('socialLogin');
+      navigation.navigate('socialLogin', { HelpUs: true });
     }
   };
 
@@ -105,6 +109,7 @@ const HelpUsImproveModal = ({
         alwaysBounceHorizontal={false}
         alwaysBounceVertical={false}
         bounces={false}
+        keyboardShouldPersistTaps={'handled'}
         style={onHandleFocus && Platform.OS === 'ios' ? { flex: 1 } : {}}
         // style={{ flex: 1 }}
         onContentSizeChange={(contentWidth, contentHeight) => {
@@ -177,16 +182,22 @@ const HelpUsImproveModal = ({
             }}
           />
           <TouchableOpacity
-            disabled={waiterName ? false : true}
+            disabled={loading}
             onPress={handleAddingWaiters}
             style={[
               styles.btnConfrm,
               waiterName !== '' ? { backgroundColor: Colors.yellow } : null,
             ]}
           >
-            <Text style={[styles.txtBtnConfrm, { fontFamily: 'ProximaNova' }]}>
-              {i18n.t('add')}{' '}
-            </Text>
+            {loading ? (
+              <ActivityIndicator size={30} color="#000" />
+            ) : (
+              <Text
+                style={[styles.txtBtnConfrm, { fontFamily: 'ProximaNova' }]}
+              >
+                {i18n.t('add')}{' '}
+              </Text>
+            )}
           </TouchableOpacity>
         </KeyboardAvoidingView>
       </ScrollView>

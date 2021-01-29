@@ -21,6 +21,9 @@ import i18n from '../../li8n';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Facebook from 'expo-facebook';
+import { UPDATE_PICTURE } from '../../queries';
+import { useMutation } from 'react-query';
 
 const imgBg = require('../../assets/images/Group5.png');
 
@@ -28,38 +31,77 @@ const Setting = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const { state, dispatch } = useContext(Context);
   const [image, setImage] = useState();
+  const [updatePicture] = useMutation(UPDATE_PICTURE);
 
-  // useEffect(() => {
-  //   setuserName(state.userDetails.name);
-  //   setImage(state.userDetails.image);
-  // }, [state]);
+  const resetState = async () => {
+    navigation.replace('socialLogin');
+    let userDetails = {
+      name: '',
+      image: '',
+      email: '',
+      accessToken: '',
+      user_id: '',
+    };
+    dispatch({
+      type: actionTypes.USER_DETAILS,
+      payload: userDetails,
+    });
+    await AsyncStorage.setItem(
+      '@userInfo',
+      JSON.stringify({
+        ...userDetails,
+      }),
+    );
+    setLoading(false);
+  };
 
-  const handleGoogleSignOut = async () => {
+  const handleChangePicture = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+    if (!result.cancelled) {
+      setImage(result.uri);
+      console.log(result.uri);
+      let formData = new FormData();
+
+      formData.append('image', {
+        uri: result.uri,
+        type: 'image/jpeg/jpg',
+        name: result.fileName,
+        data: result.data,
+      });
+
+      let UploadData = {
+        user_id: state.userDetails.user_id,
+        image: formData,
+      };
+      await updatePicture(UploadData, {
+        onSuccess: res => {
+          console.log(res);
+          console.log('Image');
+        },
+      });
+    }
+  };
+
+  const handleSignOut = async () => {
     const { userInfo } = await getAsyncStorageValues();
     const accessToken = userInfo.accessToken;
     /* Log-Out */
     if (accessToken) {
       setLoading(true);
+      // const auth = await Facebook.getAuthenticationCredentialAsync();
+      // if (auth) {
+      // Log out
+      Facebook.logOutAsync();
+      // resetState();
+      // } else {
       await Google.logOutAsync({ accessToken, ...config });
-      navigation.replace('socialLogin');
-      let userDetails = {
-        name: '',
-        image: '',
-        email: '',
-        accessToken: '',
-        user_id: '',
-      };
-      dispatch({
-        type: actionTypes.USER_DETAILS,
-        payload: userDetails,
-      });
-      await AsyncStorage.setItem(
-        '@userInfo',
-        JSON.stringify({
-          ...userDetails,
-        }),
-      );
-      setLoading(false);
+      resetState();
+      // }
     }
   };
 
@@ -73,6 +115,7 @@ const Setting = ({ navigation }) => {
       });
       if (!result.cancelled) {
         setImage(result.uri);
+        // handleChangePicture();
       }
     } catch (E) {
       console.log(E);
@@ -101,7 +144,10 @@ const Setting = ({ navigation }) => {
             navigation={navigation}
           />
 
-          <TouchableOpacity onPress={() => _pickImage()} style={styles.viewImg}>
+          <TouchableOpacity
+            onPress={_pickImage}
+            style={styles.viewImg}
+          >
             {state.userDetails.image === null ||
             state.userDetails.image === undefined ||
             state.userDetails.image === '' ? (
@@ -130,7 +176,7 @@ const Setting = ({ navigation }) => {
               )}
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => _pickImage()}
+            onPress={_pickImage}
             style={styles.btnPencil}
           >
             <View style={styles.viewPencil}>
@@ -225,11 +271,11 @@ const Setting = ({ navigation }) => {
       </View>
       <TouchableOpacity
         disabled={loading}
-        onPress={handleGoogleSignOut}
+        onPress={handleSignOut}
         style={styles.btnValider}
       >
         {loading ? (
-          <ActivityIndicator size={40} color='#000' />
+          <ActivityIndicator size={35} color="#000" />
         ) : (
           <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
             {i18n.t('sign_out')}

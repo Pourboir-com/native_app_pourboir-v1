@@ -21,19 +21,19 @@ const HomeCard = ({
   name,
   distance,
   services,
+  DeleteRestaurant,
   crossIcon,
-  deleteCall,
   place_id,
   refetchRestaurant,
 }) => {
   const [fontLoaded, setFontLoaded] = useState(false);
-  // const {crossIcon} = routes.params;
-  // Star arrayyyyyyyy
   const [starSelect, setstarSelect] = useState(rating);
   const obj = [1, 2, 3, 4, 5];
+
   const onPressStar = v => {
     setstarSelect(v);
   };
+
   const fetchFont = () => {
     return Font.loadAsync({
       ProximaNova: require('../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
@@ -70,7 +70,11 @@ const HomeCard = ({
           }
           style={[styles.viewItemConatier]}
         >
-          <ImageBackground style={styles.imgCard} source={{ uri: img }}>
+          <ImageBackground
+            style={styles.imgCard}
+            resizeMode="cover"
+            source={{ uri: img }}
+          >
             <LinearGradient
               style={{
                 zIndex: 100,
@@ -82,11 +86,12 @@ const HomeCard = ({
             ></LinearGradient>
             {crossIcon && (
               <TouchableOpacity
+                onPress={DeleteRestaurant}
                 style={[
                   styles.btnCross,
                   { zIndex: 1000, marginRight: -5, marginTop: -5 },
                 ]}
-                onPress={deleteCall}
+                // onPress={deleteCall}
               >
                 <View
                   style={{
@@ -121,7 +126,10 @@ const HomeCard = ({
             )}
 
             <View style={{ zIndex: 101, padding: 12 }}>
-              <View pointerEvents="none" style={{ flexDirection: 'row', zIndex: 9999 }}>
+              <View
+                pointerEvents="none"
+                style={{ flexDirection: 'row', zIndex: 9999 }}
+              >
                 {obj.map((v, i) => {
                   return (
                     <TouchableOpacity

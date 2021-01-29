@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { ImageBackground, Animated, Dimensions } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
@@ -10,10 +10,7 @@ import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 
 export default function SplashScreen(props) {
-  // const [Internet, setInternet] = React.useState(false);
-  // const [location, setLocation] = React.useState(false);
   const { dispatch } = useContext(Context);
-
   useEffect(() => {
     (async () => {
       const { userInfo = {} } = await getAsyncStorageValues();
@@ -31,20 +28,8 @@ export default function SplashScreen(props) {
     })();
   }, []);
 
-  // const checkInternet = () => {
-  //   NetInfo.fetch().then(state => {
-  //     if (state.isConnected) {
-  //       setInternet(true);
-  //     } else {
-  //       setInternet(false);
-  //     }
-  //   });
-  // };
-
   const [springValue] = React.useState(new Animated.Value(0.5));
   const locationFunction = async () => {
-    // const Location_Permission = Permissions.askAsync(Permissions.LOCATION);
-    // if(Location_Permission){}
     try {
       let values = await Location.requestPermissionsAsync();
       if (values === 'granted') {
@@ -55,11 +40,13 @@ export default function SplashScreen(props) {
           }),
         );
       }
+
       const isLocation = await Location.hasServicesEnabledAsync();
       if (isLocation) {
         const location = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Highest,
         });
+
         await AsyncStorage.setItem(
           '@location',
           JSON.stringify({

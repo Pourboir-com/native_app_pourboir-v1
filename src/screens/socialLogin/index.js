@@ -14,7 +14,7 @@ import * as Google from 'expo-google-app-auth';
 import i18n from '../../li8n';
 import { loadAsync } from 'expo-font';
 import { config } from '../../constants';
-import { userSignUp } from '../../util';
+import { userSignUp, userGivenName } from '../../util';
 import { useMutation } from 'react-query';
 import { GOOGLE_SIGNUP } from '../../queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -26,12 +26,17 @@ const imgWaiter = require('../../assets/images/waiter2.png');
 import * as Facebook from 'expo-facebook';
 
 const SocialLogin = ({ navigation, route }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [googleSignup] = useMutation(GOOGLE_SIGNUP);
   const [vote, setVote] = useState(false);
-
+  const [confirmWaiter, setconfirmWaiter] = useState(false);
+  const [HelpUs, setHelpUs] = useState();
   useEffect(() => {
     setVote(route?.params?.vote ? route?.params?.vote : false);
+    setconfirmWaiter(
+      route?.params?.confirmWaiter ? route?.params?.confirmWaiter : false,
+    );
+    setHelpUs(route?.params?.HelpUs ? route?.params?.HelpUs : false);
   }, [route.params]);
 
   useEffect(() => {
@@ -43,32 +48,34 @@ const SocialLogin = ({ navigation, route }) => {
       });
     }
     loadFont();
-    setLoading(false);
   }, []);
   const { dispatch } = useContext(Context);
   const handleGoogleSignIn = async () => {
-    setLoading(true);
     // First- obtain access token from Expo's Google API
     const { type, accessToken, user } = await Google.logInAsync(config);
-    setLoading(false);
     if (type === 'success') {
       // Then you can use the Google REST API
       let userInfoResponse = await userSignUp(accessToken);
       await googleSignup(userInfoResponse.data, {
         onSuccess: async res => {
+          setLoading(true);
+
           if (vote) {
             navigation.navigate('RateYourService');
             setVote(false);
+          } else if (confirmWaiter || HelpUs) {
+            navigation.navigate('OpenCardReviews');
           } else {
-            navigation.replace('Home', { crossIcon: false });
+            navigation.navigate('Home', { crossIcon: false });
           }
           let userDetails = {
-            name: res?.user?.given_name,
+            name: userGivenName(res?.user?.given_name),
             image: res?.user?.picture,
             email: res?.user?.email,
             accessToken: accessToken,
             user_id: res?.user?._id,
           };
+
           dispatch({
             type: actionTypes.USER_DETAILS,
             payload: userDetails,
@@ -79,6 +86,7 @@ const SocialLogin = ({ navigation, route }) => {
               ...userDetails,
             }),
           );
+          setLoading(false);
         },
         onError: error => {
           console.log(error);
@@ -86,31 +94,81 @@ const SocialLogin = ({ navigation, route }) => {
       });
     }
   };
-  // const facebookLogin = async () => {
-  //   try {
-  //     await Facebook.initializeAsync({
-  //       appId: '771555200360518',
-  //     });
-  //     const {
-  //       type,
-  //       token,
-  //       expirationDate,
-  //       permissions,
-  //       declinedPermissions,
-  //     } = await Facebook.logInWithReadPermissionsAsync({
-  //       permissions: ['public_profile'],
-  //     });
-  //     if (type === 'success') {
-  //       // Get the user's name using Facebook's Graph API
-  //       const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-  //       alert('Logged in!', `Hi ${(await response.json()).name}!`);
-  //     } else {
-  //       // type === 'cancel'
-  //     }
-  //   } catch ({ message }) {
-  //     alert(`Facebook Login Error: ${message}`);
-  //   }
-  // };
+
+  const facebookLogin = async () => {
+    try {
+      await Facebook.initializeAsync({
+        appId: '771555200360518',
+      });
+      const {
+        type,
+        token,
+        expirationDate,
+        permissions,
+        declinedPermissions,
+      } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ['public_profile', 'email'],
+      });
+      if (type === 'success') {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(
+          `https://graph.facebook.com/me?access_token=${token}&fields=id,name,first_name,last_name,middle_name,email,picture.height(500)`,
+        )
+          .then(response => response.json())
+          .then(async data => {
+            setLoading(true);
+
+            let user = {
+              name: data?.name || '',
+              email: data?.email || '',
+              family_name: data?.last_name || '',
+              id: data?.id || '',
+              picture: data?.picture?.data?.url || '',
+              given_name: data?.middle_name || '',
+            };
+
+            await googleSignup(user, {
+              onSuccess: async res => {
+                if (vote) {
+                  navigation.navigate('RateYourService');
+                  setVote(false);
+                } else if (confirmWaiter || HelpUs) {
+                  navigation.navigate('OpenCardReviews');
+                } else {
+                  navigation.navigate('Home', { crossIcon: false });
+                }
+
+                let userDetails = {
+                  name: userGivenName(res?.user?.full_name),
+                  image: res?.user?.picture,
+                  email: res?.user?.email,
+                  accessToken: token,
+                  user_id: res?.user?._id,
+                };
+
+                dispatch({
+                  type: actionTypes.USER_DETAILS,
+                  payload: userDetails,
+                });
+
+                await AsyncStorage.setItem(
+                  '@userInfo',
+                  JSON.stringify({
+                    ...userDetails,
+                  }),
+                );
+                setLoading(false);
+              },
+            });
+          })
+          .catch(e => console.log(e));
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  };
 
   return (
     <View
@@ -136,8 +194,8 @@ const SocialLogin = ({ navigation, route }) => {
             />
           </View>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Home', { crossIcon: false })}
-            // onPress={facebookLogin}
+            // onPress={() => navigation.navigate('Home', { crossIcon: false })}
+            onPress={facebookLogin}
             style={styles.btnFb}
           >
             <FontAwesome name="facebook" color="#fff" size={20} />

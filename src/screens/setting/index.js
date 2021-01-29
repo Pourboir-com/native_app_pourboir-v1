@@ -86,7 +86,7 @@ const Setting = ({ navigation, route }) => {
       });
     }
   };
-
+  //user signout
   const handleSignOut = async () => {
     const { userInfo } = await getAsyncStorageValues();
     const accessToken = userInfo.accessToken;

@@ -85,7 +85,7 @@ const HomeScreen = props => {
             refetchRestaurant={refetchRestaurant}
             resIsFetching={resIsFetching}
             saveLocation={saveLocation}
-            nextPageToken={nextPageToken}
+            // nextPageToken={nextPageToken}
             Data={data}
           >
             <StatusBar translucent={true} style="dark" />

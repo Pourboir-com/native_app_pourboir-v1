@@ -27,12 +27,12 @@ import { useMutation } from 'react-query';
 
 const imgBg = require('../../assets/images/Group5.png');
 
-const Setting = ({ navigation }) => {
+const Setting = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const { state, dispatch } = useContext(Context);
   const [image, setImage] = useState();
   const [updatePicture] = useMutation(UPDATE_PICTURE);
-
+  const { RefetchRestaurant } = route.params;
   const resetState = async () => {
     navigation.replace('socialLogin');
     let userDetails = {
@@ -144,10 +144,7 @@ const Setting = ({ navigation }) => {
             navigation={navigation}
           />
 
-          <TouchableOpacity
-            onPress={_pickImage}
-            style={styles.viewImg}
-          >
+          <TouchableOpacity onPress={_pickImage} style={styles.viewImg}>
             {state.userDetails.image === null ||
             state.userDetails.image === undefined ||
             state.userDetails.image === '' ? (
@@ -175,10 +172,7 @@ const Setting = ({ navigation }) => {
                 />
               )}
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={_pickImage}
-            style={styles.btnPencil}
-          >
+          <TouchableOpacity onPress={_pickImage} style={styles.btnPencil}>
             <View style={styles.viewPencil}>
               <MaterialCommunityIcons
                 name="pencil-outline"
@@ -234,6 +228,7 @@ const Setting = ({ navigation }) => {
             onPress={() =>
               navigation.navigate('Remove', {
                 crossIcon: true,
+                RefetchRestaurant,
               })
             }
             style={[styles.viewItem, { marginBottom: 0 }]}

@@ -39,7 +39,7 @@ const ConfirmationModal = ({
         restaurant_id: place_id,
       };
       await IAMWAITER(IWaiter, {
-        onSuccess: async () => {
+        onSuccess: async (res) => {
           await refetchWaiters();
           handleModalClose();
           setLoading(false);

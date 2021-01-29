@@ -24,12 +24,14 @@ import { useMutation } from 'react-query';
 import { StatusBar } from 'expo-status-bar';
 import NumberFormat from 'react-number-format';
 import i18n from '../../li8n';
-
 const imgBg = require('../../assets/images/Group5.png');
+import { getAsyncStorageValues } from '../../constants';
+var getCountry = require('country-currency-map').getCountry;
 
 const RateService = ({ navigation, route }) => {
   const { state } = useContext(Context);
   const [hospitality, setHospitality] = useState();
+  const [currency, setCurrency] = useState();
   const [speed, setSpeed] = useState();
   const [service, setService] = useState();
   const [professionalism, setProfessionalism] = useState();
@@ -37,10 +39,16 @@ const RateService = ({ navigation, route }) => {
   const [isVisible, setisVisible] = useState(false);
   const [addRatings] = useMutation(ADD_RATINGS);
   const [loading, setLoading] = useState(false);
-
   const scrollRef = React.useRef(null);
-
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { country } = await getAsyncStorageValues();
+      setCurrency(getCountry(JSON.parse(country).country));
+    })();
+  }, []);
+
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -55,6 +63,7 @@ const RateService = ({ navigation, route }) => {
       keyboardDidShowListener.remove();
     };
   }, []);
+
   const handleModalClose = () => {
     setisVisible(false);
     navigation.navigate('Home', { crossIcon: false });
@@ -315,8 +324,7 @@ const RateService = ({ navigation, route }) => {
             <NumberFormat
               value={remarks}
               thousandSeparator={true}
-              prefix={'€ '}
-              // suffix={' €'}
+              prefix={currency ? `${currency.currency} ` : ''}
               renderText={formattedValue => (
                 <TextInput
                   keyboardType="numeric"

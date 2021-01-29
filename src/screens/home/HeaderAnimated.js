@@ -27,7 +27,7 @@ const HomeScreen = props => {
     setLoading(!loading);
   }, [
     props.saveLocation,
-    props.nextPageToken,
+    // props.nextPageToken,
     props.Data,
     state.userDetails.name,
   ]);
@@ -137,7 +137,9 @@ const HomeScreen = props => {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              onPress={() => props.navigation.navigate('Setting')}
+              onPress={() => props.navigation.navigate('Setting', {
+                RefetchRestaurant: props.refetchRestaurant,
+              })}
             >
               <Image
                 style={{

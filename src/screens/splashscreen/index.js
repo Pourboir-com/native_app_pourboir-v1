@@ -11,6 +11,7 @@ import * as actionTypes from '../../contextApi/actionTypes';
 
 export default function SplashScreen(props) {
   const { dispatch } = useContext(Context);
+
   useEffect(() => {
     (async () => {
       const { userInfo = {} } = await getAsyncStorageValues();
@@ -47,6 +48,20 @@ export default function SplashScreen(props) {
           accuracy: Location.Accuracy.Highest,
         });
 
+        Location.getCurrentPositionAsync().then(pos => {
+          Location.reverseGeocodeAsync({
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+          }).then(async res => {
+            await AsyncStorage.setItem(
+              '@Country',
+              JSON.stringify({
+                country: res[0].country,
+              }),
+            );
+          });
+        });
+
         await AsyncStorage.setItem(
           '@location',
           JSON.stringify({
@@ -54,6 +69,7 @@ export default function SplashScreen(props) {
             log: location?.coords.longitude,
           }),
         );
+
         NetInfo.fetch().then(state => {
           if (state.isConnected) {
             props.navigation.replace('Home', { crossIcon: false });
@@ -65,6 +81,21 @@ export default function SplashScreen(props) {
         const location = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Highest,
         });
+
+        Location.getCurrentPositionAsync().then(pos => {
+          Location.reverseGeocodeAsync({
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+          }).then(async res => {
+            await AsyncStorage.setItem(
+              '@Country',
+              JSON.stringify({
+                country: res[0].country,
+              }),
+            );
+          });
+        });
+
         await AsyncStorage.setItem(
           '@location',
           JSON.stringify({

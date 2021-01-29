@@ -26,6 +26,7 @@ export default function HomeScreenContent({
   restaurantLoading,
   refetchRestaurant,
   resIsFetching,
+  RefetchRestaurant,
   Data,
   isFetch,
   // DeleteRestaurant,
@@ -64,7 +65,7 @@ export default function HomeScreenContent({
 
       await deleteRestaurant(userInfo, {
         onSuccess: async => {
-          // refetchRestaurant();
+          RefetchRestaurant();
         },
       });
     }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -64,28 +64,42 @@ const Setting = ({ navigation, route }) => {
     });
     if (!result.cancelled) {
       setImage(result.uri);
-      console.log(result.uri);
-      let formData = new FormData();
 
+      const { userInfo } = await getAsyncStorageValues();
+      dispatch({
+        type: actionTypes.USER_DETAILS,
+        payload: {
+          ...state.userDetails,
+          image: result.uri,
+        },
+      });
+
+      await AsyncStorage.setItem(
+        '@userInfo',
+        JSON.stringify({
+          ...userInfo,
+          image: result.uri,
+        }),
+      );
+
+      let formData = new FormData();
       formData.append('image', {
         uri: result.uri,
-        type: 'image/jpeg/jpg',
-        name: result.fileName,
-        data: result.data,
+        type: `image/${result.uri.split('.')[1]}`,
+        name: result.uri.substr(result.uri.lastIndexOf('/') + 1),
       });
 
       let UploadData = {
         user_id: state.userDetails.user_id,
         image: formData,
       };
+
       await updatePicture(UploadData, {
-        onSuccess: res => {
-          console.log(res);
-          console.log('Image');
-        },
+        onSuccess: res => {},
       });
     }
   };
+
   //user signout
   const handleSignOut = async () => {
     const { userInfo } = await getAsyncStorageValues();
@@ -105,23 +119,6 @@ const Setting = ({ navigation, route }) => {
       } catch {
         resetState();
       }
-    }
-  };
-
-  const _pickImage = async () => {
-    try {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 4],
-        quality: 1,
-      });
-      if (!result.cancelled) {
-        setImage(result.uri);
-        // handleChangePicture();
-      }
-    } catch (E) {
-      console.log(E);
     }
   };
 
@@ -147,7 +144,10 @@ const Setting = ({ navigation, route }) => {
             navigation={navigation}
           />
 
-          <TouchableOpacity onPress={_pickImage} style={styles.viewImg}>
+          <TouchableOpacity
+            onPress={handleChangePicture}
+            style={styles.viewImg}
+          >
             {state.userDetails.image === null ||
             state.userDetails.image === undefined ||
             state.userDetails.image === '' ? (
@@ -175,7 +175,10 @@ const Setting = ({ navigation, route }) => {
                 />
               )}
           </TouchableOpacity>
-          <TouchableOpacity onPress={_pickImage} style={styles.btnPencil}>
+          <TouchableOpacity
+            onPress={handleChangePicture}
+            style={styles.btnPencil}
+          >
             <View style={styles.viewPencil}>
               <MaterialCommunityIcons
                 name="pencil-outline"

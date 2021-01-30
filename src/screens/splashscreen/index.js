@@ -8,6 +8,8 @@ import NetInfo from '@react-native-community/netinfo';
 import { getAsyncStorageValues } from '../../constants';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
+var getCountry = require('country-currency-map').getCountry;
+var formatCurrency = require('country-currency-map').formatCurrency;
 
 export default function SplashScreen(props) {
   const { dispatch } = useContext(Context);
@@ -47,18 +49,12 @@ export default function SplashScreen(props) {
           accuracy: Location.Accuracy.Highest,
         });
 
-        Location.getCurrentPositionAsync().then(pos => {
-          Location.reverseGeocodeAsync({
-            latitude: pos.coords.latitude,
-            longitude: pos.coords.longitude,
-          }).then(async res => {
-            await AsyncStorage.setItem(
-              '@Country',
-              JSON.stringify({
-                country: res[0]?.country || '',
-              }),
-            );
-          });
+        NetInfo.fetch().then(state => {
+          if (state.isConnected) {
+            props.navigation.replace('Home', { crossIcon: false });
+          } else {
+            props.navigation.replace('NoWiFi');
+          }
         });
 
         await AsyncStorage.setItem(
@@ -69,30 +65,32 @@ export default function SplashScreen(props) {
           }),
         );
 
-        NetInfo.fetch().then(state => {
-          if (state.isConnected) {
-            props.navigation.replace('Home', { crossIcon: false });
-          } else {
-            props.navigation.replace('NoWiFi');
-          }
+        Location.getCurrentPositionAsync().then(pos => {
+          Location.reverseGeocodeAsync({
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+          }).then(async res => {
+            let currency = getCountry(res[0]?.country);
+            let formattedCurrency = formatCurrency('', currency?.currency);
+            await AsyncStorage.setItem(
+              '@Currency',
+              JSON.stringify({
+                currency: formattedCurrency || '',
+              }),
+            );
+          });
         });
       } else {
         const location = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Highest,
         });
 
-        Location.getCurrentPositionAsync().then(pos => {
-          Location.reverseGeocodeAsync({
-            latitude: pos.coords.latitude,
-            longitude: pos.coords.longitude,
-          }).then(async res => {
-            await AsyncStorage.setItem(
-              '@Country',
-              JSON.stringify({
-                country: res[0]?.country || '',
-              }),
-            );
-          });
+        NetInfo.fetch().then(state => {
+          if (state.isConnected) {
+            props.navigation.replace('Home', { crossIcon: false });
+          } else {
+            props.navigation.replace('NoWiFi');
+          }
         });
 
         await AsyncStorage.setItem(
@@ -103,12 +101,20 @@ export default function SplashScreen(props) {
           }),
         );
 
-        NetInfo.fetch().then(state => {
-          if (state.isConnected) {
-            props.navigation.replace('Home', { crossIcon: false });
-          } else {
-            props.navigation.replace('NoWiFi');
-          }
+        Location.getCurrentPositionAsync().then(pos => {
+          Location.reverseGeocodeAsync({
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+          }).then(async res => {
+            let currency = getCountry(res[0]?.country);
+            let formattedCurrency = formatCurrency('', currency?.currency);
+            await AsyncStorage.setItem(
+              '@Currency',
+              JSON.stringify({
+                currency: formattedCurrency || '',
+              }),
+            );
+          });
         });
       }
     } catch (error) {

@@ -57,7 +57,7 @@ export default function HomeScreenContent({
         user_id: state.userDetails.user_id,
       };
       await deleteRestaurant(userInfo, {
-        onSuccess: async => {
+        onSuccess: () => {
           RefetchRestaurant();
         },
       });

@@ -75,14 +75,6 @@ const RateService = ({ navigation, route }) => {
     }
   }, [isVisible]);
 
-  useEffect(() => {
-    if (isVisible) {
-      setTimeout(() => {
-        handleModalClose();
-      }, 5000);
-    }
-  }, [isVisible]);
-
   const {
     name,
     image,

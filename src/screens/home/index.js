@@ -69,7 +69,7 @@ const HomeScreen = props => {
 
   const handleLoadMore = () => {
     setnextPageToken(restaurantData.restaurants.next_page_token);
-    console.log('next page load');
+    // console.log('next page load');
   };
 
   return (

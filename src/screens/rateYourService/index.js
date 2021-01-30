@@ -26,7 +26,6 @@ import NumberFormat from 'react-number-format';
 import i18n from '../../li8n';
 const imgBg = require('../../assets/images/Group5.png');
 import { getAsyncStorageValues } from '../../constants';
-var getCountry = require('country-currency-map').getCountry;
 
 const RateService = ({ navigation, route }) => {
   const { state } = useContext(Context);
@@ -41,10 +40,11 @@ const RateService = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const scrollRef = React.useRef(null);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
   useEffect(() => {
     (async () => {
-      const { country } = await getAsyncStorageValues();
-      setCurrency(getCountry(JSON.parse(country).country));
+      const { Currency } = await getAsyncStorageValues();
+      setCurrency(JSON.parse(Currency));
     })();
   }, []);
 
@@ -62,19 +62,6 @@ const RateService = ({ navigation, route }) => {
       keyboardDidShowListener.remove();
     };
   }, []);
-  const handleModalClose = () => {
-    setisVisible(false);
-    navigation.navigate('Home', { crossIcon: false });
-  };
-
-  useEffect(() => {
-    if (isVisible) {
-      setTimeout(() => {
-        handleModalClose();
-      }, 5000);
-    }
-  }, [isVisible]);
-
   const handleModalClose = () => {
     setisVisible(false);
     navigation.navigate('Home', { crossIcon: false });
@@ -160,14 +147,6 @@ const RateService = ({ navigation, route }) => {
             backgroundColor={'transparent'}
             navigation={navigation}
           />
-          {/* {isKeyboardVisible ? null
-                    : <View>
-                        <View style={styles.viewImg}>
-                            <FontAwesome name="user-circle-o" size={100} color="#fff" />
-                        </View>
-                        <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>Amy Farha</Text>
-                    </View>
-                } */}
           <View>
             <View style={styles.viewImg}>
               {image ? (
@@ -338,7 +317,7 @@ const RateService = ({ navigation, route }) => {
             <NumberFormat
               value={remarks}
               thousandSeparator={true}
-              prefix={currency ? `${currency.currency} ` : ''}
+              prefix={currency ? currency.currency : ''}
               renderText={formattedValue => (
                 <TextInput
                   keyboardType="numeric"

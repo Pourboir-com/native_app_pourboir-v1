@@ -10,7 +10,6 @@ function compareDistance(a, b) {
     return 0;
   }
 }
-
 export const distributeInArray = restaurants => {
   let sortedRestaurants = restaurants;
   sortedRestaurants.sort(compareDistance);
@@ -25,7 +24,6 @@ export const distributeInArray = restaurants => {
       secondArray = [...secondArray, sortedRestaurants[i + 1] || {}];
     }
   }
-
   return {
     firstArray,
     secondArray,

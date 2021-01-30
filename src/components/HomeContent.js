@@ -218,8 +218,6 @@ export default function HomeScreenContent({
                       : distributeInArray(data).firstArray
                   }
                   showsVerticalScrollIndicator={false}
-                  onEndReached={handleLoadMore}
-                  onEndReachedThreshold={0.5}
                   alwaysBounceHorizontal={false}
                   keyboardShouldPersistTaps={'handled'}
                   alwaysBounceVertical={false}
@@ -255,8 +253,6 @@ export default function HomeScreenContent({
                   showsVerticalScrollIndicator={false}
                   style={{ marginTop: 15 }}
                   alwaysBounceHorizontal={false}
-                  onEndReached={handleLoadMore}
-                  onEndReachedThreshold={0.5}
                   keyboardShouldPersistTaps={'handled'}
                   alwaysBounceVertical={false}
                   bounces={false}

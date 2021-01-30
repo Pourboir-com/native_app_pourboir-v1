@@ -6,7 +6,14 @@ import React, {
   useState,
   useContext,
 } from 'react';
-import { Text, TextInput, View, TouchableOpacity, Image, RefreshControl } from 'react-native';
+import {
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+  Image,
+  RefreshControl,
+} from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
@@ -137,9 +144,11 @@ const HomeScreen = props => {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              onPress={() => props.navigation.navigate('Setting', {
-                RefetchRestaurant: props.refetchRestaurant,
-              })}
+              onPress={() =>
+                props.navigation.navigate('Setting', {
+                  RefetchRestaurant: props.refetchRestaurant,
+                })
+              }
             >
               <Image
                 style={{

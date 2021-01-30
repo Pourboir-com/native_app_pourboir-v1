@@ -59,7 +59,6 @@ const SocialLogin = ({ navigation, route }) => {
       let userInfoResponse = await userSignUp(accessToken);
       await googleSignup(userInfoResponse.data, {
         onSuccess: async res => {
-
           if (vote) {
             navigation.navigate('RateYourService');
             setVote(false);
@@ -89,8 +88,12 @@ const SocialLogin = ({ navigation, route }) => {
           setLoading(false);
         },
         onError: error => {
-          console.log(error);
+          setLoading(false);
+          alert(`Google Login Error: ${error}`);
         },
+      }).catch(error => {
+        setLoading(false);
+        alert(`Google Login Error: ${error}`);
       });
     }
   };
@@ -159,9 +162,16 @@ const SocialLogin = ({ navigation, route }) => {
                 );
                 setLoading(false);
               },
+              onError: e => {
+                setLoading(false);
+                alert(`Facebook Login Error: ${e}`);
+              },
             });
           })
-          .catch(e => console.log(e));
+          .catch(e => {
+            setLoading(false);
+            alert(`Facebook Login Error: ${e}`);
+          });
       } else {
         // type === 'cancel'
       }

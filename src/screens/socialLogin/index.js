@@ -54,11 +54,11 @@ const SocialLogin = ({ navigation, route }) => {
     // First- obtain access token from Expo's Google API
     const { type, accessToken, user } = await Google.logInAsync(config);
     if (type === 'success') {
+      setLoading(true);
       // Then you can use the Google REST API
       let userInfoResponse = await userSignUp(accessToken);
       await googleSignup(userInfoResponse.data, {
         onSuccess: async res => {
-          setLoading(true);
 
           if (vote) {
             navigation.navigate('RateYourService');

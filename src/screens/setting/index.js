@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -27,12 +27,12 @@ import { useMutation } from 'react-query';
 
 const imgBg = require('../../assets/images/Group5.png');
 
-const Setting = ({ navigation }) => {
+const Setting = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const { state, dispatch } = useContext(Context);
   const [image, setImage] = useState();
   const [updatePicture] = useMutation(UPDATE_PICTURE);
-
+  const { RefetchRestaurant } = route.params;
   const resetState = async () => {
     navigation.replace('socialLogin');
     let userDetails = {
@@ -64,61 +64,61 @@ const Setting = ({ navigation }) => {
     });
     if (!result.cancelled) {
       setImage(result.uri);
-      console.log(result.uri);
-      let formData = new FormData();
 
+      const { userInfo } = await getAsyncStorageValues();
+      dispatch({
+        type: actionTypes.USER_DETAILS,
+        payload: {
+          ...state.userDetails,
+          image: result.uri,
+        },
+      });
+
+      await AsyncStorage.setItem(
+        '@userInfo',
+        JSON.stringify({
+          ...userInfo,
+          image: result.uri,
+        }),
+      );
+
+      let formData = new FormData();
       formData.append('image', {
         uri: result.uri,
-        type: 'image/jpeg/jpg',
-        name: result.fileName,
-        data: result.data,
+        type: `image/${result.uri.split('.')[1]}`,
+        name: result.uri.substr(result.uri.lastIndexOf('/') + 1),
       });
 
       let UploadData = {
         user_id: state.userDetails.user_id,
         image: formData,
       };
+
       await updatePicture(UploadData, {
-        onSuccess: res => {
-          console.log(res);
-          console.log('Image');
-        },
+        onSuccess: res => {},
       });
     }
   };
 
+  //user signout
   const handleSignOut = async () => {
     const { userInfo } = await getAsyncStorageValues();
     const accessToken = userInfo.accessToken;
     /* Log-Out */
     if (accessToken) {
       setLoading(true);
-      // const auth = await Facebook.getAuthenticationCredentialAsync();
-      // if (auth) {
-      // Log out
-      Facebook.logOutAsync();
-      // resetState();
-      // } else {
-      await Google.logOutAsync({ accessToken, ...config });
-      resetState();
-      // }
-    }
-  };
-
-  const _pickImage = async () => {
-    try {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 4],
-        quality: 1,
-      });
-      if (!result.cancelled) {
-        setImage(result.uri);
-        // handleChangePicture();
+      try {
+        const auth = await Facebook.getAuthenticationCredentialAsync();
+        if (auth) {
+          Facebook.logOutAsync();
+          resetState();
+        } else {
+          await Google.logOutAsync({ accessToken, ...config });
+          resetState();
+        }
+      } catch {
+        resetState();
       }
-    } catch (E) {
-      console.log(E);
     }
   };
 
@@ -145,7 +145,7 @@ const Setting = ({ navigation }) => {
           />
 
           <TouchableOpacity
-            onPress={_pickImage}
+            onPress={handleChangePicture}
             style={styles.viewImg}
           >
             {state.userDetails.image === null ||
@@ -176,7 +176,7 @@ const Setting = ({ navigation }) => {
               )}
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={_pickImage}
+            onPress={handleChangePicture}
             style={styles.btnPencil}
           >
             <View style={styles.viewPencil}>
@@ -234,6 +234,7 @@ const Setting = ({ navigation }) => {
             onPress={() =>
               navigation.navigate('Remove', {
                 crossIcon: true,
+                RefetchRestaurant,
               })
             }
             style={[styles.viewItem, { marginBottom: 0 }]}

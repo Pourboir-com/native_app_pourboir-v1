@@ -24,12 +24,14 @@ import { useMutation } from 'react-query';
 import { StatusBar } from 'expo-status-bar';
 import NumberFormat from 'react-number-format';
 import i18n from '../../li8n';
-
 const imgBg = require('../../assets/images/Group5.png');
+import { getAsyncStorageValues } from '../../constants';
+var getCountry = require('country-currency-map').getCountry;
 
 const RateService = ({ navigation, route }) => {
   const { state } = useContext(Context);
   const [hospitality, setHospitality] = useState();
+  const [currency, setCurrency] = useState();
   const [speed, setSpeed] = useState();
   const [service, setService] = useState();
   const [professionalism, setProfessionalism] = useState();
@@ -37,10 +39,15 @@ const RateService = ({ navigation, route }) => {
   const [isVisible, setisVisible] = useState(false);
   const [addRatings] = useMutation(ADD_RATINGS);
   const [loading, setLoading] = useState(false);
-
   const scrollRef = React.useRef(null);
-
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  useEffect(() => {
+    (async () => {
+      const { country } = await getAsyncStorageValues();
+      setCurrency(getCountry(JSON.parse(country).country));
+    })();
+  }, []);
+
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -68,12 +75,26 @@ const RateService = ({ navigation, route }) => {
     }
   }, [isVisible]);
 
+  const handleModalClose = () => {
+    setisVisible(false);
+    navigation.navigate('Home', { crossIcon: false });
+  };
+
+  useEffect(() => {
+    if (isVisible) {
+      setTimeout(() => {
+        handleModalClose();
+      }, 5000);
+    }
+  }, [isVisible]);
+
   const {
     name,
     image,
     restaurant_id,
     waiter_id,
     refetchWaiters,
+    refetchRestaurant,
   } = route.params;
 
   const handleAddRatings = async () => {
@@ -81,20 +102,22 @@ const RateService = ({ navigation, route }) => {
       setLoading(true);
       let ratingDetails = {
         rating: {
-          hospitality: hospitality,
-          speed: speed,
-          service: service,
-          professionalism: professionalism,
+          hospitality: hospitality || '',
+          speed: speed || '',
+          service: service || '',
+          professionalism: professionalism || '',
         },
-        tip: remarks.replace(/[^0-9]/g, ''),
-        user_id: state.userDetails.user_id,
-        waiter_id: waiter_id,
-        restaurant_id: restaurant_id,
+        tip: remarks.replace(/[^0-9]/g, '') || '',
+        user_id: state.userDetails.user_id || '',
+        waiter_id: waiter_id || '',
+        restaurant_id: restaurant_id || '',
+        currency: currency.currency || '',
       };
       await addRatings(ratingDetails, {
         onSuccess: async () => {
           setLoading(false);
           setisVisible(true);
+          refetchRestaurant();
           await refetchWaiters();
         },
       });
@@ -315,8 +338,7 @@ const RateService = ({ navigation, route }) => {
             <NumberFormat
               value={remarks}
               thousandSeparator={true}
-              prefix={'€ '}
-              // suffix={' €'}
+              prefix={currency ? `${currency.currency} ` : ''}
               renderText={formattedValue => (
                 <TextInput
                   keyboardType="numeric"

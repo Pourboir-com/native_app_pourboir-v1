@@ -25,6 +25,9 @@ const Remove = props => {
       setSaveLocation(location);
     })();
   }, []);
+  const {
+    RefetchRestaurant,
+  } = props.route.params;
 
   const navigation = useNavigation();
   const {
@@ -104,6 +107,7 @@ const Remove = props => {
         refetchRestaurant={refetchRestaurant}
         isFetch={true}
         resIsFetching={resIsFetching}
+        RefetchRestaurant={RefetchRestaurant}
         // DeleteRestaurant={DeleteRestaurant}
         Data={data}
         // handleLoadMore={handleLoadMore}

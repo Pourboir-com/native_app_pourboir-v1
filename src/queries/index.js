@@ -4,4 +4,3 @@ export * from './waiters-screen';
 export * from './rate-your-service-screen';
 export * from './your-restaurant';
 export * from './settings-screen';
-

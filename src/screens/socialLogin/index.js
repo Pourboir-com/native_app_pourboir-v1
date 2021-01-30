@@ -54,6 +54,7 @@ const SocialLogin = ({ navigation, route }) => {
     // First- obtain access token from Expo's Google API
     const { type, accessToken, user } = await Google.logInAsync(config);
     if (type === 'success') {
+      setLoading(true);
       // Then you can use the Google REST API
       let userInfoResponse = await userSignUp(accessToken);
       await googleSignup(userInfoResponse.data, {
@@ -89,8 +90,12 @@ const SocialLogin = ({ navigation, route }) => {
           setLoading(false);
         },
         onError: error => {
-          console.log(error);
+          setLoading(false);
+          alert(`Google Login Error: ${error}`);
         },
+      }).catch(error => {
+        setLoading(false);
+        alert(`Google Login Error: ${error}`);
       });
     }
   };
@@ -159,9 +164,16 @@ const SocialLogin = ({ navigation, route }) => {
                 );
                 setLoading(false);
               },
+              onError: e => {
+                setLoading(false);
+                alert(`Facebook Login Error: ${e}`);
+              },
             });
           })
-          .catch(e => console.log(e));
+          .catch(e => {
+            setLoading(false);
+            alert(`Facebook Login Error: ${e}`);
+          });
       } else {
         // type === 'cancel'
       }

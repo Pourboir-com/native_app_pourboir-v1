@@ -26,6 +26,7 @@ export default function HomeScreenContent({
   restaurantLoading,
   refetchRestaurant,
   resIsFetching,
+  RefetchRestaurant,
   Data,
   isFetch,
   // DeleteRestaurant,
@@ -42,7 +43,7 @@ export default function HomeScreenContent({
     setData(Data);
   }, [Data]);
 
-  const dummyArray = [1, 2, 3];
+  const dummyArray = [1, 2];
 
   const fetchFont = () => {
     return Font.loadAsync({
@@ -64,7 +65,11 @@ export default function HomeScreenContent({
 
       await deleteRestaurant(userInfo, {
         onSuccess: async => {
+<<<<<<< HEAD
           // refetchRestaurant();
+=======
+          RefetchRestaurant();
+>>>>>>> b24d3f6bc32dce08dd361d8d826881a03a5fe00b
         },
       });
     }
@@ -141,7 +146,11 @@ export default function HomeScreenContent({
               alwaysBounceHorizontal={false}
               alwaysBounceVertical={false}
               bounces={false}
+<<<<<<< HEAD
               style={{ backgroundColor: '#f9f9f9' }}
+=======
+              style={{ backgroundColor: '#f9f9f9', flex: 1 }}
+>>>>>>> b24d3f6bc32dce08dd361d8d826881a03a5fe00b
             >
               {!route.params.crossIcon && (
                 <Text

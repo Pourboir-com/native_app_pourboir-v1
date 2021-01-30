@@ -56,7 +56,7 @@ export default function SplashScreen(props) {
             await AsyncStorage.setItem(
               '@Country',
               JSON.stringify({
-                country: res[0].country,
+                country: res[0]?.country || '',
               }),
             );
           });
@@ -90,7 +90,7 @@ export default function SplashScreen(props) {
             await AsyncStorage.setItem(
               '@Country',
               JSON.stringify({
-                country: res[0].country,
+                country: res[0]?.country || '',
               }),
             );
           });

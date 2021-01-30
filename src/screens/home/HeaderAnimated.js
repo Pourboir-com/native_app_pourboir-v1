@@ -6,7 +6,7 @@ import React, {
   useState,
   useContext,
 } from 'react';
-import { Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
+import { Text, TextInput, View, TouchableOpacity, Image, RefreshControl } from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
@@ -17,29 +17,20 @@ import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
 import Context from '../../contextApi/context';
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
 
 const HomeScreen = props => {
-  const [fontLoaded, setFontLoaded] = useState(false);
   const { state } = useContext(Context);
-  const [loading, setLoading] = React.useState(false);
-  const [isFocused, setIsFocused] = React.useState(false);
-  // const [userImage, setuserImage] = useState(
-  //   state ? state.userDetails.image : '',
-  // );
-  // const [userName, setuserName] = useState(state ? state.userDetails.name : '');
+  const [loading, setLoading] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
-  const fetchFont = () => {
-    return Font.loadAsync({
-      ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
-    });
-  };
-
-  // useEffect(() => {
-  //   setuserName(state.userDetails.name);
-  //   setuserImage(state.userDetails.image);
-  // }, [state]);
+  useEffect(() => {
+    setLoading(!loading);
+  }, [
+    props.saveLocation,
+    // props.nextPageToken,
+    props.Data,
+    state.userDetails.name,
+  ]);
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
 
@@ -103,8 +94,20 @@ const HomeScreen = props => {
   });
   const titleHeaderMarginLeft = scrollYAnimatedValue.interpolate({
     inputRange: [0, HEADER_HEIGHT / 2],
-    outputRange: [0, HEADER_BAR_HEIGHT + spacing(2)],
+    outputRange: [
+      0,
+      HEADER_BAR_HEIGHT +
+        spacing(
+          !state.userDetails.name
+            ? LAYOUT.window.width * 0.026
+            : LAYOUT.window.width * 0.013,
+        ),
+    ],
     // outputRange: [0, (LAYOUT.window.width * 0.5) ],
+    // outputRange: [
+    //   -Dimensions.get('window').width / 2 + (spacing(5) + spacing(2.5)),
+    //   0,
+    // ],
 
     extrapolate: Extrapolate.CLAMP,
   });
@@ -134,7 +137,9 @@ const HomeScreen = props => {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              onPress={() => props.navigation.navigate('Setting')}
+              onPress={() => props.navigation.navigate('Setting', {
+                RefetchRestaurant: props.refetchRestaurant,
+              })}
             >
               <Image
                 style={{
@@ -155,18 +160,14 @@ const HomeScreen = props => {
     const renderTitle = () => {
       return (
         <>
-          {/* {!fontLoaded ? (
-            <AppLoading
-              startAsync={fetchFont}
-              onFinish={() => {
-                setFontLoaded(true);
-              }}
-              onError={() => console.log('ERROR')}
-            />
-          ) : ( */}
           <View
             style={[
-              { position: 'absolute', left: spacing(2.5), top: spacing(1) },
+              {
+                position: 'absolute',
+                left: spacing(2.5),
+                top: spacing(1),
+                // width: Dimensions.get('window').width - spacing(5),
+              },
               // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
             ]}
           >
@@ -175,6 +176,7 @@ const HomeScreen = props => {
                 marginLeft: titleHeaderMarginLeft,
                 height: HEADER_BAR_HEIGHT,
                 justifyContent: 'center',
+                // width: '100%',
               }}
             >
               <Text
@@ -184,11 +186,14 @@ const HomeScreen = props => {
                   fontFamily: 'ProximaNovaBold',
                   textAlign: 'center',
                   fontWeight: 'bold',
+                  // width:'50%'
                 }}
-                ellipsizeMode="tail"
-                numberOfLines={1}
+                // ellipsizeMode="tail"
+                // numberOfLines={1}
               >
-                {!state.userDetails.name ? 'Bonjour' : state.userDetails.name}
+                {!state.userDetails.name
+                  ? i18n.t('hello')
+                  : i18n.t('hello') + ' ' + state.userDetails.name}
               </Text>
             </Animated.View>
           </View>
@@ -209,33 +214,22 @@ const HomeScreen = props => {
     });
   });
 
-  // useEffect(() => {
-
-  //   setInterval(() => {
-  //     setLoading(false)
-  //   }, 100)
-
-  // }, [isFocused])
-
   return (
     <>
-      {/* <View style={[{ position: "absolute", left: spacing(2.5), top: spacing(1), zIndex: 999999999, marginTop: getStatusBarHeight() },
-        // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
-      ]}>
-        <TouchableOpacity
-          onPress={() =>
-            props.navigation.navigate('Setting')}>
-          <SvgHeaderUserIcon height={HEADER_BAR_HEIGHT} />
-        </TouchableOpacity>
-
-      </View> */}
-      {/* <StatusBar backgroundColor={Colors.yellow}    /> */}
       {loading ? (
         <View>
           <Animated.ScrollView
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
+            refreshControl={
+              <RefreshControl
+                //refresh control used for the Pull to Refresh
+                refreshing={props.resIsFetching}
+                onRefresh={props.refetchRestaurant}
+              />
+            }
             bounces={false}
+            keyboardShouldPersistTaps={'handled'}
             ref={scrollRef}
             contentContainerStyle={{
               paddingTop: props.searchIconPress ? 0 : HEADER_HEIGHT,
@@ -369,11 +363,6 @@ const HomeScreen = props => {
                         padding: 4,
                       }}
                     >
-                      {/* <Entypo
-                  name="cross"
-                  color={'#1E272E'}
-                  size={25}
-              /> */}
                       <AntDesign name="close" size={14} color="#485460" />
                     </View>
                   </TouchableOpacity>
@@ -387,6 +376,14 @@ const HomeScreen = props => {
           <Animated.ScrollView
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
+            keyboardShouldPersistTaps={'handled'}
+            refreshControl={
+              <RefreshControl
+                //refresh control used for the Pull to Refresh
+                refreshing={props.resIsFetching}
+                onRefresh={props.refetchRestaurant}
+              />
+            }
             bounces={false}
             ref={scrollRef}
             contentContainerStyle={{

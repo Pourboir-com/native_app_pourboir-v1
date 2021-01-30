@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { ImageBackground, Animated, Dimensions } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
@@ -10,8 +10,6 @@ import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 
 export default function SplashScreen(props) {
-  // const [Internet, setInternet] = React.useState(false);
-  // const [location, setLocation] = React.useState(false);
   const { dispatch } = useContext(Context);
 
   useEffect(() => {
@@ -31,20 +29,8 @@ export default function SplashScreen(props) {
     })();
   }, []);
 
-  // const checkInternet = () => {
-  //   NetInfo.fetch().then(state => {
-  //     if (state.isConnected) {
-  //       setInternet(true);
-  //     } else {
-  //       setInternet(false);
-  //     }
-  //   });
-  // };
-
   const [springValue] = React.useState(new Animated.Value(0.5));
   const locationFunction = async () => {
-    // const Location_Permission = Permissions.askAsync(Permissions.LOCATION);
-    // if(Location_Permission){}
     try {
       let values = await Location.requestPermissionsAsync();
       if (values === 'granted') {
@@ -55,11 +41,27 @@ export default function SplashScreen(props) {
           }),
         );
       }
+
       const isLocation = await Location.hasServicesEnabledAsync();
       if (isLocation) {
         const location = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Highest,
         });
+
+        Location.getCurrentPositionAsync().then(pos => {
+          Location.reverseGeocodeAsync({
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+          }).then(async res => {
+            await AsyncStorage.setItem(
+              '@Country',
+              JSON.stringify({
+                country: res[0].country,
+              }),
+            );
+          });
+        });
+
         await AsyncStorage.setItem(
           '@location',
           JSON.stringify({
@@ -67,6 +69,7 @@ export default function SplashScreen(props) {
             log: location?.coords.longitude,
           }),
         );
+
         NetInfo.fetch().then(state => {
           if (state.isConnected) {
             props.navigation.replace('Home', { crossIcon: false });
@@ -78,6 +81,21 @@ export default function SplashScreen(props) {
         const location = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Highest,
         });
+
+        Location.getCurrentPositionAsync().then(pos => {
+          Location.reverseGeocodeAsync({
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+          }).then(async res => {
+            await AsyncStorage.setItem(
+              '@Country',
+              JSON.stringify({
+                country: res[0].country,
+              }),
+            );
+          });
+        });
+
         await AsyncStorage.setItem(
           '@location',
           JSON.stringify({

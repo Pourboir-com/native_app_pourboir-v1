@@ -4,11 +4,11 @@ import { Colors } from '../../constants/Theme';
 import { Entypo } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import i18n from '../../li8n';
 
 const NoLocation = () => {
-  const [location, setLocation] = useState(null);
   const navigation = useNavigation();
 
   const excessLocation = async () => {
@@ -16,8 +16,16 @@ const NoLocation = () => {
     if (status !== 'granted') {
       return;
     }
-    let location = await Location.getCurrentPositionAsync({});
-    setLocation(location);
+    const location = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Highest,
+    });
+    await AsyncStorage.setItem(
+      '@location',
+      JSON.stringify({
+        lat: location?.coords.latitude,
+        log: location?.coords.longitude,
+      }),
+    );
     navigation.replace('Home', { crossIcon: false });
   };
 

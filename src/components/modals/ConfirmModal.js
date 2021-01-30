@@ -39,17 +39,17 @@ const ConfirmationModal = ({
         restaurant_id: place_id,
       };
       await IAMWAITER(IWaiter, {
-        onSuccess: async () => {
+        onSuccess: async (res) => {
+          await refetchWaiters();
           handleModalClose();
           setLoading(false);
-          await refetchWaiters();
           await refetchRestaurant();
         },
       });
+    } else {
+      handleModalClose();
+      navigation.navigate('socialLogin', { confirmWaiter: true });
     }
-    // else {
-    //   navigation.navigate('socialLogin');
-    // }
   };
 
   return (
@@ -87,7 +87,11 @@ const ConfirmationModal = ({
       >
         {name}
       </Text>
-      <TouchableOpacity disabled={loading} onPress={handleIAMWAITER} style={styles.btnConfrm}>
+      <TouchableOpacity
+        disabled={loading}
+        onPress={handleIAMWAITER}
+        style={styles.btnConfrm}
+      >
         {loading ? (
           <ActivityIndicator size={30} color="#000" />
         ) : (

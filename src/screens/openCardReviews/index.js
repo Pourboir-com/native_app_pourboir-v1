@@ -11,6 +11,7 @@ import {
   FlatList,
   SafeAreaView,
   KeyboardAvoidingView,
+  RefreshControl,
   Animated,
 } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
@@ -43,7 +44,7 @@ const ReviewDetails = ({ navigation, route }) => {
     services,
     place_id,
     refetchRestaurant,
-  } = route.params;
+  } = route?.params;
   const {
     data: waitersData,
     isLoading: waitersLoading,
@@ -107,7 +108,7 @@ const ReviewDetails = ({ navigation, route }) => {
           zIndex: 9,
         }}
       >
-        <View style={styles.viewImg}>
+        <View style={styles.viewImg} >
           <ImageBackground
             source={{ uri: img }}
             style={{ flex: 1, justifyContent: 'space-between' }}
@@ -216,19 +217,27 @@ const ReviewDetails = ({ navigation, route }) => {
                     name: itemData?.item?.user_id
                       ? itemData?.item?.user_id?.full_name
                       : itemData?.item.full_name,
-                    Image: itemData?.item?.imgAvatar,
+                    image: itemData?.item?.user_id
+                      ? itemData?.item?.user_id?.picture
+                      : itemData?.item?.imgAvatar,
                     restaurant_id: place_id,
                     waiter_id: itemData?.item?._id,
                     refetchWaiters: refetchWaiters,
+                    refetchRestaurant: refetchRestaurant,
                   })
                 }
                 style={styles.viewItemConatier}
               >
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  {itemData.item.imgAvatar ? (
+                  {itemData?.item?.user_id ? (
                     <Image
                       style={{ width: 45, height: 45, borderRadius: 30 }}
-                      source={{ uri: itemData.item.imgAvatar }}
+                      source={{ uri: itemData?.item?.user_id.picture }}
+                    />
+                  ) : itemData?.item?.imgAvatar ? (
+                    <Image
+                      style={{ width: 45, height: 45, borderRadius: 30 }}
+                      source={{ uri: itemData?.item?.imgAvatar }}
                     />
                   ) : (
                     <SvgHeaderUserIcon height={45} width={45} />
@@ -393,7 +402,6 @@ const styles = StyleSheet.create({
     //  borderRadius: 15
   },
   viewNumRaters: {
-    overflow: 'hidden',
     backgroundColor: Colors.yellow,
     marginLeft: 23,
     borderRadius: 9,
@@ -401,7 +409,7 @@ const styles = StyleSheet.create({
     paddingTop: 1,
     paddingLeft: 7,
     paddingRight: 8,
-    width: 25,
+    width: 'auto',
     height: 25,
     paddingVertical: 1,
     alignItems: 'center',

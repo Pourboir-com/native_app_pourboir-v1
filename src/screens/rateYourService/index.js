@@ -5,11 +5,11 @@ import {
   View,
   ImageBackground,
   ScrollView,
+  Image,
   TextInput,
   Dimensions,
   TouchableOpacity,
-  FlatList,
-  KeyboardAvoidingView,
+  ActivityIndicator,
   Keyboard,
   Platform,
 } from 'react-native';
@@ -22,25 +22,32 @@ import Context from '../../contextApi/context';
 import { ADD_RATINGS } from '../../queries';
 import { useMutation } from 'react-query';
 import { StatusBar } from 'expo-status-bar';
-
+import NumberFormat from 'react-number-format';
 import i18n from '../../li8n';
-
 const imgBg = require('../../assets/images/Group5.png');
+import { getAsyncStorageValues } from '../../constants';
+var getCountry = require('country-currency-map').getCountry;
 
 const RateService = ({ navigation, route }) => {
   const { state } = useContext(Context);
   const [hospitality, setHospitality] = useState();
+  const [currency, setCurrency] = useState();
   const [speed, setSpeed] = useState();
   const [service, setService] = useState();
   const [professionalism, setProfessionalism] = useState();
   const [remarks, setRemarks] = useState('');
   const [isVisible, setisVisible] = useState(false);
   const [addRatings] = useMutation(ADD_RATINGS);
-
+  const [loading, setLoading] = useState(false);
   const scrollRef = React.useRef(null);
-  // const [onHandleFocus, setonHandleFocus] = useState(false)
-
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { country } = await getAsyncStorageValues();
+      setCurrency(getCountry(JSON.parse(country).country));
+    })();
+  }, []);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -57,36 +64,49 @@ const RateService = ({ navigation, route }) => {
     };
   }, []);
 
+  const handleModalClose = () => {
+    setisVisible(false);
+    navigation.navigate('Home', { crossIcon: false });
+  };
+
+  useEffect(() => {
+    if (isVisible) {
+      setTimeout(() => {
+        handleModalClose();
+      }, 5000);
+    }
+  }, [isVisible]);
+
   const {
     name,
-    Image,
+    image,
     restaurant_id,
     waiter_id,
     refetchWaiters,
+    refetchRestaurant,
   } = route.params;
-
-  const handleModalClose = () => {
-    setisVisible(false);
-    navigation.navigate('OpenCardReviews');
-  };
 
   const handleAddRatings = async () => {
     if (state.userDetails.user_id) {
+      setLoading(true);
       let ratingDetails = {
         rating: {
-          hospitality: hospitality,
-          speed: speed,
-          service: service,
-          professionalism: professionalism,
+          hospitality: hospitality || '',
+          speed: speed || '',
+          service: service || '',
+          professionalism: professionalism || '',
         },
-        tip: remarks,
-        user_id: state.userDetails.user_id,
-        waiter_id: waiter_id,
-        restaurant_id: restaurant_id,
+        tip: remarks.replace(/[^0-9]/g, '') || '',
+        user_id: state.userDetails.user_id || '',
+        waiter_id: waiter_id || '',
+        restaurant_id: restaurant_id || '',
+        currency: currency.currency || '',
       };
       await addRatings(ratingDetails, {
         onSuccess: async () => {
+          setLoading(false);
           setisVisible(true);
+          refetchRestaurant();
           await refetchWaiters();
         },
       });
@@ -95,24 +115,7 @@ const RateService = ({ navigation, route }) => {
     }
   };
 
-  // const addRating = () => {
-
-  // };
-
   const obj = [1, 2, 3, 4, 5];
-
-  // const _keyboardDidShow = () => {
-  //     scrollRef.current.scrollToEnd({ animated: true })
-  // };
-
-  // React.useEffect(() => {
-  //     Keyboard.addListener("keyboardDidShow", _keyboardDidShow);
-
-  //     // cleanup function
-  //     return () => {
-  //         Keyboard.removeListener("keyboardDidShow", _keyboardDidShow);
-  //     };
-  // });
 
   return (
     <ScrollView
@@ -121,6 +124,7 @@ const RateService = ({ navigation, route }) => {
       alwaysBounceVertical={false}
       bounces={false}
       showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps={'handled'}
       style={[
         styles.container,
         Platform.OS === 'ios'
@@ -155,8 +159,11 @@ const RateService = ({ navigation, route }) => {
                 } */}
           <View>
             <View style={styles.viewImg}>
-              {Image ? (
-                <Image source={{ uri: Image }} />
+              {image ? (
+                <Image
+                  style={{ width: 100, height: 100, borderRadius: 50 }}
+                  source={{ uri: image }}
+                />
               ) : (
                 <FontAwesome name="user-circle-o" size={100} color="#fff" />
               )}
@@ -176,6 +183,7 @@ const RateService = ({ navigation, route }) => {
         alwaysBounceVertical={false}
         bounces={false}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps={'handled'}
         style={styles.viewFlatlist}
         // contentContainerStyle={{ flex: 1 }}
       >
@@ -316,66 +324,65 @@ const RateService = ({ navigation, route }) => {
             <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
               {i18n.t('your_tip_to_waiter')}
             </Text>
-            <TextInput
-              keyboardType="numeric"
+            <NumberFormat
               value={remarks}
-              onFocus={() => {
-                setKeyboardVisible(true);
-                scrollRef.current.scrollToEnd({ animated: true });
-              }}
-              onBlur={() => {
-                setKeyboardVisible(false);
-              }}
-              onChangeText={e => {
-                scrollRef.current.scrollToEnd({ animated: true });
-                // if (remarks.length - 1 === e.length) {
-                //   setRemarks(e);
-                // } else {
-                //   if (e.length > 0) {
-                //     let str = e.replace('€', '');
-                //     setRemarks(str + '€');
-                //   } else {
-                setRemarks(e);
-                //   }
-                // }
-              }}
-              //  onFocus={() => setonHandleFocus(!onHandleFocus)}
-              style={[
-                styles.inputStyle,
-                { fontFamily: 'ProximaNova', textAlign: 'center' },
-              ]}
+              thousandSeparator={true}
+              prefix={currency ? `${currency.currency} ` : ''}
+              renderText={formattedValue => (
+                <TextInput
+                  keyboardType="numeric"
+                  value={formattedValue}
+                  onFocus={() => {
+                    setKeyboardVisible(true);
+                    scrollRef.current.scrollToEnd({ animated: true });
+                  }}
+                  onBlur={() => {
+                    setKeyboardVisible(false);
+                  }}
+                  onChangeText={e => {
+                    scrollRef.current.scrollToEnd({ animated: true });
+                    setRemarks(e);
+                  }}
+                  //  onFocus={() => setonHandleFocus(!onHandleFocus)}
+                  style={[
+                    styles.inputStyle,
+                    { fontFamily: 'ProximaNova', textAlign: 'center' },
+                  ]}
+                />
+              )}
+              displayType={'text'}
             />
           </View>
         </View>
         <TouchableOpacity
           onPress={handleAddRatings}
           disabled={
-            hospitality !== 0 &&
-            speed !== 0 &&
-            professionalism !== 0 &&
-            service !== 0 &&
-            remarks !== ''
+            hospitality && speed && professionalism && service && remarks
               ? false
               : true
           }
           style={[
             styles.btnValider,
-            hospitality !== 0 &&
-              speed !== 0 &&
-              professionalism !== 0 &&
-              service !== 0 &&
-              remarks !== '' && { backgroundColor: Colors.yellow },
+            hospitality &&
+              speed &&
+              professionalism &&
+              service &&
+              remarks && { backgroundColor: Colors.yellow },
           ]}
         >
-          <Text
-            style={{
-              fontSize: 16,
-              fontFamily: 'ProximaNova',
-              color: Colors.fontLight,
-            }}
-          >
-            {i18n.t('validate')}
-          </Text>
+          {loading ? (
+            <ActivityIndicator size={35} color="#000" />
+          ) : (
+            <Text
+              style={{
+                fontSize: 16,
+                fontFamily: 'ProximaNova',
+                color: Colors.fontLight,
+              }}
+            >
+              {i18n.t('validate')}
+            </Text>
+          )}
         </TouchableOpacity>
       </ScrollView>
 

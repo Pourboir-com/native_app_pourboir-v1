@@ -75,11 +75,6 @@ const RateService = ({ navigation, route }) => {
     }
   }, [isVisible]);
 
-  const handleModalClose = () => {
-    setisVisible(false);
-    navigation.navigate('Home', { crossIcon: false });
-  };
-
   useEffect(() => {
     if (isVisible) {
       setTimeout(() => {

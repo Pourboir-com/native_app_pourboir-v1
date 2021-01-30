@@ -32,10 +32,6 @@ const HomeScreen = props => {
 
   useEffect(() => {
     setLoading(!loading);
-    console.log(props.saveLocation, 'location');
-    console.log(props.Data, 'Data');
-    console.log(state.userDetails.name, 'Name');
-
   }, [
     props.saveLocation,
     // props.nextPageToken,

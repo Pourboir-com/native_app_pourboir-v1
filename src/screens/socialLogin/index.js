@@ -59,6 +59,8 @@ const SocialLogin = ({ navigation, route }) => {
       let userInfoResponse = await userSignUp(accessToken);
       await googleSignup(userInfoResponse.data, {
         onSuccess: async res => {
+          setLoading(true);
+
           if (vote) {
             navigation.navigate('RateYourService');
             setVote(false);

@@ -41,7 +41,6 @@ const RateService = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const scrollRef = React.useRef(null);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-
   useEffect(() => {
     (async () => {
       const { country } = await getAsyncStorageValues();
@@ -63,6 +62,18 @@ const RateService = ({ navigation, route }) => {
       keyboardDidShowListener.remove();
     };
   }, []);
+  const handleModalClose = () => {
+    setisVisible(false);
+    navigation.navigate('Home', { crossIcon: false });
+  };
+
+  useEffect(() => {
+    if (isVisible) {
+      setTimeout(() => {
+        handleModalClose();
+      }, 5000);
+    }
+  }, [isVisible]);
 
   const handleModalClose = () => {
     setisVisible(false);

@@ -30,9 +30,11 @@ export const distributeInArray = restaurants => {
     all: sortedRestaurants,
   };
 };
+
 export const restaurantCompareDistance = item => {
   return item?.distance?.rows[0]?.elements[0]?.distance?.value;
 };
+
 export const restaurantDistance = item => {
   return item?.item?.distance?.rows[0]?.elements[0]?.distance?.value;
 };

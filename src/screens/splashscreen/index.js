@@ -11,7 +11,6 @@ import * as actionTypes from '../../contextApi/actionTypes';
 
 export default function SplashScreen(props) {
   const { dispatch } = useContext(Context);
-
   useEffect(() => {
     (async () => {
       const { userInfo = {} } = await getAsyncStorageValues();

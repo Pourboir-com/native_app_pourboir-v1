@@ -204,84 +204,62 @@ export default function HomeScreenContent({
                   {i18n.t('around_you')}
                 </Text>
               )}
-              <View
+              <FlatList
+                data={
+                  restaurantLoading ? dummyArray : distributeInArray(data).all
+                }
+                showsVerticalScrollIndicator={false}
+                onEndReached={handleLoadMore}
+                onEndReachedThreshold={0.5}
                 style={{
-                  flexDirection: 'row',
                   marginTop: 17,
                 }}
-              >
-                <FlatList
-                  data={
-                    restaurantLoading
-                      ? dummyArray
-                      : distributeInArray(data).firstArray
+                alwaysBounceHorizontal={false}
+                keyboardShouldPersistTaps={'handled'}
+                alwaysBounceVertical={false}
+                numColumns={2}
+                bounces={false}
+                // keyExtractor={(item, index) => index}
+                renderItem={itemData => {
+                  if (Object.keys(itemData.item).length) {
+                    return (
+                      <View
+                        style={{ marginTop: itemData.index % 2 !== 0 ? 12 : 0 }}
+                      >
+                        <HomeCard
+                          navigation={navigation}
+                          key={itemData.item.place_id}
+                          img={
+                            restaurantLoading ? null : itemData?.item?.photos[0]
+                          }
+                          rating={
+                            restaurantLoading ? null : itemData?.item.rating
+                          }
+                          name={restaurantLoading ? null : itemData?.item.name}
+                          DeleteRestaurant={
+                            (data,
+                            i => DeleteRestaurant(itemData?.item?.waiter?._id))
+                          }
+                          distance={
+                            restaurantLoading
+                              ? null
+                              : restaurantDistance(itemData)
+                          }
+                          services={
+                            restaurantLoading ? null : itemData?.item.servers
+                          }
+                          loading={restaurantLoading}
+                          crossIcon={route.params.crossIcon}
+                          place_id={
+                            restaurantLoading ? null : itemData?.item.place_id
+                          }
+                          refetchRestaurant={refetchRestaurant}
+                        />
+                      </View>
+                    );
                   }
-                  showsVerticalScrollIndicator={false}
-                  onEndReached={handleLoadMore}
-                  onEndReachedThreshold={0.5}
-                  alwaysBounceHorizontal={false}
-                  keyboardShouldPersistTaps={'handled'}
-                  alwaysBounceVertical={false}
-                  bounces={false}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={itemData => (
-                    <HomeCard
-                      navigation={navigation}
-                      key={itemData.item.place_id}
-                      img={restaurantLoading ? null : itemData.item.photos[0]}
-                      rating={restaurantLoading ? null : itemData.item.rating}
-                      name={restaurantLoading ? null : itemData.item.name}
-                      DeleteRestaurant={
-                        (data, i => DeleteRestaurant(itemData?.item?.waiter?._id))
-                      }
-                      distance={
-                        restaurantLoading ? null : restaurantDistance(itemData)
-                      }
-                      services={restaurantLoading ? null : itemData.item.servers}
-                      loading={restaurantLoading}
-                      crossIcon={route.params.crossIcon}
-                      place_id={restaurantLoading ? null : itemData.item.place_id}
-                      refetchRestaurant={refetchRestaurant}
-                    />
-                  )}
-                />
-                <FlatList
-                  data={
-                    restaurantLoading
-                      ? dummyArray
-                      : distributeInArray(data).secondArray
-                  }
-                  showsVerticalScrollIndicator={false}
-                  style={{ marginTop: 15 }}
-                  alwaysBounceHorizontal={false}
-                  onEndReached={handleLoadMore}
-                  onEndReachedThreshold={0.5}
-                  keyboardShouldPersistTaps={'handled'}
-                  alwaysBounceVertical={false}
-                  bounces={false}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={itemData => (
-                    <HomeCard
-                      navigation={navigation}
-                      key={itemData.item.place_id}
-                      img={restaurantLoading ? null : itemData.item.photos[0]}
-                      rating={restaurantLoading ? null : itemData.item.rating}
-                      name={restaurantLoading ? null : itemData.item.name}
-                      DeleteRestaurant={(data, i) =>
-                        DeleteRestaurant(itemData?.item?.waiter?._id, i)
-                      }
-                      distance={
-                        restaurantLoading ? null : restaurantDistance(itemData)
-                      }
-                      services={restaurantLoading ? null : itemData.item.servers}
-                      loading={restaurantLoading}
-                      crossIcon={route.params.crossIcon}
-                      place_id={restaurantLoading ? null : itemData.item.place_id}
-                      refetchRestaurant={refetchRestaurant}
-                    />
-                  )}
-                />
-              </View>
+                }}
+              />
             </ScrollView>
           )}
       </>

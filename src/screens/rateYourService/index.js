@@ -104,8 +104,8 @@ const RateService = ({ navigation, route }) => {
         onSuccess: async () => {
           setLoading(false);
           setisVisible(true);
-          await refetchRestaurant();
           await refetchWaiters();
+          await refetchRestaurant();
         },
       });
     } else {

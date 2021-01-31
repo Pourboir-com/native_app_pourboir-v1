@@ -119,17 +119,17 @@ const HomeScreen = props => {
         spacing(
           !state.userDetails.name
             ? LAYOUT.window.width * 0.026
-            : LAYOUT.window.width * 0.017,
+            : LAYOUT.window.width * 0.016,
         ) : LAYOUT.window.width < 400 ? HEADER_BAR_HEIGHT +
         spacing(
           !state.userDetails.name
             ? LAYOUT.window.width * 0.026
-            : LAYOUT.window.width * 0.021,
+            : LAYOUT.window.width * 0.020,
         ) : HEADER_BAR_HEIGHT +
         spacing(
           !state.userDetails.name
             ? LAYOUT.window.width * 0.026
-            : LAYOUT.window.width * 0.025,
+            : LAYOUT.window.width * 0.024,
         ),
     ],
     // outputRange: [0, (LAYOUT.window.width * 0.5) ],

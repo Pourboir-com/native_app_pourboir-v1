@@ -131,18 +131,8 @@ const SocialLogin = ({ navigation, route }) => {
               picture: data?.picture?.data?.url || '',
               given_name: data?.middle_name || '',
             };
-
             await googleSignup(user, {
               onSuccess: async res => {
-                if (vote) {
-                  navigation.navigate('RateYourService');
-                  setVote(false);
-                } else if (confirmWaiter || HelpUs) {
-                  navigation.navigate('OpenCardReviews');
-                } else {
-                  navigation.navigate('Home', { crossIcon: false });
-                }
-
                 let userDetails = {
                   name: userGivenName(res?.user?.full_name),
                   image: res?.user?.picture,
@@ -162,6 +152,14 @@ const SocialLogin = ({ navigation, route }) => {
                     ...userDetails,
                   }),
                 );
+                if (vote) {
+                  navigation.navigate('RateYourService');
+                  setVote(false);
+                } else if (confirmWaiter || HelpUs) {
+                  navigation.navigate('OpenCardReviews');
+                } else {
+                  navigation.navigate('Home', { crossIcon: false });
+                }
                 setLoading(false);
               },
               onError: e => {

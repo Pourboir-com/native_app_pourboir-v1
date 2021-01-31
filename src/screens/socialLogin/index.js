@@ -68,11 +68,11 @@ const SocialLogin = ({ navigation, route }) => {
             navigation.navigate('Home', { crossIcon: false });
           }
           let userDetails = {
-            name: userGivenName(res?.user?.full_name),
-            image: res?.user?.picture,
-            email: res?.user?.email,
-            accessToken: accessToken,
-            user_id: res?.user?._id,
+            name: res?.user?.full_name ? userGivenName(res?.user?.full_name) : '',
+            image: res?.user?.picture || '',
+            email: res?.user?.email || '',
+            accessToken: accessToken || '',
+            user_id: res?.user?._id || '',
           };
 
           dispatch({

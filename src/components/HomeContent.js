@@ -40,7 +40,7 @@ export default function HomeScreenContent({
   useEffect(() => {
     setData(Data);
   }, [Data]);
-  const dummyArray = [1, 2];
+  const dummyArray = [1, 2, 3];
   const fetchFont = () => {
     return Font.loadAsync({
       ProximaNova: require('../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
@@ -57,8 +57,8 @@ export default function HomeScreenContent({
         user_id: state.userDetails.user_id,
       };
       await deleteRestaurant(userInfo, {
-        onSuccess: () => {
-          RefetchRestaurant();
+        onSuccess: async () => {
+          await RefetchRestaurant();
         },
       });
     }

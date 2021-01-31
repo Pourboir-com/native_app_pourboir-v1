@@ -29,6 +29,11 @@ const HomeScreen = props => {
   const { state } = useContext(Context);
   const [loading, setLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [hasValue, sethasValue] = useState();
+
+  useEffect(() => {
+    sethasValue(props.searchVal ? true : false);
+  });
 
   useEffect(() => {
     setLoading(!loading);
@@ -103,11 +108,28 @@ const HomeScreen = props => {
     inputRange: [0, HEADER_HEIGHT / 2],
     outputRange: [
       0,
-      HEADER_BAR_HEIGHT +
+      LAYOUT.window.width < 365
+        ? HEADER_BAR_HEIGHT +
+          spacing(
+            !state.userDetails.name
+              ? LAYOUT.window.width * 0.026
+              : LAYOUT.window.width * 0.013,
+          )
+        : LAYOUT.window.width < 380 ? HEADER_BAR_HEIGHT +
         spacing(
           !state.userDetails.name
             ? LAYOUT.window.width * 0.026
-            : LAYOUT.window.width * 0.013,
+            : LAYOUT.window.width * 0.017,
+        ) : LAYOUT.window.width < 400 ? HEADER_BAR_HEIGHT +
+        spacing(
+          !state.userDetails.name
+            ? LAYOUT.window.width * 0.026
+            : LAYOUT.window.width * 0.021,
+        ) : HEADER_BAR_HEIGHT +
+        spacing(
+          !state.userDetails.name
+            ? LAYOUT.window.width * 0.026
+            : LAYOUT.window.width * 0.025,
         ),
     ],
     // outputRange: [0, (LAYOUT.window.width * 0.5) ],
@@ -356,7 +378,7 @@ const HomeScreen = props => {
                   style={{ flex: 1, paddingHorizontal: 25 }}
                 />
 
-                {isFocused && (
+                {hasValue && (
                   <TouchableOpacity
                     onPress={() => {
                       props.setSearchVal('');
@@ -510,7 +532,7 @@ const HomeScreen = props => {
                   style={{ flex: 1, paddingHorizontal: 25 }}
                 />
 
-                {isFocused && (
+                {hasValue && (
                   <TouchableOpacity
                     onPress={() => {
                       props.setSearchVal('');
@@ -526,11 +548,6 @@ const HomeScreen = props => {
                         padding: 4,
                       }}
                     >
-                      {/* <Entypo
-                      name="cross"
-                      color={'#1E272E'}
-                      size={25}
-                  /> */}
                       <AntDesign name="close" size={14} color="#485460" />
                     </View>
                   </TouchableOpacity>

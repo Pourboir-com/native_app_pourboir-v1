@@ -80,6 +80,7 @@ const HomeScreen = props => {
             setsearchIconPress={setSearchIconPress}
             searchIconPress={searchIconPress}
             searchVal={searchVal}
+            restaurantLoading={restaurantLoading}
             setSearchVal={setSearchVal}
             navigation={props?.navigation}
             refetchRestaurant={refetchRestaurant}

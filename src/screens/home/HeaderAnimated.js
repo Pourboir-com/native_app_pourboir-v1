@@ -40,7 +40,9 @@ const HomeScreen = props => {
   }, [
     props.saveLocation,
     // props.nextPageToken,
-    props.Data,
+    props.resIsFetching,
+    // props.Data,
+    props.restaurantLoading,
     state.userDetails.name,
   ]);
 

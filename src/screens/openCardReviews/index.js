@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -22,11 +22,12 @@ import RatingStar from '../../components/RatingComponent';
 import GlobalHeader from '../../components/GlobalHeader';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { reactQueryConfig } from '../../constants';
-import { GET_WAITERS } from '../../queries';
+import { GET_WAITERS, I_AM_WAITER } from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
+import Context from '../../contextApi/context';
 
 import i18n from '../../li8n';
 
@@ -35,7 +36,9 @@ const ReviewDetails = ({ navigation, route }) => {
   const [confirmModalVisible, setconfirmModalVisible] = useState(false);
   const [helpUsModalVisible, sethelpUsModalVisible] = useState(false);
   const [starSelect, setstarSelect] = useState();
-
+  const { state } = useContext(Context);
+  const [IAMWAITER] = useMutation(I_AM_WAITER);
+  const [loading, setLoading] = useState(false);
   const {
     img,
     name,
@@ -72,7 +75,12 @@ const ReviewDetails = ({ navigation, route }) => {
   };
 
   const handleConfirmModalOpen = () => {
-    setconfirmModalVisible(true);
+    const isUserAlreadyWaiter = data.find(
+      item => item?.user_id?._id === state.userDetails.user_id,
+    );
+    if (isUserAlreadyWaiter) {
+      alert('You are already waiter in this restaurant.');
+    } else setconfirmModalVisible(true);
   };
 
   const handleHelpUsModalOpen = () => {
@@ -83,6 +91,31 @@ const ReviewDetails = ({ navigation, route }) => {
   // Star arrayyyyyyyy
   const obj = [1, 2, 3, 4, 5];
 
+  const handleIAMWAITER = async () => {
+    if (state.userDetails.user_id) {
+      setLoading(true);
+      let IWaiter = {
+        user_id: state.userDetails.user_id,
+        restaurant_id: place_id,
+      };
+      await IAMWAITER(IWaiter, {
+        onSuccess: async () => {
+          await refetchWaiters();
+          handleModalClose();
+          setLoading(false);
+          await refetchRestaurant();
+        },
+        onError: () => {
+          handleModalClose();
+          setLoading(false);
+          alert('You are already waiter in this restaurant.');
+        },
+      });
+    } else {
+      handleModalClose();
+      navigation.navigate('socialLogin', { confirmWaiter: true });
+    }
+  };
   return (
     <View style={styles.container}>
       {/* <StatusBar
@@ -108,7 +141,7 @@ const ReviewDetails = ({ navigation, route }) => {
           zIndex: 9,
         }}
       >
-        <View style={styles.viewImg} >
+        <View style={styles.viewImg}>
           <ImageBackground
             source={{ uri: img }}
             style={{ flex: 1, justifyContent: 'space-between' }}
@@ -134,8 +167,8 @@ const ReviewDetails = ({ navigation, route }) => {
                           v <= rating
                             ? 'filled'
                             : v === rating + 0.5
-                              ? 'half'
-                              : 'empty'
+                            ? 'half'
+                            : 'empty'
                         }
                         notRatedStarColor="rgba(255,255,255, 0.6)"
                       />
@@ -266,8 +299,8 @@ const ReviewDetails = ({ navigation, route }) => {
                                 v <= itemData.item.rating
                                   ? 'filled'
                                   : v === itemData.item.rating + 0.5
-                                    ? 'half'
-                                    : 'empty'
+                                  ? 'half'
+                                  : 'empty'
                               }
                               notRatedStarColor="rgba(0,0,0,0.1)"
                             />
@@ -324,6 +357,8 @@ const ReviewDetails = ({ navigation, route }) => {
         place_id={place_id}
         navigation={navigation}
         name={name}
+        loading={loading}
+        handleIAMWAITER={handleIAMWAITER}
       />
       {/* <KeyboardAvoidingView>
         <ScrollView> */}

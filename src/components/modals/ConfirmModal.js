@@ -22,36 +22,9 @@ const ConfirmationModal = ({
   isVisible,
   handleModalClose,
   name,
-  place_id,
-  navigation,
-  refetchWaiters,
-  refetchRestaurant,
+  handleIAMWAITER,
+  loading,
 }) => {
-  const { state } = useContext(Context);
-  const [IAMWAITER] = useMutation(I_AM_WAITER);
-  const [loading, setLoading] = useState(false);
-
-  const handleIAMWAITER = async () => {
-    if (state.userDetails.user_id) {
-      setLoading(true);
-      let IWaiter = {
-        user_id: state.userDetails.user_id,
-        restaurant_id: place_id,
-      };
-      await IAMWAITER(IWaiter, {
-        onSuccess: async () => {
-          await refetchWaiters();
-          handleModalClose();
-          setLoading(false);
-          await refetchRestaurant();
-        },
-      });
-    } else {
-      handleModalClose();
-      navigation.navigate('socialLogin', { confirmWaiter: true });
-    }
-  };
-
   return (
     <Overlay
       overlayStyle={styles.container}

@@ -1,5 +1,10 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { ImageBackground, Animated, Dimensions } from 'react-native';
+import {
+  ImageBackground,
+  Animated,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -7,6 +12,7 @@ const imgSplash = require('../../assets/images/splash.png');
 import NetInfo from '@react-native-community/netinfo';
 import { getAsyncStorageValues } from '../../constants';
 import Context from '../../contextApi/context';
+import { Colors } from '../../constants/Theme';
 import * as actionTypes from '../../contextApi/actionTypes';
 var getCountry = require('country-currency-map').getCountry;
 var formatCurrency = require('country-currency-map').formatCurrency;
@@ -136,14 +142,5 @@ export default function SplashScreen(props) {
     // }
   }, []);
 
-  return (
-    <ImageBackground
-      style={{
-        width: Dimensions.get('window').width * 1,
-        height: Dimensions.get('screen').height * 1,
-      }}
-      resizeMode="stretch"
-      source={imgSplash}
-    ></ImageBackground>
-  );
+  return <ActivityIndicator size={70} color={Colors.yellow} />;
 }

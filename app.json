@@ -17,12 +17,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.developerspourboir.pourboir",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.849073051273-p2rjj7ir7cmkscv26p5o6il9t4ombfk5"
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "config": {
+        "googleSignIn": {
+          "apiKey": "AIzaSyB7XMr35kinzd5MqsesXeIIHqYoERA_nCw"
+        }
       },
       "package": "pourboir.expo_app"
     },

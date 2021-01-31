@@ -108,29 +108,40 @@ const HomeScreen = props => {
     inputRange: [0, HEADER_HEIGHT / 2],
     outputRange: [
       0,
-      LAYOUT.window.width < 365
+      LAYOUT.window.width < 345
         ? HEADER_BAR_HEIGHT +
+          spacing(
+            !state.userDetails.name
+              ? LAYOUT.window.width * 0.026
+              : LAYOUT.window.width * 0.010,
+          )
+        : LAYOUT.window.width < 365
+          ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.026
               : LAYOUT.window.width * 0.013,
           )
-        : LAYOUT.window.width < 380 ? HEADER_BAR_HEIGHT +
-        spacing(
-          !state.userDetails.name
-            ? LAYOUT.window.width * 0.026
-            : LAYOUT.window.width * 0.016,
-        ) : LAYOUT.window.width < 400 ? HEADER_BAR_HEIGHT +
-        spacing(
-          !state.userDetails.name
-            ? LAYOUT.window.width * 0.026
-            : LAYOUT.window.width * 0.020,
-        ) : HEADER_BAR_HEIGHT +
-        spacing(
-          !state.userDetails.name
-            ? LAYOUT.window.width * 0.026
-            : LAYOUT.window.width * 0.024,
-        ),
+          : LAYOUT.window.width < 380
+            ? HEADER_BAR_HEIGHT +
+          spacing(
+            !state.userDetails.name
+              ? LAYOUT.window.width * 0.026
+              : LAYOUT.window.width * 0.016,
+          )
+            : LAYOUT.window.width < 400
+              ? HEADER_BAR_HEIGHT +
+          spacing(
+            !state.userDetails.name
+              ? LAYOUT.window.width * 0.026
+              : LAYOUT.window.width * 0.020,
+          )
+              : HEADER_BAR_HEIGHT +
+          spacing(
+            !state.userDetails.name
+              ? LAYOUT.window.width * 0.026
+              : LAYOUT.window.width * 0.024,
+          ),
     ],
     // outputRange: [0, (LAYOUT.window.width * 0.5) ],
     // outputRange: [

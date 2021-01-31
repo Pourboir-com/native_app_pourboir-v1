@@ -5,7 +5,8 @@ import { Entypo } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+var getCountry = require('country-currency-map').getCountry;
+var formatCurrency = require('country-currency-map').formatCurrency;
 import i18n from '../../li8n';
 
 const NoLocation = () => {
@@ -26,6 +27,22 @@ const NoLocation = () => {
         log: location?.coords.longitude,
       }),
     );
+    Location.getCurrentPositionAsync().then(pos => {
+      Location.reverseGeocodeAsync({
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+      }).then(async res => {
+        let currency = getCountry(res[0]?.country);
+        let formattedCurrency = formatCurrency('', currency?.currency);
+        await AsyncStorage.setItem(
+          '@Currency',
+          JSON.stringify({
+            currency: formattedCurrency || '',
+          }),
+        );
+      });
+    });
+
     navigation.replace('Home', { crossIcon: false });
   };
 

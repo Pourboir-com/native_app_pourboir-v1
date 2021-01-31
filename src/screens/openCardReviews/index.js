@@ -283,7 +283,7 @@ const ReviewDetails = ({ navigation, route }) => {
                       style={styles.txtItemName}
                     >
                       {itemData?.item?.user_id
-                        ? itemData?.item?.user_id?.given_name
+                        ? itemData?.item?.user_id?.full_name
                         : itemData?.item.full_name}
                     </Text>
                     <View

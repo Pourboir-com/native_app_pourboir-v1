@@ -34,7 +34,7 @@ const Setting = ({ navigation, route }) => {
   const [updatePicture] = useMutation(UPDATE_PICTURE);
   const { RefetchRestaurant } = route.params;
   const resetState = async () => {
-    navigation.replace('socialLogin');
+    navigation.navigate('Home', { crossIcon: false });
     let userDetails = {
       name: '',
       image: '',

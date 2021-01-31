@@ -59,8 +59,6 @@ const SocialLogin = ({ navigation, route }) => {
       let userInfoResponse = await userSignUp(accessToken);
       await googleSignup(userInfoResponse.data, {
         onSuccess: async res => {
-          setLoading(true);
-
           if (vote) {
             navigation.navigate('RateYourService');
             setVote(false);
@@ -70,7 +68,7 @@ const SocialLogin = ({ navigation, route }) => {
             navigation.navigate('Home', { crossIcon: false });
           }
           let userDetails = {
-            name: userGivenName(res?.user?.given_name),
+            name: userGivenName(res?.user?.full_name),
             image: res?.user?.picture,
             email: res?.user?.email,
             accessToken: accessToken,
@@ -129,16 +127,23 @@ const SocialLogin = ({ navigation, route }) => {
               family_name: data?.last_name || '',
               id: data?.id || '',
               picture: data?.picture?.data?.url || '',
-              given_name: data?.middle_name || '',
             };
             await googleSignup(user, {
               onSuccess: async res => {
+                if (vote) {
+                  navigation.navigate('RateYourService');
+                  setVote(false);
+                } else if (confirmWaiter || HelpUs) {
+                  navigation.navigate('OpenCardReviews');
+                } else {
+                  navigation.navigate('Home', { crossIcon: false });
+                }
                 let userDetails = {
-                  name: userGivenName(res?.user?.full_name),
-                  image: res?.user?.picture,
-                  email: res?.user?.email,
-                  accessToken: token,
-                  user_id: res?.user?._id,
+                  name: res?.user?.full_name ? userGivenName(res?.user?.full_name) : '',
+                  image: res?.user?.picture || '',
+                  email: res?.user?.email || '',
+                  accessToken: token || '',
+                  user_id: res?.user?._id || '',
                 };
 
                 dispatch({
@@ -152,14 +157,6 @@ const SocialLogin = ({ navigation, route }) => {
                     ...userDetails,
                   }),
                 );
-                if (vote) {
-                  navigation.navigate('RateYourService');
-                  setVote(false);
-                } else if (confirmWaiter || HelpUs) {
-                  navigation.navigate('OpenCardReviews');
-                } else {
-                  navigation.navigate('Home', { crossIcon: false });
-                }
                 setLoading(false);
               },
               onError: e => {

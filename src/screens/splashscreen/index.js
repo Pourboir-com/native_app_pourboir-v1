@@ -1,14 +1,11 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import {
-  ImageBackground,
   Animated,
-  Dimensions,
   ActivityIndicator,
 } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const imgSplash = require('../../assets/images/splash.png');
 import NetInfo from '@react-native-community/netinfo';
 import { getAsyncStorageValues } from '../../constants';
 import Context from '../../contextApi/context';
@@ -16,6 +13,7 @@ import { Colors } from '../../constants/Theme';
 import * as actionTypes from '../../contextApi/actionTypes';
 var getCountry = require('country-currency-map').getCountry;
 var formatCurrency = require('country-currency-map').formatCurrency;
+import { loadAsync } from 'expo-font';
 
 export default function SplashScreen(props) {
   const { dispatch } = useContext(Context);
@@ -33,6 +31,14 @@ export default function SplashScreen(props) {
         type: actionTypes.USER_DETAILS,
         payload: userDetails,
       });
+      async function loadFont() {
+        await loadAsync({
+          // Load a font `Montserrat` from a static resource
+          ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
+          ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
+        });
+      }
+      loadFont();
     })();
   }, []);
 
@@ -142,5 +148,5 @@ export default function SplashScreen(props) {
     // }
   }, []);
 
-  return <ActivityIndicator size={70} color={Colors.yellow} />;
+  return <ActivityIndicator style={{flex: 1}} size={70} color={Colors.yellow} />;
 }

@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
   Text,
-  Image,
   View,
   TextInput,
   Platform,
@@ -11,15 +10,13 @@ import {
   SafeAreaView,
   BackHandler,
 } from 'react-native';
-import { Header, Body, Left, Right } from 'native-base';
+import { Body, Right } from 'native-base';
 import { Colors } from '../constants/Theme';
 import {
   MaterialIcons,
   FontAwesome,
   Fontisto,
-  FontAwesome5,
 } from '@expo/vector-icons';
-import { spacing } from '../constants/layout';
 
 const GlobalHeader = props => {
   const goBackHandler = props => {
@@ -92,7 +89,6 @@ const GlobalHeader = props => {
           Platform.OS === 'ios' ? { borderBottomWidth: 0 } : {},
         ]}
       >
-        {/* <View style={{ backgroundColor: 'red' }}> */}
         {props.left ? null : (
           <TouchableOpacity
             disabled={!props.arrow}
@@ -103,14 +99,7 @@ const GlobalHeader = props => {
           >
             <View style={[styles.viewLeft]}>
               {props.arrow === true && (
-                // <TouchableOpacity
-                //   style={{ padding: 10 }}
-                //   onPress={() => goBackHandler(props)}
-                // >
                 <MaterialIcons
-                  // onPress={e => {
-                  //   goBackHandler(props);
-                  // }}
                   style={{
                     marginTop: -10,
                   }}
@@ -118,38 +107,10 @@ const GlobalHeader = props => {
                   size={props.Arrowsize ? props.Arrowsize : 24}
                   color={props.BackIconColor ? props.BackIconColor : '#000'}
                 />
-                // </TouchableOpacity>
               )}
             </View>
           </TouchableOpacity>
         )}
-        {/* </View> */}
-        {/* {props.left ? null : (
-          <Left style={{ flex: props.leftText ? 2 : 1 }}>
-            <View style={[styles.viewLeft]}>
-              {props.arrow === true && (
-                <TouchableOpacity
-                  style={{ padding: 10 }}
-                  onPress={() => goBackHandler(props)}
-                >
-                  <MaterialIcons
-                    onPress={e => {
-                      goBackHandler(props);
-                    }}
-                    style={{
-                      zIndex: 9999999,
-                      width: '100%',
-                      marginTop: -20,
-                    }}
-                    name="arrow-back"
-                    size={props.Arrowsize ? props.Arrowsize : 24}
-                    color={props.BackIconColor ? props.BackIconColor : '#000'}
-                  />
-                </TouchableOpacity>
-              )}
-            </View>
-          </Left>
-        )} */}
 
         <Body
           style={{

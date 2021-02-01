@@ -14,8 +14,6 @@ import { Colors } from '../constants/Theme';
 import HomeCard from './HomeCard';
 import i18n from '../li8n';
 import { distributeInArray, restaurantDistance } from '../util';
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
 import { HomeCardSkeleton } from '../components/skeleton';
 import NoListImg from '../assets/images/emptyRestaurantList.png';
 import { DELETE_RES } from '../queries';
@@ -29,11 +27,10 @@ export default function HomeScreenContent({
   Data,
   isFetch,
   // DeleteRestaurant,
-  handleLoadMore,
+  // handleLoadMore,
   route,
 }) {
   const [data, setData] = useState([]);
-  const [fontLoaded, setFontLoaded] = useState(false);
   const navigation = useNavigation();
   const { state } = useContext(Context);
   const [deleteRestaurant] = useMutation(DELETE_RES);
@@ -41,12 +38,7 @@ export default function HomeScreenContent({
     setData(Data);
   }, [Data]);
   const dummyArray = [1, 2, 3];
-  const fetchFont = () => {
-    return Font.loadAsync({
-      ProximaNova: require('../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
-      ProximaNovaBold: require('../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
-    });
-  };
+
   const DeleteRestaurant = async waiter_id => {
     if (state.userDetails.user_id) {
       let Restaurants = [...data];
@@ -66,200 +58,177 @@ export default function HomeScreenContent({
   if (!data.length && !restaurantLoading && !resIsFetching) {
     return (
       <>
-        {!fontLoaded ? (
-          <AppLoading
-            startAsync={fetchFont}
-            onFinish={() => {
-              setFontLoaded(true);
+        <View style={styles.viewEmptyList}>
+          <View
+            style={{
+              backgroundColor: '#fff',
+              width: 160,
+              height: 160,
+              borderRadius: 100,
             }}
-            onError={() => console.log('ERROR')}
-          />
-        ) : (
-          <View style={styles.viewEmptyList}>
+          >
+            <Image
+              source={NoListImg}
+              style={{
+                width: 260,
+                height: 220,
+                marginTop: -55,
+                marginLeft: -50,
+              }}
+              resizeMode="contain"
+            />
+          </View>
+          <Text style={[styles.txt1NoRest, { fontFamily: 'ProximaNovaBold' }]}>
+            {i18n.t('you_have_no_restaurant')}
+          </Text>
+          <Text style={[styles.txt2NoRest, { fontFamily: 'ProximaNova' }]}>
+            {i18n.t('search_for_rest_and_add')}
+          </Text>
+        </View>
+        {/* )} */}
+      </>
+    );
+  }
+  return (
+    <>
+      {(isFetch ? (
+        restaurantLoading || resIsFetching
+      ) : (
+        restaurantLoading
+      )) ? (
+          <View
+          // bounces={true}
+          //   alwaysBounceVertical={true}
+            showsVerticalScrollIndicator={false}
+            alwaysBounceHorizontal={false}
+            alwaysBounceVertical={false}
+            bounces={false}
+            style={{ backgroundColor: '#F9F9F9', flex: 1 }}
+          >
+            {!route.params.crossIcon && (
+              <Text
+                style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
+              >
+                {i18n.t('around_you')}
+              </Text>
+            )}
             <View
               style={{
-                backgroundColor: '#fff',
-                width: 160,
-                height: 160,
-                borderRadius: 100,
+                flexDirection: 'row',
+                marginTop: 17,
               }}
             >
-              <Image
-                source={NoListImg}
-                style={{
-                  width: 260,
-                  height: 220,
-                  marginTop: -55,
-                  marginLeft: -50,
-                }}
-                resizeMode="contain"
+              <FlatList
+                data={dummyArray}
+                showsVerticalScrollIndicator={false}
+                alwaysBounceHorizontal={false}
+                scrollEnabled={false}
+                alwaysBounceVertical={false}
+                bounces={false}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={() => <HomeCardSkeleton />}
+              />
+              <FlatList
+                data={dummyArray}
+                showsVerticalScrollIndicator={false}
+                style={{ marginTop: 15 }}
+                alwaysBounceHorizontal={false}
+                scrollEnabled={false}
+                alwaysBounceVertical={false}
+                bounces={false}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={() => <HomeCardSkeleton />}
               />
             </View>
-            <Text
-              style={[styles.txt1NoRest, { fontFamily: 'ProximaNovaBold' }]}
-            >
-              {i18n.t('you_have_no_restaurant')}
-            </Text>
-            <Text style={[styles.txt2NoRest, { fontFamily: 'ProximaNova' }]}>
-              {i18n.t('search_for_rest_and_add')}
-            </Text>
           </View>
-        )}
-      </>
-    );
-  }
-  if (!fontLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFont}
-        onFinish={() => {
-          setFontLoaded(true);
-        }}
-        onError={() => console.log('ERROR')}
-      />
-    );
-  } else {
-    return (
-      <>
-        {(isFetch ? (
-          restaurantLoading || resIsFetching
         ) : (
-          restaurantLoading
-        )) ? (
+          <ScrollView
+          // bounces={true}
+          //   alwaysBounceVertical={true}
+            showsVerticalScrollIndicator={false}
+            alwaysBounceHorizontal={false}
+            refreshControl={
+              <RefreshControl
+              //refresh control used for the Pull to Refresh
+                refreshing={resIsFetching}
+                onRefresh={refetchRestaurant}
+              />
+            }
+            alwaysBounceVertical={false}
+            bounces={false}
+            keyboardShouldPersistTaps={'handled'}
+            style={{ backgroundColor: '#F9F9F9' }}
+          >
+            {!route.params.crossIcon && (
+              <Text
+                style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
+              >
+                {i18n.t('around_you')}
+              </Text>
+            )}
             <View
-            // bounces={true}
-            //   alwaysBounceVertical={true}
-              showsVerticalScrollIndicator={false}
-              alwaysBounceHorizontal={false}
-              alwaysBounceVertical={false}
-              bounces={false}
-              style={{ backgroundColor: '#F9F9F9', flex: 1 }}
+              style={{
+                marginTop: 17,
+              }}
             >
-              {!route.params.crossIcon && (
-                <Text
-                  style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
-                >
-                  {i18n.t('around_you')}
-                </Text>
-              )}
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: 17,
-                }}
-              >
-                <FlatList
-                  data={dummyArray}
-                  showsVerticalScrollIndicator={false}
-                  alwaysBounceHorizontal={false}
-                  scrollEnabled={false}
-                  alwaysBounceVertical={false}
-                  bounces={false}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={() => <HomeCardSkeleton />}
-                />
-                <FlatList
-                  data={dummyArray}
-                  showsVerticalScrollIndicator={false}
-                  style={{ marginTop: 15 }}
-                  alwaysBounceHorizontal={false}
-                  scrollEnabled={false}
-                  alwaysBounceVertical={false}
-                  bounces={false}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={() => <HomeCardSkeleton />}
-                />
-              </View>
-            </View>
-          ) : (
-            <ScrollView
-            // bounces={true}
-            //   alwaysBounceVertical={true}
-              showsVerticalScrollIndicator={false}
-              alwaysBounceHorizontal={false}
-              refreshControl={
-                <RefreshControl
-                //refresh control used for the Pull to Refresh
-                  refreshing={resIsFetching}
-                  onRefresh={refetchRestaurant}
-                />
-              }
-              alwaysBounceVertical={false}
-              bounces={false}
-              keyboardShouldPersistTaps={'handled'}
-              style={{ backgroundColor: '#F9F9F9' }}
-            >
-              {!route.params.crossIcon && (
-                <Text
-                  style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
-                >
-                  {i18n.t('around_you')}
-                </Text>
-              )}
-              <View
-                style={{
-                  marginTop: 17,
-                }}
-              >
-                <FlatList
-                  data={
-                    restaurantLoading ? dummyArray : distributeInArray(data).all
+              <FlatList
+                data={
+                  restaurantLoading ? dummyArray : distributeInArray(data).all
+                }
+                showsVerticalScrollIndicator={false}
+                // onEndReached={handleLoadMore}
+                // onEndReachedThreshold={0.5}
+                alwaysBounceHorizontal={false}
+                keyboardShouldPersistTaps={'handled'}
+                alwaysBounceVertical={false}
+                numColumns={2}
+                bounces={false}
+                keyExtractor={(item, index) => index}
+                renderItem={itemData => {
+                  if (Object.keys(itemData.item).length) {
+                    return (
+                      <View
+                        style={{ marginTop: itemData.index % 2 !== 0 ? 12 : 0 }}
+                      >
+                        <HomeCard
+                          navigation={navigation}
+                          key={itemData.item.place_id}
+                          img={
+                            restaurantLoading ? null : itemData?.item?.photos[0]
+                          }
+                          rating={
+                            restaurantLoading ? null : itemData?.item.rating
+                          }
+                          name={restaurantLoading ? null : itemData?.item.name}
+                          DeleteRestaurant={
+                            (data,
+                            i => DeleteRestaurant(itemData?.item?.waiter?._id))
+                          }
+                          distance={
+                            restaurantLoading
+                              ? null
+                              : restaurantDistance(itemData)
+                          }
+                          services={
+                            restaurantLoading ? null : itemData?.item.servers
+                          }
+                          loading={restaurantLoading}
+                          crossIcon={route.params.crossIcon}
+                          place_id={
+                            restaurantLoading ? null : itemData?.item.place_id
+                          }
+                          refetchRestaurant={refetchRestaurant}
+                        />
+                      </View>
+                    );
                   }
-                  showsVerticalScrollIndicator={false}
-                  // onEndReached={handleLoadMore}
-                  // onEndReachedThreshold={0.5}
-                  alwaysBounceHorizontal={false}
-                  keyboardShouldPersistTaps={'handled'}
-                  alwaysBounceVertical={false}
-                  numColumns={2}
-                  bounces={false}
-                  keyExtractor={(item, index) => index}
-                  renderItem={itemData => {
-                    if (Object.keys(itemData.item).length) {
-                      return (
-                        <View
-                          style={{ marginTop: itemData.index % 2 !== 0 ? 12 : 0 }}
-                        >
-                          <HomeCard
-                            navigation={navigation}
-                            key={itemData.item.place_id}
-                            img={
-                              restaurantLoading ? null : itemData?.item?.photos[0]
-                            }
-                            rating={
-                              restaurantLoading ? null : itemData?.item.rating
-                            }
-                            name={restaurantLoading ? null : itemData?.item.name}
-                            DeleteRestaurant={
-                              (data,
-                              i => DeleteRestaurant(itemData?.item?.waiter?._id))
-                            }
-                            distance={
-                              restaurantLoading
-                                ? null
-                                : restaurantDistance(itemData)
-                            }
-                            services={
-                              restaurantLoading ? null : itemData?.item.servers
-                            }
-                            loading={restaurantLoading}
-                            crossIcon={route.params.crossIcon}
-                            place_id={
-                              restaurantLoading ? null : itemData?.item.place_id
-                            }
-                            refetchRestaurant={refetchRestaurant}
-                          />
-                        </View>
-                      );
-                    }
-                  }}
-                />
-              </View>
-            </ScrollView>
-          )}
-      </>
-    );
-  }
+                }}
+              />
+            </View>
+          </ScrollView>
+        )}
+    </>
+  );
 }
 const styles = StyleSheet.create({
   container: {

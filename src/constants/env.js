@@ -10,9 +10,12 @@ export const releaseEnvironment = getEnvVars(Constants.manifest.releaseChannel);
 const apiUrl = () => {
   let api_url = `http:localhost:8080/api`;
   if (releaseEnvironment == 'production') {
+    // expo build:ios --release-channel production-1.0.0
+    // expo build:android --release-channel production-1.0.0
     api_url =
       'http://ec2-34-211-185-52.us-west-2.compute.amazonaws.com:5000/api';
   } else if (releaseEnvironment == 'staging') {
+    // expo publish --release-channel staging-0.0.1
     api_url =
       'http://ec2-34-211-185-52.us-west-2.compute.amazonaws.com:8080/api';
   }

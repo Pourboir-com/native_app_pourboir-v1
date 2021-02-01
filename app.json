@@ -35,7 +35,7 @@
           "certificateHash": "2D1F998CDB943BED21A3831029A25469F04709EE"
         }
       },
-      "package": "pourboir.expo_app"
+      "package": "com.developerspourboir.pourboir"
     },
     "web": {
       "favicon": "./assets/favicon.png"

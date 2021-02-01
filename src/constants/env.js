@@ -10,9 +10,11 @@ export const releaseEnvironment = getEnvVars(Constants.manifest.releaseChannel);
 const apiUrl = () => {
   let api_url = `http:localhost:8080/api`;
   if (releaseEnvironment == 'production') {
-    api_url = 'https://production.dancingnomads.com';
+    api_url =
+      'http://ec2-34-211-185-52.us-west-2.compute.amazonaws.com:5000/api';
   } else if (releaseEnvironment == 'staging') {
-    api_url = 'http://34.211.185.52:8080/api';
+    api_url =
+      'http://ec2-34-211-185-52.us-west-2.compute.amazonaws.com:8080/api';
   }
   return api_url;
 };

@@ -2,6 +2,9 @@
   "expo": {
     "name": "pourboir",
     "slug": "pourboir",
+    "facebookAppId":"771555200360518",
+    "facebookScheme":"fb771555200360518",
+    "facebookDisplayName":"Pourboir'",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/Serveur.png",

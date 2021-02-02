@@ -29,8 +29,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/Serveur.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/Serveur.png"
       },
       "config": {
         "googleSignIn": {

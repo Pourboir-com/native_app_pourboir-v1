@@ -29,15 +29,16 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/Serveur.png",
         "backgroundColor": "#FFFFFF"
       },
       "config": {
         "googleSignIn": {
-          "apiKey": "AIzaSyB7XMr35kinzd5MqsesXeIIHqYoERA_nCw"
+          "apiKey": "AIzaSyB7XMr35kinzd5MqsesXeIIHqYoERA_nCw",
+          "certificateHash": "2D1F998CDB943BED21A3831029A25469F04709EE"
         }
       },
-      "package": "pourboir.expo_app"
+      "package": "com.developerspourboir.pourboir"
     },
     "web": {
       "favicon": "./assets/favicon.png"

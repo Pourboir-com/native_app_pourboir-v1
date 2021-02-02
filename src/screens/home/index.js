@@ -74,6 +74,7 @@ const HomeScreen = props => {
             searchVal={searchVal}
             refetchRestaurant={refetchRestaurant}
             resIsFetching={resIsFetching}
+            saveLocation={saveLocation}
             Data={data}
             // isFetch={searchVal === '' ? true : false}
             route={props?.route}
@@ -92,6 +93,7 @@ const HomeScreen = props => {
           <HomeScreenContent
             restaurantLoading={restaurantLoading}
             refetchRestaurant={refetchRestaurant}
+            saveLocation={saveLocation}
             resIsFetching={resIsFetching}
             Data={data}
             route={props?.route}

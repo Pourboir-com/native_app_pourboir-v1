@@ -28,6 +28,7 @@ export default function HomeScreenContent({
   isFetch,
   // DeleteRestaurant,
   // handleLoadMore,
+  saveLocation,
   route,
 }) {
   const [data, setData] = useState([]);
@@ -55,7 +56,7 @@ export default function HomeScreenContent({
       });
     }
   };
-  if (!data.length && !restaurantLoading && !resIsFetching) {
+  if (!data.length && !restaurantLoading && !resIsFetching && saveLocation) {
     return (
       <>
         <View style={styles.viewEmptyList}>
@@ -115,7 +116,7 @@ export default function HomeScreenContent({
             <View
               style={{
                 flexDirection: 'row',
-                marginTop: 17,
+                // marginTop: 17,
               }}
             >
               <FlatList

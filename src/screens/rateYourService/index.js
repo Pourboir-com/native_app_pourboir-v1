@@ -104,7 +104,7 @@ const RateService = ({ navigation, route }) => {
         onSuccess: async () => {
           setLoading(false);
           setisVisible(true);
-          await refetchRestaurant();
+          // await refetchRestaurant();
         },
         onError: () => {
           alert('You can only vote once today.');

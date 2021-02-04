@@ -51,7 +51,7 @@ export default function HomeScreenContent({
       };
       await deleteRestaurant(userInfo, {
         onSuccess: async () => {
-          await RefetchRestaurant();
+          // await RefetchRestaurant();
         },
       });
     }

@@ -79,7 +79,7 @@ const HelpUsImproveModal = ({
             await refetchWaiters();
             handleModalClose();
             setLoading(false);
-            await refetchRestaurant();
+            // await refetchRestaurant();
             setWaiterName('');
           },
         });

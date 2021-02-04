@@ -103,7 +103,7 @@ const ReviewDetails = ({ navigation, route }) => {
           await refetchWaiters();
           handleModalClose();
           setLoading(false);
-          await refetchRestaurant();
+          // await refetchRestaurant();
         },
         onError: () => {
           handleModalClose();

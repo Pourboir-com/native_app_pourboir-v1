@@ -7,6 +7,7 @@ const Context = createContext({
     email: '',
     accessToken: '',
   },
+  restaurantsDetails: [],
 });
 
 export default Context;

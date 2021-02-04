@@ -19,6 +19,7 @@ import NoListImg from '../assets/images/emptyRestaurantList.png';
 import { DELETE_RES } from '../queries';
 import { useMutation } from 'react-query';
 import Context from '../contextApi/context';
+
 export default function HomeScreenContent({
   restaurantLoading,
   refetchRestaurant,
@@ -33,7 +34,7 @@ export default function HomeScreenContent({
 }) {
   const [data, setData] = useState([]);
   const navigation = useNavigation();
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   const [deleteRestaurant] = useMutation(DELETE_RES);
   useEffect(() => {
     setData(Data);
@@ -116,7 +117,7 @@ export default function HomeScreenContent({
             <View
               style={{
                 flexDirection: 'row',
-                // marginTop: 17,
+                marginTop: 17,
               }}
             >
               <FlatList

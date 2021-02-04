@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Header from './HeaderAnimated';
 import HeaderSimple from './HeaderSimple';
 import HomeScreenContent from '../../components/HomeContent';
@@ -7,13 +7,22 @@ import { getAsyncStorageValues } from '../../constants';
 import { GET_RESTAURANT } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import { useQuery } from 'react-query';
+import Context from '../../contextApi/context';
+import * as actionTypes from '../../contextApi/actionTypes';
 
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
   const [searchIconPress, setSearchIconPress] = useState(false);
-  const [data, setData] = useState([]);
   const [saveLocation, setSaveLocation] = useState('');
   const [nextPageToken, setnextPageToken] = useState();
+  const { state, dispatch } = useContext(Context);
+  const [data, setData] = useState(
+    state?.restaurantsDetails ? state?.restaurantsDetails : [],
+  );
+
+  useEffect(() => {
+    setData(state?.restaurantsDetails);
+  }, [state?.restaurantsDetails]);
 
   useEffect(() => {
     (async () => {
@@ -34,7 +43,6 @@ const HomeScreen = props => {
         location: saveLocation,
         search: searchVal.split(' ').join('').length >= 3 ? searchVal : '',
         // pageToken: nextPageToken,
-        // maxResults: 20,
       },
     ],
     GET_RESTAURANT,
@@ -42,7 +50,10 @@ const HomeScreen = props => {
       ...reactQueryConfig,
       enabled: saveLocation,
       onSuccess: res => {
-        setData(res?.restaurants?.results || []);
+        dispatch({
+          type: actionTypes.RESTAURANTS_DETAILS,
+          payload: res?.restaurants?.results || [],
+        });
       },
     },
   );

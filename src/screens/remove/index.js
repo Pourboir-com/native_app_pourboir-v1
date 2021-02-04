@@ -13,11 +13,12 @@ import i18n from '../../li8n';
 import { View } from 'react-native';
 import { Dimensions } from 'react-native';
 import Context from '../../contextApi/context';
+import * as actionTypes from '../../contextApi/actionTypes';
 
 const Remove = props => {
   const [saveLocation, setSaveLocation] = useState('');
   const [data, setData] = useState([]);
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
 
   useEffect(() => {
     (async () => {

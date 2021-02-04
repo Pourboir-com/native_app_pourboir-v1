@@ -28,7 +28,7 @@ import { GET_WAITERS, I_AM_WAITER } from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import Context from '../../contextApi/context';
-
+import * as actionTypes from '../../contextApi/actionTypes';
 import i18n from '../../li8n';
 
 const ReviewDetails = ({ navigation, route }) => {
@@ -36,9 +36,10 @@ const ReviewDetails = ({ navigation, route }) => {
   const [confirmModalVisible, setconfirmModalVisible] = useState(false);
   const [helpUsModalVisible, sethelpUsModalVisible] = useState(false);
   const [starSelect, setstarSelect] = useState();
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   const [IAMWAITER] = useMutation(I_AM_WAITER);
   const [loading, setLoading] = useState(false);
+
   const {
     img,
     name,
@@ -48,6 +49,20 @@ const ReviewDetails = ({ navigation, route }) => {
     place_id,
     refetchRestaurant,
   } = route?.params;
+
+  const updateRestaurants = place_id => {
+    let filteredRestaurant = state?.restaurantsDetails.find(obj => {
+      return obj.place_id === place_id;
+    });
+    let updatedServers = filteredRestaurant.servers + 1;
+    filteredRestaurant.servers = updatedServers;
+    let updatedRestaurants = [...state?.restaurantsDetails, filteredRestaurant];
+    dispatch({
+      type: actionTypes.RESTAURANTS_DETAILS,
+      payload: updatedRestaurants,
+    });
+  };
+
   const {
     data: waitersData,
     isLoading: waitersLoading,
@@ -58,7 +73,6 @@ const ReviewDetails = ({ navigation, route }) => {
     enabled: place_id,
     onSuccess: res => {
       setData(res.data);
-      console.log(res.data);
     },
   });
 
@@ -80,7 +94,10 @@ const ReviewDetails = ({ navigation, route }) => {
     );
     if (isUserAlreadyWaiter) {
       alert('You are already waiter in this restaurant.');
-    } else setconfirmModalVisible(true);
+    } else {
+      setconfirmModalVisible(true);
+      // updateRestaurants(place_id);
+    }
   };
 
   const handleHelpUsModalOpen = () => {

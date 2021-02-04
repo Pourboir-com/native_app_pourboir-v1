@@ -2,9 +2,9 @@
   "expo": {
     "name": "pourboir",
     "slug": "pourboir",
-    "facebookAppId":"771555200360518",
-    "facebookScheme":"fb771555200360518",
-    "facebookDisplayName":"Pourboir'",
+    "facebookAppId": "771555200360518",
+    "facebookScheme": "fb771555200360518",
+    "facebookDisplayName": "Pourboir'",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/Serveur.png",
@@ -33,7 +33,7 @@
       },
       "config": {
         "googleSignIn": {
-          "apiKey": "AIzaSyB7XMr35kinzd5MqsesXeIIHqYoERA_nCw",
+          "apiKey": "AIzaSyDHVUwmNlKIiTNhnOi8xzM_vnsilLrJhkA",
           "certificateHash": "2D1F998CDB943BED21A3831029A25469F04709EE"
         }
       },

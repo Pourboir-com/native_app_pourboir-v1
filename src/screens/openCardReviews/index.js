@@ -51,15 +51,12 @@ const ReviewDetails = ({ navigation, route }) => {
   } = route?.params;
 
   const updateRestaurants = place_id => {
-    let filteredRestaurant = state?.restaurantsDetails.find(obj => {
-      return obj.place_id === place_id;
-    });
-    let updatedServers = filteredRestaurant.servers + 1;
-    filteredRestaurant.servers = updatedServers;
-    let updatedRestaurants = [...state?.restaurantsDetails, filteredRestaurant];
+    let filteredRestaurant = state?.restaurantsDetails.map(obj =>
+      obj.place_id === place_id ? { ...obj, servers: obj.servers + 1 } : obj,
+    );
     dispatch({
       type: actionTypes.RESTAURANTS_DETAILS,
-      payload: updatedRestaurants,
+      payload: filteredRestaurant,
     });
   };
 
@@ -96,7 +93,7 @@ const ReviewDetails = ({ navigation, route }) => {
       alert('You are already waiter in this restaurant.');
     } else {
       setconfirmModalVisible(true);
-      // updateRestaurants(place_id);
+      updateRestaurants(place_id);
     }
   };
 

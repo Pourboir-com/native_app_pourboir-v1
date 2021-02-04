@@ -8,7 +8,7 @@ function getEnvVars(env = '') {
 }
 export const releaseEnvironment = getEnvVars(Constants.manifest.releaseChannel);
 const apiUrl = () => {
-  let api_url = `http:192.168.10.25:8080/api`;
+  let api_url = `http://192.168.10.3:8081/api`;
   if (releaseEnvironment == 'production') {
     // expo build:ios --release-channel production-1.0.0
     // expo build:android --release-channel production-1.0.0

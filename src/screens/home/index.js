@@ -16,13 +16,7 @@ const HomeScreen = props => {
   const [saveLocation, setSaveLocation] = useState('');
   const [nextPageToken, setnextPageToken] = useState();
   const { state, dispatch } = useContext(Context);
-  const [data, setData] = useState(
-    state?.restaurantsDetails ? state?.restaurantsDetails : [],
-  );
-
-  useEffect(() => {
-    setData(state?.restaurantsDetails);
-  }, [state?.restaurantsDetails]);
+  const {restaurantsDetails: data} = state;
 
   useEffect(() => {
     (async () => {
@@ -50,6 +44,8 @@ const HomeScreen = props => {
       ...reactQueryConfig,
       enabled: saveLocation,
       onSuccess: res => {
+        setData(res?.restaurants?.results);
+        console.log('Restaurant fetched!!');
         dispatch({
           type: actionTypes.RESTAURANTS_DETAILS,
           payload: res?.restaurants?.results || [],

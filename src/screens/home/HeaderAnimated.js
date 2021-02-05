@@ -180,11 +180,7 @@ const HomeScreen = props => {
           ) : (
             <TouchableOpacity
               onPress={() =>
-                props.navigation.navigate('Setting', {
-                  yourRestaurantLoading: props.yourRestaurantLoading,
-                  yourRefetchRestaurant: props.yourRefetchRestaurant,
-                  yourResIsFetching: props.yourResIsFetching,
-                })
+                props.navigation.navigate('Setting')
               }
             >
               <Image

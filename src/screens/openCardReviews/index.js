@@ -30,7 +30,7 @@ import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import i18n from '../../li8n';
-import filteredRestaurant from '../../util';
+import { filteredRestaurant } from '../../util';
 
 const ReviewDetails = ({ navigation, route }) => {
   const [data, setData] = useState([]);
@@ -38,6 +38,7 @@ const ReviewDetails = ({ navigation, route }) => {
   const [helpUsModalVisible, sethelpUsModalVisible] = useState(false);
   const [starSelect, setstarSelect] = useState();
   const { state, dispatch } = useContext(Context);
+  const { yourRestaurants } = state;
   const [IAMWAITER] = useMutation(I_AM_WAITER);
   const [loading, setLoading] = useState(false);
 
@@ -48,6 +49,7 @@ const ReviewDetails = ({ navigation, route }) => {
     distance,
     services,
     place_id,
+    vicinity,
   } = route?.params;
 
   const updateRestaurants = (state, placeId) => {
@@ -91,7 +93,6 @@ const ReviewDetails = ({ navigation, route }) => {
       alert('You are already waiter in this restaurant.');
     } else {
       setconfirmModalVisible(true);
-      updateRestaurants(state, place_id);
     }
   };
 
@@ -108,11 +109,25 @@ const ReviewDetails = ({ navigation, route }) => {
       setLoading(true);
       let IWaiter = {
         user_id: state.userDetails.user_id,
-        restaurant_id: place_id,
+        restaurant: {
+          place_id: place_id,
+          rating: rating,
+          photos: [img],
+          name: name,
+          vicinity: vicinity,
+        },
       };
       await IAMWAITER(IWaiter, {
-        onSuccess: async () => {
+        onSuccess: async res => {
           await refetchWaiters();
+          updateRestaurants(state, place_id);
+          dispatch({
+            type: actionTypes.YOUR_RESTAURANTS,
+            payload: [
+              ...yourRestaurants,
+              { ...res.data.data, distance, servers: services },
+            ],
+          });
           handleModalClose();
           setLoading(false);
         },

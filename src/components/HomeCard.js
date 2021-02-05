@@ -22,6 +22,7 @@ const HomeCard = ({
   DeleteRestaurant,
   crossIcon,
   place_id,
+  vicinity,
 }) => {
   const [starSelect, setstarSelect] = useState(rating);
   const obj = [1, 2, 3, 4, 5];
@@ -35,12 +36,13 @@ const HomeCard = ({
       <TouchableOpacity
         onPress={() =>
           navigation.navigate('OpenCardReviews', {
-            img: img,
+            img,
             rating: starSelect,
-            name: name,
-            distance: distance,
-            services: services,
-            place_id: place_id,
+            name,
+            distance,
+            services,
+            place_id,
+            vicinity,
           })
         }
         style={[styles.viewItemConatier]}

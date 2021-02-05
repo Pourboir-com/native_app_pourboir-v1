@@ -31,31 +31,35 @@ export default function HomeScreenContent({
   saveLocation,
   route,
 }) {
-  const data = [...Data];
-  // const [data, setData] = useState([]);
+  // const data = [...Data];
+  const [data, setData] = useState([]);
   const navigation = useNavigation();
   const { state, dispatch } = useContext(Context);
   const [deleteRestaurant] = useMutation(DELETE_RES);
-  // useEffect(() => {
-  //   setData(Data);
-  // }, [Data]);
+  useEffect(() => {
+    setData(Data);
+  }, [Data]);
   const dummyArray = [1, 2, 3];
 
   const DeleteRestaurant = async waiter_id => {
     if (state.userDetails.user_id) {
-      let Restaurants = [...data];
-      Restaurants = Restaurants.filter(item => item?.waiter?._id !== waiter_id);
-      // setData(Restaurants);
       let userInfo = {
         id: waiter_id,
         user_id: state.userDetails.user_id,
       };
       await deleteRestaurant(userInfo, {
-        onSuccess: async () => {
-          dispatch({
-            type: actionTypes.YOUR_RESTAURANTS,
-            payload: Restaurants || [],
-          });
+        onSuccess: async (res) => {
+          let Restaurants = [...data];
+          Restaurants = Restaurants.filter(item => item?.waiter?._id !== waiter_id);
+          setData(Restaurants);
+          console.log(Restaurants);
+          // dispatch({
+          //   type: actionTypes.YOUR_RESTAURANTS,
+          //   payload: Restaurants,
+          // });
+        },
+        onError: e => {
+          console.log(e);
         },
       });
     }
@@ -218,6 +222,9 @@ export default function HomeScreenContent({
                         crossIcon={route.params.crossIcon}
                         place_id={
                           restaurantLoading ? null : itemData?.item.place_id
+                        }
+                        vicinity={
+                          restaurantLoading ? null : itemData?.item.vicinity
                         }
                       />
                     </View>

@@ -35,7 +35,7 @@ const HomeScreen = props => {
       'GET_RESTAURANT',
       {
         location: saveLocation,
-        search: searchVal.split(' ').join('').length >= 3 ? searchVal : '',
+
         // pageToken: nextPageToken,
       },
     ],

@@ -30,6 +30,7 @@ import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import i18n from '../../li8n';
+import filteredRestaurant from '../../util';
 
 const ReviewDetails = ({ navigation, route }) => {
   const [data, setData] = useState([]);
@@ -47,16 +48,13 @@ const ReviewDetails = ({ navigation, route }) => {
     distance,
     services,
     place_id,
-    refetchRestaurant,
   } = route?.params;
 
-  const updateRestaurants = place_id => {
-    let filteredRestaurant = state?.restaurantsDetails.map(obj =>
-      obj.place_id === place_id ? { ...obj, servers: obj.servers + 1 } : obj,
-    );
+  const updateRestaurants = (state, placeId) => {
+    let FilteredRestaurant = filteredRestaurant(state, placeId);
     dispatch({
       type: actionTypes.RESTAURANTS_DETAILS,
-      payload: filteredRestaurant,
+      payload: FilteredRestaurant,
     });
   };
 
@@ -93,7 +91,7 @@ const ReviewDetails = ({ navigation, route }) => {
       alert('You are already waiter in this restaurant.');
     } else {
       setconfirmModalVisible(true);
-      updateRestaurants(place_id);
+      updateRestaurants(state, place_id);
     }
   };
 
@@ -117,7 +115,6 @@ const ReviewDetails = ({ navigation, route }) => {
           await refetchWaiters();
           handleModalClose();
           setLoading(false);
-          // await refetchRestaurant();
         },
         onError: () => {
           handleModalClose();
@@ -266,7 +263,6 @@ const ReviewDetails = ({ navigation, route }) => {
                     restaurant_id: place_id,
                     waiter_id: itemData?.item?._id,
                     refetchWaiters: refetchWaiters,
-                    refetchRestaurant: refetchRestaurant,
                   })
                 }
                 style={styles.viewItemConatier}
@@ -363,7 +359,6 @@ const ReviewDetails = ({ navigation, route }) => {
         isVisible={confirmModalVisible}
         handleModalClose={handleModalClose}
         refetchWaiters={refetchWaiters}
-        refetchRestaurant={refetchRestaurant}
         place_id={place_id}
         navigation={navigation}
         name={name}
@@ -378,7 +373,6 @@ const ReviewDetails = ({ navigation, route }) => {
           refetchWaiters={refetchWaiters}
           isVisible={helpUsModalVisible}
           handleModalClose={handleModalClose}
-          refetchRestaurant={refetchRestaurant}
           navigation={navigation}
         />
       )}

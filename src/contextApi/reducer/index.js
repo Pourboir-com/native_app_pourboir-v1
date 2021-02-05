@@ -12,6 +12,11 @@ const reducer = (state, { type, payload }) => {
         ...state,
         restaurantsDetails: payload,
       };
+    case actionTypes.YOUR_RESTAURANTS:
+      return {
+        ...state,
+        yourRestaurants: payload,
+      };
     default:
       return state;
   }

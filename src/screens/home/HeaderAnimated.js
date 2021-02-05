@@ -41,9 +41,9 @@ const HomeScreen = props => {
     props.saveLocation,
     // props.nextPageToken,
     // props.resIsFetching,
-    props.Data,
+    // props.Data,
     // props.restaurantLoading,
-    state.userDetails.name,
+    state,
   ]);
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
@@ -115,7 +115,7 @@ const HomeScreen = props => {
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.026
-              : LAYOUT.window.width * 0.010,
+              : LAYOUT.window.width * 0.01,
           )
         : LAYOUT.window.width < 365
           ? HEADER_BAR_HEIGHT +
@@ -136,7 +136,7 @@ const HomeScreen = props => {
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.026
-              : LAYOUT.window.width * 0.020,
+              : LAYOUT.window.width * 0.02,
           )
               : HEADER_BAR_HEIGHT +
           spacing(
@@ -181,7 +181,9 @@ const HomeScreen = props => {
             <TouchableOpacity
               onPress={() =>
                 props.navigation.navigate('Setting', {
-                  RefetchRestaurant: props.refetchRestaurant,
+                  yourRestaurantLoading: props.yourRestaurantLoading,
+                  yourRefetchRestaurant: props.yourRefetchRestaurant,
+                  yourResIsFetching: props.yourResIsFetching,
                 })
               }
             >

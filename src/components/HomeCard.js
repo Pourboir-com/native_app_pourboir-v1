@@ -22,7 +22,6 @@ const HomeCard = ({
   DeleteRestaurant,
   crossIcon,
   place_id,
-  refetchRestaurant,
 }) => {
   const [starSelect, setstarSelect] = useState(rating);
   const obj = [1, 2, 3, 4, 5];
@@ -42,7 +41,6 @@ const HomeCard = ({
             distance: distance,
             services: services,
             place_id: place_id,
-            refetchRestaurant,
           })
         }
         style={[styles.viewItemConatier]}

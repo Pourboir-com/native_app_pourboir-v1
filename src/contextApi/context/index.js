@@ -8,6 +8,7 @@ const Context = createContext({
     accessToken: '',
   },
   restaurantsDetails: [],
+  yourRestaurants: [],
 });
 
 export default Context;

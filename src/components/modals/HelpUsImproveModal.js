@@ -30,7 +30,6 @@ const HelpUsImproveModal = ({
   handleModalClose,
   place_id,
   refetchWaiters,
-  refetchRestaurant,
   navigation,
 }) => {
   const [loading, setLoading] = useState(false);
@@ -79,7 +78,6 @@ const HelpUsImproveModal = ({
             await refetchWaiters();
             handleModalClose();
             setLoading(false);
-            // await refetchRestaurant();
             setWaiterName('');
           },
         });

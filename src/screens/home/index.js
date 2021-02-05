@@ -4,7 +4,7 @@ import HeaderSimple from './HeaderSimple';
 import HomeScreenContent from '../../components/HomeContent';
 import { StatusBar } from 'expo-status-bar';
 import { getAsyncStorageValues } from '../../constants';
-import { GET_RESTAURANT } from '../../queries';
+import { GET_RESTAURANT, GET_YOUR_RES } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import { useQuery } from 'react-query';
 import Context from '../../contextApi/context';
@@ -16,7 +16,7 @@ const HomeScreen = props => {
   const [saveLocation, setSaveLocation] = useState('');
   const [nextPageToken, setnextPageToken] = useState();
   const { state, dispatch } = useContext(Context);
-  const {restaurantsDetails: data} = state;
+  const { restaurantsDetails: data, userDetails } = state;
 
   useEffect(() => {
     (async () => {
@@ -44,10 +44,37 @@ const HomeScreen = props => {
       ...reactQueryConfig,
       enabled: saveLocation,
       onSuccess: res => {
-        setData(res?.restaurants?.results);
-        console.log('Restaurant fetched!!');
         dispatch({
           type: actionTypes.RESTAURANTS_DETAILS,
+          payload: res?.restaurants?.results || [],
+        });
+      },
+    },
+  );
+
+  const {
+    data: yourRestaurantData,
+    isLoading: yourRestaurantLoading,
+    refetch: yourRefetchRestaurant,
+    isFetching: yourResIsFetching,
+  } = useQuery(
+    [
+      'GET_YOUR_RES',
+      {
+        location: saveLocation,
+        user_id: userDetails.user_id,
+        // pageToken: nextPageToken,
+        // max_results: 1,
+        // page_no: 1,
+      },
+    ],
+    GET_YOUR_RES,
+    {
+      ...reactQueryConfig,
+      enabled: saveLocation && userDetails.user_id,
+      onSuccess: res => {
+        dispatch({
+          type: actionTypes.YOUR_RESTAURANTS,
           payload: res?.restaurants?.results || [],
         });
       },
@@ -69,11 +96,13 @@ const HomeScreen = props => {
           restaurantLoading={restaurantLoading}
           setSearchVal={setSearchVal}
           navigation={props?.navigation}
-          refetchRestaurant={refetchRestaurant}
           resIsFetching={resIsFetching}
           saveLocation={saveLocation}
           // nextPageToken={nextPageToken}
           Data={data}
+          yourRestaurantLoading={yourRestaurantLoading}
+          yourRefetchRestaurant={yourRefetchRestaurant}
+          yourResIsFetching={yourResIsFetching}
         >
           <StatusBar translucent={true} style="dark" />
           <HomeScreenContent

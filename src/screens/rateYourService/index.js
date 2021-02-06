@@ -100,16 +100,20 @@ const RateService = ({ navigation, route }) => {
         restaurant_id: restaurant_id || '',
         currency: currency.currency || '',
       };
-      dispatch({
-        type: actionTypes.REFRESH_ANIMATION,
-        payload: !state.refreshAnimation,
-      });
       await addRatings(ratingDetails, {
         onSuccess: async () => {
           setLoading(false);
           setisVisible(true);
+          // dispatch({
+          //   type: actionTypes.REFRESH_ANIMATION,
+          //   payload: !state.refreshAnimation,
+          // });
         },
         onError: () => {
+          // dispatch({
+          //   type: actionTypes.REFRESH_ANIMATION,
+          //   payload: !state.refreshAnimation,
+          // });
           alert('You can only vote once today.');
           navigation.navigate('Home', { crossIcon: false });
         },

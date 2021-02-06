@@ -111,7 +111,6 @@ const ReviewDetails = ({ navigation, route }) => {
   const handleIAMWAITER = async () => {
     if (state.userDetails.user_id) {
       setLoading(true);
-      updateRestaurants(state, place_id);
       let IWaiter = {
         user_id: state.userDetails.user_id,
         restaurant: {
@@ -124,6 +123,7 @@ const ReviewDetails = ({ navigation, route }) => {
       };
       await IAMWAITER(IWaiter, {
         onSuccess: async res => {
+          updateRestaurants(state, place_id);
           dispatch({
             type: actionTypes.YOUR_RESTAURANTS,
             payload: [

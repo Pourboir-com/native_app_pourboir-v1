@@ -63,18 +63,22 @@ export default function HomeScreenContent({
         id: waiter_id,
         user_id: state.userDetails.user_id,
       };
-      let Restaurants = [...data];
-      Restaurants = Restaurants.filter(item => item?.waiter?._id !== waiter_id);
-      updateRestaurants(state, place_id);
-      dispatch({
-        type: actionTypes.YOUR_RESTAURANTS,
-        payload: Restaurants,
-      });
       await deleteRestaurant(userInfo, {
         onSuccess: () => {
+          let Restaurants = [...data];
+          Restaurants = Restaurants.filter(item => item?.waiter?._id !== waiter_id);
+          updateRestaurants(state, place_id);
+          dispatch({
+            type: actionTypes.YOUR_RESTAURANTS,
+            payload: Restaurants,
+          });
+          setdeleteLoading(false);
+        },
+        onError: () =>{
           setdeleteLoading(false);
         },
       });
+      
     }
   };
 

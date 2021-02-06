@@ -7,6 +7,7 @@ const Context = createContext({
     email: '',
     accessToken: '',
   },
+  refreshAnimation: true,
   restaurantsDetails: [],
   yourRestaurants: [],
 });

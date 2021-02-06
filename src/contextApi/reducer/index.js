@@ -17,6 +17,11 @@ const reducer = (state, { type, payload }) => {
         ...state,
         yourRestaurants: payload,
       };
+    case actionTypes.REFRESH_ANIMATION:
+      return {
+        ...state,
+        refreshAnimation: payload,
+      };
     default:
       return state;
   }

@@ -24,6 +24,7 @@ import { DELETE_RES } from '../queries';
 import { useMutation } from 'react-query';
 import Context from '../contextApi/context';
 import * as actionTypes from '../contextApi/actionTypes';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default function HomeScreenContent({
   restaurantLoading,
@@ -38,6 +39,7 @@ export default function HomeScreenContent({
   // const data = [...Data];
   const [data, setData] = useState([]);
   const navigation = useNavigation();
+  const [deleteLoading, setdeleteLoading] = useState(false);
   const { state, dispatch } = useContext(Context);
   const [deleteRestaurant] = useMutation(DELETE_RES);
   useEffect(() => {
@@ -56,6 +58,7 @@ export default function HomeScreenContent({
 
   const DeleteRestaurant = async (waiter_id, place_id) => {
     if (state.userDetails.user_id) {
+      setdeleteLoading(true);
       let userInfo = {
         id: waiter_id,
         user_id: state.userDetails.user_id,
@@ -67,7 +70,11 @@ export default function HomeScreenContent({
         type: actionTypes.YOUR_RESTAURANTS,
         payload: Restaurants,
       });
-      await deleteRestaurant(userInfo);
+      await deleteRestaurant(userInfo, {
+        onSuccess: () => {
+          setdeleteLoading(false);
+        },
+      });
     }
   };
 
@@ -171,6 +178,9 @@ export default function HomeScreenContent({
           keyboardShouldPersistTaps={'handled'}
           style={{ backgroundColor: '#F9F9F9' }}
         >
+          <Spinner
+            visible={deleteLoading}
+          />
           {!route.params.crossIcon && (
             <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}

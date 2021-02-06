@@ -30,7 +30,7 @@ import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import i18n from '../../li8n';
-import { filteredRestaurant } from '../../util';
+import { filteredRestaurant, yourfilteredRestaurant } from '../../util';
 
 const ReviewDetails = ({ navigation, route }) => {
   const [data, setData] = useState([]);
@@ -53,10 +53,15 @@ const ReviewDetails = ({ navigation, route }) => {
 
   const updateRestaurants = (state, placeId) => {
     let FilteredRestaurant = filteredRestaurant(state, placeId);
+    // let YourFilteredRestaurant = yourfilteredRestaurant(state, placeId);
     dispatch({
       type: actionTypes.RESTAURANTS_DETAILS,
       payload: FilteredRestaurant,
     });
+    // dispatch({
+    //   type: actionTypes.YOUR_RESTAURANTS,
+    //   payload: YourFilteredRestaurant,
+    // });
   };
 
   const {
@@ -106,6 +111,7 @@ const ReviewDetails = ({ navigation, route }) => {
   const handleIAMWAITER = async () => {
     if (state.userDetails.user_id) {
       setLoading(true);
+      updateRestaurants(state, place_id);
       let IWaiter = {
         user_id: state.userDetails.user_id,
         restaurant: {
@@ -126,7 +132,6 @@ const ReviewDetails = ({ navigation, route }) => {
             ],
           });
           await refetchWaiters();
-          updateRestaurants(state, place_id);
           handleModalClose();
           setLoading(false);
         },
@@ -188,8 +193,8 @@ const ReviewDetails = ({ navigation, route }) => {
                           v <= rating
                             ? 'filled'
                             : v === rating + 0.5
-                            ? 'half'
-                            : 'empty'
+                              ? 'half'
+                              : 'empty'
                         }
                         notRatedStarColor="rgba(255,255,255, 0.6)"
                       />
@@ -319,8 +324,8 @@ const ReviewDetails = ({ navigation, route }) => {
                                 v <= itemData.item.rating
                                   ? 'filled'
                                   : v === itemData.item.rating + 0.5
-                                  ? 'half'
-                                  : 'empty'
+                                    ? 'half'
+                                    : 'empty'
                               }
                               notRatedStarColor="rgba(0,0,0,0.1)"
                             />

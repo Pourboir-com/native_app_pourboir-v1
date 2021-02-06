@@ -26,9 +26,10 @@ import NumberFormat from 'react-number-format';
 import i18n from '../../li8n';
 const imgBg = require('../../assets/images/Group5.png');
 import { getAsyncStorageValues } from '../../constants';
+import * as actionTypes from '../../contextApi/actionTypes';
 
 const RateService = ({ navigation, route }) => {
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   const [hospitality, setHospitality] = useState();
   const [currency, setCurrency] = useState();
   const [speed, setSpeed] = useState();
@@ -99,6 +100,10 @@ const RateService = ({ navigation, route }) => {
         restaurant_id: restaurant_id || '',
         currency: currency.currency || '',
       };
+      dispatch({
+        type: actionTypes.REFRESH_ANIMATION,
+        payload: !state.refreshAnimation,
+      });
       await addRatings(ratingDetails, {
         onSuccess: async () => {
           setLoading(false);

@@ -188,8 +188,8 @@ const ReviewDetails = ({ navigation, route }) => {
                           v <= rating
                             ? 'filled'
                             : v === rating + 0.5
-                              ? 'half'
-                              : 'empty'
+                            ? 'half'
+                            : 'empty'
                         }
                         notRatedStarColor="rgba(255,255,255, 0.6)"
                       />
@@ -319,8 +319,8 @@ const ReviewDetails = ({ navigation, route }) => {
                                 v <= itemData.item.rating
                                   ? 'filled'
                                   : v === itemData.item.rating + 0.5
-                                    ? 'half'
-                                    : 'empty'
+                                  ? 'half'
+                                  : 'empty'
                               }
                               notRatedStarColor="rgba(0,0,0,0.1)"
                             />

@@ -13,7 +13,11 @@ import {
 import { Colors } from '../constants/Theme';
 import HomeCard from './HomeCard';
 import i18n from '../li8n';
-import { distributeInArray, restaurantDistance, filteredMinusRestaurant } from '../util';
+import {
+  distributeInArray,
+  restaurantDistance,
+  filteredMinusRestaurant,
+} from '../util';
 import { HomeCardSkeleton } from '../components/skeleton';
 import NoListImg from '../assets/images/emptyRestaurantList.png';
 import { DELETE_RES } from '../queries';
@@ -56,19 +60,14 @@ export default function HomeScreenContent({
         id: waiter_id,
         user_id: state.userDetails.user_id,
       };
-      await deleteRestaurant(userInfo, {
-        onSuccess: res => {
-          let Restaurants = [...data];
-          Restaurants = Restaurants.filter(
-            item => item?.waiter?._id !== waiter_id,
-          );
-          updateRestaurants(state, place_id);
-          dispatch({
-            type: actionTypes.YOUR_RESTAURANTS,
-            payload: Restaurants,
-          });
-        },
+      let Restaurants = [...data];
+      Restaurants = Restaurants.filter(item => item?.waiter?._id !== waiter_id);
+      updateRestaurants(state, place_id);
+      dispatch({
+        type: actionTypes.YOUR_RESTAURANTS,
+        payload: Restaurants,
       });
+      await deleteRestaurant(userInfo);
     }
   };
 
@@ -211,7 +210,11 @@ export default function HomeScreenContent({
                         name={itemData?.item.name}
                         DeleteRestaurant={
                           (data,
-                          i => DeleteRestaurant(itemData?.item?.waiter?._id, itemData?.item?.place_id))
+                          i =>
+                            DeleteRestaurant(
+                              itemData?.item?.waiter?._id,
+                              itemData?.item?.place_id,
+                            ))
                         }
                         distance={restaurantDistance(itemData)}
                         services={itemData?.item.servers}

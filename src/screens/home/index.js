@@ -12,6 +12,7 @@ import * as actionTypes from '../../contextApi/actionTypes';
 
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
+  const [searchEnter, setsearchEnter] = useState('');
   const [searchIconPress, setSearchIconPress] = useState(false);
   const [saveLocation, setSaveLocation] = useState('');
   const [nextPageToken, setnextPageToken] = useState();
@@ -35,7 +36,7 @@ const HomeScreen = props => {
       'GET_RESTAURANT',
       {
         location: saveLocation,
-        search: searchVal.split(' ').join('').length >= 3 ? searchVal : '',
+        search: searchEnter.split(' ').join('').length >= 3 ? searchEnter : '',
         // pageToken: nextPageToken,
       },
     ],
@@ -103,6 +104,7 @@ const HomeScreen = props => {
           yourRestaurantLoading={yourRestaurantLoading}
           yourRefetchRestaurant={yourRefetchRestaurant}
           yourResIsFetching={yourResIsFetching}
+          setsearchEnter={setsearchEnter}
           // nextPageToken={nextPageToken}
           Data={data}
         >
@@ -113,6 +115,7 @@ const HomeScreen = props => {
             refetchRestaurant={refetchRestaurant}
             resIsFetching={resIsFetching}
             saveLocation={saveLocation}
+            searchEnter={searchEnter}
             Data={data}
             // isFetch={searchVal === '' ? true : false}
             route={props?.route}
@@ -126,6 +129,7 @@ const HomeScreen = props => {
             searchIconPress={searchIconPress}
             searchVal={searchVal}
             setSearchVal={setSearchVal}
+            setsearchEnter={setsearchEnter}
           />
           <StatusBar translucent={true} style="dark" />
           <HomeScreenContent
@@ -133,6 +137,7 @@ const HomeScreen = props => {
             refetchRestaurant={refetchRestaurant}
             saveLocation={saveLocation}
             resIsFetching={resIsFetching}
+            searchEnter={searchEnter}
             Data={data}
             route={props?.route}
             // handleLoadMore={handleLoadMore}

@@ -37,6 +37,7 @@ export default function HeaderSimple(props) {
 
         <TextInput
           value={props.searchVal}
+          onSubmitEditing={() => props.setsearchEnter(props.searchVal)}
           onFocus={() => {
             setIsFocused(true);
           }}

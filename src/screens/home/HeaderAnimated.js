@@ -377,6 +377,7 @@ const HomeScreen = props => {
                   <SvgHeaderSearchIcon />
                 </TouchableOpacity>
                 <TextInput
+                  onSubmitEditing={() => props.setsearchEnter(props.searchVal)}
                   value={props.searchVal}
                   onFocus={() => {
                     setIsFocused(true);
@@ -533,6 +534,7 @@ const HomeScreen = props => {
                 </TouchableOpacity>
                 <TextInput
                   value={props.searchVal}
+                  onSubmitEditing={() => props.setsearchEnter(props.searchVal)}
                   onFocus={() => {
                     setIsFocused(true);
                   }}

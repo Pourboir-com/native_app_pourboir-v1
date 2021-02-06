@@ -38,3 +38,13 @@ export const restaurantCompareDistance = item => {
 export const restaurantDistance = item => {
   return item?.item?.distance?.rows[0]?.elements[0]?.distance?.value;
 };
+
+export const isSearch = (searchVal, searchEnter) => {
+  if (!searchVal) {
+    return '';
+  }
+  if (searchEnter.trim().length >= 3) {
+    return searchEnter;
+  }
+  return '';
+};

@@ -118,27 +118,27 @@ const HomeScreen = props => {
               : LAYOUT.window.width * 0.01,
           )
         : LAYOUT.window.width < 365
-          ? HEADER_BAR_HEIGHT +
+        ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.026
               : LAYOUT.window.width * 0.013,
           )
-          : LAYOUT.window.width < 380
-            ? HEADER_BAR_HEIGHT +
+        : LAYOUT.window.width < 380
+        ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.026
               : LAYOUT.window.width * 0.016,
           )
-            : LAYOUT.window.width < 400
-              ? HEADER_BAR_HEIGHT +
+        : LAYOUT.window.width < 400
+        ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.026
               : LAYOUT.window.width * 0.02,
           )
-              : HEADER_BAR_HEIGHT +
+        : HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.026

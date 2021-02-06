@@ -66,7 +66,9 @@ export default function HomeScreenContent({
       await deleteRestaurant(userInfo, {
         onSuccess: () => {
           let Restaurants = [...data];
-          Restaurants = Restaurants.filter(item => item?.waiter?._id !== waiter_id);
+          Restaurants = Restaurants.filter(
+            item => item?.waiter?._id !== waiter_id,
+          );
           updateRestaurants(state, place_id);
           dispatch({
             type: actionTypes.YOUR_RESTAURANTS,
@@ -74,11 +76,10 @@ export default function HomeScreenContent({
           });
           setdeleteLoading(false);
         },
-        onError: () =>{
+        onError: () => {
           setdeleteLoading(false);
         },
       });
-      
     }
   };
 
@@ -182,9 +183,7 @@ export default function HomeScreenContent({
           keyboardShouldPersistTaps={'handled'}
           style={{ backgroundColor: '#F9F9F9' }}
         >
-          <Spinner
-            visible={deleteLoading}
-          />
+          <Spinner visible={deleteLoading} />
           {!route.params.crossIcon && (
             <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}

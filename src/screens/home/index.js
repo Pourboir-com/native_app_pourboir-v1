@@ -9,6 +9,7 @@ import { reactQueryConfig } from '../../constants';
 import { useQuery } from 'react-query';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
+import { isSearch } from '../../util';
 
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
@@ -17,7 +18,7 @@ const HomeScreen = props => {
   const [saveLocation, setSaveLocation] = useState('');
   const [nextPageToken, setnextPageToken] = useState();
   const { state, dispatch } = useContext(Context);
-  const { restaurantsDetails: data, userDetails} = state;
+  const { restaurantsDetails: data, userDetails } = state;
 
   useEffect(() => {
     (async () => {
@@ -26,6 +27,11 @@ const HomeScreen = props => {
     })();
   }, []);
 
+  useEffect(() => {
+    if (!searchVal) {
+      setsearchEnter('');
+    }
+  }, [searchVal]);
   const {
     data: restaurantData,
     isLoading: restaurantLoading,
@@ -36,7 +42,7 @@ const HomeScreen = props => {
       'GET_RESTAURANT',
       {
         location: saveLocation,
-        search: searchEnter.split(' ').join('').length >= 3 ? searchEnter : '',
+        search: isSearch(searchVal, searchEnter),
         // pageToken: nextPageToken,
       },
     ],

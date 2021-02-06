@@ -30,7 +30,7 @@ import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import i18n from '../../li8n';
-import { filteredRestaurant, yourfilteredRestaurant } from '../../util';
+import { filteredRestaurant, yourFilteredRestaurant } from '../../util';
 
 const ReviewDetails = ({ navigation, route }) => {
   const [data, setData] = useState([]);
@@ -53,15 +53,10 @@ const ReviewDetails = ({ navigation, route }) => {
 
   const updateRestaurants = (state, placeId) => {
     let FilteredRestaurant = filteredRestaurant(state, placeId);
-    // let YourFilteredRestaurant = yourfilteredRestaurant(state, placeId);
     dispatch({
       type: actionTypes.RESTAURANTS_DETAILS,
       payload: FilteredRestaurant,
     });
-    // dispatch({
-    //   type: actionTypes.YOUR_RESTAURANTS,
-    //   payload: YourFilteredRestaurant,
-    // });
   };
 
   const {
@@ -124,11 +119,14 @@ const ReviewDetails = ({ navigation, route }) => {
       await IAMWAITER(IWaiter, {
         onSuccess: async res => {
           updateRestaurants(state, place_id);
+          const restaurant = state.restaurantsDetails.find(
+            res => res.place_id === place_id,
+          );
           dispatch({
             type: actionTypes.YOUR_RESTAURANTS,
             payload: [
               ...state.yourRestaurants,
-              { ...res.data.data, distance, servers: services },
+              { ...res.data.data, distance, servers: restaurant.servers + 1 },
             ],
           });
           await refetchWaiters();
@@ -193,8 +191,8 @@ const ReviewDetails = ({ navigation, route }) => {
                           v <= rating
                             ? 'filled'
                             : v === rating + 0.5
-                              ? 'half'
-                              : 'empty'
+                            ? 'half'
+                            : 'empty'
                         }
                         notRatedStarColor="rgba(255,255,255, 0.6)"
                       />
@@ -258,14 +256,14 @@ const ReviewDetails = ({ navigation, route }) => {
             {/* <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length * 2}</Text> */}
           </View>
         </View>
-        {waitersLoading ? (
+        {waitersLoading || waitersIsFetching ? (
           <>
             <ReviewsSkeleton />
             <ReviewsSkeleton />
           </>
         ) : (
           <FlatList
-            data={waitersLoading ? null : data}
+            data={waitersLoading || waitersIsFetching ? null : data}
             showsVerticalScrollIndicator={false}
             keyExtractor={item => item._id}
             renderItem={itemData => (
@@ -324,8 +322,8 @@ const ReviewDetails = ({ navigation, route }) => {
                                 v <= itemData.item.rating
                                   ? 'filled'
                                   : v === itemData.item.rating + 0.5
-                                    ? 'half'
-                                    : 'empty'
+                                  ? 'half'
+                                  : 'empty'
                               }
                               notRatedStarColor="rgba(0,0,0,0.1)"
                             />

@@ -24,7 +24,7 @@ import i18n from '../../li8n';
 import Context from '../../contextApi/context';
 const imgSitting = require('../../assets/images/sittingtable.png');
 const imgBg = require('../../assets/images/Group7.png');
-import { filteredRestaurant } from '../../util';
+import { filteredRestaurant, yourFilteredRestaurant } from '../../util';
 import * as actionTypes from '../../contextApi/actionTypes';
 
 const HelpUsImproveModal = ({
@@ -52,6 +52,11 @@ const HelpUsImproveModal = ({
     dispatch({
       type: actionTypes.RESTAURANTS_DETAILS,
       payload: FilteredRestaurant,
+    });
+    let YourFilteredRestaurant = yourFilteredRestaurant(state, placeId);
+    dispatch({
+      type: actionTypes.YOUR_RESTAURANTS,
+      payload: YourFilteredRestaurant,
     });
   };
 

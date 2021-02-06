@@ -27,11 +27,16 @@ import { useMutation } from 'react-query';
 
 const imgBg = require('../../assets/images/Group5.png');
 
-const Setting = ({ navigation }) => {
+const Setting = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const { state, dispatch } = useContext(Context);
   const [image, setImage] = useState();
   const [updatePicture] = useMutation(UPDATE_PICTURE);
+  const {
+    yourRestaurantLoading,
+    yourRefetchRestaurant,
+    yourResIsFetching,
+  } = route.params;
 
   const resetState = async () => {
     navigation.navigate('Home', { crossIcon: false });
@@ -234,6 +239,9 @@ const Setting = ({ navigation }) => {
             onPress={() =>
               navigation.navigate('Remove', {
                 crossIcon: true,
+                yourRestaurantLoading,
+                yourRefetchRestaurant,
+                yourResIsFetching,
               })
             }
             style={[styles.viewItem, { marginBottom: 0 }]}

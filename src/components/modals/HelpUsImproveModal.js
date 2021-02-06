@@ -24,6 +24,8 @@ import i18n from '../../li8n';
 import Context from '../../contextApi/context';
 const imgSitting = require('../../assets/images/sittingtable.png');
 const imgBg = require('../../assets/images/Group7.png');
+import { filteredRestaurant } from '../../util';
+import * as actionTypes from '../../contextApi/actionTypes';
 
 const HelpUsImproveModal = ({
   isVisible,
@@ -39,11 +41,19 @@ const HelpUsImproveModal = ({
   const [onHandleFocus, setonHandleFocus] = useState(false);
   const [waiterName, setWaiterName] = useState('');
   const textRef = React.useRef(null);
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
 
   const [placeholder, setPlaceholder] = React.useState(
     i18n.t('name_of_your_server'),
   );
+
+  const updateRestaurants = (state, placeId) => {
+    let FilteredRestaurant = filteredRestaurant(state, placeId);
+    dispatch({
+      type: actionTypes.RESTAURANTS_DETAILS,
+      payload: FilteredRestaurant,
+    });
+  };
 
   React.useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -76,6 +86,7 @@ const HelpUsImproveModal = ({
         await addingWaiters(waiter, {
           onSuccess: async () => {
             await refetchWaiters();
+            updateRestaurants(state, place_id);
             handleModalClose();
             setLoading(false);
             setWaiterName('');

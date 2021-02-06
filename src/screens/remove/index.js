@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState,useEffect } from 'react';
 import { ImageBackground } from 'react-native';
-import { getAsyncStorageValues } from '../../constants';
 import { Colors } from '../../constants/Theme';
 import GlobalHeader from '../../components/GlobalHeader';
 import HomeScreenContent from '../../components/HomeContent';
@@ -9,15 +8,18 @@ import i18n from '../../li8n';
 import { View } from 'react-native';
 import { Dimensions } from 'react-native';
 import Context from '../../contextApi/context';
-import { useQuery } from 'react-query';
-import { reactQueryConfig } from '../../constants';
-import * as actionTypes from '../../contextApi/actionTypes';
-import { GET_YOUR_RES } from '../../queries';
+import { getAsyncStorageValues } from '../../constants';
 
 const Remove = props => {
+  const {
+    yourRestaurantLoading,
+    yourRefetchRestaurant,
+    yourResIsFetching,
+  } = props.route.params;
+  const { state } = useContext(Context);
   const [saveLocation, setSaveLocation] = useState('');
-  const { state, dispatch } = useContext(Context);
-  const { yourRestaurants: data, userDetails } = state;
+  const { yourRestaurants: data } = state;
+  console.log(data);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -26,36 +28,6 @@ const Remove = props => {
       setSaveLocation(location);
     })();
   }, []);
-
-  const {
-    data: yourRestaurantData,
-    isLoading: yourRestaurantLoading,
-    refetch: yourRefetchRestaurant,
-    isFetching: yourResIsFetching,
-  } = useQuery(
-    [
-      'GET_YOUR_RES',
-      {
-        location: saveLocation,
-        user_id: userDetails.user_id,
-        // pageToken: nextPageToken,
-        // max_results: 1,
-        // page_no: 1,
-      },
-    ],
-    GET_YOUR_RES,
-    {
-      ...reactQueryConfig,
-      enabled: saveLocation && userDetails.user_id && !data.length,
-      onSuccess: res => {
-        console.log('Your restaurants fetched!!');
-        dispatch({
-          type: actionTypes.YOUR_RESTAURANTS,
-          payload: res?.restaurants?.results || [],
-        });
-      },
-    },
-  );
 
   return (
     <>
@@ -104,6 +76,7 @@ const Remove = props => {
         isFetch={true}
         resIsFetching={yourResIsFetching}
         Data={data}
+        saveLocation={saveLocation}
         // handleLoadMore={handleLoadMore}
       />
     </>

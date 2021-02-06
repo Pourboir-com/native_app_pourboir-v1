@@ -38,7 +38,6 @@ const ReviewDetails = ({ navigation, route }) => {
   const [helpUsModalVisible, sethelpUsModalVisible] = useState(false);
   const [starSelect, setstarSelect] = useState();
   const { state, dispatch } = useContext(Context);
-  const { yourRestaurants } = state;
   const [IAMWAITER] = useMutation(I_AM_WAITER);
   const [loading, setLoading] = useState(false);
 
@@ -119,15 +118,15 @@ const ReviewDetails = ({ navigation, route }) => {
       };
       await IAMWAITER(IWaiter, {
         onSuccess: async res => {
-          await refetchWaiters();
-          updateRestaurants(state, place_id);
           dispatch({
             type: actionTypes.YOUR_RESTAURANTS,
             payload: [
-              ...yourRestaurants,
+              ...state.yourRestaurants,
               { ...res.data.data, distance, servers: services },
             ],
           });
+          await refetchWaiters();
+          updateRestaurants(state, place_id);
           handleModalClose();
           setLoading(false);
         },

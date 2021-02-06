@@ -13,7 +13,7 @@ import {
 import { Colors } from '../constants/Theme';
 import HomeCard from './HomeCard';
 import i18n from '../li8n';
-import { distributeInArray, restaurantDistance } from '../util';
+import { distributeInArray, restaurantDistance, filteredMinusRestaurant } from '../util';
 import { HomeCardSkeleton } from '../components/skeleton';
 import NoListImg from '../assets/images/emptyRestaurantList.png';
 import { DELETE_RES } from '../queries';
@@ -39,27 +39,34 @@ export default function HomeScreenContent({
   useEffect(() => {
     setData(Data);
   }, [Data]);
+
+  const updateRestaurants = (state, placeId) => {
+    let FilteredRestaurant = filteredMinusRestaurant(state, placeId);
+    dispatch({
+      type: actionTypes.RESTAURANTS_DETAILS,
+      payload: FilteredRestaurant,
+    });
+  };
+
   const dummyArray = [1, 2, 3];
 
-  const DeleteRestaurant = async waiter_id => {
+  const DeleteRestaurant = async (waiter_id, place_id) => {
     if (state.userDetails.user_id) {
       let userInfo = {
         id: waiter_id,
         user_id: state.userDetails.user_id,
       };
       await deleteRestaurant(userInfo, {
-        onSuccess: async (res) => {
+        onSuccess: res => {
           let Restaurants = [...data];
-          Restaurants = Restaurants.filter(item => item?.waiter?._id !== waiter_id);
-          setData(Restaurants);
-          console.log(Restaurants);
-          // dispatch({
-          //   type: actionTypes.YOUR_RESTAURANTS,
-          //   payload: Restaurants,
-          // });
-        },
-        onError: e => {
-          console.log(e);
+          Restaurants = Restaurants.filter(
+            item => item?.waiter?._id !== waiter_id,
+          );
+          updateRestaurants(state, place_id);
+          dispatch({
+            type: actionTypes.YOUR_RESTAURANTS,
+            payload: Restaurants,
+          });
         },
       });
     }
@@ -198,34 +205,20 @@ export default function HomeScreenContent({
                     >
                       <HomeCard
                         navigation={navigation}
-                        key={itemData.item.place_id}
-                        img={
-                          restaurantLoading ? null : itemData?.item?.photos[0]
-                        }
-                        rating={
-                          restaurantLoading ? null : itemData?.item.rating
-                        }
-                        name={restaurantLoading ? null : itemData?.item.name}
+                        key={itemData?.item?.place_id}
+                        img={itemData?.item?.photos[0]}
+                        rating={itemData?.item.rating}
+                        name={itemData?.item.name}
                         DeleteRestaurant={
                           (data,
-                          i => DeleteRestaurant(itemData?.item?.waiter?._id))
+                          i => DeleteRestaurant(itemData?.item?.waiter?._id, itemData?.item?.place_id))
                         }
-                        distance={
-                          restaurantLoading
-                            ? null
-                            : restaurantDistance(itemData)
-                        }
-                        services={
-                          restaurantLoading ? null : itemData?.item.servers
-                        }
+                        distance={restaurantDistance(itemData)}
+                        services={itemData?.item.servers}
                         loading={restaurantLoading}
                         crossIcon={route.params.crossIcon}
-                        place_id={
-                          restaurantLoading ? null : itemData?.item.place_id
-                        }
-                        vicinity={
-                          restaurantLoading ? null : itemData?.item.vicinity
-                        }
+                        place_id={itemData?.item.place_id}
+                        vicinity={itemData?.item.vicinity}
                       />
                     </View>
                   );

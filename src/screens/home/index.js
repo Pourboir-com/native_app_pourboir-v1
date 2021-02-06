@@ -44,7 +44,6 @@ const HomeScreen = props => {
       enabled: saveLocation,
       onSuccess: res => {
         console.log('Home Restaurats....');
-        console.log(res?.restaurants?.results);
         dispatch({
           type: actionTypes.RESTAURANTS_DETAILS,
           payload: res?.restaurants?.results || [],
@@ -52,35 +51,36 @@ const HomeScreen = props => {
       },
     },
   );
-  // const {
-  //   data: yourRestaurantData,
-  //   isLoading: yourRestaurantLoading,
-  //   refetch: yourRefetchRestaurant,
-  //   isFetching: yourResIsFetching,
-  // } = useQuery(
-  //   [
-  //     'GET_YOUR_RES',
-  //     {
-  //       location: saveLocation,
-  //       user_id: userDetails.user_id,
-  //       // pageToken: nextPageToken,
-  //       // max_results: 1,
-  //       // page_no: 1,
-  //     },
-  //   ],
-  //   GET_YOUR_RES,
-  //   {
-  //     ...reactQueryConfig,
-  //     enabled: saveLocation && userDetails.user_id && !data.length,
-  //     onSuccess: res => {
-  //       console.log('Your restaurants fetched!!');
-  //       dispatch({
-  //         type: actionTypes.YOUR_RESTAURANTS,
-  //         payload: res?.restaurants?.results || [],
-  //       });
-  //     },
-  //   },
-  // );
+
+  const {
+    data: yourRestaurantData,
+    isLoading: yourRestaurantLoading,
+    refetch: yourRefetchRestaurant,
+    isFetching: yourResIsFetching,
+  } = useQuery(
+    [
+      'GET_YOUR_RES',
+      {
+        location: saveLocation,
+        user_id: userDetails.user_id,
+        // pageToken: nextPageToken,
+        // max_results: 1,
+        // page_no: 1,
+      },
+    ],
+    GET_YOUR_RES,
+    {
+      ...reactQueryConfig,
+      enabled: saveLocation && userDetails.user_id,
+      onSuccess: res => {
+        console.log('Your restaurants fetched!!');
+        dispatch({
+          type: actionTypes.YOUR_RESTAURANTS,
+          payload: res?.restaurants?.results || [],
+        });
+      },
+    },
+  );
 
   // const handleLoadMore = () => {
   //   setnextPageToken(restaurantData.restaurants.next_page_token);
@@ -99,6 +99,9 @@ const HomeScreen = props => {
           navigation={props?.navigation}
           resIsFetching={resIsFetching}
           saveLocation={saveLocation}
+          yourRestaurantLoading={yourRestaurantLoading}
+          yourRefetchRestaurant={yourRefetchRestaurant}
+          yourResIsFetching={yourResIsFetching}
           // nextPageToken={nextPageToken}
           Data={data}
         >

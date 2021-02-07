@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useContext, useState,useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { ImageBackground } from 'react-native';
 import { Colors } from '../../constants/Theme';
 import GlobalHeader from '../../components/GlobalHeader';
@@ -19,7 +19,7 @@ const Remove = props => {
   const { state } = useContext(Context);
   const [saveLocation, setSaveLocation] = useState('');
   const { yourRestaurants: data } = state;
-  console.log(data);
+
   const navigation = useNavigation();
 
   useEffect(() => {

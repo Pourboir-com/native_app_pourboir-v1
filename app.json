@@ -7,7 +7,7 @@
     "facebookDisplayName": "Pourboir'",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/Serveur.png",
+    "icon": "./assets/Serveur-IOS.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover"

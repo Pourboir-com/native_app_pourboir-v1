@@ -31,6 +31,8 @@ import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import i18n from '../../li8n';
 import { filteredRestaurant, yourFilteredRestaurant } from '../../util';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { set } from 'react-native-reanimated';
 
 const ReviewDetails = ({ navigation, route }) => {
   const [data, setData] = useState([]);
@@ -40,6 +42,9 @@ const ReviewDetails = ({ navigation, route }) => {
   const { state, dispatch } = useContext(Context);
   const [IAMWAITER] = useMutation(I_AM_WAITER);
   const [loading, setLoading] = useState(false);
+  const handleLoading = anim => {
+    setLoading(anim);
+  };
 
   const {
     img,
@@ -146,6 +151,7 @@ const ReviewDetails = ({ navigation, route }) => {
   };
   return (
     <View style={styles.container}>
+      <Spinner visible={waitersIsFetching && !loading && !waitersLoading} />
       <StatusBar translucent={true} style="light" />
       <GlobalHeader
         arrow={true}
@@ -191,8 +197,8 @@ const ReviewDetails = ({ navigation, route }) => {
                           v <= rating
                             ? 'filled'
                             : v === rating + 0.5
-                            ? 'half'
-                            : 'empty'
+                              ? 'half'
+                              : 'empty'
                         }
                         notRatedStarColor="rgba(255,255,255, 0.6)"
                       />
@@ -256,14 +262,14 @@ const ReviewDetails = ({ navigation, route }) => {
             {/* <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length * 2}</Text> */}
           </View>
         </View>
-        {waitersLoading || waitersIsFetching ? (
+        {waitersLoading ? (
           <>
             <ReviewsSkeleton />
             <ReviewsSkeleton />
           </>
         ) : (
           <FlatList
-            data={waitersLoading || waitersIsFetching ? null : data}
+            data={waitersLoading ? null : data}
             showsVerticalScrollIndicator={false}
             keyExtractor={item => item._id}
             renderItem={itemData => (
@@ -322,8 +328,8 @@ const ReviewDetails = ({ navigation, route }) => {
                                 v <= itemData.item.rating
                                   ? 'filled'
                                   : v === itemData.item.rating + 0.5
-                                  ? 'half'
-                                  : 'empty'
+                                    ? 'half'
+                                    : 'empty'
                               }
                               notRatedStarColor="rgba(0,0,0,0.1)"
                             />
@@ -391,6 +397,8 @@ const ReviewDetails = ({ navigation, route }) => {
           isVisible={helpUsModalVisible}
           handleModalClose={handleModalClose}
           navigation={navigation}
+          handleLoading={handleLoading}
+          loading={loading}
         />
       )}
       {/* </ScrollView>

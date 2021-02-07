@@ -66,6 +66,10 @@ const RateService = ({ navigation, route }) => {
   const handleModalClose = () => {
     setisVisible(false);
     navigation.navigate('Home', { crossIcon: false });
+    dispatch({
+      type: actionTypes.REFRESH_ANIMATION,
+      payload: !state.refreshAnimation,
+    });
   };
 
   useEffect(() => {
@@ -104,18 +108,14 @@ const RateService = ({ navigation, route }) => {
         onSuccess: async () => {
           setLoading(false);
           setisVisible(true);
-          // dispatch({
-          //   type: actionTypes.REFRESH_ANIMATION,
-          //   payload: !state.refreshAnimation,
-          // });
         },
         onError: () => {
-          // dispatch({
-          //   type: actionTypes.REFRESH_ANIMATION,
-          //   payload: !state.refreshAnimation,
-          // });
           alert('You can only vote once today.');
           navigation.navigate('Home', { crossIcon: false });
+          dispatch({
+            type: actionTypes.REFRESH_ANIMATION,
+            payload: !state.refreshAnimation,
+          });
         },
       });
     } else {
@@ -210,8 +210,8 @@ const RateService = ({ navigation, route }) => {
                       v <= hospitality
                         ? 'filled'
                         : v === hospitality + 0.5
-                        ? 'half'
-                        : 'empty'
+                          ? 'half'
+                          : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />
@@ -243,8 +243,8 @@ const RateService = ({ navigation, route }) => {
                       v <= speed
                         ? 'filled'
                         : v === speed + 0.5
-                        ? 'half'
-                        : 'empty'
+                          ? 'half'
+                          : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />
@@ -276,8 +276,8 @@ const RateService = ({ navigation, route }) => {
                       v <= service
                         ? 'filled'
                         : v === service + 0.5
-                        ? 'half'
-                        : 'empty'
+                          ? 'half'
+                          : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />
@@ -309,8 +309,8 @@ const RateService = ({ navigation, route }) => {
                       v <= professionalism
                         ? 'filled'
                         : v === professionalism + 0.5
-                        ? 'half'
-                        : 'empty'
+                          ? 'half'
+                          : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />

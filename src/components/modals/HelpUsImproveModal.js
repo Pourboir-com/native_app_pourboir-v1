@@ -33,8 +33,10 @@ const HelpUsImproveModal = ({
   place_id,
   refetchWaiters,
   navigation,
+  loading,
+  handleLoading,
 }) => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [addingWaiters] = useMutation(ADDING_WAITERS);
   let contentEnd;
   const scrollRef = React.useRef(null);
@@ -81,7 +83,7 @@ const HelpUsImproveModal = ({
 
   const handleAddingWaiters = async () => {
     if (state.userDetails.user_id) {
-      setLoading(true);
+      handleLoading(true);
       let waiter = {
         restaurant_id: place_id,
         full_name: waiterName,
@@ -93,7 +95,7 @@ const HelpUsImproveModal = ({
             await refetchWaiters();
             updateRestaurants(state, place_id);
             handleModalClose();
-            setLoading(false);
+            handleLoading(false);
             setWaiterName('');
           },
         });

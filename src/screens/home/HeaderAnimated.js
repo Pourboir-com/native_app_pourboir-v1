@@ -39,10 +39,6 @@ const HomeScreen = props => {
     setLoading(!loading);
   }, [
     props.saveLocation,
-    // props.nextPageToken,
-    // props.resIsFetching,
-    // props.Data,
-    // props.restaurantLoading,
     state,
   ]);
 

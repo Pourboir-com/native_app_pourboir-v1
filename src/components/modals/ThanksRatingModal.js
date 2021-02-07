@@ -10,10 +10,8 @@ import {
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
-
 const imgWaiter = require('../../assets/images/ThanksGiving.png');
 const imgBg = require('../../assets/images/Group7.png');
-
 import i18n from '../../li8n';
 
 const ThanksRatingModal = ({ isVisible, handleModalClose }) => {

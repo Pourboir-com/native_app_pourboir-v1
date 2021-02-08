@@ -51,7 +51,6 @@ const HomeScreen = props => {
       ...reactQueryConfig,
       enabled: saveLocation,
       onSuccess: res => {
-        console.log('Home Restaurats....');
         dispatch({
           type: actionTypes.RESTAURANTS_DETAILS,
           payload: res?.restaurants?.results || [],
@@ -81,7 +80,6 @@ const HomeScreen = props => {
       ...reactQueryConfig,
       enabled: saveLocation && userDetails.user_id,
       onSuccess: res => {
-        console.log('Your restaurants fetched!!');
         dispatch({
           type: actionTypes.YOUR_RESTAURANTS,
           payload: res?.restaurants?.results || [],
@@ -142,6 +140,7 @@ const HomeScreen = props => {
             restaurantLoading={restaurantLoading}
             refetchRestaurant={refetchRestaurant}
             saveLocation={saveLocation}
+            searchVal={searchVal}
             resIsFetching={resIsFetching}
             searchEnter={searchEnter}
             Data={data}

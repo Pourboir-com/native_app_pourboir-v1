@@ -112,10 +112,10 @@ const RateService = ({ navigation, route }) => {
         onError: () => {
           alert('You can only vote once today.');
           navigation.navigate('Home', { crossIcon: false });
-          dispatch({
-            type: actionTypes.REFRESH_ANIMATION,
-            payload: !state.refreshAnimation,
-          });
+          // dispatch({
+          //   type: actionTypes.REFRESH_ANIMATION,
+          //   payload: !state.refreshAnimation,
+          // });
         },
       });
     } else {

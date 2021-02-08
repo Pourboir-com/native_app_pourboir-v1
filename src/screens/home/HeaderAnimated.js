@@ -24,6 +24,7 @@ import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
 import Context from '../../contextApi/context';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const HomeScreen = props => {
   const { state } = useContext(Context);
@@ -110,8 +111,8 @@ const HomeScreen = props => {
         ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
-              ? LAYOUT.window.width * 0.026
-              : LAYOUT.window.width * 0.01,
+              ? LAYOUT.window.width * 0.024
+              : LAYOUT.window.width * 0.010,
           )
         : LAYOUT.window.width < 365
         ? HEADER_BAR_HEIGHT +
@@ -124,20 +125,20 @@ const HomeScreen = props => {
         ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
-              ? LAYOUT.window.width * 0.026
+              ? LAYOUT.window.width * 0.028
               : LAYOUT.window.width * 0.016,
           )
         : LAYOUT.window.width < 400
         ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
-              ? LAYOUT.window.width * 0.026
-              : LAYOUT.window.width * 0.02,
+              ? LAYOUT.window.width * 0.030
+              : LAYOUT.window.width * 0.020,
           )
         : HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
-              ? LAYOUT.window.width * 0.026
+              ? LAYOUT.window.width * 0.032
               : LAYOUT.window.width * 0.024,
           ),
     ],

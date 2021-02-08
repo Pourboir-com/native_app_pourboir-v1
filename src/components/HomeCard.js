@@ -136,7 +136,7 @@ const HomeCard = ({
             </Text>
             <View style={styles.view2Card}>
               <Text style={[styles.txt2Card, { fontFamily: 'ProximaNova' }]}>
-                {distance}m
+                {distance ? distance + 'm' : ''}
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text

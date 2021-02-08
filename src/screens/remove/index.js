@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useContext, useState, useEffect } from 'react';
 import { ImageBackground } from 'react-native';
 import { Colors } from '../../constants/Theme';
@@ -19,8 +18,6 @@ const Remove = props => {
   const { state } = useContext(Context);
   const [saveLocation, setSaveLocation] = useState('');
   const { yourRestaurants: data } = state;
-
-  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -60,7 +57,7 @@ const Remove = props => {
               headingText={i18n.t('your_restaurant')}
               fontSize={17}
               color={Colors.fontDark}
-              navigation={navigation}
+              navigation={props.navigation}
               setting={true}
               backgroundColor={'transparent'}
               borderRadius={true}

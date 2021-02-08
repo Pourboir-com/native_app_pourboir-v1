@@ -4,6 +4,7 @@ export default {
   hello: 'Bonjour',
   find_your_restaurant: 'Recherchez votre restaurant',
   around_you: 'Autour de vous',
+  result_distance: 'Résultat Autour de vous',
   serveurs: 'serveurs',
   you_have_no_restaurant: "Vous n'avez aucun restaurant pour le moment",
   search_for_rest_and_add:

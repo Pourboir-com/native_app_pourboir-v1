@@ -30,6 +30,7 @@ export default function HomeScreenContent({
   restaurantLoading,
   refetchRestaurant,
   resIsFetching,
+  searchVal,
   Data,
   // isFetch,
   // handleLoadMore,
@@ -134,7 +135,7 @@ export default function HomeScreenContent({
             <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
-              {i18n.t('around_you')}
+              {searchVal ? i18n.t('result_distance') : i18n.t('around_you')}
             </Text>
           )}
           <View
@@ -189,7 +190,7 @@ export default function HomeScreenContent({
             <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
-              {i18n.t('around_you')}
+              {searchVal ? i18n.t('result_distance') : i18n.t('around_you')}
             </Text>
           )}
           <View
@@ -197,51 +198,53 @@ export default function HomeScreenContent({
               marginTop: 17,
             }}
           >
-            <FlatList
-              data={
-                restaurantLoading ? dummyArray : distributeInArray(data).all
-              }
-              showsVerticalScrollIndicator={false}
-              // onEndReached={handleLoadMore}
-              // onEndReachedThreshold={0.5}
-              alwaysBounceHorizontal={false}
-              keyboardShouldPersistTaps={'handled'}
-              alwaysBounceVertical={false}
-              numColumns={2}
-              bounces={false}
-              keyExtractor={(item, index) => index}
-              renderItem={itemData => {
-                if (Object.keys(itemData.item).length) {
-                  return (
-                    <View
-                      style={{ marginTop: itemData.index % 2 !== 0 ? 12 : 0 }}
-                    >
-                      <HomeCard
-                        navigation={navigation}
-                        key={itemData?.item?.place_id}
-                        img={itemData?.item?.photos[0]}
-                        rating={itemData?.item.rating}
-                        name={itemData?.item.name}
-                        DeleteRestaurant={
-                          (data,
-                          i =>
-                            DeleteRestaurant(
-                              itemData?.item?.waiter?._id,
-                              itemData?.item?.place_id,
-                            ))
-                        }
-                        distance={restaurantDistance(itemData)}
-                        services={itemData?.item.servers}
-                        loading={restaurantLoading}
-                        crossIcon={route.params.crossIcon}
-                        place_id={itemData?.item.place_id}
-                        vicinity={itemData?.item.vicinity}
-                      />
-                    </View>
-                  );
+            {data && (
+              <FlatList
+                data={
+                  restaurantLoading ? dummyArray : distributeInArray(data).all
                 }
-              }}
-            />
+                showsVerticalScrollIndicator={false}
+                // onEndReached={handleLoadMore}
+                // onEndReachedThreshold={0.5}
+                alwaysBounceHorizontal={false}
+                keyboardShouldPersistTaps={'handled'}
+                alwaysBounceVertical={false}
+                numColumns={2}
+                bounces={false}
+                keyExtractor={(item, index) => index}
+                renderItem={itemData => {
+                  if (Object.keys(itemData.item).length) {
+                    return (
+                      <View
+                        style={{ marginTop: itemData.index % 2 !== 0 ? 12 : 0 }}
+                      >
+                        <HomeCard
+                          navigation={navigation}
+                          key={itemData?.item?.place_id}
+                          img={itemData?.item?.photos[0] ? itemData?.item?.photos[0] : ''}
+                          rating={itemData?.item.rating}
+                          name={itemData?.item.name}
+                          DeleteRestaurant={
+                            (data,
+                            i =>
+                              DeleteRestaurant(
+                                itemData?.item?.waiter?._id,
+                                itemData?.item?.place_id,
+                              ))
+                          }
+                          distance={restaurantDistance(itemData)}
+                          services={itemData?.item.servers}
+                          loading={restaurantLoading}
+                          crossIcon={route.params.crossIcon}
+                          place_id={itemData?.item.place_id}
+                          vicinity={itemData?.item.vicinity}
+                        />
+                      </View>
+                    );
+                  }
+                }}
+              />
+            )}
           </View>
         </ScrollView>
       )}

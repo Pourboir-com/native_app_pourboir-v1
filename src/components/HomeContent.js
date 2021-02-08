@@ -123,13 +123,7 @@ export default function HomeScreenContent({
     <>
       {restaurantLoading ? (
         <View
-          // bounces={true}
-          //   alwaysBounceVertical={true}
-          showsVerticalScrollIndicator={false}
-          alwaysBounceHorizontal={false}
-          alwaysBounceVertical={false}
-          bounces={false}
-          style={{ backgroundColor: '#F9F9F9', flex: 1 }}
+          style={{ backgroundColor: '#F9F9F9'}}
         >
           {!route.params.crossIcon && (
             <Text
@@ -198,53 +192,56 @@ export default function HomeScreenContent({
               marginTop: 17,
             }}
           >
-            {data && (
-              <FlatList
-                data={
-                  restaurantLoading ? dummyArray : distributeInArray(data).all
+            <FlatList
+              data={
+                restaurantLoading ? dummyArray : distributeInArray(data).all
+              }
+              showsVerticalScrollIndicator={false}
+              // onEndReached={handleLoadMore}
+              // onEndReachedThreshold={0.5}
+              alwaysBounceHorizontal={false}
+              keyboardShouldPersistTaps={'handled'}
+              alwaysBounceVertical={false}
+              key={'_'}
+              numColumns={2}
+              bounces={false}
+              keyExtractor={(item, index) => index}
+              renderItem={itemData => {
+                if (Object.keys(itemData.item).length) {
+                  return (
+                    <View
+                      style={{ marginTop: itemData.index % 2 !== 0 ? 12 : 0 }}
+                    >
+                      <HomeCard
+                        navigation={navigation}
+                        key={itemData?.item?.place_id}
+                        img={
+                          itemData?.item?.photos[0]
+                            ? itemData?.item?.photos[0]
+                            : ''
+                        }
+                        rating={itemData?.item.rating}
+                        name={itemData?.item.name}
+                        DeleteRestaurant={
+                          (data,
+                          i =>
+                            DeleteRestaurant(
+                              itemData?.item?.waiter?._id,
+                              itemData?.item?.place_id,
+                            ))
+                        }
+                        distance={restaurantDistance(itemData)}
+                        services={itemData?.item.servers}
+                        loading={restaurantLoading}
+                        crossIcon={route.params.crossIcon}
+                        place_id={itemData?.item.place_id}
+                        vicinity={itemData?.item.vicinity}
+                      />
+                    </View>
+                  );
                 }
-                showsVerticalScrollIndicator={false}
-                // onEndReached={handleLoadMore}
-                // onEndReachedThreshold={0.5}
-                alwaysBounceHorizontal={false}
-                keyboardShouldPersistTaps={'handled'}
-                alwaysBounceVertical={false}
-                numColumns={2}
-                bounces={false}
-                keyExtractor={(item, index) => index}
-                renderItem={itemData => {
-                  if (Object.keys(itemData.item).length) {
-                    return (
-                      <View
-                        style={{ marginTop: itemData.index % 2 !== 0 ? 12 : 0 }}
-                      >
-                        <HomeCard
-                          navigation={navigation}
-                          key={itemData?.item?.place_id}
-                          img={itemData?.item?.photos[0] ? itemData?.item?.photos[0] : ''}
-                          rating={itemData?.item.rating}
-                          name={itemData?.item.name}
-                          DeleteRestaurant={
-                            (data,
-                            i =>
-                              DeleteRestaurant(
-                                itemData?.item?.waiter?._id,
-                                itemData?.item?.place_id,
-                              ))
-                          }
-                          distance={restaurantDistance(itemData)}
-                          services={itemData?.item.servers}
-                          loading={restaurantLoading}
-                          crossIcon={route.params.crossIcon}
-                          place_id={itemData?.item.place_id}
-                          vicinity={itemData?.item.vicinity}
-                        />
-                      </View>
-                    );
-                  }
-                }}
-              />
-            )}
+              }}
+            />
           </View>
         </ScrollView>
       )}
@@ -252,34 +249,6 @@ export default function HomeScreenContent({
   );
 }
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  inputSearch: {
-    height: 45,
-    backgroundColor: '#fff',
-    paddingHorizontal: 5,
-    paddingVertical: 0,
-    flex: 1,
-  },
-  viewHeader2: {
-    width: '100%',
-    height: 110,
-    backgroundColor: Colors.yellow,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-  },
-  viewInputSearch: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    width: '90%',
-    marginTop: 45,
-    alignSelf: 'center',
-    borderRadius: 7,
-    overflow: 'hidden',
-  },
   txt1NoRest: {
     fontSize: 16,
     color: Colors.fontDark,
@@ -299,41 +268,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9F9F9',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  btnCross: {
-    backgroundColor: '#fff',
-    position: 'absolute',
-    alignSelf: 'flex-end',
-    borderRadius: 20,
-    margin: -1,
-    right: 0,
-    width: 30,
-    height: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  view2Card: {
-    flexDirection: 'row',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  txt2Card: {
-    color: '#EDEFEE',
-    fontSize: 13,
-  },
-  imgCard: {
-    flex: 1,
-    padding: 12,
-    justifyContent: 'space-between',
-  },
-  viewItemConatier: {
-    width: Dimensions.get('window').width * 0.45,
-    height: Dimensions.get('window').width * 0.56,
-    margin: Dimensions.get('window').width * 0.02,
-    backgroundColor: 'red',
-    borderRadius: 12,
-    overflow: 'hidden',
   },
   txtHeading: {
     fontSize: 24,

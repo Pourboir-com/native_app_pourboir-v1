@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "pourboir",
+    "name": "Pourboir",
     "slug": "pourboir",
     "facebookAppId": "771555200360518",
     "facebookScheme": "fb771555200360518",
@@ -21,6 +21,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.developerspourboir.pourboir",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app uses location for nearby restaurants",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses location for nearby restaurants",
+        "NSLocationAlwaysUsageDescription": "This app uses location for nearby restaurants"
+      },
       "config": {
         "googleSignIn": {
           "reservedClientId": "com.googleusercontent.apps.849073051273-p2rjj7ir7cmkscv26p5o6il9t4ombfk5"

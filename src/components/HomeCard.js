@@ -26,6 +26,7 @@ const HomeCard = ({
   vicinity,
 }) => {
   const [starSelect, setstarSelect] = useState(rating);
+  const [opacity, setOpacity] = useState(1);
   const obj = [1, 2, 3, 4, 5];
 
   const onPressStar = v => {
@@ -35,7 +36,11 @@ const HomeCard = ({
   return (
     <>
       <TouchableOpacity
-        onPress={() =>
+        delayPressIn={550}
+        activeOpacity={1}
+        // TouchableOpacity={0.5}
+        onPress={() => {
+          setOpacity(0.2);
           navigation.navigate('OpenCardReviews', {
             img,
             rating: starSelect,
@@ -44,8 +49,9 @@ const HomeCard = ({
             services,
             place_id,
             vicinity,
-          })
-        }
+          });
+          setOpacity(1);
+        }}
         style={[styles.viewItemConatier]}
       >
         <ImageBackground
@@ -61,7 +67,7 @@ const HomeCard = ({
               height: '20%',
             }}
             colors={['rgba(0,0,0,0.5)', 'transparent']}
-          ></LinearGradient>
+          />
           {crossIcon && (
             <TouchableOpacity
               onPress={DeleteRestaurant}

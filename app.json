@@ -42,7 +42,7 @@
           "certificateHash": "2D1F998CDB943BED21A3831029A25469F04709EE"
         }
       },
-      "permissions": ["ACCESS_COARSE_LOCATION","ACCESS_FINE_LOCATION","ACCESS_BACKGROUND_LOCATION","MEDIA_LIBRARY"],
+      "permissions": ["MEDIA_LIBRARY"],
       "package": "com.developerspourboir.pourboir"
     },
     "web": {

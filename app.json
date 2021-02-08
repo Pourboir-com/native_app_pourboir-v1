@@ -5,7 +5,7 @@
     "facebookAppId": "771555200360518",
     "facebookScheme": "fb771555200360518",
     "facebookDisplayName": "Pourboir'",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/Serveur-IOS.png",
     "splash": {
@@ -21,6 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.developerspourboir.pourboir",
+      "buildNumber": "1.0.1",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "This app uses location for nearby restaurants",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses location for nearby restaurants",
@@ -42,7 +43,8 @@
           "certificateHash": "2D1F998CDB943BED21A3831029A25469F04709EE"
         }
       },
-      "package": "com.developerspourboir.pourboir"
+      "package": "com.developerspourboir.pourboir",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"

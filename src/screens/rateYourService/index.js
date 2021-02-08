@@ -327,7 +327,7 @@ const RateService = ({ navigation, route }) => {
             <NumberFormat
               value={remarks}
               thousandSeparator={true}
-              prefix={currency ? currency.currency : ''}
+              prefix={currency ? currency.currency + ' ' : ''}
               renderText={formattedValue => (
                 <TextInput
                   keyboardType="numeric"

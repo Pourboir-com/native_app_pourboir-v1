@@ -7,9 +7,9 @@ import {
   ScrollView,
   RefreshControl,
   Dimensions,
-  Platform,
   FlatList,
   Image,
+  Platform,
 } from 'react-native';
 import { Colors } from '../constants/Theme';
 import HomeCard from './HomeCard';
@@ -37,6 +37,7 @@ export default function HomeScreenContent({
   // handleLoadMore,
   saveLocation,
   route,
+  searchIconPress,
 }) {
   // const data = [...Data];
   const [data, setData] = useState([]);
@@ -85,8 +86,9 @@ export default function HomeScreenContent({
       });
     }
   };
-
-  if (!data.length && !restaurantLoading && !resIsFetching && saveLocation) {
+  const noData =
+    !data.length && !restaurantLoading && !resIsFetching && saveLocation;
+  if (noData) {
     return (
       <>
         <View style={styles.viewEmptyList}>
@@ -126,7 +128,7 @@ export default function HomeScreenContent({
         <View
           style={{
             backgroundColor: '#F9F9F9',
-            marginTop: Platform.OS === 'ios' ? -58 : 0,
+            marginTop: Platform.OS === 'ios' && !searchIconPress ? -58 : 0,
           }}
         >
           {!route.params.crossIcon && (
@@ -169,6 +171,8 @@ export default function HomeScreenContent({
         <ScrollView
           // bounces={true}
           //   alwaysBounceVertical={true}
+          showsVerticalScrollIndicator={false}
+          alwaysBounceHorizontal={false}
           refreshControl={
             <RefreshControl
               //refresh control used for the Pull to Refresh
@@ -176,8 +180,6 @@ export default function HomeScreenContent({
               onRefresh={refetchRestaurant}
             />
           }
-          showsVerticalScrollIndicator={false}
-          alwaysBounceHorizontal={false}
           alwaysBounceVertical={false}
           bounces={false}
           keyboardShouldPersistTaps={'handled'}
@@ -191,7 +193,7 @@ export default function HomeScreenContent({
               {searchVal ? i18n.t('result_distance') : i18n.t('around_you')}
             </Text>
           )}
-          <ScrollView
+          <View
             style={{
               marginTop: 17,
             }}
@@ -214,7 +216,9 @@ export default function HomeScreenContent({
                 if (Object.keys(itemData.item).length) {
                   return (
                     <View
-                      style={{ marginTop: itemData.index % 2 !== 0 ? 12 : 0 }}
+                      style={{
+                        marginTop: itemData.index % 2 !== 0 ? 12 : 0,
+                      }}
                     >
                       <HomeCard
                         navigation={navigation}
@@ -222,7 +226,7 @@ export default function HomeScreenContent({
                         img={
                           itemData?.item?.photos[0]
                             ? itemData?.item?.photos[0]
-                            : null
+                            : ''
                         }
                         rating={itemData?.item.rating}
                         name={itemData?.item.name}
@@ -246,7 +250,7 @@ export default function HomeScreenContent({
                 }
               }}
             />
-          </ScrollView>
+          </View>
         </ScrollView>
       )}
     </>

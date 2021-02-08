@@ -25,6 +25,7 @@ import { AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
 import Context from '../../contextApi/context';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { Button } from 'react-native';
 
 const HomeScreen = props => {
   const { state } = useContext(Context);
@@ -38,10 +39,7 @@ const HomeScreen = props => {
 
   useEffect(() => {
     setLoading(!loading);
-  }, [
-    props.saveLocation,
-    state,
-  ]);
+  }, [props.saveLocation, state]);
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
 
@@ -112,30 +110,30 @@ const HomeScreen = props => {
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.024
-              : LAYOUT.window.width * 0.010,
+              : LAYOUT.window.width * 0.01,
           )
         : LAYOUT.window.width < 365
-        ? HEADER_BAR_HEIGHT +
+          ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.026
               : LAYOUT.window.width * 0.013,
           )
-        : LAYOUT.window.width < 380
-        ? HEADER_BAR_HEIGHT +
+          : LAYOUT.window.width < 380
+            ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.028
               : LAYOUT.window.width * 0.016,
           )
-        : LAYOUT.window.width < 400
-        ? HEADER_BAR_HEIGHT +
+            : LAYOUT.window.width < 400
+              ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
-              ? LAYOUT.window.width * 0.030
-              : LAYOUT.window.width * 0.020,
+              ? LAYOUT.window.width * 0.03
+              : LAYOUT.window.width * 0.02,
           )
-        : HEADER_BAR_HEIGHT +
+              : HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.032
@@ -333,6 +331,7 @@ const HomeScreen = props => {
                 </G>
               </Svg>
             </Animated.View>
+
             <Animated.View
               style={{
                 position: 'absolute',
@@ -341,9 +340,11 @@ const HomeScreen = props => {
                 // height: HEADER_BAR_HEIGHT,
                 height: searchBarHeight,
                 width: searchBarWidth,
+
                 left: spacing(2.5),
                 // left: 10,
                 // left: searchBarLocation,
+                // marginLeft: spacing(2.5),
                 borderRadius: borderRadiusIcon,
                 backgroundColor: searchBarColor,
                 shadowColor: '#000',
@@ -363,13 +364,20 @@ const HomeScreen = props => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'flex-start',
+                  // marginLeft: spacing(2.5),
+
+                  // position: 'absolute',
+                  // left: '4%',
                 }}
               >
                 <TouchableOpacity
-                  onPress={() =>
-                    props.setsearchIconPress(!props.searchIconPress)
-                  }
-                  style={{ paddingLeft: HEADER_BAR_HEIGHT / 4 }}
+                  onPress={() => {
+                    props.setsearchIconPress(!props.searchIconPress);
+                  }}
+                  style={{
+                    paddingLeft: HEADER_BAR_HEIGHT / 4,
+                    zIndex: 1,
+                  }}
                 >
                   <SvgHeaderSearchIcon />
                 </TouchableOpacity>
@@ -522,10 +530,10 @@ const HomeScreen = props => {
                 }}
               >
                 <TouchableOpacity
-                  onPress={() =>
-                    props.setsearchIconPress(!props.searchIconPress)
-                  }
-                  style={{ paddingLeft: HEADER_BAR_HEIGHT / 4 }}
+                  onPress={() => {
+                    props.setsearchIconPress(!props.searchIconPress);
+                  }}
+                  style={{ paddingLeft: HEADER_BAR_HEIGHT / 4, zIndex: 1 }}
                 >
                   <SvgHeaderSearchIcon />
                 </TouchableOpacity>

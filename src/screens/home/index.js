@@ -116,6 +116,7 @@ const HomeScreen = props => {
           <HomeScreenContent
             restaurantLoading={restaurantLoading}
             searchVal={searchVal}
+            searchIconPress={searchIconPress}
             refetchRestaurant={refetchRestaurant}
             resIsFetching={resIsFetching}
             saveLocation={saveLocation}
@@ -138,6 +139,7 @@ const HomeScreen = props => {
           <StatusBar translucent={true} style="dark" />
           <HomeScreenContent
             restaurantLoading={restaurantLoading}
+            searchIconPress={searchIconPress}
             refetchRestaurant={refetchRestaurant}
             saveLocation={saveLocation}
             searchVal={searchVal}

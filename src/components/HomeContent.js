@@ -9,6 +9,7 @@ import {
   Dimensions,
   FlatList,
   Image,
+  Platform,
 } from 'react-native';
 import { Colors } from '../constants/Theme';
 import HomeCard from './HomeCard';
@@ -123,7 +124,10 @@ export default function HomeScreenContent({
     <>
       {restaurantLoading ? (
         <View
-          style={{ backgroundColor: '#F9F9F9'}}
+          style={{
+            backgroundColor: '#F9F9F9',
+            marginTop: Platform.OS === 'ios' ? -58 : 0,
+          }}
         >
           {!route.params.crossIcon && (
             <Text

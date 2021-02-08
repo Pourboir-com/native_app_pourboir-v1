@@ -187,8 +187,7 @@ const RateService = ({ navigation, route }) => {
         style={styles.viewFlatlist}
         // contentContainerStyle={{ flex: 1 }}
       >
-        <TouchableOpacity
-          // onPress={() => navigation.navigate('socialLogin')}
+        <View
           style={styles.viewListCard}
         >
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
@@ -219,9 +218,8 @@ const RateService = ({ navigation, route }) => {
               );
             })}
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={() => navigation.navigate('socialLogin')}
+        </View>
+        <View
           style={styles.viewListCard}
         >
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
@@ -252,9 +250,8 @@ const RateService = ({ navigation, route }) => {
               );
             })}
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={() => navigation.navigate('socialLogin')}
+        </View>
+        <View
           style={styles.viewListCard}
         >
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
@@ -285,9 +282,8 @@ const RateService = ({ navigation, route }) => {
               );
             })}
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={() => navigation.navigate('socialLogin')}
+        </View>
+        <View
           style={styles.viewListCard}
         >
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
@@ -318,7 +314,7 @@ const RateService = ({ navigation, route }) => {
               );
             })}
           </View>
-        </TouchableOpacity>
+        </View>
         <View style={{ alignItems: 'center' }}>
           <View style={styles.viewTip}>
             <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>

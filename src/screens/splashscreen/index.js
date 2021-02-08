@@ -1,8 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import {
-  Animated,
-  ActivityIndicator,
-} from 'react-native';
+import { Animated, ActivityIndicator, Linking } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -149,5 +146,7 @@ export default function SplashScreen(props) {
     // }
   }, []);
 
-  return <ActivityIndicator style={{flex: 1}} size={70} color={Colors.yellow} />;
+  return (
+    <ActivityIndicator style={{ flex: 1 }} size={70} color={Colors.yellow} />
+  );
 }

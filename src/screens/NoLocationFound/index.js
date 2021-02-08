@@ -8,13 +8,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 var getCountry = require('country-currency-map').getCountry;
 var formatCurrency = require('country-currency-map').formatCurrency;
 import i18n from '../../li8n';
+import { Platform } from 'react-native';
+import { Linking } from 'react-native';
 
 const NoLocation = () => {
   const navigation = useNavigation();
 
   const excessLocation = async () => {
     let { status } = await Location.requestPermissionsAsync();
+
     if (status !== 'granted') {
+      if (Platform.OS === 'ios') {
+        Linking.openURL('app-settings:');
+      }
       return;
     }
     const location = await Location.getCurrentPositionAsync({

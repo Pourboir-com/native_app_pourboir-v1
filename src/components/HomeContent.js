@@ -32,6 +32,7 @@ export default function HomeScreenContent({
   refetchRestaurant,
   resIsFetching,
   searchVal,
+  searchEnter,
   Data,
   // isFetch,
   // handleLoadMore,
@@ -135,7 +136,7 @@ export default function HomeScreenContent({
             <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
-              {searchVal ? i18n.t('result_distance') : i18n.t('around_you')}
+              {searchEnter ? i18n.t('result_distance') : i18n.t('around_you')}
             </Text>
           )}
           <View
@@ -190,7 +191,7 @@ export default function HomeScreenContent({
             <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
-              {searchVal ? i18n.t('result_distance') : i18n.t('around_you')}
+              {searchEnter ? i18n.t('result_distance') : i18n.t('around_you')}
             </Text>
           )}
           <View

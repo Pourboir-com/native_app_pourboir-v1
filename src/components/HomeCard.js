@@ -26,9 +26,7 @@ const HomeCard = ({
   vicinity,
 }) => {
   const [starSelect, setstarSelect] = useState(rating);
-  const [opacity, setOpacity] = useState(1);
   const obj = [1, 2, 3, 4, 5];
-
   const onPressStar = v => {
     setstarSelect(v);
   };
@@ -36,11 +34,8 @@ const HomeCard = ({
   return (
     <>
       <TouchableOpacity
-        delayPressIn={550}
-        activeOpacity={1}
-        // TouchableOpacity={0.5}
+        delayPressIn={50}
         onPress={() => {
-          setOpacity(0.2);
           navigation.navigate('OpenCardReviews', {
             img,
             rating: starSelect,
@@ -50,7 +45,6 @@ const HomeCard = ({
             place_id,
             vicinity,
           });
-          setOpacity(1);
         }}
         style={[styles.viewItemConatier]}
       >

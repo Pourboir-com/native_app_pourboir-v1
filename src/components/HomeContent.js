@@ -121,7 +121,7 @@ export default function HomeScreenContent({
   }
   return (
     <>
-      {restaurantLoading ? (
+      {/* {restaurantLoading ? (
         <View style={{ backgroundColor: '#F9F9F9' }}>
           {!route.params.crossIcon && (
             <Text
@@ -159,27 +159,61 @@ export default function HomeScreenContent({
             />
           </View>
         </View>
-      ) : (
-        <ScrollView
-          // bounces={true}
-          //   alwaysBounceVertical={true}
-          showsVerticalScrollIndicator={false}
-          alwaysBounceHorizontal={false}
-          alwaysBounceVertical={false}
-          bounces={false}
-          keyboardShouldPersistTaps={'handled'}
-          style={{ backgroundColor: '#F9F9F9' }}
-        >
-          <Spinner visible={deleteLoading} />
-          {!route.params.crossIcon && (
-            <Text
-              style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
-            >
-              {searchVal ? i18n.t('result_distance') : i18n.t('around_you')}
-            </Text>
-          )}
-
+      ) : ( */}
+      <ScrollView
+        // bounces={true}
+        //   alwaysBounceVertical={true}
+        showsVerticalScrollIndicator={false}
+        alwaysBounceHorizontal={false}
+        alwaysBounceVertical={false}
+        bounces={false}
+        keyboardShouldPersistTaps={'handled'}
+        style={{ backgroundColor: '#F9F9F9' }}
+      >
+        <Spinner visible={deleteLoading} />
+        {!route.params.crossIcon && (
+          <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
+            {searchVal ? i18n.t('result_distance') : i18n.t('around_you')}
+          </Text>
+        )}
+        {restaurantLoading ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: 17,
+            }}
+          >
+            <FlatList
+              data={dummyArray}
+              showsVerticalScrollIndicator={false}
+              alwaysBounceHorizontal={false}
+              scrollEnabled={false}
+              alwaysBounceVertical={false}
+              bounces={false}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={() => <HomeCardSkeleton />}
+            />
+            <FlatList
+              data={dummyArray}
+              showsVerticalScrollIndicator={false}
+              style={{ marginTop: 15 }}
+              alwaysBounceHorizontal={false}
+              scrollEnabled={false}
+              alwaysBounceVertical={false}
+              bounces={false}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={() => <HomeCardSkeleton />}
+            />
+          </View>
+        ) : (
           <ScrollView
+            refreshControl={
+              <RefreshControl
+                //refresh control used for the Pull to Refresh
+                refreshing={resIsFetching}
+                onRefresh={refetchRestaurant}
+              />
+            }
             style={{
               marginTop: 17,
             }}
@@ -210,7 +244,7 @@ export default function HomeScreenContent({
                         img={
                           itemData?.item?.photos[0]
                             ? itemData?.item?.photos[0]
-                            : ''
+                            : null
                         }
                         rating={itemData?.item.rating}
                         name={itemData?.item.name}
@@ -235,8 +269,9 @@ export default function HomeScreenContent({
               }}
             />
           </ScrollView>
-        </ScrollView>
-      )}
+        )}
+      </ScrollView>
+      {/* )} */}
     </>
   );
 }

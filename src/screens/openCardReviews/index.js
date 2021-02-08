@@ -215,7 +215,7 @@ const ReviewDetails = ({ navigation, route }) => {
                     fontSize: 16,
                   }}
                 >
-                  {distance}m
+                  {distance ? distance + 'm' : ''}
                 </Text>
                 <TouchableOpacity
                   style={{

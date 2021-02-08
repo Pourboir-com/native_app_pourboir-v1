@@ -80,13 +80,7 @@ const RateService = ({ navigation, route }) => {
     }
   }, [isVisible]);
 
-  const {
-    name,
-    image,
-    restaurant_id,
-    waiter_id,
-    refetchWaiters,
-  } = route.params;
+  const { name, image, restaurant_id, waiter_id } = route.params;
 
   const handleAddRatings = async () => {
     if (state.userDetails.user_id) {
@@ -112,10 +106,10 @@ const RateService = ({ navigation, route }) => {
         onError: () => {
           alert('You can only vote once today.');
           navigation.navigate('Home', { crossIcon: false });
-          // dispatch({
-          //   type: actionTypes.REFRESH_ANIMATION,
-          //   payload: !state.refreshAnimation,
-          // });
+          dispatch({
+            type: actionTypes.REFRESH_ANIMATION,
+            payload: !state.refreshAnimation,
+          });
         },
       });
     } else {
@@ -187,9 +181,7 @@ const RateService = ({ navigation, route }) => {
         style={styles.viewFlatlist}
         // contentContainerStyle={{ flex: 1 }}
       >
-        <View
-          style={styles.viewListCard}
-        >
+        <View style={styles.viewListCard}>
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
             {i18n.t('hospitality')}
           </Text>
@@ -219,9 +211,7 @@ const RateService = ({ navigation, route }) => {
             })}
           </View>
         </View>
-        <View
-          style={styles.viewListCard}
-        >
+        <View style={styles.viewListCard}>
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
             {i18n.t('speed')}
           </Text>
@@ -251,9 +241,7 @@ const RateService = ({ navigation, route }) => {
             })}
           </View>
         </View>
-        <View
-          style={styles.viewListCard}
-        >
+        <View style={styles.viewListCard}>
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
             {i18n.t('service')}
           </Text>
@@ -283,9 +271,7 @@ const RateService = ({ navigation, route }) => {
             })}
           </View>
         </View>
-        <View
-          style={styles.viewListCard}
-        >
+        <View style={styles.viewListCard}>
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
             {i18n.t('professionalism')}
           </Text>
@@ -326,7 +312,17 @@ const RateService = ({ navigation, route }) => {
               prefix={currency ? currency.currency + ' ' : ''}
               renderText={formattedValue => (
                 <TextInput
-                  keyboardType="numeric"
+                  returnKeyLabel="Validate"
+                  returnKeyType="done"
+                  onSubmitEditing={
+                    hospitality &&
+                    speed &&
+                    professionalism &&
+                    service &&
+                    remarks.replace(/[^0-9]/g, '') &&
+                    handleAddRatings
+                  }
+                  keyboardType="number-pad"
                   value={formattedValue}
                   onFocus={() => {
                     setKeyboardVisible(true);
@@ -353,7 +349,11 @@ const RateService = ({ navigation, route }) => {
         <TouchableOpacity
           onPress={handleAddRatings}
           disabled={
-            hospitality && speed && professionalism && service && remarks
+            hospitality &&
+            speed &&
+            professionalism &&
+            service &&
+            remarks.replace(/[^0-9]/g, '')
               ? false
               : true
           }
@@ -363,7 +363,9 @@ const RateService = ({ navigation, route }) => {
               speed &&
               professionalism &&
               service &&
-              remarks && { backgroundColor: Colors.yellow },
+              remarks.replace(/[^0-9]/g, '') && {
+              backgroundColor: Colors.yellow,
+            },
           ]}
         >
           {loading ? (

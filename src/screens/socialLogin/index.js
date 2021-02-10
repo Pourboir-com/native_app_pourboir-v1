@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Entypo } from '@expo/vector-icons';
 import { Colors } from '../../constants/Theme';
 import * as Google from 'expo-google-app-auth';
 import i18n from '../../li8n';
@@ -70,7 +70,9 @@ const SocialLogin = ({ navigation, route }) => {
             navigation.navigate('Home', { crossIcon: false });
           }
           let userDetails = {
-            name: res?.user?.full_name ? userGivenName(res?.user?.full_name) : '',
+            name: res?.user?.full_name
+              ? userGivenName(res?.user?.full_name)
+              : '',
             image: res?.user?.picture || '',
             email: res?.user?.email || '',
             accessToken: accessToken || '',
@@ -141,7 +143,9 @@ const SocialLogin = ({ navigation, route }) => {
                   navigation.navigate('Home', { crossIcon: false });
                 }
                 let userDetails = {
-                  name: res?.user?.full_name ? userGivenName(res?.user?.full_name) : '',
+                  name: res?.user?.full_name
+                    ? userGivenName(res?.user?.full_name)
+                    : '',
                   image: res?.user?.picture || '',
                   email: res?.user?.email || '',
                   accessToken: token || '',
@@ -190,6 +194,12 @@ const SocialLogin = ({ navigation, route }) => {
         <ActivityIndicator size={70} color={Colors.yellow} />
       ) : (
         <View style={{ width: '100%', alignItems: 'center' }}>
+          <TouchableOpacity
+            style={styles.cross}
+            onPress={() => navigation.navigate('Home', { crossIcon: false })}
+          >
+            <Entypo name="cross" size={29} color="black" />
+          </TouchableOpacity>
           <Image
             style={styles.imgLogoStyle}
             source={imgLogo}
@@ -237,74 +247,86 @@ const SocialLogin = ({ navigation, route }) => {
               {i18n.t('continue_with_google')}
             </Text>
           </TouchableOpacity>
-          {Platform.OS === 'ios' && <AppleAuthentication.AppleAuthenticationButton
-            buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
-            buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
-            cornerRadius={5}
-            style={{ width: '90%', height: 50, fontSize: 16,
-              fontFamily: 'ProximaNova' }}
-            onPress={async () => {
-              try {
-                const credential = await AppleAuthentication.signInAsync({
-                  requestedScopes: [
-                    AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-                    AppleAuthentication.AppleAuthenticationScope.EMAIL,
-                  ],
-                });
-                let user = {
-                  name: iPhoneLoginName(credential.fullName)  || '',
-                  email: credential.email || '',
-                  family_name: credential.fullName?.familyName || '',
-                  id: credential.user || '',
-                  picture: credential.image || '',
-                };
-                await googleSignup(user, {
-                  onSuccess: async res => {
-                    if (vote) {
-                      navigation.navigate('RateYourService');
-                      setVote(false);
-                    } else if (confirmWaiter || HelpUs) {
-                      navigation.navigate('OpenCardReviews');
-                    } else {
-                      navigation.navigate('Home', { crossIcon: false });
-                    }
-                    let userDetails = {
-                      name: res?.user?.full_name ? userGivenName(res?.user?.full_name) : '',
-                      image: res?.user?.picture || '',
-                      email: res?.user?.email || '',
-                      accessToken: credential.authorizationCode || '',
-                      user_id: res?.user?._id || '',
-                    };
-
-                    dispatch({
-                      type: actionTypes.USER_DETAILS,
-                      payload: userDetails,
-                    });
-
-                    await AsyncStorage.setItem(
-                      '@userInfo',
-                      JSON.stringify({
-                        ...userDetails,
-                      }),
-                    );
-                    setLoading(false);
-                  },
-                  onError: e => {
-                    setLoading(false);
-                    alert(`Apple Login Error: ${e}`);
-                  },
-                });
-                // signed in
-              } catch (e) {
-                alert(`Apple Login Error: ${e}`);
-                if (e.code === 'ERR_CANCELED') {
-                  // handle that the user canceled the sign-in flow
-                } else {
-                  // handle other errors
-                }
+          {Platform.OS === 'ios' && (
+            <AppleAuthentication.AppleAuthenticationButton
+              buttonType={
+                AppleAuthentication.AppleAuthenticationButtonType.CONTINUE
               }
-            }}
-          />}
+              buttonStyle={
+                AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
+              }
+              cornerRadius={5}
+              style={{
+                width: '90%',
+                height: 50,
+                fontSize: 16,
+                fontFamily: 'ProximaNova',
+              }}
+              onPress={async () => {
+                try {
+                  const credential = await AppleAuthentication.signInAsync({
+                    requestedScopes: [
+                      AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+                      AppleAuthentication.AppleAuthenticationScope.EMAIL,
+                    ],
+                  });
+                  let user = {
+                    name: iPhoneLoginName(credential.fullName) || '',
+                    email: credential.email || '',
+                    family_name: credential.fullName?.familyName || '',
+                    id: credential.user || '',
+                    picture: credential.image || '',
+                  };
+                  await googleSignup(user, {
+                    onSuccess: async res => {
+                      if (vote) {
+                        navigation.navigate('RateYourService');
+                        setVote(false);
+                      } else if (confirmWaiter || HelpUs) {
+                        navigation.navigate('OpenCardReviews');
+                      } else {
+                        navigation.navigate('Home', { crossIcon: false });
+                      }
+                      let userDetails = {
+                        name: res?.user?.full_name
+                          ? userGivenName(res?.user?.full_name)
+                          : '',
+                        image: res?.user?.picture || '',
+                        email: res?.user?.email || '',
+                        accessToken: credential.authorizationCode || '',
+                        user_id: res?.user?._id || '',
+                      };
+
+                      dispatch({
+                        type: actionTypes.USER_DETAILS,
+                        payload: userDetails,
+                      });
+
+                      await AsyncStorage.setItem(
+                        '@userInfo',
+                        JSON.stringify({
+                          ...userDetails,
+                        }),
+                      );
+                      setLoading(false);
+                    },
+                    onError: e => {
+                      setLoading(false);
+                      alert(`Apple Login Error: ${e}`);
+                    },
+                  });
+                  // signed in
+                } catch (e) {
+                  alert(`Apple Login Error: ${e}`);
+                  if (e.code === 'ERR_CANCELED') {
+                    // handle that the user canceled the sign-in flow
+                  } else {
+                    // handle other errors
+                  }
+                }
+              }}
+            />
+          )}
           <Text
             style={[
               styles.txtCreatingAcc,
@@ -395,7 +417,6 @@ const styles = StyleSheet.create({
     width: 200,
     height: 50,
     marginTop: 20,
-    // height:'auto'
   },
   btnFb: {
     width: '90%',
@@ -420,5 +441,10 @@ const styles = StyleSheet.create({
   textFb: {
     color: '#fff',
     marginLeft: 10,
+  },
+  cross: {
+    height: 29,
+    width: 29,
+    marginLeft: '-80%',
   },
 });

@@ -196,7 +196,13 @@ const SocialLogin = ({ navigation, route }) => {
         <View style={{ width: '100%', alignItems: 'center' }}>
           <TouchableOpacity
             style={styles.cross}
-            onPress={() => navigation.navigate('Home', { crossIcon: false })}
+            onPress={() =>{ 
+              navigation.navigate('Home', { crossIcon: false });
+              dispatch({
+                type: actionTypes.REFRESH_ANIMATION,
+                payload: !state.refreshAnimation,
+              });
+            }}
           >
             <Entypo name="cross" size={29} color="black" />
           </TouchableOpacity>

@@ -130,7 +130,10 @@ const HomeCard = ({
             <Text
               ellipsizeMode="tail"
               numberOfLines={3}
-              style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}
+              style={[
+                styles.txtName,
+                { fontFamily: 'ProximaNovaBold' },
+              ]}
             >
               {name}
             </Text>
@@ -185,6 +188,7 @@ const styles = StyleSheet.create({
   txtName: {
     color: '#fff',
     fontSize: 18,
+    textTransform: 'capitalize',
     // fontFamily:'ProximaNovaBold'
   },
   btnCross: {

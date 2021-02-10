@@ -252,9 +252,9 @@ const SocialLogin = ({ navigation, route }) => {
                   ],
                 });
                 let user = {
-                  name: credential.fullName || '',
+                  name: credential.fullName?.givenName || '',
                   email: credential.email || '',
-                  family_name: credential.fullName || '',
+                  family_name: credential.fullName?.familyName || '',
                   id: credential.user || '',
                   picture: credential.image || '',
                 };
@@ -296,7 +296,7 @@ const SocialLogin = ({ navigation, route }) => {
                 });
                 // signed in
               } catch (e) {
-                console.log(e);
+                alert(`Apple Login Error: ${e}`);
                 if (e.code === 'ERR_CANCELED') {
                   // handle that the user canceled the sign-in flow
                 } else {

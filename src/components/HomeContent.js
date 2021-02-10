@@ -129,7 +129,7 @@ export default function HomeScreenContent({
         <View
           style={{
             backgroundColor: '#F9F9F9',
-            marginTop: Platform.OS === 'ios' && !searchIconPress ? -58 : 0,
+            marginTop: Platform.OS ==='ios' && !searchIconPress ? -58 : 0,
           }}
         >
           {!route.params.crossIcon && (

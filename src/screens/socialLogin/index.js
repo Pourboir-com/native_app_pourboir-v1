@@ -237,7 +237,7 @@ const SocialLogin = ({ navigation, route }) => {
               {i18n.t('continue_with_google')}
             </Text>
           </TouchableOpacity>
-          {AppleAuthentication.isAvailableAsync() && <AppleAuthentication.AppleAuthenticationButton
+          {Platform.OS === 'ios' && <AppleAuthentication.AppleAuthenticationButton
             buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
             buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
             cornerRadius={5}

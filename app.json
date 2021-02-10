@@ -22,10 +22,12 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.developerspourboir.pourboir",
       "buildNumber": "1.0.1",
+      "usesAppleSignIn": true,
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "This app uses location for nearby restaurants",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses location for nearby restaurants",
-        "NSLocationAlwaysUsageDescription": "This app uses location for nearby restaurants"
+        "NSLocationAlwaysUsageDescription": "This app uses location for nearby restaurants",
+        "CFBundleAllowMixedLocalizations": true
       },
       "config": {
         "googleSignIn": {
@@ -43,7 +45,9 @@
           "certificateHash": "2D1F998CDB943BED21A3831029A25469F04709EE"
         }
       },
-      "permissions": ["MEDIA_LIBRARY"],
+      "permissions": [
+        "MEDIA_LIBRARY"
+      ],
       "package": "com.developerspourboir.pourboir",
       "versionCode": 2
     },

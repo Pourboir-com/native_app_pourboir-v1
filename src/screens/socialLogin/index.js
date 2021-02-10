@@ -24,6 +24,8 @@ import * as actionTypes from '../../contextApi/actionTypes';
 const imgLogo = require('../../assets/images/imgLogo.png');
 const imgWaiter = require('../../assets/images/waiter2.png');
 import * as Facebook from 'expo-facebook';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import { Platform } from 'react-native';
 
 const SocialLogin = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
@@ -235,7 +237,74 @@ const SocialLogin = ({ navigation, route }) => {
               {i18n.t('continue_with_google')}
             </Text>
           </TouchableOpacity>
+          {Platform.OS === 'ios' && <AppleAuthentication.AppleAuthenticationButton
+            buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
+            buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+            cornerRadius={5}
+            style={{ width: '90%', height: 50, fontSize: 16,
+              fontFamily: 'ProximaNova' }}
+            onPress={async () => {
+              try {
+                const credential = await AppleAuthentication.signInAsync({
+                  requestedScopes: [
+                    AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+                    AppleAuthentication.AppleAuthenticationScope.EMAIL,
+                  ],
+                });
+                let user = {
+                  name: credential.fullName || '',
+                  email: credential.email || '',
+                  family_name: credential.fullName || '',
+                  id: credential.user || '',
+                  picture: credential.image || '',
+                };
+                await googleSignup(user, {
+                  onSuccess: async res => {
+                    if (vote) {
+                      navigation.navigate('RateYourService');
+                      setVote(false);
+                    } else if (confirmWaiter || HelpUs) {
+                      navigation.navigate('OpenCardReviews');
+                    } else {
+                      navigation.navigate('Home', { crossIcon: false });
+                    }
+                    let userDetails = {
+                      name: res?.user?.full_name ? userGivenName(res?.user?.full_name) : '',
+                      image: res?.user?.picture || '',
+                      email: res?.user?.email || '',
+                      accessToken: credential.authorizationCode || '',
+                      user_id: res?.user?._id || '',
+                    };
 
+                    dispatch({
+                      type: actionTypes.USER_DETAILS,
+                      payload: userDetails,
+                    });
+
+                    await AsyncStorage.setItem(
+                      '@userInfo',
+                      JSON.stringify({
+                        ...userDetails,
+                      }),
+                    );
+                    setLoading(false);
+                  },
+                  onError: e => {
+                    setLoading(false);
+                    alert(`Apple Login Error: ${e}`);
+                  },
+                });
+                // signed in
+              } catch (e) {
+                console.log(e);
+                if (e.code === 'ERR_CANCELED') {
+                  // handle that the user canceled the sign-in flow
+                } else {
+                  // handle other errors
+                }
+              }
+            }}
+          />}
           <Text
             style={[
               styles.txtCreatingAcc,

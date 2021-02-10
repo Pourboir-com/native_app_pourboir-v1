@@ -12,7 +12,7 @@ const apiUrl = () => {
   let api_url = `http://localhost:8081/api`;
 
   if (releaseEnvironment == 'production') {
-    // expo build:ios --release-channel production-1.0.0
+    // expo build:ios --clear-provisioning-profile --revoke-credentials --release-channel production-1.0.0
     // expo build:android --release-channel production-1.0.0
     api_url =
       'http://ec2-34-211-185-52.us-west-2.compute.amazonaws.com:5000/api';

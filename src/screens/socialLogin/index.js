@@ -14,7 +14,7 @@ import * as Google from 'expo-google-app-auth';
 import i18n from '../../li8n';
 import { loadAsync } from 'expo-font';
 import { config } from '../../constants';
-import { userSignUp, userGivenName } from '../../util';
+import { userSignUp, userGivenName, iPhoneLoginName } from '../../util';
 import { useMutation } from 'react-query';
 import { GOOGLE_SIGNUP } from '../../queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -237,7 +237,7 @@ const SocialLogin = ({ navigation, route }) => {
               {i18n.t('continue_with_google')}
             </Text>
           </TouchableOpacity>
-          {Platform.OS === 'ios' && <AppleAuthentication.AppleAuthenticationButton
+          {AppleAuthentication.isAvailableAsync() && <AppleAuthentication.AppleAuthenticationButton
             buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
             buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
             cornerRadius={5}
@@ -252,7 +252,7 @@ const SocialLogin = ({ navigation, route }) => {
                   ],
                 });
                 let user = {
-                  name: credential.fullName?.givenName || '',
+                  name: iPhoneLoginName(credential.fullName)  || '',
                   email: credential.email || '',
                   family_name: credential.fullName?.familyName || '',
                   id: credential.user || '',

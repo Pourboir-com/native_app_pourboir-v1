@@ -107,6 +107,7 @@ const HomeScreen = props => {
           saveLocation={saveLocation}
           yourRestaurantLoading={yourRestaurantLoading}
           yourRefetchRestaurant={yourRefetchRestaurant}
+          refetchRestaurant={refetchRestaurant}
           yourResIsFetching={yourResIsFetching}
           setsearchEnter={setsearchEnter}
           // nextPageToken={nextPageToken}

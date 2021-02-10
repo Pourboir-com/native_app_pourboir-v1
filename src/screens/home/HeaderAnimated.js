@@ -31,7 +31,14 @@ const HomeScreen = props => {
   const { state } = useContext(Context);
   const [loading, setLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  // const [loader, setLoader] = useState();
   const [hasValue, sethasValue] = useState();
+
+  // useEffect(() => {
+  //   if (state.refreshAnimation) {
+  //     setLoader(true);
+  //   }
+  // }, [state.refreshAnimation]);
 
   useEffect(() => {
     sethasValue(props.searchVal ? true : false);
@@ -262,13 +269,13 @@ const HomeScreen = props => {
           <Animated.ScrollView
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
-            refreshControl={
-              <RefreshControl
-                //refresh control used for the Pull to Refresh
-                refreshing={props.resIsFetching}
-                onRefresh={props.refetchRestaurant}
-              />
-            }
+            // refreshControl={
+            //   <RefreshControl
+            //     //refresh control used for the Pull to Refresh
+            //     refreshing={props.resIsFetching}
+            //     onRefresh={props.refetchRestaurant}
+            //   />
+            // }
             bounces={false}
             keyboardShouldPersistTaps={'handled'}
             ref={scrollRef}
@@ -284,6 +291,7 @@ const HomeScreen = props => {
               { nativeEvent: { contentOffset: { y: scrollYAnimatedValue } } },
             ])}
           >
+            {/* <Spinner visible={loader} /> */}
             {props.children}
           </Animated.ScrollView>
           <Animated.View
@@ -429,13 +437,13 @@ const HomeScreen = props => {
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
             keyboardShouldPersistTaps={'handled'}
-            refreshControl={
-              <RefreshControl
-                //refresh control used for the Pull to Refresh
-                refreshing={props.resIsFetching}
-                onRefresh={props.refetchRestaurant}
-              />
-            }
+            // refreshControl={
+            //   <RefreshControl
+            //     //refresh control used for the Pull to Refresh
+            //     refreshing={props.resIsFetching}
+            //     onRefresh={props.refetchRestaurant}
+            //   />
+            // }
             bounces={false}
             ref={scrollRef}
             contentContainerStyle={{

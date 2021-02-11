@@ -21,7 +21,7 @@ import { SvgHeaderSearchIcon } from '../../components/svg/header_search_icon';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import { COLORS } from '../../constants/colors';
 import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import i18n from '../../li8n';
 import Context from '../../contextApi/context';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -206,7 +206,7 @@ const HomeScreen = props => {
                     })
                   }
                 >
-                  <SvgHeaderUserIcon height={40} width={40} />
+                  <FontAwesome name="user-circle-o" size={37} color="black" />
                 </TouchableOpacity>
               )}
             </>

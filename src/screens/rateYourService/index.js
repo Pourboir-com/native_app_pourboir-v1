@@ -72,13 +72,13 @@ const RateService = ({ navigation, route }) => {
     });
   };
 
-  useEffect(() => {
-    if (isVisible) {
-      setTimeout(() => {
-        handleModalClose();
-      }, 5000);
-    }
-  }, [isVisible]);
+  // useEffect(() => {
+  //   if (isVisible) {
+  //     setTimeout(() => {
+  //       handleModalClose();
+  //     }, 5000);
+  //   }
+  // }, [isVisible]);
 
   const { name, image, restaurant_id, waiter_id } = route.params;
 

@@ -173,34 +173,40 @@ const HomeScreen = props => {
             // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
           ]}
         >
-          {!state.userDetails.image ? (
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate('socialLogin')}
-            >
-              <SvgHeaderUserIcon height={40} width={40} />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              onPress={() =>
-                props.navigation.navigate('Setting', {
+          <TouchableOpacity
+            onPress={() =>
+              state.userDetails.user_id
+                ? props.navigation.navigate('Setting', {
                   yourRestaurantLoading: props.yourRestaurantLoading,
                   yourRefetchRestaurant: props.yourRefetchRestaurant,
                   yourResIsFetching: props.yourResIsFetching,
                 })
-              }
-            >
-              <Image
-                style={{
-                  borderRadius: 90,
-                  width: 40,
-                  height: 40,
-                }}
-                source={{
-                  uri: state.userDetails.image,
-                }}
-              />
-            </TouchableOpacity>
-          )}
+                : props.navigation.navigate('socialLogin')
+            }
+          >
+            <SvgHeaderUserIcon height={40} width={40} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() =>
+              state.userDetails.user_id ? props.navigation.navigate('Setting', {
+                yourRestaurantLoading: props.yourRestaurantLoading,
+                yourRefetchRestaurant: props.yourRefetchRestaurant,
+                yourResIsFetching: props.yourResIsFetching,
+              }): props.navigation.navigate('socialLogin')
+            }
+          >
+            <Image
+              style={{
+                borderRadius: 90,
+                width: 40,
+                height: 40,
+              }}
+              source={{
+                uri: state.userDetails.image,
+              }}
+            />
+          </TouchableOpacity>
         </View>
       );
     };

@@ -196,12 +196,12 @@ const SocialLogin = ({ navigation, route }) => {
         <View style={{ width: '100%', alignItems: 'center' }}>
           <TouchableOpacity
             style={styles.cross}
-            onPress={() =>{ 
+            onPress={() =>{
               navigation.navigate('Home', { crossIcon: false });
-              dispatch({
-                type: actionTypes.REFRESH_ANIMATION,
-                payload: !state.refreshAnimation,
-              });
+              // dispatch({
+              //   type: actionTypes.REFRESH_ANIMATION,
+              //   payload: !state.refreshAnimation,
+              // });
             }}
           >
             <Entypo name="cross" size={29} color="black" />
@@ -283,6 +283,7 @@ const SocialLogin = ({ navigation, route }) => {
                     id: credential.user || '',
                     picture: credential.image || '',
                   };
+
                   await googleSignup(user, {
                     onSuccess: async res => {
                       if (vote) {
@@ -303,6 +304,7 @@ const SocialLogin = ({ navigation, route }) => {
                         user_id: res?.user?._id || '',
                       };
 
+                      console.log({userDetails});
                       dispatch({
                         type: actionTypes.USER_DETAILS,
                         payload: userDetails,

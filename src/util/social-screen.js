@@ -6,7 +6,7 @@ export const userSignUp = async accessToken => {
   });
 };
 
-export const userGivenName = name => {
+export const userGivenName = (name='') => {
   let given_name;
   let fullName = name.split(' ');
   if (fullName.length >= 3) {
@@ -33,4 +33,5 @@ export const iPhoneLoginName = (fullName = {}) => {
   if (fullName.nickname) {
     return fullName.nickname;
   }
+  return '';
 };

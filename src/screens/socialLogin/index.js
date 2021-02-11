@@ -198,10 +198,10 @@ const SocialLogin = ({ navigation, route }) => {
             style={styles.cross}
             onPress={() =>{
               navigation.navigate('Home', { crossIcon: false });
-              // dispatch({
-              //   type: actionTypes.REFRESH_ANIMATION,
-              //   payload: !state.refreshAnimation,
-              // });
+              dispatch({
+                type: actionTypes.REFRESH_ANIMATION,
+                payload: !state.refreshAnimation,
+              });
             }}
           >
             <Entypo name="cross" size={29} color="black" />

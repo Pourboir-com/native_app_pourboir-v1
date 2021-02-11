@@ -16,6 +16,7 @@ export default {
   add_your_server: 'Add your server',
   are_you_waiter: 'Are you a waiter?',
   see_the_menu: 'See the menu',
+  please_fill: 'Please fill in this information',
 
   // Rate your server
   rate_your_server: 'Rate your server',

@@ -16,6 +16,7 @@ export default {
   add_your_server: 'Ajoutez votre serveur',
   are_you_waiter: 'Vous êtes serveur?',
   see_the_menu: 'Voir le menu',
+  please_fill: 'Veuillez remplir ces informations',
 
   // Rate your server
   rate_your_server: 'Notez votre serveur',

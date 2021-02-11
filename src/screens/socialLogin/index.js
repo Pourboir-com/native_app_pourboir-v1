@@ -51,7 +51,7 @@ const SocialLogin = ({ navigation, route }) => {
     }
     loadFont();
   }, []);
-  const { dispatch } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   const handleGoogleSignIn = async () => {
     // First- obtain access token from Expo's Google API
     const { type, accessToken, user } = await Google.logInAsync(config);
@@ -196,7 +196,7 @@ const SocialLogin = ({ navigation, route }) => {
         <View style={{ width: '100%', alignItems: 'center' }}>
           <TouchableOpacity
             style={styles.cross}
-            onPress={() =>{ 
+            onPress={() => {
               navigation.navigate('Home', { crossIcon: false });
               dispatch({
                 type: actionTypes.REFRESH_ANIMATION,
@@ -411,18 +411,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imgStyle: {
-    // flex:1,
-    // backgroundColor:'red',
-    width: Dimensions.get('window').width * 1,
     marginLeft: Dimensions.get('window').width * 0.05,
-    height: Dimensions.get('window').height * 0.5,
+    height: Dimensions.get('window').height * 0.40,
     alignSelf: 'center',
-    // marginBottom:20
+    marginTop: 15,
   },
   imgLogoStyle: {
     width: 200,
     height: 50,
-    marginTop: 20,
+    // marginTop: 10,
   },
   btnFb: {
     width: '90%',
@@ -433,6 +430,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 50,
     marginBottom: 15,
+    marginTop: -32,
   },
   btnGoogle: {
     width: '90%',

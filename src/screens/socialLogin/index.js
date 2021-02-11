@@ -194,23 +194,32 @@ const SocialLogin = ({ navigation, route }) => {
         <ActivityIndicator size={70} color={Colors.yellow} />
       ) : (
         <View style={{ width: '100%', alignItems: 'center' }}>
-          <TouchableOpacity
-            style={styles.cross}
-            onPress={() =>{
-              navigation.navigate('Home', { crossIcon: false });
-              // dispatch({
-              //   type: actionTypes.REFRESH_ANIMATION,
-              //   payload: !state.refreshAnimation,
-              // });
+          <View
+            style={{
+              flexDirection: 'row',
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            <Entypo name="cross" size={29} color="black" />
-          </TouchableOpacity>
-          <Image
-            style={styles.imgLogoStyle}
-            source={imgLogo}
-            resizeMode="contain"
-          />
+            <TouchableOpacity
+              style={styles.cross}
+              onPress={() => {
+                navigation.navigate('Home', { crossIcon: false });
+                dispatch({
+                  type: actionTypes.REFRESH_ANIMATION,
+                  payload: !state.refreshAnimation,
+                });
+              }}
+            >
+              <Entypo name="cross" size={32} color="black" />
+            </TouchableOpacity>
+            <Image
+              style={styles.imgLogoStyle}
+              source={imgLogo}
+              resizeMode="contain"
+            />
+          </View>
           <View style={styles.viewImg}>
             <Image
               style={styles.imgStyle}
@@ -254,86 +263,87 @@ const SocialLogin = ({ navigation, route }) => {
             </Text>
           </TouchableOpacity>
           {Platform.OS === 'ios' && (
-            <AppleAuthentication.AppleAuthenticationButton
-              buttonType={
-                AppleAuthentication.AppleAuthenticationButtonType.CONTINUE
-              }
-              buttonStyle={
-                AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
-              }
-              cornerRadius={5}
-              style={{
-                width: '90%',
-                height: 50,
-                fontSize: 16,
-                fontFamily: 'ProximaNova',
-              }}
-              onPress={async () => {
-                try {
-                  const credential = await AppleAuthentication.signInAsync({
-                    requestedScopes: [
-                      AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-                      AppleAuthentication.AppleAuthenticationScope.EMAIL,
-                    ],
-                  });
-                  let user = {
-                    name: iPhoneLoginName(credential.fullName) || '',
-                    email: credential.email || '',
-                    family_name: credential.fullName?.familyName || '',
-                    id: credential.user || '',
-                    picture: credential.image || '',
-                  };
+            <React.Fragment>
+              <TouchableOpacity
+                onPress={async () => {
+                  try {
+                    const credential = await AppleAuthentication.signInAsync({
+                      requestedScopes: [
+                        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+                        AppleAuthentication.AppleAuthenticationScope.EMAIL,
+                      ],
+                    });
+                    let user = {
+                      name: iPhoneLoginName(credential.fullName) || '',
+                      email: credential.email || '',
+                      family_name: credential.fullName?.familyName || '',
+                      id: credential.user || '',
+                      picture: credential.image || '',
+                    };
 
-                  await googleSignup(user, {
-                    onSuccess: async res => {
-                      if (vote) {
-                        navigation.navigate('RateYourService');
-                        setVote(false);
-                      } else if (confirmWaiter || HelpUs) {
-                        navigation.navigate('OpenCardReviews');
-                      } else {
-                        navigation.navigate('Home', { crossIcon: false });
-                      }
-                      let userDetails = {
-                        name: res?.user?.full_name
-                          ? userGivenName(res?.user?.full_name)
-                          : '',
-                        image: res?.user?.picture || '',
-                        email: res?.user?.email || '',
-                        accessToken: credential.authorizationCode || '',
-                        user_id: res?.user?._id || '',
-                      };
+                    await googleSignup(user, {
+                      onSuccess: async res => {
+                        if (vote) {
+                          navigation.navigate('RateYourService');
+                          setVote(false);
+                        } else if (confirmWaiter || HelpUs) {
+                          navigation.navigate('OpenCardReviews');
+                        } else {
+                          navigation.navigate('Home', { crossIcon: false });
+                        }
+                        let userDetails = {
+                          name: res?.user?.full_name
+                            ? userGivenName(res?.user?.full_name)
+                            : '',
+                          image: res?.user?.picture || '',
+                          email: res?.user?.email || '',
+                          accessToken: credential.authorizationCode || '',
+                          user_id: res?.user?._id || '',
+                        };
 
-                      console.log({userDetails});
-                      dispatch({
-                        type: actionTypes.USER_DETAILS,
-                        payload: userDetails,
-                      });
+                        dispatch({
+                          type: actionTypes.USER_DETAILS,
+                          payload: userDetails,
+                        });
 
-                      await AsyncStorage.setItem(
-                        '@userInfo',
-                        JSON.stringify({
-                          ...userDetails,
-                        }),
-                      );
-                      setLoading(false);
-                    },
-                    onError: e => {
-                      setLoading(false);
-                      alert(`Apple Login Error: ${e}`);
-                    },
-                  });
-                  // signed in
-                } catch (e) {
-                  alert(`Apple Login Error: ${e}`);
-                  if (e.code === 'ERR_CANCELED') {
-                    // handle that the user canceled the sign-in flow
-                  } else {
-                    // handle other errors
+                        await AsyncStorage.setItem(
+                          '@userInfo',
+                          JSON.stringify({
+                            ...userDetails,
+                          }),
+                        );
+                        setLoading(false);
+                      },
+                      onError: e => {
+                        setLoading(false);
+                        alert(`Apple Login Error: ${e}`);
+                      },
+                    });
+                    // signed in
+                  } catch (e) {
+                    if (e.code === 'ERR_CANCELED') {
+                      // handle that the user canceled the sign-in flow
+                    } else {
+                      // handle other errors
+                    }
                   }
-                }
-              }}
-            />
+                }}
+                style={styles.btnApple}
+              >
+                <FontAwesome name="apple" color="#fff" size={20} />
+                <Text
+                  style={[
+                    styles.textFb,
+                    {
+                      fontSize: 16,
+                      fontFamily: 'ProximaNova',
+                    },
+                  ]}
+                >
+                  {i18n.t('continue_with_apple')}
+                </Text>
+              </TouchableOpacity>
+            </React.Fragment>
           )}
           <Text
             style={[
@@ -414,13 +424,15 @@ const styles = StyleSheet.create({
   },
   imgStyle: {
     marginLeft: Dimensions.get('window').width * 0.05,
-    height: Dimensions.get('window').height * 0.40,
+    height: Dimensions.get('window').height * 0.38,
     alignSelf: 'center',
     marginTop: 15,
   },
   imgLogoStyle: {
     width: 200,
     height: 50,
+    position: 'relative',
+    marginRight: '16%',
     // marginTop: 10,
   },
   btnFb: {
@@ -432,7 +444,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 50,
     marginBottom: 15,
-    marginTop: -32,
+    marginTop: -35,
   },
   btnGoogle: {
     width: '90%',
@@ -444,13 +456,25 @@ const styles = StyleSheet.create({
     height: 50,
     marginBottom: 15,
   },
+  btnApple: {
+    width: '90%',
+    flexDirection: 'row',
+    backgroundColor: '#000',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    marginBottom: 15,
+  },
   textFb: {
     color: '#fff',
     marginLeft: 10,
   },
   cross: {
-    height: 29,
-    width: 29,
-    marginLeft: '-80%',
+    width: '18%',
+    alignSelf: 'flex-start',
+    alignContent: 'center',
+    display: 'flex',
+    justifyContent: 'flex-start',
   },
 });

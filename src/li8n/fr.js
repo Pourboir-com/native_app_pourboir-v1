@@ -62,5 +62,6 @@ export default {
   will_contact_by_email:
     'Nous vous contacterons par email pour vous offire un coupon très prochainement.',
   must_loggedIn: 'Vous devez être connecté pour utiliser Pourboir!',
+  continue_with_apple: 'Continuer avec Apple',
 
 };

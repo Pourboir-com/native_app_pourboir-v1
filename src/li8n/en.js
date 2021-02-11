@@ -62,4 +62,5 @@ export default {
 
   //Global Header
   must_loggedIn: 'You must be logged in to use Pourboir!',
+  continue_with_apple: 'Continue with Apple',
 };

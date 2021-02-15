@@ -66,7 +66,7 @@ const ThanksRatingModal = ({ isVisible, handleModalClose, LotteryNumber }) => {
       </Text>
       {LotteryNumber ? (
         <NumberFormat
-          value={pad(1234567891012345678, 8, '0')}
+          value={pad(LotteryNumber, 8, '0')}
           allowEmptyFormatting
           displayType={'text'}
           format="####-####"

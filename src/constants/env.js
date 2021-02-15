@@ -8,8 +8,8 @@ function getEnvVars(env = '') {
 }
 export const releaseEnvironment = getEnvVars(Constants.manifest.releaseChannel);
 const apiUrl = () => {
-  let api_url = `http://192.168.10.18:8081/api`;
-  // let api_url = `http://localhost:8081/api`;
+  // let api_url = `http://192.168.10.18:8081/api`;
+  let api_url = `http://192.168.0.106:8081/api`;
 
   if (releaseEnvironment == 'production') {
     // expo build:ios --clear-provisioning-profile --revoke-credentials --release-channel production-1.0.0
@@ -23,5 +23,13 @@ const apiUrl = () => {
   }
   return api_url;
 };
+
+let email_to = 'salmansidd991@gmail.com';
+if (releaseEnvironment == 'production') {
+  email_to = 'joinus@pourboir.com';
+} else if (releaseEnvironment == 'staging') {
+  email_to = 'joinus@pourboir.com';
+}
+export { email_to };
 
 export const BASE_URL = apiUrl();

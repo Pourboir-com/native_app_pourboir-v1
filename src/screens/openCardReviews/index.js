@@ -13,6 +13,7 @@ import {
   KeyboardAvoidingView,
   RefreshControl,
   Animated,
+  Platform,
 } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import ConfirmationModal from '../../components/modals/ConfirmModal';
@@ -108,7 +109,12 @@ const ReviewDetails = ({ navigation, route }) => {
   // Star arrayyyyyyyy
   const obj = [1, 2, 3, 4, 5];
 
-  const handleIAMWAITER = async (companyName, businessRegNumber, bossName, bossContact) => {
+  const handleIAMWAITER = async (
+    companyName,
+    businessRegNumber,
+    bossName,
+    bossContact,
+  ) => {
     if (state.userDetails.user_id) {
       setLoading(true);
       let IWaiter = {
@@ -142,11 +148,11 @@ const ReviewDetails = ({ navigation, route }) => {
           handleModalClose();
           setLoading(false);
         },
-        onError: (e) => {
+        onError: e => {
           handleModalClose();
           setLoading(false);
           // alert('You are already waiter in this restaurant.');
-          alert(e)
+          alert(e);
         },
       });
     } else {
@@ -202,8 +208,8 @@ const ReviewDetails = ({ navigation, route }) => {
                           v <= rating
                             ? 'filled'
                             : v === rating + 0.5
-                              ? 'half'
-                              : 'empty'
+                            ? 'half'
+                            : 'empty'
                         }
                         notRatedStarColor="rgba(255,255,255, 0.6)"
                       />
@@ -246,6 +252,7 @@ const ReviewDetails = ({ navigation, route }) => {
         }}
         scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
+        bounces={false}
       >
         <View
           style={{
@@ -333,8 +340,8 @@ const ReviewDetails = ({ navigation, route }) => {
                                 v <= itemData.item.rating
                                   ? 'filled'
                                   : v === itemData.item.rating + 0.5
-                                    ? 'half'
-                                    : 'empty'
+                                  ? 'half'
+                                  : 'empty'
                               }
                               notRatedStarColor="rgba(0,0,0,0.1)"
                             />
@@ -461,7 +468,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    marginBottom: 15,
+    marginBottom: Platform.OS === 'ios' ? 25 : '15',
     marginTop: 1,
   },
   txtNumRaters: {

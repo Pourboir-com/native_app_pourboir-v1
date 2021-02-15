@@ -9,6 +9,7 @@ import {
   ScrollView,
   ActivityIndicator,
   ImageBackground,
+  Linking,
 } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import GlobalHeader from '../../components/GlobalHeader';
@@ -24,6 +25,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Facebook from 'expo-facebook';
 import { UPDATE_PICTURE } from '../../queries';
 import { useMutation } from 'react-query';
+import { Platform } from 'react-native';
+import * as StoreReview from 'expo-store-review';
+import { email_to } from '../../constants/env';
+import Constants from 'expo-constants';
 
 const imgBg = require('../../assets/images/Group5.png');
 
@@ -157,28 +162,28 @@ const Setting = ({ navigation, route }) => {
             state.userDetails.image === undefined ||
             state.userDetails.image === '' ? (
               // <FontAwesome name="user-circle-o" size={110} color="#fff" />
-                <Image
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: 60,
-                  }}
-                  source={{
-                    uri:
+              <Image
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: 60,
+                }}
+                source={{
+                  uri:
                     'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png',
-                  }}
-                />
-              ) : (
-                <Image
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: 60,
-                  }}
-                  source={{ uri: image ? image : state.userDetails.image }}
-                  resizeMode="cover"
-                />
-              )}
+                }}
+              />
+            ) : (
+              <Image
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: 60,
+                }}
+                source={{ uri: image ? image : state.userDetails.image }}
+                resizeMode="cover"
+              />
+            )}
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleChangePicture}
@@ -207,7 +212,18 @@ const Setting = ({ navigation, route }) => {
           bounces={false}
           showsVerticalScrollIndicator={false}
         >
-          <TouchableOpacity style={styles.viewItem}>
+          <TouchableOpacity
+            style={styles.viewItem}
+            onPress={() => {
+              // Open the iOS App Store directly
+
+              if (Platform.OS === 'ios') {
+                Linking.openURL(
+                  `itms-apps://itunes.apple.com/app/viewContentsUserReviews/id${1552612137}?action=write-review`,
+                );
+              }
+            }}
+          >
             <View style={styles.viewIcon}>
               <FontAwesome name="star" size={20} color={Colors.yellow} />
             </View>
@@ -221,7 +237,12 @@ const Setting = ({ navigation, route }) => {
               {i18n.t('rate_application')}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.viewItem}>
+          <TouchableOpacity
+            style={styles.viewItem}
+            onPress={() => {
+              Linking.openURL(`mailto:${email_to}`);
+            }}
+          >
             <View style={styles.viewIcon}>
               <FontAwesome name="envelope" size={16} color={Colors.yellow} />
             </View>
@@ -274,7 +295,7 @@ const Setting = ({ navigation, route }) => {
       </View>
       <View>
         <Text style={[styles.versionText, { fontFamily: 'ProximaNova' }]}>
-          Version 2.17.4.0.1.0
+          Version {Constants.manifest.version}
         </Text>
       </View>
       <TouchableOpacity
@@ -370,6 +391,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     position: 'absolute',
     bottom: 10,
+    marginBottom: Platform.OS === 'ios' ? 15 : 0,
   },
   txtName: {
     alignSelf: 'center',

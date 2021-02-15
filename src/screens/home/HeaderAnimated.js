@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   Image,
   RefreshControl,
+  Platform,
 } from 'react-native';
 import Animated, { Extrapolate } from 'react-native-reanimated';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
@@ -120,27 +121,27 @@ const HomeScreen = props => {
               : LAYOUT.window.width * 0.01,
           )
         : LAYOUT.window.width < 365
-          ? HEADER_BAR_HEIGHT +
+        ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.026
               : LAYOUT.window.width * 0.013,
           )
-          : LAYOUT.window.width < 380
-            ? HEADER_BAR_HEIGHT +
+        : LAYOUT.window.width < 380
+        ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.028
               : LAYOUT.window.width * 0.016,
           )
-            : LAYOUT.window.width < 400
-              ? HEADER_BAR_HEIGHT +
+        : LAYOUT.window.width < 400
+        ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.03
               : LAYOUT.window.width * 0.02,
           )
-              : HEADER_BAR_HEIGHT +
+        : HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.032
@@ -277,7 +278,7 @@ const HomeScreen = props => {
       headerLeftContainerStyle: { position: 'absolute' },
     });
   });
-
+  const hitSlop = { top: 5, bottom: 5, left: 5, right: 5 };
   return (
     <>
       {loading ? (
@@ -361,6 +362,7 @@ const HomeScreen = props => {
                 position: 'absolute',
                 top: searchBarTop,
                 marginTop: 0,
+                zIndex: 10,
                 // height: HEADER_BAR_HEIGHT,
                 height: searchBarHeight,
                 width: searchBarWidth,
@@ -381,6 +383,7 @@ const HomeScreen = props => {
                 elevation: 5,
                 overflow: 'hidden',
               }}
+              // hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
             >
               <View
                 style={{
@@ -393,6 +396,7 @@ const HomeScreen = props => {
                   // position: 'absolute',
                   // left: '4%',
                 }}
+                // hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
               >
                 <TouchableOpacity
                   onPress={() => {
@@ -402,6 +406,7 @@ const HomeScreen = props => {
                     paddingLeft: HEADER_BAR_HEIGHT / 4,
                     zIndex: 1,
                   }}
+                  // hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
                 >
                   <SvgHeaderSearchIcon />
                 </TouchableOpacity>
@@ -445,6 +450,100 @@ const HomeScreen = props => {
                 )}
               </View>
             </Animated.View>
+          </Animated.View>
+
+          <Animated.View
+            style={{
+              position: 'absolute',
+              top: searchBarTop,
+              marginTop: 0,
+              zIndex: 10,
+              // height: HEADER_BAR_HEIGHT,
+              height: searchBarHeight,
+              width: searchBarWidth,
+
+              left: spacing(2.5),
+              // left: 10,
+              // left: searchBarLocation,
+              // marginLeft: spacing(2.5),
+              borderRadius: borderRadiusIcon,
+              backgroundColor: searchBarColor,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 3,
+              },
+              shadowOpacity: 0.2,
+              shadowRadius: 0.1,
+              elevation: 5,
+              overflow: 'hidden',
+            }}
+            {...(Platform.OS === 'ios' ? { hitSlop } : {})}
+          >
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                // marginLeft: spacing(2.5),
+
+                // position: 'absolute',
+                // left: '4%',
+              }}
+              {...(Platform.OS === 'ios' ? { hitSlop } : {})}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  props.setsearchIconPress(!props.searchIconPress);
+                }}
+                style={{
+                  padding: HEADER_BAR_HEIGHT / 4,
+                  zIndex: 1,
+                }}
+                {...(Platform.OS === 'ios' ? { hitSlop } : {})}
+              >
+                <SvgHeaderSearchIcon />
+              </TouchableOpacity>
+              <TextInput
+                onSubmitEditing={() => props.setsearchEnter(props.searchVal)}
+                value={props.searchVal}
+                onFocus={() => {
+                  setIsFocused(true);
+                }}
+                onBlur={() => {
+                  setLoading(!loading);
+                  setIsFocused(false);
+                }}
+                onChangeText={e => {
+                  props.setSearchVal(e);
+                }}
+                placeholder={i18n.t('find_your_restaurant')}
+                placeholderTextColor={'#485460'}
+                style={{ flex: 1, paddingHorizontal: 25 }}
+              />
+
+              {hasValue && (
+                <TouchableOpacity
+                  onPress={() => {
+                    props.setSearchVal('');
+                  }}
+                  style={{ paddingHorizontal: 8 }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: '#FCDF6F',
+                      borderRadius: 20,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: 4,
+                    }}
+                  >
+                    <AntDesign name="close" size={14} color="#485460" />
+                  </View>
+                </TouchableOpacity>
+              )}
+            </View>
           </Animated.View>
         </View>
       ) : (
@@ -544,6 +643,7 @@ const HomeScreen = props => {
                 elevation: 5,
                 overflow: 'hidden',
               }}
+              {...(Platform.OS === 'ios' ? { hitSlop } : {})}
             >
               <View
                 style={{
@@ -552,12 +652,14 @@ const HomeScreen = props => {
                   alignItems: 'center',
                   justifyContent: 'flex-start',
                 }}
+                {...(Platform.OS === 'ios' ? { hitSlop } : {})}
               >
                 <TouchableOpacity
                   onPress={() => {
                     props.setsearchIconPress(!props.searchIconPress);
                   }}
                   style={{ paddingLeft: HEADER_BAR_HEIGHT / 4, zIndex: 1 }}
+                  {...(Platform.OS === 'ios' ? { hitSlop } : {})}
                 >
                   <SvgHeaderSearchIcon />
                 </TouchableOpacity>

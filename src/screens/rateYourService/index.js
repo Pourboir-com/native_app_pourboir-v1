@@ -202,8 +202,8 @@ const RateService = ({ navigation, route }) => {
                       v <= hospitality
                         ? 'filled'
                         : v === hospitality + 0.5
-                          ? 'half'
-                          : 'empty'
+                        ? 'half'
+                        : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />
@@ -232,8 +232,8 @@ const RateService = ({ navigation, route }) => {
                       v <= speed
                         ? 'filled'
                         : v === speed + 0.5
-                          ? 'half'
-                          : 'empty'
+                        ? 'half'
+                        : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />
@@ -262,8 +262,8 @@ const RateService = ({ navigation, route }) => {
                       v <= service
                         ? 'filled'
                         : v === service + 0.5
-                          ? 'half'
-                          : 'empty'
+                        ? 'half'
+                        : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />
@@ -292,8 +292,8 @@ const RateService = ({ navigation, route }) => {
                       v <= professionalism
                         ? 'filled'
                         : v === professionalism + 0.5
-                          ? 'half'
-                          : 'empty'
+                        ? 'half'
+                        : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />
@@ -369,8 +369,8 @@ const RateService = ({ navigation, route }) => {
               professionalism &&
               service &&
               remarks.replace(/[^0-9]/g, '') && {
-              backgroundColor: Colors.yellow,
-            },
+                backgroundColor: Colors.yellow,
+              },
           ]}
         >
           {loading ? (
@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 50,
     borderRadius: 8,
-    marginBottom: 15,
+    marginBottom: Platform.OS === 'ios' ? 25 : 15,
     marginTop: 2,
     alignSelf: 'center',
   },

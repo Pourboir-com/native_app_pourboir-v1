@@ -8,6 +8,7 @@ import {
   ImageBackground,
   ActivityIndicator,
   KeyboardAvoidingView,
+  Platform,
   TextInput,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
@@ -46,10 +47,12 @@ const ConfirmationModal = ({
     setBossName('');
     setBossContact('');
     setSiren('');
-    setplaceholderCompanyName(i18n.t('nom_de'));
-    setplaceholderSiren(i18n.t('siren'));
-    setplaceholderBossName(i18n.t('nom_de_boss'));
-    setplaceholderBossContact(i18n.t('contact_du_boss'));
+    if (Platform.OS != 'ios') {
+      setplaceholderCompanyName(i18n.t('nom_de'));
+      setplaceholderSiren(i18n.t('siren'));
+      setplaceholderBossName(i18n.t('nom_de_boss'));
+      setplaceholderBossContact(i18n.t('contact_du_boss'));
+    }
   };
 
   return (
@@ -111,9 +114,13 @@ const ConfirmationModal = ({
               setCompanyName(text);
             }}
             placeholder={placeholderCompanyName}
-            onFocus={() => setplaceholderCompanyName('')}
+            onFocus={() => {
+              if (Platform.OS != 'ios') {
+                setplaceholderCompanyName('');
+              }
+            }}
             onBlur={() => {
-              if (!CompanyName) {
+              if (!CompanyName && Platform.OS != 'ios') {
                 setplaceholderCompanyName(i18n.t('nom_de'));
               }
             }}
@@ -129,9 +136,13 @@ const ConfirmationModal = ({
             selectionColor={Colors.yellow}
             keyboardType="number-pad"
             placeholder={placeholderSiren}
-            onFocus={() => setplaceholderSiren('')}
+            onFocus={() => {
+              if (Platform.OS != 'ios') {
+                setplaceholderSiren('');
+              }
+            }}
             onBlur={() => {
-              if (!Siren) {
+              if (!Siren && Platform.OS != 'ios') {
                 setplaceholderSiren(i18n.t('siren'));
               }
             }}
@@ -151,9 +162,13 @@ const ConfirmationModal = ({
             // }}
             selectionColor={Colors.yellow}
             placeholder={placeholderBossName}
-            onFocus={() => setplaceholderBossName('')}
+            onFocus={() => {
+              if (Platform.OS != 'ios') {
+                setplaceholderBossName('');
+              }
+            }}
             onBlur={() => {
-              if (!bossName) {
+              if (!bossName && Platform.OS != 'ios') {
                 setplaceholderBossName(i18n.t('nom_de_boss'));
               }
             }}
@@ -169,7 +184,9 @@ const ConfirmationModal = ({
           />
           <TextInput
             onFocus={() => {
-              setplaceholderBossContact('');
+              if (Platform.OS != 'ios') {
+                setplaceholderBossContact('');
+              }
               setTimeout(() => {
                 scrollRef.current.scrollToEnd({ animated: true });
               }, 100);
@@ -178,7 +195,7 @@ const ConfirmationModal = ({
             keyboardType="number-pad"
             placeholder={placeholderBossContact}
             onBlur={() => {
-              if (!bossContact) {
+              if (!bossContact && Platform.OS != 'ios') {
                 setplaceholderBossContact(i18n.t('contact_du_boss'));
               }
             }}

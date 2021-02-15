@@ -42,6 +42,20 @@ const ConfirmationModal = ({
   const [bossName, setBossName] = useState();
   const [bossContact, setBossContact] = useState();
 
+  React.useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setTimeout(() => {
+          scrollRef.current.scrollToEnd({ animated: true });
+        }, 100);
+      },
+    );
+    return () => {
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   const resetPlaceholder = () => {
     setCompanyName('');
     setBossName('');

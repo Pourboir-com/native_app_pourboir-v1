@@ -75,7 +75,7 @@ const ThanksRatingModal = ({ isVisible, handleModalClose, LotteryNumber }) => {
           )}
         />
       ) : (
-        <Text style={styles.lottery}>'XXXX-XXXX'</Text>
+        <Text style={styles.lottery}>XXXX-XXXX</Text>
       )}
     </Overlay>
   );

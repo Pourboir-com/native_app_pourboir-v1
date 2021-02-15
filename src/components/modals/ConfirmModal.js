@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,14 +7,14 @@ import {
   Image,
   ImageBackground,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  TextInput,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
-import { I_AM_WAITER } from '../../queries';
-import { useMutation } from 'react-query';
 import i18n from '../../li8n';
-import Context from '../../contextApi/context';
+import { ScrollView } from 'react-native-gesture-handler';
 const imgWaiter = require('../../assets/images/waiter2.png');
 const imgBg = require('../../assets/images/Group7.png');
 
@@ -25,54 +25,208 @@ const ConfirmationModal = ({
   handleIAMWAITER,
   loading,
 }) => {
+  const scrollRef = React.useRef(null);
+  const [placeholderCompanyName, setplaceholderCompanyName] = useState(
+    i18n.t('nom_de'),
+  );
+  const [placeholderSiren, setplaceholderSiren] = useState(i18n.t('siren'));
+  const [placeholderBossName, setplaceholderBossName] = useState(
+    i18n.t('nom_de_boss'),
+  );
+  const [placeholderBossContact, setplaceholderBossContact] = useState(
+    i18n.t('contact_du_boss'),
+  );
+  const [CompanyName, setCompanyName] = useState();
+  const [Siren, setSiren] = useState();
+  const [bossName, setBossName] = useState();
+  const [bossContact, setBossContact] = useState();
+
+  const resetPlaceholder = () => {
+    setCompanyName('');
+    setBossName('');
+    setBossContact('');
+    setSiren('');
+    setplaceholderCompanyName(i18n.t('nom_de'));
+    setplaceholderSiren(i18n.t('siren'));
+    setplaceholderBossName(i18n.t('nom_de_boss'));
+    setplaceholderBossContact(i18n.t('contact_du_boss'));
+  };
+
   return (
     <Overlay
       overlayStyle={styles.container}
       isVisible={isVisible}
-      onBackdropPress={handleModalClose}
+      onBackdropPress={() => {
+        handleModalClose();
+        resetPlaceholder();
+      }}
     >
-      <ImageBackground
-        style={styles.imgBgStyle}
-        source={imgBg}
-        resizeMode="stretch"
+      <ScrollView
+        ref={scrollRef}
+        alwaysBounceHorizontal={false}
+        alwaysBounceVertical={false}
+        bounces={false}
+        keyboardShouldPersistTaps={'handled'}
+        style={{ width: '100%' }}
+        // style={onHandleFocus && Platform.OS === 'ios' ? { flex: 1 } : {}}
       >
-        <View style={styles.viewImg}>
-          <TouchableOpacity
-            onPress={handleModalClose}
-            style={{ alignSelf: 'flex-end', margin: 10 }}
+        <KeyboardAvoidingView
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <ImageBackground
+            style={styles.imgBgStyle}
+            source={imgBg}
+            resizeMode="stretch"
           >
-            <AntDesign name="close" size={29} color="#485460" />
-          </TouchableOpacity>
-          <Image
-            source={imgWaiter}
-            style={styles.imgStyle}
-            resizeMode="contain"
-          />
-        </View>
-      </ImageBackground>
-      <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNova' }]}>
-        {i18n.t('confrm_you_are_server')}
-      </Text>
-      <Text
-        ellipsizeMode="tail"
-        numberOfLines={1}
-        style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}
-      >
-        {name}
-      </Text>
-      <TouchableOpacity
-        disabled={loading}
-        onPress={handleIAMWAITER}
-        style={styles.btnConfrm}
-      >
-        {loading ? (
-          <ActivityIndicator size={30} color="#000" />
-        ) : (
-          <Text style={[styles.txtBtnConfrm, { fontFamily: 'ProximaNova' }]}>
-            {i18n.t('i_confirm')}
+            <View style={styles.viewImg}>
+              <TouchableOpacity
+                onPress={() => {
+                  handleModalClose();
+                  resetPlaceholder();
+                }}
+                style={{ alignSelf: 'flex-end', margin: 10 }}
+              >
+                <AntDesign name="close" size={29} color="#485460" />
+              </TouchableOpacity>
+              <Image
+                source={imgWaiter}
+                style={styles.imgStyle}
+                resizeMode="contain"
+              />
+            </View>
+          </ImageBackground>
+          <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
+            {i18n.t('please_fill')}
           </Text>
-        )}
-      </TouchableOpacity>
+          <TextInput
+            selectionColor={Colors.yellow}
+            // onFocus={() => {
+            //   scrollRef.current.scrollToEnd({ animated: true });
+            // }}
+            value={CompanyName}
+            onChangeText={text => {
+              setCompanyName(text);
+            }}
+            placeholder={placeholderCompanyName}
+            onFocus={() => setplaceholderCompanyName('')}
+            onBlur={() => {
+              if (!CompanyName) {
+                setplaceholderCompanyName(i18n.t('nom_de'));
+              }
+            }}
+            style={[
+              styles.inputStyle,
+              { fontFamily: 'ProximaNova', textAlign: 'center' },
+            ]}
+          />
+          <TextInput
+            // onFocus={() => {
+            //   scrollRef.current.scrollToEnd({ animated: true });
+            // }}
+            selectionColor={Colors.yellow}
+            keyboardType="number-pad"
+            placeholder={placeholderSiren}
+            onFocus={() => setplaceholderSiren('')}
+            onBlur={() => {
+              if (!Siren) {
+                setplaceholderSiren(i18n.t('siren'));
+              }
+            }}
+            value={Siren}
+            onChangeText={e => {
+              // scrollRef.current.scrollToEnd({ animated: true });
+              setSiren(e);
+            }}
+            style={[
+              styles.inputStyle,
+              { fontFamily: 'ProximaNova', textAlign: 'center' },
+            ]}
+          />
+          <TextInput
+            // onFocus={() => {
+            //   scrollRef.current.scrollToEnd({ animated: true });
+            // }}
+            selectionColor={Colors.yellow}
+            placeholder={placeholderBossName}
+            onFocus={() => setplaceholderBossName('')}
+            onBlur={() => {
+              if (!bossName) {
+                setplaceholderBossName(i18n.t('nom_de_boss'));
+              }
+            }}
+            value={bossName}
+            onChangeText={e => {
+              // scrollRef.current.scrollToEnd({ animated: true });
+              setBossName(e);
+            }}
+            style={[
+              styles.inputStyle,
+              { fontFamily: 'ProximaNova', textAlign: 'center' },
+            ]}
+          />
+          <TextInput
+            onFocus={() => {
+              setplaceholderBossContact('');
+              setTimeout(() => {
+                scrollRef.current.scrollToEnd({ animated: true });
+              }, 100);
+            }}
+            selectionColor={Colors.yellow}
+            keyboardType="number-pad"
+            placeholder={placeholderBossContact}
+            onBlur={() => {
+              if (!bossContact) {
+                setplaceholderBossContact(i18n.t('contact_du_boss'));
+              }
+            }}
+            value={bossContact}
+            onChangeText={e => {
+              scrollRef.current.scrollToEnd({ animated: true });
+              setBossContact(e);
+            }}
+            style={[
+              styles.inputStyle,
+              { fontFamily: 'ProximaNova', textAlign: 'center' },
+            ]}
+          />
+
+          <TouchableOpacity
+            disabled={
+              loading
+                ? true
+                : CompanyName && Siren && bossName && bossContact
+                  ? false
+                  : true
+            }
+            onPress={async () => {
+              await handleIAMWAITER(CompanyName, Siren, bossName, bossContact);
+              resetPlaceholder();
+            }}
+            style={[
+              styles.btnConfrm,
+              CompanyName &&
+                Siren &&
+                bossName &&
+                bossContact && {
+                backgroundColor: Colors.yellow,
+              },
+            ]}
+          >
+            {loading ? (
+              <ActivityIndicator size={30} color="#000" />
+            ) : (
+              <Text
+                style={[styles.txtBtnConfrm, { fontFamily: 'ProximaNova' }]}
+              >
+                {i18n.t('validate')}
+              </Text>
+            )}
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
+      </ScrollView>
     </Overlay>
   );
 };
@@ -97,7 +251,7 @@ const styles = StyleSheet.create({
     color: Colors.fontDark,
   },
   btnConfrm: {
-    backgroundColor: Colors.yellow,
+    backgroundColor: '#EAEAEA',
     borderRadius: 10,
     width: '80%',
     justifyContent: 'center',
@@ -105,22 +259,16 @@ const styles = StyleSheet.create({
     marginVertical: 25,
     height: 45,
   },
-  txtConfrm: {
-    fontSize: 16,
-    color: Colors.fontLight,
-    marginTop: 20,
-    width: 180,
-    textAlign: 'center',
-  },
   txtName: {
-    fontSize: 24,
+    fontSize: 18,
     color: Colors.fontDark,
-    marginTop: 10,
+    marginTop: 15,
+    marginBottom: 10,
     textAlign: 'center',
     maxWidth: '80%',
   },
   imgStyle: {
-    width: 220,
+    width: 300,
     height: 200,
     alignSelf: 'center',
     marginTop: -30,
@@ -129,5 +277,16 @@ const styles = StyleSheet.create({
   viewImg: {
     width: '100%',
     height: 240,
+  },
+  inputStyle: {
+    height: 50,
+    width: '80%',
+    borderColor: '#e6e6e6',
+    borderRadius: 9,
+    borderWidth: 1.3,
+    marginTop: 12,
+    fontSize: 18,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
 });

@@ -15,7 +15,6 @@ import {
   Keyboard,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
-// import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 import { useMutation } from 'react-query';
@@ -38,7 +37,6 @@ const HelpUsImproveModal = ({
 }) => {
   // const [loading, setLoading] = useState(false);
   const [addingWaiters] = useMutation(ADDING_WAITERS);
-  let contentEnd;
   const scrollRef = React.useRef(null);
   const [onHandleFocus, setonHandleFocus] = useState(false);
   const [waiterName, setWaiterName] = useState('');
@@ -62,24 +60,19 @@ const HelpUsImproveModal = ({
     });
   };
 
-  React.useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => {
-        // setKeyboardVisible(true); // or some other action
-
-        setTimeout(() => {
-          scrollRef.current.scrollToEnd({ animated: true });
-        }, 100);
-        // alert('we')
-      },
-    );
-
-    return () => {
-      // keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
-    };
-  }, []);
+  // React.useEffect(() => {
+  //   const keyboardDidShowListener = Keyboard.addListener(
+  //     'keyboardDidShow',
+  //     () => {
+  //       setTimeout(() => {
+  //         scrollRef.current.scrollToEnd({ animated: true });
+  //       }, 100);
+  //     },
+  //   );
+  //   return () => {
+  //     keyboardDidShowListener.remove();
+  //   };
+  // }, []);
 
   const handleAddingWaiters = async () => {
     if (state.userDetails.user_id) {
@@ -127,10 +120,6 @@ const HelpUsImproveModal = ({
         bounces={false}
         keyboardShouldPersistTaps={'handled'}
         style={onHandleFocus && Platform.OS === 'ios' ? { flex: 1 } : {}}
-        // style={{ flex: 1 }}
-        onContentSizeChange={(contentWidth, contentHeight) => {
-          contentEnd = contentHeight;
-        }}
       >
         <KeyboardAvoidingView
           style={{
@@ -144,12 +133,7 @@ const HelpUsImproveModal = ({
             source={imgBg}
             resizeMode="stretch"
           >
-            <View
-              // onLayout={(e) => {
-              //   contentEnd = e.nativeEvent.layout.y;
-              // }}
-              style={styles.viewImg}
-            >
+            <View style={styles.viewImg}>
               <TouchableOpacity
                 onPress={handleModalClose}
                 style={{ alignSelf: 'flex-end', margin: 10 }}
@@ -198,7 +182,7 @@ const HelpUsImproveModal = ({
             }}
           />
           <TouchableOpacity
-            disabled={loading}
+            disabled={loading ? true : !waiterName ? true : false}
             onPress={handleAddingWaiters}
             style={[
               styles.btnConfrm,

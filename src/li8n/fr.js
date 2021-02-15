@@ -17,6 +17,10 @@ export default {
   are_you_waiter: 'Vous êtes serveur?',
   see_the_menu: 'Voir le menu',
   please_fill: 'Veuillez remplir ces informations',
+  nom_de: 'Nom de la boîte',
+  siren: 'SIREN',
+  nom_de_boss: 'Nom de boss',
+  contact_du_boss: 'contact du boss',
 
   // Rate your server
   rate_your_server: 'Notez votre serveur',

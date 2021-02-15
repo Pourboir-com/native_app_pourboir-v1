@@ -174,13 +174,13 @@ export default function HomeScreenContent({
           //   alwaysBounceVertical={true}
           showsVerticalScrollIndicator={false}
           alwaysBounceHorizontal={false}
-          // refreshControl={
-          //   <RefreshControl
-          //     //refresh control used for the Pull to Refresh
-          //     refreshing={resIsFetching}
-          //     onRefresh={refetchRestaurant}
-          //   />
-          // }
+          refreshControl={
+            <RefreshControl
+              //refresh control used for the Pull to Refresh
+              refreshing={resIsFetching}
+              onRefresh={refetchRestaurant}
+            />
+          }
           alwaysBounceVertical={false}
           bounces={false}
           keyboardShouldPersistTaps={'handled'}

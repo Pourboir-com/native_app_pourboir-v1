@@ -13,8 +13,14 @@ import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/ThanksGiving.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
+import NumberFormat from 'react-number-format';
 
-const ThanksRatingModal = ({ isVisible, handleModalClose }) => {
+const ThanksRatingModal = ({ isVisible, handleModalClose, LotteryNumber }) => {
+  function pad(n, width, z) {
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+  }
   return (
     <Overlay
       overlayStyle={styles.container}
@@ -58,6 +64,19 @@ const ThanksRatingModal = ({ isVisible, handleModalClose }) => {
       <Text style={[styles.txtName, { fontFamily: 'ProximaNova' }]}>
         {i18n.t('will_contact_by_email')}
       </Text>
+      {LotteryNumber ? (
+        <NumberFormat
+          value={pad(1234567891012345678, 8, '0')}
+          allowEmptyFormatting
+          displayType={'text'}
+          format="####-####"
+          renderText={formattedValue => (
+            <Text style={styles.lottery}>{formattedValue}</Text>
+          )}
+        />
+      ) : (
+        <Text style={styles.lottery}>'XXXX-XXXX'</Text>
+      )}
     </Overlay>
   );
 };
@@ -103,7 +122,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     width: 270,
     textAlign: 'center',
-    marginBottom: 30,
+    marginBottom: 20,
   },
   imgStyle: {
     width: 210,
@@ -116,5 +135,17 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 240,
     // backgroundColor:"red"
+  },
+  lottery: {
+    width: '80%',
+    backgroundColor: '#fcf4e4',
+    borderRadius: 10,
+    fontSize: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#e6c33d',
+    fontWeight: 'bold',
   },
 });

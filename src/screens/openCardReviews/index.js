@@ -108,7 +108,7 @@ const ReviewDetails = ({ navigation, route }) => {
   // Star arrayyyyyyyy
   const obj = [1, 2, 3, 4, 5];
 
-  const handleIAMWAITER = async () => {
+  const handleIAMWAITER = async (companyName, businessRegNumber, bossName, bossContact) => {
     if (state.userDetails.user_id) {
       setLoading(true);
       let IWaiter = {
@@ -120,6 +120,10 @@ const ReviewDetails = ({ navigation, route }) => {
           name: name,
           vicinity: vicinity,
         },
+        company_name: companyName,
+        business_registration_number: businessRegNumber,
+        manager_name: bossName,
+        manager_contact: bossContact,
       };
       await IAMWAITER(IWaiter, {
         onSuccess: async res => {
@@ -138,10 +142,11 @@ const ReviewDetails = ({ navigation, route }) => {
           handleModalClose();
           setLoading(false);
         },
-        onError: () => {
+        onError: (e) => {
           handleModalClose();
           setLoading(false);
-          alert('You are already waiter in this restaurant.');
+          // alert('You are already waiter in this restaurant.');
+          alert(e)
         },
       });
     } else {

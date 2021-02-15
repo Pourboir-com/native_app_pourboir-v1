@@ -41,7 +41,7 @@ const RateService = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const scrollRef = React.useRef(null);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-
+  const [lotteryNo, setlotteryNo] = useState();
   useEffect(() => {
     (async () => {
       const { Currency } = await getAsyncStorageValues();
@@ -49,20 +49,20 @@ const RateService = ({ navigation, route }) => {
     })();
   }, []);
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => {
-        // setKeyboardVisible(true); // or some other action
-        scrollRef.current.scrollToEnd();
-      },
-    );
+  // useEffect(() => {
+  //   const keyboardDidShowListener = Keyboard.addListener(
+  //     'keyboardDidShow',
+  //     () => {
+  //       // setKeyboardVisible(true); // or some other action
+  //       scrollRef.current.scrollToEnd();
+  //     },
+  //   );
 
-    return () => {
-      // keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
-    };
-  }, []);
+  //   return () => {
+  //     // keyboardDidHideListener.remove();
+  //     keyboardDidShowListener.remove();
+  //   };
+  // }, []);
   const handleModalClose = () => {
     setisVisible(false);
     navigation.navigate('Home', { crossIcon: false });
@@ -96,20 +96,22 @@ const RateService = ({ navigation, route }) => {
         user_id: state.userDetails.user_id || '',
         waiter_id: waiter_id || '',
         restaurant_id: restaurant_id || '',
-        currency: currency.currency || '',
+        currency: currency.currency.split(' ').join('') || '',
       };
       await addRatings(ratingDetails, {
-        onSuccess: async () => {
+        onSuccess: async e => {
           setLoading(false);
           setisVisible(true);
+          setlotteryNo(e.data.data.token);
         },
         onError: () => {
+          setLoading(false);
           alert('You can only vote once today.');
-          navigation.navigate('Home', { crossIcon: false });
-          dispatch({
-            type: actionTypes.REFRESH_ANIMATION,
-            payload: !state.refreshAnimation,
-          });
+          // navigation.navigate('Home', { crossIcon: false });
+          // dispatch({
+          //   type: actionTypes.REFRESH_ANIMATION,
+          //   payload: !state.refreshAnimation,
+          // });
         },
       });
     } else {
@@ -179,7 +181,6 @@ const RateService = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps={'handled'}
         style={styles.viewFlatlist}
-        // contentContainerStyle={{ flex: 1 }}
       >
         <View style={styles.viewListCard}>
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
@@ -309,7 +310,9 @@ const RateService = ({ navigation, route }) => {
             <NumberFormat
               value={remarks}
               thousandSeparator={true}
-              prefix={currency ? currency.currency + ' ' : ''}
+              prefix={
+                currency ? currency.currency.split(' ').join('') + ' ' : ''
+              }
               renderText={formattedValue => (
                 <TextInput
                   returnKeyLabel="Validate"
@@ -326,7 +329,9 @@ const RateService = ({ navigation, route }) => {
                   value={formattedValue}
                   onFocus={() => {
                     setKeyboardVisible(true);
-                    scrollRef.current.scrollToEnd({ animated: true });
+                    setTimeout(() => {
+                      scrollRef.current.scrollToEnd({ animated: true });
+                    }, 100);
                   }}
                   onBlur={() => {
                     setKeyboardVisible(false);
@@ -386,6 +391,7 @@ const RateService = ({ navigation, route }) => {
 
       <ThankRatingModal
         isVisible={isVisible}
+        LotteryNumber={lotteryNo}
         handleModalClose={handleModalClose}
       />
     </ScrollView>

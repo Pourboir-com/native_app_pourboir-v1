@@ -468,7 +468,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    marginBottom: Platform.OS === 'ios' ? 25 : '15',
+    marginBottom: Platform.OS === 'ios' ? 25 : 15,
     marginTop: 1,
   },
   txtNumRaters: {

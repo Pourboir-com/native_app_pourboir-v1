@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
+  Keyboard,
   TextInput,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
@@ -42,19 +43,21 @@ const ConfirmationModal = ({
   const [bossName, setBossName] = useState();
   const [bossContact, setBossContact] = useState();
 
-  React.useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => {
-        setTimeout(() => {
-          scrollRef.current.scrollToEnd({ animated: true });
-        }, 100);
-      },
-    );
-    return () => {
-      keyboardDidShowListener.remove();
-    };
-  }, []);
+  // React.useEffect(() => {
+  //   if (scrollRef) {
+  //     const keyboardDidShowListener = Keyboard.addListener(
+  //       'keyboardDidShow',
+  //       () => {
+  //         setTimeout(() => {
+  //           scrollRef.current.scrollToEnd({ animated: true });
+  //         }, 300);
+  //       },
+  //     );
+  //     return () => {
+  //       keyboardDidShowListener.remove();
+  //     };
+  //   }
+  // }, []);
 
   const resetPlaceholder = () => {
     setCompanyName('');
@@ -126,12 +129,14 @@ const ConfirmationModal = ({
             value={CompanyName}
             onChangeText={text => {
               setCompanyName(text);
+              scrollRef.current.scrollToEnd({ animated: true });
             }}
             placeholder={placeholderCompanyName}
             onFocus={() => {
               if (Platform.OS != 'ios') {
                 setplaceholderCompanyName('');
               }
+              scrollRef.current.scrollToEnd({ animated: true });
             }}
             onBlur={() => {
               if (!CompanyName && Platform.OS != 'ios') {
@@ -154,6 +159,7 @@ const ConfirmationModal = ({
               if (Platform.OS != 'ios') {
                 setplaceholderSiren('');
               }
+              scrollRef.current.scrollToEnd({ animated: true });
             }}
             onBlur={() => {
               if (!Siren && Platform.OS != 'ios') {
@@ -162,8 +168,8 @@ const ConfirmationModal = ({
             }}
             value={Siren}
             onChangeText={e => {
-              // scrollRef.current.scrollToEnd({ animated: true });
               setSiren(e);
+              scrollRef.current.scrollToEnd({ animated: true });
             }}
             style={[
               styles.inputStyle,
@@ -180,6 +186,7 @@ const ConfirmationModal = ({
               if (Platform.OS != 'ios') {
                 setplaceholderBossName('');
               }
+              scrollRef.current.scrollToEnd({ animated: true });
             }}
             onBlur={() => {
               if (!bossName && Platform.OS != 'ios') {
@@ -188,8 +195,8 @@ const ConfirmationModal = ({
             }}
             value={bossName}
             onChangeText={e => {
-              // scrollRef.current.scrollToEnd({ animated: true });
               setBossName(e);
+              scrollRef.current.scrollToEnd({ animated: true });
             }}
             style={[
               styles.inputStyle,
@@ -201,9 +208,7 @@ const ConfirmationModal = ({
               if (Platform.OS != 'ios') {
                 setplaceholderBossContact('');
               }
-              setTimeout(() => {
-                scrollRef.current.scrollToEnd({ animated: true });
-              }, 100);
+              scrollRef.current.scrollToEnd({ animated: true });
             }}
             selectionColor={Colors.yellow}
             keyboardType="number-pad"
@@ -215,8 +220,8 @@ const ConfirmationModal = ({
             }}
             value={bossContact}
             onChangeText={e => {
-              scrollRef.current.scrollToEnd({ animated: true });
               setBossContact(e);
+              scrollRef.current.scrollToEnd({ animated: true });
             }}
             style={[
               styles.inputStyle,

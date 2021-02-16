@@ -209,7 +209,6 @@ export default function HomeScreenContent({
               alwaysBounceHorizontal={false}
               keyboardShouldPersistTaps={'handled'}
               alwaysBounceVertical={false}
-              key={'_'}
               numColumns={2}
               bounces={false}
               keyExtractor={(item, index) => index}
@@ -219,6 +218,7 @@ export default function HomeScreenContent({
                     <View
                       style={{
                         marginTop: itemData.index % 2 !== 0 ? 12 : 0,
+                        marginBottom: -12,
                       }}
                     >
                       <HomeCard

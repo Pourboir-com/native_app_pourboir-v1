@@ -60,19 +60,21 @@ const HelpUsImproveModal = ({
     });
   };
 
-  // React.useEffect(() => {
-  //   const keyboardDidShowListener = Keyboard.addListener(
-  //     'keyboardDidShow',
-  //     () => {
-  //       setTimeout(() => {
-  //         scrollRef.current.scrollToEnd({ animated: true });
-  //       }, 100);
-  //     },
-  //   );
-  //   return () => {
-  //     keyboardDidShowListener.remove();
-  //   };
-  // }, []);
+  React.useEffect(() => {
+    if (scrollRef) {
+      const keyboardDidShowListener = Keyboard.addListener(
+        'keyboardDidShow',
+        () => {
+          setTimeout(() => {
+            scrollRef.current.scrollToEnd({ animated: true });
+          }, 100);
+        },
+      );
+      return () => {
+        keyboardDidShowListener.remove();
+      };
+    }
+  }, []);
 
   const handleAddingWaiters = async () => {
     if (state.userDetails.user_id) {
@@ -172,10 +174,12 @@ const HelpUsImproveModal = ({
               },
             ]}
             onFocus={() => {
-              setonHandleFocus(true);
-              setTimeout(() => {
-                scrollRef.current.scrollToEnd({ animated: true });
-              }, 100);
+              if (scrollRef) {
+                setTimeout(() => {
+                  scrollRef.current.scrollToEnd({ animated: true });
+                }, 100);
+                setonHandleFocus(true);
+              }
             }}
             onBlur={() => {
               setonHandleFocus(false);

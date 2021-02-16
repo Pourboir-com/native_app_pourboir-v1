@@ -121,27 +121,27 @@ const HomeScreen = props => {
               : LAYOUT.window.width * 0.01,
           )
         : LAYOUT.window.width < 365
-        ? HEADER_BAR_HEIGHT +
+          ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.026
               : LAYOUT.window.width * 0.013,
           )
-        : LAYOUT.window.width < 380
-        ? HEADER_BAR_HEIGHT +
+          : LAYOUT.window.width < 380
+            ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.028
               : LAYOUT.window.width * 0.016,
           )
-        : LAYOUT.window.width < 400
-        ? HEADER_BAR_HEIGHT +
+            : LAYOUT.window.width < 400
+              ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.03
               : LAYOUT.window.width * 0.02,
           )
-        : HEADER_BAR_HEIGHT +
+              : HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.032
@@ -286,13 +286,13 @@ const HomeScreen = props => {
           <Animated.ScrollView
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
-            // refreshControl={
-            //   <RefreshControl
-            //     //refresh control used for the Pull to Refresh
-            //     refreshing={props.resIsFetching}
-            //     onRefresh={props.refetchRestaurant}
-            //   />
-            // }
+            refreshControl={
+              <RefreshControl
+                //refresh control used for the Pull to Refresh
+                refreshing={props.resIsFetching}
+                onRefresh={props.refetchRestaurant}
+              />
+            }
             bounces={false}
             keyboardShouldPersistTaps={'handled'}
             ref={scrollRef}
@@ -411,6 +411,8 @@ const HomeScreen = props => {
                   <SvgHeaderSearchIcon />
                 </TouchableOpacity>
                 <TextInput
+                  returnKeyLabel="Search"
+                  returnKeyType="done"
                   onSubmitEditing={() => props.setsearchEnter(props.searchVal)}
                   value={props.searchVal}
                   onFocus={() => {
@@ -425,7 +427,7 @@ const HomeScreen = props => {
                   }}
                   placeholder={i18n.t('find_your_restaurant')}
                   placeholderTextColor={'#485460'}
-                  style={{ flex: 1, paddingHorizontal: 25 }}
+                  style={{ flex: 1, paddingHorizontal: 7 }}
                 />
 
                 {hasValue && (
@@ -506,6 +508,8 @@ const HomeScreen = props => {
                 <SvgHeaderSearchIcon />
               </TouchableOpacity>
               <TextInput
+                returnKeyLabel="Search"
+                returnKeyType="done"
                 onSubmitEditing={() => props.setsearchEnter(props.searchVal)}
                 value={props.searchVal}
                 onFocus={() => {
@@ -520,7 +524,7 @@ const HomeScreen = props => {
                 }}
                 placeholder={i18n.t('find_your_restaurant')}
                 placeholderTextColor={'#485460'}
-                style={{ flex: 1, paddingHorizontal: 25 }}
+                style={{ flex: 1, paddingHorizontal: 7 }}
               />
 
               {hasValue && (
@@ -552,13 +556,13 @@ const HomeScreen = props => {
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
             keyboardShouldPersistTaps={'handled'}
-            // refreshControl={
-            //   <RefreshControl
-            //     //refresh control used for the Pull to Refresh
-            //     refreshing={props.resIsFetching}
-            //     onRefresh={props.refetchRestaurant}
-            //   />
-            // }
+            refreshControl={
+              <RefreshControl
+                //refresh control used for the Pull to Refresh
+                refreshing={props.resIsFetching}
+                onRefresh={props.refetchRestaurant}
+              />
+            }
             bounces={false}
             ref={scrollRef}
             contentContainerStyle={{
@@ -664,6 +668,8 @@ const HomeScreen = props => {
                   <SvgHeaderSearchIcon />
                 </TouchableOpacity>
                 <TextInput
+                  returnKeyLabel="Search"
+                  returnKeyType="done"
                   value={props.searchVal}
                   onSubmitEditing={() => props.setsearchEnter(props.searchVal)}
                   onFocus={() => {
@@ -677,7 +683,7 @@ const HomeScreen = props => {
                     props.setSearchVal(e);
                   }}
                   placeholder={i18n.t('find_your_restaurant')}
-                  style={{ flex: 1, paddingHorizontal: 25 }}
+                  style={{ flex: 1, paddingHorizontal: 7 }}
                 />
 
                 {hasValue && (

@@ -174,11 +174,11 @@ const HelpUsImproveModal = ({
               },
             ]}
             onFocus={() => {
+              setonHandleFocus(true);
               if (scrollRef) {
                 setTimeout(() => {
                   scrollRef.current.scrollToEnd({ animated: true });
                 }, 100);
-                setonHandleFocus(true);
               }
             }}
             onBlur={() => {

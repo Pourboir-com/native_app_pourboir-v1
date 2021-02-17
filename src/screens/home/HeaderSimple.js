@@ -47,7 +47,7 @@ export default function HeaderSimple(props) {
           onChangeText={e => {
             props.setSearchVal(e);
           }}
-          style={{
+          style={[{
             shadowColor: '#000',
             shadowOffset: {
               width: 0,
@@ -57,7 +57,7 @@ export default function HeaderSimple(props) {
             shadowRadius: 0.1,
             elevation: 5,
             zIndex: 120,
-          }}
+          }]}
           placeholder="Search"
           style={styles.inputSearch}
         />

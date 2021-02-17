@@ -69,9 +69,9 @@ const Remove = props => {
       <HomeScreenContent
         route={props.route}
         restaurantLoading={yourRestaurantLoading}
-        refetchRestaurant={yourRefetchRestaurant}
+        // refetchRestaurant={yourRefetchRestaurant}
         isFetch={true}
-        resIsFetching={yourResIsFetching}
+        // resIsFetching={yourResIsFetching}
         Data={data}
         saveLocation={saveLocation}
         // handleLoadMore={handleLoadMore}

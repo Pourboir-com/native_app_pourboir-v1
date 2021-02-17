@@ -4,7 +4,6 @@ import {
   Text,
   View,
   ImageBackground,
-  ActivityIndicator,
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
@@ -12,6 +11,7 @@ import { Entypo } from '@expo/vector-icons';
 import { Colors } from '../constants/Theme';
 import RatingStar from './RatingComponent';
 import { LinearGradient } from 'expo-linear-gradient';
+import i18n from '../li8n';
 
 const HomeCard = ({
   navigation,
@@ -130,10 +130,7 @@ const HomeCard = ({
             <Text
               ellipsizeMode="tail"
               numberOfLines={3}
-              style={[
-                styles.txtName,
-                { fontFamily: 'ProximaNovaBold' },
-              ]}
+              style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}
             >
               {name}
             </Text>
@@ -149,11 +146,10 @@ const HomeCard = ({
                     fontSize: 12,
                   }}
                 >
-                  {services}
+                  {services + ' '}
                 </Text>
                 <Text style={[styles.txt2Card, { fontFamily: 'ProximaNova' }]}>
-                  {' '}
-                  serveurs
+                  {services > 1 ? i18n.t('serveurs') : i18n.t('serveur')}
                 </Text>
               </View>
             </View>

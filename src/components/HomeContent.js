@@ -26,6 +26,7 @@ import { useMutation } from 'react-query';
 import Context from '../contextApi/context';
 import * as actionTypes from '../contextApi/actionTypes';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { BallIndicator } from 'react-native-indicators';
 
 export default function HomeScreenContent({
   restaurantLoading,
@@ -175,17 +176,21 @@ export default function HomeScreenContent({
           showsVerticalScrollIndicator={false}
           alwaysBounceHorizontal={false}
           refreshControl={
-            <RefreshControl
-              //refresh control used for the Pull to Refresh
-              refreshing={resIsFetching}
-              onRefresh={refetchRestaurant}
-            />
+            refetchRestaurant &&
+            resIsFetching && (
+              <RefreshControl
+                //refresh control used for the Pull to Refresh
+                refreshing={resIsFetching}
+                onRefresh={refetchRestaurant}
+              />
+            )
           }
           alwaysBounceVertical={false}
           bounces={false}
           keyboardShouldPersistTaps={'handled'}
           style={{ backgroundColor: '#F9F9F9' }}
         >
+          {/* {resIsFetching && <BallIndicator style={{ marginTop: 25 }} size={25} color="black" />} */}
           <Spinner visible={deleteLoading} />
           {!route.params.crossIcon && (
             <Text

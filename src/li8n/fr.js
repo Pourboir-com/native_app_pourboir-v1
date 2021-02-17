@@ -1,11 +1,13 @@
 export default {
+  //home card
+  serveur: 'serveur',
+  serveurs: 'serveurs',
   // home
   your_restaurant: 'Vos restaurants',
   hello: 'Bonjour',
   find_your_restaurant: 'Recherchez votre restaurant',
   around_you: 'Autour de vous',
   result_distance: 'Résultat Autour de vous',
-  serveurs: 'serveurs',
   you_have_no_restaurant: "Vous n'avez aucun restaurant pour le moment",
   search_for_rest_and_add:
     'Recherchez votre restaurant et ajoutez vous en choisissant: Vous êtes serveur',
@@ -68,5 +70,4 @@ export default {
     'Nous vous contacterons par email pour vous offire un coupon très prochainement.',
   must_loggedIn: 'Vous devez être connecté pour utiliser Pourboir!',
   continue_with_apple: 'Continuer avec Apple',
-
 };

@@ -27,6 +27,7 @@ import i18n from '../../li8n';
 import Context from '../../contextApi/context';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Button } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 
 const HomeScreen = props => {
   const { state } = useContext(Context);
@@ -177,26 +178,32 @@ const HomeScreen = props => {
           {state.userDetails.user_id ? (
             <>
               {state.userDetails.image ? (
-                <TouchableOpacity
-                  onPress={() =>
-                    props.navigation.navigate('Setting', {
-                      yourRestaurantLoading: props.yourRestaurantLoading,
-                      yourRefetchRestaurant: props.yourRefetchRestaurant,
-                      yourResIsFetching: props.yourResIsFetching,
-                    })
-                  }
-                >
-                  <Image
-                    style={{
-                      borderRadius: 90,
-                      width: 40,
-                      height: 40,
-                    }}
-                    source={{
-                      uri: state.userDetails.image,
-                    }}
-                  />
-                </TouchableOpacity>
+                props.yourRestaurantLoading ? (
+                  <ActivityIndicator color="black" size={38} />
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      props.navigation.navigate('Setting', {
+                        yourRestaurantLoading: props.yourRestaurantLoading,
+                        yourRefetchRestaurant: props.yourRefetchRestaurant,
+                        yourResIsFetching: props.yourResIsFetching,
+                      })
+                    }
+                  >
+                    <Image
+                      style={{
+                        borderRadius: 90,
+                        width: 40,
+                        height: 40,
+                      }}
+                      source={{
+                        uri: state.userDetails.image,
+                      }}
+                    />
+                  </TouchableOpacity>
+                )
+              ) : props.yourRestaurantLoading ? (
+                <ActivityIndicator color="black" size={38} />
               ) : (
                 <TouchableOpacity
                   onPress={() =>
@@ -284,14 +291,17 @@ const HomeScreen = props => {
       {loading ? (
         <View>
           <Animated.ScrollView
+            style={{ backgroundColor: '#F9F9F9' }}
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
             refreshControl={
-              <RefreshControl
-                //refresh control used for the Pull to Refresh
-                refreshing={props.resIsFetching}
-                onRefresh={props.refetchRestaurant}
-              />
+              <>
+                <RefreshControl
+                  //refresh control used for the Pull to Refresh
+                  refreshing={props.resIsFetching}
+                  onRefresh={props.refetchRestaurant}
+                />
+              </>
             }
             bounces={false}
             keyboardShouldPersistTaps={'handled'}
@@ -308,6 +318,7 @@ const HomeScreen = props => {
               { nativeEvent: { contentOffset: { y: scrollYAnimatedValue } } },
             ])}
           >
+            {/* <BallIndicator size={20} color="black" /> */}
             {/* <Spinner visible={loader} /> */}
             {props.children}
           </Animated.ScrollView>
@@ -391,6 +402,7 @@ const HomeScreen = props => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'flex-start',
+                  paddingLeft: 10,
                   // marginLeft: spacing(2.5),
 
                   // position: 'absolute',
@@ -402,10 +414,10 @@ const HomeScreen = props => {
                   onPress={() => {
                     props.setsearchIconPress(!props.searchIconPress);
                   }}
-                  style={{
-                    paddingLeft: HEADER_BAR_HEIGHT / 4,
-                    zIndex: 1,
-                  }}
+                  // style={{
+                  //   padding: 5,
+                  //   zIndex: 1,
+                  // }}
                   // hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
                 >
                   <SvgHeaderSearchIcon />
@@ -427,7 +439,7 @@ const HomeScreen = props => {
                   }}
                   placeholder={i18n.t('find_your_restaurant')}
                   placeholderTextColor={'#485460'}
-                  style={{ flex: 1, paddingHorizontal: 7 }}
+                  style={{ flex: 1, paddingHorizontal: 10 }}
                 />
 
                 {hasValue && (
@@ -488,6 +500,7 @@ const HomeScreen = props => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'flex-start',
+                paddingLeft: 10,
                 // marginLeft: spacing(2.5),
 
                 // position: 'absolute',
@@ -499,10 +512,10 @@ const HomeScreen = props => {
                 onPress={() => {
                   props.setsearchIconPress(!props.searchIconPress);
                 }}
-                style={{
-                  padding: HEADER_BAR_HEIGHT / 4,
-                  zIndex: 1,
-                }}
+                // style={{
+                //   padding: 5,
+                //   zIndex: 1,
+                // }}
                 {...(Platform.OS === 'ios' ? { hitSlop } : {})}
               >
                 <SvgHeaderSearchIcon />
@@ -524,7 +537,7 @@ const HomeScreen = props => {
                 }}
                 placeholder={i18n.t('find_your_restaurant')}
                 placeholderTextColor={'#485460'}
-                style={{ flex: 1, paddingHorizontal: 7 }}
+                style={{ flex: 1, paddingHorizontal: 10 }}
               />
 
               {hasValue && (
@@ -553,6 +566,7 @@ const HomeScreen = props => {
       ) : (
         <>
           <Animated.ScrollView
+            style={{ backgroundColor: '#F9F9F9' }}
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={false}
             keyboardShouldPersistTaps={'handled'}
@@ -655,6 +669,7 @@ const HomeScreen = props => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'flex-start',
+                  paddingLeft: 10,
                 }}
                 {...(Platform.OS === 'ios' ? { hitSlop } : {})}
               >
@@ -662,7 +677,7 @@ const HomeScreen = props => {
                   onPress={() => {
                     props.setsearchIconPress(!props.searchIconPress);
                   }}
-                  style={{ paddingLeft: HEADER_BAR_HEIGHT / 4, zIndex: 1 }}
+                  // style={{ paddingLeft: 5, zIndex: 1 }}
                   {...(Platform.OS === 'ios' ? { hitSlop } : {})}
                 >
                   <SvgHeaderSearchIcon />
@@ -683,7 +698,7 @@ const HomeScreen = props => {
                     props.setSearchVal(e);
                   }}
                   placeholder={i18n.t('find_your_restaurant')}
-                  style={{ flex: 1, paddingHorizontal: 7 }}
+                  style={{ flex: 1, paddingHorizontal: 10 }}
                 />
 
                 {hasValue && (

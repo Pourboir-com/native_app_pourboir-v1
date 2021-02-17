@@ -10,6 +10,7 @@ import { useQuery } from 'react-query';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import { isSearch } from '../../util';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
@@ -32,32 +33,6 @@ const HomeScreen = props => {
       setsearchEnter('');
     }
   }, [searchVal]);
-  const {
-    data: restaurantData,
-    isLoading: restaurantLoading,
-    refetch: refetchRestaurant,
-    isFetching: resIsFetching,
-  } = useQuery(
-    [
-      'GET_RESTAURANT',
-      {
-        location: saveLocation,
-        search: isSearch(searchVal, searchEnter),
-        // pageToken: nextPageToken,
-      },
-    ],
-    GET_RESTAURANT,
-    {
-      ...reactQueryConfig,
-      enabled: saveLocation,
-      onSuccess: res => {
-        dispatch({
-          type: actionTypes.RESTAURANTS_DETAILS,
-          payload: res?.restaurants?.results || [],
-        });
-      },
-    },
-  );
 
   const {
     data: yourRestaurantData,
@@ -88,6 +63,33 @@ const HomeScreen = props => {
     },
   );
 
+  const {
+    data: restaurantData,
+    isLoading: restaurantLoading,
+    refetch: refetchRestaurant,
+    isFetching: resIsFetching,
+  } = useQuery(
+    [
+      'GET_RESTAURANT',
+      {
+        location: saveLocation,
+        search: isSearch(searchVal, searchEnter),
+        // pageToken: nextPageToken,
+      },
+    ],
+    GET_RESTAURANT,
+    {
+      ...reactQueryConfig,
+      enabled: saveLocation,
+      onSuccess: res => {
+        dispatch({
+          type: actionTypes.RESTAURANTS_DETAILS,
+          payload: res?.restaurants?.results || [],
+        });
+      },
+    },
+  );
+
   // const handleLoadMore = () => {
   //   setnextPageToken(restaurantData.restaurants.next_page_token);
   //   // console.log('next page load');
@@ -95,6 +97,7 @@ const HomeScreen = props => {
 
   return (
     <>
+      {/* <Spinner visible={yourRestaurantLoading}/> */}
       {!searchIconPress ? (
         <Header
           setsearchIconPress={setSearchIconPress}

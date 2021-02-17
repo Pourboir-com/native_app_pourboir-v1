@@ -1,11 +1,13 @@
 export default {
+  //home card
+  serveur: 'waiter',
+  serveurs: 'waiters',
   // home
   your_restaurant: 'Your restaurants',
   hello: 'Welcome',
   find_your_restaurant: 'Find your restaurant',
   around_you: 'Around you',
   result_distance: 'Result around you',
-  serveurs: 'servers',
   you_have_no_restaurant: 'You have no restaurant at the moment',
   search_for_rest_and_add:
     'Search for your restaurant and add yourself by choosing: You are a waiter',

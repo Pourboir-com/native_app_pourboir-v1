@@ -110,6 +110,7 @@ const HomeScreen = props => {
 
     extrapolate: Extrapolate.CLAMP,
   });
+
   const titleHeaderMarginLeft = scrollYAnimatedValue.interpolate({
     inputRange: [0, HEADER_HEIGHT / 2],
     outputRange: [
@@ -139,14 +140,14 @@ const HomeScreen = props => {
               ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
-              ? LAYOUT.window.width * 0.03
-              : LAYOUT.window.width * 0.02,
+              ? LAYOUT.window.width * 0.030
+              : LAYOUT.window.width * 0.020,
           )
               : HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.032
-              : LAYOUT.window.width * 0.024,
+              : LAYOUT.window.width * 0.022,
           ),
     ],
     // outputRange: [0, (LAYOUT.window.width * 0.5) ],
@@ -157,16 +158,29 @@ const HomeScreen = props => {
 
     extrapolate: Extrapolate.CLAMP,
   });
-
   const borderRadiusIcon = scrollYAnimatedValue.interpolate({
     inputRange: [0, HEADER_BAR_HEIGHT],
     outputRange: [10, HEADER_BAR_HEIGHT],
     extrapolate: Extrapolate.CLAMP,
   });
 
+  // React.useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     headerTitle: '',
+  //     headerRight: null,
+  //     headerShown: false,
+  //     headerLeft: null,
+  //     headerTransparent: false,
+  //     headerTitleAlign: 'left',
+  //     // headerRightContainerStyle: { paddingRight: spacing(2) }
+  //   });
+  // });
+
   useLayoutEffect(() => {
     // alert(())
+
     const renderUserIcon = () => {
+
       // return <Ionicons name="ios-contact" size={30} onPress={(): void => propsUserIcon.navigation.navigate('SelectSignIn')} />;
       return (
         <View
@@ -230,6 +244,7 @@ const HomeScreen = props => {
     };
 
     const renderTitle = () => {
+
       return (
         <>
           <View
@@ -238,17 +253,16 @@ const HomeScreen = props => {
                 position: 'absolute',
                 left: spacing(2.5),
                 top: spacing(1),
-                // width: Dimensions.get('window').width - spacing(5),
               },
-              // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
             ]}
           >
             <Animated.View
               style={{
                 marginLeft: titleHeaderMarginLeft,
+                position: 'absolute',
                 height: HEADER_BAR_HEIGHT,
                 justifyContent: 'center',
-                // width: '100%',
+
               }}
             >
               <Text
@@ -260,8 +274,8 @@ const HomeScreen = props => {
                   fontWeight: 'bold',
                   // width:'50%'
                 }}
-                // ellipsizeMode="tail"
-                // numberOfLines={1}
+                ellipsizeMode="tail"
+                numberOfLines={1}
               >
                 {!state.userDetails.name
                   ? i18n.t('hello')
@@ -269,6 +283,7 @@ const HomeScreen = props => {
               </Text>
             </Animated.View>
           </View>
+
           {/* )} */}
         </>
       );
@@ -285,7 +300,7 @@ const HomeScreen = props => {
       headerLeftContainerStyle: { position: 'absolute' },
     });
   });
-  const hitSlop = { top: 5, bottom: 5, left: 5, right: 5 };
+  const hitSlop = { zIndex: 2 };
   return (
     <>
       {loading ? (
@@ -293,17 +308,18 @@ const HomeScreen = props => {
           <Animated.ScrollView
             style={{ backgroundColor: '#F9F9F9' }}
             alwaysBounceHorizontal={false}
-            alwaysBounceVertical={false}
+            alwaysBounceVertical={true}
+            bounces={true}
             refreshControl={
               <>
                 <RefreshControl
                   //refresh control used for the Pull to Refresh
                   refreshing={props.resIsFetching}
                   onRefresh={props.refetchRestaurant}
+                  // style={{position: 'absolute'}}
                 />
               </>
             }
-            bounces={false}
             keyboardShouldPersistTaps={'handled'}
             ref={scrollRef}
             contentContainerStyle={{
@@ -568,7 +584,8 @@ const HomeScreen = props => {
           <Animated.ScrollView
             style={{ backgroundColor: '#F9F9F9' }}
             alwaysBounceHorizontal={false}
-            alwaysBounceVertical={false}
+            alwaysBounceVertical={true}
+            bounces={true}
             keyboardShouldPersistTaps={'handled'}
             refreshControl={
               <RefreshControl
@@ -577,7 +594,7 @@ const HomeScreen = props => {
                 onRefresh={props.refetchRestaurant}
               />
             }
-            bounces={false}
+            // bounces={true}
             ref={scrollRef}
             contentContainerStyle={{
               paddingTop: props.searchIconPress ? 0 : HEADER_HEIGHT,

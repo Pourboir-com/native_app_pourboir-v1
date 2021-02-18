@@ -30,6 +30,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { Button } from 'react-native';
 import { ActivityIndicator } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { BallIndicator } from 'react-native-indicators';
+import { StatusBar } from 'expo-status-bar';
 
 const HomeScreen = props => {
   const scrollRef = useRef(null);
@@ -43,6 +45,8 @@ const HomeScreen = props => {
   //     setLoader(true);
   //   }
   // }, [state.refreshAnimation]);
+  const bounceLoading = props.restaurantLoading || props.resIsFetching;
+  console.log(bounceLoading);
   useEffect(() => {
     sethasValue(props.searchVal ? true : false);
   });
@@ -72,9 +76,11 @@ const HomeScreen = props => {
 
   useEffect(() => {
     setLoading(!loading);
-  }, [props.saveLocation, state]);
 
-  const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
+  }, [props.saveLocation, state]);
+  const reBounce =25;
+
+  const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight() + (bounceLoading ? reBounce:0);
 
   const navigation = useNavigation();
 
@@ -194,7 +200,12 @@ const HomeScreen = props => {
       return (
         <View
           style={[
-            { position: 'absolute', right: spacing(2.5), top: spacing(1) },
+            {
+              position: 'absolute',
+              right: spacing(2.5),
+              top: spacing(1),
+              marginTop: bounceLoading ? reBounce : 0,
+            },
             // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
           ]}
         >
@@ -261,6 +272,8 @@ const HomeScreen = props => {
                 position: 'absolute',
                 left: spacing(2.5),
                 top: spacing(1),
+                marginTop: bounceLoading ? reBounce : 0,
+
               },
             ]}
           >
@@ -310,95 +323,204 @@ const HomeScreen = props => {
   const hitSlop = { zIndex: 2 };
   return (
     <>
-      {loading ? (
-        <>
-          <View>
-            <Animated.ScrollView
-              style={{ backgroundColor: '#F9F9F9' }}
-              alwaysBounceHorizontal={false}
-              alwaysBounceVertical={true}
-              bounces={true}
-              refreshControl={
-                <>
-                  <RefreshControl
-                    //refresh control used for the Pull to Refresh
-                    refreshing={props.resIsFetching}
-                    // onRefresh={props.refetchRestaurant}
-                    onRefresh={() => {}}
-                    // style={{position: 'absolute'}}
-                  />
-                </>
-              }
-              keyboardShouldPersistTaps={'handled'}
-              ref={scrollRef}
-              contentContainerStyle={{
-                // alignItems: 'center',
-                paddingTop: props.searchIconPress ? 0 : HEADER_HEIGHT,
-                minHeight: props.searchIconPress
-                  ? 0
-                  : LAYOUT.window.height + HEADER_HEIGHT,
-              }}
-              scrollEventThrottle={1}
-              showsVerticalScrollIndicator={false}
-              onScroll={Animated.event([
-                { nativeEvent: { contentOffset: { y: scrollYAnimatedValue } } },
-              ])}
-            >
-              {/* <BallIndicator size={20} color="black" /> */}
-              {/* <Spinner visible={loader} /> */}
-              {props.children}
-            </Animated.ScrollView>
-            <Animated.View
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-              }}
-            >
-              <Animated.View
-                style={[
-                  {
-                    position: 'relative',
-                    top: headerHeight,
-                    height: HEADER_HEIGHT,
-                  },
-                ]}
-              >
-                <Svg viewBox="0 0 375 190" preserveAspectRatio="none">
-                  <Defs>
-                    <ClipPath id="prefix__a">
-                      <Path
-                        d="M0 0h375v170a20 20 0 01-20 20H20a20 20 0 01-20-20V0z"
-                        transform="translate(0 .981)"
-                        fill="#fcdf6f"
-                      />
-                    </ClipPath>
-                  </Defs>
-                  <Path
-                    data-name="Mask"
-                    d="M0 0h375v170a20 20 0 01-20 20H20a20 20 0 01-20-20V0z"
-                    fill="#fcdf6f"
-                  />
-                  <G
-                    data-name="BG"
-                    clipPath="url(#prefix__a)"
-                    transform="translate(0 -.981)"
-                  >
-                    <Path
-                      data-name="Weird Shape"
-                      d="M238.418-41.74c59.628-43.534 217.933 62.136 224.724 167.256s-148.41 240.355-200.258 210.42 13.883-143.786 11.81-189.565S178.788 1.791 238.417-41.74z"
-                      fill="#ffe685"
+      {/* <StatusBar translucent={true} style="dark" /> */}
+      <View style={{  }}>
+        {loading ? (
+          <>
+            <View>
+              <Animated.ScrollView
+                style={{ backgroundColor: '#F9F9F9' }}
+                alwaysBounceHorizontal={false}
+                alwaysBounceVertical={true}
+                bounces={true}
+
+                refreshControl={
+                  <>
+                    <RefreshControl
+                      //refresh control used for the Pull to Refresh
+                      // refreshing={bounceLoading}
+                      onRefresh={props.refetchRestaurant}
+                      color="#F9F9F9"
+                      tintColor="#F9F9F9"
+                      // onRefresh={() => {}}
+                      // style={{position: 'absolute'}}
                     />
-                  </G>
-                </Svg>
+                  </>
+                }
+                keyboardShouldPersistTaps={'handled'}
+                ref={scrollRef}
+                contentContainerStyle={{
+                  // alignItems: 'center',
+                  paddingTop: props.searchIconPress ? 0 : HEADER_HEIGHT,
+                  minHeight: props.searchIconPress
+                    ? 0
+                    : LAYOUT.window.height + HEADER_HEIGHT,
+                  // marginTop: bounceLoading ? reBounce : 0,
+                }}
+                scrollEventThrottle={1}
+                showsVerticalScrollIndicator={false}
+                onScroll={Animated.event([
+                  {
+                    nativeEvent: { contentOffset: { y: scrollYAnimatedValue } },
+                  },
+                ])}
+              >
+                {/* <BallIndicator size={20} color="black" /> */}
+                {/* <Spinner visible={loader} /> */}
+                {props.children}
+              </Animated.ScrollView>
+              <Animated.View
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                }}
+              >
+                <Animated.View
+                  style={[
+                    {
+                      position: 'relative',
+                      top: headerHeight,
+                      height: HEADER_HEIGHT,
+                    },
+                  ]}
+                >
+                  <Svg viewBox="0 0 375 190" preserveAspectRatio="none">
+                    <Defs>
+                      <ClipPath id="prefix__a">
+                        <Path
+                          d="M0 0h375v170a20 20 0 01-20 20H20a20 20 0 01-20-20V0z"
+                          transform="translate(0 .981)"
+                          fill="#fcdf6f"
+                        />
+                      </ClipPath>
+                    </Defs>
+                    <Path
+                      data-name="Mask"
+                      d="M0 0h375v170a20 20 0 01-20 20H20a20 20 0 01-20-20V0z"
+                      fill="#fcdf6f"
+                    />
+                    <G
+                      data-name="BG"
+                      clipPath="url(#prefix__a)"
+                      transform="translate(0 -.981)"
+                    >
+                      <Path
+                        data-name="Weird Shape"
+                        d="M238.418-41.74c59.628-43.534 217.933 62.136 224.724 167.256s-148.41 240.355-200.258 210.42 13.883-143.786 11.81-189.565S178.788 1.791 238.417-41.74z"
+                        fill="#ffe685"
+                      />
+                    </G>
+                  </Svg>
+                </Animated.View>
+
+                {/* <Animated.View
+                  style={{
+                    position: 'absolute',
+                    top: searchBarTop,
+                    marginTop: 0,
+                    zIndex: 10,
+                    // height: HEADER_BAR_HEIGHT,
+                    height: searchBarHeight,
+                    width: searchBarWidth,
+
+                    left: spacing(2.5),
+                    // left: 10,
+                    // left: searchBarLocation,
+                    // marginLeft: spacing(2.5),
+                    borderRadius: borderRadiusIcon,
+                    backgroundColor: searchBarColor,
+                    shadowColor: '#000',
+                    shadowOffset: {
+                      width: 0,
+                      height: 3,
+                    },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 0.1,
+                    elevation: 5,
+                    overflow: 'hidden',
+                  }}
+                  // hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
+                >
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'flex-start',
+                      paddingLeft: 10,
+                      // marginTop: reBounce,
+                      // marginLeft: spacing(2.5),
+
+                      // position: 'absolute',
+                      // left: '4%',
+                    }}
+                    // hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
+                  >
+                    <TouchableOpacity
+                      onPress={() => {
+                        props.setsearchIconPress(!props.searchIconPress);
+                      }}
+                      // style={{
+                      //   padding: 5,
+                      //   zIndex: 1,
+                      // }}
+                      // hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
+                    >
+                      <SvgHeaderSearchIcon />
+                    </TouchableOpacity>
+                    <TextInput
+                      returnKeyLabel="Search"
+                      returnKeyType="done"
+                      onSubmitEditing={() =>
+                        props.setsearchEnter(props.searchVal)
+                      }
+                      value={props.searchVal}
+                      onFocus={() => {
+                        setIsFocused(true);
+                      }}
+                      onBlur={() => {
+                        setLoading(!loading);
+                        setIsFocused(false);
+                      }}
+                      onChangeText={e => {
+                        props.setSearchVal(e);
+                      }}
+                      placeholder={i18n.t('find_your_restaurant')}
+                      placeholderTextColor={'#485460'}
+                      style={{ flex: 1, paddingHorizontal: 10 }}
+                    />
+
+                    {hasValue && (
+                      <TouchableOpacity
+                        onPress={() => {
+                          props.setSearchVal('');
+                        }}
+                        style={{ paddingHorizontal: 8 }}
+                      >
+                        <View
+                          style={{
+                            backgroundColor: '#FCDF6F',
+                            borderRadius: 20,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: 4,
+                          }}
+                        >
+                          <AntDesign name="close" size={14} color="#485460" />
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                </Animated.View> */}
               </Animated.View>
 
               <Animated.View
                 style={{
                   position: 'absolute',
                   top: searchBarTop,
-                  marginTop: 0,
+                  marginTop: Platform.OS==='ios'? bounceLoading?reBounce:0:0,
                   zIndex: 10,
                   // height: HEADER_BAR_HEIGHT,
                   height: searchBarHeight,
@@ -420,7 +542,7 @@ const HomeScreen = props => {
                   elevation: 5,
                   overflow: 'hidden',
                 }}
-                // hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
+                // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
               >
                 <View
                   style={{
@@ -429,12 +551,13 @@ const HomeScreen = props => {
                     alignItems: 'center',
                     justifyContent: 'flex-start',
                     paddingLeft: 10,
+                    // marginTop: reBounce,
                     // marginLeft: spacing(2.5),
 
                     // position: 'absolute',
                     // left: '4%',
                   }}
-                  // hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
+                  // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
                 >
                   <TouchableOpacity
                     onPress={() => {
@@ -444,7 +567,7 @@ const HomeScreen = props => {
                     //   padding: 5,
                     //   zIndex: 1,
                     // }}
-                    // hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
+                    // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
                   >
                     <SvgHeaderSearchIcon />
                   </TouchableOpacity>
@@ -492,272 +615,188 @@ const HomeScreen = props => {
                   )}
                 </View>
               </Animated.View>
-            </Animated.View>
-
+            </View>
+          </>
+        ) : (
+          <>
+            <Animated.ScrollView
+              style={{ backgroundColor: '#F9F9F9' }}
+              alwaysBounceHorizontal={false}
+              alwaysBounceVertical={true}
+              bounces={true}
+              onLayout={nativeEvent => console.log(nativeEvent.layout)}
+              keyboardShouldPersistTaps={'handled'}
+              refreshControl={
+                <RefreshControl
+                  //refresh control used for the Pull to Refresh
+                  // refreshing={bounceLoading}
+                  tintColor="#f0f"
+                  // onRefresh={() => {}}
+                  style={{ display: 'none', color: '#F9F9F9' }}
+                  onRefresh={props.refetchRestaurant}
+                />
+              }
+              // bounces={true}
+              ref={scrollRef}
+              contentContainerStyle={{
+                // alignItems: 'center',
+                paddingTop: props.searchIconPress ? 0 : HEADER_HEIGHT,
+                minHeight: props.searchIconPress
+                  ? 0
+                  : LAYOUT.window.height + HEADER_HEIGHT,
+              }}
+              scrollEventThrottle={1}
+              showsVerticalScrollIndicator={false}
+              onScroll={Animated.event([
+                { nativeEvent: { contentOffset: { y: scrollYAnimatedValue } } },
+              ])}
+            >
+              {props.children}
+            </Animated.ScrollView>
             <Animated.View
               style={{
                 position: 'absolute',
-                top: searchBarTop,
-                marginTop: 0,
-                zIndex: 10,
-                // height: HEADER_BAR_HEIGHT,
-                height: searchBarHeight,
-                width: searchBarWidth,
-
-                left: spacing(2.5),
-                // left: 10,
-                // left: searchBarLocation,
-                // marginLeft: spacing(2.5),
-                borderRadius: borderRadiusIcon,
-                backgroundColor: searchBarColor,
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 3,
-                },
-                shadowOpacity: 0.2,
-                shadowRadius: 0.1,
-                elevation: 5,
-                overflow: 'hidden',
+                top: 0,
+                left: 0,
+                right: 0,
               }}
-              // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
             >
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                  paddingLeft: 10,
-                  // marginLeft: spacing(2.5),
-
-                  // position: 'absolute',
-                  // left: '4%',
-                }}
-                // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
+              <Animated.View
+                style={[
+                  {
+                    position: 'relative',
+                    top: headerHeight,
+                    height: HEADER_HEIGHT,
+                  },
+                ]}
               >
-                <TouchableOpacity
-                  onPress={() => {
-                    props.setsearchIconPress(!props.searchIconPress);
-                  }}
-                  // style={{
-                  //   padding: 5,
-                  //   zIndex: 1,
-                  // }}
-                  // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
-                >
-                  <SvgHeaderSearchIcon />
-                </TouchableOpacity>
-                <TextInput
-                  returnKeyLabel="Search"
-                  returnKeyType="done"
-                  onSubmitEditing={() => props.setsearchEnter(props.searchVal)}
-                  value={props.searchVal}
-                  onFocus={() => {
-                    setIsFocused(true);
-                  }}
-                  onBlur={() => {
-                    setLoading(!loading);
-                    setIsFocused(false);
-                  }}
-                  onChangeText={e => {
-                    props.setSearchVal(e);
-                  }}
-                  placeholder={i18n.t('find_your_restaurant')}
-                  placeholderTextColor={'#485460'}
-                  style={{ flex: 1, paddingHorizontal: 10 }}
-                />
-
-                {hasValue && (
-                  <TouchableOpacity
-                    onPress={() => {
-                      props.setSearchVal('');
-                    }}
-                    style={{ paddingHorizontal: 8 }}
-                  >
-                    <View
-                      style={{
-                        backgroundColor: '#FCDF6F',
-                        borderRadius: 20,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: 4,
-                      }}
-                    >
-                      <AntDesign name="close" size={14} color="#485460" />
-                    </View>
-                  </TouchableOpacity>
-                )}
-              </View>
-            </Animated.View>
-          </View>
-        </>
-      ) : (
-        <>
-          <Animated.ScrollView
-            style={{ backgroundColor: '#F9F9F9' }}
-            alwaysBounceHorizontal={false}
-            alwaysBounceVertical={true}
-            bounces={true}
-            onLayout={nativeEvent => console.log(nativeEvent.layout)}
-            keyboardShouldPersistTaps={'handled'}
-            refreshControl={
-              <RefreshControl
-                //refresh control used for the Pull to Refresh
-                refreshing={props.resIsFetching}
-                onRefresh={() => {}}
-                // onRefresh={props.refetchRestaurant}
-              />
-            }
-            // bounces={true}
-            ref={scrollRef}
-            contentContainerStyle={{
-              // alignItems: 'center',
-              paddingTop: props.searchIconPress ? 0 : HEADER_HEIGHT,
-              minHeight: props.searchIconPress
-                ? 0
-                : LAYOUT.window.height + HEADER_HEIGHT,
-            }}
-            scrollEventThrottle={1}
-            showsVerticalScrollIndicator={false}
-            onScroll={Animated.event([
-              { nativeEvent: { contentOffset: { y: scrollYAnimatedValue } } },
-            ])}
-          >
-            {props.children}
-          </Animated.ScrollView>
-          <Animated.View
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-            }}
-          >
-            <Animated.View
-              style={[
-                {
-                  position: 'relative',
-                  top: headerHeight,
-                  height: HEADER_HEIGHT,
-                },
-              ]}
-            >
-              <Svg viewBox="0 0 375 190" preserveAspectRatio="none">
-                <Defs>
-                  <ClipPath id="prefix__a">
-                    <Path
-                      d="M0 0h375v170a20 20 0 01-20 20H20a20 20 0 01-20-20V0z"
-                      transform="translate(0 .981)"
-                      fill="#fcdf6f"
-                    />
-                  </ClipPath>
-                </Defs>
-                <Path
-                  data-name="Mask"
-                  d="M0 0h375v170a20 20 0 01-20 20H20a20 20 0 01-20-20V0z"
-                  fill="#fcdf6f"
-                />
-                <G
-                  data-name="BG"
-                  clipPath="url(#prefix__a)"
-                  transform="translate(0 -.981)"
-                >
+                <Svg viewBox="0 0 375 190" preserveAspectRatio="none">
+                  <Defs>
+                    <ClipPath id="prefix__a">
+                      <Path
+                        d="M0 0h375v170a20 20 0 01-20 20H20a20 20 0 01-20-20V0z"
+                        transform="translate(0 .981)"
+                        fill="#fcdf6f"
+                      />
+                    </ClipPath>
+                  </Defs>
                   <Path
-                    data-name="Weird Shape"
-                    d="M238.418-41.74c59.628-43.534 217.933 62.136 224.724 167.256s-148.41 240.355-200.258 210.42 13.883-143.786 11.81-189.565S178.788 1.791 238.417-41.74z"
-                    fill="#ffe685"
+                    data-name="Mask"
+                    d="M0 0h375v170a20 20 0 01-20 20H20a20 20 0 01-20-20V0z"
+                    fill="#fcdf6f"
                   />
-                </G>
-              </Svg>
-            </Animated.View>
-            <Animated.View
-              style={{
-                position: 'absolute',
-                top: searchBarTop,
-                marginTop: 0,
-                // height: HEADER_BAR_HEIGHT,
-                height: searchBarHeight,
-                width: searchBarWidth,
-                left: spacing(2.5),
-                // left: 10,
-                // left: searchBarLocation,
-                borderRadius: borderRadiusIcon,
-                backgroundColor: searchBarColor,
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 3,
-                },
-                shadowOpacity: 0.2,
-                shadowRadius: 0.1,
-                elevation: 5,
-                overflow: 'hidden',
-              }}
-              // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
-            >
-              <View
+                  <G
+                    data-name="BG"
+                    clipPath="url(#prefix__a)"
+                    transform="translate(0 -.981)"
+                  >
+                    <Path
+                      data-name="Weird Shape"
+                      d="M238.418-41.74c59.628-43.534 217.933 62.136 224.724 167.256s-148.41 240.355-200.258 210.42 13.883-143.786 11.81-189.565S178.788 1.791 238.417-41.74z"
+                      fill="#ffe685"
+                    />
+                  </G>
+                </Svg>
+              </Animated.View>
+              <Animated.View
                 style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                  paddingLeft: 10,
+                  position: 'absolute',
+                  top: searchBarTop,
+                  marginTop: Platform.OS==='ios'? bounceLoading?reBounce:0:0,
+                  // height: HEADER_BAR_HEIGHT,
+                  height: searchBarHeight,
+                  width: searchBarWidth,
+                  left: spacing(2.5),
+                  // left: 10,
+                  // left: searchBarLocation,
+                  borderRadius: borderRadiusIcon,
+                  backgroundColor: searchBarColor,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 3,
+                  },
+                  shadowOpacity: 0.2,
+                  shadowRadius: 0.1,
+                  elevation: 5,
+                  overflow: 'hidden',
                 }}
                 // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
               >
-                <TouchableOpacity
-                  onPress={() => {
-                    props.setsearchIconPress(!props.searchIconPress);
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                    paddingLeft: 10,
+                    // marginTop: reBounce,
                   }}
-                  // style={{ paddingLeft: 5, zIndex: 1 }}
                   // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
                 >
-                  <SvgHeaderSearchIcon />
-                </TouchableOpacity>
-                <TextInput
-                  returnKeyLabel="Search"
-                  returnKeyType="done"
-                  value={props.searchVal}
-                  onSubmitEditing={() => props.setsearchEnter(props.searchVal)}
-                  onFocus={() => {
-                    setIsFocused(true);
-                  }}
-                  onBlur={() => {
-                    setLoading(!loading);
-                    setIsFocused(false);
-                  }}
-                  onChangeText={e => {
-                    props.setSearchVal(e);
-                  }}
-                  placeholder={i18n.t('find_your_restaurant')}
-                  style={{ flex: 1, paddingHorizontal: 10 }}
-                />
-
-                {hasValue && (
                   <TouchableOpacity
                     onPress={() => {
-                      props.setSearchVal('');
+                      props.setsearchIconPress(!props.searchIconPress);
                     }}
-                    style={{ paddingHorizontal: 8 }}
+                    // style={{ paddingLeft: 5, zIndex: 1 }}
+                    // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
                   >
-                    <View
-                      style={{
-                        backgroundColor: '#FCDF6F',
-                        borderRadius: 20,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: 4,
-                      }}
-                    >
-                      <AntDesign name="close" size={14} color="#485460" />
-                    </View>
+                    <SvgHeaderSearchIcon />
                   </TouchableOpacity>
-                )}
-              </View>
+
+                  <TextInput
+                    returnKeyLabel="Search"
+                    returnKeyType="done"
+                    value={props.searchVal}
+                    onSubmitEditing={() =>
+                      props.setsearchEnter(props.searchVal)
+                    }
+                    onFocus={() => {
+                      setIsFocused(true);
+                    }}
+                    onBlur={() => {
+                      setLoading(!loading);
+                      setIsFocused(false);
+                    }}
+                    onChangeText={e => {
+                      props.setSearchVal(e);
+                    }}
+                    placeholder={i18n.t('find_your_restaurant')}
+                    style={{ flex: 1, paddingHorizontal: 10 }}
+                  />
+
+                  {hasValue && (
+                    <TouchableOpacity
+                      onPress={() => {
+                        props.setSearchVal('');
+                      }}
+                      style={{ paddingHorizontal: 8 }}
+                    >
+                      <View
+                        style={{
+                          backgroundColor: '#FCDF6F',
+                          borderRadius: 20,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          padding: 4,
+                        }}
+                      >
+                        <AntDesign name="close" size={14} color="#485460" />
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </Animated.View>
             </Animated.View>
-          </Animated.View>
-        </>
+          </>
+        )}
+      </View>
+      {bounceLoading && (
+        <BallIndicator
+          style={{ position: 'absolute', top: '5%', right: '48%' }}
+          size={25}
+          color="white"
+        />
       )}
     </>
   );

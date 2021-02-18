@@ -8,12 +8,14 @@ function getEnvVars(env = '') {
 }
 export const releaseEnvironment = getEnvVars(Constants.manifest.releaseChannel);
 const apiUrl = () => {
-  let api_url = `http://192.168.10.15:8081/api`;
-  // let api_url = `http://192.168.0.106:8081/api`;
+  // let api_url = `http://192.168.10.15:8081/api`;
+  let api_url = `http://192.168.0.108:8081/api`;
 
   if (releaseEnvironment == 'production') {
     // expo build:ios --clear-provisioning-profile --revoke-credentials --release-channel production-1.0.0
     // expo build:android --release-channel production-1.0.0
+    //  "ACCESS_COARSE_LOCATION",
+    // "ACCESS_FINE_LOCATION"
     api_url =
       'http://ec2-34-211-185-52.us-west-2.compute.amazonaws.com:5000/api';
   } else if (releaseEnvironment == 'staging') {

@@ -46,7 +46,9 @@
         }
       },
       "permissions": [
-        "MEDIA_LIBRARY"
+        "MEDIA_LIBRARY",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
       ],
       "package": "com.developerspourboir.pourboir",
       "versionCode": 3

@@ -121,6 +121,7 @@ const HomeScreen = props => {
             restaurantLoading={restaurantLoading}
             searchVal={searchVal}
             searchIconPress={searchIconPress}
+
             refetchRestaurant={refetchRestaurant}
             resIsFetching={resIsFetching}
             saveLocation={saveLocation}

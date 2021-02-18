@@ -7,8 +7,8 @@ export default {
   hello: 'Bonjour',
   find_your_restaurant: 'Recherchez votre restaurant',
   around_you: 'Autour de vous',
-  result_distance: 'Résultat Autour de vous',
-  you_have_no_restaurant: "Vous n'avez aucun restaurant pour le moment",
+  result_distance: 'Résultat autour de vous',
+  you_have_no_restaurant: "Vous ne travaillez pour aucun restaurant",
   search_for_rest_and_add:
     'Recherchez votre restaurant et ajoutez vous en choisissant: Vous êtes serveur',
 
@@ -19,10 +19,10 @@ export default {
   are_you_waiter: 'Vous êtes serveur?',
   see_the_menu: 'Voir le menu',
   please_fill: 'Veuillez remplir ces informations',
-  nom_de: 'Nom de la boîte',
-  siren: 'SIREN',
-  nom_de_boss: 'Nom de boss',
-  contact_du_boss: 'contact du boss',
+  nom_de: 'Nom de l&apos;entreprise',
+  siren: 'numéro de SIREN',
+  nom_de_boss: 'Nom du responsable légal',
+  contact_du_boss: 'Téléphone du responsable',
 
   // Rate your server
   rate_your_server: 'Notez votre serveur',
@@ -58,16 +58,16 @@ export default {
 
   // Popup help us improve
   help_us_improve:
-    'Aidez-nous à améliorer notre application. Donnez nous le nom de votre serveur',
+    'Aidez-nous à enrichir les données. Donnez nous le nom de votre serveur',
   will_contact_shortly:
-    'Nous le contacterons prochainement pour l’ajouter dans notre application.',
+    'Nous le contacterons rapidement pour l’ajouter dans l&apos;application.',
   name_of_your_server: 'Le nom de votre serveur',
   add: 'Ajouter',
 
   // Popup thanks for vote
   thanks_for_vote: 'Merci pour votre vote',
   will_contact_by_email:
-    'Nous vous contacterons par email pour vous offire un coupon très prochainement.',
+    'Nous vous offrons un coupon pour la prochaine loterie',
   must_loggedIn: 'Vous devez être connecté pour utiliser Pourboir!',
   continue_with_apple: 'Continuer avec Apple',
 };

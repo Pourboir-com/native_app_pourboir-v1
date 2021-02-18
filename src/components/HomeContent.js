@@ -144,6 +144,7 @@ export default function HomeScreenContent({
             style={{
               flexDirection: 'row',
               marginTop: 17,
+              alignItems: 'center',
             }}
           >
             <FlatList
@@ -181,7 +182,8 @@ export default function HomeScreenContent({
               <RefreshControl
                 //refresh control used for the Pull to Refresh
                 refreshing={resIsFetching}
-                onRefresh={refetchRestaurant}
+                // onRefresh={refetchRestaurant}
+                onRefresh={() => {}}
               />
             )
           }
@@ -202,6 +204,7 @@ export default function HomeScreenContent({
           <View
             style={{
               marginTop: 17,
+              alignItems: 'center',
             }}
           >
             <FlatList

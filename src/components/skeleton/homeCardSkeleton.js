@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   viewDummyCard: {
-    width: Dimensions.get('window').width * 0.45,
+    width: Dimensions.get('window').width * 0.455,
     height: 210,
     margin: Dimensions.get('window').width * 0.02,
     backgroundColor: '#fff',

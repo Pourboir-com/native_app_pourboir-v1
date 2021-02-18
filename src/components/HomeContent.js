@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import {
   StyleSheet,
   Text,
@@ -27,6 +27,7 @@ import Context from '../contextApi/context';
 import * as actionTypes from '../contextApi/actionTypes';
 import Spinner from 'react-native-loading-spinner-overlay';
 // import { BallIndicator } from 'react-native-indicators';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function HomeScreenContent({
   restaurantLoading,
@@ -204,7 +205,7 @@ export default function HomeScreenContent({
           <View
             style={{
               marginTop: 17,
-              alignItems: 'center',
+              marginLeft: 2,
             }}
           >
             <FlatList

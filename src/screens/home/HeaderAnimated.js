@@ -11,6 +11,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  BackHandler,
   Image,
   RefreshControl,
   Platform,
@@ -28,14 +29,15 @@ import Context from '../../contextApi/context';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Button } from 'react-native';
 import { ActivityIndicator } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 const HomeScreen = props => {
+  const scrollRef = useRef(null);
   const { state } = useContext(Context);
   const [loading, setLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   // const [loader, setLoader] = useState();
   const [hasValue, sethasValue] = useState();
-
   // useEffect(() => {
   //   if (state.refreshAnimation) {
   //     setLoader(true);
@@ -45,13 +47,34 @@ const HomeScreen = props => {
     sethasValue(props.searchVal ? true : false);
   });
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const onPressTouch = () => {
+        if (scrollRef.current && scrollRef.current.getNode) {
+          const node = scrollRef.current.getNode();
+          if (node) {
+            // if (scrollPosition > 0) {
+            node.scrollTo({ x: 0, y: 0, animated: true });
+            // }
+          }
+        }
+        return true;
+      };
+      // Add Event Listener for hardwareBackPress
+      BackHandler.addEventListener('hardwareBackPress', onPressTouch);
+
+      return () => {
+        // Once the Screen gets blur Remove Event Listener
+        BackHandler.removeEventListener('hardwareBackPress', onPressTouch);
+      };
+    }, []),
+  );
+
   useEffect(() => {
     setLoading(!loading);
   }, [props.saveLocation, state]);
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight();
-
-  const scrollRef = useRef(null);
 
   const navigation = useNavigation();
 
@@ -497,7 +520,7 @@ const HomeScreen = props => {
                 elevation: 5,
                 overflow: 'hidden',
               }}
-              {...(Platform.OS === 'ios' ? { hitSlop } : {})}
+              // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
             >
               <View
                 style={{
@@ -511,7 +534,7 @@ const HomeScreen = props => {
                   // position: 'absolute',
                   // left: '4%',
                 }}
-                {...(Platform.OS === 'ios' ? { hitSlop } : {})}
+                // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
               >
                 <TouchableOpacity
                   onPress={() => {
@@ -521,7 +544,7 @@ const HomeScreen = props => {
                   //   padding: 5,
                   //   zIndex: 1,
                   // }}
-                  {...(Platform.OS === 'ios' ? { hitSlop } : {})}
+                  // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
                 >
                   <SvgHeaderSearchIcon />
                 </TouchableOpacity>
@@ -576,6 +599,7 @@ const HomeScreen = props => {
             alwaysBounceHorizontal={false}
             alwaysBounceVertical={true}
             bounces={true}
+            onLayout={nativeEvent => console.log(nativeEvent.layout)}
             keyboardShouldPersistTaps={'handled'}
             refreshControl={
               <RefreshControl
@@ -670,7 +694,7 @@ const HomeScreen = props => {
                 elevation: 5,
                 overflow: 'hidden',
               }}
-              {...(Platform.OS === 'ios' ? { hitSlop } : {})}
+              // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
             >
               <View
                 style={{
@@ -680,7 +704,7 @@ const HomeScreen = props => {
                   justifyContent: 'flex-start',
                   paddingLeft: 10,
                 }}
-                {...(Platform.OS === 'ios' ? { hitSlop } : {})}
+                // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
               >
                 <TouchableOpacity
                   onPress={() => {

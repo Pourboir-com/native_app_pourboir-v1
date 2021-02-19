@@ -647,7 +647,6 @@ const HomeScreen = props => {
                     <TouchableOpacity
                       onPress={() => {
                         props.setSearchVal('');
-                        setIsNoLoading(true);
                       }}
                       style={{ paddingHorizontal: 8 }}
                     >

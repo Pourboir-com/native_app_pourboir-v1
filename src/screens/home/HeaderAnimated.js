@@ -46,7 +46,7 @@ const HomeScreen = props => {
   //   }
   // }, [state.refreshAnimation]);
   const bounceLoading = props.restaurantLoading || props.resIsFetching;
-  console.log(bounceLoading);
+
   useEffect(() => {
     sethasValue(props.searchVal ? true : false);
   });
@@ -520,7 +520,7 @@ const HomeScreen = props => {
                 style={{
                   position: 'absolute',
                   top: searchBarTop,
-                  marginTop: Platform.OS==='ios'? bounceLoading?reBounce:0:0,
+                  marginTop: props.restaurantLoading ?0:Platform.OS==='ios'? bounceLoading?reBounce:0:0,
                   zIndex: 10,
                   // height: HEADER_BAR_HEIGHT,
                   height: searchBarHeight,
@@ -701,7 +701,7 @@ const HomeScreen = props => {
                 style={{
                   position: 'absolute',
                   top: searchBarTop,
-                  marginTop: Platform.OS==='ios'? bounceLoading?reBounce:0:0,
+                  marginTop: props.restaurantLoading ?0:Platform.OS==='ios'? bounceLoading?reBounce:0:0,
                   // height: HEADER_BAR_HEIGHT,
                   height: searchBarHeight,
                   width: searchBarWidth,

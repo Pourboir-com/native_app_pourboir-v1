@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Header from './HeaderAnimated';
-import HeaderSimple from './HeaderSimple';
 import HomeScreenContent from '../../components/HomeContent';
 import { StatusBar } from 'expo-status-bar';
 import { getAsyncStorageValues } from '../../constants';
@@ -10,12 +9,10 @@ import { useQuery } from 'react-query';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import { isSearch } from '../../util';
-import Spinner from 'react-native-loading-spinner-overlay';
 
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
   const [searchEnter, setsearchEnter] = useState('');
-  const [searchIconPress, setSearchIconPress] = useState(false);
   const [saveLocation, setSaveLocation] = useState('');
   const [nextPageToken, setnextPageToken] = useState();
   const { state, dispatch } = useContext(Context);
@@ -97,64 +94,35 @@ const HomeScreen = props => {
 
   return (
     <>
-      {/* <Spinner visible={yourRestaurantLoading}/> */}
-      {!searchIconPress ? (
-        <Header
-          setsearchIconPress={setSearchIconPress}
-          searchIconPress={searchIconPress}
-          searchVal={searchVal}
+      <Header
+        searchVal={searchVal}
+        restaurantLoading={restaurantLoading}
+        setSearchVal={setSearchVal}
+        navigation={props?.navigation}
+        resIsFetching={resIsFetching}
+        saveLocation={saveLocation}
+        yourRestaurantLoading={yourRestaurantLoading}
+        yourRefetchRestaurant={yourRefetchRestaurant}
+        refetchRestaurant={refetchRestaurant}
+        yourResIsFetching={yourResIsFetching}
+        setsearchEnter={setsearchEnter}
+        // nextPageToken={nextPageToken}
+        Data={data}
+      >
+        <StatusBar translucent={true} style="dark" />
+        <HomeScreenContent
           restaurantLoading={restaurantLoading}
-          setSearchVal={setSearchVal}
-          navigation={props?.navigation}
+          searchVal={searchVal}
+          refetchRestaurant={refetchRestaurant}
           resIsFetching={resIsFetching}
           saveLocation={saveLocation}
-          yourRestaurantLoading={yourRestaurantLoading}
-          yourRefetchRestaurant={yourRefetchRestaurant}
-          refetchRestaurant={refetchRestaurant}
-          yourResIsFetching={yourResIsFetching}
-          setsearchEnter={setsearchEnter}
-          // nextPageToken={nextPageToken}
+          searchEnter={searchEnter}
           Data={data}
-        >
-          <StatusBar translucent={true} style="dark" />
-          <HomeScreenContent
-            restaurantLoading={restaurantLoading}
-            searchVal={searchVal}
-            searchIconPress={searchIconPress}
-            refetchRestaurant={refetchRestaurant}
-            resIsFetching={resIsFetching}
-            saveLocation={saveLocation}
-            searchEnter={searchEnter}
-            Data={data}
-            // isFetch={searchVal === '' ? true : false}
-            route={props?.route}
-            // handleLoadMore={handleLoadMore}
-          />
-        </Header>
-      ) : (
-        <>
-          <HeaderSimple
-            setSearchIconPress={setSearchIconPress}
-            searchIconPress={searchIconPress}
-            searchVal={searchVal}
-            setSearchVal={setSearchVal}
-            setsearchEnter={setsearchEnter}
-          />
-          <StatusBar translucent={true} style="dark" />
-          <HomeScreenContent
-            restaurantLoading={restaurantLoading}
-            searchIconPress={searchIconPress}
-            refetchRestaurant={refetchRestaurant}
-            saveLocation={saveLocation}
-            searchVal={searchVal}
-            resIsFetching={resIsFetching}
-            searchEnter={searchEnter}
-            Data={data}
-            route={props?.route}
-            // handleLoadMore={handleLoadMore}
-          />
-        </>
-      )}
+          // isFetch={searchVal === '' ? true : false}
+          route={props?.route}
+          // handleLoadMore={handleLoadMore}
+        />
+      </Header>
     </>
   );
 };

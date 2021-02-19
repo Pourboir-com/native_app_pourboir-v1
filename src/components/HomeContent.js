@@ -1,15 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   ScrollView,
   RefreshControl,
-  Dimensions,
   FlatList,
   Image,
-  Platform,
 } from 'react-native';
 import { Colors } from '../constants/Theme';
 import HomeCard from './HomeCard';
@@ -26,8 +24,6 @@ import { useMutation } from 'react-query';
 import Context from '../contextApi/context';
 import * as actionTypes from '../contextApi/actionTypes';
 import Spinner from 'react-native-loading-spinner-overlay';
-// import { BallIndicator } from 'react-native-indicators';
-import { useFocusEffect } from '@react-navigation/native';
 
 export default function HomeScreenContent({
   restaurantLoading,
@@ -40,7 +36,6 @@ export default function HomeScreenContent({
   // handleLoadMore,
   saveLocation,
   route,
-  searchIconPress,
 }) {
   // const data = [...Data];
   const [data, setData] = useState([]);
@@ -131,7 +126,7 @@ export default function HomeScreenContent({
         <View
           style={{
             backgroundColor: '#F9F9F9',
-            marginTop: Platform.OS === 'ios' && !searchIconPress ? -58 : 0,
+            marginTop: 0,
           }}
         >
           {!route.params.crossIcon && (

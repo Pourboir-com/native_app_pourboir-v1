@@ -26,15 +26,13 @@ import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import i18n from '../../li8n';
 import Context from '../../contextApi/context';
-import Spinner from 'react-native-loading-spinner-overlay';
-import { Button } from 'react-native';
 import { ActivityIndicator } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { BallIndicator } from 'react-native-indicators';
-import { StatusBar } from 'expo-status-bar';
 
 const HomeScreen = props => {
   const scrollRef = useRef(null);
+  const TextInputRef = React.useRef(null);
   const { state } = useContext(Context);
   const [loading, setLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -207,10 +205,7 @@ const HomeScreen = props => {
   });
 
   useLayoutEffect(() => {
-    // alert(())
-
     const renderUserIcon = () => {
-      // return <Ionicons name="ios-contact" size={30} onPress={(): void => propsUserIcon.navigation.navigate('SelectSignIn')} />;
       return (
         <View
           style={[
@@ -220,7 +215,6 @@ const HomeScreen = props => {
               top: spacing(1),
               marginTop: bounceLoading ? reBounce : 0,
             },
-            // Platform.OS === 'ios' ? { marginTop: HEADER_BAR_HEIGHT / 1.5 } : { marginTop: HEADER_BAR_HEIGHT / 1.5 }
           ]}
         >
           {state.userDetails.user_id ? (
@@ -316,8 +310,6 @@ const HomeScreen = props => {
               </Text>
             </Animated.View>
           </View>
-
-          {/* )} */}
         </>
       );
     };
@@ -333,10 +325,8 @@ const HomeScreen = props => {
       headerLeftContainerStyle: { position: 'absolute' },
     });
   });
-  const hitSlop = { zIndex: 2 };
   return (
     <>
-      {/* <StatusBar translucent={true} style="dark" /> */}
       <View style={{}}>
         {loading ? (
           <>
@@ -377,8 +367,6 @@ const HomeScreen = props => {
                   },
                 ])}
               >
-                {/* <BallIndicator size={20} color="black" /> */}
-                {/* <Spinner visible={loader} /> */}
                 {props.children}
               </Animated.ScrollView>
               <Animated.View
@@ -426,106 +414,6 @@ const HomeScreen = props => {
                     </G>
                   </Svg>
                 </Animated.View>
-
-                {/* <Animated.View
-                  style={{
-                    position: 'absolute',
-                    top: searchBarTop,
-                    marginTop: 0,
-                    zIndex: 10,
-                    // height: HEADER_BAR_HEIGHT,
-                    height: searchBarHeight,
-                    width: searchBarWidth,
-
-                    left: spacing(2.5),
-                    // left: 10,
-                    // left: searchBarLocation,
-                    // marginLeft: spacing(2.5),
-                    borderRadius: borderRadiusIcon,
-                    backgroundColor: searchBarColor,
-                    shadowColor: '#000',
-                    shadowOffset: {
-                      width: 0,
-                      height: 3,
-                    },
-                    shadowOpacity: 0.2,
-                    shadowRadius: 0.1,
-                    elevation: 5,
-                    overflow: 'hidden',
-                  }}
-                  // hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
-                >
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'flex-start',
-                      paddingLeft: 10,
-                      // marginTop: reBounce,
-                      // marginLeft: spacing(2.5),
-
-                      // position: 'absolute',
-                      // left: '4%',
-                    }}
-                    // hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
-                  >
-                    <TouchableOpacity
-                      onPress={() => {
-                        props.setsearchIconPress(!props.searchIconPress);
-                      }}
-                      // style={{
-                      //   padding: 5,
-                      //   zIndex: 1,
-                      // }}
-                      // hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
-                    >
-                      <SvgHeaderSearchIcon />
-                    </TouchableOpacity>
-                    <TextInput
-                      returnKeyLabel="Search"
-                      returnKeyType="done"
-                      onSubmitEditing={() =>
-                        props.setsearchEnter(props.searchVal)
-                      }
-                      value={props.searchVal}
-                      onFocus={() => {
-                        setIsFocused(true);
-                      }}
-                      onBlur={() => {
-                        setLoading(!loading);
-                        setIsFocused(false);
-                      }}
-                      onChangeText={e => {
-                        props.setSearchVal(e);
-                      }}
-                      placeholder={i18n.t('find_your_restaurant')}
-                      placeholderTextColor={'#485460'}
-                      style={{ flex: 1, paddingHorizontal: 10 }}
-                    />
-
-                    {hasValue && (
-                      <TouchableOpacity
-                        onPress={() => {
-                          props.setSearchVal('');
-                        }}
-                        style={{ paddingHorizontal: 8 }}
-                      >
-                        <View
-                          style={{
-                            backgroundColor: '#FCDF6F',
-                            borderRadius: 20,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            padding: 4,
-                          }}
-                        >
-                          <AntDesign name="close" size={14} color="#485460" />
-                        </View>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                </Animated.View> */}
               </Animated.View>
 
               <Animated.View
@@ -577,21 +465,26 @@ const HomeScreen = props => {
                     // position: 'absolute',
                     // left: '4%',
                   }}
-                  // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
                 >
                   <TouchableOpacity
                     onPress={() => {
-                      props.setsearchIconPress(!props.searchIconPress);
+                      if (scrollRef.current && scrollRef.current.getNode) {
+                        const node = scrollRef.current.getNode();
+                        if (node) {
+                          // if (scrollPosition > 0) {
+                          node.scrollTo({ y: -50, animated: true });
+                          setTimeout(() => {
+                            TextInputRef.current.focus();
+                          }, 200);
+                          // }
+                        }
+                      }
                     }}
-                    // style={{
-                    //   padding: 5,
-                    //   zIndex: 1,
-                    // }}
-                    // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
                   >
                     <SvgHeaderSearchIcon />
                   </TouchableOpacity>
                   <TextInput
+                    ref={TextInputRef}
                     returnKeyLabel="Search"
                     returnKeyType="done"
                     onSubmitEditing={() =>
@@ -645,7 +538,6 @@ const HomeScreen = props => {
               alwaysBounceHorizontal={false}
               alwaysBounceVertical={true}
               bounces={true}
-              // onLayout={nativeEvent => console.log(nativeEvent.layout)}
               keyboardShouldPersistTaps={'handled'}
               refreshControl={
                 <RefreshControl
@@ -659,7 +551,6 @@ const HomeScreen = props => {
               // bounces={true}
               ref={scrollRef}
               contentContainerStyle={{
-                // alignItems: 'center',
                 paddingTop: props.searchIconPress ? 0 : HEADER_HEIGHT,
                 minHeight: props.searchIconPress
                   ? 0
@@ -749,7 +640,6 @@ const HomeScreen = props => {
                   elevation: 5,
                   overflow: 'hidden',
                 }}
-                // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
               >
                 <View
                   style={{
@@ -760,19 +650,26 @@ const HomeScreen = props => {
                     paddingLeft: 10,
                     // marginTop: reBounce,
                   }}
-                  // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
                 >
                   <TouchableOpacity
                     onPress={() => {
-                      props.setsearchIconPress(!props.searchIconPress);
+                      if (scrollRef.current && scrollRef.current.getNode) {
+                        const node = scrollRef.current.getNode();
+                        if (node) {
+                          // if (scrollPosition > 0) {
+                          node.scrollTo({ y: -50, animated: true });
+                          setTimeout(() => {
+                            TextInputRef.current.focus();
+                          }, 200);
+                        }
+                      }
                     }}
-                    // style={{ paddingLeft: 5, zIndex: 1 }}
-                    // {...(Platform.OS === 'ios' ? { hitSlop } : {})}
                   >
                     <SvgHeaderSearchIcon />
                   </TouchableOpacity>
 
                   <TextInput
+                    ref={TextInputRef}
                     returnKeyLabel="Search"
                     returnKeyType="done"
                     value={props.searchVal}
@@ -822,7 +719,7 @@ const HomeScreen = props => {
       </View>
       {bounceLoading && (
         <BallIndicator
-          style={{ position: 'absolute', top: '5%', right: '48%' }}
+          style={{ position: 'absolute', top: '5%', right: '47%' }}
           size={25}
           color="white"
         />

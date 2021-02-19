@@ -100,9 +100,9 @@ const RateService = ({ navigation, route }) => {
       };
       await addRatings(ratingDetails, {
         onSuccess: async e => {
-          setLoading(false);
           setisVisible(true);
           setlotteryNo(e.data.data.token);
+          setLoading(false);
         },
         onError: () => {
           setLoading(false);
@@ -202,8 +202,8 @@ const RateService = ({ navigation, route }) => {
                       v <= hospitality
                         ? 'filled'
                         : v === hospitality + 0.5
-                        ? 'half'
-                        : 'empty'
+                          ? 'half'
+                          : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />
@@ -232,8 +232,8 @@ const RateService = ({ navigation, route }) => {
                       v <= speed
                         ? 'filled'
                         : v === speed + 0.5
-                        ? 'half'
-                        : 'empty'
+                          ? 'half'
+                          : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />
@@ -262,8 +262,8 @@ const RateService = ({ navigation, route }) => {
                       v <= service
                         ? 'filled'
                         : v === service + 0.5
-                        ? 'half'
-                        : 'empty'
+                          ? 'half'
+                          : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />
@@ -292,8 +292,8 @@ const RateService = ({ navigation, route }) => {
                       v <= professionalism
                         ? 'filled'
                         : v === professionalism + 0.5
-                        ? 'half'
-                        : 'empty'
+                          ? 'half'
+                          : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />
@@ -354,13 +354,15 @@ const RateService = ({ navigation, route }) => {
         <TouchableOpacity
           onPress={handleAddRatings}
           disabled={
-            hospitality &&
-            speed &&
-            professionalism &&
-            service &&
-            remarks.replace(/[^0-9]/g, '')
-              ? false
-              : true
+            loading
+              ? true
+              : hospitality &&
+                speed &&
+                professionalism &&
+                service &&
+                remarks.replace(/[^0-9]/g, '')
+                ? false
+                : true
           }
           style={[
             styles.btnValider,
@@ -369,8 +371,8 @@ const RateService = ({ navigation, route }) => {
               professionalism &&
               service &&
               remarks.replace(/[^0-9]/g, '') && {
-                backgroundColor: Colors.yellow,
-              },
+              backgroundColor: Colors.yellow,
+            },
           ]}
         >
           {loading ? (

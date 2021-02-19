@@ -80,7 +80,7 @@ const HomeScreen = props => {
   }, [props.saveLocation, state]);
   const reBounce =25;
 
-  const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight() + (bounceLoading ? reBounce:0);
+  const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight() + (bounceLoading ? reBounce : 0);
 
   const navigation = useNavigation();
 
@@ -92,7 +92,7 @@ const HomeScreen = props => {
     // outputRange: [0, -HEADER_HEIGHT + HEADER_BAR_HEIGHT + getStatusBarHeight() + spacing(1)],
     outputRange: [
       0,
-      -HEADER_HEIGHT + 1.5 * HEADER_BAR_HEIGHT + getStatusBarHeight(),
+      -HEADER_HEIGHT + 1.5 * HEADER_BAR_HEIGHT + getStatusBarHeight() +  (bounceLoading ? 27 : 0),
     ],
     extrapolate: Extrapolate.CLAMP,
   });
@@ -133,7 +133,7 @@ const HomeScreen = props => {
     // outputRange: [HEADER_HEIGHT - (1.5 * HEADER_BAR_HEIGHT) - getStatusBarHeight(), spacing(1)],
     outputRange: [
       HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT,
-      getStatusBarHeight() + spacing(1),
+      getStatusBarHeight() + spacing(bounceLoading ? 4.4 : 1.1),
     ],
 
     extrapolate: Extrapolate.CLAMP,
@@ -630,7 +630,6 @@ const HomeScreen = props => {
                 <RefreshControl
                   //refresh control used for the Pull to Refresh
                   // refreshing={bounceLoading}
-                  tintColor="#f0f"
                   // onRefresh={() => {}}
                   style={{ display: 'none', color: '#F9F9F9' }}
                   onRefresh={props.refetchRestaurant}

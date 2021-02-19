@@ -8,7 +8,7 @@ export default {
   find_your_restaurant: 'Find your restaurant',
   around_you: 'Around you',
   result_distance: 'Result around you',
-  you_have_no_restaurant: 'You don&apos;t work for any restaurants',
+  you_have_no_restaurant: 'You do not work for any restaurants',
   search_for_rest_and_add:
     'Search for your restaurant and add yourself by choosing: You are a waiter',
 

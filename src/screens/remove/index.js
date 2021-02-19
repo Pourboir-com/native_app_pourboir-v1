@@ -38,7 +38,7 @@ const Remove = props => {
         <View
           style={{
             width: '100%',
-            height: 110,
+            height: 100,
             borderBottomLeftRadius: Dimensions.get('window').width * 0.06,
             borderBottomRightRadius: Dimensions.get('window').width * 0.06,
             overflow: 'hidden',

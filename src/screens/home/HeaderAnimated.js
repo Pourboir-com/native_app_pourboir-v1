@@ -45,8 +45,17 @@ const HomeScreen = props => {
   //     setLoader(true);
   //   }
   // }, [state.refreshAnimation]);
-  const bounceLoading = props.restaurantLoading || props.resIsFetching;
+  const [isNoLoading, setIsNoLoading] = useState(false);
 
+  useEffect(() => {
+    if (isNoLoading) {
+      setTimeout(() => {
+        setIsNoLoading(false);
+      }, 2000);
+    }
+  }, [isNoLoading]);
+  const bounceLoading = props.restaurantLoading || props.resIsFetching;
+  const noLoading = (hasValue && props.resIsFetching) || isNoLoading;
   useEffect(() => {
     sethasValue(props.searchVal ? true : false);
   });
@@ -523,13 +532,15 @@ const HomeScreen = props => {
                 style={{
                   position: 'absolute',
                   top: searchBarTop,
-                  marginTop: props.restaurantLoading
+                  marginTop: noLoading
                     ? 0
-                    : Platform.OS === 'ios'
-                      ? bounceLoading
-                        ? reBounce
-                        : 0
-                      : 0,
+                    : props.restaurantLoading
+                      ? 0
+                      : Platform.OS === 'ios'
+                        ? bounceLoading
+                          ? reBounce
+                          : 0
+                        : 0,
                   zIndex: 10,
                   // height: HEADER_BAR_HEIGHT,
                   height: searchBarHeight,
@@ -606,6 +617,7 @@ const HomeScreen = props => {
                     <TouchableOpacity
                       onPress={() => {
                         props.setSearchVal('');
+                        setIsNoLoading(true);
                       }}
                       style={{ paddingHorizontal: 8 }}
                     >
@@ -710,13 +722,15 @@ const HomeScreen = props => {
                 style={{
                   position: 'absolute',
                   top: searchBarTop,
-                  marginTop: props.restaurantLoading
+                  marginTop: noLoading
                     ? 0
-                    : Platform.OS === 'ios'
-                      ? bounceLoading
-                        ? reBounce
-                        : 0
-                      : 0,
+                    : props.restaurantLoading
+                      ? 0
+                      : Platform.OS === 'ios'
+                        ? bounceLoading
+                          ? reBounce
+                          : 0
+                        : 0,
                   // height: HEADER_BAR_HEIGHT,
                   height: searchBarHeight,
                   width: searchBarWidth,
@@ -783,6 +797,7 @@ const HomeScreen = props => {
                     <TouchableOpacity
                       onPress={() => {
                         props.setSearchVal('');
+                        setIsNoLoading(true);
                       }}
                       style={{ paddingHorizontal: 8 }}
                     >

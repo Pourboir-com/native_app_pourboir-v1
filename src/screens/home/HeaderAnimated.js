@@ -76,11 +76,13 @@ const HomeScreen = props => {
 
   useEffect(() => {
     setLoading(!loading);
-
   }, [props.saveLocation, state]);
-  const reBounce =25;
+  const reBounce = 25;
 
-  const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight() + (bounceLoading ? reBounce : 0);
+  const HEADER_HEIGHT =
+    HEADER_BAR_HEIGHT * 3.1 +
+    getStatusBarHeight() +
+    (bounceLoading ? reBounce : 0);
 
   const navigation = useNavigation();
 
@@ -92,7 +94,10 @@ const HomeScreen = props => {
     // outputRange: [0, -HEADER_HEIGHT + HEADER_BAR_HEIGHT + getStatusBarHeight() + spacing(1)],
     outputRange: [
       0,
-      -HEADER_HEIGHT + 1.5 * HEADER_BAR_HEIGHT + getStatusBarHeight() +  (bounceLoading ? 27 : 0),
+      -HEADER_HEIGHT +
+        1.5 * HEADER_BAR_HEIGHT +
+        getStatusBarHeight() +
+        (bounceLoading ? 27 : 0),
     ],
     extrapolate: Extrapolate.CLAMP,
   });
@@ -273,7 +278,6 @@ const HomeScreen = props => {
                 left: spacing(2.5),
                 top: spacing(1),
                 marginTop: bounceLoading ? reBounce : 0,
-
               },
             ]}
           >
@@ -324,7 +328,7 @@ const HomeScreen = props => {
   return (
     <>
       {/* <StatusBar translucent={true} style="dark" /> */}
-      <View style={{  }}>
+      <View style={{}}>
         {loading ? (
           <>
             <View>
@@ -333,7 +337,6 @@ const HomeScreen = props => {
                 alwaysBounceHorizontal={false}
                 alwaysBounceVertical={true}
                 bounces={true}
-
                 refreshControl={
                   <>
                     <RefreshControl
@@ -520,7 +523,13 @@ const HomeScreen = props => {
                 style={{
                   position: 'absolute',
                   top: searchBarTop,
-                  marginTop: props.restaurantLoading ?0:Platform.OS==='ios'? bounceLoading?reBounce:0:0,
+                  marginTop: props.restaurantLoading
+                    ? 0
+                    : Platform.OS === 'ios'
+                      ? bounceLoading
+                        ? reBounce
+                        : 0
+                      : 0,
                   zIndex: 10,
                   // height: HEADER_BAR_HEIGHT,
                   height: searchBarHeight,
@@ -624,7 +633,7 @@ const HomeScreen = props => {
               alwaysBounceHorizontal={false}
               alwaysBounceVertical={true}
               bounces={true}
-              onLayout={nativeEvent => console.log(nativeEvent.layout)}
+              // onLayout={nativeEvent => console.log(nativeEvent.layout)}
               keyboardShouldPersistTaps={'handled'}
               refreshControl={
                 <RefreshControl
@@ -701,7 +710,13 @@ const HomeScreen = props => {
                 style={{
                   position: 'absolute',
                   top: searchBarTop,
-                  marginTop: props.restaurantLoading ?0:Platform.OS==='ios'? bounceLoading?reBounce:0:0,
+                  marginTop: props.restaurantLoading
+                    ? 0
+                    : Platform.OS === 'ios'
+                      ? bounceLoading
+                        ? reBounce
+                        : 0
+                      : 0,
                   // height: HEADER_BAR_HEIGHT,
                   height: searchBarHeight,
                   width: searchBarWidth,

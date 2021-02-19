@@ -28,7 +28,6 @@ import i18n from '../../li8n';
 import Context from '../../contextApi/context';
 import { ActivityIndicator } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { BallIndicator } from 'react-native-indicators';
 
 const HomeScreen = props => {
   const scrollRef = useRef(null);
@@ -38,22 +37,7 @@ const HomeScreen = props => {
   const [isFocused, setIsFocused] = useState(false);
   // const [loader, setLoader] = useState();
   const [hasValue, sethasValue] = useState();
-  // useEffect(() => {
-  //   if (state.refreshAnimation) {
-  //     setLoader(true);
-  //   }
-  // }, [state.refreshAnimation]);
-  const [isNoLoading, setIsNoLoading] = useState(false);
 
-  useEffect(() => {
-    if (isNoLoading) {
-      setTimeout(() => {
-        setIsNoLoading(false);
-      }, 2000);
-    }
-  }, [isNoLoading]);
-  const bounceLoading = props.restaurantLoading || props.resIsFetching;
-  const noLoading = (hasValue && props.resIsFetching) || isNoLoading;
   useEffect(() => {
     sethasValue(props.searchVal ? true : false);
   });
@@ -88,8 +72,7 @@ const HomeScreen = props => {
 
   const HEADER_HEIGHT =
     HEADER_BAR_HEIGHT * 3.1 +
-    getStatusBarHeight() +
-    (bounceLoading ? reBounce : 0);
+    getStatusBarHeight() + 0;
 
   const navigation = useNavigation();
 
@@ -104,7 +87,7 @@ const HomeScreen = props => {
       -HEADER_HEIGHT +
         1.5 * HEADER_BAR_HEIGHT +
         getStatusBarHeight() +
-        (bounceLoading ? 27 : 0),
+        (0),
     ],
     extrapolate: Extrapolate.CLAMP,
   });
@@ -145,7 +128,7 @@ const HomeScreen = props => {
     // outputRange: [HEADER_HEIGHT - (1.5 * HEADER_BAR_HEIGHT) - getStatusBarHeight(), spacing(1)],
     outputRange: [
       HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT,
-      getStatusBarHeight() + spacing(bounceLoading ? 4.4 : 1.1),
+      getStatusBarHeight() + spacing(1.1),
     ],
 
     extrapolate: Extrapolate.CLAMP,
@@ -213,7 +196,7 @@ const HomeScreen = props => {
               position: 'absolute',
               right: spacing(2.5),
               top: spacing(1),
-              marginTop: bounceLoading ? reBounce : 0,
+              marginTop: 0,
             },
           ]}
         >
@@ -280,7 +263,7 @@ const HomeScreen = props => {
                 position: 'absolute',
                 left: spacing(2.5),
                 top: spacing(1),
-                marginTop: bounceLoading ? reBounce : 0,
+                marginTop: 0,
               },
             ]}
           >
@@ -340,12 +323,9 @@ const HomeScreen = props => {
                   <>
                     <RefreshControl
                       //refresh control used for the Pull to Refresh
-                      // refreshing={bounceLoading}
+                      refreshing={props.resIsFetching}
                       onRefresh={props.refetchRestaurant}
-                      color="#F9F9F9"
-                      tintColor="#F9F9F9"
-                      // onRefresh={() => {}}
-                      // style={{position: 'absolute'}}
+
                     />
                   </>
                 }
@@ -357,7 +337,7 @@ const HomeScreen = props => {
                   minHeight: props.searchIconPress
                     ? 0
                     : LAYOUT.window.height + HEADER_HEIGHT,
-                  // marginTop: bounceLoading ? reBounce : 0,
+
                 }}
                 scrollEventThrottle={1}
                 showsVerticalScrollIndicator={false}
@@ -420,15 +400,6 @@ const HomeScreen = props => {
                 style={{
                   position: 'absolute',
                   top: searchBarTop,
-                  marginTop: noLoading
-                    ? 0
-                    : props.restaurantLoading
-                      ? 0
-                      : Platform.OS === 'ios'
-                        ? bounceLoading
-                          ? reBounce
-                          : 0
-                        : 0,
                   zIndex: 10,
                   // height: HEADER_BAR_HEIGHT,
                   height: searchBarHeight,
@@ -459,11 +430,6 @@ const HomeScreen = props => {
                     alignItems: 'center',
                     justifyContent: 'flex-start',
                     paddingLeft: 10,
-                    // marginTop: reBounce,
-                    // marginLeft: spacing(2.5),
-
-                    // position: 'absolute',
-                    // left: '4%',
                   }}
                 >
                   <TouchableOpacity
@@ -471,7 +437,6 @@ const HomeScreen = props => {
                       if (scrollRef.current && scrollRef.current.getNode) {
                         const node = scrollRef.current.getNode();
                         if (node) {
-                          // if (scrollPosition > 0) {
                           node.scrollTo({ y: -50, animated: true });
                           setTimeout(() => {
                             TextInputRef.current.focus();
@@ -510,7 +475,6 @@ const HomeScreen = props => {
                     <TouchableOpacity
                       onPress={() => {
                         props.setSearchVal('');
-                        setIsNoLoading(true);
                       }}
                       style={{ paddingHorizontal: 8 }}
                     >
@@ -542,9 +506,8 @@ const HomeScreen = props => {
               refreshControl={
                 <RefreshControl
                   //refresh control used for the Pull to Refresh
-                  // refreshing={bounceLoading}
+                  refreshing={props.resIsFetching}
                   // onRefresh={() => {}}
-                  style={{ display: 'none', color: '#F9F9F9' }}
                   onRefresh={props.refetchRestaurant}
                 />
               }
@@ -613,21 +576,11 @@ const HomeScreen = props => {
                 style={{
                   position: 'absolute',
                   top: searchBarTop,
-                  marginTop: noLoading
-                    ? 0
-                    : props.restaurantLoading
-                      ? 0
-                      : Platform.OS === 'ios'
-                        ? bounceLoading
-                          ? reBounce
-                          : 0
-                        : 0,
-                  // height: HEADER_BAR_HEIGHT,
+
                   height: searchBarHeight,
                   width: searchBarWidth,
                   left: spacing(2.5),
-                  // left: 10,
-                  // left: searchBarLocation,
+
                   borderRadius: borderRadiusIcon,
                   backgroundColor: searchBarColor,
                   shadowColor: '#000',
@@ -648,7 +601,7 @@ const HomeScreen = props => {
                     alignItems: 'center',
                     justifyContent: 'flex-start',
                     paddingLeft: 10,
-                    // marginTop: reBounce,
+
                   }}
                 >
                   <TouchableOpacity
@@ -717,13 +670,6 @@ const HomeScreen = props => {
           </>
         )}
       </View>
-      {bounceLoading && (
-        <BallIndicator
-          style={{ position: 'absolute', top: '5%', right: '47%' }}
-          size={25}
-          color="white"
-        />
-      )}
     </>
   );
 };

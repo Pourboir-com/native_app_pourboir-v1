@@ -177,7 +177,7 @@ export default function HomeScreenContent({
             resIsFetching && (
               <RefreshControl
                 //refresh control used for the Pull to Refresh
-                // refreshing={resIsFetching}
+                refreshing={resIsFetching}
                 // color="#F9F9F9"
                 // tintColor="#F9F9F9"
                 // onRefresh={refetchRestaurant}

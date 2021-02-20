@@ -11,8 +11,8 @@ import {
   Platform,
   ScrollView,
   // Keyboard,
-  Dimensions,
   TextInput,
+  Dimensions,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -24,8 +24,7 @@ const imgBg = require('../../assets/images/Group7.png');
 const ConfirmationModal = ({
   isVisible,
   handleModalClose,
-  name,
-  handleIAMWAITER,
+  postData,
   loading,
 }) => {
   const scrollRef = React.useRef(null);
@@ -39,28 +38,91 @@ const ConfirmationModal = ({
   const [placeholderBossContact, setplaceholderBossContact] = useState(
     i18n.t('contact_du_boss'),
   );
+  const [placeholderWaiterName, setPlaceholderWaiterName] = React.useState(
+    i18n.t('name_of_your_server'),
+  );
   const [CompanyName, setCompanyName] = useState();
   const [Siren, setSiren] = useState();
   const [bossName, setBossName] = useState();
   const [bossContact, setBossContact] = useState();
-  console.log(Dimensions.get('window').height)
-  // const [onHandleFocus, setonHandleFocus] = useState(false);
+  const [waiterName, setwaiterName] = useState();
+
+  const ValidateDisable = () => {
+    if (loading) {
+      return true;
+    } else if (!isVisible.addWaiterModalVisible) {
+      if (CompanyName && Siren && bossName && bossContact) {
+        return false;
+      } else {
+        return true;
+      }
+    } else if (isVisible.addWaiterModalVisible) {
+      if (waiterName && CompanyName && Siren && bossName && bossContact) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const ValidateButtonColor = () => {
+    if (!isVisible.addWaiterModalVisible) {
+      if (CompanyName && Siren && bossName && bossContact) {
+        return {
+          backgroundColor: Colors.yellow,
+        };
+      }
+    } else if (isVisible.addWaiterModalVisible) {
+      if (waiterName && CompanyName && Siren && bossName && bossContact) {
+        return {
+          backgroundColor: Colors.yellow,
+        };
+      }
+    } else {
+      return {};
+    }
+  };
+
+  const HandlePostData = async () => {
+    if (!isVisible.addWaiterModalVisible) {
+      await postData(CompanyName, Siren, bossName, bossContact);
+      resetPlaceholder();
+    }
+    if (isVisible.addWaiterModalVisible) {
+      await postData(waiterName, CompanyName, Siren, bossName, bossContact);
+      resetPlaceholder();
+    }
+  };
 
   // React.useEffect(() => {
   //   if (scrollRef.current) {
-  //     const keyboardDidShowListener = Keyboard.addListener(
-  //       'keyboardDidShow',
-  //       () => {
-  //         setTimeout(() => {
-  //           scrollRef.current.scrollToEnd({ animated: true });
-  //         }, 100);
-  //       },
-  //     );
-  //     return () => {
-  //       keyboardDidShowListener.remove();
-  //     };
+  //     const node = scrollRef.current;
+  //     if (node) {
+  //       const keyboardDidShowListener = Keyboard.addListener(
+  //         'keyboardDidShow',
+  //         () => {
+  //           // setTimeout(() => {
+  //           node.scrollToEnd({ animated: true });
+  //           // }, 100);
+  //         },
+  //       );
+  //       return () => {
+  //         keyboardDidShowListener.remove();
+  //       };
+  //     }
   //   }
   // }, []);
+
+  // const ScrollToEnd = () => {
+  //   if (scrollRef.current) {
+  //     const node = scrollRef.current;
+  //     if (node) {
+  //       node.scrollToEnd({ animated: true });
+  //     }
+  //   }
+  // };
+
   const resetPlaceholder = () => {
     setCompanyName('');
     setBossName('');
@@ -76,22 +138,17 @@ const ConfirmationModal = ({
 
   return (
     <Overlay
-      overlayStyle={[
-        styles.container,
-        // Platform.OS === 'ios'
-        //   ? onHandleFocus
-        //     ? { marginBottom: Dimensions.get('window').height * 0.3 }
-        //     : null
-        //   : null,
-      ]}
-      isVisible={isVisible}
+      overlayStyle={[styles.container]}
+      isVisible={
+        isVisible.confirmModalVisible || isVisible.addWaiterModalVisible
+      }
       onBackdropPress={() => {
         handleModalClose();
         resetPlaceholder();
       }}
     >
       <ScrollView
-        scrollEnabled={false}
+        // ref={scrollRef}
         keyboardShouldPersistTaps={'handled'}
         bounces={false}
         style={{
@@ -99,72 +156,83 @@ const ConfirmationModal = ({
         }}
       >
         <KeyboardAvoidingView
-          keyboardVerticalOffset={Dimensions.get('window').height <=645 ? 10 : 25}
+          keyboardVerticalOffset={
+            Dimensions.get('window').height <= 645 ? 10 : 25
+          }
           behavior="position"
           enabled
         >
           <View style={{ alignItems: 'center' }}>
-            {/* <ScrollView
-          ref={scrollRef}
-          contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}
-          alwaysBounceHorizontal={false}
-          alwaysBounceVertical={false}
-          bounces={false}
-          keyboardShouldPersistTaps={'handled'}
-          style={
-            onHandleFocus && Platform.OS === 'ios'
-              ? {
-                flex: 1,
-              }
-              : {}
-          }
-        > */}
             <ImageBackground
               style={styles.imgBgStyle}
               source={imgBg}
               resizeMode="stretch"
             >
               <View style={styles.viewImg}>
-                <TouchableOpacity
-                  onPress={() => {
-                    handleModalClose();
-                    resetPlaceholder();
-                  }}
-                  style={{ alignSelf: 'flex-end', margin: 10 }}
-                >
-                  <AntDesign name="close" size={29} color="#485460" />
-                </TouchableOpacity>
                 <Image
                   source={imgWaiter}
                   style={styles.imgStyle}
                   resizeMode="contain"
                 />
+                <TouchableOpacity
+                  onPress={() => {
+                    handleModalClose();
+                    resetPlaceholder();
+                  }}
+                  style={{
+                    alignSelf: 'flex-end',
+                    marginTop: -160,
+                    marginRight: 15,
+                  }}
+                >
+                  <AntDesign name="close" size={29} color="#485460" />
+                </TouchableOpacity>
               </View>
             </ImageBackground>
             <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
               {i18n.t('please_fill')}
             </Text>
+            {isVisible.addWaiterModalVisible && (
+              <TextInput
+                selectionColor={Colors.yellow}
+                value={waiterName}
+                onChangeText={text => {
+                  setwaiterName(text);
+                  // ScrollToEnd();
+                }}
+                placeholder={placeholderWaiterName}
+                onFocus={() => {
+                  if (Platform.OS != 'ios') {
+                    setPlaceholderWaiterName('');
+                  }
+                  // ScrollToEnd();
+                }}
+                onBlur={() => {
+                  if (!CompanyName && Platform.OS != 'ios') {
+                    setPlaceholderWaiterName(i18n.t('name_of_your_server'));
+                  }
+                }}
+                style={[
+                  styles.inputStyle,
+                  { fontFamily: 'ProximaNova', textAlign: 'center' },
+                ]}
+              />
+            )}
             <TextInput
               selectionColor={Colors.yellow}
               value={CompanyName}
               onChangeText={text => {
                 setCompanyName(text);
-                // scrollRef.current.scrollToEnd({ animated: true });
+                // ScrollToEnd();
               }}
               placeholder={placeholderCompanyName}
               onFocus={() => {
                 if (Platform.OS != 'ios') {
                   setplaceholderCompanyName('');
                 }
-                // if (scrollRef.current) {
-                // setonHandleFocus(true);
-                // setTimeout(() => {
-                //   scrollRef.current.scrollToEnd({ animated: true });
-                // }, 100);
-                // }
+                // ScrollToEnd();
               }}
               onBlur={() => {
-                // setonHandleFocus(false);
                 if (!CompanyName && Platform.OS != 'ios') {
                   setplaceholderCompanyName(i18n.t('nom_de'));
                 }
@@ -179,16 +247,12 @@ const ConfirmationModal = ({
               keyboardType="number-pad"
               placeholder={placeholderSiren}
               onFocus={() => {
-                // setonHandleFocus(true);
                 if (Platform.OS != 'ios') {
                   setplaceholderSiren('');
                 }
-                // setTimeout(() => {
-                //   scrollRef.current.scrollToEnd({ animated: true });
-                // }, 100);
+                // ScrollToEnd();
               }}
               onBlur={() => {
-                // setonHandleFocus(false);
                 if (!Siren && Platform.OS != 'ios') {
                   setplaceholderSiren(i18n.t('siren'));
                 }
@@ -196,7 +260,7 @@ const ConfirmationModal = ({
               value={Siren}
               onChangeText={e => {
                 setSiren(e);
-                // scrollRef.current.scrollToEnd({ animated: true });
+                // ScrollToEnd();
               }}
               style={[
                 styles.inputStyle,
@@ -207,16 +271,12 @@ const ConfirmationModal = ({
               selectionColor={Colors.yellow}
               placeholder={placeholderBossName}
               onFocus={() => {
-                // setonHandleFocus(true);
                 if (Platform.OS != 'ios') {
                   setplaceholderBossName('');
                 }
-                // setTimeout(() => {
-                //   scrollRef.current.scrollToEnd({ animated: true });
-                // }, 100);
+                // ScrollToEnd();
               }}
               onBlur={() => {
-                // setonHandleFocus(false);
                 if (!bossName && Platform.OS != 'ios') {
                   setplaceholderBossName(i18n.t('nom_de_boss'));
                 }
@@ -224,7 +284,7 @@ const ConfirmationModal = ({
               value={bossName}
               onChangeText={e => {
                 setBossName(e);
-                // scrollRef.current.scrollToEnd({ animated: true });
+                // ScrollToEnd();
               }}
               style={[
                 styles.inputStyle,
@@ -233,13 +293,10 @@ const ConfirmationModal = ({
             />
             <TextInput
               onFocus={() => {
-                // setonHandleFocus(true);
                 if (Platform.OS != 'ios') {
                   setplaceholderBossContact('');
                 }
-                // setTimeout(() => {
-                //   scrollRef.current.scrollToEnd({ animated: true });
-                // }, 100);
+                // ScrollToEnd();
               }}
               selectionColor={Colors.yellow}
               keyboardType="number-pad"
@@ -253,7 +310,7 @@ const ConfirmationModal = ({
               value={bossContact}
               onChangeText={e => {
                 setBossContact(e);
-                // scrollRef.current.scrollToEnd({ animated: true });
+                // ScrollToEnd();
               }}
               style={[
                 styles.inputStyle,
@@ -262,31 +319,9 @@ const ConfirmationModal = ({
             />
 
             <TouchableOpacity
-              disabled={
-                loading
-                  ? true
-                  : CompanyName && Siren && bossName && bossContact
-                    ? false
-                    : true
-              }
-              onPress={async () => {
-                await handleIAMWAITER(
-                  CompanyName,
-                  Siren,
-                  bossName,
-                  bossContact,
-                );
-                resetPlaceholder();
-              }}
-              style={[
-                styles.btnConfrm,
-                CompanyName &&
-                  Siren &&
-                  bossName &&
-                  bossContact && {
-                  backgroundColor: Colors.yellow,
-                },
-              ]}
+              disabled={ValidateDisable()}
+              onPress={HandlePostData}
+              style={[styles.btnConfrm, ValidateButtonColor()]}
             >
               {loading ? (
                 <ActivityIndicator size={30} color="#000" />
@@ -298,7 +333,6 @@ const ConfirmationModal = ({
                 </Text>
               )}
             </TouchableOpacity>
-            {/* </ScrollView> */}
           </View>
         </KeyboardAvoidingView>
       </ScrollView>
@@ -319,7 +353,7 @@ const styles = StyleSheet.create({
   },
   imgBgStyle: {
     width: '100%',
-    height: 240,
+    height: 220,
   },
   txtBtnConfrm: {
     fontSize: 16,
@@ -346,7 +380,7 @@ const styles = StyleSheet.create({
     width: 300,
     height: 200,
     alignSelf: 'center',
-    marginTop: -30,
+    // marginTop: -30,
     marginRight: -20,
   },
   viewImg: {

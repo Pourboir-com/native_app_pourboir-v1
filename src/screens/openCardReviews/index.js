@@ -6,18 +6,18 @@ import {
   ImageBackground,
   ScrollView,
   Image,
-  Dimensions,
+  // Dimensions,
   TouchableOpacity,
   FlatList,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  RefreshControl,
+  // SafeAreaView,
+  // KeyboardAvoidingView,
+  // RefreshControl,
   Animated,
   Platform,
 } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import ConfirmationModal from '../../components/modals/ConfirmModal';
-import HelpUsImproveModal from '../../components/modals/HelpUsImproveModal';
+// import HelpUsImproveModal from '../../components/modals/HelpUsImproveModal';
 import { Colors } from '../../constants/Theme';
 import RatingStar from '../../components/RatingComponent';
 import GlobalHeader from '../../components/GlobalHeader';
@@ -25,7 +25,7 @@ import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useMutation, useQuery } from 'react-query';
 import { reactQueryConfig } from '../../constants';
-import { GET_WAITERS, I_AM_WAITER } from '../../queries';
+import { GET_WAITERS, I_AM_WAITER, ADDING_WAITERS } from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import Context from '../../contextApi/context';
@@ -33,20 +33,23 @@ import * as actionTypes from '../../contextApi/actionTypes';
 import i18n from '../../li8n';
 import { filteredRestaurant, yourFilteredRestaurant } from '../../util';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { set } from 'react-native-reanimated';
+// import { set } from 'react-native-reanimated';
 
 const ReviewDetails = ({ navigation, route }) => {
+  // Star arrayyyyyyyy
+  const obj = [1, 2, 3, 4, 5];
   const [data, setData] = useState([]);
   const [confirmModalVisible, setconfirmModalVisible] = useState(false);
-  const [helpUsModalVisible, sethelpUsModalVisible] = useState(false);
-  const [starSelect, setstarSelect] = useState();
+  const [addWaiterModalVisible, setaddWaiterModalVisible] = useState(false);
+  // const [helpUsModalVisible, sethelpUsModalVisible] = useState(false);
+  // const [starSelect, setstarSelect] = useState();
   const { state, dispatch } = useContext(Context);
   const [IAMWAITER] = useMutation(I_AM_WAITER);
+  const [AddWaiters] = useMutation(ADDING_WAITERS);
   const [loading, setLoading] = useState(false);
-  const handleLoading = anim => {
-    setLoading(anim);
-  };
-
+  // const handleLoading = anim => {
+  //   setLoading(anim);
+  // };
   const {
     img,
     name,
@@ -62,6 +65,19 @@ const ReviewDetails = ({ navigation, route }) => {
     dispatch({
       type: actionTypes.RESTAURANTS_DETAILS,
       payload: FilteredRestaurant,
+    });
+  };
+
+  const updateRestaurants_AddWaiter = (state, placeId) => {
+    let FilteredRestaurant = filteredRestaurant(state, placeId);
+    dispatch({
+      type: actionTypes.RESTAURANTS_DETAILS,
+      payload: FilteredRestaurant,
+    });
+    let YourFilteredRestaurant = yourFilteredRestaurant(state, placeId);
+    dispatch({
+      type: actionTypes.YOUR_RESTAURANTS,
+      payload: YourFilteredRestaurant,
     });
   };
 
@@ -87,7 +103,12 @@ const ReviewDetails = ({ navigation, route }) => {
 
   const handleModalClose = () => {
     setconfirmModalVisible(false);
-    sethelpUsModalVisible(false);
+    // sethelpUsModalVisible(false);
+    setaddWaiterModalVisible(false);
+  };
+
+  const handleAddWaiterModalOpen = () => {
+    setaddWaiterModalVisible(true);
   };
 
   const handleConfirmModalOpen = () => {
@@ -101,13 +122,48 @@ const ReviewDetails = ({ navigation, route }) => {
     }
   };
 
-  const handleHelpUsModalOpen = () => {
-    //   alert('working')
-    sethelpUsModalVisible(true);
+  const handleAddWaiter = async (
+    fullName,
+    companyName,
+    businessRegNumber,
+    bossName,
+    bossContact,
+  ) => {
+    if (state.userDetails.user_id) {
+      setLoading(true);
+      let newWaiter = {
+        created_by: state.userDetails.user_id,
+        full_name: fullName,
+        restaurant: {
+          place_id: place_id,
+          rating: rating,
+          photos: [img],
+          name: name,
+          formatted_address: vicinity,
+        },
+        company_name: companyName,
+        business_registration_number: businessRegNumber,
+        manager_name: bossName,
+        manager_contact: bossContact,
+      };
+      updateRestaurants_AddWaiter(state, place_id);
+      await AddWaiters(newWaiter, {
+        onSuccess: async () => {
+          await refetchWaiters();
+          handleModalClose();
+          setLoading(false);
+        },
+        onError: e => {
+          handleModalClose();
+          setLoading(false);
+          alert(e);
+        },
+      });
+    } else {
+      handleModalClose();
+      navigation.navigate('socialLogin', { confirmWaiter: true });
+    }
   };
-
-  // Star arrayyyyyyyy
-  const obj = [1, 2, 3, 4, 5];
 
   const handleIAMWAITER = async (
     companyName,
@@ -124,16 +180,16 @@ const ReviewDetails = ({ navigation, route }) => {
           rating: rating,
           photos: [img],
           name: name,
-          vicinity: vicinity,
+          formatted_address: vicinity,
         },
         company_name: companyName,
         business_registration_number: businessRegNumber,
         manager_name: bossName,
         manager_contact: bossContact,
       };
+      updateRestaurants(state, place_id);
       await IAMWAITER(IWaiter, {
         onSuccess: async res => {
-          updateRestaurants(state, place_id);
           const restaurant = state.restaurantsDetails.find(
             res => res.place_id === place_id,
           );
@@ -208,8 +264,8 @@ const ReviewDetails = ({ navigation, route }) => {
                           v <= rating
                             ? 'filled'
                             : v === rating + 0.5
-                            ? 'half'
-                            : 'empty'
+                              ? 'half'
+                              : 'empty'
                         }
                         notRatedStarColor="rgba(255,255,255, 0.6)"
                       />
@@ -340,8 +396,8 @@ const ReviewDetails = ({ navigation, route }) => {
                                 v <= itemData.item.rating
                                   ? 'filled'
                                   : v === itemData.item.rating + 0.5
-                                  ? 'half'
-                                  : 'empty'
+                                    ? 'half'
+                                    : 'empty'
                               }
                               notRatedStarColor="rgba(0,0,0,0.1)"
                             />
@@ -367,7 +423,7 @@ const ReviewDetails = ({ navigation, route }) => {
               {i18n.t('add_your_server')}
             </Text>
             <TouchableOpacity
-              onPress={handleHelpUsModalOpen}
+              onPress={handleAddWaiterModalOpen}
               style={styles.btnAdd}
             >
               <AntDesign name="plus" size={16} color={Colors.fontDark} />
@@ -390,19 +446,25 @@ const ReviewDetails = ({ navigation, route }) => {
         </Text>
       </TouchableOpacity>
 
-      <ConfirmationModal
-        isVisible={confirmModalVisible}
-        handleModalClose={handleModalClose}
-        refetchWaiters={refetchWaiters}
-        place_id={place_id}
-        navigation={navigation}
-        name={name}
-        loading={loading}
-        handleIAMWAITER={handleIAMWAITER}
-      />
+      {confirmModalVisible && (
+        <ConfirmationModal
+          isVisible={{ confirmModalVisible }}
+          handleModalClose={handleModalClose}
+          loading={loading}
+          postData={handleIAMWAITER}
+        />
+      )}
+      {addWaiterModalVisible && (
+        <ConfirmationModal
+          isVisible={{ addWaiterModalVisible }}
+          handleModalClose={handleModalClose}
+          loading={loading}
+          postData={handleAddWaiter}
+        />
+      )}
       {/* <KeyboardAvoidingView>
         <ScrollView> */}
-      {helpUsModalVisible && (
+      {/* {helpUsModalVisible && (
         <HelpUsImproveModal
           place_id={place_id}
           refetchWaiters={refetchWaiters}
@@ -412,7 +474,7 @@ const ReviewDetails = ({ navigation, route }) => {
           handleLoading={handleLoading}
           loading={loading}
         />
-      )}
+      )} */}
       {/* </ScrollView>
         </KeyboardAvoidingView> */}
     </View>

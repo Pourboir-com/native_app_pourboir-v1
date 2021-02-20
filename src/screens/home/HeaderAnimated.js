@@ -42,28 +42,28 @@ const HomeScreen = props => {
     sethasValue(props.searchVal ? true : false);
   });
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const onPressTouch = () => {
-        if (scrollRef.current && scrollRef.current.getNode) {
-          const node = scrollRef.current.getNode();
-          if (node) {
-            // if (scrollPosition > 0) {
-            node.scrollTo({ x: 0, y: 0, animated: true });
-            // }
-          }
-        }
-        return true;
-      };
-      // Add Event Listener for hardwareBackPress
-      BackHandler.addEventListener('hardwareBackPress', onPressTouch);
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     const onPressTouch = () => {
+  //       if (scrollRef.current && scrollRef.current.getNode) {
+  //         const node = scrollRef.current.getNode();
+  //         if (node) {
+  //           // if (scrollPosition > 0) {
+  //           node.scrollTo({ x: 0, y: 0, animated: true });
+  //           // }
+  //         }
+  //       }
+  //       return true;
+  //     };
+  //     // Add Event Listener for hardwareBackPress
+  //     BackHandler.addEventListener('hardwareBackPress', onPressTouch);
 
-      return () => {
-        // Once the Screen gets blur Remove Event Listener
-        BackHandler.removeEventListener('hardwareBackPress', onPressTouch);
-      };
-    }, []),
-  );
+  //     return () => {
+  //       // Once the Screen gets blur Remove Event Listener
+  //       BackHandler.removeEventListener('hardwareBackPress', onPressTouch);
+  //     };
+  //   }, []),
+  // );
 
   useEffect(() => {
     setLoading(!loading);

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { BASE_URL } from '../constants';
 
 export const ADDING_WAITERS = async e => {
-  let res = await fetch(BASE_URL + `/v1/restaurant-waiters/add-waiter`, {
+  let res = await fetch(BASE_URL + `/v1/restaurant-waiters`, {
     method: 'Post',
     body: JSON.stringify(e),
     headers: {

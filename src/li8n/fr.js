@@ -8,7 +8,7 @@ export default {
   find_your_restaurant: 'Recherchez votre restaurant',
   around_you: 'Autour de vous',
   result_distance: 'Résultat autour de vous',
-  you_have_no_restaurant: "Vous ne travaillez pour aucun restaurant",
+  you_have_no_restaurant: 'Vous ne travaillez pour aucun restaurant',
   search_for_rest_and_add:
     'Recherchez votre restaurant et ajoutez vous en choisissant: Vous êtes serveur',
 
@@ -70,4 +70,6 @@ export default {
     'Nous vous offrons un coupon pour la prochaine loterie',
   must_loggedIn: 'Vous devez être connecté pour utiliser Pourboir!',
   continue_with_apple: 'Continuer avec Apple',
+  cannot_vote: 'Vous ne pouvez pas voter vous-même',
+  already_waiter: 'Vous êtes déjà serveur dans ce restaurant',
 };

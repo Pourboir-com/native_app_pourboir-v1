@@ -37,7 +37,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/Serveur_512.png"
+        "foregroundImage": "./assets/playstore-icon.png"
       },
       "config": {
         "googleSignIn": {

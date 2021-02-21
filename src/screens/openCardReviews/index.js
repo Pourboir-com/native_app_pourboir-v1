@@ -116,7 +116,7 @@ const ReviewDetails = ({ navigation, route }) => {
       item => item?.user_id?._id === state.userDetails.user_id,
     );
     if (isUserAlreadyWaiter) {
-      alert('You are already waiter in this restaurant.');
+      alert(i18n.t('already_waiter'));
     } else {
       setconfirmModalVisible(true);
     }
@@ -265,8 +265,8 @@ const ReviewDetails = ({ navigation, route }) => {
                           v <= rating
                             ? 'filled'
                             : v === rating + 0.5
-                              ? 'half'
-                              : 'empty'
+                            ? 'half'
+                            : 'empty'
                         }
                         notRatedStarColor="rgba(255,255,255, 0.6)"
                       />
@@ -344,19 +344,25 @@ const ReviewDetails = ({ navigation, route }) => {
             renderItem={itemData => (
               <TouchableOpacity
                 key={itemData?.item?._id}
-                onPress={() =>
-                  navigation.navigate('RateYourService', {
-                    name: itemData?.item?.user_id
-                      ? itemData?.item?.user_id?.full_name
-                      : itemData?.item.full_name,
-                    image: itemData?.item?.user_id
-                      ? itemData?.item?.user_id?.picture
-                      : itemData?.item?.imgAvatar,
-                    restaurant_id: place_id,
-                    waiter_id: itemData?.item?._id,
-                    refetchWaiters: refetchWaiters,
-                  })
-                }
+                onPress={() => {
+                  if (
+                    state.userDetails.user_id !== itemData.item?.user_id?._id
+                  ) {
+                    navigation.navigate('RateYourService', {
+                      name: itemData?.item?.user_id
+                        ? itemData?.item?.user_id?.full_name
+                        : itemData?.item.full_name,
+                      image: itemData?.item?.user_id
+                        ? itemData?.item?.user_id?.picture
+                        : itemData?.item?.imgAvatar,
+                      restaurant_id: place_id,
+                      waiter_id: itemData?.item?._id,
+                      refetchWaiters: refetchWaiters,
+                    });
+                  } else {
+                    alert(i18n.t('cannot_vote'));
+                  }
+                }}
                 style={styles.viewItemConatier}
               >
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -397,8 +403,8 @@ const ReviewDetails = ({ navigation, route }) => {
                                 v <= itemData.item.rating
                                   ? 'filled'
                                   : v === itemData.item.rating + 0.5
-                                    ? 'half'
-                                    : 'empty'
+                                  ? 'half'
+                                  : 'empty'
                               }
                               notRatedStarColor="rgba(0,0,0,0.1)"
                             />

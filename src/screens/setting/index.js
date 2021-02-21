@@ -162,28 +162,28 @@ const Setting = ({ navigation, route }) => {
             state.userDetails.image === undefined ||
             state.userDetails.image === '' ? (
               // <FontAwesome name="user-circle-o" size={110} color="#fff" />
-                <Image
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: 60,
-                  }}
-                  source={{
-                    uri:
+              <Image
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: 60,
+                }}
+                source={{
+                  uri:
                     'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png',
-                  }}
-                />
-              ) : (
-                <Image
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: 60,
-                  }}
-                  source={{ uri: image ? image : state.userDetails.image }}
-                  resizeMode="cover"
-                />
-              )}
+                }}
+              />
+            ) : (
+              <Image
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: 60,
+                }}
+                source={{ uri: image ? image : state.userDetails.image }}
+                resizeMode="cover"
+              />
+            )}
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleChangePicture}
@@ -222,6 +222,12 @@ const Setting = ({ navigation, route }) => {
                   `itms-apps://itunes.apple.com/app/viewContentsUserReviews/id${1552612137}?action=write-review`,
                 );
               }
+              if (Platform.OS === 'android') {
+                Linking.openURL(
+                  `https://play.google.com/store/apps/details?id=com.developerspourboir.pourboir&showAllReviews=true`,
+                );
+              }
+              // StoreReview.requestReview();
             }}
           >
             <View style={styles.viewIcon}>

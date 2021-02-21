@@ -216,6 +216,7 @@ const ReviewDetails = ({ navigation, route }) => {
       navigation.navigate('socialLogin', { confirmWaiter: true });
     }
   };
+
   return (
     <View style={styles.container}>
       <Spinner visible={waitersIsFetching && !loading && !waitersLoading} />

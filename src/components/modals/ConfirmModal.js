@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -46,6 +46,27 @@ const ConfirmationModal = ({
   const [bossName, setBossName] = useState();
   const [bossContact, setBossContact] = useState();
   const [waiterName, setwaiterName] = useState();
+  // const [keyboardVisible, setKeyboardVisible] = useState();
+
+  // useEffect(() => {
+  //   const keyboardDidShowListener = Keyboard.addListener(
+  //     'keyboardDidShow',
+  //     () => {
+  //       setKeyboardVisible(true); // or some other action
+  //     },
+  //   );
+  //   const keyboardDidHideListener = Keyboard.addListener(
+  //     'keyboardDidHide',
+  //     () => {
+  //       setKeyboardVisible(false); // or some other action
+  //     },
+  //   );
+
+  //   return () => {
+  //     keyboardDidHideListener.remove();
+  //     keyboardDidShowListener.remove();
+  //   };
+  // }, []);
 
   const ValidateDisable = () => {
     if (loading) {
@@ -151,11 +172,13 @@ const ConfirmationModal = ({
         // ref={scrollRef}
         keyboardShouldPersistTaps={'handled'}
         bounces={false}
+        scrollEnabled={false}
         style={{
           width: '100%',
         }}
       >
         <KeyboardAvoidingView
+          // style={ keyboardVisible && { marginBottom: -190 }}
           keyboardVerticalOffset={
             Dimensions.get('window').height <= 645 ? 10 : 25
           }

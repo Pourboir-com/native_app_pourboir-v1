@@ -65,7 +65,6 @@ export default function HomeScreenContent({
         id: waiter_id,
         user_id: state.userDetails.user_id,
       };
-
       await deleteRestaurant(userInfo, {
         onSuccess: () => {
           let Restaurants = [...data];

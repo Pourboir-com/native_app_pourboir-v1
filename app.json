@@ -51,7 +51,7 @@
         "ACCESS_FINE_LOCATION"
       ],
       "package": "com.developerspourboir.pourboir",
-      "versionCode": 1
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png"

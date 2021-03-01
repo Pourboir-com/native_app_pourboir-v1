@@ -27,6 +27,7 @@
     "expo-app-loading": "^1.0.1",
     "expo-apple-authentication": "^3.0.0",
     "expo-constants": "^9.3.5",
+    "expo-device": "^3.1.1",
     "expo-facebook": "^10.0.0",
     "expo-file-system": "^10.0.0",
     "expo-font": "^8.3.0",

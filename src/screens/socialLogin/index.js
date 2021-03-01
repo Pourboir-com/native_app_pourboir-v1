@@ -26,6 +26,8 @@ const imgWaiter = require('../../assets/images/waiter2.png');
 import * as Facebook from 'expo-facebook';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { Platform } from 'react-native';
+import * as Device from 'expo-device';
+import { getAsyncStorageValues } from '../../constants';
 
 const SocialLogin = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
@@ -53,14 +55,23 @@ const SocialLogin = ({ navigation, route }) => {
   }, []);
   const { state, dispatch } = useContext(Context);
   const handleGoogleSignIn = async () => {
+    const { City } = await getAsyncStorageValues();
     // First- obtain access token from Expo's Google API
     const { type, accessToken, user } = await Google.logInAsync(config);
     if (type === 'success') {
       setLoading(true);
       // Then you can use the Google REST API
       let userInfoResponse = await userSignUp(accessToken);
-      await googleSignup(userInfoResponse.data, {
+      let userSignInDetails = {
+        ...userInfoResponse.data,
+        city: City?.city,
+        login_type: 'Google',
+        mobile_type: Device.deviceName,
+        verified_email: `${userInfoResponse.data.verified_email}`,
+      };
+      await googleSignup(userSignInDetails, {
         onSuccess: async res => {
+          console.log(res);
           if (vote) {
             navigation.navigate('RateYourService');
             setVote(false);
@@ -116,6 +127,7 @@ const SocialLogin = ({ navigation, route }) => {
       } = await Facebook.logInWithReadPermissionsAsync({
         permissions: ['public_profile', 'email'],
       });
+      const { City } = await getAsyncStorageValues();
       if (type === 'success') {
         // Get the user's name using Facebook's Graph API
         const response = await fetch(
@@ -131,9 +143,13 @@ const SocialLogin = ({ navigation, route }) => {
               family_name: data?.last_name || '',
               id: data?.id || '',
               picture: data?.picture?.data?.url || '',
+              city: City?.city,
+              login_type: 'Facebook',
+              mobile_type: Device.deviceName,
             };
             await googleSignup(user, {
               onSuccess: async res => {
+                console.log(res);
                 if (vote) {
                   navigation.navigate('RateYourService');
                   setVote(false);

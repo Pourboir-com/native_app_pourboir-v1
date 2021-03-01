@@ -88,6 +88,12 @@ export default function SplashScreen(props) {
                 currency: formattedCurrency || '',
               }),
             );
+            await AsyncStorage.setItem(
+              '@City',
+              JSON.stringify({
+                city: res[0]?.city || '',
+              }),
+            );
           });
         });
       } else {
@@ -122,6 +128,12 @@ export default function SplashScreen(props) {
               '@Currency',
               JSON.stringify({
                 currency: formattedCurrency || '',
+              }),
+            );
+            await AsyncStorage.setItem(
+              '@City',
+              JSON.stringify({
+                city: res[0]?.city || '',
               }),
             );
           });

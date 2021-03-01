@@ -86,7 +86,7 @@ const ReviewDetails = ({ navigation, route }) => {
     isLoading: waitersLoading,
     refetch: refetchWaiters,
     isFetching: waitersIsFetching,
-  } = useQuery(['GET_WAITERS', { restaurant_id: place_id }], GET_WAITERS, {
+  } = useQuery(['GET_WAITERS', { restaurant_id: place_id, statuses: ['active'] }], GET_WAITERS, {
     ...reactQueryConfig,
     enabled: place_id,
     onSuccess: res => {
@@ -146,10 +146,10 @@ const ReviewDetails = ({ navigation, route }) => {
         manager_name: bossName,
         manager_contact: bossContact,
       };
-      updateRestaurants_AddWaiter(state, place_id);
+      // updateRestaurants_AddWaiter(state, place_id);
       await AddWaiters(newWaiter, {
-        onSuccess: async () => {
-          await refetchWaiters();
+        onSuccess: () => {
+          // await refetchWaiters();
           handleModalClose();
           setLoading(false);
         },
@@ -187,20 +187,20 @@ const ReviewDetails = ({ navigation, route }) => {
         manager_name: bossName,
         manager_contact: bossContact,
       };
-      updateRestaurants(state, place_id);
+      // updateRestaurants(state, place_id);
       await IAMWAITER(IWaiter, {
         onSuccess: async res => {
-          const restaurant = state.restaurantsDetails.find(
-            res => res.place_id === place_id,
-          );
-          dispatch({
-            type: actionTypes.YOUR_RESTAURANTS,
-            payload: [
-              ...state.yourRestaurants,
-              { ...res.data.data, distance, servers: restaurant.servers + 1 },
-            ],
-          });
-          await refetchWaiters();
+          // const restaurant = state.restaurantsDetails.find(
+          //   res => res.place_id === place_id,
+          // );
+          // dispatch({
+          //   type: actionTypes.YOUR_RESTAURANTS,
+          //   payload: [
+          //     ...state.yourRestaurants,
+          //     { ...res.data.data, distance, servers: restaurant.servers + 1 },
+          //   ],
+          // });
+          // await refetchWaiters();
           handleModalClose();
           setLoading(false);
         },
@@ -325,7 +325,7 @@ const ReviewDetails = ({ navigation, route }) => {
           </Text>
           <View style={styles.viewNumRaters}>
             <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>
-              {data.length}
+              {data?.length || '0'}
             </Text>
 
             {/* <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length * 2}</Text> */}
@@ -357,7 +357,6 @@ const ReviewDetails = ({ navigation, route }) => {
                         : itemData?.item?.imgAvatar,
                       restaurant_id: place_id,
                       waiter_id: itemData?.item?._id,
-                      refetchWaiters: refetchWaiters,
                     });
                   } else {
                     alert(i18n.t('cannot_vote'));

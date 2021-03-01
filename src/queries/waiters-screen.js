@@ -13,13 +13,18 @@ export const ADDING_WAITERS = async e => {
 };
 
 export const GET_WAITERS = async (get, e = {}) => {
-  let res = await fetch(
-    BASE_URL + `/v1/restaurant-waiters?restaurant_id=${e.restaurant_id}`,
-    {
-      method: 'get',
-    },
-  );
-  return await res.json();
+  console.log(e);
+  const res = await axios.get(BASE_URL + `/v1/restaurant-waiters`, {
+    params: e,
+  });
+  return res.data;
+  // let res = await fetch(
+  //   BASE_URL + `/v1/restaurant-waiters?restaurant_id=${e.restaurant_id}&statuses=${e.statuses}`,
+  //   {
+  //     method: 'get',
+  //   },
+  // );
+  // return await res.json();
 };
 
 export const I_AM_WAITER = async e => {

@@ -13,7 +13,6 @@ export const ADDING_WAITERS = async e => {
 };
 
 export const GET_WAITERS = async (get, e = {}) => {
-  console.log(e);
   const res = await axios.get(BASE_URL + `/v1/restaurant-waiters`, {
     params: e,
   });

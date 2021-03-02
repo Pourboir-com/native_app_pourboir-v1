@@ -71,7 +71,6 @@ const SocialLogin = ({ navigation, route }) => {
       };
       await googleSignup(userSignInDetails, {
         onSuccess: async res => {
-          console.log(res);
           if (vote) {
             navigation.navigate('RateYourService');
             setVote(false);
@@ -149,7 +148,6 @@ const SocialLogin = ({ navigation, route }) => {
             };
             await googleSignup(user, {
               onSuccess: async res => {
-                console.log(res);
                 if (vote) {
                   navigation.navigate('RateYourService');
                   setVote(false);

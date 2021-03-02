@@ -237,6 +237,7 @@ export default function HomeScreenContent({
                         }
                         rating={itemData?.item.rating}
                         name={itemData?.item.name}
+                        menu_url={itemData?.item?.menu_url}
                         DeleteRestaurant={
                           (data,
                           i =>

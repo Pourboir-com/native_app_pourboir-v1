@@ -17,6 +17,7 @@ import {
 } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import ConfirmationModal from '../../components/modals/ConfirmModal';
+import * as WebBrowser from 'expo-web-browser';
 // import HelpUsImproveModal from '../../components/modals/HelpUsImproveModal';
 import { Colors } from '../../constants/Theme';
 import RatingStar from '../../components/RatingComponent';
@@ -58,6 +59,7 @@ const ReviewDetails = ({ navigation, route }) => {
     services,
     place_id,
     vicinity,
+    menu_url,
   } = route?.params;
 
   const updateRestaurants = (state, placeId) => {
@@ -86,13 +88,17 @@ const ReviewDetails = ({ navigation, route }) => {
     isLoading: waitersLoading,
     refetch: refetchWaiters,
     isFetching: waitersIsFetching,
-  } = useQuery(['GET_WAITERS', { restaurant_id: place_id, statuses: ['active'] }], GET_WAITERS, {
-    ...reactQueryConfig,
-    enabled: place_id,
-    onSuccess: res => {
-      setData(res.data);
+  } = useQuery(
+    ['GET_WAITERS', { restaurant_id: place_id, statuses: ['active'] }],
+    GET_WAITERS,
+    {
+      ...reactQueryConfig,
+      enabled: place_id,
+      onSuccess: res => {
+        setData(res.data);
+      },
     },
-  });
+  );
 
   const scrollY = new Animated.Value(0);
   const diffClamp = Animated.diffClamp(scrollY, 0, 55);
@@ -253,53 +259,6 @@ const ReviewDetails = ({ navigation, route }) => {
               }}
               colors={['black', 'transparent', 'black']}
             ></LinearGradient>
-
-            <View style={[styles.viewBottom, { zIndex: 102 }]}>
-              <View pointerEvents="none" style={{ flexDirection: 'row' }}>
-                {obj.map((v, i) => {
-                  return (
-                    <TouchableOpacity style={{ marginRight: 3 }} key={i}>
-                      <RatingStar
-                        starSize={17}
-                        type={
-                          v <= rating
-                            ? 'filled'
-                            : v === rating + 0.5
-                            ? 'half'
-                            : 'empty'
-                        }
-                        notRatedStarColor="rgba(255,255,255, 0.6)"
-                      />
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
-              <View style={{ alignItems: 'flex-end' }}>
-                <Text
-                  style={{
-                    color: '#fff',
-                    marginBottom: 10,
-                    fontFamily: 'ProximaNova',
-                    fontSize: 16,
-                  }}
-                >
-                  {distance ? distance + 'm' : ''}
-                </Text>
-                <TouchableOpacity
-                  style={{
-                    paddingHorizontal: 10,
-                    paddingVertical: 5,
-                    borderWidth: 1,
-                    borderColor: '#fff',
-                    borderRadius: 7,
-                  }}
-                >
-                  <Text style={{ color: '#fff' }}>
-                    {i18n.t('see_the_menu')}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
           </ImageBackground>
         </View>
       </Animated.View>
@@ -468,6 +427,60 @@ const ReviewDetails = ({ navigation, route }) => {
           postData={handleAddWaiter}
         />
       )}
+      <Animated.View
+        style={[
+          styles.viewBottom,
+          { transform: [{ translateY: translateY }], elevation: 0, zIndex: 9 },
+        ]}
+      >
+        <View pointerEvents="none" style={{ flexDirection: 'row' }}>
+          {obj.map((v, i) => {
+            return (
+              <TouchableOpacity style={{ marginRight: 3 }} key={i}>
+                <RatingStar
+                  starSize={17}
+                  type={
+                    v <= rating
+                      ? 'filled'
+                      : v === rating + 0.5
+                      ? 'half'
+                      : 'empty'
+                  }
+                  notRatedStarColor="rgba(255,255,255, 0.6)"
+                />
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+        <View style={{ alignItems: 'flex-end' }}>
+          <Text
+            style={{
+              color: '#fff',
+              marginBottom: 10,
+              fontFamily: 'ProximaNova',
+              fontSize: 16,
+            }}
+          >
+            {distance ? distance + 'm' : ''}
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              if (menu_url) {
+                WebBrowser.openBrowserAsync(menu_url);
+              }
+            }}
+            style={{
+              paddingHorizontal: 10,
+              paddingVertical: 5,
+              borderWidth: 1,
+              borderColor: '#fff',
+              borderRadius: 7,
+            }}
+          >
+            <Text style={{ color: '#fff' }}>{i18n.t('see_the_menu')}</Text>
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
       {/* <KeyboardAvoidingView>
         <ScrollView> */}
       {/* {helpUsModalVisible && (
@@ -571,12 +584,10 @@ const styles = StyleSheet.create({
   },
   viewBottom: {
     flexDirection: 'row',
-    marginBottom: 10,
     justifyContent: 'space-between',
-    alignItems: 'center',
     paddingHorizontal: 20,
     alignItems: 'flex-end',
-    bottom: 0,
+    top: 125,
     position: 'absolute',
     width: '100%',
   },

@@ -19,8 +19,8 @@ export default {
   are_you_waiter: 'Vous êtes serveur?',
   see_the_menu: 'Voir le menu',
   please_fill: 'Veuillez remplir ces informations',
-  nom_de: 'Nom de l&apos;entreprise',
-  siren: 'numéro de SIREN',
+  nom_de: `Nom de l'entreprise`,
+  siren: 'Numéro de SIREN',
   nom_de_boss: 'Nom du responsable légal',
   contact_du_boss: 'Téléphone du responsable',
 

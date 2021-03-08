@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  Platform, 
   ActivityIndicator,
 } from 'react-native';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
@@ -18,23 +19,23 @@ import { userSignUp, userGivenName, iPhoneLoginName } from '../../util';
 import { useMutation } from 'react-query';
 import { GOOGLE_SIGNUP } from '../../queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 const imgLogo = require('../../assets/images/imgLogo.png');
 const imgWaiter = require('../../assets/images/waiter2.png');
 import * as Facebook from 'expo-facebook';
 import * as AppleAuthentication from 'expo-apple-authentication';
-import { Platform } from 'react-native';
 import * as Device from 'expo-device';
 import { getAsyncStorageValues } from '../../constants';
 
 const SocialLogin = ({ navigation, route }) => {
+  const [city, setCity] = useState();
   const [loading, setLoading] = useState(false);
   const [googleSignup] = useMutation(GOOGLE_SIGNUP);
   const [vote, setVote] = useState(false);
   const [confirmWaiter, setconfirmWaiter] = useState(false);
   const [HelpUs, setHelpUs] = useState();
+
   useEffect(() => {
     setVote(route?.params?.vote ? route?.params?.vote : false);
     setconfirmWaiter(
@@ -44,18 +45,15 @@ const SocialLogin = ({ navigation, route }) => {
   }, [route.params]);
 
   useEffect(() => {
-    async function loadFont() {
-      await loadAsync({
-        // Load a font `Montserrat` from a static resource
-        ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
-        ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
-      });
+    async function loadCity() {
+      const { City } = await getAsyncStorageValues();
+      setCity(City?.city);
     }
-    loadFont();
+    loadCity();
   }, []);
+
   const { state, dispatch } = useContext(Context);
   const handleGoogleSignIn = async () => {
-    const { City } = await getAsyncStorageValues();
     // First- obtain access token from Expo's Google API
     const { type, accessToken, user } = await Google.logInAsync(config);
     if (type === 'success') {
@@ -64,7 +62,7 @@ const SocialLogin = ({ navigation, route }) => {
       let userInfoResponse = await userSignUp(accessToken);
       let userSignInDetails = {
         ...userInfoResponse.data,
-        city: City?.city,
+        city: city,
         login_type: 'Google',
         mobile_type: Device.deviceName,
         verified_email: `${userInfoResponse.data.verified_email}`,
@@ -87,6 +85,7 @@ const SocialLogin = ({ navigation, route }) => {
             email: res?.user?.email || '',
             accessToken: accessToken || '',
             user_id: res?.user?._id || '',
+            os: Platform.OS || '',
           };
 
           dispatch({
@@ -126,7 +125,7 @@ const SocialLogin = ({ navigation, route }) => {
       } = await Facebook.logInWithReadPermissionsAsync({
         permissions: ['public_profile', 'email'],
       });
-      const { City } = await getAsyncStorageValues();
+
       if (type === 'success') {
         // Get the user's name using Facebook's Graph API
         const response = await fetch(
@@ -142,9 +141,10 @@ const SocialLogin = ({ navigation, route }) => {
               family_name: data?.last_name || '',
               id: data?.id || '',
               picture: data?.picture?.data?.url || '',
-              city: City?.city,
+              city: city,
               login_type: 'Facebook',
-              mobile_type: Device.deviceName,
+              mobile_type: Device.deviceName || '',
+              os: Platform.OS || '',
             };
             await googleSignup(user, {
               onSuccess: async res => {
@@ -287,12 +287,17 @@ const SocialLogin = ({ navigation, route }) => {
                         AppleAuthentication.AppleAuthenticationScope.EMAIL,
                       ],
                     });
+
                     let user = {
                       name: iPhoneLoginName(credential.fullName) || '',
                       email: credential.email || '',
                       family_name: credential.fullName?.familyName || '',
                       id: credential.user || '',
                       picture: credential.image || '',
+                      city: city,
+                      login_type: 'Facebook',
+                      mobile_type: Device.deviceName || '',
+                      os: Platform.OS || '',
                     };
 
                     await googleSignup(user, {

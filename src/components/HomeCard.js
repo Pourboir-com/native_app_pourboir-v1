@@ -25,6 +25,7 @@ const HomeCard = ({
   place_id,
   vicinity,
   menu_url,
+  our_rating,
 }) => {
   const [starSelect, setstarSelect] = useState(rating);
   const obj = [1, 2, 3, 4, 5];
@@ -46,6 +47,7 @@ const HomeCard = ({
             place_id,
             vicinity,
             menu_url,
+            our_rating,
           });
         }}
         style={[styles.viewItemConatier]}

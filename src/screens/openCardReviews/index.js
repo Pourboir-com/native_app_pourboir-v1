@@ -30,9 +30,9 @@ import { GET_WAITERS, I_AM_WAITER, ADDING_WAITERS } from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import Context from '../../contextApi/context';
-import * as actionTypes from '../../contextApi/actionTypes';
+// import * as actionTypes from '../../contextApi/actionTypes';
 import i18n from '../../li8n';
-import { filteredRestaurant, yourFilteredRestaurant } from '../../util';
+// import { filteredRestaurant, yourFilteredRestaurant } from '../../util';
 import Spinner from 'react-native-loading-spinner-overlay';
 // import { set } from 'react-native-reanimated';
 
@@ -60,28 +60,29 @@ const ReviewDetails = ({ navigation, route }) => {
     place_id,
     vicinity,
     menu_url,
+    our_rating,
   } = route?.params;
 
-  const updateRestaurants = (state, placeId) => {
-    let FilteredRestaurant = filteredRestaurant(state, placeId);
-    dispatch({
-      type: actionTypes.RESTAURANTS_DETAILS,
-      payload: FilteredRestaurant,
-    });
-  };
+  // const updateRestaurants = (state, placeId) => {
+  //   let FilteredRestaurant = filteredRestaurant(state, placeId);
+  //   dispatch({
+  //     type: actionTypes.RESTAURANTS_DETAILS,
+  //     payload: FilteredRestaurant,
+  //   });
+  // };
 
-  const updateRestaurants_AddWaiter = (state, placeId) => {
-    let FilteredRestaurant = filteredRestaurant(state, placeId);
-    dispatch({
-      type: actionTypes.RESTAURANTS_DETAILS,
-      payload: FilteredRestaurant,
-    });
-    let YourFilteredRestaurant = yourFilteredRestaurant(state, placeId);
-    dispatch({
-      type: actionTypes.YOUR_RESTAURANTS,
-      payload: YourFilteredRestaurant,
-    });
-  };
+  // const updateRestaurants_AddWaiter = (state, placeId) => {
+  //   let FilteredRestaurant = filteredRestaurant(state, placeId);
+  //   dispatch({
+  //     type: actionTypes.RESTAURANTS_DETAILS,
+  //     payload: FilteredRestaurant,
+  //   });
+  //   let YourFilteredRestaurant = yourFilteredRestaurant(state, placeId);
+  //   dispatch({
+  //     type: actionTypes.YOUR_RESTAURANTS,
+  //     payload: YourFilteredRestaurant,
+  //   });
+  // };
 
   const {
     data: waitersData,
@@ -187,6 +188,7 @@ const ReviewDetails = ({ navigation, route }) => {
           photos: [img],
           name: name,
           formatted_address: vicinity,
+          our_rating: our_rating,
         },
         company_name: companyName,
         business_registration_number: businessRegNumber,

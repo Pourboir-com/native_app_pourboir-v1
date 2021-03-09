@@ -96,6 +96,7 @@ const RateService = ({ navigation, route }) => {
         user_id: state.userDetails.user_id || '',
         waiter_id: waiter_id || '',
         restaurant_id: restaurant_id || '',
+        place_id: restaurant_id || '',
         currency: currency.currency.split(' ').join('') || '',
       };
       await addRatings(ratingDetails, {

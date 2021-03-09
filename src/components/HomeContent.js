@@ -126,7 +126,7 @@ export default function HomeScreenContent({
         <View
           style={{
             backgroundColor: '#F9F9F9',
-            marginTop: Platform.OS === 'ios'  ? -58 : 0,
+            marginTop: Platform.OS === 'ios' ? -58 : 0,
           }}
         >
           {!route.params.crossIcon && (
@@ -235,7 +235,11 @@ export default function HomeScreenContent({
                             ? itemData?.item?.photos[0]
                             : ''
                         }
-                        rating={itemData?.item.rating}
+                        rating={
+                          Number(itemData?.item?.our_rating?.our_rating) > 0
+                            ? itemData?.item?.our_rating?.our_rating
+                            : itemData?.item?.rating
+                        }
                         name={itemData?.item.name}
                         menu_url={itemData?.item?.menu_url}
                         DeleteRestaurant={
@@ -250,8 +254,8 @@ export default function HomeScreenContent({
                         services={itemData?.item.servers}
                         loading={restaurantLoading}
                         crossIcon={route.params.crossIcon}
-                        place_id={itemData?.item.place_id}
-                        vicinity={itemData?.item.vicinity}
+                        place_id={itemData?.item?.place_id}
+                        vicinity={itemData?.item?.vicinity}
                         our_rating={String(itemData?.item?.our_rating) || '0'}
                       />
                     </View>

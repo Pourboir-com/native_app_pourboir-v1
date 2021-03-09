@@ -17,7 +17,7 @@ const apiUrl = () => {
     //  "ACCESS_COARSE_LOCATION",
     // "ACCESS_FINE_LOCATION"
     api_url =
-      'http://ec2-34-211-185-52.us-west-2.compute.amazonaws.com:5000/api';
+      'https://api.pourboir.com/api';
   } else if (releaseEnvironment == 'staging') {
     // expo publish --release-channel staging-0.0.1
     api_url =

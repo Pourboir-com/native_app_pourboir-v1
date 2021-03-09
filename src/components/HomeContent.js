@@ -253,6 +253,7 @@ export default function HomeScreenContent({
                         place_id={itemData?.item.place_id}
                         vicinity={itemData?.item.vicinity}
                         our_rating={String(itemData?.item?.our_rating) || '0'}
+                        restaurant_id={itemData.item._id || itemData.item.restaurant_id}
                       />
                     </View>
                   );

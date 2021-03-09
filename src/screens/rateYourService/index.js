@@ -80,10 +80,11 @@ const RateService = ({ navigation, route }) => {
   //   }
   // }, [isVisible]);
 
-  const { name, image, restaurant_id, waiter_id } = route.params;
+  const { name, image, restaurant_id, waiter_id, place_id } = route.params;
 
   const handleAddRatings = async () => {
     if (state.userDetails.user_id) {
+      console.log(place_id);
       setLoading(true);
       let ratingDetails = {
         rating: {
@@ -97,6 +98,7 @@ const RateService = ({ navigation, route }) => {
         waiter_id: waiter_id || '',
         restaurant_id: restaurant_id || '',
         currency: currency.currency.split(' ').join('') || '',
+        place_id,
       };
       await addRatings(ratingDetails, {
         onSuccess: async e => {

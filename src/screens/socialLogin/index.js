@@ -6,7 +6,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  Platform, 
+  Platform,
   ActivityIndicator,
 } from 'react-native';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
@@ -51,7 +51,7 @@ const SocialLogin = ({ navigation, route }) => {
     }
     loadCity();
   }, []);
-
+  const os = Platform.OS === 'android' ? 'android' : 'apple';
   const { state, dispatch } = useContext(Context);
   const handleGoogleSignIn = async () => {
     // First- obtain access token from Expo's Google API
@@ -66,6 +66,7 @@ const SocialLogin = ({ navigation, route }) => {
         login_type: 'Google',
         mobile_type: Device.deviceName,
         verified_email: `${userInfoResponse.data.verified_email}`,
+        os,
       };
       await googleSignup(userSignInDetails, {
         onSuccess: async res => {
@@ -85,9 +86,8 @@ const SocialLogin = ({ navigation, route }) => {
             email: res?.user?.email || '',
             accessToken: accessToken || '',
             user_id: res?.user?._id || '',
-            os: Platform.OS || '',
+            os,
           };
-
           dispatch({
             type: actionTypes.USER_DETAILS,
             payload: userDetails,
@@ -144,7 +144,7 @@ const SocialLogin = ({ navigation, route }) => {
               city: city,
               login_type: 'Facebook',
               mobile_type: Device.deviceName || '',
-              os: Platform.OS || '',
+              os,
             };
             await googleSignup(user, {
               onSuccess: async res => {
@@ -297,7 +297,7 @@ const SocialLogin = ({ navigation, route }) => {
                       city: city,
                       login_type: 'Facebook',
                       mobile_type: Device.deviceName || '',
-                      os: Platform.OS || '',
+                      os,
                     };
 
                     await googleSignup(user, {

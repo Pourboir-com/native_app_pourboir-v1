@@ -61,6 +61,7 @@ const ReviewDetails = ({ navigation, route }) => {
     vicinity,
     menu_url,
     our_rating,
+    restaurant_id,
   } = route?.params;
 
   // const updateRestaurants = (state, placeId) => {
@@ -147,6 +148,7 @@ const ReviewDetails = ({ navigation, route }) => {
           photos: [img],
           name: name,
           formatted_address: vicinity,
+          our_rating: String(our_rating),
         },
         company_name: companyName,
         business_registration_number: businessRegNumber,
@@ -318,6 +320,7 @@ const ReviewDetails = ({ navigation, route }) => {
                         : itemData?.item?.imgAvatar,
                       restaurant_id: place_id,
                       waiter_id: itemData?.item?._id,
+                      place_id: restaurant_id,
                     });
                   } else {
                     alert(i18n.t('cannot_vote'));

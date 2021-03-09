@@ -230,7 +230,7 @@ const ReviewDetails = ({ navigation, route }) => {
               },
               { text: 'OK', onPress: () => handleModalClose() },
             ],
-            { cancelable: false }
+            { cancelable: false },
           );
           // alert('You are already waiter in this restaurant.');
         },
@@ -329,9 +329,9 @@ const ReviewDetails = ({ navigation, route }) => {
                       name: itemData?.item?.full_name
                         ? itemData?.item.full_name
                         : itemData?.item?.user_id?.full_name,
-                      image: itemData?.item?.full_name ? itemData?.item?.imgAvatar
-                        : itemData?.item?.user_id?.picture
-                         ,
+                      image:
+                        itemData?.item?.user_id &&
+                        itemData?.item?.user_id?.picture,
                       restaurant_id: place_id,
                       waiter_id: itemData?.item?._id,
                       place_id: restaurant_id,
@@ -348,11 +348,6 @@ const ReviewDetails = ({ navigation, route }) => {
                       style={{ width: 45, height: 45, borderRadius: 30 }}
                       source={{ uri: itemData?.item?.user_id.picture }}
                     />
-                  ) : itemData?.item?.imgAvatar ? (
-                    <Image
-                      style={{ width: 45, height: 45, borderRadius: 30 }}
-                      source={{ uri: itemData?.item?.imgAvatar }}
-                    />
                   ) : (
                     <SvgHeaderUserIcon height={45} width={45} />
                   )}
@@ -365,7 +360,9 @@ const ReviewDetails = ({ navigation, route }) => {
                     >
                       {itemData?.item?.full_name
                         ? itemData?.item.full_name
-                        : itemData?.item?.user_id?.full_name}
+                        : itemData?.item?.user_id
+                        ? itemData?.item?.user_id?.full_name
+                        : 'name missing'}
                     </Text>
                     <View
                       pointerEvents="none"

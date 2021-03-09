@@ -31,39 +31,31 @@ const Remove = props => {
       <View
         style={{
           width: '100%',
-          height: 110,
+          height: 100,
+          borderBottomLeftRadius: Dimensions.get('window').width * 0.06,
+          borderBottomRightRadius: Dimensions.get('window').width * 0.06,
+          overflow: 'hidden',
           backgroundColor: '#f9f9f9',
         }}
       >
-        <View
+        <ImageBackground
           style={{
             width: '100%',
             height: 100,
-            borderBottomLeftRadius: Dimensions.get('window').width * 0.06,
-            borderBottomRightRadius: Dimensions.get('window').width * 0.06,
-            overflow: 'hidden',
-            backgroundColor: '#f9f9f9',
           }}
+          source={require('../../assets/images/Group3.png')}
         >
-          <ImageBackground
-            style={{
-              width: '100%',
-              height: 110,
-            }}
-            source={require('../../assets/images/Group3.png')}
-          >
-            <GlobalHeader
-              arrow={true}
-              headingText={i18n.t('your_restaurant')}
-              fontSize={17}
-              color={Colors.fontDark}
-              navigation={props.navigation}
-              setting={true}
-              backgroundColor={'transparent'}
-              borderRadius={true}
-            />
-          </ImageBackground>
-        </View>
+          <GlobalHeader
+            arrow={true}
+            headingText={i18n.t('your_restaurant')}
+            fontSize={17}
+            color={Colors.fontDark}
+            navigation={props.navigation}
+            setting={true}
+            backgroundColor={'transparent'}
+            borderRadius={true}
+          />
+        </ImageBackground>
       </View>
 
       <HomeScreenContent

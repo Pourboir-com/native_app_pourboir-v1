@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, StatusBar, TouchableOpacity } from 'react-nativ
 
 const SelectLanguage = ({ }) => {
     const [newLang, setNewLang] = useState('')
-    console.log(newLang);
+    // console.log(newLang);
 
     const changeToEnglish = (newLang) => {
         setNewLang('en')

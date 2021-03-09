@@ -97,6 +97,8 @@ const ReviewDetails = ({ navigation, route }) => {
       ...reactQueryConfig,
       enabled: place_id,
       onSuccess: res => {
+        console.log('new data');
+        console.log(res.data);
         setData(res.data);
       },
     },
@@ -312,12 +314,12 @@ const ReviewDetails = ({ navigation, route }) => {
                     state.userDetails.user_id !== itemData.item?.user_id?._id
                   ) {
                     navigation.navigate('RateYourService', {
-                      name: itemData?.item?.user_id
-                        ? itemData?.item?.user_id?.full_name
-                        : itemData?.item.full_name,
-                      image: itemData?.item?.user_id
-                        ? itemData?.item?.user_id?.picture
-                        : itemData?.item?.imgAvatar,
+                      name: itemData?.item?.full_name
+                        ? itemData?.item.full_name
+                        : itemData?.item?.user_id?.full_name,
+                      image: itemData?.item?.full_name ? itemData?.item?.imgAvatar
+                        : itemData?.item?.user_id?.picture
+                         ,
                       restaurant_id: place_id,
                       waiter_id: itemData?.item?._id,
                       place_id: restaurant_id,
@@ -349,9 +351,9 @@ const ReviewDetails = ({ navigation, route }) => {
                       numberOfLines={1}
                       style={styles.txtItemName}
                     >
-                      {itemData?.item?.user_id
-                        ? itemData?.item?.user_id?.full_name
-                        : itemData?.item.full_name}
+                      {itemData?.item?.full_name
+                        ? itemData?.item.full_name
+                        : itemData?.item?.user_id?.full_name}
                     </Text>
                     <View
                       pointerEvents="none"
@@ -366,8 +368,8 @@ const ReviewDetails = ({ navigation, route }) => {
                                 v <= itemData.item.rating
                                   ? 'filled'
                                   : v === itemData.item.rating + 0.5
-                                    ? 'half'
-                                    : 'empty'
+                                  ? 'half'
+                                  : 'empty'
                               }
                               notRatedStarColor="rgba(0,0,0,0.1)"
                             />
@@ -448,8 +450,8 @@ const ReviewDetails = ({ navigation, route }) => {
                     v <= rating
                       ? 'filled'
                       : v === rating + 0.5
-                        ? 'half'
-                        : 'empty'
+                      ? 'half'
+                      : 'empty'
                   }
                   notRatedStarColor="rgba(255,255,255, 0.6)"
                 />

@@ -16,7 +16,6 @@ const NoLocation = () => {
 
   const excessLocation = async () => {
     let locationStats = await Location.requestPermissionsAsync();
-    console.log(locationStats);
     if (locationStats.status !== 'granted') {
       if (Platform.OS === 'ios') {
         Linking.openURL('app-settings:');

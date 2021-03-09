@@ -236,8 +236,8 @@ export default function HomeScreenContent({
                             : ''
                         }
                         rating={
-                          Number(itemData?.item?.our_rating?.our_rating) > 0
-                            ? itemData?.item?.our_rating?.our_rating
+                          Number(itemData?.item?.our_rating) > 0
+                            ? itemData?.item?.our_rating
                             : itemData?.item?.rating
                         }
                         name={itemData?.item.name}
@@ -257,7 +257,7 @@ export default function HomeScreenContent({
                         place_id={itemData?.item?.place_id}
                         vicinity={itemData?.item?.vicinity}
                         our_rating={String(itemData?.item?.our_rating) || '0'}
-                        restaurant_id={itemData.item._id || itemData.item.restaurant_id}
+                        restaurant_id={itemData?.item._id || itemData?.item?.restaurant_id}
                       />
                     </View>
                   );

@@ -84,7 +84,6 @@ const RateService = ({ navigation, route }) => {
 
   const handleAddRatings = async () => {
     if (state.userDetails.user_id) {
-      console.log(place_id);
       setLoading(true);
       let ratingDetails = {
         rating: {
@@ -97,7 +96,6 @@ const RateService = ({ navigation, route }) => {
         user_id: state.userDetails.user_id || '',
         waiter_id: waiter_id || '',
         restaurant_id: restaurant_id || '',
-        place_id: restaurant_id || '',
         currency: currency.currency.split(' ').join('') || '',
         place_id,
       };

@@ -14,6 +14,7 @@ import {
   // RefreshControl,
   Animated,
   Platform,
+  Alert,
 } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import ConfirmationModal from '../../components/modals/ConfirmModal';
@@ -215,10 +216,21 @@ const ReviewDetails = ({ navigation, route }) => {
           setLoading(false);
         },
         onError: e => {
-          handleModalClose();
           setLoading(false);
+          Alert.alert(
+            'Error',
+            e.response?.data?.message,
+            [
+              {
+                text: 'Cancel',
+                onPress: () => handleModalClose(),
+                style: 'cancel',
+              },
+              { text: 'OK', onPress: () => handleModalClose() },
+            ],
+            { cancelable: false }
+          );
           // alert('You are already waiter in this restaurant.');
-          alert(e);
         },
       });
     } else {

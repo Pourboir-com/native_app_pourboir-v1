@@ -252,7 +252,7 @@ export default function HomeScreenContent({
                         crossIcon={route.params.crossIcon}
                         place_id={itemData?.item.place_id}
                         vicinity={itemData?.item.vicinity}
-                        our_rating={itemData?.item?.our_rating || '0'}
+                        our_rating={String(itemData?.item?.our_rating) || '0'}
                       />
                     </View>
                   );

@@ -326,9 +326,10 @@ const ReviewDetails = ({ navigation, route }) => {
                     state.userDetails.user_id !== itemData.item?.user_id?._id
                   ) {
                     navigation.navigate('RateYourService', {
-                      name: itemData?.item?.full_name
-                        ? itemData?.item.full_name
-                        : itemData?.item?.user_id?.full_name,
+                      name:
+                        itemData?.item?.user_id?.full_name ||
+                        itemData?.item.full_name ||
+                        'name missing',
                       image:
                         itemData?.item?.user_id &&
                         itemData?.item?.user_id?.picture,
@@ -358,11 +359,14 @@ const ReviewDetails = ({ navigation, route }) => {
                       numberOfLines={1}
                       style={styles.txtItemName}
                     >
-                      {itemData?.item?.full_name
-                        ? itemData?.item.full_name
-                        : itemData?.item?.user_id
+                      {itemData?.item?.user_id?.full_name ||
+                        itemData?.item?.full_name ||
+                        'name missing'}
+                      {/* {itemData?.item?.user_id
                         ? itemData?.item?.user_id?.full_name
-                        : 'name missing'}
+                        : itemData?.item?.full_name
+                        ? itemData?.item.full_name
+                        : 'name missing'} */}
                     </Text>
                     <View
                       pointerEvents="none"

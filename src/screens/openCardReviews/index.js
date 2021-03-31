@@ -275,6 +275,51 @@ const ReviewDetails = ({ navigation, route }) => {
               }}
               colors={['black', 'transparent', 'black']}
             ></LinearGradient>
+            <View style={[styles.viewBottom, { zIndex: 102 }]}>
+              <View pointerEvents="none" style={{ flexDirection: 'row' }}>
+                {obj.map((v, i) => {
+                  return (
+                    <TouchableOpacity style={{ marginRight: 3 }} key={i}>
+                      <RatingStar
+                        starSize={17}
+                        type={
+                          v <= rating
+                            ? 'filled'
+                            : v === rating + 0.5
+                            ? 'half'
+                            : 'empty'
+                        }
+                        notRatedStarColor="rgba(255,255,255, 0.6)"
+                      />
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+              <View>
+                <Text
+                  style={{
+                    color: '#fff',
+                    fontFamily: 'ProximaNova',
+                    fontSize: 16,
+                  }}
+                >
+                  {distance ? distance + 'm' : ''}
+                </Text>
+                {/* <TouchableOpacity
+                  style={{
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    borderWidth: 1,
+                    borderColor: '#fff',
+                    borderRadius: 7,
+                  }}
+                >
+                  <Text style={{ color: '#fff' }}>
+                    {i18n.t('see_the_menu')}
+                  </Text>
+                </TouchableOpacity> */}
+              </View>
+            </View>
           </ImageBackground>
         </View>
       </Animated.View>
@@ -304,9 +349,12 @@ const ReviewDetails = ({ navigation, route }) => {
             </Text>
           </View>
         </View>
-        {(!data.length && !waitersLoading && !waitersIsFetching) && (
+        {!data.length && !waitersLoading && !waitersIsFetching && (
           <Text
-            style={[styles.no_waiter_found, { fontFamily: 'ProximaNovaSemiBold' }]}
+            style={[
+              styles.no_waiter_found,
+              { fontFamily: 'ProximaNovaSemiBold' },
+            ]}
           >
             {i18n.t('no_waiter_found')}
           </Text>
@@ -401,9 +449,9 @@ const ReviewDetails = ({ navigation, route }) => {
           />
         )}
         <View style={styles.viewAddReview}>
-          <Text style={[styles.txtCantFind, { fontFamily: 'ProximaNova' }]}>
+          {/* <Text style={[styles.txtCantFind, { fontFamily: 'ProximaNova' }]}>
             {i18n.t('cant_find_your_server')}
-          </Text>
+          </Text> */}
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text
               style={[styles.txtAddReview, { fontFamily: 'ProximaNovaBold' }]}
@@ -419,6 +467,29 @@ const ReviewDetails = ({ navigation, route }) => {
           </View>
         </View>
       </ScrollView>
+      <TouchableOpacity
+        disabled={menu_url ? false : true}
+        onPress={() => {
+          if (menu_url) {
+            WebBrowser.openBrowserAsync(menu_url);
+          }
+        }}
+        style={[
+          styles.viewLastBtn,
+          !menu_url && { backgroundColor: '#f0f0f0' },
+        ]}
+      >
+        <Text
+          style={{
+            fontFamily: 'ProximaNova',
+            fontSize: 16,
+            color: Colors.fontDark,
+          }}
+        >
+          {i18n.t('see_the_menu')}
+        </Text>
+      </TouchableOpacity>
+
       <TouchableOpacity
         onPress={handleConfirmModalOpen}
         style={styles.viewLastBtn}
@@ -450,7 +521,7 @@ const ReviewDetails = ({ navigation, route }) => {
           postData={handleAddWaiter}
         />
       )}
-      <Animated.View
+      {/* <Animated.View
         style={[
           styles.viewBottom,
           { transform: [{ translateY: translateY }], elevation: 0, zIndex: 9 },
@@ -503,7 +574,7 @@ const ReviewDetails = ({ navigation, route }) => {
             <Text style={{ color: '#fff' }}>{i18n.t('see_the_menu')}</Text>
           </TouchableOpacity>
         </View>
-      </Animated.View>
+      </Animated.View> */}
       {/* <KeyboardAvoidingView>
         <ScrollView> */}
       {/* {helpUsModalVisible && (
@@ -606,11 +677,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   viewBottom: {
+    // top: 125,
     flexDirection: 'row',
+    marginBottom: 10,
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     alignItems: 'flex-end',
-    top: 125,
+    bottom: 0,
     position: 'absolute',
     width: '100%',
   },
@@ -643,10 +716,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     justifyContent: 'space-between',
   },
-  no_waiter_found:{
+  no_waiter_found: {
     fontSize: 16,
     color: Colors.fontLight,
-    width: '92%',
+    width: '91.8%',
     alignSelf: 'center',
     marginTop: 7,
     marginBottom: 25,

@@ -12,6 +12,7 @@ export default {
   search_for_rest_and_add:
     'Search for your restaurant and add yourself by choosing: You are a waiter',
   no_restaurant_found: 'Sorry, no restaurant was found',
+  no_waiter_found: 'Sorry, no server registered to date',
 
   // Open card reviews
   waiters: 'Waiters',

@@ -98,8 +98,6 @@ const ReviewDetails = ({ navigation, route }) => {
       ...reactQueryConfig,
       enabled: place_id,
       onSuccess: res => {
-        console.log('new data');
-        console.log(res.data);
         setData(res.data);
       },
     },
@@ -304,10 +302,15 @@ const ReviewDetails = ({ navigation, route }) => {
             <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>
               {data?.length || '0'}
             </Text>
-
-            {/* <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>{services.length * 2}</Text> */}
           </View>
         </View>
+        {(!data.length && !waitersLoading && !waitersIsFetching) && (
+          <Text
+            style={[styles.no_waiter_found, { fontFamily: 'ProximaNovaSemiBold' }]}
+          >
+            {i18n.t('no_waiter_found')}
+          </Text>
+        )}
         {waitersLoading ? (
           <>
             <ReviewsSkeleton />
@@ -639,5 +642,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 15,
     justifyContent: 'space-between',
+  },
+  no_waiter_found:{
+    fontSize: 16,
+    color: Colors.fontLight,
+    width: '92%',
+    alignSelf: 'center',
+    marginTop: 7,
+    marginBottom: 25,
   },
 });

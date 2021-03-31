@@ -34,6 +34,7 @@ export default function SplashScreen(props) {
           // Load a font `Montserrat` from a static resource
           ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
           ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
+          ProximaNovaSemiBold: require('../../assets/fonts/ProximaNova/ProximaNova-Semibold.otf'),
         });
       }
       loadFont();

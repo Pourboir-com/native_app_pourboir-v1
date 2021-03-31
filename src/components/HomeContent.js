@@ -56,7 +56,7 @@ export default function HomeScreenContent({
     });
   };
 
-  const dummyArray = [1, 2, 3];
+  const dummyArray = [1, 2];
 
   const DeleteRestaurant = async (waiter_id, place_id) => {
     if (state.userDetails.user_id) {
@@ -89,8 +89,8 @@ export default function HomeScreenContent({
   if (noData) {
     return (
       <>
-        <View style={styles.viewEmptyList}>
-          <View
+        <View>
+          {/* <View
             style={{
               backgroundColor: '#fff',
               width: 160,
@@ -108,12 +108,18 @@ export default function HomeScreenContent({
               }}
               resizeMode="contain"
             />
-          </View>
-          <Text style={[styles.txt1NoRest, { fontFamily: 'ProximaNovaBold' }]}>
+          </View> */}
+          {/* <Text style={[styles.txt1NoRest, { fontFamily: 'ProximaNovaBold' }]}>
             {i18n.t('you_have_no_restaurant')}
-          </Text>
-          <Text style={[styles.txt2NoRest, { fontFamily: 'ProximaNova' }]}>
+          </Text> */}
+          {/* <Text style={[styles.txt2NoRest, { fontFamily: 'ProximaNova' }]}>
             {i18n.t('search_for_rest_and_add')}
+          </Text> */}
+          <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
+            {searchEnter ? i18n.t('result_distance') : i18n.t('around_you')}
+          </Text>
+          <Text style={[styles.txt2NoRest, { fontFamily: 'ProximaNovaSemiBold' }]}>
+            {i18n.t('no_restaurant_found')}
           </Text>
         </View>
         {/* )} */}
@@ -257,7 +263,9 @@ export default function HomeScreenContent({
                         place_id={itemData?.item?.place_id}
                         vicinity={itemData?.item?.vicinity}
                         our_rating={String(itemData?.item?.our_rating) || '0'}
-                        restaurant_id={itemData?.item._id || itemData?.item?.restaurant_id}
+                        restaurant_id={
+                          itemData?.item._id || itemData?.item?.restaurant_id
+                        }
                       />
                     </View>
                   );
@@ -281,8 +289,8 @@ const styles = StyleSheet.create({
   txt2NoRest: {
     fontSize: 16,
     color: Colors.fontLight,
-    textAlign: 'center',
-    maxWidth: 320,
+    width: '90%',
+    alignSelf: 'center',
     marginTop: 15,
   },
   viewEmptyList: {

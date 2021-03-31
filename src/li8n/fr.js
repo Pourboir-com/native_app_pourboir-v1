@@ -11,6 +11,7 @@ export default {
   you_have_no_restaurant: 'Vous ne travaillez pour aucun restaurant',
   search_for_rest_and_add:
     'Recherchez votre restaurant et ajoutez vous en choisissant: Vous êtes serveur',
+  no_restaurant_found: 'Désolé, aucun restaurant n’a été trouvé',
 
   // Open card reviews
   waiters: 'Les serveurs',

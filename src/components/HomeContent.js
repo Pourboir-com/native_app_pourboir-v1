@@ -25,6 +25,7 @@ import Context from '../contextApi/context';
 import * as actionTypes from '../contextApi/actionTypes';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Platform } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function HomeScreenContent({
   restaurantLoading,
@@ -121,12 +122,15 @@ export default function HomeScreenContent({
           <Text style={[styles.txt2NoRest, { fontFamily: 'ProximaNovaSemiBold' }]}>
             {i18n.t('no_restaurant_found')}
           </Text>
+          
         </View>
         {/* )} */}
       </>
     );
   }
   return (
+    
+  
     <>
       {restaurantLoading ? (
         <View

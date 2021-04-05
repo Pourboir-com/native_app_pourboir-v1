@@ -73,10 +73,43 @@ export default {
 
 // Popup pay your tip
 pay_your_tip: 'Pay your tip',
+cash: 'Cash',
+digital: 'Digital',
 
   //Global Header
   must_loggedIn: 'You must be logged in to use Pourboir!',
   continue_with_apple: 'Continue with Apple',
   cannot_vote: 'You cannot vote yourself',
   already_waiter: 'You are already waiter in this restaurant',
+
+  // Personal Details 
+  personal_info: 'Personal Information',
+  first_name: 'First name',
+  last_name: 'Last name',
+  phone_num: 'Phone number',
+  not_verified: 'Not verified',
+  checked: 'Checked',
+  payment_methods: 'Payment Methods',
+  add_pay_method: 'Add a payment method',
+  your_personal_details:'Your Personal Details',
+
+  // Apple Pay 
+  pay_with_apple: 'Pay with Apple Pay',
+  app_acc: 'You can pay using your Apple Pay account linked to this device.',
+
+  // Master Card 
+  date_of_exp: "Expiration date",
+  master_card:'Master Card',
+  clear_map: 'Clear Map',
+
+  //add a map 
+  add_a_map: 'Add a Map',
+  card_number: 'Card Number',
+  pays:'Pays',
+  save:'Save',
+
+  // Paypal 
+  delete_paypal: 'Delete this Paypal account'
+
+
 };

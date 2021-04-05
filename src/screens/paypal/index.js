@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import GlobalHeader from '../../components/GlobalHeader'
+import i18n from '../../li8n';
 
 const PaypalPayment = ({navigation}) => {
     const [text, onChangeText] = useState()
@@ -43,7 +44,7 @@ const PaypalPayment = ({navigation}) => {
                 </View>
                 <View style={{flex:1, alignItems:'center'}}>
                     <TouchableOpacity activeOpacity={0.7} style={styles.btn_yellow}>
-                        <Text style={{fontSize:13}}>Effacer ce compte Paypal</Text>
+                        <Text style={{fontSize:13}}>{i18n.t('delete_paypal')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

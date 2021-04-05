@@ -4,6 +4,7 @@ import { ImageBackground } from 'react-native'
 import { StyleSheet, Text, View } from 'react-native'
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import GlobalHeader from '../../components/GlobalHeader'
+import i18n from '../../li8n';
 
 const MasterCard = ({navigation}) => {
     return (
@@ -18,7 +19,7 @@ const MasterCard = ({navigation}) => {
           >
             <GlobalHeader
               arrow={true}
-              headingText={'Master Card'}
+              headingText={i18n.t('master_card')}
               fontSize={17}
               color={'black'}
               navigation={navigation}
@@ -34,14 +35,14 @@ const MasterCard = ({navigation}) => {
                 <TextInput secureTextEntry={true} placeholder="* * * * 8 8 8 8" style={{color:'black', fontSize:18}} />
             </View>
             <View style={{paddingTop:20}}>
-            <Text style={{fontSize:13}}>Date d’expiration</Text>
+            <Text style={{fontSize:13}}>{i18n.t('date_of_exp')}</Text>
             <Text style={{fontSize:13}}>08/2028</Text>
             </View>
           </View>
         </View>
         <View style={{flex:1, alignItems:'center'}}>
                     <TouchableOpacity activeOpacity={0.7} style={styles.btn_yellow}>
-                        <Text style={{fontSize:13}}>Effacer la carte</Text>
+                        <Text style={{fontSize:13}}>{i18n.t('clear_map')}</Text>
                     </TouchableOpacity>
                 </View>
       </View>

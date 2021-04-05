@@ -16,6 +16,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { getAsyncStorageValues } from '../../constants';
 import { UPDATE_PICTURE } from '../../queries';
 import { useMutation } from 'react-query';
+import i18n from '../../li8n';
+
 
 const PersonalDetails = ({navigation}) => {
   
@@ -93,7 +95,7 @@ const PersonalDetails = ({navigation}) => {
             >
               <GlobalHeader
                 arrow={true}
-                headingText={'Vos données personnels'}
+                headingText={i18n.t('your_personal_details')}
                 fontSize={17}
                 color={Colors.fontLight}
                 navigation={navigation}
@@ -167,9 +169,9 @@ const PersonalDetails = ({navigation}) => {
               </View>
 
               <View style={{ marginHorizontal: 30, alignItems: 'center' }}>
-                <Text style={styles.heading1}>Information personnelles</Text>
+                <Text style={styles.heading1}> {i18n.t('personal_info')}</Text>
                 <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>Prénom</Text>
+                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>{i18n.t('first_name')}</Text>
                   <TextInput
                     style={styles.inputsTopTow}
                     onChangeText={onChangeText}
@@ -179,7 +181,7 @@ const PersonalDetails = ({navigation}) => {
                   />
                 </View>
                 <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>Nom</Text>
+                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>{i18n.t('last_name')}</Text>
                   <TextInput
                     style={styles.inputsTopTow}
                     onChangeText={onChangeText2}
@@ -190,7 +192,7 @@ const PersonalDetails = ({navigation}) => {
                 </View>
                 <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
                   <Text style={{ color: '#1E272E', opacity: 0.7 }}>
-                    Numéro de téléphone
+                  {i18n.t('phone_num')}
                   </Text>
                   <View style={styles.inputsBottomTwo}>
                     <TextInput
@@ -198,10 +200,10 @@ const PersonalDetails = ({navigation}) => {
                       value={text3}
                       placeholder="+33 6 88 88 88"
                       keyboardType="text"
-                      style={{ width: '70%' }}
+                      style={{ width: '60%' }}
                     />
-                    <Text style={{ color: '#E02020', width: '30%', fontSize:13 }}>
-                      Non vérifié
+                    <Text style={{ color: '#E02020', width: '40%', fontSize:13 , textAlign:'right'}}>
+                    {i18n.t('not_verified')}
                     </Text>
                   </View>
                 </View>
@@ -214,17 +216,17 @@ const PersonalDetails = ({navigation}) => {
                       value={text4}
                       placeholder="christine@zhou.com"
                       keyboardType="text"
-                      style={{ width: '80%' }}
+                      style={{ width: '70%' }}
                     />
-                    <Text style={{ color: '#6DD400', width: '20%', fontSize:13 }}>
-                      Vérifié
+                    <Text style={{ color: '#6DD400', width: '30%', fontSize:13, textAlign:'right'}}>
+                    {i18n.t('checked')}
                     </Text>
                   </View>
                 </View>
             </View>
             <View style={{alignItems:'center', marginBottom:40}}>
                <View>
-                 <Text style={styles.heading1}>Modes de paiement</Text>
+                 <Text style={styles.heading1}>{i18n.t('payment_methods')}</Text>
                </View>
                 
               <View style={styles.payment_container}>
@@ -275,7 +277,7 @@ const PersonalDetails = ({navigation}) => {
                       <View style={{backgroundColor:'#FFF6D4', padding:3}}>
                       <AntDesign name="plus" size={21} color="black" />
                       </View>
-                      <Text style={{paddingLeft: 10, fontSize:14}}>Ajoutez un mode de paiement</Text>
+                      <Text style={{paddingLeft: 10, fontSize:14}}>{i18n.t('add_pay_method')}</Text>
                     </View>
                     <View>
                     <AntDesign name="right" size={20} color="lightgray" />

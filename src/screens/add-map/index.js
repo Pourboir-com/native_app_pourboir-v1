@@ -4,6 +4,7 @@ import { ImageBackground } from 'react-native'
 import { StyleSheet, Text, View } from 'react-native'
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import GlobalHeader from '../../components/GlobalHeader'
+import i18n from '../../li8n';
 
 const AddMap = ({navigation}) => {
     const [text, onChangeText] = React.useState();
@@ -23,7 +24,7 @@ const AddMap = ({navigation}) => {
           >
             <GlobalHeader
               arrow={true}
-              headingText={'Ajouter une carte'}
+              headingText={i18n.t('add_a_map')}
               fontSize={17}
               color={'black'}
               navigation={navigation}
@@ -38,7 +39,7 @@ const AddMap = ({navigation}) => {
        <ScrollView>
        <View style={{ marginHorizontal: 30, alignItems: 'center', marginTop:50 }}>
                 <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>Numéro de carte</Text>
+                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>{i18n.t('card_number')}</Text>
                   <TextInput
                     style={styles.inputsTopTow}
                     onChangeText={onChangeText}
@@ -48,7 +49,7 @@ const AddMap = ({navigation}) => {
                   />
                 </View>
                 <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>Date d’expiration</Text>
+                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>{i18n.t('date_of_exp')}</Text>
                   <TextInput
                     style={styles.inputsTopTow}
                     onChangeText={onChangeText2}
@@ -68,7 +69,7 @@ const AddMap = ({navigation}) => {
                   />
                 </View>
                 <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>Pays</Text>
+                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>{i18n.t('pays')}</Text>
                   <TextInput
                     style={styles.inputsTopTow}
                     onChangeText={onChangeText4}
@@ -82,7 +83,7 @@ const AddMap = ({navigation}) => {
         </View>
         <View style={{flex:1, alignItems:'center'}}>
                     <TouchableOpacity activeOpacity={0.7} style={styles.btn_yellow}>
-                        <Text style={{fontSize:13}}>Sauvegarder</Text>
+                        <Text style={{fontSize:13}}>{i18n.t('save')}</Text>
                     </TouchableOpacity>
                 </View>
       </View>

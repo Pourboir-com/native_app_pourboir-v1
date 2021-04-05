@@ -62,10 +62,10 @@ const TipModal = ({ isVisible, handleModalClose }) => {
       </Text>
      <View style={{flexDirection:'row', justifyContent:'space-around', width:'90%', marginVertical:15}}>
          <TouchableOpacity style={styles.btnTipModal} activeOpacity={0.7} >
-             <Text style={styles.txtTipModal}>Cash</Text>
+             <Text style={styles.txtTipModal}>{i18n.t('cash')}</Text>
          </TouchableOpacity>
          <TouchableOpacity style={styles.btnTipModal} activeOpacity={0.7}>
-             <Text style={styles.txtTipModal}>Digital</Text>
+             <Text style={styles.txtTipModal}>{i18n.t('digital')}</Text>
          </TouchableOpacity>
      </View>
     </Overlay>

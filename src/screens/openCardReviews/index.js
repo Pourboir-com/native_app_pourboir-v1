@@ -354,14 +354,7 @@ const ReviewDetails = ({ navigation, route }) => {
        
         <View style={{marginTop:220, marginHorizontal:24, marginBottom:20}}>
         <TouchableOpacity
-            // onPress={() =>
-            //   navigation.navigate('Remove', {
-            //     crossIcon: true,
-            //     yourRestaurantLoading,
-            //     yourRefetchRestaurant,
-            //     yourResIsFetching,
-            //   })
-            // }
+            onPress={() => navigation.navigate("MapScreen")}
             style={[styles.viewItem, { borderBottomColor:'#f9f9f9', borderBottomWidth:1, borderTopLeftRadius:12, borderTopRightRadius:12 }]}
           >
             <View style={styles.viewIcon}>

@@ -70,6 +70,10 @@ export default {
   will_contact_by_email:
     'We are offering you a unique code for our next lottery.',
 
+
+// Popup pay your tip
+pay_your_tip: 'Pay your tip',
+
   //Global Header
   must_loggedIn: 'You must be logged in to use Pourboir!',
   continue_with_apple: 'Continue with Apple',

@@ -17,6 +17,7 @@ const AddMap = ({navigation}) => {
             style={{
               width: '100%',
               height: 100,
+              zIndex:111111
             }}
             source={require('../../assets/images/Group3.png')}
           >
@@ -32,6 +33,7 @@ const AddMap = ({navigation}) => {
             />
           </ImageBackground>
         </View>
+        
         <View style={{ flex: 7 }}>
        <ScrollView>
        <View style={{ marginHorizontal: 30, alignItems: 'center', marginTop:50 }}>

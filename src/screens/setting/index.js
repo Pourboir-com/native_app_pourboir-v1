@@ -29,6 +29,7 @@ import { Platform } from 'react-native';
 import * as StoreReview from 'expo-store-review';
 import { email_to } from '../../constants/env';
 import Constants from 'expo-constants';
+import TipModal from '../../components/modals/TipModal';
 
 const imgBg = require('../../assets/images/Group5.png');
 
@@ -36,12 +37,21 @@ const Setting = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const { state, dispatch } = useContext(Context);
   const [image, setImage] = useState();
+  const [isVisible, setisVisible] = useState(false);
   const [updatePicture] = useMutation(UPDATE_PICTURE);
   const {
     yourRestaurantLoading,
     yourRefetchRestaurant,
     yourResIsFetching,
   } = route.params;
+
+  const handleModalClose = () => {
+    setisVisible(false);
+  };
+
+  const handleModalOpen = () => {
+    setisVisible(true)
+  }
 
   const resetState = async () => {
     navigation.navigate('Home', { crossIcon: false });
@@ -215,14 +225,7 @@ const Setting = ({ navigation, route }) => {
         >
 
 <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('Remove', {
-                crossIcon: true,
-                yourRestaurantLoading,
-                yourRefetchRestaurant,
-                yourResIsFetching,
-              })
-            }
+            onPress={handleModalOpen}
             style={[styles.viewItem, { marginBottom: 0 }]}
           >
             <View style={styles.viewIcon}>
@@ -355,7 +358,12 @@ const Setting = ({ navigation, route }) => {
           </Text>
         )}
       </TouchableOpacity>
+      <TipModal
+        isVisible={isVisible}
+        handleModalClose={handleModalClose}
+      />
     </View>
+    
   );
 };
 export default Setting;

@@ -75,4 +75,8 @@ export default {
   continue_with_apple: 'Continuer avec Apple',
   cannot_vote: 'Vous ne pouvez pas voter vous-même',
   already_waiter: 'Vous êtes déjà serveur dans ce restaurant',
+
+
+ // Popup pay your tip
+ pay_your_tip: 'Payez votre pourboire', 
 };

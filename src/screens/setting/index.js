@@ -155,8 +155,9 @@ const Setting = ({ navigation, route }) => {
           />
 
           <TouchableOpacity
-            onPress={handleChangePicture}
+            onPress={() => navigation.navigate('personalDetails')}
             style={styles.viewImg}
+            activeOpacity={0.6}
           >
             {state.userDetails.image === null ||
             state.userDetails.image === undefined ||
@@ -185,7 +186,7 @@ const Setting = ({ navigation, route }) => {
               />
             )}
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={handleChangePicture}
             style={styles.btnPencil}
           >
@@ -196,7 +197,7 @@ const Setting = ({ navigation, route }) => {
                 size={15}
               />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           {/* <View style={styles.viewImg}>
               <FontAwesome name="user-circle-o" size={120} color="#fff" />
             </View> */}
@@ -212,6 +213,43 @@ const Setting = ({ navigation, route }) => {
           bounces={false}
           showsVerticalScrollIndicator={false}
         >
+
+<TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Remove', {
+                crossIcon: true,
+                yourRestaurantLoading,
+                yourRefetchRestaurant,
+                yourResIsFetching,
+              })
+            }
+            style={[styles.viewItem, { marginBottom: 0 }]}
+          >
+            <View style={styles.viewIcon}>
+              <FontAwesome name="star" size={16} color={Colors.yellow} />
+            </View>
+            <Text
+              style={{
+                fontFamily: 'ProximaNova',
+                color: Colors.fontDark,
+                fontSize: 16,
+              }}
+            >
+              {i18n.t('personal_data')}
+            </Text>
+
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row-reverse',
+              }}
+            >
+              <View style={[styles.viewIcon2]}>
+                <FontAwesome name="angle-right" size={26} color={'grey'} />
+              </View>
+            </View>
+          </TouchableOpacity>
+          
           <TouchableOpacity
             style={styles.viewItem}
             onPress={() => {

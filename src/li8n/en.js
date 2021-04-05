@@ -44,6 +44,7 @@ export default {
   setting: 'Settings',
   rate_application: 'Rate the application',
   contact_us: 'Contact us',
+  personal_data: 'Personal data',
   // are_you_a_waiter   open card reviews
   sign_out: 'Sign out',
 

@@ -14,10 +14,14 @@ import {
   // RefreshControl,
   Animated,
   Platform,
+  Linking,
   Alert,
 } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import ConfirmationModal from '../../components/modals/ConfirmModal';
+import { FontAwesome} from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 // import HelpUsImproveModal from '../../components/modals/HelpUsImproveModal';
 import { Colors } from '../../constants/Theme';
@@ -38,6 +42,22 @@ import Spinner from 'react-native-loading-spinner-overlay';
 // import { set } from 'react-native-reanimated';
 
 const ReviewDetails = ({ navigation, route }) => {
+
+
+
+  const openDialScreen = () => {
+    let number = '';
+    if (Platform.OS === 'ios') {
+      number = 'telprompt:${ +33 4 91 55 06 92}';
+    } else {
+      number = 'tel:${ +33 4 91 55 06 92}';
+    }
+    Linking.openURL(number);
+  };
+
+
+
+
   // Star arrayyyyyyyy
   const obj = [1, 2, 3, 4, 5];
   const [data, setData] = useState([]);
@@ -331,10 +351,78 @@ const ReviewDetails = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
+       
+        <View style={{marginTop:220, marginHorizontal:24, marginBottom:20}}>
+        <TouchableOpacity
+            // onPress={() =>
+            //   navigation.navigate('Remove', {
+            //     crossIcon: true,
+            //     yourRestaurantLoading,
+            //     yourRefetchRestaurant,
+            //     yourResIsFetching,
+            //   })
+            // }
+            style={[styles.viewItem, { borderBottomColor:'#f9f9f9', borderBottomWidth:1, borderTopLeftRadius:12, borderTopRightRadius:12 }]}
+          >
+            <View style={styles.viewIcon}>
+              <Feather name="send" size={18} color={Colors.yellow} />
+            </View>
+            <Text
+              style={{
+                fontFamily: 'ProximaNova',
+                color: Colors.fontDark,
+                fontSize: 13,
+                width:150
+              }}
+            >
+              27 Qual des Belges 13001 Marselle, France
+            </Text>
+
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row-reverse',
+              }}
+            >
+              <View style={[styles.viewIcon2]}>
+                <FontAwesome name="angle-right" size={26} color={'grey'} />
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => openDialScreen()}
+            style={[styles.viewItem, { marginBottom: 0, borderBottomRightRadius:12, borderBottomLeftRadius:12  }]}
+          >
+            <View style={styles.viewIcon}>
+            <Feather name="phone" size={20} color={Colors.yellow} />
+            </View>
+            <Text
+              style={{
+                fontFamily: 'ProximaNova',
+                color: Colors.fontDark,
+                fontSize: 14,
+              }}
+            >
+              +33 4 91 55 06 92
+            </Text>
+
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row-reverse',
+              }}
+            >
+              <View style={[styles.viewIcon2]}>
+                <FontAwesome name="angle-right" size={26} color={'grey'} />
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+
         <View
           style={{
             flexDirection: 'row',
-            marginTop: 220,
+            // marginTop: 220,
             marginHorizontal: 15,
             marginBottom: 10,
             alignItems: 'center',
@@ -723,5 +811,39 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 7,
     marginBottom: 25,
+  },
+  viewIcon: {
+    width: 30,
+    height: 30,
+    // backgroundColor: '#FFF6D4',
+    borderRadius: 5,
+    marginRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  viewIcon2: {
+    width: 30,
+    height: 30,
+    borderRadius: 5,
+    marginRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  viewBtnConatiner: {
+    width: '90%',
+    alignSelf: 'center',
+    borderRadius: 15,
+    marginTop: -45,
+    overflow: 'hidden',
+    backgroundColor: 'transparent',
+  },
+  viewItem: {
+    width: '100%',
+    height: 55,
+    backgroundColor: '#fff',
+    marginBottom: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
   },
 });

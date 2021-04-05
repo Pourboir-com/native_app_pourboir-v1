@@ -44,6 +44,7 @@ export default {
   setting: 'Paramètre',
   rate_application: "Notez l'application",
   contact_us: 'Contactez nous',
+  personal_data: 'Données personnels',
   // are_you_a_waiter   open card reviews
   sign_out: 'Se déconnecter',
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useContext} from 'react'
 import { StatusBar } from 'react-native'
 import { ImageBackground } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native'
@@ -7,8 +7,15 @@ import { Text, View } from 'react-native'
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import GlobalHeader from '../../components/GlobalHeader'
 import { Colors } from '../../constants/Theme'
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from './styles'
+import Context from '../../contextApi/context';
+import * as actionTypes from '../../contextApi/actionTypes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as ImagePicker from 'expo-image-picker';
+import { getAsyncStorageValues } from '../../constants';
+import { UPDATE_PICTURE } from '../../queries';
+import { useMutation } from 'react-query';
 
 const PersonalDetails = ({navigation}) => {
   
@@ -16,6 +23,55 @@ const PersonalDetails = ({navigation}) => {
   const [text2, onChangeText2] = React.useState();
   const [text3, onChangeText3] = React.useState();
   const [text4, onChangeText4] = React.useState();
+  const [loading, setLoading] = useState(false);
+  const { state, dispatch } = useContext(Context);
+  const [image, setImage] = useState();
+  const [updatePicture] = useMutation(UPDATE_PICTURE);
+
+  const handleChangePicture = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+    if (!result.cancelled) {
+      setImage(result.uri);
+
+      const { userInfo } = await getAsyncStorageValues();
+      dispatch({
+        type: actionTypes.USER_DETAILS,
+        payload: {
+          ...state.userDetails,
+          image: result.uri,
+        },
+      });
+
+      await AsyncStorage.setItem(
+        '@userInfo',
+        JSON.stringify({
+          ...userInfo,
+          image: result.uri,
+        }),
+      );
+
+      let formData = new FormData();
+      formData.append('image', {
+        uri: result.uri,
+        type: `image/${result.uri.split('.')[1]}`,
+        name: result.uri.substr(result.uri.lastIndexOf('/') + 1),
+      });
+
+      let UploadData = {
+        user_id: state.userDetails.user_id,
+        image: formData,
+      };
+
+      await updatePicture(UploadData, {
+        onSuccess: res => {},
+      });
+    }
+  };
 
     return (
       <View style={styles.container}>
@@ -49,7 +105,7 @@ const PersonalDetails = ({navigation}) => {
 
             <View>
               <View style={styles.avatar}>
-                <TouchableOpacity style={styles.viewImg}>
+                {/* <TouchableOpacity style={styles.viewImg}>
                   <Image
                     style={{
                       width: '100%',
@@ -61,7 +117,53 @@ const PersonalDetails = ({navigation}) => {
                         'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png',
                     }}
                   />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+                 <TouchableOpacity
+            // onPress={() => navigation.navigate('personalDetails')}
+            onPress={handleChangePicture}
+            style={styles.viewImg}
+            activeOpacity={0.6}
+          >
+            {state.userDetails.image === null ||
+            state.userDetails.image === undefined ||
+            state.userDetails.image === '' ? (
+              // <FontAwesome name="user-circle-o" size={110} color="#fff" />
+              <Image
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: 60,
+                }}
+                source={{
+                  uri:
+                    'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png',
+                }}
+              />
+            ) : (
+              <Image
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: 60,
+                }}
+                source={{ uri: image ? image : state.userDetails.image }}
+                resizeMode="cover"
+              />
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleChangePicture}
+            style={styles.btnPencil}
+          >
+            <View style={styles.viewPencil}>
+              <MaterialCommunityIcons
+                name="pencil-outline"
+                color="#fff"
+                size={15}
+              />
+            </View>
+          </TouchableOpacity>
+                
               </View>
 
               <View style={{ marginHorizontal: 30, alignItems: 'center' }}>
@@ -96,9 +198,9 @@ const PersonalDetails = ({navigation}) => {
                       value={text3}
                       placeholder="+33 6 88 88 88"
                       keyboardType="text"
-                      style={{ width: '65%' }}
+                      style={{ width: '70%' }}
                     />
-                    <Text style={{ color: '#E02020', width: '35%' }}>
+                    <Text style={{ color: '#E02020', width: '30%', fontSize:13 }}>
                       Non vérifié
                     </Text>
                   </View>
@@ -112,9 +214,9 @@ const PersonalDetails = ({navigation}) => {
                       value={text4}
                       placeholder="christine@zhou.com"
                       keyboardType="text"
-                      style={{ width: '75%' }}
+                      style={{ width: '80%' }}
                     />
-                    <Text style={{ color: '#6DD400', width: '25%' }}>
+                    <Text style={{ color: '#6DD400', width: '20%', fontSize:13 }}>
                       Vérifié
                     </Text>
                   </View>

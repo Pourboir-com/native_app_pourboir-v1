@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderColor: '#FFE685',
     borderWidth: 3,
+    // position:'absolute',
+    // top:40
   },
   heading1: {
     marginTop: 20,
@@ -76,7 +78,31 @@ const styles = StyleSheet.create({
   lastpayment:{
         flexDirection:'row', 
         justifyContent:'space-between'
-  }
+  },
+  viewPencil: {
+    width: 25,
+    height: 25,
+    backgroundColor: '#1E272E',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // position:'absolute',
+    zIndex:11111
+  },
+  btnPencil: {
+    backgroundColor: '#FCDF6F',
+    width: 30,
+    height: 30,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    // marginRight: -40,
+    // position:'absolute',
+    marginTop: -28,
+    marginLeft:65,
+    zIndex: 111
+  },
 });
 
   export default styles

@@ -29,6 +29,7 @@ import { Platform } from 'react-native';
 import * as StoreReview from 'expo-store-review';
 import { email_to } from '../../constants/env';
 import Constants from 'expo-constants';
+import TipModal from '../../components/modals/TipModal';
 
 const imgBg = require('../../assets/images/Group5.png');
 
@@ -36,12 +37,21 @@ const Setting = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const { state, dispatch } = useContext(Context);
   const [image, setImage] = useState();
+  const [isVisible, setisVisible] = useState(false);
   const [updatePicture] = useMutation(UPDATE_PICTURE);
   const {
     yourRestaurantLoading,
     yourRefetchRestaurant,
     yourResIsFetching,
   } = route.params;
+
+  const handleModalClose = () => {
+    setisVisible(false);
+  };
+
+  const handleModalOpen = () => {
+    setisVisible(true)
+  }
 
   const resetState = async () => {
     navigation.navigate('Home', { crossIcon: false });
@@ -149,14 +159,15 @@ const Setting = ({ navigation, route }) => {
             arrow={true}
             headingText={i18n.t('setting')}
             fontSize={17}
-            color="#000"
+            color={'black'}
             backgroundColor={'transparent'}
             navigation={navigation}
           />
 
           <TouchableOpacity
-            onPress={handleChangePicture}
             style={styles.viewImg}
+            activeOpacity={0.6}
+            onPress={() => navigation.navigate('personalDetails')}
           >
             {state.userDetails.image === null ||
             state.userDetails.image === undefined ||
@@ -185,7 +196,7 @@ const Setting = ({ navigation, route }) => {
               />
             )}
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={handleChangePicture}
             style={styles.btnPencil}
           >
@@ -196,7 +207,7 @@ const Setting = ({ navigation, route }) => {
                 size={15}
               />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           {/* <View style={styles.viewImg}>
               <FontAwesome name="user-circle-o" size={120} color="#fff" />
             </View> */}
@@ -212,6 +223,37 @@ const Setting = ({ navigation, route }) => {
           bounces={false}
           showsVerticalScrollIndicator={false}
         >
+
+<TouchableOpacity
+            onPress={handleModalOpen}
+            style={[styles.viewItem, { marginBottom: 0 }]}
+            // onPress={() => navigation.navigate('personalDetails')}
+          >
+            <View style={styles.viewIcon}>
+              <FontAwesome name="star" size={16} color={Colors.yellow} />
+            </View>
+            <Text
+              style={{
+                fontFamily: 'ProximaNova',
+                color: Colors.fontDark,
+                fontSize: 16,
+              }}
+            >
+              {i18n.t('personal_data')}
+            </Text>
+
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row-reverse',
+              }}
+            >
+              <View style={[styles.viewIcon2]}>
+                <FontAwesome name="angle-right" size={26} color={'grey'} />
+              </View>
+            </View>
+          </TouchableOpacity>
+          
           <TouchableOpacity
             style={styles.viewItem}
             onPress={() => {
@@ -317,7 +359,12 @@ const Setting = ({ navigation, route }) => {
           </Text>
         )}
       </TouchableOpacity>
+      <TipModal
+        isVisible={isVisible}
+        handleModalClose={handleModalClose}
+      />
     </View>
+    
   );
 };
 export default Setting;

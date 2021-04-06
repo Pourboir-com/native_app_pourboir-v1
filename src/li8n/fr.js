@@ -44,6 +44,7 @@ export default {
   setting: 'Paramètre',
   rate_application: "Notez l'application",
   contact_us: 'Contactez nous',
+  personal_data: 'Données personnels',
   // are_you_a_waiter   open card reviews
   sign_out: 'Se déconnecter',
 
@@ -74,4 +75,42 @@ export default {
   continue_with_apple: 'Continuer avec Apple',
   cannot_vote: 'Vous ne pouvez pas voter vous-même',
   already_waiter: 'Vous êtes déjà serveur dans ce restaurant',
+
+
+ // Popup pay your tip
+ pay_your_tip: 'Payez votre pourboire', 
+ cash: 'En espèces',
+digital: 'Numérique',
+
+// Personal Info details 
+
+personal_info: 'Information personnelles',
+first_name: 'Prénom',
+last_name:'Nom',
+phone_num: 'Numéro de téléphone',
+not_verified: 'Non vérifié',
+checked: 'Vérifié',
+payment_methods: 'Modes de paiement',
+add_pay_method: 'Ajoutez un mode de paiement',
+your_personal_details:'Vos données personnels',
+
+
+ // Apple Pay 
+ pay_with_apple: 'Payer avec Apple Pay',
+ app_acc: 'Vous pouvez payer en utilisant votre compte Apple Pay lié à cette device.',
+
+ // Master Card 
+ date_of_exp: "Date d'expiration",
+ master_card:'Carte maîtresse',
+ clear_map: 'Effacer la carte',
+
+ // Add a map
+ add_a_map: 'Ajouter une carte',
+ card_number: 'Numéro de carte',
+ pays: 'Paie',
+ save:'Sauvegarder',
+
+//  PayPal 
+delete_paypal: 'Effacer ce compte Paypal'
+
 };

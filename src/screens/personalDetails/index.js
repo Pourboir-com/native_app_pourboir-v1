@@ -79,6 +79,25 @@ const PersonalDetails = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar translucent={true} style="dark" />
+      <ImageBackground
+        style={{
+          width: '100%',
+          height: 100,
+        }}
+        source={require('../../assets/images/Group3.png')}
+      >
+        <GlobalHeader
+          arrow={true}
+          headingText={i18n.t('your_personal_details')}
+          fontSize={17}
+          color={'black'}
+          navigation={navigation}
+          setting={false}
+          backgroundColor={'transparent'}
+          borderRadius={true}
+        />
+      </ImageBackground>
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         bounces={false}
@@ -87,26 +106,6 @@ const PersonalDetails = ({ navigation }) => {
           width: '100%',
         }}
       >
-        <StatusBar translucent={true} style="light" />
-        <ImageBackground
-          style={{
-            width: '100%',
-            height: 100,
-          }}
-          source={require('../../assets/images/Group3.png')}
-        >
-          <GlobalHeader
-            arrow={true}
-            headingText={i18n.t('your_personal_details')}
-            fontSize={17}
-            color={'black'}
-            navigation={navigation}
-            setting={false}
-            backgroundColor={'transparent'}
-            borderRadius={true}
-          />
-        </ImageBackground>
-
         <View>
           <View style={styles.avatar}>
             {/* <TouchableOpacity style={styles.viewImg}>
@@ -256,55 +255,83 @@ const PersonalDetails = ({ navigation }) => {
               <Text style={styles.heading1}>{i18n.t('payment_methods')}</Text>
             </View>
 
-            <View style={styles.payment_container}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('paypalPayment')}
-                activeOpacity={0.6}
-                style={styles.payments}
-              >
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <View style={{ backgroundColor: '#FFF6D4', padding: 3 }}>
-                    <Image
-                      source={require('../../assets/images/paypal.png')}
-                      style={{ width: 23, height: 23, resizeMode: 'cover' }}
-                    />
-                  </View>
-                  <Text style={{ paddingLeft: 10, fontSize: 15 }}>Paypal</Text>
+            <View style={{ marginHorizontal: 30, alignItems: 'center' }}>
+              <Text style={styles.heading1}> {i18n.t('personal_info')}</Text>
+              <View style={{ alignItems: 'flex-start', marginBottom: 16 }}>
+                <Text
+                  style={{
+                    color: '#1E272E',
+                    paddingBottom: 3,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {i18n.t('first_name')}
+                </Text>
+                <TextInput
+                  style={styles.inputsTopTow}
+                  onChangeText={onChangeText}
+                  value={text}
+                  placeholder="Christine"
+                  keyboardType="text"
+                />
+              </View>
+              <View style={{ alignItems: 'flex-start', marginBottom: 16 }}>
+                <Text
+                  style={{
+                    color: '#1E272E',
+                    paddingBottom: 3,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {i18n.t('last_name')}
+                </Text>
+                <TextInput
+                  style={styles.inputsTopTow}
+                  onChangeText={onChangeText2}
+                  value={text2}
+                  placeholder="Zhou"
+                  keyboardType="text"
+                />
+              </View>
+              <View style={{ alignItems: 'flex-start', marginBottom: 16 }}>
+                <Text
+                  style={{
+                    color: '#1E272E',
+                    paddingBottom: 3,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {i18n.t('phone_num')}
+                </Text>
+                <View style={styles.inputsBottomTwo}>
+                  <TextInput
+                    onChangeText={onChangeText3}
+                    value={text3}
+                    placeholder="+33 6 88 88 88"
+                    keyboardType="text"
+                    style={{ width: '60%' }}
+                  />
                 </View>
-                <View style={{ alignItems: 'center' }}>
-                  <AntDesign name="right" size={20} color="lightgray" />
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('applePayment')}
-                activeOpacity={0.6}
-                style={styles.payments}
-              >
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <View style={{ backgroundColor: '#FFF6D4', padding: 3 }}>
-                    <Image
-                      source={require('../../assets/images/apple.png')}
-                      style={{ width: 24, height: 24, resizeMode: 'contain' }}
-                    />
-                  </View>
-                  <Text style={{ paddingLeft: 10, fontSize: 15 }}>
-                    Apple Pay
+                <Text style={{ paddingLeft: 10, fontSize: 15 }}>Apple Pay</Text>
+              </View>
+              <TouchableOpacity>
+                <View style={{ alignItems: 'flex-start', marginBottom: 16 }}>
+                  <Text
+                    style={{
+                      color: '#1E272E',
+                      paddingBottom: 3,
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    Email
                   </Text>
-                </View>
-                <View style={{ alignItems: 'center' }}>
-                  <AntDesign name="right" size={20} color="lightgray" />
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('masterCard')}
-                activeOpacity={0.6}
-                style={styles.payments}
-              >
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <View style={{ backgroundColor: '#FFF6D4', padding: 3 }}>
-                    <Image
-                      source={require('../../assets/images/card.png')}
-                      style={{ width: 25, height: 25, resizeMode: 'cover' }}
+                  <View style={styles.inputsBottomTwo}>
+                    <TextInput
+                      onChangeText={onChangeText4}
+                      value={text4}
+                      placeholder="christine@zhou.com"
+                      keyboardType="text"
+                      style={{ width: '70%' }}
                     />
                   </View>
                   <Text style={{ paddingLeft: 10, fontSize: 15 }}>***8888</Text>

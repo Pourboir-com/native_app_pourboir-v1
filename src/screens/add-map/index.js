@@ -17,14 +17,14 @@ const AddMap = ({ navigation }) => {
   const [text4, onChangeText4] = React.useState();
   return (
     <View style={styles.container}>
+      <StatusBar translucent={true} style="dark" />
       <View style={{ flex: 1 }}>
         <ImageBackground
           style={{
-            width: '100%',
-            height: 100,
-            zIndex: 111111,
+            marginHorizontal: 30,
+            alignItems: 'center',
+            marginTop: 50,
           }}
-          source={require('../../assets/images/Group3.png')}
         >
           <GlobalHeader
             arrow={true}
@@ -48,8 +48,15 @@ const AddMap = ({ navigation }) => {
               marginTop: 50,
             }}
           >
-            <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-              <Text style={{ color: '#1E272E', opacity: 0.7 }}>
+            <View style={{ alignItems: 'flex-start', marginBottom: 15 }}>
+              <Text
+                style={{
+                  color: '#1E272E',
+                  opacity: 1,
+                  fontWeight: 'bold',
+                  paddingBottom: 3,
+                }}
+              >
                 {i18n.t('card_number')}
               </Text>
               <TextInput
@@ -60,8 +67,15 @@ const AddMap = ({ navigation }) => {
                 keyboardType="numeric"
               />
             </View>
-            <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-              <Text style={{ color: '#1E272E', opacity: 0.7 }}>
+            <View style={{ alignItems: 'flex-start', marginBottom: 15 }}>
+              <Text
+                style={{
+                  color: '#1E272E',
+                  opacity: 1,
+                  fontWeight: 'bold',
+                  paddingBottom: 3,
+                }}
+              >
                 {i18n.t('date_of_exp')}
               </Text>
               <TextInput
@@ -69,11 +83,20 @@ const AddMap = ({ navigation }) => {
                 onChangeText={onChangeText2}
                 value={text2}
                 placeholder="MM/AA"
-                keyboardType="number-pad"
+                keyboardType="text"
               />
             </View>
-            <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-              <Text style={{ color: '#1E272E', opacity: 0.7 }}>CVV</Text>
+            <View style={{ alignItems: 'flex-start', marginBottom: 15 }}>
+              <Text
+                style={{
+                  color: '#1E272E',
+                  opacity: 1,
+                  fontWeight: 'bold',
+                  paddingBottom: 3,
+                }}
+              >
+                CVV
+              </Text>
               <TextInput
                 style={styles.inputsTopTow}
                 onChangeText={onChangeText3}
@@ -82,8 +105,15 @@ const AddMap = ({ navigation }) => {
                 keyboardType="numeric"
               />
             </View>
-            <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-              <Text style={{ color: '#1E272E', opacity: 0.7 }}>
+            <View style={{ alignItems: 'flex-start', marginBottom: 15 }}>
+              <Text
+                style={{
+                  color: '#1E272E',
+                  opacity: 1,
+                  fontWeight: 'bold',
+                  paddingBottom: 3,
+                }}
+              >
                 {i18n.t('pays')}
               </Text>
               <TextInput
@@ -91,11 +121,18 @@ const AddMap = ({ navigation }) => {
                 onChangeText={onChangeText4}
                 value={text4}
                 placeholder="France"
+                keyboardType="text"
               />
             </View>
           </View>
         </ScrollView>
       </View>
+      <View style={{ flex: 1, alignItems: 'center' }}>
+        <TouchableOpacity activeOpacity={0.7} style={styles.btn_yellow}>
+          <Text style={{ fontSize: 13 }}>{i18n.t('save')}</Text>
+        </TouchableOpacity>
+      </View>
+      {/* </View> */}
       <View style={{ flex: 1, alignItems: 'center' }}>
         <TouchableOpacity activeOpacity={0.7} style={styles.btn_yellow}>
           <Text style={{ fontSize: 13 }}>{i18n.t('save')}</Text>

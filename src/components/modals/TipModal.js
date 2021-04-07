@@ -10,7 +10,7 @@ import {
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
-const imgWaiter = require('../../assets/images/ThanksGiving.png');
+const imgWaiter = require('../../assets/images/payment.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 
@@ -52,7 +52,7 @@ const TipModal = ({ isVisible, handleModalClose }) => {
           <Image
             source={imgWaiter}
             style={styles.imgStyle}
-            resizeMode="cover"
+            resizeMode="contain"
           />
         </View>
       </ImageBackground>
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     width: 210,
     height: 200,
     alignSelf: 'center',
-    marginTop: -109,
+    marginTop: -69,
     marginRight: -20,
   },
   viewImg: {

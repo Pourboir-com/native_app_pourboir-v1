@@ -159,15 +159,15 @@ const Setting = ({ navigation, route }) => {
             arrow={true}
             headingText={i18n.t('setting')}
             fontSize={17}
-            color="#000"
+            color={'black'}
             backgroundColor={'transparent'}
             navigation={navigation}
           />
 
           <TouchableOpacity
-            onPress={() => navigation.navigate('personalDetails')}
             style={styles.viewImg}
             activeOpacity={0.6}
+            onPress={() => navigation.navigate('personalDetails')}
           >
             {state.userDetails.image === null ||
             state.userDetails.image === undefined ||
@@ -227,6 +227,7 @@ const Setting = ({ navigation, route }) => {
 <TouchableOpacity
             onPress={handleModalOpen}
             style={[styles.viewItem, { marginBottom: 0 }]}
+            // onPress={() => navigation.navigate('personalDetails')}
           >
             <View style={styles.viewIcon}>
               <FontAwesome name="star" size={16} color={Colors.yellow} />

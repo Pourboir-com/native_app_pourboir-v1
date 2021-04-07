@@ -97,7 +97,7 @@ const PersonalDetails = ({navigation}) => {
                 arrow={true}
                 headingText={i18n.t('your_personal_details')}
                 fontSize={17}
-                color={Colors.fontLight}
+                color={'black'}
                 navigation={navigation}
                 setting={false}
                 backgroundColor={'transparent'}
@@ -171,7 +171,7 @@ const PersonalDetails = ({navigation}) => {
               <View style={{ marginHorizontal: 30, alignItems: 'center' }}>
                 <Text style={styles.heading1}> {i18n.t('personal_info')}</Text>
                 <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>{i18n.t('first_name')}</Text>
+                  <Text style={{ color: '#1E272E', opacity: 0.7, paddingBottom:5 }}>{i18n.t('first_name')}</Text>
                   <TextInput
                     style={styles.inputsTopTow}
                     onChangeText={onChangeText}
@@ -181,7 +181,7 @@ const PersonalDetails = ({navigation}) => {
                   />
                 </View>
                 <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>{i18n.t('last_name')}</Text>
+                  <Text style={{ color: '#1E272E', opacity: 0.7, paddingBottom:5 }}>{i18n.t('last_name')}</Text>
                   <TextInput
                     style={styles.inputsTopTow}
                     onChangeText={onChangeText2}
@@ -191,7 +191,7 @@ const PersonalDetails = ({navigation}) => {
                   />
                 </View>
                 <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>
+                  <Text style={{ color: '#1E272E', opacity: 0.7, paddingBottom:5 }}>
                   {i18n.t('phone_num')}
                   </Text>
                   <View style={styles.inputsBottomTwo}>
@@ -209,7 +209,7 @@ const PersonalDetails = ({navigation}) => {
                 </View>
 
                 <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>Email</Text>
+                  <Text style={{ color: '#1E272E', opacity: 0.7, paddingBottom:5 }}>Email</Text>
                   <View style={styles.inputsBottomTwo}>
                     <TextInput
                       onChangeText={onChangeText4}

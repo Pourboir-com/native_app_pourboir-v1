@@ -70,9 +70,7 @@ const HomeScreen = props => {
   }, [props.saveLocation, state]);
   const reBounce = 25;
 
-  const HEADER_HEIGHT =
-    HEADER_BAR_HEIGHT * 3.1 +
-    getStatusBarHeight() + 0;
+  const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight() + 0;
 
   const navigation = useNavigation();
 
@@ -84,10 +82,7 @@ const HomeScreen = props => {
     // outputRange: [0, -HEADER_HEIGHT + HEADER_BAR_HEIGHT + getStatusBarHeight() + spacing(1)],
     outputRange: [
       0,
-      -HEADER_HEIGHT +
-        1.5 * HEADER_BAR_HEIGHT +
-        getStatusBarHeight() +
-        (0),
+      -HEADER_HEIGHT + 1.5 * HEADER_BAR_HEIGHT + getStatusBarHeight() + 0,
     ],
     extrapolate: Extrapolate.CLAMP,
   });
@@ -143,30 +138,30 @@ const HomeScreen = props => {
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.024
-              : LAYOUT.window.width * 0.01,
+              : LAYOUT.window.width * 0.010,
           )
         : LAYOUT.window.width < 365
-          ? HEADER_BAR_HEIGHT +
+        ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.026
               : LAYOUT.window.width * 0.013,
           )
-          : LAYOUT.window.width < 380
-            ? HEADER_BAR_HEIGHT +
+        : LAYOUT.window.width < 380
+        ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.028
               : LAYOUT.window.width * 0.016,
           )
-            : LAYOUT.window.width < 400
-              ? HEADER_BAR_HEIGHT +
+        : LAYOUT.window.width < 400
+        ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
-              ? LAYOUT.window.width * 0.03
-              : LAYOUT.window.width * 0.02,
+              ? LAYOUT.window.width * 0.030
+              : LAYOUT.window.width * 0.020,
           )
-              : HEADER_BAR_HEIGHT +
+        : HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.032
@@ -203,33 +198,33 @@ const HomeScreen = props => {
           {state.userDetails.user_id ? (
             <>
               {state.userDetails.image ? (
-                props.yourRestaurantLoading ? (
-                  <ActivityIndicator color="black" size={38} />
-                ) : (
-                  <TouchableOpacity
-                    onPress={() =>
-                      props.navigation.navigate('Setting', {
-                        yourRestaurantLoading: props.yourRestaurantLoading,
-                        yourRefetchRestaurant: props.yourRefetchRestaurant,
-                        yourResIsFetching: props.yourResIsFetching,
-                      })
-                    }
-                  >
-                    <Image
-                      style={{
-                        borderRadius: 90,
-                        width: 40,
-                        height: 40,
-                      }}
-                      source={{
-                        uri: state.userDetails.image,
-                      }}
-                    />
-                  </TouchableOpacity>
-                )
-              ) : props.yourRestaurantLoading ? (
-                <ActivityIndicator color="black" size={38} />
+                // props.yourRestaurantLoading ? (
+                //   <ActivityIndicator color="black" size={38} />
+                // ) : (
+                <TouchableOpacity
+                  onPress={() =>
+                    props.navigation.navigate('Setting', {
+                      yourRestaurantLoading: props.yourRestaurantLoading,
+                      yourRefetchRestaurant: props.yourRefetchRestaurant,
+                      yourResIsFetching: props.yourResIsFetching,
+                    })
+                  }
+                >
+                  <Image
+                    style={{
+                      borderRadius: 90,
+                      width: 40,
+                      height: 40,
+                    }}
+                    source={{
+                      uri: state?.userDetails?.image,
+                    }}
+                  />
+                </TouchableOpacity>
               ) : (
+                // ) : props.yourRestaurantLoading ? (
+                //   <ActivityIndicator color="black" size={38} />
+                // ) : (
                 <TouchableOpacity
                   onPress={() =>
                     props.navigation.navigate('Setting', {
@@ -325,7 +320,6 @@ const HomeScreen = props => {
                       //refresh control used for the Pull to Refresh
                       refreshing={props.resIsFetching}
                       onRefresh={props.refetchRestaurant}
-
                     />
                   </>
                 }
@@ -337,7 +331,6 @@ const HomeScreen = props => {
                   minHeight: props.searchIconPress
                     ? 0
                     : LAYOUT.window.height + HEADER_HEIGHT,
-
                 }}
                 scrollEventThrottle={1}
                 showsVerticalScrollIndicator={false}
@@ -601,7 +594,6 @@ const HomeScreen = props => {
                     alignItems: 'center',
                     justifyContent: 'flex-start',
                     paddingLeft: 10,
-
                   }}
                 >
                   <TouchableOpacity

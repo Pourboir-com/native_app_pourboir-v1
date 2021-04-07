@@ -57,7 +57,6 @@ const Remove = props => {
           />
         </ImageBackground>
       </View>
-
       <HomeScreenContent
         route={props.route}
         restaurantLoading={yourRestaurantLoading}

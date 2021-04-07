@@ -14,7 +14,7 @@ const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
   const [searchEnter, setsearchEnter] = useState('');
   const [saveLocation, setSaveLocation] = useState('');
-  const [nextPageToken, setnextPageToken] = useState();
+  // const [nextPageToken, setnextPageToken] = useState();
   const { state, dispatch } = useContext(Context);
   const { restaurantsDetails: data, userDetails } = state;
 

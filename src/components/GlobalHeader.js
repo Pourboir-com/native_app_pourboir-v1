@@ -101,7 +101,7 @@ const GlobalHeader = props => {
               {props.arrow === true && (
                 <MaterialIcons
                   style={{
-                    marginTop: -10,
+                    marginTop: -7,
                   }}
                   name="arrow-back"
                   size={props.Arrowsize ? props.Arrowsize : 24}
@@ -116,7 +116,7 @@ const GlobalHeader = props => {
           style={{
             flex: props.centerHide === true ? 0 : 5,
             left: 20,
-            marginTop: -10,
+            marginTop: -7,
             justifyContent: 'center',
             alignItems: props.headingALign ? props.headingALign : 'center',
             alignSelf: 'center',

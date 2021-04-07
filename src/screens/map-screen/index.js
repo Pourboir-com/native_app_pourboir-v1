@@ -7,7 +7,11 @@ import MapView from 'react-native-maps';
 import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';
 
-const MapScreen = ({ navigation }) => {
+const MapScreen = ({ navigation, route }) => {
+  const {
+    geometry,
+    name,
+  } = route?.params;
   return (
     <View style={styles.container}>
       <View style={{ flex: 0 }}>
@@ -16,12 +20,15 @@ const MapScreen = ({ navigation }) => {
           style={{
             width: '100%',
             height: 100,
+            borderBottomLeftRadius: Dimensions.get('window').width * 0.06,
+            borderBottomRightRadius: Dimensions.get('window').width * 0.06,
+            overflow: 'hidden',
           }}
           source={require('../../assets/images/Group3.png')}
         >
           <GlobalHeader
             arrow={true}
-            headingText={'27 Qual des Belges 13001'}
+            headingText={name}
             fontSize={17}
             color={'black'}
             navigation={navigation}
@@ -35,19 +42,19 @@ const MapScreen = ({ navigation }) => {
         <MapView
           style={styles.map}
           initialRegion={{
-            latitude: 43.296398,
-            longitude: 5.37,
+            latitude: geometry?.lat,
+            longitude: geometry?.lng,
             latitudeDelta: 0.0092,
             longitudeDelta: 0.00421,
           }}
         >
           <MapView.Marker
             coordinate={{
-              latitude: 43.296398,
-              longitude: 5.37,
+              latitude: geometry?.lat,
+              longitude: geometry?.lng,
             }}
             title={'Location'}
-            description={'27 Qual des Belges 13001 Marselle, France'}
+            description={name}
           />
         </MapView>
       </View>

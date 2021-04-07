@@ -19,7 +19,7 @@ import {
 } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import ConfirmationModal from '../../components/modals/ConfirmModal';
-import { FontAwesome} from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
@@ -42,9 +42,6 @@ import Spinner from 'react-native-loading-spinner-overlay';
 // import { set } from 'react-native-reanimated';
 
 const ReviewDetails = ({ navigation, route }) => {
-
-
-
   const openDialScreen = () => {
     let number = '';
     if (Platform.OS === 'ios') {
@@ -54,9 +51,6 @@ const ReviewDetails = ({ navigation, route }) => {
     }
     Linking.openURL(number);
   };
-
-
-
 
   // Star arrayyyyyyyy
   const obj = [1, 2, 3, 4, 5];
@@ -83,6 +77,7 @@ const ReviewDetails = ({ navigation, route }) => {
     menu_url,
     our_rating,
     restaurant_id,
+    geometry,
   } = route?.params;
 
   // const updateRestaurants = (state, placeId) => {
@@ -351,11 +346,25 @@ const ReviewDetails = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-       
-        <View style={{marginTop:220, marginHorizontal:24, marginBottom:20}}>
-        <TouchableOpacity
-            onPress={() => navigation.navigate("MapScreen")}
-            style={[styles.viewItem, { borderBottomColor:'#f9f9f9', borderBottomWidth:1, borderTopLeftRadius:12, borderTopRightRadius:12 }]}
+        <View
+          style={{ marginTop: 220, marginHorizontal: 24, marginBottom: 20 }}
+        >
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('MapScreen', {
+                geometry,
+                name,
+              })
+            }
+            style={[
+              styles.viewItem,
+              {
+                borderBottomColor: '#f9f9f9',
+                borderBottomWidth: 1,
+                borderTopLeftRadius: 12,
+                borderTopRightRadius: 12,
+              },
+            ]}
           >
             <View style={styles.viewIcon}>
               <Feather name="send" size={18} color={Colors.yellow} />
@@ -365,10 +374,10 @@ const ReviewDetails = ({ navigation, route }) => {
                 fontFamily: 'ProximaNova',
                 color: Colors.fontDark,
                 fontSize: 13,
-                width:150
+                width: 150,
               }}
             >
-              27 Qual des Belges 13001 Marselle, France
+              {name}
             </Text>
 
             <View
@@ -384,10 +393,17 @@ const ReviewDetails = ({ navigation, route }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => openDialScreen()}
-            style={[styles.viewItem, { marginBottom: 0, borderBottomRightRadius:12, borderBottomLeftRadius:12  }]}
+            style={[
+              styles.viewItem,
+              {
+                marginBottom: 0,
+                borderBottomRightRadius: 12,
+                borderBottomLeftRadius: 12,
+              },
+            ]}
           >
             <View style={styles.viewIcon}>
-            <Feather name="phone" size={20} color={Colors.yellow} />
+              <Feather name="phone" size={20} color={Colors.yellow} />
             </View>
             <Text
               style={{
@@ -556,7 +572,7 @@ const ReviewDetails = ({ navigation, route }) => {
           }
         }}
         style={[
-          styles.viewLastBtn,
+          styles.see_menu,
           !menu_url && { backgroundColor: '#f0f0f0' },
         ]}
       >
@@ -726,6 +742,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: Platform.OS === 'ios' ? 25 : 15,
     marginTop: 1,
+  },
+  see_menu: {
+    width: '90%',
+    alignSelf: 'center',
+    backgroundColor: Colors.yellow,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    borderRadius: 10,
+    // marginBottom: Platform.OS === 'ios' ? 20 : 10,
+    bottom: 75,
   },
   txtNumRaters: {
     // backgroundColor: Colors.yellow, paddingVertical: 3, paddingHorizontal: 9,

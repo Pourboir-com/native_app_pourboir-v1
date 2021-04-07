@@ -30,7 +30,7 @@ const ApplePay = ({navigation}) => {
         </View>
         <View style={{ flex: 7 }}>
           <View style={{ marginTop: 50, marginHorizontal: 30 }}>
-            <Text style={{ fontSize: 20, paddingBottom:4 }}>{i18n.t('pay_with_apple')}</Text>
+            <Text style={{ fontSize: 20, paddingBottom:4, fontWeight:'bold' }}>{i18n.t('pay_with_apple')}</Text>
             <Text style={{fontSize:12, color:'#1E272E'}}>
             {i18n.t('app_acc')}
             </Text>

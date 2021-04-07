@@ -32,17 +32,17 @@ const MasterCard = ({navigation}) => {
         <View style={{ flex: 7 }}>
           <View style={{ marginTop: 85, marginHorizontal: 30 }}>
             <View>
-                <TextInput secureTextEntry={true} placeholder="* * * * 8 8 8 8" style={{color:'black', fontSize:18}} />
+                <TextInput secureTextEntry={true} placeholder="* * * * 8 8 8 8" style={{color:'black', fontSize:18, fontWeight:'bold'}} />
             </View>
             <View style={{paddingTop:20}}>
-            <Text style={{fontSize:13}}>{i18n.t('date_of_exp')}</Text>
-            <Text style={{fontSize:13}}>08/2028</Text>
+            <Text style={{fontSize:13, }}>{i18n.t('date_of_exp')}</Text>
+            <Text style={{fontSize:13, fontWeight:'bold'}}>08/2028</Text>
             </View>
           </View>
         </View>
         <View style={{flex:1, alignItems:'center'}}>
                     <TouchableOpacity activeOpacity={0.7} style={styles.btn_yellow}>
-                        <Text style={{fontSize:13}}>{i18n.t('clear_map')}</Text>
+                        <Text style={{fontSize:13, }}>{i18n.t('clear_map')}</Text>
                     </TouchableOpacity>
                 </View>
       </View>

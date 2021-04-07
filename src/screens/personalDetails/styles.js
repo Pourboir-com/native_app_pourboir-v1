@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 21,
     fontSize: 20,
-    color: Colors.fontLight,
+    color: 'black',
+    fontWeight:'bold'
   },
   inputsTopTow: {
     borderColor: '#ccc',

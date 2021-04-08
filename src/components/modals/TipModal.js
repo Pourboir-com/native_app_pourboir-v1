@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
+  ActivityIndicator,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -14,7 +15,13 @@ const imgWaiter = require('../../assets/images/payment.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 
-const TipModal = ({ isVisible, handleModalClose }) => {
+const TipModal = ({
+  isVisible,
+  handleModalClose,
+  handlePayCash,
+  handlePayDigital,
+  loading,
+}) => {
   return (
     <Overlay
       overlayStyle={styles.container}
@@ -61,10 +68,23 @@ const TipModal = ({ isVisible, handleModalClose }) => {
           marginVertical: 15,
         }}
       >
-        <TouchableOpacity style={styles.btnTipModal} activeOpacity={0.5}>
-          <Text style={styles.txtTipModal}>{i18n.t('cash')}</Text>
+        <TouchableOpacity
+          disabled={loading}
+          onPress={handlePayCash}
+          style={styles.btnTipModal}
+          activeOpacity={0.5}
+        >
+          {loading ? (
+            <ActivityIndicator size={25} color="#EBC42B" />
+          ) : (
+            <Text style={styles.txtTipModal}>{i18n.t('cash')}</Text>
+          )}
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnTipModal} activeOpacity={0.5}>
+        <TouchableOpacity
+          onPress={handlePayDigital}
+          style={styles.btnTipModal}
+          activeOpacity={0.5}
+        >
           <Text style={styles.txtTipModal}>{i18n.t('digital')}</Text>
         </TouchableOpacity>
       </View>

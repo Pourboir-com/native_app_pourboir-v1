@@ -37,7 +37,8 @@ const RateService = ({ navigation, route }) => {
   const [service, setService] = useState();
   const [professionalism, setProfessionalism] = useState();
   const [remarks, setRemarks] = useState('');
-  const [isVisible, setisVisible] = useState(false);
+  const [PayMethodsIsVisible, setPayMethodsIsVisible] = useState(false);
+  const [TokenModalIsVisible, setTokenModalIsVisible] = useState(false);
   const [addRatings] = useMutation(ADD_RATINGS);
   const [loading, setLoading] = useState(false);
   const scrollRef = React.useRef(null);
@@ -64,13 +65,20 @@ const RateService = ({ navigation, route }) => {
   //     keyboardDidShowListener.remove();
   //   };
   // }, []);
-  const handleModalClose = () => {
-    setisVisible(false);
+  const handlePayMethodClose = () => {
+    setPayMethodsIsVisible(false);
+  };
+  const handleTokenModalClose = () => {
+    setTokenModalIsVisible(false);
     navigation.navigate('Home', { crossIcon: false });
     dispatch({
       type: actionTypes.REFRESH_ANIMATION,
       payload: !state.refreshAnimation,
     });
+  };
+  const handlePayDigital = () => {
+    setPayMethodsIsVisible(false);
+    navigation.navigate('addCard');
   };
 
   // useEffect(() => {
@@ -102,7 +110,8 @@ const RateService = ({ navigation, route }) => {
       };
       await addRatings(ratingDetails, {
         onSuccess: async e => {
-          setisVisible(true);
+          setTokenModalIsVisible(true);
+          setPayMethodsIsVisible(false);
           setlotteryNo(e.data.data.token);
           setLoading(false);
         },
@@ -204,8 +213,8 @@ const RateService = ({ navigation, route }) => {
                       v <= hospitality
                         ? 'filled'
                         : v === hospitality + 0.5
-                          ? 'half'
-                          : 'empty'
+                        ? 'half'
+                        : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />
@@ -234,8 +243,8 @@ const RateService = ({ navigation, route }) => {
                       v <= speed
                         ? 'filled'
                         : v === speed + 0.5
-                          ? 'half'
-                          : 'empty'
+                        ? 'half'
+                        : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />
@@ -264,8 +273,8 @@ const RateService = ({ navigation, route }) => {
                       v <= service
                         ? 'filled'
                         : v === service + 0.5
-                          ? 'half'
-                          : 'empty'
+                        ? 'half'
+                        : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />
@@ -294,8 +303,8 @@ const RateService = ({ navigation, route }) => {
                       v <= professionalism
                         ? 'filled'
                         : v === professionalism + 0.5
-                          ? 'half'
-                          : 'empty'
+                        ? 'half'
+                        : 'empty'
                     }
                     notRatedStarColor="rgba(0,0,0,0.1)"
                   />
@@ -354,7 +363,7 @@ const RateService = ({ navigation, route }) => {
           </View>
         </View>
         <TouchableOpacity
-          onPress={handleAddRatings}
+          onPress={() => setPayMethodsIsVisible(true)}
           disabled={
             loading
               ? true
@@ -363,8 +372,8 @@ const RateService = ({ navigation, route }) => {
                 professionalism &&
                 service &&
                 remarks.replace(/[^0-9]/g, '')
-                ? false
-                : true
+              ? false
+              : true
           }
           style={[
             styles.btnValider,
@@ -373,32 +382,37 @@ const RateService = ({ navigation, route }) => {
               professionalism &&
               service &&
               remarks.replace(/[^0-9]/g, '') && {
-              backgroundColor: Colors.yellow,
-            },
+                backgroundColor: Colors.yellow,
+              },
           ]}
         >
-          {loading ? (
-            <ActivityIndicator size={35} color="#000" />
-          ) : (
-            <Text
-              style={{
-                fontSize: 16,
-                fontFamily: 'ProximaNova',
-                color: Colors.fontLight,
-              }}
-            >
-              {i18n.t('validate')}
-            </Text>
-          )}
+          <Text
+            style={{
+              fontSize: 16,
+              fontFamily: 'ProximaNova',
+              color: Colors.fontLight,
+            }}
+          >
+            {i18n.t('validate')}
+          </Text>
         </TouchableOpacity>
       </ScrollView>
-
-      {/* <ThankRatingModal
-        isVisible={isVisible}
-        LotteryNumber={lotteryNo}
-        handleModalClose={handleModalClose}
-      /> */}
-      <TipModal isVisible={isVisible} handleModalClose={handleModalClose} />
+      {TokenModalIsVisible && (
+        <ThankRatingModal
+          isVisible={TokenModalIsVisible}
+          LotteryNumber={lotteryNo}
+          handleModalClose={handleTokenModalClose}
+        />
+      )}
+      {PayMethodsIsVisible && (
+        <TipModal
+          loading={loading}
+          isVisible={PayMethodsIsVisible}
+          handleModalClose={handlePayMethodClose}
+          handlePayCash={handleAddRatings}
+          handlePayDigital={handlePayDigital}
+        />
+      )}
     </ScrollView>
   );
 };

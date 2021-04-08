@@ -372,11 +372,11 @@ const ReviewDetails = ({ navigation, route }) => {
             </View>
             <Text
               ellipsizeMode="tail"
-              numberOfLines={1}
+              numberOfLines={2}
               style={{
                 fontFamily: 'ProximaNova',
                 color: Colors.fontDark,
-                fontSize: 13,
+                fontSize: 14,
                 width: '70%',
               }}
             >
@@ -407,7 +407,7 @@ const ReviewDetails = ({ navigation, route }) => {
             ]}
           >
             <View style={styles.viewIcon}>
-              <Feather name="phone" size={20} color={Colors.yellow} />
+              <Feather name="phone" size={18} color={Colors.yellow} />
             </View>
             <Text
               style={{

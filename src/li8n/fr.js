@@ -51,9 +51,8 @@ export default {
   // Social Login
   continue_with_fb: 'Continuer avec Facebook',
   continue_with_google: 'Continuer avec Google',
-  by_creatin_your_acc: 'En créant votre compte vous acceptez nos',
-  terms_of_use: 'conditions d’utilisation',
-  privacy_policy: 'politique de confidentialité',
+  I_accept: 'J’accepte les',
+  terms_of_use: 'conditions d’utilisation et  la  politique de confidentialité',
 
   //Popup Confirm you are a server
   confrm_you_are_server: 'Confirmez que vous êtes serveur pour',
@@ -76,41 +75,39 @@ export default {
   cannot_vote: 'Vous ne pouvez pas voter vous-même',
   already_waiter: 'Vous êtes déjà serveur dans ce restaurant',
 
+  // Popup pay your tip
+  pay_your_tip: 'Payez votre pourboire',
+  cash: 'En espèces',
+  digital: 'Numérique',
 
- // Popup pay your tip
- pay_your_tip: 'Payez votre pourboire', 
- cash: 'En espèces',
-digital: 'Numérique',
+  // Personal Info details
 
-// Personal Info details 
+  personal_info: 'Information personnelles',
+  first_name: 'Prénom',
+  last_name: 'Nom',
+  phone_num: 'Numéro de téléphone',
+  not_verified: 'Non vérifié',
+  checked: 'Vérifié',
+  payment_methods: 'Modes de paiement',
+  add_pay_method: 'Ajoutez un mode de paiement',
+  your_personal_details: 'Vos données personnels',
 
-personal_info: 'Information personnelles',
-first_name: 'Prénom',
-last_name:'Nom',
-phone_num: 'Numéro de téléphone',
-not_verified: 'Non vérifié',
-checked: 'Vérifié',
-payment_methods: 'Modes de paiement',
-add_pay_method: 'Ajoutez un mode de paiement',
-your_personal_details:'Vos données personnels',
+  // Apple Pay
+  pay_with_apple: 'Payer avec Apple Pay',
+  app_acc:
+    'Vous pouvez payer en utilisant votre compte Apple Pay lié à cette device.',
 
+  // Master Card
+  date_of_exp: "Date d'expiration",
+  master_card: 'Carte maîtresse',
+  delete_card: 'Effacer la carte',
 
- // Apple Pay 
- pay_with_apple: 'Payer avec Apple Pay',
- app_acc: 'Vous pouvez payer en utilisant votre compte Apple Pay lié à cette device.',
+  // Add a map
+  add_a_card: 'Ajouter une carte',
+  card_number: 'Numéro de carte',
+  pays: 'Paie',
+  save: 'Sauvegarder',
 
- // Master Card 
- date_of_exp: "Date d'expiration",
- master_card:'Carte maîtresse',
- clear_map: 'Effacer la carte',
-
- // Add a map
- add_a_map: 'Ajouter une carte',
- card_number: 'Numéro de carte',
- pays: 'Paie',
- save:'Sauvegarder',
-
-//  PayPal 
-delete_paypal: 'Effacer ce compte Paypal'
-
+  //  PayPal
+  delete_paypal: 'Effacer ce compte Paypal',
 };

@@ -51,9 +51,8 @@ export default {
   // Social Login
   continue_with_fb: 'Continue with Facebook',
   continue_with_google: 'Continue with Google',
-  by_creatin_your_acc: 'By creating your account you accept our',
-  terms_of_use: 'Terms of use',
-  privacy_policy: 'Privacy Policy',
+  I_accept: 'I accept the',
+  terms_of_use: 'Terms of use and privacy policy',
 
   //Popup Confirm you are a server
   confrm_you_are_server: 'Confirm that you are a server for',

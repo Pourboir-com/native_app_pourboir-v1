@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
   Platform,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
+import CheckBox from 'react-native-check-box';
 import { Colors } from '../../constants/Theme';
 import * as Google from 'expo-google-app-auth';
 import i18n from '../../li8n';
@@ -35,6 +37,7 @@ const SocialLogin = ({ navigation, route }) => {
   const [vote, setVote] = useState(false);
   const [confirmWaiter, setconfirmWaiter] = useState(false);
   const [HelpUs, setHelpUs] = useState();
+  const [termsChecked, setTermsChecked] = useState(false);
 
   useEffect(() => {
     setVote(route?.params?.vote ? route?.params?.vote : false);
@@ -198,8 +201,8 @@ const SocialLogin = ({ navigation, route }) => {
   };
 
   return (
-    <View
-      style={[
+    <ScrollView
+      contentContainerStyle={[
         styles.container,
         { backgroundColor: loading ? '#fff' : Colors.yellow },
       ]}
@@ -242,7 +245,8 @@ const SocialLogin = ({ navigation, route }) => {
             />
           </View>
           <TouchableOpacity
-            // onPress={() => navigation.navigate('Home', { crossIcon: false })}
+            activeOpacity={0.5}
+            disabled={termsChecked ? false : true}
             onPress={facebookLogin}
             style={styles.btnFb}
           >
@@ -260,6 +264,8 @@ const SocialLogin = ({ navigation, route }) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.5}
+            disabled={termsChecked ? false : true}
             onPress={handleGoogleSignIn}
             style={styles.btnGoogle}
           >
@@ -279,6 +285,8 @@ const SocialLogin = ({ navigation, route }) => {
           {Platform.OS === 'ios' && (
             <React.Fragment>
               <TouchableOpacity
+                activeOpacity={0.5}
+                disabled={termsChecked ? false : true}
                 onPress={async () => {
                   try {
                     const credential = await AppleAuthentication.signInAsync({
@@ -364,55 +372,42 @@ const SocialLogin = ({ navigation, route }) => {
               </TouchableOpacity>
             </React.Fragment>
           )}
-          <Text
-            style={[
-              styles.txtCreatingAcc,
-              {
-                fontSize: 14,
-                fontFamily: 'ProximaNova',
-                lineHeight: 24,
-              },
-            ]}
-          >
-            {i18n.t('by_creatin_your_acc')}
-          </Text>
-          <View style={styles.viewbtns}>
-            <TouchableOpacity>
-              <Text
-                style={{
-                  color: '#0050A0',
-                  fontSize: 14,
-                  fontFamily: 'ProximaNova',
-                  lineHeight: 24,
-                }}
-              >
-                {i18n.t('terms_of_use')}
-              </Text>
-            </TouchableOpacity>
-            <View
-              style={{
-                width: 1,
-                height: 10,
-                backgroundColor: 'grey',
-                marginHorizontal: 10,
-              }}
-            />
-            <TouchableOpacity>
-              <Text
-                style={{
-                  color: '#0050A0',
-                  fontSize: 14,
-                  fontFamily: 'ProximaNova',
-                  lineHeight: 24,
-                }}
-              >
-                {i18n.t('privacy_policy')}
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <CheckBox
+            onClick={() => setTermsChecked(!termsChecked)}
+            isChecked={termsChecked}
+            rightTextView={
+              <View>
+                <Text
+                  style={[
+                    styles.txtCreatingAcc,
+                    {
+                      fontSize: 14,
+                      fontFamily: 'ProximaNova',
+                      lineHeight: 24,
+                      width: 250,
+                      textAlign: 'center',
+                    },
+                  ]}
+                >
+                  {i18n.t('I_accept')}{' '}
+                  <Text
+                    style={{
+                      color: '#0050A0',
+                      fontSize: 14,
+                      fontFamily: 'ProximaNova',
+                      lineHeight: 24,
+                      textAlign: 'center',
+                    }}
+                  >
+                    {i18n.t('terms_of_use')}
+                  </Text>
+                </Text>
+              </View>
+            }
+          />
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
 export default SocialLogin;
@@ -422,18 +417,19 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: 25,
   },
   txtCreatingAcc: {
     color: Colors.fontLight,
     fontSize: 12,
-    marginTop: 10,
+    marginLeft: 4,
+    marginTop: 23,
   },
   viewImg: {
     width: '100%',
     alignSelf: 'center',
     height: Dimensions.get('window').height * 0.5,
     marginBottom: 10,
-    // backgroundColor:'black'
   },
   viewbtns: {
     flexDirection: 'row',

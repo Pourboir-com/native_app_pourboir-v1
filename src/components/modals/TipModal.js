@@ -71,7 +71,7 @@ const TipModal = ({
         <TouchableOpacity
           disabled={loading}
           onPress={handlePayCash}
-          style={styles.btnTipModal}
+          style={[styles.btnTipModal, { paddingVertical: loading ? 14 : 17 }]}
           activeOpacity={0.5}
         >
           {loading ? (
@@ -106,34 +106,12 @@ const styles = StyleSheet.create({
   imgBgStyle: {
     width: '100%',
     height: 240,
-    // overflow:"hidden"
-  },
-  txtBtnConfrm: {
-    fontSize: 16,
-    color: Colors.fontDark,
-  },
-  btnConfrm: {
-    backgroundColor: Colors.yellow,
-    borderRadius: 10,
-    width: '80%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 25,
-    height: 45,
   },
   txtConfrm: {
     fontSize: 24,
     color: Colors.fontDark,
     marginTop: 18,
     textAlign: 'center',
-  },
-  txtName: {
-    fontSize: 16,
-    color: Colors.fontLight,
-    marginTop: 12,
-    width: 270,
-    textAlign: 'center',
-    marginBottom: 20,
   },
   imgStyle: {
     width: 210,
@@ -144,33 +122,20 @@ const styles = StyleSheet.create({
   viewImg: {
     width: '100%',
     height: 240,
-    // backgroundColor:"red"
-  },
-  lottery: {
-    width: '80%',
-    backgroundColor: '#fcf4e4',
-    borderRadius: 10,
-    fontSize: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-    textAlign: 'center',
-    marginBottom: 20,
-    color: '#e6c33d',
-    fontWeight: 'bold',
   },
   btnTipModal: {
     backgroundColor: '#FFF6D4',
     paddingHorizontal: 25,
-    paddingVertical: 12,
     borderRadius: 10,
-    width: '47%',
+    width: '45%',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 10,
   },
   txtTipModal: {
     color: '#EBC42B',
-    fontSize: 18,
+    fontSize: 15,
     fontFamily: 'ProximaNovaBold',
+    textAlign: 'center',
   },
 });

@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { StatusBar } from 'react-native';
 import { ImageBackground } from 'react-native';
-import { KeyboardAvoidingView } from 'react-native';
+// import { KeyboardAvoidingView } from 'react-native';
 import { Text, View, Dimensions, Image } from 'react-native';
 import {
   ScrollView,
@@ -9,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import GlobalHeader from '../../components/GlobalHeader';
-import { Colors } from '../../constants/Theme';
+// import { Colors } from '../../constants/Theme';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from './styles';
 import Context from '../../contextApi/context';
@@ -26,7 +25,6 @@ const PersonalDetails = ({ navigation }) => {
   const [text2, onChangeText2] = React.useState();
   const [text3, onChangeText3] = React.useState();
   const [text4, onChangeText4] = React.useState();
-  const [loading, setLoading] = useState(false);
   const { state, dispatch } = useContext(Context);
   const [image, setImage] = useState();
   const [updatePicture] = useMutation(UPDATE_PICTURE);
@@ -78,7 +76,6 @@ const PersonalDetails = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar translucent={true} style="light" />
       <ImageBackground
         style={{
           width: '100%',

@@ -1,8 +1,8 @@
 import React from 'react';
 import { ImageBackground } from 'react-native';
-import { StatusBar } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { Dimensions } from 'react-native';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import MapView from 'react-native-maps';
 import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';
@@ -14,7 +14,7 @@ const MapScreen = ({ navigation, route }) => {
   } = route?.params;
   return (
     <View style={styles.container}>
-      <View style={{ flex: 0 }}>
+      <View style={{  }}>
         <StatusBar translucent={true} style="dark" />
         <ImageBackground
           style={{

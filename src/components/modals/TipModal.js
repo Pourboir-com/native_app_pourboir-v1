@@ -10,7 +10,7 @@ import {
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
-const imgWaiter = require('../../assets/images/manmoney.png');
+const imgWaiter = require('../../assets/images/payment.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 
@@ -117,10 +117,9 @@ const styles = StyleSheet.create({
   },
   imgStyle: {
     width: 210,
-    height: 200,
+    height: 180,
     alignSelf: 'center',
-    marginTop: -69,
-    marginRight: -20,
+    marginTop: -52,
   },
   viewImg: {
     width: '100%',

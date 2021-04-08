@@ -11,10 +11,10 @@ import {
   ImageBackground,
   Linking,
 } from 'react-native';
-import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import GlobalHeader from '../../components/GlobalHeader';
 import { Colors } from '../../constants/Theme';
-import * as ImagePicker from 'expo-image-picker';
+// import * as ImagePicker from 'expo-image-picker';
 import { getAsyncStorageValues } from '../../constants';
 import * as Google from 'expo-google-app-auth';
 import { config } from '../../constants';
@@ -23,102 +23,80 @@ import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Facebook from 'expo-facebook';
-import { UPDATE_PICTURE } from '../../queries';
-import { useMutation } from 'react-query';
+// import { UPDATE_PICTURE } from '../../queries';
+// import { useMutation } from 'react-query';
 import { Platform } from 'react-native';
-import * as StoreReview from 'expo-store-review';
+// import * as StoreReview from 'expo-store-review';
 import { email_to } from '../../constants/env';
 import Constants from 'expo-constants';
-import TipModal from '../../components/modals/TipModal';
 
 const imgBg = require('../../assets/images/Group5.png');
 
 const Setting = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const { state, dispatch } = useContext(Context);
-  const [image, setImage] = useState();
-  const [isVisible, setisVisible] = useState(false);
-  const [updatePicture] = useMutation(UPDATE_PICTURE);
+  // const [image, setImage] = useState();
+  // const [updatePicture] = useMutation(UPDATE_PICTURE);
   const {
     yourRestaurantLoading,
     yourRefetchRestaurant,
     yourResIsFetching,
   } = route.params;
 
-  const handleModalClose = () => {
-    setisVisible(false);
-  };
-
-  const handleModalOpen = () => {
-    setisVisible(true);
-  };
-
   const resetState = async () => {
     navigation.navigate('Home', { crossIcon: false });
-    let userDetails = {
-      name: '',
-      image: '',
-      email: '',
-      accessToken: '',
-      user_id: '',
-    };
     dispatch({
       type: actionTypes.USER_DETAILS,
-      payload: userDetails,
+      payload: {},
     });
-    await AsyncStorage.setItem(
-      '@userInfo',
-      JSON.stringify({
-        ...userDetails,
-      }),
-    );
+    await AsyncStorage.setItem('@userInfo', JSON.stringify({}));
     setLoading(false);
   };
 
-  const handleChangePicture = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 1,
-    });
-    if (!result.cancelled) {
-      setImage(result.uri);
+  // const handleChangePicture = async () => {
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [4, 4],
+  //     quality: 1,
+  //   });
+  //   if (!result.cancelled) {
+  //     setImage(result.uri);
 
-      const { userInfo } = await getAsyncStorageValues();
-      dispatch({
-        type: actionTypes.USER_DETAILS,
-        payload: {
-          ...state.userDetails,
-          image: result.uri,
-        },
-      });
+  //     const { userInfo } = await getAsyncStorageValues();
+  //     dispatch({
+  //       type: actionTypes.USER_DETAILS,
+  //       payload: {
+  //         ...state.userDetails,
+  //         image: result.uri,
+  //       },
+  //     });
 
-      await AsyncStorage.setItem(
-        '@userInfo',
-        JSON.stringify({
-          ...userInfo,
-          image: result.uri,
-        }),
-      );
+  //     await AsyncStorage.setItem(
+  //       '@userInfo',
+  //       JSON.stringify({
+  //         ...userInfo,
+  //         image: result.uri,
+  //       }),
+  //     );
 
-      let formData = new FormData();
-      formData.append('image', {
-        uri: result.uri,
-        type: `image/${result.uri.split('.')[1]}`,
-        name: result.uri.substr(result.uri.lastIndexOf('/') + 1),
-      });
+  //     let formData = new FormData();
+  //     formData.append('image', {
+  //       uri: result.uri,
+  //       type: `image/${result.uri.split('.')[1]}`,
+  //       name: result.uri.substr(result.uri.lastIndexOf('/') + 1),
+  //     });
 
-      let UploadData = {
-        user_id: state.userDetails.user_id,
-        image: formData,
-      };
+  //     let UploadData = {
+  //       user_id: state.userDetails.user_id,
+  //       image: formData,
+  //     };
 
-      await updatePicture(UploadData, {
-        onSuccess: res => {},
-      });
-    }
-  };
+  //     await updatePicture(UploadData, {
+  //       onSuccess: res => {},
+  //     });
+  //   }
+  // };
 
   //user signout
   const handleSignOut = async () => {
@@ -144,8 +122,6 @@ const Setting = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      {/* <StatusBar backgroundColor={Colors.yellow} /> */}
-
       <View style={styles.viewProfile}>
         <ImageBackground
           style={{
@@ -164,13 +140,8 @@ const Setting = ({ navigation, route }) => {
             navigation={navigation}
           />
 
-          <View
-            style={styles.viewImg}
-          >
-            {state.userDetails.image === null ||
-            state.userDetails.image === undefined ||
-            state.userDetails.image === '' ? (
-              // <FontAwesome name="user-circle-o" size={110} color="#fff" />
+          <View style={styles.viewImg}>
+            {!state?.userDetails?.image ? (
               <Image
                 style={{
                   width: '100%',
@@ -189,7 +160,7 @@ const Setting = ({ navigation, route }) => {
                   height: '100%',
                   borderRadius: 60,
                 }}
-                source={{ uri: image ? image : state.userDetails.image }}
+                source={{ uri: state?.userDetails?.image }}
                 resizeMode="cover"
               />
             )}
@@ -210,7 +181,7 @@ const Setting = ({ navigation, route }) => {
               <FontAwesome name="user-circle-o" size={120} color="#fff" />
             </View> */}
           <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
-            {state.userDetails.name === '' ? 'Bonjour' : state.userDetails.name}
+            {!state?.userDetails?.name ? 'Bonjour' : state.userDetails.name}
           </Text>
         </ImageBackground>
       </View>
@@ -223,9 +194,8 @@ const Setting = ({ navigation, route }) => {
         >
           <TouchableOpacity
             activeOpacity={0.5}
-            onPress={handleModalOpen}
             style={[styles.viewItem, { marginBottom: 0 }]}
-            // onPress={() => navigation.navigate('personalDetails')}
+            onPress={() => navigation.navigate('personalDetails')}
           >
             <View style={styles.viewIcon}>
               <FontAwesome name="star" size={16} color={Colors.yellow} />
@@ -343,12 +313,7 @@ const Setting = ({ navigation, route }) => {
         </ScrollView>
       </View>
       <View>
-        <Text
-          style={[
-            styles.versionText,
-            { fontFamily: 'ProximaNova' },
-          ]}
-        >
+        <Text style={[styles.versionText, { fontFamily: 'ProximaNova' }]}>
           Version {Constants.manifest.version}
         </Text>
       </View>
@@ -366,7 +331,6 @@ const Setting = ({ navigation, route }) => {
           </Text>
         )}
       </TouchableOpacity>
-      <TipModal isVisible={isVisible} handleModalClose={handleModalClose} />
     </View>
   );
 };
@@ -375,7 +339,6 @@ export default Setting;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent:"center",
     alignItems: 'center',
     backgroundColor: '#EEF0EF',
   },
@@ -432,8 +395,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 55,
     backgroundColor: '#fff',
-    marginBottom: 1,
     flexDirection: 'row',
+    borderBottomColor: '#F4F4F4',
+    borderBottomWidth: 0.8,
     alignItems: 'center',
     paddingHorizontal: 10,
   },

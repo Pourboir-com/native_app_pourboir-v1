@@ -27,6 +27,7 @@ import i18n from '../../li8n';
 const imgBg = require('../../assets/images/Group5.png');
 import { getAsyncStorageValues } from '../../constants';
 import * as actionTypes from '../../contextApi/actionTypes';
+import TipModal from '../../components/modals/TipModal';
 
 const RateService = ({ navigation, route }) => {
   const { state, dispatch } = useContext(Context);
@@ -392,11 +393,12 @@ const RateService = ({ navigation, route }) => {
         </TouchableOpacity>
       </ScrollView>
 
-      <ThankRatingModal
+      {/* <ThankRatingModal
         isVisible={isVisible}
         LotteryNumber={lotteryNo}
         handleModalClose={handleModalClose}
-      />
+      /> */}
+      <TipModal isVisible={isVisible} handleModalClose={handleModalClose} />
     </ScrollView>
   );
 };

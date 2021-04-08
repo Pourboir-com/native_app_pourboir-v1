@@ -77,6 +77,10 @@ export default function HomeScreenContent({
             type: actionTypes.YOUR_RESTAURANTS,
             payload: Restaurants,
           });
+          dispatch({
+            type: actionTypes.REFRESH_ANIMATION,
+            payload: !state.refreshAnimation,
+          });
           setdeleteLoading(false);
         },
         onError: () => {
@@ -86,7 +90,7 @@ export default function HomeScreenContent({
     }
   };
   const noData =
-    !data.length && !restaurantLoading && !resIsFetching && saveLocation;
+    !data.length && (!restaurantLoading || !resIsFetching) && saveLocation;
   if (noData) {
     return (
       <>
@@ -119,24 +123,24 @@ export default function HomeScreenContent({
           <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
             {searchEnter ? i18n.t('result_distance') : i18n.t('around_you')}
           </Text>
-          <Text style={[styles.txt2NoRest, { fontFamily: 'ProximaNovaSemiBold' }]}>
+          <Text
+            style={[styles.txt2NoRest, { fontFamily: 'ProximaNovaSemiBold' }]}
+          >
             {i18n.t('no_restaurant_found')}
           </Text>
-          
         </View>
         {/* )} */}
       </>
     );
   }
   return (
-    
-  
     <>
       {restaurantLoading ? (
         <View
           style={{
             backgroundColor: '#F9F9F9',
             marginTop: Platform.OS === 'ios' ? -58 : 0,
+            flex: 1,
           }}
         >
           {!route.params.crossIcon && (

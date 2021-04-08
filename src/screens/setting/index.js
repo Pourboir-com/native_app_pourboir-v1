@@ -37,11 +37,6 @@ const Setting = ({ navigation, route }) => {
   const { state, dispatch } = useContext(Context);
   // const [image, setImage] = useState();
   // const [updatePicture] = useMutation(UPDATE_PICTURE);
-  const {
-    yourRestaurantLoading,
-    yourRefetchRestaurant,
-    yourResIsFetching,
-  } = route.params;
 
   const resetState = async () => {
     navigation.navigate('Home', { crossIcon: false });
@@ -279,9 +274,6 @@ const Setting = ({ navigation, route }) => {
             onPress={() =>
               navigation.navigate('Remove', {
                 crossIcon: true,
-                yourRestaurantLoading,
-                yourRefetchRestaurant,
-                yourResIsFetching,
               })
             }
             style={[styles.viewItem, { marginBottom: 0 }]}

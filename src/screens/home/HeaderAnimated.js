@@ -67,7 +67,12 @@ const HomeScreen = props => {
 
   useEffect(() => {
     setLoading(!loading);
-  }, [props.saveLocation, state]);
+  }, [
+    props.saveLocation,
+    state.userDetails,
+    state.refreshAnimation,
+    state.restaurantsDetails,
+  ]);
   const reBounce = 25;
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight() + 0;
@@ -138,7 +143,7 @@ const HomeScreen = props => {
           spacing(
             !state.userDetails.name
               ? LAYOUT.window.width * 0.024
-              : LAYOUT.window.width * 0.010,
+              : LAYOUT.window.width * 0.01,
           )
         : LAYOUT.window.width < 365
         ? HEADER_BAR_HEIGHT +
@@ -158,8 +163,8 @@ const HomeScreen = props => {
         ? HEADER_BAR_HEIGHT +
           spacing(
             !state.userDetails.name
-              ? LAYOUT.window.width * 0.030
-              : LAYOUT.window.width * 0.020,
+              ? LAYOUT.window.width * 0.03
+              : LAYOUT.window.width * 0.02,
           )
         : HEADER_BAR_HEIGHT +
           spacing(
@@ -202,13 +207,7 @@ const HomeScreen = props => {
                 //   <ActivityIndicator color="black" size={38} />
                 // ) : (
                 <TouchableOpacity
-                  onPress={() =>
-                    props.navigation.navigate('Setting', {
-                      yourRestaurantLoading: props.yourRestaurantLoading,
-                      yourRefetchRestaurant: props.yourRefetchRestaurant,
-                      yourResIsFetching: props.yourResIsFetching,
-                    })
-                  }
+                  onPress={() => props.navigation.navigate('Setting')}
                 >
                   <Image
                     style={{
@@ -226,13 +225,7 @@ const HomeScreen = props => {
                 //   <ActivityIndicator color="black" size={38} />
                 // ) : (
                 <TouchableOpacity
-                  onPress={() =>
-                    props.navigation.navigate('Setting', {
-                      yourRestaurantLoading: props.yourRestaurantLoading,
-                      yourRefetchRestaurant: props.yourRefetchRestaurant,
-                      yourResIsFetching: props.yourResIsFetching,
-                    })
-                  }
+                  onPress={() => props.navigation.navigate('Setting')}
                 >
                   <FontAwesome name="user-circle-o" size={37} color="black" />
                 </TouchableOpacity>

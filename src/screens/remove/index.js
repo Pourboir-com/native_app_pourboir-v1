@@ -10,11 +10,11 @@ import Context from '../../contextApi/context';
 import { getAsyncStorageValues } from '../../constants';
 
 const Remove = props => {
-  const {
-    yourRestaurantLoading,
-    yourRefetchRestaurant,
-    yourResIsFetching,
-  } = props.route.params;
+  // const {
+  //   yourRestaurantLoading,
+  //   yourRefetchRestaurant,
+  //   yourResIsFetching,
+  // } = props.route.params;
   const { state } = useContext(Context);
   const [saveLocation, setSaveLocation] = useState('');
   const { yourRestaurants: data } = state;
@@ -59,10 +59,9 @@ const Remove = props => {
       </View>
       <HomeScreenContent
         route={props.route}
-        restaurantLoading={yourRestaurantLoading}
+        restaurantLoading={data?.length ? false : true}
         // refetchRestaurant={yourRefetchRestaurant}
         isFetch={true}
-        // resIsFetching={yourResIsFetching}
         Data={data}
         saveLocation={saveLocation}
         // handleLoadMore={handleLoadMore}

@@ -13,6 +13,7 @@ const AddMap = ({navigation}) => {
     const [text4, onChangeText4] = React.useState();
     return (
       <View style={styles.container}>
+        <StatusBar translucent={true} style="dark" />
         <View style={{ flex: 1 }}>
           <ImageBackground
             style={{
@@ -38,8 +39,8 @@ const AddMap = ({navigation}) => {
         <View style={{ flex: 7 }}>
        <ScrollView>
        <View style={{ marginHorizontal: 30, alignItems: 'center', marginTop:50 }}>
-                <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>{i18n.t('card_number')}</Text>
+                <View style={{ alignItems: 'flex-start', marginBottom: 15 }}>
+                  <Text style={{ color: '#1E272E', opacity: 1 , fontWeight:'bold', paddingBottom:3}}>{i18n.t('card_number')}</Text>
                   <TextInput
                     style={styles.inputsTopTow}
                     onChangeText={onChangeText}
@@ -48,8 +49,8 @@ const AddMap = ({navigation}) => {
                     keyboardType="numeric"
                   />
                 </View>
-                <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>{i18n.t('date_of_exp')}</Text>
+                <View style={{ alignItems: 'flex-start', marginBottom: 15 }}>
+                  <Text style={{ color: '#1E272E', opacity: 1 , fontWeight:'bold', paddingBottom:3}}>{i18n.t('date_of_exp')}</Text>
                   <TextInput
                     style={styles.inputsTopTow}
                     onChangeText={onChangeText2}
@@ -58,8 +59,8 @@ const AddMap = ({navigation}) => {
                     keyboardType="text"
                   />
                 </View>
-                <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>CVV</Text>
+                <View style={{ alignItems: 'flex-start', marginBottom: 15 }}>
+                  <Text style={{ color: '#1E272E', opacity: 1 , fontWeight:'bold', paddingBottom:3}}>CVV</Text>
                   <TextInput
                     style={styles.inputsTopTow}
                     onChangeText={onChangeText3}
@@ -68,8 +69,8 @@ const AddMap = ({navigation}) => {
                     keyboardType="numeric"
                   />
                 </View>
-                <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7 }}>{i18n.t('pays')}</Text>
+                <View style={{ alignItems: 'flex-start', marginBottom: 15 }}>
+                  <Text style={{ color: '#1E272E', opacity: 1 , fontWeight:'bold', paddingBottom:3}}>{i18n.t('pays')}</Text>
                   <TextInput
                     style={styles.inputsTopTow}
                     onChangeText={onChangeText4}

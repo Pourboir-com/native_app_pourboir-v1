@@ -77,15 +77,8 @@ const PersonalDetails = ({navigation}) => {
 
     return (
       <View style={styles.container}>
-        <ScrollView
-          keyboardShouldPersistTaps={'handled'}
-          bounces={false}
-          scrollEnabled={true}
-          style={{
-            width: '100%',
-          }}
-        >
-            <StatusBar translucent={true} style="light" />
+        
+        <StatusBar translucent={true} style="dark" />
             <ImageBackground
               style={{
                 width: '100%',
@@ -104,6 +97,14 @@ const PersonalDetails = ({navigation}) => {
                 borderRadius={true}
               />
             </ImageBackground>
+        <ScrollView
+          keyboardShouldPersistTaps={'handled'}
+          bounces={false}
+          scrollEnabled={true}
+          style={{
+            width: '100%',
+          }}
+        >
 
             <View>
               <View style={styles.avatar}>
@@ -170,8 +171,8 @@ const PersonalDetails = ({navigation}) => {
 
               <View style={{ marginHorizontal: 30, alignItems: 'center' }}>
                 <Text style={styles.heading1}> {i18n.t('personal_info')}</Text>
-                <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7, paddingBottom:5 }}>{i18n.t('first_name')}</Text>
+                <View style={{ alignItems: 'flex-start', marginBottom: 16 }}>
+                  <Text style={{ color: '#1E272E', paddingBottom:3, fontWeight:'bold' }}>{i18n.t('first_name')}</Text>
                   <TextInput
                     style={styles.inputsTopTow}
                     onChangeText={onChangeText}
@@ -180,8 +181,8 @@ const PersonalDetails = ({navigation}) => {
                     keyboardType="text"
                   />
                 </View>
-                <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7, paddingBottom:5 }}>{i18n.t('last_name')}</Text>
+                <View style={{ alignItems: 'flex-start', marginBottom: 16 }}>
+                  <Text style={{ color: '#1E272E', paddingBottom:3, fontWeight:'bold' }}>{i18n.t('last_name')}</Text>
                   <TextInput
                     style={styles.inputsTopTow}
                     onChangeText={onChangeText2}
@@ -190,8 +191,8 @@ const PersonalDetails = ({navigation}) => {
                     keyboardType="text"
                   />
                 </View>
-                <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7, paddingBottom:5 }}>
+                <View style={{ alignItems: 'flex-start', marginBottom: 16 }}>
+                  <Text style={{ color: '#1E272E', paddingBottom:3, fontWeight:'bold' }}>
                   {i18n.t('phone_num')}
                   </Text>
                   <View style={styles.inputsBottomTwo}>
@@ -208,15 +209,15 @@ const PersonalDetails = ({navigation}) => {
                   </View>
                 </View>
 
-                <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-                  <Text style={{ color: '#1E272E', opacity: 0.7, paddingBottom:5 }}>Email</Text>
+                <View style={{ alignItems: 'flex-start', marginBottom: 16 }}>
+                  <Text style={{ color: '#1E272E', paddingBottom:3, fontWeight:'bold' }}>Email</Text>
                   <View style={styles.inputsBottomTwo}>
                     <TextInput
                       onChangeText={onChangeText4}
                       value={text4}
                       placeholder="christine@zhou.com"
                       keyboardType="text"
-                      style={{ width: '70%' }}
+                      style={{ width: '70%', }}
                     />
                     <Text style={{ color: '#6DD400', width: '30%', fontSize:13, textAlign:'right'}}>
                     {i18n.t('checked')}

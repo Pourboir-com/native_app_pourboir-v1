@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, StatusBar } from 'react-native';
+// import { KeyboardAvoidingView, StatusBar } from 'react-native';
 import { ImageBackground } from 'react-native';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Platform } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';
@@ -50,7 +50,7 @@ const PaypalPayment = ({ navigation }) => {
           />
         </View>
       </View>
-      <View style={{ flex: 1, alignItems: 'center' }}>
+      <View style={{ alignItems: 'center' }}>
         <TouchableOpacity activeOpacity={0.5} style={styles.btn_yellow}>
           <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
             {i18n.t('delete_paypal')}
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 20,
+    marginBottom: Platform.OS === 'ios' ? 25 : 15,
     fontFamily: 'ProximaNova',
   },
 });

@@ -421,8 +421,6 @@ export default RateService;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent:"center",
-    // alignItems: 'center',
     backgroundColor: '#F9F9F9',
   },
   inputStyle: {
@@ -501,7 +499,6 @@ const styles = StyleSheet.create({
   viewProfile: {
     backgroundColor: Colors.yellow,
     width: '100%',
-    // marginTop: -20,
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
   },

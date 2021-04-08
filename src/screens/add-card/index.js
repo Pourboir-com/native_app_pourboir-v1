@@ -1,6 +1,6 @@
 import React from 'react';
 import { ImageBackground } from 'react-native';
-import { Text, View, Dimensions } from 'react-native';
+import { Text, View, Dimensions, Platform } from 'react-native';
 import {
   ScrollView,
   TextInput,
@@ -97,8 +97,14 @@ const AddCard = ({ navigation }) => {
           </View>
         </ScrollView>
       </View>
-      <View style={{ flex: 1, alignItems: 'center' }}>
-        <TouchableOpacity activeOpacity={0.5} style={styles.btn_yellow}>
+      <View style={{ alignItems: 'center' }}>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={[
+            styles.btn_yellow,
+            { marginBottom: Platform.OS === 'ios' ? 25 : 15 },
+          ]}
+        >
           <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
             {i18n.t('save')}
           </Text>

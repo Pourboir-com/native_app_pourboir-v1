@@ -36,7 +36,7 @@ const MasterCard = ({ navigation }) => {
         <View style={{ marginTop: 85, marginHorizontal: 30 }}>
           <View>
             <TextInput
-              style={styles.inputsTopTow}
+              style={styles.input}
               secureTextEntry={true}
               placeholder="* * * * 8 8 8 8"
               placeholderTextColor={'black'}
@@ -70,11 +70,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F9F9F9',
   },
-  inputsTopTow: {
+  input: {
     color: 'black',
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: '700',
-    fontFamily: 'ProximaNovaBold',
   },
   btn_yellow: {
     backgroundColor: '#FCDF6F',

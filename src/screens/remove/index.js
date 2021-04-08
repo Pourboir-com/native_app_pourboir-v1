@@ -10,11 +10,6 @@ import Context from '../../contextApi/context';
 import { getAsyncStorageValues } from '../../constants';
 
 const Remove = props => {
-  // const {
-  //   yourRestaurantLoading,
-  //   yourRefetchRestaurant,
-  //   yourResIsFetching,
-  // } = props.route.params;
   const { state } = useContext(Context);
   const [saveLocation, setSaveLocation] = useState('');
   const { yourRestaurants: data } = state;

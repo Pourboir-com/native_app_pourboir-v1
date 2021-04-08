@@ -64,6 +64,9 @@ export default {
   name_of_your_server: 'The name of your waiter',
   waiter_email: 'Your waiter email',
   add: 'Add',
+  check_profile: 'We check your profile internally and will be validated within 24 hours',
+  Thank_you: 'Thank you',
+  close: 'Close',
 
   // Popup thanks for vote
   thank_collaboration: 'thank you for your collaboration',

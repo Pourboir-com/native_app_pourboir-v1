@@ -35,6 +35,7 @@ export default {
   your_tip_to_waiter: 'Votre pourboire au serveur',
   enter_your_amount: 'Entrez le montant',
   validate: 'Valider',
+  close: 'Fermer',
 
   // No location
   activate_your_geolocation: 'Activez votre géolocalisation',
@@ -66,6 +67,8 @@ export default {
   name_of_your_server: 'Le nom de votre serveur',
   waiter_email: 'L’email de votre serveur',
   add: 'Ajouter',
+  check_profile: 'Nous vérifions votre profil en interne et sera validé sous 24 heures',
+  Thank_you: 'Merci',
 
   // Popup thanks for vote
   thank_collaboration: 'Merci de votre collaboration',

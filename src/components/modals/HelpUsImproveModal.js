@@ -66,29 +66,45 @@ const HelpUsImproveModal = ({
             </View>
           </ImageBackground>
           {heading && (
-            <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
+            <Text
+              ellipsizeMode="tail"
+              numberOfLines={2}
+              style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}
+            >
               {heading}
             </Text>
           )}
           {subHeadingText && (
-            <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNova' }]}>
+            <Text
+              ellipsizeMode="tail"
+              numberOfLines={2}
+              style={[styles.txtConfrm, { fontFamily: 'ProximaNova' }]}
+            >
               {subHeadingText}
             </Text>
           )}
           {subtext && (
-            <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNova' }]}>
+            <Text
+              ellipsizeMode="tail"
+              numberOfLines={2}
+              style={[styles.txtConfrm, { fontFamily: 'ProximaNova' }]}
+            >
               {subtext}
             </Text>
           )}
           {restaurant && (
-            <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
+            <Text
+              ellipsizeMode="tail"
+              numberOfLines={2}
+              style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}
+            >
               {restaurant}
             </Text>
           )}
           <TouchableOpacity
             activeOpacity={0.5}
             disabled={loading}
-            onPress={onPress}
+            onPress={onPress && onPress}
             style={styles.btnConfrm}
           >
             {loading ? (
@@ -150,7 +166,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   imgStyle: {
-    width: 220,
+    width: 260,
     height: 200,
     alignSelf: 'center',
     marginTop: -30,

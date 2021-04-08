@@ -18,12 +18,12 @@ import {
   Alert,
 } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
-import ConfirmationModal from '../../components/modals/ConfirmModal';
+import RefferedWaiterModal from '../../components/modals/ConfirmModal';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
-import HelpUsImproveModal from '../../components/modals/HelpUsImproveModal';
+import CommonModal from '../../components/modals/HelpUsImproveModal';
 import { Colors } from '../../constants/Theme';
 import RatingStar from '../../components/RatingComponent';
 import GlobalHeader from '../../components/GlobalHeader';
@@ -36,6 +36,7 @@ import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import Context from '../../contextApi/context';
 const imgSitting = require('../../assets/images/sittingtable.png');
+const waiter = require('../../assets/images/waiter2.png');
 // import * as actionTypes from '../../contextApi/actionTypes';
 import i18n from '../../li8n';
 // import { filteredRestaurant, yourFilteredRestaurant } from '../../util';
@@ -60,14 +61,16 @@ const ReviewDetails = ({ navigation, route }) => {
   const [RefferedWaiterModalVisible, setRefferedWaiterModalVisible] = useState(
     false,
   );
+  const [userThanksModalVisible, setUserThanksModalVisible] = useState(false);
+  const [refferedThanksModalVisible, setRefferedThanksModalVisible] = useState(
+    false,
+  );
   const { state, dispatch } = useContext(Context);
   const [IAMWAITER] = useMutation(I_AM_WAITER);
   const [AddWaiters] = useMutation(ADDING_WAITERS);
   const [Refferedloading, setRefferedLoading] = useState(false);
   const [Userloading, setUserLoading] = useState(false);
-  // const handleLoading = anim => {
-  //   setLoading(anim);
-  // };
+
   const {
     img,
     name,
@@ -174,6 +177,7 @@ const ReviewDetails = ({ navigation, route }) => {
           // await refetchWaiters();
           handleRefferedModalClose();
           setRefferedLoading(false);
+          setRefferedThanksModalVisible(true);
         },
         onError: e => {
           handleRefferedModalClose();
@@ -221,6 +225,7 @@ const ReviewDetails = ({ navigation, route }) => {
           // await refetchWaiters();
           handleUserModalClose();
           setUserLoading(false);
+          setUserThanksModalVisible(true);
         },
         onError: e => {
           setUserLoading(false);
@@ -607,25 +612,47 @@ const ReviewDetails = ({ navigation, route }) => {
       </TouchableOpacity>
 
       {RefferedWaiterModalVisible && (
-        <ConfirmationModal
+        <RefferedWaiterModal
           isVisible={RefferedWaiterModalVisible}
           handleModalClose={handleRefferedModalClose}
           loading={Refferedloading}
           postData={handleAddWaiter}
         />
       )}
+      {refferedThanksModalVisible && (
+        <CommonModal
+          isVisible={refferedThanksModalVisible}
+          handleModalClose={() => setRefferedThanksModalVisible(false)}
+          image={imgSitting}
+          onPress={() => setRefferedThanksModalVisible(false)}
+          heading={i18n.t('thank_collaboration')}
+          subHeadingText={i18n.t('waiter_our_database')}
+          buttonText={i18n.t('close')}
+        />
+      )}
       {userWaiterModalVisible && (
-        <HelpUsImproveModal
+        <CommonModal
           isVisible={userWaiterModalVisible}
           handleModalClose={handleUserModalClose}
           loading={Userloading}
           onPress={handleIAMWAITER}
-          image={imgSitting}
+          image={waiter}
           buttonText={i18n.t('i_confirm')}
           subHeadingText={i18n.t('confrm_you_are_server')}
           restaurant={name}
         />
       )}
+      {userThanksModalVisible && (
+        <CommonModal
+          isVisible={userThanksModalVisible}
+          handleModalClose={() => setUserThanksModalVisible(false)}
+          image={waiter}
+          onPress={() => setUserThanksModalVisible(false)}
+          subHeadingText={i18n.t('check_profile')}
+          buttonText={i18n.t('Thank_you')}
+        />
+      )}
+
       {/* <Animated.View
         style={[
           styles.viewBottom,

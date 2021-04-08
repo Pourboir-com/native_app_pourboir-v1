@@ -64,9 +64,12 @@ export default {
   will_contact_shortly:
     'Nous le contacterons rapidement pour l’ajouter dans l&apos;application.',
   name_of_your_server: 'Le nom de votre serveur',
+  waiter_email: 'L’email de votre serveur',
   add: 'Ajouter',
 
   // Popup thanks for vote
+  thank_collaboration: 'Merci de votre collaboration',
+  waiter_our_database: 'Le serveur a bien été ajouté dans notre base de données',
   thanks_for_vote: 'Merci pour votre vote',
   will_contact_by_email:
     'Nous vous offrons un coupon pour la prochaine loterie',

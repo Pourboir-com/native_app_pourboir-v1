@@ -55,16 +55,19 @@ export default {
   terms_of_use: 'Terms of use and privacy policy',
 
   //Popup Confirm you are a server
-  confrm_you_are_server: 'Confirm that you are a server for',
+  confrm_you_are_server: 'Confirm that you are a waiter for',
   i_confirm: 'I confirm',
 
   // Popup help us improve
   help_us_improve: 'Help us improve our app. Give us the name of your waiter',
   will_contact_shortly: 'We will contact him shortly to add him to our app.',
   name_of_your_server: 'The name of your waiter',
+  waiter_email: 'Your waiter email',
   add: 'Add',
 
   // Popup thanks for vote
+  thank_collaboration: 'thank you for your collaboration',
+  waiter_our_database: 'The waiter has been added to our database',
   thanks_for_vote: 'Thanks for your vote',
   will_contact_by_email:
     'We are offering you a unique code for our next lottery.',

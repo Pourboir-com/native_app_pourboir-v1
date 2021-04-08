@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -18,151 +18,66 @@ import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 import i18n from '../../li8n';
-const imgWaiter = require('../../assets/images/waiter2.png');
+const imgWaiter = require('../../assets/images/sittingtable.png');
 const imgBg = require('../../assets/images/Group7.png');
+const validator = require('validator');
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const ConfirmationModal = ({
-  isVisible,
   handleModalClose,
   postData,
   loading,
+  isVisible,
 }) => {
-  const scrollRef = React.useRef(null);
-  const [placeholderCompanyName, setplaceholderCompanyName] = useState(
-    i18n.t('nom_de'),
-  );
-  const [placeholderSiren, setplaceholderSiren] = useState(i18n.t('siren'));
-  const [placeholderBossName, setplaceholderBossName] = useState(
-    i18n.t('nom_de_boss'),
-  );
-  const [placeholderBossContact, setplaceholderBossContact] = useState(
-    i18n.t('contact_du_boss'),
-  );
   const [placeholderWaiterName, setPlaceholderWaiterName] = React.useState(
     i18n.t('name_of_your_server'),
   );
-  const [CompanyName, setCompanyName] = useState();
-  const [Siren, setSiren] = useState();
-  const [bossName, setBossName] = useState();
-  const [bossContact, setBossContact] = useState();
-  const [waiterName, setwaiterName] = useState();
-  // const [keyboardVisible, setKeyboardVisible] = useState();
+  const [placeholderEmail, setPlaceholderEmail] = React.useState(
+    i18n.t('waiter_email'),
+  );
 
-  // useEffect(() => {
-  //   const keyboardDidShowListener = Keyboard.addListener(
-  //     'keyboardDidShow',
-  //     () => {
-  //       setKeyboardVisible(true); // or some other action
-  //     },
-  //   );
-  //   const keyboardDidHideListener = Keyboard.addListener(
-  //     'keyboardDidHide',
-  //     () => {
-  //       setKeyboardVisible(false); // or some other action
-  //     },
-  //   );
-
-  //   return () => {
-  //     keyboardDidHideListener.remove();
-  //     keyboardDidShowListener.remove();
-  //   };
-  // }, []);
+  const [waiterName, setwaiterName] = useState('');
+  const [email, setEmail] = useState('');
 
   const ValidateDisable = () => {
     if (loading) {
       return true;
-    } else if (!isVisible.addWaiterModalVisible) {
-      if (CompanyName && Siren && bossName && bossContact) {
-        return false;
-      } else {
-        return true;
-      }
-    } else if (isVisible.addWaiterModalVisible) {
-      if (waiterName && CompanyName && Siren && bossName && bossContact) {
-        return false;
-      } else {
-        return true;
-      }
+    }
+    if (waiterName && email && validator?.isEmail(email)) {
+      return false;
     } else {
       return true;
     }
   };
   const ValidateButtonColor = () => {
-    if (!isVisible.addWaiterModalVisible) {
-      if (CompanyName && Siren && bossName && bossContact) {
-        return {
-          backgroundColor: Colors.yellow,
-        };
-      }
-    } else if (isVisible.addWaiterModalVisible) {
-      if (waiterName && CompanyName && Siren && bossName && bossContact) {
-        return {
-          backgroundColor: Colors.yellow,
-        };
-      }
+    if (waiterName && email && validator?.isEmail(email)) {
+      return {
+        backgroundColor: Colors.yellow,
+      };
     } else {
       return {};
     }
   };
 
   const HandlePostData = async () => {
-    if (!isVisible.addWaiterModalVisible) {
-      await postData(CompanyName, Siren, bossName, bossContact);
-      resetPlaceholder();
-    }
-    if (isVisible.addWaiterModalVisible) {
-      await postData(waiterName, CompanyName, Siren, bossName, bossContact);
-      resetPlaceholder();
-    }
+    await postData(waiterName, email);
+    resetPlaceholder();
   };
-
-  // React.useEffect(() => {
-  //   if (scrollRef.current) {
-  //     const node = scrollRef.current;
-  //     if (node) {
-  //       const keyboardDidShowListener = Keyboard.addListener(
-  //         'keyboardDidShow',
-  //         () => {
-  //           // setTimeout(() => {
-  //           node.scrollToEnd({ animated: true });
-  //           // }, 100);
-  //         },
-  //       );
-  //       return () => {
-  //         keyboardDidShowListener.remove();
-  //       };
-  //     }
-  //   }
-  // }, []);
-
-  // const ScrollToEnd = () => {
-  //   if (scrollRef.current) {
-  //     const node = scrollRef.current;
-  //     if (node) {
-  //       node.scrollToEnd({ animated: true });
-  //     }
-  //   }
-  // };
 
   const resetPlaceholder = () => {
-    setCompanyName('');
-    setBossName('');
-    setBossContact('');
-    setSiren('');
+    setwaiterName('');
+    setEmail('');
     if (Platform.OS != 'ios') {
-      setplaceholderCompanyName(i18n.t('nom_de'));
-      setplaceholderSiren(i18n.t('siren'));
-      setplaceholderBossName(i18n.t('nom_de_boss'));
-      setplaceholderBossContact(i18n.t('contact_du_boss'));
+      setPlaceholderWaiterName('name_of_your_server');
+      setPlaceholderEmail('');
     }
   };
+  let emailError = email && !validator?.isEmail(email);
 
   return (
     <Overlay
       overlayStyle={[styles.container]}
-      isVisible={
-        isVisible.confirmModalVisible || isVisible.addWaiterModalVisible
-      }
+      isVisible={isVisible}
       onBackdropPress={() => {
         handleModalClose();
         resetPlaceholder();
@@ -204,7 +119,7 @@ const ConfirmationModal = ({
                   }}
                   style={{
                     alignSelf: 'flex-end',
-                    marginTop: -160,
+                    marginTop: -185,
                     marginRight: 15,
                   }}
                 >
@@ -213,26 +128,54 @@ const ConfirmationModal = ({
               </View>
             </ImageBackground>
             <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
-              {i18n.t('please_fill')}
+              {i18n.t('help_us_improve')}
             </Text>
-            {isVisible.addWaiterModalVisible && (
+            <Text style={[styles.txtName, { fontFamily: 'ProximaNova' }]}>
+              {i18n.t('will_contact_shortly')}
+            </Text>
+            <TextInput
+              selectionColor={Colors.yellow}
+              value={waiterName}
+              onChangeText={text => {
+                setwaiterName(text);
+                // ScrollToEnd();
+              }}
+              placeholder={placeholderWaiterName}
+              onFocus={() => {
+                if (Platform.OS != 'ios') {
+                  setPlaceholderWaiterName('');
+                }
+                // ScrollToEnd();
+              }}
+              onBlur={() => {
+                if (!email && Platform.OS != 'ios') {
+                  setPlaceholderWaiterName(i18n.t('name_of_your_server'));
+                }
+              }}
+              style={[
+                styles.inputStyle,
+                { fontFamily: 'ProximaNova', textAlign: 'center' },
+              ]}
+            />
+            <View style={{ flexDirection: 'row', position: 'relative' }}>
               <TextInput
                 selectionColor={Colors.yellow}
-                value={waiterName}
+                keyboardType="email-address"
+                value={email}
                 onChangeText={text => {
-                  setwaiterName(text);
+                  setEmail(text);
                   // ScrollToEnd();
                 }}
-                placeholder={placeholderWaiterName}
+                placeholder={placeholderEmail}
                 onFocus={() => {
                   if (Platform.OS != 'ios') {
-                    setPlaceholderWaiterName('');
+                    setPlaceholderEmail('');
                   }
                   // ScrollToEnd();
                 }}
                 onBlur={() => {
-                  if (!CompanyName && Platform.OS != 'ios') {
-                    setPlaceholderWaiterName(i18n.t('name_of_your_server'));
+                  if (!email && Platform.OS != 'ios') {
+                    setPlaceholderEmail(i18n.t('waiter_email'));
                   }
                 }}
                 style={[
@@ -240,119 +183,29 @@ const ConfirmationModal = ({
                   { fontFamily: 'ProximaNova', textAlign: 'center' },
                 ]}
               />
-            )}
-            <TextInput
-              selectionColor={Colors.yellow}
-              value={CompanyName}
-              onChangeText={text => {
-                setCompanyName(text);
-                // ScrollToEnd();
-              }}
-              placeholder={placeholderCompanyName}
-              onFocus={() => {
-                if (Platform.OS != 'ios') {
-                  setplaceholderCompanyName('');
-                }
-                // ScrollToEnd();
-              }}
-              onBlur={() => {
-                if (!CompanyName && Platform.OS != 'ios') {
-                  setplaceholderCompanyName(i18n.t('nom_de'));
-                }
-              }}
-              style={[
-                styles.inputStyle,
-                { fontFamily: 'ProximaNova', textAlign: 'center' },
-              ]}
-            />
-            <TextInput
-              selectionColor={Colors.yellow}
-              keyboardType="number-pad"
-              placeholder={placeholderSiren}
-              onFocus={() => {
-                if (Platform.OS != 'ios') {
-                  setplaceholderSiren('');
-                }
-                // ScrollToEnd();
-              }}
-              onBlur={() => {
-                if (!Siren && Platform.OS != 'ios') {
-                  setplaceholderSiren(i18n.t('siren'));
-                }
-              }}
-              value={Siren}
-              onChangeText={e => {
-                setSiren(e);
-                // ScrollToEnd();
-              }}
-              style={[
-                styles.inputStyle,
-                { fontFamily: 'ProximaNova', textAlign: 'center' },
-              ]}
-            />
-            <TextInput
-              selectionColor={Colors.yellow}
-              placeholder={placeholderBossName}
-              onFocus={() => {
-                if (Platform.OS != 'ios') {
-                  setplaceholderBossName('');
-                }
-                // ScrollToEnd();
-              }}
-              onBlur={() => {
-                if (!bossName && Platform.OS != 'ios') {
-                  setplaceholderBossName(i18n.t('nom_de_boss'));
-                }
-              }}
-              value={bossName}
-              onChangeText={e => {
-                setBossName(e);
-                // ScrollToEnd();
-              }}
-              style={[
-                styles.inputStyle,
-                { fontFamily: 'ProximaNova', textAlign: 'center' },
-              ]}
-            />
-            <TextInput
-              onFocus={() => {
-                if (Platform.OS != 'ios') {
-                  setplaceholderBossContact('');
-                }
-                // ScrollToEnd();
-              }}
-              selectionColor={Colors.yellow}
-              keyboardType="number-pad"
-              placeholder={placeholderBossContact}
-              onBlur={() => {
-                // setonHandleFocus(false);
-                if (!bossContact && Platform.OS != 'ios') {
-                  setplaceholderBossContact(i18n.t('contact_du_boss'));
-                }
-              }}
-              value={bossContact}
-              onChangeText={e => {
-                setBossContact(e);
-                // ScrollToEnd();
-              }}
-              style={[
-                styles.inputStyle,
-                { fontFamily: 'ProximaNova', textAlign: 'center' },
-              ]}
-            />
-
+              <Text style={{ position: 'absolute', right: 3.5, top: 14 }}>
+                {emailError && (
+                  <FontAwesome5
+                    name="exclamation-circle"
+                    size={13}
+                    color="red"
+                  />
+                )}
+              </Text>
+            </View>
             <TouchableOpacity
+              activeOpacity={0.5}
               disabled={ValidateDisable()}
               onPress={HandlePostData}
               style={[styles.btnConfrm, ValidateButtonColor()]}
             >
               {loading ? (
-                <ActivityIndicator size={30} color="#000" />
+                <ActivityIndicator size={29} color="#EBC11B" />
               ) : (
                 <Text
                   style={[styles.txtBtnConfrm, { fontFamily: 'ProximaNova' }]}
                 >
-                  {i18n.t('validate')}
+                  {i18n.t('add')}
                 </Text>
               )}
             </TouchableOpacity>
@@ -388,7 +241,7 @@ const styles = StyleSheet.create({
     width: '80%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: '5%',
+    marginVertical: '7%',
     height: 45,
   },
   txtName: {

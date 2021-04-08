@@ -29,7 +29,6 @@ import * as Facebook from 'expo-facebook';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Device from 'expo-device';
 import { getAsyncStorageValues } from '../../constants';
-import SvgUri from 'react-native-svg-uri';
 
 const SocialLogin = ({ navigation, route }) => {
   const [city, setCity] = useState();
@@ -58,6 +57,7 @@ const SocialLogin = ({ navigation, route }) => {
   const os = Platform.OS === 'android' ? 'android' : 'apple';
   const { state, dispatch } = useContext(Context);
   const handleGoogleSignIn = async () => {
+    setLoading(true);
     // First- obtain access token from Expo's Google API
     const { type, accessToken, user } = await Google.logInAsync(config);
     if (type === 'success') {
@@ -112,6 +112,9 @@ const SocialLogin = ({ navigation, route }) => {
         setLoading(false);
         alert(`Google Login Error: ${error}`);
       });
+    }
+    else {
+      setLoading(false);
     }
   };
 
@@ -376,8 +379,20 @@ const SocialLogin = ({ navigation, route }) => {
           <CheckBox
             onClick={() => setTermsChecked(!termsChecked)}
             isChecked={termsChecked}
-            checkedImage={<Image style={{width: 18}} resizeMode={'contain'}  source={require('../../assets/images/checked.png')}/>}
-            unCheckedImage={<Image style={{width: 16}} resizeMode={'contain'} source={require('../../assets/images/unchecked.png')}/>}
+            checkedImage={
+              <Image
+                style={{ width: 18 }}
+                resizeMode={'contain'}
+                source={require('../../assets/images/checked.png')}
+              />
+            }
+            unCheckedImage={
+              <Image
+                style={{ width: 16 }}
+                resizeMode={'contain'}
+                source={require('../../assets/images/unchecked.png')}
+              />
+            }
             rightTextView={
               <View>
                 <Text

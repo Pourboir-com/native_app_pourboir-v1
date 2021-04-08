@@ -75,7 +75,7 @@ const TipModal = ({
           activeOpacity={0.5}
         >
           {loading ? (
-            <ActivityIndicator size={25} color="#EBC42B" />
+            <ActivityIndicator size={25} color="#EBC11B" />
           ) : (
             <Text style={styles.txtTipModal}>{i18n.t('cash')}</Text>
           )}

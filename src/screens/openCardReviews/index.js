@@ -350,6 +350,7 @@ const ReviewDetails = ({ navigation, route }) => {
           style={{ marginTop: 220, marginHorizontal: 24, marginBottom: 20 }}
         >
           <TouchableOpacity
+            activeOpacity={0.5}
             onPress={() =>
               navigation.navigate('MapScreen', {
                 geometry,
@@ -370,11 +371,13 @@ const ReviewDetails = ({ navigation, route }) => {
               <Feather name="send" size={18} color={Colors.yellow} />
             </View>
             <Text
+              ellipsizeMode="tail"
+              numberOfLines={1}
               style={{
                 fontFamily: 'ProximaNova',
                 color: Colors.fontDark,
                 fontSize: 13,
-                width: 150,
+                width: '70%',
               }}
             >
               {name}
@@ -392,6 +395,7 @@ const ReviewDetails = ({ navigation, route }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.5}
             onPress={() => openDialScreen()}
             style={[
               styles.viewItem,
@@ -468,6 +472,7 @@ const ReviewDetails = ({ navigation, route }) => {
             keyExtractor={item => item._id}
             renderItem={itemData => (
               <TouchableOpacity
+                activeOpacity={0.5}
                 key={itemData?.item?._id}
                 onPress={() => {
                   if (
@@ -556,6 +561,7 @@ const ReviewDetails = ({ navigation, route }) => {
               {i18n.t('add_your_server')}
             </Text>
             <TouchableOpacity
+              activeOpacity={0.5}
               onPress={handleAddWaiterModalOpen}
               style={styles.btnAdd}
             >
@@ -565,16 +571,14 @@ const ReviewDetails = ({ navigation, route }) => {
         </View>
       </ScrollView>
       <TouchableOpacity
+        activeOpacity={0.5}
         disabled={menu_url ? false : true}
         onPress={() => {
           if (menu_url) {
             WebBrowser.openBrowserAsync(menu_url);
           }
         }}
-        style={[
-          styles.see_menu,
-          !menu_url && { backgroundColor: '#f0f0f0' },
-        ]}
+        style={[styles.see_menu, !menu_url && { backgroundColor: '#f0f0f0' }]}
       >
         <Text
           style={{
@@ -588,6 +592,7 @@ const ReviewDetails = ({ navigation, route }) => {
       </TouchableOpacity>
 
       <TouchableOpacity
+        activeOpacity={0.5}
         onPress={handleConfirmModalOpen}
         style={styles.viewLastBtn}
       >

@@ -1,6 +1,6 @@
-import { StyleSheet} from 'react-native'
-import { Colors } from '../../constants/Theme';
-
+import {
+  StyleSheet,
+} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,6 +11,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
+  },
+  inputLabel: {
+    color: 'black',
+    opacity: 0.8,
+    paddingBottom: 2.7,
+    fontSize: 15,
+    fontFamily: 'ProximaNovaBold',
+  },
+  input_box: {
+    alignItems: 'flex-start', 
+    marginBottom: 16,
   },
   viewImg: {
     width: 120,
@@ -32,7 +43,7 @@ const styles = StyleSheet.create({
     marginBottom: 21,
     fontSize: 20,
     color: 'black',
-    fontWeight:'bold'
+    fontFamily: 'ProximaNovaBold',
   },
   inputsTopTow: {
     borderColor: '#ccc',
@@ -41,6 +52,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     backgroundColor: '#fff',
+    fontFamily: 'ProximaNova',
   },
   inputsBottomTwo: {
     borderColor: '#ccc',
@@ -54,31 +66,31 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   payment_container: {
-      backgroundColor:'#fff',
-      padding:16,
-      borderRadius:10,
-      width:320,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 0,
-      },
-      shadowOpacity: 0.1,
-      shadowRadius: 2.45,
-  
-      elevation: 1,
+    backgroundColor: '#fff',
+    padding: 16,
+    borderRadius: 10,
+    width: 320,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2.45,
+
+    elevation: 1,
   },
   payments: {
-    flexDirection:'row', 
-    justifyContent:'space-between',
-    borderBottomColor:'#f1f1f1',
-    borderBottomWidth:1,
-    paddingBottom:10,
-    marginBottom:20
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderBottomColor: '#f1f1f1',
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+    marginBottom: 20,
   },
-  lastpayment:{
-        flexDirection:'row', 
-        justifyContent:'space-between'
+  lastpayment: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   viewPencil: {
     width: 25,
@@ -88,7 +100,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     // position:'absolute',
-    zIndex:11111
+    zIndex: 11111,
   },
   btnPencil: {
     backgroundColor: '#FCDF6F',
@@ -101,9 +113,18 @@ const styles = StyleSheet.create({
     // marginRight: -40,
     // position:'absolute',
     marginTop: -28,
-    marginLeft:65,
-    zIndex: 111
+    marginLeft: 65,
+    zIndex: 111,
+  },
+  paymentMethodLabel: {
+    paddingLeft: 10, 
+    fontSize: 15,
+    fontFamily: 'ProximaNova',
+  },
+  paymentMethodImage: {
+    backgroundColor: '#FFF6D4',
+    padding: 3,
   },
 });
 
-  export default styles
+export default styles;

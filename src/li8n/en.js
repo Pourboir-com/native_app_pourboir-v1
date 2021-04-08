@@ -70,11 +70,10 @@ export default {
   will_contact_by_email:
     'We are offering you a unique code for our next lottery.',
 
-
-// Popup pay your tip
-pay_your_tip: 'Pay your tip',
-cash: 'Cash',
-digital: 'Digital',
+  // Popup pay your tip
+  pay_your_tip: 'Pay your tip',
+  cash: 'Cash',
+  digital: 'Digital',
 
   //Global Header
   must_loggedIn: 'You must be logged in to use Pourboir!',
@@ -82,7 +81,7 @@ digital: 'Digital',
   cannot_vote: 'You cannot vote yourself',
   already_waiter: 'You are already waiter in this restaurant',
 
-  // Personal Details 
+  // Personal Details
   personal_info: 'Personal Information',
   first_name: 'First name',
   last_name: 'Last name',
@@ -91,25 +90,23 @@ digital: 'Digital',
   checked: 'Checked',
   payment_methods: 'Payment Methods',
   add_pay_method: 'Add a payment method',
-  your_personal_details:'Your Personal Details',
+  your_personal_details: 'Your Personal Details',
 
-  // Apple Pay 
+  // Apple Pay
   pay_with_apple: 'Pay with Apple Pay',
   app_acc: 'You can pay using your Apple Pay account linked to this device.',
 
-  // Master Card 
-  date_of_exp: "Expiration date",
-  master_card:'Master Card',
-  clear_map: 'Clear Map',
+  // Master Card
+  date_of_exp: 'Expiration date',
+  master_card: 'Master Card',
+  delete_card: 'Delete the card',
 
-  //add a map 
-  add_a_map: 'Add a Map',
+  //add a map
+  add_a_card: 'Add a card',
   card_number: 'Card Number',
-  pays:'Pays',
-  save:'Save',
+  pays: 'Pays',
+  save: 'Save',
 
-  // Paypal 
-  delete_paypal: 'Delete this Paypal account'
-
-
+  // Paypal
+  delete_paypal: 'Delete this Paypal account',
 };

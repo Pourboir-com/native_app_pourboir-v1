@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, StatusBar } from 'react-native';
 import { ImageBackground } from 'react-native';
-import { StyleSheet, Text, View } from 'react-native';
-import {
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';
 
@@ -20,6 +15,9 @@ const PaypalPayment = ({ navigation }) => {
           style={{
             width: '100%',
             height: 100,
+            borderBottomLeftRadius: Dimensions.get('window').width * 0.06,
+            borderBottomRightRadius: Dimensions.get('window').width * 0.06,
+            overflow: 'hidden',
           }}
           source={require('../../assets/images/Group3.png')}
         >
@@ -36,19 +34,27 @@ const PaypalPayment = ({ navigation }) => {
         </ImageBackground>
       </View>
       <View style={{ flex: 7 }}>
-        <View style={{ marginTop: 50, alignItems: 'center' }}>
+        <View
+          style={{
+            marginTop: 60,
+            alignItems: 'center',
+          }}
+        >
           <TextInput
             style={styles.inputsTopTow}
             onChangeText={onChangeText}
             value={text}
             placeholder="christine@zhou.com"
             keyboardType="email-address"
+            placeholderTextColor={'#485460'}
           />
         </View>
       </View>
       <View style={{ flex: 1, alignItems: 'center' }}>
-        <TouchableOpacity activeOpacity={0.7} style={styles.btn_yellow}>
-          <Text style={{ fontSize: 13 }}>{i18n.t('delete_paypal')}</Text>
+        <TouchableOpacity activeOpacity={0.5} style={styles.btn_yellow}>
+          <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
+            {i18n.t('delete_paypal')}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -69,6 +75,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     backgroundColor: '#fff',
+    fontFamily: 'ProximaNova',
   },
   btn_yellow: {
     backgroundColor: '#FCDF6F',
@@ -79,5 +86,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 20,
+    fontFamily: 'ProximaNova',
   },
 });

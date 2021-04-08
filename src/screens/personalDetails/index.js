@@ -2,8 +2,7 @@ import React, { useState, useContext } from 'react';
 import { StatusBar } from 'react-native';
 import { ImageBackground } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native';
-import { Image } from 'react-native';
-import { Text, View } from 'react-native';
+import { Text, View, Dimensions, Image } from 'react-native';
 import {
   ScrollView,
   TextInput,
@@ -79,11 +78,14 @@ const PersonalDetails = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar translucent={true} style="dark" />
+      <StatusBar translucent={true} style="light" />
       <ImageBackground
         style={{
           width: '100%',
           height: 100,
+          borderBottomLeftRadius: Dimensions.get('window').width * 0.06,
+          borderBottomRightRadius: Dimensions.get('window').width * 0.06,
+          overflow: 'hidden',
         }}
         source={require('../../assets/images/Group3.png')}
       >
@@ -170,38 +172,28 @@ const PersonalDetails = ({ navigation }) => {
 
           <View style={{ marginHorizontal: 30, alignItems: 'center' }}>
             <Text style={styles.heading1}> {i18n.t('personal_info')}</Text>
-            <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-              <Text
-                style={{ color: '#1E272E', opacity: 0.7, paddingBottom: 5 }}
-              >
-                {i18n.t('first_name')}
-              </Text>
+            <View style={styles.input_box}>
+              <Text style={styles.inputLabel}>{i18n.t('first_name')}</Text>
               <TextInput
                 style={styles.inputsTopTow}
                 onChangeText={onChangeText}
                 value={text}
                 placeholder="Christine"
+                placeholderTextColor={'#485460'}
               />
             </View>
-            <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-              <Text
-                style={{ color: '#1E272E', opacity: 0.7, paddingBottom: 5 }}
-              >
-                {i18n.t('last_name')}
-              </Text>
+            <View style={styles.input_box}>
+              <Text style={styles.inputLabel}>{i18n.t('last_name')}</Text>
               <TextInput
                 style={styles.inputsTopTow}
                 onChangeText={onChangeText2}
                 value={text2}
                 placeholder="Zhou"
+                placeholderTextColor={'#485460'}
               />
             </View>
-            <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-              <Text
-                style={{ color: '#1E272E', opacity: 0.7, paddingBottom: 5 }}
-              >
-                {i18n.t('phone_num')}
-              </Text>
+            <View style={styles.input_box}>
+              <Text style={styles.inputLabel}>{i18n.t('phone_num')}</Text>
               <View style={styles.inputsBottomTwo}>
                 <TextInput
                   onChangeText={onChangeText3}
@@ -209,6 +201,7 @@ const PersonalDetails = ({ navigation }) => {
                   placeholder="+33 6 88 88 88"
                   keyboardType="number-pad"
                   style={{ width: '60%' }}
+                  placeholderTextColor={'#485460'}
                 />
                 <Text
                   style={{
@@ -216,6 +209,7 @@ const PersonalDetails = ({ navigation }) => {
                     width: '40%',
                     fontSize: 13,
                     textAlign: 'right',
+                    fontFamily: 'ProximaNova',
                   }}
                 >
                   {i18n.t('not_verified')}
@@ -223,12 +217,8 @@ const PersonalDetails = ({ navigation }) => {
               </View>
             </View>
 
-            <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
-              <Text
-                style={{ color: '#1E272E', opacity: 0.7, paddingBottom: 5 }}
-              >
-                Email
-              </Text>
+            <View style={styles.input_box}>
+              <Text style={styles.inputLabel}>E-mail</Text>
               <View style={styles.inputsBottomTwo}>
                 <TextInput
                   onChangeText={onChangeText4}
@@ -236,6 +226,7 @@ const PersonalDetails = ({ navigation }) => {
                   placeholder="christine@zhou.com"
                   keyboardType="email-address"
                   style={{ width: '70%' }}
+                  placeholderTextColor={'#485460'}
                 />
                 <Text
                   style={{
@@ -243,6 +234,7 @@ const PersonalDetails = ({ navigation }) => {
                     width: '30%',
                     fontSize: 13,
                     textAlign: 'right',
+                    fontFamily: 'ProximaNova',
                   }}
                 >
                   {i18n.t('checked')}
@@ -255,101 +247,71 @@ const PersonalDetails = ({ navigation }) => {
               <Text style={styles.heading1}>{i18n.t('payment_methods')}</Text>
             </View>
 
-            <View style={{ marginHorizontal: 30, alignItems: 'center' }}>
-              <Text style={styles.heading1}> {i18n.t('personal_info')}</Text>
-              <View style={{ alignItems: 'flex-start', marginBottom: 16 }}>
-                <Text
-                  style={{
-                    color: '#1E272E',
-                    paddingBottom: 3,
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {i18n.t('first_name')}
-                </Text>
-                <TextInput
-                  style={styles.inputsTopTow}
-                  onChangeText={onChangeText}
-                  value={text}
-                  placeholder="Christine"
-                  keyboardType="text"
-                />
-              </View>
-              <View style={{ alignItems: 'flex-start', marginBottom: 16 }}>
-                <Text
-                  style={{
-                    color: '#1E272E',
-                    paddingBottom: 3,
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {i18n.t('last_name')}
-                </Text>
-                <TextInput
-                  style={styles.inputsTopTow}
-                  onChangeText={onChangeText2}
-                  value={text2}
-                  placeholder="Zhou"
-                  keyboardType="text"
-                />
-              </View>
-              <View style={{ alignItems: 'flex-start', marginBottom: 16 }}>
-                <Text
-                  style={{
-                    color: '#1E272E',
-                    paddingBottom: 3,
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {i18n.t('phone_num')}
-                </Text>
-                <View style={styles.inputsBottomTwo}>
-                  <TextInput
-                    onChangeText={onChangeText3}
-                    value={text3}
-                    placeholder="+33 6 88 88 88"
-                    keyboardType="text"
-                    style={{ width: '60%' }}
-                  />
-                </View>
-                <Text style={{ paddingLeft: 10, fontSize: 15 }}>Apple Pay</Text>
-              </View>
-              <TouchableOpacity>
-                <View style={{ alignItems: 'flex-start', marginBottom: 16 }}>
-                  <Text
-                    style={{
-                      color: '#1E272E',
-                      paddingBottom: 3,
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    Email
-                  </Text>
-                  <View style={styles.inputsBottomTwo}>
-                    <TextInput
-                      onChangeText={onChangeText4}
-                      value={text4}
-                      placeholder="christine@zhou.com"
-                      keyboardType="text"
-                      style={{ width: '70%' }}
+            <View style={styles.payment_container}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('paypalPayment')}
+                activeOpacity={0.6}
+                style={styles.payments}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View style={styles.paymentMethodImage}>
+                    <Image
+                      source={require('../../assets/images/paypal.png')}
+                      style={{ width: 23, height: 23, resizeMode: 'contain' }}
                     />
                   </View>
-                  <Text style={{ paddingLeft: 10, fontSize: 15 }}>***8888</Text>
+                  <Text style={styles.paymentMethodLabel}>Paypal</Text>
                 </View>
                 <View style={{ alignItems: 'center' }}>
                   <AntDesign name="right" size={20} color="lightgray" />
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => navigation.navigate('addMap')}
+                onPress={() => navigation.navigate('applePayment')}
+                activeOpacity={0.6}
+                style={styles.payments}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View style={styles.paymentMethodImage}>
+                    <Image
+                      source={require('../../assets/images/apple.png')}
+                      style={{ width: 24, height: 24, resizeMode: 'contain' }}
+                    />
+                  </View>
+                  <Text style={styles.paymentMethodLabel}>Apple Pay</Text>
+                </View>
+                <View style={{ alignItems: 'center' }}>
+                  <AntDesign name="right" size={20} color="lightgray" />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('masterCard')}
+                activeOpacity={0.6}
+                style={styles.payments}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View style={styles.paymentMethodImage}>
+                    <Image
+                      source={require('../../assets/images/card.png')}
+                      style={{ width: 25, height: 25, resizeMode: 'contain' }}
+                    />
+                  </View>
+                  <Text style={styles.paymentMethodLabel}>***8888</Text>
+                </View>
+                <View style={{ alignItems: 'center' }}>
+                  <AntDesign name="right" size={20} color="lightgray" />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('addCard')}
                 activeOpacity={0.6}
                 style={styles.lastpayment}
               >
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <View style={{ backgroundColor: '#FFF6D4', padding: 3 }}>
+                  <View style={styles.paymentMethodImage}>
                     <AntDesign name="plus" size={21} color="black" />
                   </View>
-                  <Text style={{ paddingLeft: 10, fontSize: 14 }}>
+                  <Text style={styles.paymentMethodLabel}>
                     {i18n.t('add_pay_method')}
                   </Text>
                 </View>

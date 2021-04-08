@@ -10,16 +10,11 @@ import {
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
-const imgWaiter = require('../../assets/images/payment.png');
+const imgWaiter = require('../../assets/images/manmoney.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 
 const TipModal = ({ isVisible, handleModalClose }) => {
-  function pad(n, width, z) {
-    z = z || '0';
-    n = n + '';
-    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-  }
   return (
     <Overlay
       overlayStyle={styles.container}
@@ -41,9 +36,7 @@ const TipModal = ({ isVisible, handleModalClose }) => {
           <View
             style={{
               width: 140,
-              height: 140,
-              borderRadius: 100,
-              backgroundColor: 'rgba(255, 255, 255, 0.5)',
+              height: 130,
               alignSelf: 'center',
               marginBottom: -70,
               bottom: -20,
@@ -60,14 +53,21 @@ const TipModal = ({ isVisible, handleModalClose }) => {
       <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
         {i18n.t('pay_your_tip')}
       </Text>
-     <View style={{flexDirection:'row', justifyContent:'space-around', width:'90%', marginVertical:15}}>
-         <TouchableOpacity style={styles.btnTipModal} activeOpacity={0.7} >
-             <Text style={styles.txtTipModal}>{i18n.t('cash')}</Text>
-         </TouchableOpacity>
-         <TouchableOpacity style={styles.btnTipModal} activeOpacity={0.7}>
-             <Text style={styles.txtTipModal}>{i18n.t('digital')}</Text>
-         </TouchableOpacity>
-     </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          width: '90%',
+          marginVertical: 15,
+        }}
+      >
+        <TouchableOpacity style={styles.btnTipModal} activeOpacity={0.5}>
+          <Text style={styles.txtTipModal}>{i18n.t('cash')}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btnTipModal} activeOpacity={0.5}>
+          <Text style={styles.txtTipModal}>{i18n.t('digital')}</Text>
+        </TouchableOpacity>
+      </View>
     </Overlay>
   );
 };
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   txtConfrm: {
     fontSize: 24,
     color: Colors.fontDark,
-    marginTop: 20,
+    marginTop: 18,
     textAlign: 'center',
   },
   txtName: {
@@ -139,16 +139,19 @@ const styles = StyleSheet.create({
     color: '#e6c33d',
     fontWeight: 'bold',
   },
-  btnTipModal:{
-      backgroundColor:'#FFF6D4',
-      paddingHorizontal:25,
-      paddingVertical:12,
-      borderRadius:10,
-      width:'47%',
-      alignItems:'center',
-      justifyContent:'center'
+  btnTipModal: {
+    backgroundColor: '#FFF6D4',
+    paddingHorizontal: 25,
+    paddingVertical: 12,
+    borderRadius: 10,
+    width: '47%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
   },
-  txtTipModal:{
-      color:'#EBC42B'
-  }
+  txtTipModal: {
+    color: '#EBC42B',
+    fontSize: 18,
+    fontFamily: 'ProximaNovaBold',
+  },
 });

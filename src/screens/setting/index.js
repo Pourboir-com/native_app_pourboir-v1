@@ -50,8 +50,8 @@ const Setting = ({ navigation, route }) => {
   };
 
   const handleModalOpen = () => {
-    setisVisible(true)
-  }
+    setisVisible(true);
+  };
 
   const resetState = async () => {
     navigation.navigate('Home', { crossIcon: false });
@@ -164,10 +164,8 @@ const Setting = ({ navigation, route }) => {
             navigation={navigation}
           />
 
-          <TouchableOpacity
+          <View
             style={styles.viewImg}
-            activeOpacity={0.6}
-            onPress={() => navigation.navigate('personalDetails')}
           >
             {state.userDetails.image === null ||
             state.userDetails.image === undefined ||
@@ -195,7 +193,7 @@ const Setting = ({ navigation, route }) => {
                 resizeMode="cover"
               />
             )}
-          </TouchableOpacity>
+          </View>
           {/* <TouchableOpacity
             onPress={handleChangePicture}
             style={styles.btnPencil}
@@ -223,8 +221,8 @@ const Setting = ({ navigation, route }) => {
           bounces={false}
           showsVerticalScrollIndicator={false}
         >
-
-<TouchableOpacity
+          <TouchableOpacity
+            activeOpacity={0.5}
             onPress={handleModalOpen}
             style={[styles.viewItem, { marginBottom: 0 }]}
             // onPress={() => navigation.navigate('personalDetails')}
@@ -253,8 +251,9 @@ const Setting = ({ navigation, route }) => {
               </View>
             </View>
           </TouchableOpacity>
-          
+
           <TouchableOpacity
+            activeOpacity={0.5}
             style={styles.viewItem}
             onPress={() => {
               // Open the iOS App Store directly
@@ -286,6 +285,7 @@ const Setting = ({ navigation, route }) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.5}
             style={styles.viewItem}
             onPress={() => {
               Linking.openURL(`mailto:${email_to}`);
@@ -305,6 +305,7 @@ const Setting = ({ navigation, route }) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.5}
             onPress={() =>
               navigation.navigate('Remove', {
                 crossIcon: true,
@@ -342,11 +343,17 @@ const Setting = ({ navigation, route }) => {
         </ScrollView>
       </View>
       <View>
-        <Text style={[styles.versionText, { fontFamily: 'ProximaNova' }]}>
+        <Text
+          style={[
+            styles.versionText,
+            { fontFamily: 'ProximaNova' },
+          ]}
+        >
           Version {Constants.manifest.version}
         </Text>
       </View>
       <TouchableOpacity
+        activeOpacity={0.5}
         disabled={loading}
         onPress={handleSignOut}
         style={styles.btnValider}
@@ -359,12 +366,8 @@ const Setting = ({ navigation, route }) => {
           </Text>
         )}
       </TouchableOpacity>
-      <TipModal
-        isVisible={isVisible}
-        handleModalClose={handleModalClose}
-      />
+      <TipModal isVisible={isVisible} handleModalClose={handleModalClose} />
     </View>
-    
   );
 };
 export default Setting;
@@ -421,7 +424,7 @@ const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     borderRadius: 15,
-    marginTop: -45,
+    marginTop: -85,
     overflow: 'hidden',
     backgroundColor: 'transparent',
   },

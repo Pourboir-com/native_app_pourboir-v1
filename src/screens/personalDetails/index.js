@@ -23,8 +23,11 @@ import i18n from '../../li8n';
 const PersonalDetails = ({ navigation }) => {
   const { state, dispatch } = useContext(Context);
   let fullName = state?.userDetails?.name?.split(' ');
-  let firstName = fullName.slice(0, fullName.length - 1).join(' ');
-  let lastName = fullName[fullName.length - 1];
+  let firstName =
+    fullName?.length > 1
+      ? fullName?.slice(0, fullName?.length - 1).join(' ')
+      : fullName[0];
+  let lastName = fullName?.length > 1 ? fullName[fullName?.length - 1] : '';
 
   const [text, onChangeText] = React.useState(firstName);
   const [text2, onChangeText2] = React.useState(lastName);

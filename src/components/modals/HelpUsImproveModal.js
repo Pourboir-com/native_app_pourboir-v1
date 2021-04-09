@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     height: 200,
     alignSelf: 'center',
     marginTop: -30,
-    marginRight: -20,
+    marginRight: -10,
   },
   viewImg: {
     width: '100%',

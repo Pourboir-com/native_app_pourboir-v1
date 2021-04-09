@@ -21,11 +21,11 @@ import { useMutation } from 'react-query';
 import i18n from '../../li8n';
 
 const PersonalDetails = ({ navigation }) => {
-  const [text, onChangeText] = React.useState();
-  const [text2, onChangeText2] = React.useState();
-  const [text3, onChangeText3] = React.useState();
-  const [text4, onChangeText4] = React.useState();
   const { state, dispatch } = useContext(Context);
+  const [text, onChangeText] = React.useState(state?.userDetails?.name?.split(' ')[0]);
+  const [text2, onChangeText2] = React.useState(state?.userDetails?.name?.split(' ')[1]);
+  const [text3, onChangeText3] = React.useState();
+  const [text4, onChangeText4] = React.useState(state?.userDetails?.email);
   const [image, setImage] = useState();
   const [updatePicture] = useMutation(UPDATE_PICTURE);
 

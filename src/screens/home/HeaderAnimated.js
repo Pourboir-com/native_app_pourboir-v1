@@ -26,8 +26,9 @@ import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import i18n from '../../li8n';
 import Context from '../../contextApi/context';
-import { ActivityIndicator } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+// import { ActivityIndicator } from 'react-native';
+// import { useFocusEffect } from '@react-navigation/native';
+import { userGivenName } from '../../util';
 
 const HomeScreen = props => {
   const scrollRef = useRef(null);
@@ -40,7 +41,7 @@ const HomeScreen = props => {
 
   useEffect(() => {
     sethasValue(props.searchVal ? true : false);
-  });
+  }, []);
 
   // useFocusEffect(
   //   React.useCallback(() => {
@@ -73,6 +74,7 @@ const HomeScreen = props => {
     state.refreshAnimation,
     state.restaurantsDetails,
   ]);
+
   const reBounce = 25;
 
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight() + 0;
@@ -277,7 +279,7 @@ const HomeScreen = props => {
               >
                 {!state.userDetails.name
                   ? i18n.t('hello')
-                  : i18n.t('hello') + ' ' + state.userDetails.name}
+                  : i18n.t('hello') + ' ' + userGivenName(state.userDetails.name)}
               </Text>
             </Animated.View>
           </View>

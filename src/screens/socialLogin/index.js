@@ -83,9 +83,9 @@ const SocialLogin = ({ navigation, route }) => {
             navigation.navigate('Home', { crossIcon: false });
           }
           let userDetails = {
-            name: res?.user?.full_name
-              ? userGivenName(res?.user?.full_name)
-              : '',
+            name: res?.user?.full_name,
+            // ? userGivenName(res?.user?.full_name)
+            // : '',
             image: res?.user?.picture || '',
             email: res?.user?.email || '',
             accessToken: accessToken || '',
@@ -112,8 +112,7 @@ const SocialLogin = ({ navigation, route }) => {
         setLoading(false);
         alert(`Google Login Error: ${error}`);
       });
-    }
-    else {
+    } else {
       setLoading(false);
     }
   };
@@ -164,9 +163,9 @@ const SocialLogin = ({ navigation, route }) => {
                   navigation.navigate('Home', { crossIcon: false });
                 }
                 let userDetails = {
-                  name: res?.user?.full_name
-                    ? userGivenName(res?.user?.full_name)
-                    : '',
+                  name: res?.user?.full_name,
+                  // ? userGivenName(res?.user?.full_name)
+                  // : '',
                   image: res?.user?.picture || '',
                   email: res?.user?.email || '',
                   accessToken: token || '',
@@ -323,9 +322,9 @@ const SocialLogin = ({ navigation, route }) => {
                           navigation.navigate('Home', { crossIcon: false });
                         }
                         let userDetails = {
-                          name: res?.user?.full_name
-                            ? userGivenName(res?.user?.full_name)
-                            : '',
+                          name: res?.user?.full_name,
+                          // ? userGivenName(res?.user?.full_name)
+                          // : '',
                           image: res?.user?.picture || '',
                           email: res?.user?.email || '',
                           accessToken: credential.authorizationCode || '',

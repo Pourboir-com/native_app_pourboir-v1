@@ -29,6 +29,7 @@ import { Platform } from 'react-native';
 // import * as StoreReview from 'expo-store-review';
 import { email_to } from '../../constants/env';
 import Constants from 'expo-constants';
+import { userGivenName } from '../../util';
 
 const imgBg = require('../../assets/images/Group5.png');
 
@@ -176,7 +177,7 @@ const Setting = ({ navigation, route }) => {
               <FontAwesome name="user-circle-o" size={120} color="#fff" />
             </View> */}
           <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
-            {!state?.userDetails?.name ? 'Bonjour' : state.userDetails.name}
+            {!state?.userDetails?.name ? 'Bonjour' : userGivenName(state.userDetails.name)}
           </Text>
         </ImageBackground>
       </View>

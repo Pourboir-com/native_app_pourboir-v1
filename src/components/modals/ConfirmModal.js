@@ -248,16 +248,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Colors.fontDark,
     marginTop: 15,
-    marginBottom: 5,
+    marginBottom: 3,
     textAlign: 'center',
     maxWidth: '80%',
   },
   imgStyle: {
-    width: 260,
+    width: 240,
     height: 200,
     alignSelf: 'center',
-    // marginTop: -30,
-    marginRight: -20,
   },
   viewImg: {
     width: '100%',

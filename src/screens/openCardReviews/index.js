@@ -582,7 +582,11 @@ const ReviewDetails = ({ navigation, route }) => {
             WebBrowser.openBrowserAsync(menu_url);
           }
         }}
-        style={[styles.see_menu, !menu_url && { backgroundColor: '#f0f0f0' }]}
+        style={[
+          styles.viewLastBtn,
+          { marginBottom: 10 },
+          !menu_url && { backgroundColor: '#f0f0f0' },
+        ]}
       >
         <Text
           style={{
@@ -744,7 +748,6 @@ const styles = StyleSheet.create({
     color: Colors.fontLight,
   },
   viewAddReview: {
-    backgroundColor: 'transparent',
     width: '90%',
     alignSelf: 'center',
     marginBottom: 10,
@@ -766,18 +769,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: Platform.OS === 'ios' ? 25 : 15,
     marginTop: 1,
-  },
-  see_menu: {
-    width: '90%',
-    alignSelf: 'center',
-    backgroundColor: Colors.yellow,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    borderRadius: 10,
-    // marginBottom: Platform.OS === 'ios' ? 20 : 10,
-    bottom: 75,
   },
   txtNumRaters: {
     // backgroundColor: Colors.yellow, paddingVertical: 3, paddingHorizontal: 9,

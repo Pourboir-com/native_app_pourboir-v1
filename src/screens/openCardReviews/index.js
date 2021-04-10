@@ -31,7 +31,12 @@ import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useMutation, useQuery } from 'react-query';
 import { reactQueryConfig } from '../../constants';
-import { GET_WAITERS, I_AM_WAITER, ADDING_WAITERS } from '../../queries';
+import {
+  GET_WAITERS,
+  I_AM_WAITER,
+  ADDING_WAITERS,
+  GET_RESTAURANT_DETAILS,
+} from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import Context from '../../contextApi/context';
@@ -79,12 +84,10 @@ const ReviewDetails = ({ navigation, route }) => {
     services,
     place_id,
     vicinity,
-    menu_url,
     our_rating,
     restaurant_id,
     geometry,
   } = route?.params;
-
   // const updateRestaurants = (state, placeId) => {
   //   let FilteredRestaurant = filteredRestaurant(state, placeId);
   //   dispatch({
@@ -120,6 +123,18 @@ const ReviewDetails = ({ navigation, route }) => {
       onSuccess: res => {
         setData(res.data);
       },
+    },
+  );
+  const {
+    data: RestaurantDetails,
+    isLoading: RestaurantDetailsLoading,
+    refetch: refetchRestaurantDetails,
+    isFetching: RestaurantDetailsIsFetching,
+  } = useQuery(
+    ['GET_RESTAURANT_DETAILS', { _id: place_id }],
+    GET_RESTAURANT_DETAILS,
+    {
+      ...reactQueryConfig,
     },
   );
 
@@ -168,6 +183,9 @@ const ReviewDetails = ({ navigation, route }) => {
           name: name,
           formatted_address: vicinity,
           our_rating: String(our_rating),
+          location: geometry,
+          international_phone_number:
+            RestaurantDetails?.data?.international_phone_number,
         },
         email: email,
       };
@@ -203,6 +221,9 @@ const ReviewDetails = ({ navigation, route }) => {
           name: name,
           formatted_address: vicinity,
           our_rating: String(our_rating),
+          location: geometry,
+          international_phone_number:
+            RestaurantDetails?.data?.international_phone_number,
         },
         // company_name: companyName,
         // business_registration_number: businessRegNumber,
@@ -420,7 +441,9 @@ const ReviewDetails = ({ navigation, route }) => {
                 fontSize: 14,
               }}
             >
-              +33 4 91 55 06 92
+              {RestaurantDetailsLoading
+                ? 'Please wait'
+                : RestaurantDetails?.data?.international_phone_number || 'none'}
             </Text>
 
             <View
@@ -576,16 +599,16 @@ const ReviewDetails = ({ navigation, route }) => {
       </ScrollView>
       <TouchableOpacity
         activeOpacity={0.5}
-        disabled={menu_url ? false : true}
+        disabled={RestaurantDetails?.data?.menu_url ? false : true}
         onPress={() => {
-          if (menu_url) {
-            WebBrowser.openBrowserAsync(menu_url);
+          if (RestaurantDetails?.data?.menu_url) {
+            WebBrowser.openBrowserAsync(RestaurantDetails?.data?.menu_url);
           }
         }}
         style={[
           styles.viewLastBtn,
           { marginBottom: 10 },
-          !menu_url && { backgroundColor: '#f0f0f0' },
+          !RestaurantDetails?.data?.menu_url && { backgroundColor: '#f0f0f0' },
         ]}
       >
         <Text

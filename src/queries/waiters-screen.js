@@ -30,3 +30,14 @@ export const I_AM_WAITER = async e => {
   let res = await axios.post(BASE_URL + `/v1/users/add-to-waiters`, e);
   return res;
 };
+
+export const GET_RESTAURANT_DETAILS = async (get, e = {}) => {
+  const {_id, ...rest} = e;
+  const res = await axios.get(
+    BASE_URL + `/v1/restaurants/detail/${_id}`,
+    {
+      params: rest,
+    },
+  );
+  return res.data;
+};

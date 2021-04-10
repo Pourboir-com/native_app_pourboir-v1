@@ -188,7 +188,7 @@ const Setting = ({ navigation, route }) => {
           bounces={false}
           showsVerticalScrollIndicator={false}
         >
-          <TouchableOpacity
+          {/* <TouchableOpacity
             activeOpacity={0.5}
             style={[styles.viewItem, { marginBottom: 0 }]}
             onPress={() => navigation.navigate('personalDetails')}
@@ -216,7 +216,7 @@ const Setting = ({ navigation, route }) => {
                 <FontAwesome name="angle-right" size={26} color={'grey'} />
               </View>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity
             activeOpacity={0.5}
@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     borderRadius: 15,
-    marginTop: -85,
+    marginTop: -65,
     overflow: 'hidden',
     backgroundColor: 'transparent',
   },

@@ -1,3 +1,4 @@
+import _get from 'lodash/get';
 function compareDistance(a, b) {
   // a should come before b in the sorted order
   if (restaurantCompareDistance(a) < restaurantCompareDistance(b)) {
@@ -32,11 +33,11 @@ export const distributeInArray = restaurants => {
 };
 
 export const restaurantCompareDistance = item => {
-  return item?.distance?.rows[0]?.elements[0]?.distance?.value;
+  return _get(item, 'item?.distance?.rows[0]?.elements[0]?.distance?.value', '');
 };
 
 export const restaurantDistance = item => {
-  return item?.item?.distance?.rows[0]?.elements[0]?.distance?.value;
+  return _get(item, 'item.distance.rows[0].elements[0].distance.value', '');
 };
 
 export const isSearch = (searchVal, searchEnter) => {

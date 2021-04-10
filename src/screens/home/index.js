@@ -83,6 +83,7 @@ const HomeScreen = props => {
           type: actionTypes.RESTAURANTS_DETAILS,
           payload: res?.restaurants?.results || [],
         });
+        console.log(res?.restaurants?.results);
       },
     },
   );

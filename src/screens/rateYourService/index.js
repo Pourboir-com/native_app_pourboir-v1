@@ -78,7 +78,7 @@ const RateService = ({ navigation, route }) => {
   };
   const handlePayDigital = () => {
     setPayMethodsIsVisible(false);
-    navigation.navigate('addCard');
+    // navigation.navigate('addCard');
   };
 
   // useEffect(() => {

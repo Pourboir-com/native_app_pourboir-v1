@@ -80,13 +80,13 @@ const TipModal = ({
             <Text style={styles.txtTipModal}>{i18n.t('cash')}</Text>
           )}
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={handlePayDigital}
           style={styles.btnTipModal}
           activeOpacity={0.5}
         >
           <Text style={styles.txtTipModal}>{i18n.t('digital')}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </Overlay>
   );

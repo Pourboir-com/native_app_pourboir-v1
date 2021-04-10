@@ -25,6 +25,8 @@ export default {
   siren: 'Business Registration No.',
   nom_de_boss: 'Manager Name',
   contact_du_boss: 'Manager Number',
+  please_wait: `Please wait`,
+  none: 'rien',
 
   // Rate your server
   rate_your_server: 'Rate your server',

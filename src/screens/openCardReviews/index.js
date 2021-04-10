@@ -442,8 +442,9 @@ const ReviewDetails = ({ navigation, route }) => {
               }}
             >
               {RestaurantDetailsLoading
-                ? 'Please wait'
-                : RestaurantDetails?.data?.international_phone_number || 'none'}
+                ? i18n.t('please_wait')
+                : RestaurantDetails?.data?.international_phone_number ||
+                  i18n.t('none')}
             </Text>
 
             <View

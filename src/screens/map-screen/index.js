@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ImageBackground } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Dimensions } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import MapView from 'react-native-maps';
 import GlobalHeader from '../../components/GlobalHeader';
-import i18n from '../../li8n';
 
 const MapScreen = ({ navigation, route }) => {
-  const {
-    geometry,
-    name,
-  } = route?.params;
+  const [mapReady, setMapReady] = useState(false);
+  const { geometry, name } = route?.params;
+  const handleMapReady = () => {
+    setMapReady(true);
+  };
   return (
     <View style={styles.container}>
-      <View style={{  }}>
+      <View style={{}}>
         <StatusBar translucent={true} style="dark" />
         <ImageBackground
           style={{
@@ -40,22 +40,25 @@ const MapScreen = ({ navigation, route }) => {
       </View>
       <View style={{ flex: 1 }}>
         <MapView
+          onLayout={handleMapReady}
           style={styles.map}
           initialRegion={{
-            latitude: geometry?.lat,
-            longitude: geometry?.lng,
+            latitude: geometry?.lat || 0,
+            longitude: geometry?.lng || 0,
             latitudeDelta: 0.0092,
             longitudeDelta: 0.00421,
           }}
         >
-          <MapView.Marker
-            coordinate={{
-              latitude: geometry?.lat,
-              longitude: geometry?.lng,
-            }}
-            title={'Location'}
-            description={name}
-          />
+          {mapReady && (
+            <MapView.Marker
+              coordinate={{
+                latitude: geometry?.lat,
+                longitude: geometry?.lng,
+              }}
+              title={'Location'}
+              description={name}
+            />
+          )}
         </MapView>
       </View>
     </View>

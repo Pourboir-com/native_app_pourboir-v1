@@ -52,9 +52,9 @@ const ReviewDetails = ({ navigation, route }) => {
   const openDialScreen = () => {
     let number = '';
     if (Platform.OS === 'ios') {
-      number = 'telprompt:${ +33 4 91 55 06 92}';
+      number = `telprompt:${RestaurantDetails?.data?.international_phone_number}`;
     } else {
-      number = 'tel:${ +33 4 91 55 06 92}';
+      number = `tel:${RestaurantDetails?.data?.international_phone_number}`;
     }
     Linking.openURL(number);
   };
@@ -424,7 +424,10 @@ const ReviewDetails = ({ navigation, route }) => {
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.5}
-            onPress={() => openDialScreen()}
+            onPress={() =>
+              RestaurantDetails?.data?.international_phone_number &&
+              openDialScreen()
+            }
             style={[
               styles.viewItem,
               {

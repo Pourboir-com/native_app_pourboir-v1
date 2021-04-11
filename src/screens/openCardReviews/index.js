@@ -403,9 +403,12 @@ const ReviewDetails = ({ navigation, route }) => {
                 color: Colors.fontDark,
                 fontSize: 14,
                 width: '70%',
+                lineHeight: 17,
               }}
             >
-              {name}
+              {RestaurantDetailsLoading
+                ? i18n.t('please_wait')
+                : RestaurantDetails?.data?.vicinity || i18n.t('none')}
             </Text>
 
             <View

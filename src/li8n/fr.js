@@ -26,7 +26,7 @@ export default {
   nom_de_boss: 'Nom du responsable légal',
   contact_du_boss: 'Téléphone du responsable',
   please_wait: `S'il vous plaît, attendez`,
-  none: 'none',
+  none: 'rien',
 
   // Rate your server
   rate_your_server: 'Notez votre serveur',

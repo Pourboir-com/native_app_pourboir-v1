@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ImageBackground } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Dimensions } from 'react-native';
 import { StyleSheet, View } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import GlobalHeader from '../../components/GlobalHeader';
 
 const MapScreen = ({ navigation, route }) => {
-  const [mapReady, setMapReady] = useState(false);
   const { geometry, name } = route?.params;
-  const handleMapReady = () => {
-    setMapReady(true);
-  };
+
   return (
     <View style={styles.container}>
-      <View style={{}}>
+      <View>
         <StatusBar translucent={true} style="dark" />
         <ImageBackground
           style={{
@@ -23,6 +20,7 @@ const MapScreen = ({ navigation, route }) => {
             borderBottomLeftRadius: Dimensions.get('window').width * 0.06,
             borderBottomRightRadius: Dimensions.get('window').width * 0.06,
             overflow: 'hidden',
+            backgroundColor: 'transparent',
           }}
           source={require('../../assets/images/Group3.png')}
         >
@@ -40,7 +38,7 @@ const MapScreen = ({ navigation, route }) => {
       </View>
       <View style={{ flex: 1 }}>
         <MapView
-          onLayout={handleMapReady}
+          provider={PROVIDER_GOOGLE}
           style={styles.map}
           initialRegion={{
             latitude: geometry?.lat || 0,
@@ -49,16 +47,14 @@ const MapScreen = ({ navigation, route }) => {
             longitudeDelta: 0.00421,
           }}
         >
-          {mapReady && (
-            <MapView.Marker
-              coordinate={{
-                latitude: geometry?.lat,
-                longitude: geometry?.lng,
-              }}
-              title={'Location'}
-              description={name}
-            />
-          )}
+          <MapView.Marker
+            coordinate={{
+              latitude: geometry?.lat || 0,
+              longitude: geometry?.lng || 0,
+            }}
+            title={'Location'}
+            description={name}
+          />
         </MapView>
       </View>
     </View>
@@ -70,9 +66,6 @@ export default MapScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
   map: {
     width: Dimensions.get('window').width,

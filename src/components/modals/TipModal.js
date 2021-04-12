@@ -71,7 +71,7 @@ const TipModal = ({
         <TouchableOpacity
           disabled={loading}
           onPress={handlePayCash}
-          style={[styles.btnTipModal, { paddingVertical: loading ? 14 : 17 }]}
+          style={[styles.btnTipModal, { paddingVertical: loading ? 14 : 16 }]}
           activeOpacity={0.5}
         >
           {loading ? (
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
   txtTipModal: {
     color: '#EBC42B',
-    fontSize: 15,
+    fontSize: 17,
     fontFamily: 'ProximaNovaBold',
     textAlign: 'center',
   },

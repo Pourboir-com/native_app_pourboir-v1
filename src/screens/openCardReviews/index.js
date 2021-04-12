@@ -408,7 +408,7 @@ const ReviewDetails = ({ navigation, route }) => {
             >
               {RestaurantDetailsLoading
                 ? i18n.t('please_wait')
-                : RestaurantDetails?.data?.vicinity || name}
+                : vicinity || name}
             </Text>
 
             <View

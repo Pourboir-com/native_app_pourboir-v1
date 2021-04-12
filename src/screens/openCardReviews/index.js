@@ -406,9 +406,7 @@ const ReviewDetails = ({ navigation, route }) => {
                 lineHeight: 17,
               }}
             >
-              {RestaurantDetailsLoading
-                ? i18n.t('please_wait')
-                : vicinity || name}
+              {vicinity || name}
             </Text>
 
             <View

@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ImageBackground } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Dimensions } from 'react-native';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import GlobalHeader from '../../components/GlobalHeader';
 
 const MapScreen = ({ navigation, route }) => {
   const { geometry, name } = route?.params;
+  const [isMapReady, setIsMapReady] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -38,7 +39,13 @@ const MapScreen = ({ navigation, route }) => {
       </View>
       <View style={{ flex: 1 }}>
         <MapView
-          provider={PROVIDER_GOOGLE}
+          onLayout={() => setIsMapReady(true)}
+          // provider={Platform.OS != 'ios' && PROVIDER_GOOGLE}
+          {...(Platform.OS != 'ios'
+            ? {
+                provider: PROVIDER_GOOGLE,
+              }
+            : {})}
           style={styles.map}
           initialRegion={{
             latitude: geometry?.lat || 0,
@@ -47,14 +54,16 @@ const MapScreen = ({ navigation, route }) => {
             longitudeDelta: 0.00421,
           }}
         >
-          <MapView.Marker
-            coordinate={{
-              latitude: geometry?.lat || 0,
-              longitude: geometry?.lng || 0,
-            }}
-            title={'Location'}
-            description={name}
-          />
+          {isMapReady && (
+            <MapView.Marker
+              coordinate={{
+                latitude: geometry?.lat || 0,
+                longitude: geometry?.lng || 0,
+              }}
+              title={'Location'}
+              description={name}
+            />
+          )}
         </MapView>
       </View>
     </View>

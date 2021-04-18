@@ -129,4 +129,5 @@ export default {
   candidate_btn: 'Create my candidate profile',
   candidate_profile: 'Your Candidate Profile',
   Time: 'Time',
+  years: 'years',
 };

@@ -127,7 +127,7 @@ const Find_Job = ({ navigation }) => {
                       keyboardType="numeric"
                       placeholderTextColor={'#485460'}
                     />
-                    <Text style={styles.experience}> ans </Text>
+                    <Text style={styles.experience}>{i18n.t('years')}</Text>
                   </View>
                 </View>
               </View>

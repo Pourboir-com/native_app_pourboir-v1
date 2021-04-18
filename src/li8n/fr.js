@@ -8,7 +8,7 @@ export default {
   find_your_restaurant: 'Recherchez votre restaurant',
   around_you: 'Autour de vous',
   result_distance: 'Résultat autour de vous',
-  you_have_no_restaurant: 'Vous ne travaillez pour aucun restaurant',
+  you_have_no_restaurant: 'Vous n’avez aucun restaurant pour le moment',
   search_for_rest_and_add:
     'Recherchez votre restaurant et ajoutez vous en choisissant: Vous êtes serveur',
   no_restaurant_found: 'Désolé, aucun restaurant n’a été trouvé',
@@ -69,12 +69,14 @@ export default {
   name_of_your_server: 'Le nom de votre serveur',
   waiter_email: 'L’email de votre serveur',
   add: 'Ajouter',
-  check_profile: 'Nous vérifions votre profil en interne et sera validé sous 24 heures',
+  check_profile:
+    'Nous vérifions votre profil en interne et sera validé sous 24 heures',
   Thank_you: 'Merci',
 
   // Popup thanks for vote
   thank_collaboration: 'Merci de votre collaboration',
-  waiter_our_database: 'Le serveur a bien été ajouté dans notre base de données',
+  waiter_our_database:
+    'Le serveur a bien été ajouté dans notre base de données',
   thanks_for_vote: 'Merci pour votre vote',
   will_contact_by_email:
     'Nous vous offrons un coupon pour la prochaine loterie',
@@ -118,4 +120,18 @@ export default {
 
   //  PayPal
   delete_paypal: 'Effacer ce compte Paypal',
+
+  //Remove
+  looking_for_job: `Je recherche de poste`,
+
+  // candidate profile
+  experience: 'Vivre',
+  education: 'Éducation',
+  last_experience: 'Derniere Experience',
+  passedat: 'Le Petit Nice Passedat',
+  full: 'Plein',
+  partial: 'Partiel',
+  candidate_btn: 'Je cree mon profil candidat',
+  candidate_profile: 'Votre profil de candidat',
+  Time: 'Temps',
 };

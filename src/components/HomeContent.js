@@ -25,7 +25,6 @@ import Context from '../contextApi/context';
 import * as actionTypes from '../contextApi/actionTypes';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Platform } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function HomeScreenContent({
   restaurantLoading,
@@ -94,42 +93,57 @@ export default function HomeScreenContent({
   if (noData) {
     return (
       <>
-        <View>
-          {/* <View
-            style={{
-              backgroundColor: '#fff',
-              width: 160,
-              height: 160,
-              borderRadius: 100,
-            }}
-          >
-            <Image
-              source={NoListImg}
-              style={{
-                width: 260,
-                height: 220,
-                marginTop: -55,
-                marginLeft: -50,
-              }}
-              resizeMode="contain"
-            />
-          </View> */}
-          {/* <Text style={[styles.txt1NoRest, { fontFamily: 'ProximaNovaBold' }]}>
-            {i18n.t('you_have_no_restaurant')}
-          </Text> */}
-          {/* <Text style={[styles.txt2NoRest, { fontFamily: 'ProximaNova' }]}>
-            {i18n.t('search_for_rest_and_add')}
-          </Text> */}
-          <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
-            {searchEnter ? i18n.t('result_distance') : i18n.t('around_you')}
-          </Text>
-          <Text
-            style={[styles.txt2NoRest, { fontFamily: 'ProximaNovaSemiBold' }]}
-          >
-            {i18n.t('no_restaurant_found')}
-          </Text>
+        <View
+          style={styles.viewEmptyList}
+        >
+          {route.params.crossIcon ? (
+            <>
+              <View
+                style={{
+                  backgroundColor: '#fff',
+                  width: 160,
+                  height: 160,
+                  borderRadius: 100,
+                }}
+              >
+                <Image
+                  source={NoListImg}
+                  style={{
+                    width: 260,
+                    height: 350,
+                    marginTop: -115,
+                    marginLeft: -40,
+                  }}
+                  resizeMode="contain"
+                />
+              </View>
+              <Text
+                style={[styles.txt1NoRest, { fontFamily: 'ProximaNovaBold' }]}
+              >
+                {i18n.t('you_have_no_restaurant')}
+              </Text>
+              <Text style={[styles.extra_line, { fontFamily: 'ProximaNova' }]}>
+                {i18n.t('search_for_rest_and_add')}
+              </Text>
+            </>
+          ) : (
+            <>
+              <Text
+                style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
+              >
+                {searchEnter ? i18n.t('result_distance') : i18n.t('around_you')}
+              </Text>
+              <Text
+                style={[
+                  styles.txt2NoRest,
+                  { fontFamily: 'ProximaNovaSemiBold' },
+                ]}
+              >
+                {i18n.t('no_restaurant_found')}
+              </Text>
+            </>
+          )}
         </View>
-        {/* )} */}
       </>
     );
   }
@@ -143,13 +157,6 @@ export default function HomeScreenContent({
             flex: 1,
           }}
         >
-          {!route.params.crossIcon && (
-            <Text
-              style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
-            >
-              {searchEnter ? i18n.t('result_distance') : i18n.t('around_you')}
-            </Text>
-          )}
           <View
             style={{
               flexDirection: 'row',
@@ -291,7 +298,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.fontDark,
     textAlign: 'center',
-    maxWidth: 190,
+    width: '55%',
     marginTop: 20,
   },
   txt2NoRest: {
@@ -300,6 +307,13 @@ const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     marginTop: 15,
+  },
+  extra_line: {
+    fontSize: 16,
+    color: Colors.fontLight,
+    width: '80%',
+    marginTop: 15,
+    textAlign: 'center',
   },
   viewEmptyList: {
     flex: 1,

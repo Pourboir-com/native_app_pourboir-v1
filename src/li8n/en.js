@@ -8,7 +8,7 @@ export default {
   find_your_restaurant: 'Find your restaurant',
   around_you: 'Around you',
   result_distance: 'Result around you',
-  you_have_no_restaurant: 'You do not work for any restaurants',
+  you_have_no_restaurant: 'You have no restaurant at the moment',
   search_for_rest_and_add:
     'Search for your restaurant and add yourself by choosing: You are a waiter',
   no_restaurant_found: 'Sorry, no restaurant was found',
@@ -116,4 +116,17 @@ export default {
 
   // Paypal
   delete_paypal: 'Delete this Paypal account',
+  //Remove
+  looking_for_job: `I'm looking for a job`,
+
+  // candidate profile
+  experience: 'Experience',
+  education: 'Education',
+  last_experience: 'Last Experience',
+  passedat: 'The Little Nice Passedat',
+  full: 'Full',
+  partial: 'Partial',
+  candidate_btn: 'Create my candidate profile',
+  candidate_profile: 'Your Candidate Profile',
+  Time: 'Time',
 };

@@ -9,8 +9,6 @@ import {
   TextInput,
   Dimensions,
   TouchableOpacity,
-  ActivityIndicator,
-  Keyboard,
   Platform,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
@@ -78,7 +76,7 @@ const RateService = ({ navigation, route }) => {
   };
   const handlePayDigital = () => {
     setPayMethodsIsVisible(false);
-    // navigation.navigate('addCard');
+    navigation.navigate('addCard');
   };
 
   // useEffect(() => {

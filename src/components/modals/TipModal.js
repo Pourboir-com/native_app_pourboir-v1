@@ -124,18 +124,19 @@ const styles = StyleSheet.create({
     height: 240,
   },
   btnTipModal: {
-    backgroundColor: '#FFF6D4',
+    backgroundColor: '#FFE685',
     paddingHorizontal: 25,
     borderRadius: 10,
-    width: '45%',
+    width: 'auto',
+    minWidth: '42%',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 10,
   },
   txtTipModal: {
-    color: '#EBC42B',
+    color: '#000',
     fontSize: 17,
-    fontFamily: 'ProximaNovaBold',
+    fontFamily: 'ProximaNova',
     textAlign: 'center',
   },
 });

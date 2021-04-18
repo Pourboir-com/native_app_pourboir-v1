@@ -226,7 +226,7 @@ const Setting = ({ navigation, route }) => {
 
 <TouchableOpacity
             onPress={handleModalOpen}
-            style={[styles.viewItem, { marginBottom: 0 }]}
+            style={[styles.viewItem, { marginBottom: 0}]}
             // onPress={() => navigation.navigate('personalDetails')}
           >
             <View style={styles.viewIcon}>

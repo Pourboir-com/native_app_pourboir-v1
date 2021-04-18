@@ -167,7 +167,7 @@ const Setting = ({ navigation, route }) => {
           <TouchableOpacity
             style={styles.viewImg}
             activeOpacity={0.6}
-            onPress={() => navigation.navigate('personalDetails')}
+            onPress={() => navigation.navigate('ProfileCandidate')}
           >
             {state.userDetails.image === null ||
             state.userDetails.image === undefined ||

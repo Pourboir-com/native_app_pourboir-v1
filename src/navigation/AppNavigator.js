@@ -20,6 +20,7 @@ import ApplePay from '../screens/apple-pay';
 import MasterCard from '../screens/master-card';
 import AddMap from '../screens/add-map';
 import MapScreen from '../screens/map-screen';
+import ProfileCandidate from '../screens/candidate-profile';
 
 const Stack = createStackNavigator();
 
@@ -214,6 +215,18 @@ function AppNavigator() {
         component={MapScreen}
         options={() => ({
           headerShown: false,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+        })}
+      />
+       <Stack.Screen
+        name="ProfileCandidate"
+        component={ProfileCandidate}
+        options={() => ({
+          headerShown: true,
           title: '',
           headerLeft: null,
           headerTransparent: true,

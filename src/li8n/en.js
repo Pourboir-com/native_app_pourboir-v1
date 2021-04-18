@@ -109,7 +109,17 @@ digital: 'Digital',
   save:'Save',
 
   // Paypal 
-  delete_paypal: 'Delete this Paypal account'
+  delete_paypal: 'Delete this Paypal account',
+
+
+  // candidate profile 
+  experience: 'Experience',
+  education: 'Education',
+  last_experience: 'Last Experience',
+  passedat: 'The Little Nice Passedat',
+  full: 'Full',
+  partial: 'Partial',
+  candidate_btn: 'I create my candidate profile'
 
 
 };

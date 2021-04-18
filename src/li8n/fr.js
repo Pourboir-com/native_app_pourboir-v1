@@ -111,6 +111,15 @@ your_personal_details:'Vos données personnels',
  save:'Sauvegarder',
 
 //  PayPal 
-delete_paypal: 'Effacer ce compte Paypal'
+delete_paypal: 'Effacer ce compte Paypal',
+
+ // candidate profile 
+ experience: 'Vivre',
+ education: 'Éducation',
+ last_experience: 'Derniere Experience',
+ passedat: 'Le Petit Nice Passedat',
+ full: 'Plein',
+ partial: 'Partiel',
+ candidate_btn: 'Je cree mon profil candidat'
 
 };

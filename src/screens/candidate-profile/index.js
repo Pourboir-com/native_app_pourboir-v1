@@ -9,15 +9,11 @@ import {
 import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';
 import styles from './styles';
-import { Formik } from 'formik';
-import { Pressable } from 'react-native';
 import { Button } from 'native-base';
 import { set } from 'react-native-reanimated';
-import { l } from 'i18n-js';
-import { KeyboardAvoidingView } from 'react-native';
+import I18n, { l } from 'i18n-js';
 
 const ProfileCandidate = ({ navigation }) => {
-  const [active, setActive] = useState(true);
   const [temp, setTemp] = useState();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -25,6 +21,7 @@ const ProfileCandidate = ({ navigation }) => {
   const [experience, setExperience] = useState('');
   const [lastExperience, setLastExperience] = useState('');
 
+  console.log(temp);
   return (
     <View style={styles.container}>
       <StatusBar translucent={true} style="dark" />
@@ -38,7 +35,7 @@ const ProfileCandidate = ({ navigation }) => {
         >
           <GlobalHeader
             arrow={true}
-            headingText={'Your Candidate Profile'}
+            headingText={i18n.t('candidate_profile')}
             fontSize={17}
             color={'black'}
             navigation={navigation}
@@ -62,7 +59,7 @@ const ProfileCandidate = ({ navigation }) => {
           </View>
           <View>
             <View style={styles.input_box}>
-              <Text style={styles.inputLabel}>{i18n.t('first_name')}</Text>
+              <Text style={styles.inputLabel}>{I18n.t('first_name')}</Text>
               <TextInput
                 style={styles.inputsTopTow}
                 onChangeText={e => setFirstName(e)}
@@ -94,7 +91,7 @@ const ProfileCandidate = ({ navigation }) => {
                     keyboardType="numeric"
                     placeholderTextColor={'#485460'}
                   />
-                  <Text style={{ paddingLeft: 12, paddingTop: 10 }}>ans</Text>
+                  <Text style={styles.experience}> ans </Text>
                 </View>
               </View>
             </View>
@@ -129,42 +126,47 @@ const ProfileCandidate = ({ navigation }) => {
               >
                 <TouchableOpacity
                   activeOpacity={0.7}
-                  style={styles.btn1}
-                  onPress={
-                    (e => setTemp(temp !== 'Partial' || '' ? 'Full' : ''),
-                    console.log(temp))
-                  }
+                  style={temp === 'Full' ? styles.btn1_active : styles.btn1}
+                  onPress={() => setTemp('Full')}
                   value={temp}
                 >
-                  <Text>{i18n.t('full')}</Text>
+                  <Text style={styles.timeTxt}>{i18n.t('full')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.7}
-                  style={temp !== 'Partial' ? styles.btn2_active : styles.btn2}
-                  onPress={
-                    (e => setTemp(temp === 'Full' ? 'Partial' : ''),
-                    console.log(temp))
-                  }
+                  style={temp === 'Partial' ? styles.btn2_active : styles.btn2}
+                  onPress={() => setTemp('Partial')}
                   value={temp}
                 >
-                  <Text>{i18n.t('partial')}</Text>
+                  <Text style={styles.timeTxt}>{i18n.t('partial')}</Text>
                 </TouchableOpacity>
               </View>
             </View>
           </View>
         </View>
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 20,
+          }}
+        >
           {firstName ||
           lastName ||
           lastExperience ||
           experience ||
-          education === ' ' ? (
+          education ||
+          temp === ' ' ? (
             <Button disabled={false} style={styles.btn_yellow}>
-              <Text style={{ fontSize: 13 }}>{i18n.t('candidate_btn')}</Text>
+              <Text style={{ fontSize: 14, fontFamily: 'ProximaNova' }}>
+                {i18n.t('candidate_btn')}
+              </Text>
             </Button>
           ) : (
             <Button disabled={true} style={styles.btn_gray}>
-              <Text style={{ fontSize: 13 }}>{i18n.t('candidate_btn')}</Text>
+              <Text style={{ fontSize: 14, fontFamily: 'ProximaNova' }}>
+                {i18n.t('candidate_btn')}
+              </Text>
             </Button>
           )}
         </View>

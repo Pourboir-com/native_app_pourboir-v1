@@ -76,50 +76,49 @@ export default {
   cannot_vote: 'Vous ne pouvez pas voter vous-même',
   already_waiter: 'Vous êtes déjà serveur dans ce restaurant',
 
+  // Popup pay your tip
+  pay_your_tip: 'Payez votre pourboire',
+  cash: 'En espèces',
+  digital: 'Numérique',
 
- // Popup pay your tip
- pay_your_tip: 'Payez votre pourboire', 
- cash: 'En espèces',
-digital: 'Numérique',
+  // Personal Info details
 
-// Personal Info details 
+  personal_info: 'Information personnelles',
+  first_name: 'Prénom',
+  last_name: 'Nom',
+  phone_num: 'Numéro de téléphone',
+  not_verified: 'Non vérifié',
+  checked: 'Vérifié',
+  payment_methods: 'Modes de paiement',
+  add_pay_method: 'Ajoutez un mode de paiement',
+  your_personal_details: 'Vos données personnels',
 
-personal_info: 'Information personnelles',
-first_name: 'Prénom',
-last_name:'Nom',
-phone_num: 'Numéro de téléphone',
-not_verified: 'Non vérifié',
-checked: 'Vérifié',
-payment_methods: 'Modes de paiement',
-add_pay_method: 'Ajoutez un mode de paiement',
-your_personal_details:'Vos données personnels',
+  // Apple Pay
+  pay_with_apple: 'Payer avec Apple Pay',
+  app_acc:
+    'Vous pouvez payer en utilisant votre compte Apple Pay lié à cette device.',
 
+  // Master Card
+  date_of_exp: "Date d'expiration",
+  master_card: 'Carte maîtresse',
+  clear_map: 'Effacer la carte',
 
- // Apple Pay 
- pay_with_apple: 'Payer avec Apple Pay',
- app_acc: 'Vous pouvez payer en utilisant votre compte Apple Pay lié à cette device.',
+  // Add a map
+  add_a_map: 'Ajouter une carte',
+  card_number: 'Numéro de carte',
+  pays: 'Paie',
+  save: 'Sauvegarder',
 
- // Master Card 
- date_of_exp: "Date d'expiration",
- master_card:'Carte maîtresse',
- clear_map: 'Effacer la carte',
+  //  PayPal
+  delete_paypal: 'Effacer ce compte Paypal',
 
- // Add a map
- add_a_map: 'Ajouter une carte',
- card_number: 'Numéro de carte',
- pays: 'Paie',
- save:'Sauvegarder',
-
-//  PayPal 
-delete_paypal: 'Effacer ce compte Paypal',
-
- // candidate profile 
- experience: 'Vivre',
- education: 'Éducation',
- last_experience: 'Derniere Experience',
- passedat: 'Le Petit Nice Passedat',
- full: 'Plein',
- partial: 'Partiel',
- candidate_btn: 'Je cree mon profil candidat'
-
+  // candidate profile
+  experience: 'Vivre',
+  education: 'Éducation',
+  last_experience: 'Derniere Experience',
+  passedat: 'Le Petit Nice Passedat',
+  full: 'Plein',
+  partial: 'Partiel',
+  candidate_btn: 'Je cree mon profil candidat',
+  candidate_profile: 'Votre profil de candidat',
 };

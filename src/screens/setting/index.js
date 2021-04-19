@@ -50,8 +50,8 @@ const Setting = ({ navigation, route }) => {
   };
 
   const handleModalOpen = () => {
-    setisVisible(true)
-  }
+    setisVisible(true);
+  };
 
   const resetState = async () => {
     navigation.navigate('Home', { crossIcon: false });
@@ -223,11 +223,10 @@ const Setting = ({ navigation, route }) => {
           bounces={false}
           showsVerticalScrollIndicator={false}
         >
-
-<TouchableOpacity
+          <TouchableOpacity
             onPress={handleModalOpen}
-            style={[styles.viewItem, { marginBottom: 0}]}
-            // onPress={() => navigation.navigate('personalDetails')}
+            style={[styles.viewItem, { marginBottom: 0 }]}
+            onPress={() => navigation.navigate('personalDetails')}
           >
             <View style={styles.viewIcon}>
               <FontAwesome name="star" size={16} color={Colors.yellow} />
@@ -253,7 +252,7 @@ const Setting = ({ navigation, route }) => {
               </View>
             </View>
           </TouchableOpacity>
-          
+
           <TouchableOpacity
             style={styles.viewItem}
             onPress={() => {
@@ -359,12 +358,8 @@ const Setting = ({ navigation, route }) => {
           </Text>
         )}
       </TouchableOpacity>
-      <TipModal
-        isVisible={isVisible}
-        handleModalClose={handleModalClose}
-      />
+      <TipModal isVisible={isVisible} handleModalClose={handleModalClose} />
     </View>
-    
   );
 };
 export default Setting;

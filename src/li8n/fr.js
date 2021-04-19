@@ -135,4 +135,9 @@ export default {
   candidate_profile: 'Votre profil de candidat',
   Time: 'Temps',
   years: 'ans',
+
+  //canidate modal
+  broadcast:
+    'Nous allons diffuser votre profil aux restaurants correspondants à votre profil',
+  thank_info: 'Merci pour vos informations',
 };

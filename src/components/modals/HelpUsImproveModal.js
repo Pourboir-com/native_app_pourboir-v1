@@ -68,7 +68,7 @@ const HelpUsImproveModal = ({
           {heading && (
             <Text
               ellipsizeMode="tail"
-              numberOfLines={2}
+              numberOfLines={3}
               style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}
             >
               {heading}
@@ -77,7 +77,7 @@ const HelpUsImproveModal = ({
           {subHeadingText && (
             <Text
               ellipsizeMode="tail"
-              numberOfLines={2}
+              numberOfLines={3}
               style={[styles.txtConfrm, { fontFamily: 'ProximaNova' }]}
             >
               {subHeadingText}
@@ -86,7 +86,7 @@ const HelpUsImproveModal = ({
           {subtext && (
             <Text
               ellipsizeMode="tail"
-              numberOfLines={2}
+              numberOfLines={3}
               style={[styles.txtConfrm, { fontFamily: 'ProximaNova' }]}
             >
               {subtext}
@@ -95,7 +95,7 @@ const HelpUsImproveModal = ({
           {restaurant && (
             <Text
               ellipsizeMode="tail"
-              numberOfLines={2}
+              numberOfLines={3}
               style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}
             >
               {restaurant}

@@ -5,10 +5,11 @@ import Context from './src/contextApi/context';
 import Reducer from './src/contextApi/reducer';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
-
+import { useMutation } from 'react-query';
+import { getAsyncStorageValues } from './src/constants';
+import { SEND_PUSH_TOKEN } from './src/queries';
 export default function App() {
-  const PUSH_ENDPOINT = 'https://easy-soup.glitch.me/token';
-
+  const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
   const registerForPushNotifications = async () => {
     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
     if (status !== 'granted') {
@@ -18,21 +19,17 @@ export default function App() {
 
     // Get the token that identifies this device
     let token = await Notifications.getExpoPushTokenAsync();
-    console.log(token);
-
+    const { userInfo = {} } = await getAsyncStorageValues();
     // POST the token to your backend server from where you can retrieve it to send push notifications.
-    return fetch(PUSH_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+    await sendNotificationToken(
+      {
+        id: userInfo?.user_id,
+        expo_notification_token: token,
       },
-      body: JSON.stringify({
-        token: {
-          value: token,
-        },
-      }),
-    });
+      {
+        enabled: userInfo?.user_id ? true : false,
+      },
+    );
   };
 
   useEffect(() => {

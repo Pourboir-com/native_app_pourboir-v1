@@ -6,6 +6,7 @@ const Context = createContext({
     image: '',
     email: '',
     accessToken: '',
+    user_id: '',
   },
   refreshAnimation: false,
   restaurantsDetails: [],

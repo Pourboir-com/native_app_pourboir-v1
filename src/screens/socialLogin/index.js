@@ -19,7 +19,7 @@ import { loadAsync } from 'expo-font';
 import { config } from '../../constants';
 import { userSignUp, userGivenName, iPhoneLoginName } from '../../util';
 import { useMutation } from 'react-query';
-import { GOOGLE_SIGNUP } from '../../queries';
+import { GOOGLE_SIGNUP, SEND_PUSH_TOKEN } from '../../queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
@@ -29,6 +29,8 @@ import * as Facebook from 'expo-facebook';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Device from 'expo-device';
 import { getAsyncStorageValues } from '../../constants';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 
 const SocialLogin = ({ navigation, route }) => {
   const [city, setCity] = useState();
@@ -38,6 +40,29 @@ const SocialLogin = ({ navigation, route }) => {
   const [confirmWaiter, setconfirmWaiter] = useState(false);
   const [HelpUs, setHelpUs] = useState();
   const [termsChecked, setTermsChecked] = useState(false);
+  const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
+  Notifications.addListener(notification => {
+    // let { path } = notification.data;
+    navigation.navigate('Remove', {
+      crossIcon: true,
+    });    // send user to screen
+  });
+
+  const registerForPushNotifications = async user_id => {
+    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    if (status !== 'granted') {
+      alert('No notification permissions!');
+      return;
+    }
+    let token = await Notifications.getExpoPushTokenAsync();
+    await sendNotificationToken(
+      {
+        id: user_id,
+        expo_notification_token: token,
+      },
+    );
+
+  };
 
   useEffect(() => {
     setVote(route?.params?.vote ? route?.params?.vote : false);
@@ -102,6 +127,7 @@ const SocialLogin = ({ navigation, route }) => {
               ...userDetails,
             }),
           );
+          registerForPushNotifications(res?.user?._id);
           setLoading(false);
         },
         onError: error => {
@@ -183,6 +209,7 @@ const SocialLogin = ({ navigation, route }) => {
                     ...userDetails,
                   }),
                 );
+                registerForPushNotifications(res?.user?._id);
                 setLoading(false);
               },
               onError: e => {
@@ -342,6 +369,7 @@ const SocialLogin = ({ navigation, route }) => {
                             ...userDetails,
                           }),
                         );
+                        registerForPushNotifications(res?.user?._id);
                         setLoading(false);
                       },
                       onError: e => {

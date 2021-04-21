@@ -23,31 +23,28 @@ export default function SplashScreen(props) {
     // let { path } = notification.data;
     props.navigation.navigate('Remove', {
       crossIcon: true,
-    });    // send user to screen
+    }); // send user to screen
   });
 
   const registerForPushNotifications = async () => {
-    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    if (status !== 'granted') {
-      alert('No notification permissions!');
-      return;
-    }
-
-    // Get the token that identifies this device
-    let token = await Notifications.getExpoPushTokenAsync();
     const { userInfo = {} } = await getAsyncStorageValues();
-    // POST the token to your backend server from where you can retrieve it to send push notifications.
-    // console.log(userInfo?.user_id);
-    await sendNotificationToken(
-      {
-        id: userInfo?.user_id,
-        expo_notification_token: token,
-      },
-      {
-        enabled: userInfo?.user_id ? true : false,
-      },
-    );
-
+    if (userInfo?.user_id) {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      if (status !== 'granted') {
+        alert('No notification permissions!');
+        return;
+      }
+      let token = await Notifications.getExpoPushTokenAsync();
+      await sendNotificationToken(
+        {
+          id: userInfo?.user_id,
+          expo_notification_token: token,
+        },
+        {
+          enabled: userInfo?.user_id ? true : false,
+        },
+      );
+    }
   };
 
   useEffect(() => {

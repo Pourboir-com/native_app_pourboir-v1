@@ -8,8 +8,18 @@ import * as Permissions from 'expo-permissions';
 import { useMutation } from 'react-query';
 import { getAsyncStorageValues } from './src/constants';
 import { SEND_PUSH_TOKEN } from './src/queries';
+
 export default function App() {
   const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
+
+  Notifications.addListener(notification => {
+    let { path } = notification.data;
+
+    console.log(path);
+
+    // send user to screen
+  });
+
   const registerForPushNotifications = async () => {
     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
     if (status !== 'granted') {
@@ -21,6 +31,7 @@ export default function App() {
     let token = await Notifications.getExpoPushTokenAsync();
     const { userInfo = {} } = await getAsyncStorageValues();
     // POST the token to your backend server from where you can retrieve it to send push notifications.
+    console.log(userInfo?.user_id);
     await sendNotificationToken(
       {
         id: userInfo?.user_id,

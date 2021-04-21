@@ -3,12 +3,13 @@ import Header from './HeaderAnimated';
 import HomeScreenContent from '../../components/HomeContent';
 import { StatusBar } from 'expo-status-bar';
 import { getAsyncStorageValues } from '../../constants';
-import { GET_RESTAURANT, GET_YOUR_RES } from '../../queries';
+import { GET_RESTAURANT } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import { useQuery } from 'react-query';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import { isSearch } from '../../util';
+// import * as FacebookAds from 'expo-ads-facebook';
 
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
@@ -16,7 +17,20 @@ const HomeScreen = props => {
   const [saveLocation, setSaveLocation] = useState('');
   // const [nextPageToken, setnextPageToken] = useState();
   const { state, dispatch } = useContext(Context);
-  const { restaurantsDetails: data, userDetails } = state;
+  const { restaurantsDetails: data } = state;
+
+  // FacebookAds.AdSettings.addTestDevice(
+  //   FacebookAds.AdSettings.currentDeviceHash,
+  // );
+  // const VALID_ANDROID_PLACEMENT_ID = 'IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID';
+  // useEffect(() => {
+  //   FacebookAds.InterstitialAdManager.showAd(VALID_ANDROID_PLACEMENT_ID)
+  //     .then(didClick => {
+  //     })
+  //     .catch(error => {
+  //       // call other ads
+  //     });
+  // }, []);
 
   useEffect(() => {
     (async () => {

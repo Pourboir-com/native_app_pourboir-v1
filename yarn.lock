@@ -3691,6 +3691,16 @@
     "snapdragon" "^0.8.1"
     "to-regex" "^3.0.1"
 
+"expo-ads-facebook@^10.0.4":
+  "integrity" "sha512-xw7o+sciZ8BSBKDHSwjiDVMB5Pn+xinndQSPIKuDEG1oR7Yjy5cnK9faHDfBcoRHwsNPX9eOmd/JDmHkk9rGpA=="
+  "resolved" "https://registry.npmjs.org/expo-ads-facebook/-/expo-ads-facebook-10.0.4.tgz"
+  "version" "10.0.4"
+  dependencies:
+    "@expo/config-plugins" "^1.0.18"
+    "fbemitter" "^2.1.1"
+    "nullthrows" "^1.1.0"
+    "unimodules-permissions-interface" "~6.1.0"
+
 "expo-app-auth@~9.3.0":
   "integrity" "sha512-f8OdQDNmC5vSdBWzwtic5pq+bmtSCYGU1KeVhKV3W8VgGIgVx40Q72q3M+SMs68bz4RCuC1g7LOGTOBWzXIuNw=="
   "resolved" "https://registry.npmjs.org/expo-app-auth/-/expo-app-auth-9.3.0.tgz"

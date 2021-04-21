@@ -24,6 +24,7 @@
     "axios": "^0.21.1",
     "country-currency-map": "^2.1.7",
     "expo": "~39.0.2",
+    "expo-ads-facebook": "^10.0.4",
     "expo-app-loading": "^1.0.1",
     "expo-apple-authentication": "^3.0.0",
     "expo-constants": "^9.3.5",

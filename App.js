@@ -5,6 +5,7 @@ import Context from './src/contextApi/context';
 import Reducer from './src/contextApi/reducer';
 
 export default function App() {
+
   const initialState = useContext(Context);
   const [state, dispatch] = useReducer(Reducer, initialState);
   return (

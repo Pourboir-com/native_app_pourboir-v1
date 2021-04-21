@@ -31,29 +31,29 @@ const HomeScreen = props => {
     }
   }, [searchVal]);
 
-  useQuery(
-    [
-      'GET_YOUR_RES',
-      {
-        location: saveLocation,
-        user_id: userDetails.user_id,
-        // pageToken: nextPageToken,
-        // max_results: 1,
-        // page_no: 1,
-      },
-    ],
-    GET_YOUR_RES,
-    {
-      ...reactQueryConfig,
-      enabled: saveLocation && userDetails.user_id,
-      onSuccess: res => {
-        dispatch({
-          type: actionTypes.YOUR_RESTAURANTS,
-          payload: res?.restaurants?.results || [],
-        });
-      },
-    },
-  );
+  // useQuery(
+  //   [
+  //     'GET_YOUR_RES',
+  //     {
+  //       location: saveLocation,
+  //       user_id: userDetails.user_id,
+  //       // pageToken: nextPageToken,
+  //       // max_results: 1,
+  //       // page_no: 1,
+  //     },
+  //   ],
+  //   GET_YOUR_RES,
+  //   {
+  //     ...reactQueryConfig,
+  //     enabled: saveLocation && userDetails.user_id,
+  //     onSuccess: res => {
+  //       dispatch({
+  //         type: actionTypes.YOUR_RESTAURANTS,
+  //         payload: res?.restaurants?.results || [],
+  //       });
+  //     },
+  //   },
+  // );
 
   const {
     data: restaurantData,

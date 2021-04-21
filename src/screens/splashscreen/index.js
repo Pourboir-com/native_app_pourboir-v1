@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Animated, ActivityIndicator, Linking } from 'react-native';
+import { Animated, ActivityIndicator } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,9 +11,48 @@ import * as actionTypes from '../../contextApi/actionTypes';
 var getCountry = require('country-currency-map').getCountry;
 var formatCurrency = require('country-currency-map').formatCurrency;
 import { loadAsync } from 'expo-font';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import { useMutation } from 'react-query';
+import { SEND_PUSH_TOKEN } from '../../queries';
 
 export default function SplashScreen(props) {
   const { dispatch } = useContext(Context);
+  const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
+  Notifications.addListener(notification => {
+    // let { path } = notification.data;
+    props.navigation.navigate('Remove', {
+      crossIcon: true,
+    });    // send user to screen
+  });
+
+  const registerForPushNotifications = async () => {
+    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    if (status !== 'granted') {
+      alert('No notification permissions!');
+      return;
+    }
+
+    // Get the token that identifies this device
+    let token = await Notifications.getExpoPushTokenAsync();
+    const { userInfo = {} } = await getAsyncStorageValues();
+    // POST the token to your backend server from where you can retrieve it to send push notifications.
+    // console.log(userInfo?.user_id);
+    await sendNotificationToken(
+      {
+        id: userInfo?.user_id,
+        expo_notification_token: token,
+      },
+      {
+        enabled: userInfo?.user_id ? true : false,
+      },
+    );
+
+  };
+
+  useEffect(() => {
+    registerForPushNotifications();
+  }, []);
 
   useEffect(() => {
     (async () => {

@@ -67,19 +67,20 @@ export default function HomeScreenContent({
       };
       await deleteRestaurant(userInfo, {
         onSuccess: () => {
-          let Restaurants = [...data];
-          Restaurants = Restaurants.filter(
-            item => item?.waiter?._id !== waiter_id,
-          );
+          // let Restaurants = [...data];
+          // Restaurants = Restaurants.filter(
+          //   item => item?.waiter?._id !== waiter_id,
+          // );
+          refetchRestaurant();
           updateRestaurants(state, place_id);
-          dispatch({
-            type: actionTypes.YOUR_RESTAURANTS,
-            payload: Restaurants,
-          });
-          dispatch({
-            type: actionTypes.REFRESH_ANIMATION,
-            payload: !state.refreshAnimation,
-          });
+          // dispatch({
+          //   type: actionTypes.YOUR_RESTAURANTS,
+          //   payload: Restaurants,
+          // });
+          // dispatch({
+          //   type: actionTypes.REFRESH_ANIMATION,
+          //   payload: !state.refreshAnimation,
+          // });
           setdeleteLoading(false);
         },
         onError: () => {
@@ -89,61 +90,62 @@ export default function HomeScreenContent({
     }
   };
   const noData =
-    !data.length && (!restaurantLoading || !resIsFetching) && saveLocation;
+    !data.length && !restaurantLoading && !resIsFetching && saveLocation;
   if (noData) {
     return (
       <>
-        <View
-          style={styles.viewEmptyList}
-        >
-          {route.params.crossIcon ? (
-            <>
-              <View
+        {route?.params?.crossIcon ? (
+          <View
+            style={styles.viewEmptyList}
+          >
+            <View
+              style={{
+                backgroundColor: '#fff',
+                width: 160,
+                height: 160,
+                borderRadius: 100,
+              }}
+            >
+              <Image
+                source={NoListImg}
                 style={{
-                  backgroundColor: '#fff',
-                  width: 160,
-                  height: 160,
-                  borderRadius: 100,
+                  width: 260,
+                  height: 350,
+                  marginTop: -115,
+                  marginLeft: -40,
                 }}
-              >
-                <Image
-                  source={NoListImg}
-                  style={{
-                    width: 260,
-                    height: 350,
-                    marginTop: -115,
-                    marginLeft: -40,
-                  }}
-                  resizeMode="contain"
-                />
-              </View>
-              <Text
-                style={[styles.txt1NoRest, { fontFamily: 'ProximaNovaBold' }]}
-              >
-                {i18n.t('you_have_no_restaurant')}
-              </Text>
-              <Text style={[styles.extra_line, { fontFamily: 'ProximaNova' }]}>
-                {i18n.t('search_for_rest_and_add')}
-              </Text>
-            </>
-          ) : (
-            <>
-              <Text
-                style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
-              >
-                {searchEnter ? i18n.t('result_distance') : i18n.t('around_you')}
-              </Text>
-              <Text
-                style={[
-                  styles.txt2NoRest,
-                  { fontFamily: 'ProximaNovaSemiBold' },
-                ]}
-              >
-                {i18n.t('no_restaurant_found')}
-              </Text>
-            </>
-          )}
-        </View>
+                resizeMode="contain"
+              />
+            </View>
+            <Text
+              style={[styles.txt1NoRest, { fontFamily: 'ProximaNovaBold' }]}
+            >
+              {i18n.t('you_have_no_restaurant')}
+            </Text>
+            <Text style={[styles.extra_line, { fontFamily: 'ProximaNova' }]}>
+              {i18n.t('search_for_rest_and_add')}
+            </Text>
+          </View>
+        ) : (
+          <View
+            style={{
+              backgroundColor: '#F9F9F9',
+              marginTop: Platform.OS === 'ios' ? -58 : 0,
+              flex: 1,
+            }}
+          >
+            <Text
+              style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
+            >
+              {searchEnter ? i18n.t('result_distance') : i18n.t('around_you')}
+            </Text>
+            <Text
+              style={[styles.txt2NoRest, { fontFamily: 'ProximaNovaSemiBold' }]}
+            >
+              {i18n.t('no_restaurant_found')}
+            </Text>
+          </View>
+        )}
       </>
     );
   }

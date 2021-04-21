@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ImageBackground } from 'react-native';
 import { Colors } from '../../constants/Theme';
 import GlobalHeader from '../../components/GlobalHeader';
@@ -6,21 +6,51 @@ import HomeScreenContent from '../../components/HomeContent';
 import i18n from '../../li8n';
 import { View, Text, Platform, StyleSheet } from 'react-native';
 import { Dimensions } from 'react-native';
-import Context from '../../contextApi/context';
+// import Context from '../../contextApi/context';
 import { getAsyncStorageValues } from '../../constants';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { GET_YOUR_RES } from '../../queries';
+import { reactQueryConfig } from '../../constants';
+import { useQuery } from 'react-query';
+// import * as actionTypes from '../../contextApi/actionTypes';
 
 const Remove = props => {
-  const { state } = useContext(Context);
+  // const { state, dispatch } = useContext(Context);
   const [saveLocation, setSaveLocation] = useState('');
-  const { yourRestaurants: data } = state;
+  const [userInfo, setuserInfo] = useState();
+  // const { yourRestaurants: data } = state;
 
   useEffect(() => {
     (async () => {
       const { location } = await getAsyncStorageValues();
+      const { userInfo = {} } = await getAsyncStorageValues();
+      setuserInfo(userInfo);
       setSaveLocation(location);
     })();
   }, []);
+
+  const {
+    data: yourRestaurantData,
+    isLoading: yourRestaurantLoading,
+    refetch: yourRefetchRestaurant,
+    isFetching: yourResIsFetching,
+  } = useQuery(
+    [
+      'GET_YOUR_RES',
+      {
+        location: saveLocation,
+        user_id: userInfo?.user_id,
+        // pageToken: nextPageToken,
+        // max_results: 1,
+        // page_no: 1,
+      },
+    ],
+    GET_YOUR_RES,
+    {
+      ...reactQueryConfig,
+      enabled: saveLocation && userInfo?.user_id,
+    },
+  );
 
   return (
     <>
@@ -46,11 +76,12 @@ const Remove = props => {
         />
       </ImageBackground>
       <HomeScreenContent
-        route={props.route}
-        restaurantLoading={data?.length ? false : true}
-        // refetchRestaurant={yourRefetchRestaurant}
+        route={props?.route}
+        restaurantLoading={yourRestaurantLoading}
+        resIsFetching={yourResIsFetching}
+        refetchRestaurant={yourRefetchRestaurant}
         isFetch={true}
-        Data={data}
+        Data={yourRestaurantData?.restaurants?.results || []}
         saveLocation={saveLocation}
         // handleLoadMore={handleLoadMore}
       />

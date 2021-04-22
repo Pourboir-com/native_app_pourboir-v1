@@ -14,7 +14,6 @@
     },
     "notification": {
       "icon": "./assets/Serveur.png",
-      "color": "#311b92",
       "androidMode": "default",
       "androidCollapsedTitle": "Updates from Pourboir",
       "iosDisplayInForeground": true

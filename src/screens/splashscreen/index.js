@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from 'react';
-import { Animated, ActivityIndicator } from 'react-native';
+import React, { useEffect, useContext, useRef } from 'react';
+import { Animated, ActivityIndicator, Platform } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,44 +11,79 @@ import * as actionTypes from '../../contextApi/actionTypes';
 var getCountry = require('country-currency-map').getCountry;
 var formatCurrency = require('country-currency-map').formatCurrency;
 import { loadAsync } from 'expo-font';
-import { Notifications } from 'expo';
-import * as Permissions from 'expo-permissions';
+import * as Notifications from 'expo-notifications';
 import { useMutation } from 'react-query';
 import { SEND_PUSH_TOKEN } from '../../queries';
+import Constants from 'expo-constants';
 
 export default function SplashScreen(props) {
   const { dispatch } = useContext(Context);
   const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
-  Notifications.addListener(notification => {
-    // let { path } = notification.data;
-    props.navigation.navigate('Remove', {
-      crossIcon: true,
-    }); // send user to screen
+  const notificationListener = useRef();
+  const responseListener = useRef();
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+    }),
   });
 
-  const registerForPushNotifications = async () => {
-    const { userInfo = {} } = await getAsyncStorageValues();
-    if (userInfo?.user_id) {
-      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-      if (status !== 'granted') {
-        alert('No notification permissions!');
+  async function registerForPushNotificationsAsync() {
+    let token;
+    if (Constants.isDevice) {
+      const {
+        status: existingStatus,
+      } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
         return;
       }
-      let token = await Notifications.getExpoPushTokenAsync();
-      await sendNotificationToken(
-        {
-          id: userInfo?.user_id,
-          expo_notification_token: token,
-        },
-        {
-          enabled: userInfo?.user_id ? true : false,
-        },
-      );
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+    } else {
+      alert('Must use physical device for Push Notifications');
     }
-  };
+
+    if (Platform.OS === 'android') {
+      Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        sound: true,
+      });
+    }
+    return token;
+  }
 
   useEffect(() => {
-    registerForPushNotifications();
+    registerForPushNotificationsAsync().then(async token => {
+      const { userInfo = {} } = await getAsyncStorageValues();
+      if (userInfo?.user_id) {
+        await sendNotificationToken({
+          id: userInfo?.user_id,
+          expo_notification_token: token,
+        });
+        notificationListener.current = Notifications.addNotificationReceivedListener(
+          notification => {
+            props.navigation.navigate('Remove', {
+              crossIcon: true,
+            });
+          },
+        );
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(
+          response => {
+            props.navigation.navigate('Remove', {
+              crossIcon: true,
+            });
+          },
+        );
+      }
+    });
   }, []);
 
   useEffect(() => {

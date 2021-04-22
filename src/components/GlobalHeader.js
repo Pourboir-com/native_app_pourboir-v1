@@ -12,16 +12,14 @@ import {
 } from 'react-native';
 import { Body, Right } from 'native-base';
 import { Colors } from '../constants/Theme';
-import {
-  MaterialIcons,
-  FontAwesome,
-  Fontisto,
-} from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome, Fontisto } from '@expo/vector-icons';
 
 const GlobalHeader = props => {
   const goBackHandler = props => {
     if (props.setting) {
       props.navigation.navigate('Setting');
+    } else if (props.Home) {
+      props.navigation.navigate('Home');
     } else {
       props.navigation.goBack(null);
     }

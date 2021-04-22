@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,14 +10,14 @@ import {
   ActivityIndicator,
   ScrollView,
 } from 'react-native';
+import Constants from 'expo-constants';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import CheckBox from 'react-native-check-box';
 import { Colors } from '../../constants/Theme';
 import * as Google from 'expo-google-app-auth';
 import i18n from '../../li8n';
-import { loadAsync } from 'expo-font';
 import { config } from '../../constants';
-import { userSignUp, userGivenName, iPhoneLoginName } from '../../util';
+import { userSignUp, iPhoneLoginName } from '../../util';
 import { useMutation } from 'react-query';
 import { GOOGLE_SIGNUP, SEND_PUSH_TOKEN } from '../../queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -29,8 +29,7 @@ import * as Facebook from 'expo-facebook';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Device from 'expo-device';
 import { getAsyncStorageValues } from '../../constants';
-import { Notifications } from 'expo';
-import * as Permissions from 'expo-permissions';
+import * as Notifications from 'expo-notifications';
 
 const SocialLogin = ({ navigation, route }) => {
   const [city, setCity] = useState();
@@ -41,27 +40,67 @@ const SocialLogin = ({ navigation, route }) => {
   const [HelpUs, setHelpUs] = useState();
   const [termsChecked, setTermsChecked] = useState(false);
   const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
-  Notifications.addListener(notification => {
-    // let { path } = notification.data;
-    navigation.navigate('Remove', {
-      crossIcon: true,
-    });    // send user to screen
+  const notificationListener = useRef();
+  const responseListener = useRef();
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+    }),
   });
 
   const registerForPushNotifications = async user_id => {
-    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    if (status !== 'granted') {
-      alert('No notification permissions!');
-      return;
+    let token;
+    if (Constants.isDevice) {
+      const {
+        status: existingStatus,
+      } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+    } else {
+      alert('Must use physical device for Push Notifications');
     }
-    let token = await Notifications.getExpoPushTokenAsync();
+
+    if (Platform.OS === 'android') {
+      Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        sound: true,
+      });
+    }
     await sendNotificationToken(
       {
         id: user_id,
         expo_notification_token: token,
       },
+      {
+        enabled: user_id ? true : false,
+      },
     );
-
+    notificationListener.current = Notifications.addNotificationReceivedListener(
+      notification => {
+        navigation.navigate('Remove', {
+          crossIcon: true,
+        });
+      },
+    );
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(
+      response => {
+        navigation.navigate('Remove', {
+          crossIcon: true,
+        });
+      },
+    );
   };
 
   useEffect(() => {

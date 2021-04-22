@@ -12,6 +12,13 @@
       "image": "./assets/splash.png",
       "resizeMode": "cover"
     },
+    "notification": {
+      "icon": "./assets/Serveur.png",
+      "color": "#311b92",
+      "androidMode": "default",
+      "androidCollapsedTitle": "Updates from Pourboir",
+      "iosDisplayInForeground": true
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -48,6 +55,7 @@
           "apiKey": "AIzaSyDHVUwmNlKIiTNhnOi8xzM_vnsilLrJhkA"
         }
       },
+      "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json",
       "permissions": [
         "MEDIA_LIBRARY",

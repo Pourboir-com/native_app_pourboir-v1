@@ -133,6 +133,7 @@ const Setting = ({ navigation, route }) => {
             headingText={i18n.t('setting')}
             fontSize={17}
             color={'black'}
+            Home={true}
             backgroundColor={'transparent'}
             navigation={navigation}
           />

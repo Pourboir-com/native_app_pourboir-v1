@@ -16,18 +16,19 @@ import { useMutation } from 'react-query';
 import { SEND_PUSH_TOKEN } from '../../queries';
 import Constants from 'expo-constants';
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
 export default function SplashScreen(props) {
   const { dispatch } = useContext(Context);
   const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
   const notificationListener = useRef();
   const responseListener = useRef();
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: true,
-      shouldSetBadge: false,
-    }),
-  });
 
   async function registerForPushNotificationsAsync() {
     let token;

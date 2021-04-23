@@ -129,8 +129,10 @@ export default {
   candidate_btn: 'Create my candidate profile',
   candidate_profile: 'Your Candidate Profile',
   Time: 'Time',
+  position: 'Position',
   years: 'years',
   //canidate modal
   broadcast: 'We will broadcast your profile to the corresponding restaurants to your profile',
   thank_info: 'thank you for your information',
+
 };

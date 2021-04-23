@@ -1,6 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { ImageBackground } from 'react-native';
-import { Text, View, Dimensions, ActivityIndicator } from 'react-native';
+import {
+  Text,
+  View,
+  Dimensions,
+  ActivityIndicator,
+  KeyboardAvoidingView,
+} from 'react-native';
 import {
   ScrollView,
   TextInput,
@@ -18,20 +24,31 @@ const canidate = require('../../assets/images/canidate.png');
 
 const Find_Job = ({ navigation }) => {
   const { state } = useContext(Context);
+  //getting first and last name saved in state
+  let fullName = state?.userDetails?.name?.split(' ');
+  let savedFirstName =
+    fullName?.length > 1
+      ? fullName?.slice(0, fullName?.length - 1).join(' ')
+      : fullName[0];
+  let savedLastName =
+    fullName?.length > 1 ? fullName[fullName?.length - 1] : '';
+  //states
   const [applyWaiter] = useMutation(APPLY_WAITER);
   const [temp, setTemp] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState(savedFirstName);
+  const [lastName, setLastName] = useState(savedLastName);
   const [education, setEducation] = useState('');
   const [experience, setExperience] = useState('');
   const [lastExperience, setLastExperience] = useState('');
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [position, setPosition] = useState('');
 
   let validation =
     firstName &&
     lastName &&
     lastExperience &&
+    position &&
     experience.replace(/[^0-9]/g, '') &&
     education &&
     temp;
@@ -47,6 +64,7 @@ const Find_Job = ({ navigation }) => {
         last_experience: lastExperience || '',
         education: education || '',
         time: temp || '',
+        position: position || '',
       };
       await applyWaiter(jobForm, {
         onSuccess: () => {
@@ -87,117 +105,144 @@ const Find_Job = ({ navigation }) => {
         <View style={{ flex: 5 }}>
           <ScrollView
             keyboardShouldPersistTaps={'handled'}
-            keyboardVerticalOffset={100}
             bounces={false}
-            scrollEnabled={true}
             style={{
               width: '100%',
             }}
           >
-            <View style={styles.main_container}>
-              <View>
-                <Text style={styles.heading1}> {i18n.t('personal_info')}</Text>
-              </View>
-              <View>
-                <View style={styles.input_box}>
-                  <Text style={styles.inputLabel}>{i18n.t('first_name')}</Text>
-                  <TextInput
-                    style={styles.inputsTopTow}
-                    onChangeText={e => setFirstName(e)}
-                    value={firstName}
-                    placeholder="Christine"
-                    placeholderTextColor={'#485460'}
-                  />
+            <KeyboardAvoidingView
+              keyboardVerticalOffset={-500}
+              behavior="padding"
+              enabled
+            >
+              <View style={styles.main_container}>
+                <View>
+                  <Text style={styles.heading1}>
+                    {' '}
+                    {i18n.t('personal_info')}
+                  </Text>
                 </View>
-                <View style={styles.input_box}>
-                  <Text style={styles.inputLabel}>{i18n.t('last_name')}</Text>
-                  <TextInput
-                    style={styles.inputsTopTow}
-                    onChangeText={e => setLastName(e)}
-                    value={lastName}
-                    placeholder="Zhou"
-                    placeholderTextColor={'#485460'}
-                  />
-                </View>
-                <View style={{ flexDirection: 'row' }}>
+                <View>
                   <View style={styles.input_box}>
                     <Text style={styles.inputLabel}>
-                      {i18n.t('experience')}
+                      {i18n.t('first_name')}
                     </Text>
-                    <View style={{ flexDirection: 'row' }}>
+                    <TextInput
+                      style={styles.inputsTopTow}
+                      onChangeText={e => setFirstName(e)}
+                      value={firstName}
+                      placeholder="Christine"
+                      placeholderTextColor={'#707375'}
+                    />
+                  </View>
+                  <View style={styles.input_box}>
+                    <Text style={styles.inputLabel}>{i18n.t('last_name')}</Text>
+                    <TextInput
+                      style={styles.inputsTopTow}
+                      onChangeText={e => setLastName(e)}
+                      value={lastName}
+                      placeholder="Zhou"
+                      placeholderTextColor={'#707375'}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <View style={styles.input_box}>
+                      <Text style={styles.inputLabel}>
+                        {i18n.t('experience')}
+                      </Text>
+                      <View style={{ flexDirection: 'row' }}>
+                        <TextInput
+                          style={styles.smallInput}
+                          onChangeText={e => setExperience(e)}
+                          value={experience}
+                          placeholder="5"
+                          maxLength={2}
+                          keyboardType="numeric"
+                          placeholderTextColor={'#707375'}
+                        />
+                        <Text style={styles.experience}>{i18n.t('years')}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.input_box}>
+                      <Text style={styles.inputLabel}>
+                        {i18n.t('position')}
+                      </Text>
                       <TextInput
-                        style={styles.smallInput}
-                        onChangeText={e => setExperience(e)}
-                        value={experience}
-                        placeholder="5"
+                        style={styles.waiterInput}
+                        onChangeText={e => setPosition(e)}
+                        value={position}
+                        placeholder="Waiter"
                         maxLength={2}
-                        keyboardType="numeric"
-                        placeholderTextColor={'#485460'}
+                        placeholderTextColor={'#707375'}
                       />
-                      <Text style={styles.experience}>{i18n.t('years')}</Text>
+                    </View>
+                  </View>
+                  <View style={styles.input_box}>
+                    <Text style={styles.inputLabel}>
+                      {i18n.t('last_experience')}
+                    </Text>
+                    <TextInput
+                      style={styles.inputsTopTow}
+                      onChangeText={e => setLastExperience(e)}
+                      value={lastExperience}
+                      placeholder={i18n.t('passedat')}
+                      placeholderTextColor={'#707375'}
+                    />
+                  </View>
+                  <View style={styles.input_box}>
+                    <Text style={styles.inputLabel}>{i18n.t('education')}</Text>
+                    <TextInput
+                      style={styles.inputsTopTow}
+                      onChangeText={e => setEducation(e)}
+                      value={education}
+                      placeholder="BTS Tourisme"
+                      placeholderTextColor={'#707375'}
+                    />
+                  </View>
+                  <View style={styles.input_box}>
+                    <Text style={styles.inputLabel}>{i18n.t('Time')}</Text>
+                    <View style={styles.chooseButtons_container}>
+                      <TouchableOpacity
+                        activeOpacity={0.7}
+                        style={[
+                          styles.time_opt,
+                          temp === 'full' && {
+                            backgroundColor: Colors.yellow,
+                            borderTopLeftRadius: 7,
+                            borderBottomLeftRadius: 7,
+                          },
+                        ]}
+                        onPress={() => setTemp('full')}
+                        value={temp}
+                      >
+                        <Text style={styles.timeTxt}>{i18n.t('full')}</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        activeOpacity={0.7}
+                        style={[
+                          styles.time_opt,
+                          { borderLeftWidth: 1 },
+                          temp === 'half' && {
+                            backgroundColor: Colors.yellow,
+                            borderTopRightRadius: 7,
+                            borderBottomRightRadius: 7,
+                          },
+                        ]}
+                        onPress={() => setTemp('half')}
+                        value={temp}
+                      >
+                        <Text style={styles.timeTxt}>{i18n.t('partial')}</Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 </View>
-                <View style={styles.input_box}>
-                  <Text style={styles.inputLabel}>
-                    {i18n.t('last_experience')}
-                  </Text>
-                  <TextInput
-                    style={styles.inputsTopTow}
-                    onChangeText={e => setLastExperience(e)}
-                    value={lastExperience}
-                    placeholder={i18n.t('passedat')}
-                    placeholderTextColor={'#485460'}
-                  />
-                </View>
-                <View style={styles.input_box}>
-                  <Text style={styles.inputLabel}>{i18n.t('education')}</Text>
-                  <TextInput
-                    style={styles.inputsTopTow}
-                    onChangeText={e => setEducation(e)}
-                    value={education}
-                    placeholder="BTS Tourisme"
-                    placeholderTextColor={'#485460'}
-                  />
-                </View>
-                <View style={styles.input_box}>
-                  <Text style={styles.inputLabel}>{i18n.t('Time')}</Text>
-                  <View style={styles.chooseButtons_container}>
-                    <TouchableOpacity
-                      activeOpacity={0.7}
-                      style={[
-                        styles.time_opt,
-                        temp === 'full' && {
-                          backgroundColor: Colors.yellow,
-                          borderTopLeftRadius: 7,
-                          borderBottomLeftRadius: 7,
-                        },
-                      ]}
-                      onPress={() => setTemp('full')}
-                      value={temp}
-                    >
-                      <Text style={styles.timeTxt}>{i18n.t('full')}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      activeOpacity={0.7}
-                      style={[
-                        styles.time_opt,
-                        { borderLeftWidth: 1 },
-                        temp === 'half' && {
-                          backgroundColor: Colors.yellow,
-                          borderTopRightRadius: 7,
-                          borderBottomRightRadius: 7,
-                        },
-                      ]}
-                      onPress={() => setTemp('half')}
-                      value={temp}
-                    >
-                      <Text style={styles.timeTxt}>{i18n.t('partial')}</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
               </View>
-            </View>
+            </KeyboardAvoidingView>
           </ScrollView>
         </View>
         <TouchableOpacity

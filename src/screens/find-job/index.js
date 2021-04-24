@@ -52,7 +52,7 @@ const Find_Job = ({ navigation }) => {
   let validation =
     firstName &&
     lastName &&
-    lastExperience &&
+    lastExperience?.last_exp &&
     position &&
     experience.replace(/[^0-9]/g, '') &&
     education &&

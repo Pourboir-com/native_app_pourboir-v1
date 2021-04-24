@@ -86,7 +86,7 @@ const Find_Job = ({ navigation }) => {
     }
   };
   const handleSearchRestaurant = async () => {
-    if (lastExperience) {
+    if (lastExperience?.last_exp) {
       setSearchLoading(true);
       setShowDropdown(true);
       await searchRestaurant(

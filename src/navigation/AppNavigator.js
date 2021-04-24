@@ -27,7 +27,7 @@ const Stack = createStackNavigator();
 function AppNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="FindJob"
+      initialRouteName="splashScreen"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen

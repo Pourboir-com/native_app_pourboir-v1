@@ -130,7 +130,7 @@ export default {
   candidate_profile: 'Your Candidate Profile',
   Time: 'Time',
   position: 'Position',
-  years: 'years',
+  year: 'Year',
   //canidate modal
   broadcast: 'We will broadcast your profile to the corresponding restaurants to your profile',
   thank_info: 'thank you for your information',

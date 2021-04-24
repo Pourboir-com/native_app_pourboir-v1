@@ -186,7 +186,11 @@ const Find_Job = ({ navigation }) => {
                         keyboardType="numeric"
                         placeholderTextColor={'#707375'}
                       />
-                      <Text style={styles.experience}>{i18n.t('years')}</Text>
+                      <Text style={styles.experience}>
+                        {Number(experience) > 1
+                          ? `${i18n.t('year')}s`
+                          : i18n.t('year')}
+                      </Text>
                     </View>
                   </View>
                   <View style={styles.input_box}>

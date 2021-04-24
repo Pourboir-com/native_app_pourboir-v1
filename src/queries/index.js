@@ -6,3 +6,4 @@ export * from './your-restaurant';
 export * from './settings-screen';
 export * from './canidate-profile';
 export * from './notification';
+export * from './search-res';

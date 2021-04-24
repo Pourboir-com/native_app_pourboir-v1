@@ -41,7 +41,7 @@ const Find_Job = ({ navigation }) => {
   const [lastName, setLastName] = useState(savedLastName);
   const [education, setEducation] = useState('');
   const [experience, setExperience] = useState('');
-  const [lastExperience, setLastExperience] = useState('');
+  const [lastExperience, setLastExperience] = useState({});
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [position, setPosition] = useState('');
@@ -66,7 +66,10 @@ const Find_Job = ({ navigation }) => {
         full_name: firstName || '',
         last_name: lastName || '',
         experience: experience || '',
-        last_experience: lastExperience || '',
+        last_experience: {
+          last_exp: lastExperience || '',
+          res_id: lastExperience?.res_id || '',
+        },
         education: education || '',
         time: temp || '',
         position: position || '',
@@ -206,8 +209,13 @@ const Find_Job = ({ navigation }) => {
                       returnKeyLabel="Find"
                       returnKeyType="done"
                       onSubmitEditing={handleSearchRestaurant}
-                      onChangeText={e => setLastExperience(e)}
-                      value={lastExperience}
+                      onChangeText={e =>
+                        setLastExperience({
+                          last_exp: e || '',
+                          res_id: '',
+                        })
+                      }
+                      value={lastExperience?.last_exp}
                       style={styles.input_icon_text}
                       placeholder={i18n.t('passedat')}
                       placeholderTextColor={'#707375'}
@@ -234,7 +242,10 @@ const Find_Job = ({ navigation }) => {
                             activeOpacity={0.5}
                             onPress={() => {
                               setShowDropdown(false);
-                              setLastExperience(item?.name);
+                              setLastExperience({
+                                last_exp: item?.name || '',
+                                res_id: lastExperience?._id || '',
+                              });
                             }}
                           >
                             <Text style={styles.opt_txt}>{item?.name}</Text>
@@ -247,6 +258,7 @@ const Find_Job = ({ navigation }) => {
                 <View style={styles.input_box}>
                   <Text style={styles.inputLabel}>{i18n.t('education')}</Text>
                   <TextInput
+                    onFocus={() => showDropdown && setShowDropdown(false)}
                     style={styles.inputsTopTow}
                     onChangeText={e => setEducation(e)}
                     value={education}

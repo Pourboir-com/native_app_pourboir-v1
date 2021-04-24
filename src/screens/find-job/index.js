@@ -21,6 +21,7 @@ import Context from '../../contextApi/context';
 import { APPLY_WAITER, SEARCH_RESTAURANTS } from '../../queries';
 import { useMutation } from 'react-query';
 import CommonModal from '../../components/modals/HelpUsImproveModal';
+import { Platform } from 'react-native';
 const canidate = require('../../assets/images/canidate.png');
 
 const Find_Job = ({ navigation }) => {
@@ -137,8 +138,8 @@ const Find_Job = ({ navigation }) => {
           }}
         >
           <KeyboardAvoidingView
-            keyboardVerticalOffset={-500}
-            behavior="position"
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 10 : null}
+            behavior={Platform.OS === 'ios' ? "position" : null}
             enabled
           >
             <View style={styles.main_container}>

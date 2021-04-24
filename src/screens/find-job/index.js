@@ -68,7 +68,7 @@ const Find_Job = ({ navigation }) => {
         experience: experience || '',
         last_experience: {
           last_exp: lastExperience?.last_exp || '',
-          res_id: lastExperience?.res_id || '',
+          restaurant_id: lastExperience?.res_id || '',
         },
         education: education || '',
         time: temp || '',

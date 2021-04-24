@@ -244,7 +244,7 @@ const Find_Job = ({ navigation }) => {
                               setShowDropdown(false);
                               setLastExperience({
                                 last_exp: item?.name || '',
-                                res_id: lastExperience?._id || '',
+                                res_id: item?._id || '',
                               });
                             }}
                           >

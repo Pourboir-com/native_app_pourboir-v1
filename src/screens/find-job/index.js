@@ -90,7 +90,7 @@ const Find_Job = ({ navigation }) => {
       setSearchLoading(true);
       setShowDropdown(true);
       await searchRestaurant(
-        { search: lastExperience },
+        { search: lastExperience?.last_exp },
         {
           onSuccess: res => {
             setSearchLoading(false);

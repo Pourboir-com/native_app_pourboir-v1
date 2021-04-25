@@ -6,6 +6,7 @@ import {
   Dimensions,
   ActivityIndicator,
   KeyboardAvoidingView,
+  Platform,
   Image,
 } from 'react-native';
 import {
@@ -13,6 +14,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';
 import styles from './styles';
@@ -21,7 +23,6 @@ import Context from '../../contextApi/context';
 import { APPLY_WAITER, SEARCH_RESTAURANTS } from '../../queries';
 import { useMutation } from 'react-query';
 import CommonModal from '../../components/modals/HelpUsImproveModal';
-import { Platform } from 'react-native';
 const canidate = require('../../assets/images/canidate.png');
 
 const Find_Job = ({ navigation }) => {
@@ -129,188 +130,199 @@ const Find_Job = ({ navigation }) => {
             borderRadius={true}
           />
         </ImageBackground>
-
-        <ScrollView
-          keyboardShouldPersistTaps={'handled'}
+        {/* <KeyboardAvoidingView
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 10 : null}
+          behavior={Platform.OS === 'ios' ? 'position' : null}
+          enabled
+          style={{ flex: 1 }}
+        >
+          <ScrollView
+            keyboardShouldPersistTaps={'handled'}
+            bounces={false}
+            contentContainerStyle={{
+              width: '100%',
+              // flexGrow: 1,
+            }}
+          > */}
+        <KeyboardAwareScrollView
           bounces={false}
-          style={{
+          extraScrollHeight={10}
+          // enableOnAndroid={true}
+          scrollEnabled={true}
+          keyboardShouldPersistTaps="handled"
+          scrollToOverflowEnabled={true}
+          enableAutomaticScroll={true}
+          resetScrollToCoords={{ x: 0, y: 0 }}
+          contentContainerStyle={{
             width: '100%',
+            flex: 1,
           }}
         >
-          <KeyboardAvoidingView
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 10 : null}
-            behavior={Platform.OS === 'ios' ? "position" : null}
-            enabled
-          >
-            <View style={styles.main_container}>
-              <View>
-                <Text style={styles.heading1}> {i18n.t('personal_info')}</Text>
+          <View style={styles.main_container}>
+            <View>
+              <Text style={styles.heading1}> {i18n.t('personal_info')}</Text>
+            </View>
+            <View>
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>{i18n.t('first_name')}</Text>
+                <TextInput
+                  style={styles.inputsTopTow}
+                  onChangeText={e => setFirstName(e)}
+                  value={firstName}
+                  placeholder="Christine"
+                  placeholderTextColor={'#707375'}
+                />
               </View>
-              <View>
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>{i18n.t('last_name')}</Text>
+                <TextInput
+                  style={styles.inputsTopTow}
+                  onChangeText={e => setLastName(e)}
+                  value={lastName}
+                  placeholder="Zhou"
+                  placeholderTextColor={'#707375'}
+                />
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
                 <View style={styles.input_box}>
-                  <Text style={styles.inputLabel}>{i18n.t('first_name')}</Text>
-                  <TextInput
-                    style={styles.inputsTopTow}
-                    onChangeText={e => setFirstName(e)}
-                    value={firstName}
-                    placeholder="Christine"
-                    placeholderTextColor={'#707375'}
-                  />
-                </View>
-                <View style={styles.input_box}>
-                  <Text style={styles.inputLabel}>{i18n.t('last_name')}</Text>
-                  <TextInput
-                    style={styles.inputsTopTow}
-                    onChangeText={e => setLastName(e)}
-                    value={lastName}
-                    placeholder="Zhou"
-                    placeholderTextColor={'#707375'}
-                  />
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <View style={styles.input_box}>
-                    <Text style={styles.inputLabel}>
-                      {i18n.t('experience')}
+                  <Text style={styles.inputLabel}>{i18n.t('experience')}</Text>
+                  <View style={{ flexDirection: 'row' }}>
+                    <TextInput
+                      style={styles.smallInput}
+                      onChangeText={e => setExperience(e)}
+                      value={experience}
+                      placeholder="5"
+                      maxLength={2}
+                      keyboardType="numeric"
+                      placeholderTextColor={'#707375'}
+                    />
+                    <Text style={styles.experience}>
+                      {Number(experience) > 1
+                        ? `${i18n.t('year')}s`
+                        : i18n.t('year')}
                     </Text>
-                    <View style={{ flexDirection: 'row' }}>
-                      <TextInput
-                        style={styles.smallInput}
-                        onChangeText={e => setExperience(e)}
-                        value={experience}
-                        placeholder="5"
-                        maxLength={2}
-                        keyboardType="numeric"
-                        placeholderTextColor={'#707375'}
-                      />
-                      <Text style={styles.experience}>
-                        {Number(experience) > 1
-                          ? `${i18n.t('year')}s`
-                          : i18n.t('year')}
-                      </Text>
-                    </View>
-                  </View>
-                  <View style={styles.input_box}>
-                    <Text style={styles.inputLabel}>{i18n.t('position')}</Text>
-                    <TextInput
-                      style={styles.waiterInput}
-                      onChangeText={e => setPosition(e)}
-                      value={position}
-                      placeholder="Waiter"
-                      placeholderTextColor={'#707375'}
-                    />
                   </View>
                 </View>
                 <View style={styles.input_box}>
-                  <Text style={styles.inputLabel}>
-                    {i18n.t('last_experience')}
-                  </Text>
-                  <View style={styles.input_icon}>
-                    <TextInput
-                      returnKeyLabel="Find"
-                      returnKeyType="done"
-                      onSubmitEditing={handleSearchRestaurant}
-                      onChangeText={e =>
-                        setLastExperience({
-                          last_exp: e || '',
-                          res_id: '',
-                        })
-                      }
-                      value={lastExperience?.last_exp}
-                      style={styles.input_icon_text}
-                      placeholder={i18n.t('passedat')}
-                      placeholderTextColor={'#707375'}
-                    />
-                    <TouchableOpacity
-                      activeOpacity={0.5}
-                      onPress={() => {
-                        handleSearchRestaurant();
-                      }}
-                    >
-                      <Image
-                        source={require('../../assets/images/search.png')}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  {showDropdown && (
-                    <View style={styles.options}>
-                      {searchLoading ? (
-                        <Text style={styles.opt_txt}>Loading...</Text>
-                      ) : (
-                        (restaurants?.data || []).map((item, i) => (
-                          <TouchableOpacity
-                            key={i}
-                            activeOpacity={0.5}
-                            onPress={() => {
-                              setShowDropdown(false);
-                              setLastExperience({
-                                last_exp: item?.name || '',
-                                res_id: item?.place_id || '',
-                              });
-                            }}
-                          >
-                            <Text style={styles.opt_txt}>{item?.name}</Text>
-                          </TouchableOpacity>
-                        ))
-                      )}
-                    </View>
-                  )}
-                </View>
-                <View style={styles.input_box}>
-                  <Text style={styles.inputLabel}>{i18n.t('education')}</Text>
+                  <Text style={styles.inputLabel}>{i18n.t('position')}</Text>
                   <TextInput
-                    onFocus={() => showDropdown && setShowDropdown(false)}
-                    style={styles.inputsTopTow}
-                    onChangeText={e => setEducation(e)}
-                    value={education}
-                    placeholder="BTS Tourisme"
+                    style={styles.waiterInput}
+                    onChangeText={e => setPosition(e)}
+                    value={position}
+                    placeholder="Waiter"
                     placeholderTextColor={'#707375'}
                   />
                 </View>
-                <View style={styles.input_box}>
-                  <Text style={styles.inputLabel}>{i18n.t('Time')}</Text>
-                  <View style={styles.chooseButtons_container}>
-                    <TouchableOpacity
-                      activeOpacity={0.7}
-                      style={[
-                        styles.time_opt,
-                        temp === 'full' && {
-                          backgroundColor: Colors.yellow,
-                          borderTopLeftRadius: 7,
-                          borderBottomLeftRadius: 7,
-                        },
-                      ]}
-                      onPress={() => setTemp('full')}
-                      value={temp}
-                    >
-                      <Text style={styles.timeTxt}>{i18n.t('full')}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      activeOpacity={0.7}
-                      style={[
-                        styles.time_opt,
-                        { borderLeftWidth: 1 },
-                        temp === 'half' && {
-                          backgroundColor: Colors.yellow,
-                          borderTopRightRadius: 7,
-                          borderBottomRightRadius: 7,
-                        },
-                      ]}
-                      onPress={() => setTemp('half')}
-                      value={temp}
-                    >
-                      <Text style={styles.timeTxt}>{i18n.t('partial')}</Text>
-                    </TouchableOpacity>
+              </View>
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>
+                  {i18n.t('last_experience')}
+                </Text>
+                <View style={styles.input_icon}>
+                  <TextInput
+                    returnKeyLabel="Find"
+                    returnKeyType="done"
+                    onSubmitEditing={handleSearchRestaurant}
+                    onChangeText={e =>
+                      setLastExperience({
+                        last_exp: e || '',
+                        res_id: '',
+                      })
+                    }
+                    value={lastExperience?.last_exp}
+                    style={styles.input_icon_text}
+                    placeholder={i18n.t('passedat')}
+                    placeholderTextColor={'#707375'}
+                  />
+                  <TouchableOpacity
+                    activeOpacity={0.5}
+                    onPress={() => {
+                      handleSearchRestaurant();
+                    }}
+                  >
+                    <Image source={require('../../assets/images/search.png')} />
+                  </TouchableOpacity>
+                </View>
+                {showDropdown && (
+                  <View style={styles.options}>
+                    {searchLoading ? (
+                      <Text style={styles.opt_txt}>Loading...</Text>
+                    ) : (
+                      (restaurants?.data || []).map((item, i) => (
+                        <TouchableOpacity
+                          key={i}
+                          activeOpacity={0.5}
+                          onPress={() => {
+                            setShowDropdown(false);
+                            setLastExperience({
+                              last_exp: item?.name || '',
+                              res_id: item?.place_id || '',
+                            });
+                          }}
+                        >
+                          <Text style={styles.opt_txt}>{item?.name}</Text>
+                        </TouchableOpacity>
+                      ))
+                    )}
                   </View>
+                )}
+              </View>
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>{i18n.t('education')}</Text>
+                <TextInput
+                  onFocus={() => showDropdown && setShowDropdown(false)}
+                  style={styles.inputsTopTow}
+                  onChangeText={e => setEducation(e)}
+                  value={education}
+                  placeholder="BTS Tourisme"
+                  placeholderTextColor={'#707375'}
+                />
+              </View>
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>{i18n.t('Time')}</Text>
+                <View style={styles.chooseButtons_container}>
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    style={[
+                      styles.time_opt,
+                      temp === 'full' && {
+                        backgroundColor: Colors.yellow,
+                        borderTopLeftRadius: 7,
+                        borderBottomLeftRadius: 7,
+                      },
+                    ]}
+                    onPress={() => setTemp('full')}
+                    value={temp}
+                  >
+                    <Text style={styles.timeTxt}>{i18n.t('full')}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    style={[
+                      styles.time_opt,
+                      { borderLeftWidth: 1 },
+                      temp === 'half' && {
+                        backgroundColor: Colors.yellow,
+                        borderTopRightRadius: 7,
+                        borderBottomRightRadius: 7,
+                      },
+                    ]}
+                    onPress={() => setTemp('half')}
+                    value={temp}
+                  >
+                    <Text style={styles.timeTxt}>{i18n.t('partial')}</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
-          </KeyboardAvoidingView>
-        </ScrollView>
+          </View>
+        </KeyboardAwareScrollView>
+        {/* </ScrollView> */}
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={handleApplyJob}
@@ -336,6 +348,7 @@ const Find_Job = ({ navigation }) => {
             </Text>
           )}
         </TouchableOpacity>
+        {/* </KeyboardAvoidingView> */}
       </View>
       {modalVisible && (
         <CommonModal

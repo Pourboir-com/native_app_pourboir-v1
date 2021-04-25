@@ -12,6 +12,9 @@
       "image": "./assets/splash.png",
       "resizeMode": "cover"
     },
+    "androidStatusBar": {
+      "backgroundColor": "#000000"
+    },
     "notification": {
       "icon": "./assets/Serveur.png",
       "androidMode": "default",

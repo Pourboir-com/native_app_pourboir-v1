@@ -8,10 +8,7 @@ import {
   Platform,
   Image,
 } from 'react-native';
-import {
-  TextInput,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';
@@ -135,7 +132,7 @@ const Find_Job = ({ navigation }) => {
           extraScrollHeight={10}
           keyboardShouldPersistTaps="handled"
           scrollToOverflowEnabled={true}
-          enableAutomaticScroll={(Platform.OS === 'ios')}
+          enableAutomaticScroll={Platform.OS === 'ios' ? true : false}
           resetScrollToCoords={{ x: 0, y: 0 }}
           contentContainerStyle={{
             width: '100%',

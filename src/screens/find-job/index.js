@@ -5,15 +5,10 @@ import {
   View,
   Dimensions,
   ActivityIndicator,
-  KeyboardAvoidingView,
   Platform,
   Image,
 } from 'react-native';
-import {
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';
@@ -130,32 +125,17 @@ const Find_Job = ({ navigation }) => {
             borderRadius={true}
           />
         </ImageBackground>
-        {/* <KeyboardAvoidingView
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 10 : null}
-          behavior={Platform.OS === 'ios' ? 'position' : null}
-          enabled
-          style={{ flex: 1 }}
-        >
-          <ScrollView
-            keyboardShouldPersistTaps={'handled'}
-            bounces={false}
-            contentContainerStyle={{
-              width: '100%',
-              // flexGrow: 1,
-            }}
-          > */}
+
         <KeyboardAwareScrollView
           bounces={false}
+          enableOnAndroid={true}
           extraScrollHeight={10}
-          // enableOnAndroid={true}
-          scrollEnabled={true}
           keyboardShouldPersistTaps="handled"
           scrollToOverflowEnabled={true}
-          enableAutomaticScroll={true}
+          enableAutomaticScroll={Platform.OS === 'ios' ? true : false}
           resetScrollToCoords={{ x: 0, y: 0 }}
           contentContainerStyle={{
             width: '100%',
-            flex: 1,
           }}
         >
           <View style={styles.main_container}>
@@ -322,7 +302,7 @@ const Find_Job = ({ navigation }) => {
             </View>
           </View>
         </KeyboardAwareScrollView>
-        {/* </ScrollView> */}
+
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={handleApplyJob}
@@ -348,8 +328,8 @@ const Find_Job = ({ navigation }) => {
             </Text>
           )}
         </TouchableOpacity>
-        {/* </KeyboardAvoidingView> */}
       </View>
+
       {modalVisible && (
         <CommonModal
           isVisible={modalVisible}

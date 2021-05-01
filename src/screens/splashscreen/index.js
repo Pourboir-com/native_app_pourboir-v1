@@ -116,7 +116,7 @@ export default function SplashScreen(props) {
   const [springValue] = React.useState(new Animated.Value(0.5));
   const locationFunction = async () => {
     try {
-      let values = await Location.requestPermissionsAsync();
+      let values = await Location.requestForegroundPermissionsAsync();
       if (values === 'granted') {
         props.navigation.dispatch(
           CommonActions.reset({

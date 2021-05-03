@@ -92,7 +92,7 @@ export default {
 
   // Personal Info details
 
-  personal_info: 'Information personnelles',
+  personal_info: 'Informations personnelles',
   first_name: 'Prénom',
   last_name: 'Nom',
   phone_num: 'Numéro de téléphone',
@@ -125,17 +125,17 @@ export default {
   looking_for_job: `Je recherche de poste`,
 
   // candidate profile
-  experience: 'Vivre',
+  experience: 'Expérience',
   education: 'Éducation',
-  last_experience: 'Derniere Experience',
+  last_experience: 'Dernière expérience',
   passedat: 'Le Petit Nice Passedat',
   full: 'Plein',
   partial: 'Partiel',
-  candidate_btn: 'Je cree mon profil candidat',
+  candidate_btn: 'Je crée mon profil candidat',
   candidate_profile: 'Votre profil de candidat',
   Time: 'Temps',
   year: 'Année',
-  position: 'Poste',
+  position: 'Position',
   //canidate modal
   broadcast:
     'Nous allons diffuser votre profil aux restaurants correspondants à votre profil',

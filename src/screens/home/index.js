@@ -22,6 +22,7 @@ const HomeScreen = props => {
   // FacebookAds.AdSettings.addTestDevice(
   //   FacebookAds.AdSettings.currentDeviceHash,
   // );
+  // FacebookAds.AdSettings.setAdvertisingTrackingEnabled(true);
   // const VALID_ANDROID_PLACEMENT_ID = 'IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID';
   // useEffect(() => {
   //   FacebookAds.InterstitialAdManager.showAd(VALID_ANDROID_PLACEMENT_ID)

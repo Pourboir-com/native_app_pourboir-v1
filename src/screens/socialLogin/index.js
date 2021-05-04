@@ -187,6 +187,11 @@ const SocialLogin = ({ navigation, route }) => {
       await Facebook.initializeAsync({
         appId: '771555200360518',
       });
+      if (Platform.OS === 'ios') {
+        await Facebook.setAdvertiserTrackingEnabledAsync(true);
+      }
+      await Facebook.setAutoLogAppEventsEnabledAsync(true);
+      await Facebook.setAdvertiserIDCollectionEnabledAsync(true);
       const {
         type,
         token,

@@ -279,7 +279,9 @@ const HomeScreen = props => {
               >
                 {!state.userDetails.name
                   ? i18n.t('hello')
-                  : i18n.t('hello') + ' ' + userGivenName(state.userDetails.name)}
+                  : i18n.t('hello') +
+                    ' ' +
+                    userGivenName(state.userDetails.name)}
               </Text>
             </Animated.View>
           </View>
@@ -459,7 +461,7 @@ const HomeScreen = props => {
                     style={{ flex: 1, paddingHorizontal: 10 }}
                   />
 
-                  {hasValue && (
+                  {props.searchVal ? (
                     <TouchableOpacity
                       onPress={() => {
                         props.setSearchVal('');
@@ -478,7 +480,7 @@ const HomeScreen = props => {
                         <AntDesign name="close" size={14} color="#485460" />
                       </View>
                     </TouchableOpacity>
-                  )}
+                  ) : null}
                 </View>
               </Animated.View>
             </View>
@@ -630,7 +632,7 @@ const HomeScreen = props => {
                     style={{ flex: 1, paddingHorizontal: 10 }}
                   />
 
-                  {hasValue && (
+                  {props.searchVal ? (
                     <TouchableOpacity
                       onPress={() => {
                         props.setSearchVal('');
@@ -649,7 +651,7 @@ const HomeScreen = props => {
                         <AntDesign name="close" size={14} color="#485460" />
                       </View>
                     </TouchableOpacity>
-                  )}
+                  ) : null}
                 </View>
               </Animated.View>
             </Animated.View>

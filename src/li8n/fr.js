@@ -141,7 +141,7 @@ export default {
     'Nous allons diffuser votre profil aux restaurants correspondants à votre profil',
   thank_info: 'Merci pour vos informations',
 
-  // manager side translations 
+  // manager side translations
   already_acc: 'J’ai déjà un compte',
   email: 'e-mail',
   password_sign: 'mot de passes',
@@ -162,9 +162,9 @@ export default {
   exp: 'Expérience',
   years: 'ans',
   estb: 'Etablissement',
-  mark_cater:' Bac Pro Commercialisation et Services en Restauration',
-  recruit:'Recruter',
+  mark_cater: ' Bac Pro Commercialisation et Services en Restauration',
+  recruit: 'Recruter',
   position_list: 'Liste de position',
   eval: 'Évaluation',
-  filter: 'Filtrer'
+  filter: 'Filtrer',
 };

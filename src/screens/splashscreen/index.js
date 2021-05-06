@@ -15,6 +15,7 @@ import * as Notifications from 'expo-notifications';
 import { useMutation } from 'react-query';
 import { SEND_PUSH_TOKEN } from '../../queries';
 import Constants from 'expo-constants';
+import * as Localization from 'expo-localization';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -64,10 +65,12 @@ export default function SplashScreen(props) {
   useEffect(() => {
     registerForPushNotificationsAsync().then(async token => {
       const { userInfo = {} } = await getAsyncStorageValues();
+      const { locale } = await Localization.getLocalizationAsync();
       if (userInfo?.user_id) {
         await sendNotificationToken({
-          id: userInfo?.user_id,
-          expo_notification_token: token,
+          id: userInfo?.user_id || '',
+          expo_notification_token: token || '',
+          lang: locale || '',
         });
         notificationListener.current = Notifications.addNotificationReceivedListener(
           notification => {

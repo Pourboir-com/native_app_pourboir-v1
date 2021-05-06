@@ -30,6 +30,7 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Device from 'expo-device';
 import { getAsyncStorageValues } from '../../constants';
 import * as Notifications from 'expo-notifications';
+import * as Localization from 'expo-localization';
 
 const SocialLogin = ({ navigation, route }) => {
   const [city, setCity] = useState();
@@ -78,10 +79,12 @@ const SocialLogin = ({ navigation, route }) => {
         sound: true,
       });
     }
+    const { locale } = await Localization.getLocalizationAsync();
     await sendNotificationToken(
       {
         id: user_id,
         expo_notification_token: token,
+        lang: locale || '',
       },
       {
         enabled: user_id ? true : false,

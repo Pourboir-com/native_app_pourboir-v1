@@ -21,6 +21,9 @@ import MasterCard from '../screens/master-card';
 import AddCard from '../screens/add-card';
 import MapScreen from '../screens/map-screen';
 import FindJob from '../screens/find-job';
+import SignIn from '../screens/manager-signin';
+import ManagerStaff from '../screens/manager-staff';
+import ManagerSignUp from '../screens/manager-signup';
 
 const Stack = createStackNavigator();
 
@@ -225,6 +228,42 @@ function AppNavigator() {
       <Stack.Screen
         name="FindJob"
         component={FindJob}
+        options={() => ({
+          headerShown: false,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+        })}
+      />
+      <Stack.Screen
+        name="SignIn"
+        component={SignIn}
+        options={() => ({
+          headerShown: false,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+        })}
+      />
+      <Stack.Screen
+        name="ManagerStaff"
+        component={ManagerStaff}
+        options={() => ({
+          headerShown: false,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+        })}
+      />
+      <Stack.Screen
+        name="ManagerSignUp"
+        component={ManagerSignUp}
         options={() => ({
           headerShown: false,
           title: '',

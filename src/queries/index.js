@@ -7,3 +7,4 @@ export * from './settings-screen';
 export * from './canidate-profile';
 export * from './notification';
 export * from './search-res';
+export * from './manager-signIn';

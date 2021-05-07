@@ -190,8 +190,6 @@ const SocialLogin = ({ navigation, route }) => {
       if (Platform.OS === 'ios') {
         await Facebook.setAdvertiserTrackingEnabledAsync(true);
       }
-      await Facebook.setAutoLogAppEventsEnabledAsync(true);
-      await Facebook.setAdvertiserIDCollectionEnabledAsync(true);
       const {
         type,
         token,

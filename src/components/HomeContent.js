@@ -95,9 +95,7 @@ export default function HomeScreenContent({
     return (
       <>
         {route?.params?.crossIcon ? (
-          <View
-            style={styles.viewEmptyList}
-          >
+          <View style={styles.viewEmptyList}>
             <View
               style={{
                 backgroundColor: '#fff',
@@ -130,7 +128,7 @@ export default function HomeScreenContent({
           <View
             style={{
               backgroundColor: '#F9F9F9',
-              marginTop: Platform.OS === 'ios' ? -58 : 0,
+              marginTop: 0,
               flex: 1,
             }}
           >

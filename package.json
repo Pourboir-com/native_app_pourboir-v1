@@ -18,7 +18,7 @@
     "@expo-google-fonts/inter": "^0.1.0",
     "@jesster2k10/react-native-range-slider": "^0.3.1",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
-    "@react-native-async-storage/async-storage": "^1.13.0",
+    "@react-native-async-storage/async-storage": "^1.15.4",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/netinfo": "6.0.0",
     "@react-navigation/native": "^5.8.10",

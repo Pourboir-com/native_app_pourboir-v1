@@ -5,18 +5,12 @@
     "facebookAppId": "771555200360518",
     "facebookScheme": "fb771555200360518",
     "facebookDisplayName": "Pourboir'",
-    "facebookAutoInitEnabled": true,
-    "facebookAutoLogAppEventsEnabled": true,
-    "facebookAdvertiserIDCollectionEnabled": true,
-    "version": "1.0.7",
+    "version": "1.0.8",
     "orientation": "portrait",
     "icon": "./assets/Serveur-IOS.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover"
-    },
-    "androidStatusBar": {
-      "backgroundColor": "#000000"
     },
     "notification": {
       "icon": "./assets/Serveur.png",
@@ -33,7 +27,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.developerspourboir.pourboir",
-      "buildNumber": "1.0.7",
+      "buildNumber": "1.0.0",
       "usesAppleSignIn": true,
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "This app uses location for nearby restaurants",

@@ -64,10 +64,11 @@ const styles = StyleSheet.create({
   first_part_modal: {
     borderBottomColor: '#FDDF6F',
     borderBottomWidth: 2,
-    borderStyle: 'dashed',
+    borderStyle: 'dotted',
     width: '80%',
     alignItems: 'center',
-    borderRadius: 1,
+    borderBottomRightRadius:1,
+    borderBottomRightRadius:1
   },
   exp_year: {
     fontFamily: 'ProximaNova',
@@ -171,26 +172,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
 
-  root: {
-    alignItems: 'center',
-    padding: 8,
-    backgroundColor: '#4499ff',
-    borderRadius: 4,
-  },
-  text: {
-    fontSize: 16,
-    color: '#fff',
-  },
-  root_l: {
-    width: 8,
-    height: 8,
-    borderLeftColor: 'transparent',
-    borderRightColor: 'transparent',
-    borderTopColor: '#4499ff',
-    borderLeftWidth: 4,
-    borderRightWidth: 4,
-    borderTopWidth: 8,
-  },
+
   root_r: {
     flex: 1,
     height: 4,

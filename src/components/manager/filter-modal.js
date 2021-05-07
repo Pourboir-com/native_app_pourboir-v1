@@ -5,19 +5,17 @@ import {
   View,
   TouchableOpacity,
   TextInput,
-  Platform,
 } from 'react-native';
 import styles from './styles';
 import Modal from 'react-native-modal';
 import { ScrollView } from 'react-native-gesture-handler';
-import { RadioButton } from 'react-native-paper';
 import i18n from '../../li8n';
 import RangeSlider from 'rn-range-slider';
 import RatingStar from '../../components/RatingComponent';
-import { Radio } from 'native-base';
+import { Radio } from 'galio-framework';
 
 const FilterModal = ({ filterModal, toggleFilter }) => {
-  const [checked, setChecked] = useState();
+  const [avail, setAvail] = useState('');
   const [low, setLow] = useState();
   const [high, setHigh] = useState();
   const [rating, setRating] = useState();
@@ -25,24 +23,12 @@ const FilterModal = ({ filterModal, toggleFilter }) => {
   const renderThumb = useCallback(() => <Thumb />, []);
   const renderRail = useCallback(() => <Rail />, []);
   const renderRailSelected = useCallback(() => <RailSelected />, []);
-  const renderLabel = useCallback(value => <Label text={value} />, []);
-  const renderNotch = useCallback(() => <Notch />, []);
   const handleValueChange = useCallback((low, high) => {
     setLow(low);
     setHigh(high);
   }, []);
+console.log(avail)
 
-  const Label = ({ text, ...restProps }) => {
-    return (
-      <View style={styles.root} {...restProps}>
-        <Text style={styles.text}>{text}</Text>
-      </View>
-    );
-  };
-
-  const Notch = props => {
-    return <View style={styles.root_l} {...props} />;
-  };
   const Rail = () => {
     return <View style={styles.root_r} />;
   };
@@ -79,59 +65,15 @@ const FilterModal = ({ filterModal, toggleFilter }) => {
             </View>
             <View style={{ marginVertical: 22 }}>
               <Text style={styles.postsLabel}>{i18n.t('availability')}</Text>
-              <View style={{ marginLeft: -5 }}>
+              <View style={{ marginLeft:0 }}>
                 <View style={{ flexDirection: 'row' }}>
-                  <View
-                    style={
-                      Platform.OS === 'ios'
-                        ? {
-                            borderWidth: 1,
-                            borderColor: '#FCDF6F',
-                            borderRadius: 100,
-                            height: 18,
-                            width: 18,
-                            marginTop: 2,
-                          }
-                        : null
-                    }
-                  >
-                    <RadioButton
-                      value="first"
-                      color="#FDDF6F"
-                      uncheckedColor="#FDDF6F"
-                      status={checked === 'first' ? 'checked' : 'unchecked'}
-                      onPress={() => setChecked('first')}
-                    />
-                  </View>
-                  <View style={{ justifyContent: 'center' }}>
-                    <Text style={styles.radioBtnTxt}>Full Time </Text>
+                  <View style={{marginBottom:8}}>
+                  <Radio label="Full Time" onChange={() => setAvail("Full Time")}  color={"#FCDF6F"} labelStyle={{ color: '#1E272E',fontSize:13, fontFamily:'ProximaNovaBold', paddingTop:1  }}  />
                   </View>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
-                  <View
-                    style={
-                      Platform.OS === 'ios'
-                        ? {
-                            borderWidth: 1,
-                            borderColor: '#FCDF6F',
-                            borderRadius: 100,
-                            height: 18,
-                            width: 18,
-                            marginTop: 2,
-                          }
-                        : null
-                    }
-                  >
-                    <RadioButton
-                      value="second"
-                      uncheckedColor="#FDDF6F"
-                      color="#FDDF6F"
-                      status={checked === 'second' ? 'checked' : 'unchecked'}
-                      onPress={() => setChecked('second')}
-                    />
-                  </View>
-                  <View style={{ justifyContent: 'center' }}>
-                    <Text style={styles.radioBtnTxt}>Part Time</Text>
+                <View>
+                  <Radio onChange={() => setAvail("Part Time")} label="Part Time" color={"#FCDF6F"} labelStyle={{ color: '#1E272E', fontSize:13,  fontFamily:'ProximaNovaBold', paddingTop:1 }}  />
                   </View>
                 </View>
               </View>
@@ -148,8 +90,6 @@ const FilterModal = ({ filterModal, toggleFilter }) => {
                   renderThumb={renderThumb}
                   renderRail={renderRail}
                   renderRailSelected={renderRailSelected}
-                  renderLabel={renderLabel}
-                  renderNotch={renderNotch}
                   onValueChanged={handleValueChange}
                 />
               </View>

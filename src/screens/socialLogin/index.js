@@ -447,6 +447,9 @@ const SocialLogin = ({ navigation, route }) => {
               </TouchableOpacity>
             </React.Fragment>
           )}
+          <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+            <Text>Sign In</Text>
+          </TouchableOpacity>
           <CheckBox
             onClick={() => setTermsChecked(!termsChecked)}
             isChecked={termsChecked}

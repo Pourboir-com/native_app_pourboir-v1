@@ -140,4 +140,31 @@ export default {
   broadcast:
     'Nous allons diffuser votre profil aux restaurants correspondants à votre profil',
   thank_info: 'Merci pour vos informations',
+
+  // manager side translations 
+  already_acc: 'J’ai déjà un compte',
+  email: 'e-mail',
+  password_sign: 'mot de passes',
+  to_login: 'Se connecter',
+  no_acc: 'Pas encore de compte ?',
+  im_register: 'je m’inscris',
+  res_name: 'Nom du restaurant',
+  address: 'Addresse',
+  code_postal: 'Code postal',
+  carry_on: 'Continuer',
+  return: 'Retour',
+  resturant: 'Le restaurant',
+  manager: 'Le gérant',
+  recruit_estab: 'Les recrues près de votre établissement',
+  search: 'Recherchez',
+  availability: 'Disponibilité',
+  immediate: 'Immédiate',
+  exp: 'Expérience',
+  years: 'ans',
+  estb: 'Etablissement',
+  mark_cater:' Bac Pro Commercialisation et Services en Restauration',
+  recruit:'Recruter',
+  position_list: 'Liste de position',
+  eval: 'Évaluation',
+  filter: 'Filtrer'
 };

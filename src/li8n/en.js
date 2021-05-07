@@ -135,4 +135,31 @@ export default {
   broadcast: 'We will broadcast your profile to the corresponding restaurants to your profile',
   thank_info: 'thank you for your information',
 
+// manager side translations
+already_acc: 'I already have an account',
+email: 'E-mail',
+password_sign: 'Password',
+to_login: 'To log in',
+no_acc: 'No account yet ?',
+im_register: "I'm registering",
+res_name:'Restaurant name',
+address: 'Address',
+code_postal: 'Postal Code',
+carry_on: 'Carry on',
+return: 'Return',
+resturant: 'Restaurant',
+manager:'The Manager',
+recruit_estab: 'Recruits near your establishment',
+search: 'Search',
+availability:'Availability',
+immediate: 'Immediate',
+exp: 'Experience',
+years:'years',
+estb:'Establishment',
+mark_cater: 'Bac Pro Marketing and Catering Services',
+recruit: 'Recruit',
+position_list: 'Position List',
+eval: 'Evaluation',
+filter: 'Filter'
+
 };

@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   saveTxt: {
-    paddingVertical: 5,
+    paddingVertical: 3,
     fontFamily: 'ProximaNova',
-    fontSize: 12,
+    fontSize: 14,
   },
   signupTxt: {
     textAlign: 'center',

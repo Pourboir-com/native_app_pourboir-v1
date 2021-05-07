@@ -166,5 +166,6 @@ export default {
   recruit:'Recruter',
   position_list: 'Liste de position',
   eval: 'Évaluation',
-  filter: 'Filtrer'
+  filter: 'Filtrer',
+  post: 'Poste'
 };

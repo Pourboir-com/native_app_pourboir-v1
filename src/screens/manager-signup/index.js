@@ -3,8 +3,10 @@ import { ImageBackground, Text, TextInput, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
 import i18n from '../../li8n';
+import { useNavigation } from '@react-navigation/core';
 
 const ManagerSignUp = () => {
+  const navigation = useNavigation()
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [postalCode, setPostalCode] = useState('');
@@ -124,6 +126,7 @@ const ManagerSignUp = () => {
                 onChangeText={e => [v.setValue(e), setValues(v.value, i)]}
                 value={v.value}
                 placeholder={v.placeholder}
+                placeholderTextColor="#707070"
               />
             ))}
           </View>
@@ -137,8 +140,8 @@ const ManagerSignUp = () => {
           >
             <TouchableOpacity
               style={styles.btn_return}
-              onPress={index === 0 ? null : handlePrev}
-              activeOpacity={index === 0 ? 1 : 0.4}
+              onPress={index === 0 ? () => navigation.goBack() : handlePrev}
+              activeOpacity={0.4}
             >
               <Text style={styles.btn_txt}>{i18n.t('return')}</Text>
             </TouchableOpacity>

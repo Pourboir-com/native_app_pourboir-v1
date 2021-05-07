@@ -22,6 +22,7 @@ const SignIn = ({navigation}) => {
               onChangeText={e => setEmail(e)}
               value={email}
               placeholder={i18n.t('email')}
+              placeholderTextColor="#707070"
             />
             <TextInput
               style={styles.input}
@@ -29,6 +30,7 @@ const SignIn = ({navigation}) => {
               value={password}
               placeholder={i18n.t('password_sign')}
               secureTextEntry={true}
+              placeholderTextColor="#707070"
             />
             <TouchableOpacity onPress={() => navigation.navigate("ManagerStaff")} activeOpacity={0.7} style={styles.btn_save}>
               <Text style={styles.saveTxt}>{i18n.t('to_login')}</Text>

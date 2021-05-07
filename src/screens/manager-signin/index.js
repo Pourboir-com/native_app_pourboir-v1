@@ -1,19 +1,37 @@
 import React, { useState } from 'react';
-import { ImageBackground, Text, View } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  ImageBackground,
+  KeyboardAvoidingView,
+  Text,
+  View,
+} from 'react-native';
+import {
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 import styles from './styles';
 import i18n from '../../li8n';
-
-const SignIn = ({navigation}) => {
+const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
   return (
     <ImageBackground
-      style={{ flex: 1, width: '100%', height: '100%' }}
+      style={{
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+      }}
       source={require('../../assets/images/splashBg.png')}
     >
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={-500}
+        behavior="position"
+        enabled
+        style={{ width: '100%' }}
+      >
         <View style={styles.whiteCard}>
           <Text style={styles.topHeading}>{i18n.t('already_acc')}</Text>
           <View style={{ marginVertical: 30, width: '93%' }}>
@@ -32,18 +50,25 @@ const SignIn = ({navigation}) => {
               secureTextEntry={true}
               placeholderTextColor="#707070"
             />
-            <TouchableOpacity onPress={() => navigation.navigate("ManagerStaff")} activeOpacity={0.7} style={styles.btn_save}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ManagerStaff')}
+              activeOpacity={0.7}
+              style={styles.btn_save}
+            >
               <Text style={styles.saveTxt}>{i18n.t('to_login')}</Text>
             </TouchableOpacity>
           </View>
         </View>
         <View style={{ paddingVertical: 34 }}>
-          <TouchableOpacity onPress={() => navigation.navigate("ManagerSignUp")} activeOpacity={0.6}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ManagerSignUp')}
+            activeOpacity={0.6}
+          >
             <Text style={styles.text1}>{i18n.t('no_acc')}</Text>
             <Text style={styles.signupTxt}>{i18n.t('im_register')}</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 };

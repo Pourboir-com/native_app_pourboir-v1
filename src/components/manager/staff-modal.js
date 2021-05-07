@@ -5,7 +5,6 @@ import Modal from 'react-native-modal';
 import RatingStar from '../../components/RatingComponent';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
-import DashedLine from 'react-native-dashed-line';
 
 const StaffModal = ({ isModalVisible, toggleModal }) => {
   const obj = [1, 2, 3, 4, 5];
@@ -15,13 +14,6 @@ const StaffModal = ({ isModalVisible, toggleModal }) => {
       <Modal isVisible={isModalVisible}>
         <View style={styles.modal_container}>
           <View style={{ alignItems: 'center', width: '100%' }}>
-            <TouchableOpacity style={styles.cancelBtn} onPress={toggleModal}>
-              <Image
-                source={require('../../assets/images/cross.png')}
-                style={{ resizeMode: 'contain' }}
-              />
-            </TouchableOpacity>
-            
             <View style={styles.first_part_modal}>
               <View style={{ marginVertical: 20, alignItems: 'center' }}>
                 <View>
@@ -138,6 +130,13 @@ const StaffModal = ({ isModalVisible, toggleModal }) => {
               </View>
             </View>
           </View>
+
+          <TouchableOpacity style={styles.cancelBtn} onPress={toggleModal}>
+            <Image
+              source={require('../../assets/images/cross.png')}
+              style={{ resizeMode: 'contain' }}
+            />
+          </TouchableOpacity>
         </View>
       </Modal>
     </View>

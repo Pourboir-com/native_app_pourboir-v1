@@ -8,12 +8,13 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
+    alignSelf: 'center',
   },
   topHeading: {
     fontFamily: 'ProximaNovaBold',
     fontSize: 22,
     paddingTop: 10,
-    textAlign:'center'
+    textAlign: 'center',
   },
   input: {
     backgroundColor: '#F8F8F8',
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'ProximaNova',
     fontSize: 15,
-    paddingBottom:2
+    paddingBottom: 2,
   },
 });
 

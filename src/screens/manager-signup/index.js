@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import { ImageBackground, Text, TextInput, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  ImageBackground,
+  KeyboardAvoidingView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
 import i18n from '../../li8n';
 import { useNavigation } from '@react-navigation/core';
 
 const ManagerSignUp = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [postalCode, setPostalCode] = useState('');
@@ -22,12 +28,12 @@ const ManagerSignUp = () => {
     {
       value: name,
       setValue: setName,
-      placeholder: i18n.t('res_name') ,
+      placeholder: i18n.t('res_name'),
     },
     {
       value: address,
       setValue: setAddress,
-      placeholder: i18n.t('address') ,
+      placeholder: i18n.t('address'),
     },
     {
       value: postalCode,
@@ -102,16 +108,22 @@ const ManagerSignUp = () => {
       }}
       source={require('../../assets/images/splashBg.png')}
     >
-      <View
+      <KeyboardAvoidingView
         style={{
           flex: 1,
-          alignItems: 'center',
           justifyContent: 'center',
         }}
+        behavior="position"
+        keyboardVerticalOffset={-500}
+        enabled
       >
         <View style={styles.whiteCard}>
           <Text style={styles.topHeading}>
-            {index === 0 ? i18n.t('resturant') : index === 3 ? i18n.t('manager') : null}
+            {index === 0
+              ? i18n.t('resturant')
+              : index === 3
+              ? i18n.t('manager')
+              : null}
           </Text>
           <View
             style={{
@@ -167,7 +179,7 @@ const ManagerSignUp = () => {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 };

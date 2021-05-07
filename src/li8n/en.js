@@ -66,7 +66,8 @@ export default {
   name_of_your_server: 'The name of your waiter',
   waiter_email: 'Your waiter email',
   add: 'Add',
-  check_profile: 'We check your profile internally and will be validated within 24 hours',
+  check_profile:
+    'We check your profile internally and will be validated within 24 hours',
   Thank_you: 'Thank you',
   close: 'Close',
 
@@ -132,7 +133,8 @@ export default {
   position: 'Position',
   year: 'Year',
   //canidate modal
-  broadcast: 'We will broadcast your profile to the corresponding restaurants to your profile',
+  broadcast:
+    'We will broadcast your profile to the corresponding restaurants to your profile',
   thank_info: 'thank you for your information',
 
 // manager side translations

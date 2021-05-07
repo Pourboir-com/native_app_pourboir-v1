@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-const THUMB_RADIUS = 12;
+import { Platform, StyleSheet } from 'react-native';
+const THUMB_RADIUS = 9;
 
 const styles = StyleSheet.create({
   main_card_container: {
@@ -9,10 +9,10 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+    shadowOpacity: 0.2,
+    shadowRadius: 0.2,
 
-    elevation: 1,
+    elevation: Platform.OS === 'ios' ? 0 : 1,
     borderRadius: 14,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   modal_container: {
-    flex: 1,
     backgroundColor: '#fff',
     height: 'auto',
     alignItems: 'center',
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
   first_part_modal: {
     borderBottomColor: '#FDDF6F',
     borderBottomWidth: 2,
-    borderStyle: 'dotted',
+    borderStyle: 'dashed',
     width: '80%',
     alignItems: 'center',
     borderRadius: 1,
@@ -112,8 +111,8 @@ const styles = StyleSheet.create({
   },
   recruterBtns: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingTop: 20,
+    alignItems:'center'
   },
   filterTxt: {
     fontFamily: 'ProximaNovaBold',
@@ -133,7 +132,6 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   radioBtnTxt: {
-    paddingTop: 8,
     fontFamily: 'ProximaNova',
     fontWeight: '700',
     fontSize: 12,

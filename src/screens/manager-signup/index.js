@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
-import { ImageBackground, Text, TextInput, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  ImageBackground,
+  KeyboardAvoidingView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
 import i18n from '../../li8n';
 import { useMutation } from 'react-query';
@@ -122,12 +128,14 @@ const ManagerSignUp = ({ navigation }) => {
       }}
       source={require('../../assets/images/splashBg.png')}
     >
-      <View
+      <KeyboardAvoidingView
         style={{
           flex: 1,
-          alignItems: 'center',
           justifyContent: 'center',
         }}
+        behavior="position"
+        keyboardVerticalOffset={-500}
+        enabled
       >
         <View style={styles.whiteCard}>
           <Text style={styles.topHeading}>
@@ -150,6 +158,7 @@ const ManagerSignUp = ({ navigation }) => {
                 onChangeText={e => [v.setValue(e), setValues(v.value, i)]}
                 value={v.value}
                 placeholder={v.placeholder}
+                placeholderTextColor="#707070"
               />
             ))}
           </View>
@@ -163,8 +172,8 @@ const ManagerSignUp = ({ navigation }) => {
           >
             <TouchableOpacity
               style={styles.btn_return}
-              onPress={index === 0 ? null : handlePrev}
-              activeOpacity={index === 0 ? 1 : 0.4}
+              onPress={index === 0 ? () => navigation.goBack() : handlePrev}
+              activeOpacity={0.4}
             >
               <Text style={styles.btn_txt}>{i18n.t('return')}</Text>
             </TouchableOpacity>
@@ -190,7 +199,7 @@ const ManagerSignUp = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 };

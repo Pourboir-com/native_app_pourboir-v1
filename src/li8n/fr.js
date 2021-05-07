@@ -167,4 +167,5 @@ export default {
   position_list: 'Liste de position',
   eval: 'Évaluation',
   filter: 'Filtrer',
+  post: 'Poste'
 };

@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
+    alignSelf: 'center',
   },
   topHeading: {
     fontFamily: 'ProximaNovaBold',
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNova',
     paddingVertical: 15,
     fontSize: 12,
-    textAlign:'center'
+    textAlign: 'center',
   },
   btn_yellow: {
     backgroundColor: '#FCDF6F',

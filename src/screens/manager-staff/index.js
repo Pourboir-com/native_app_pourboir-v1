@@ -39,12 +39,13 @@ const ManagerStaff = () => {
             <View style={styles.main}>
               <View style={styles.searchBar}>
                 <View style={{ justifyContent: 'center', paddingRight: 20 }}>
-                  <Feather name="search" size={20} color="#FCDF6F" />
+                  <Feather name="search" size={25} color="#FCDF6F" />
                 </View>
                 <View style={{ width: '77%' }}>
                   <TextInput
                     placeholder={i18n.t('search')}
                     value={value}
+                    placeholderTextColor="#707070"
                     onChangeText={e => setValue(e)}
                     style={{ width: '100%', height: 40 }}
                   />

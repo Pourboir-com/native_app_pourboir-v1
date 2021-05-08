@@ -5,32 +5,33 @@ import {
   Text,
   View,
 } from 'react-native';
-import {
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
 import i18n from '../../li8n';
 import { useMutation } from 'react-query';
 import { LOGIN } from '../../queries';
 
-const SignIn = ({navigation}) => {
+const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [login] = useMutation(LOGIN);
 
   const handleLogin = async () => {
-    await login({
-      email,
-      password,
-    }, {
-      onSuccess: (res) => {
-        navigation.navigate("ManagerSignUp");
-        // localStorage.setItem('token', res.token);
-        // history.push('/team');
+    await login(
+      {
+        email,
+        password,
       },
-    });
+      {
+        onSuccess: res => {
+          navigation.navigate('ManagerStaff');
+          // localStorage.setItem('token', res.token);
+        },
+        onError: () => {
+          alert('Please enter correct email or password!');
+        },
+      },
+    );
   };
 
   return (
@@ -44,7 +45,7 @@ const SignIn = ({navigation}) => {
       source={require('../../assets/images/splashBg.png')}
     >
       <KeyboardAvoidingView
-        keyboardVerticalOffset={-500}
+        // keyboardVerticalOffset={-500}
         behavior="position"
         enabled
         style={{ width: '100%' }}
@@ -68,21 +69,30 @@ const SignIn = ({navigation}) => {
               placeholderTextColor="#707070"
             />
             <TouchableOpacity
-              onPress={() => navigation.navigate('ManagerStaff')}
-              activeOpacity={0.7}
-              style={styles.btn_save}
+              onPress={handleLogin}
+              disabled={email && password ? false : true}
+              activeOpacity={0.6}
+              style={[
+                styles.btn_save,
+                email && password
+                  ? { backgroundColor: '#FCDF6F' }
+                  : { backgroundColor: '#e0e0e0' },
+              ]}
             >
               <Text style={styles.saveTxt}>{i18n.t('to_login')}</Text>
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ paddingVertical: 34 }}>
-          <TouchableOpacity onPress={handleLogin} activeOpacity={0.6}>
-            <Text style={styles.text1}>{i18n.t('no_acc')}</Text>
-            <Text style={styles.signupTxt}>{i18n.t('im_register')}</Text>
-          </TouchableOpacity>
-        </View>
       </KeyboardAvoidingView>
+      <View style={{ paddingVertical: 34 }}>
+        <Text style={styles.text1}>{i18n.t('no_acc')}</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ManagerSignUp')}
+          activeOpacity={0.6}
+        >
+          <Text style={styles.signupTxt}>{i18n.t('im_register')}</Text>
+        </TouchableOpacity>
+      </View>
     </ImageBackground>
   );
 };

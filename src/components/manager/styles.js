@@ -67,8 +67,7 @@ const styles = StyleSheet.create({
     borderStyle: 'dotted',
     width: '80%',
     alignItems: 'center',
-    borderBottomRightRadius:1,
-    borderBottomRightRadius:1
+    borderBottomRightRadius: 1,
   },
   exp_year: {
     fontFamily: 'ProximaNova',
@@ -113,7 +112,7 @@ const styles = StyleSheet.create({
   recruterBtns: {
     flexDirection: 'row',
     paddingTop: 20,
-    alignItems:'center'
+    alignItems: 'center',
   },
   filterTxt: {
     fontFamily: 'ProximaNovaBold',
@@ -171,7 +170,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 12,
   },
-
 
   root_r: {
     flex: 1,

@@ -5,12 +5,15 @@ import {
   Text,
   TextInput,
   View,
+  Image,
 } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
 import i18n from '../../li8n';
 import { useMutation } from 'react-query';
 import { SIGN_UP } from '../../queries';
+import { SEARCH_RESTAURANTS } from '../../queries';
+import stylesTextbox from '../find-job/styles';
 
 const ManagerSignUp = ({ navigation }) => {
   const [signUp] = useMutation(SIGN_UP);
@@ -23,40 +26,133 @@ const ManagerSignUp = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [index, setIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(3);
-  const [values, setValues] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [restaurants, setRestaurants] = useState();
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [lastExperience, setLastExperience] = useState({});
+  const [searchRestaurant] = useMutation(SEARCH_RESTAURANTS);
+
+  const handleSearchRestaurant = async () => {
+    if (lastExperience?.last_exp) {
+      setSearchLoading(true);
+      setShowDropdown(true);
+      await searchRestaurant(
+        { search: lastExperience?.last_exp },
+        {
+          onSuccess: res => {
+            setSearchLoading(false);
+            setRestaurants(res);
+          },
+          onError: () => {
+            setSearchLoading(false);
+          },
+        },
+      );
+    }
+  };
+
+  let restaurantNameTextbox = () => {
+    return (
+      <View style={stylesTextbox.input_box}>
+        <View
+          style={[
+            stylesTextbox.input_icon,
+            { backgroundColor: '#F8F8F8', borderWidth: 0, marginBottom: -16 },
+          ]}
+        >
+          <TextInput
+            returnKeyLabel="Find"
+            returnKeyType="done"
+            onSubmitEditing={handleSearchRestaurant}
+            onChangeText={e =>
+              setLastExperience({
+                last_exp: e || '',
+                res_id: '',
+              })
+            }
+            value={lastExperience?.last_exp}
+            style={[
+              styles.input_icon_text,
+              { textAlign: 'center', width: '90%' },
+            ]}
+            placeholder={i18n.t('passedat')}
+            placeholderTextColor={'#707375'}
+          />
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => {
+              handleSearchRestaurant();
+            }}
+          >
+            <Image source={require('../../assets/images/search.png')} />
+          </TouchableOpacity>
+        </View>
+        {showDropdown && (
+          <View style={[stylesTextbox.options, { marginTop: 16 }]}>
+            {searchLoading ? (
+              <Text style={stylesTextbox.opt_txt}>Loading...</Text>
+            ) : (
+              (restaurants?.data || []).map((item, i) => (
+                <TouchableOpacity
+                  key={i}
+                  activeOpacity={0.5}
+                  onPress={() => {
+                    setShowDropdown(false);
+                    setLastExperience({
+                      last_exp: item?.name || '',
+                      res_id: item?.place_id || '',
+                    });
+                  }}
+                >
+                  <Text style={stylesTextbox.opt_txt}>{item?.name}</Text>
+                </TouchableOpacity>
+              ))
+            )}
+          </View>
+        )}
+      </View>
+    );
+  };
 
   const data = [
     {
+      id: 1,
       value: name,
       setValue: setName,
       placeholder: i18n.t('res_name'),
     },
     {
+      id: 2,
       value: address,
       setValue: setAddress,
       placeholder: i18n.t('address'),
     },
     {
+      id: 3,
       value: postalCode,
       setValue: setPostalCode,
       placeholder: i18n.t('code_postal'),
     },
     {
-      value: lastName,
-      setValue: setLastName,
-      placeholder: i18n.t('last_name'),
-    },
-    {
+      id: 4,
       value: firstName,
       setValue: setFirstName,
       placeholder: i18n.t('first_name'),
     },
     {
+      id: 5,
+      value: lastName,
+      setValue: setLastName,
+      placeholder: i18n.t('last_name'),
+    },
+    {
+      id: 6,
       value: email,
       setValue: setEmail,
       placeholder: i18n.t('email'),
     },
     {
+      id: 7,
       value: password,
       setValue: setPassword,
       placeholder: i18n.t('password_sign'),
@@ -90,7 +186,7 @@ const ManagerSignUp = ({ navigation }) => {
 
   const handleSubmit = async () => {
     if (
-      name &&
+      lastExperience?.last_exp &&
       address &&
       postalCode &&
       lastName &&
@@ -104,18 +200,22 @@ const ManagerSignUp = ({ navigation }) => {
           last_name: lastName,
           password: password,
           email: email,
-          restaurant_id: values.restaurant,
+          restaurant_id: lastExperience?.res_id || '',
           postal_code: postalCode,
           restaurant_address: address,
         },
         {
           onSuccess: () => {
-            navigation.navigate('ManagerSignUp');
+            alert('Sign up successful! Please login now.');
+            navigation.navigate('SignIn');
+          },
+          onError: e => {
+            alert(e.response?.data?.message);
           },
         },
       );
     } else {
-      alert('Please fill all required fields ..');
+      alert('Please fill all the fields..');
     }
   };
 
@@ -151,15 +251,21 @@ const ManagerSignUp = ({ navigation }) => {
               width: '93%',
             }}
           >
-            {data.slice(index, lastIndex).map((v, i) => (
-              <TextInput
-                key={i}
-                style={styles.input}
-                onChangeText={e => [v.setValue(e), setValues(v.value, i)]}
-                value={v.value}
-                placeholder={v.placeholder}
-                placeholderTextColor="#707070"
-              />
+            {data.slice(index, lastIndex).map(v => (
+              <>
+                {v.id === 1 ? (
+                  restaurantNameTextbox()
+                ) : (
+                  <TextInput
+                    key={v.id}
+                    style={styles.input}
+                    onChangeText={e => v.setValue(e)}
+                    value={v.value}
+                    placeholder={v.placeholder}
+                    placeholderTextColor="#707070"
+                  />
+                )}
+              </>
             ))}
           </View>
           <View

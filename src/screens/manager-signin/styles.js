@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   btn_save: {
-    backgroundColor: '#FCDF6F',
     width: '100%',
     marginTop: 15,
     borderRadius: 12,

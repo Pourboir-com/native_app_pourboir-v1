@@ -21,14 +21,14 @@ const styles = StyleSheet.create({
   yellow_box: {
     justifyContent: 'center',
     backgroundColor: '#FCDF6F',
-    width: 45,
-    height: 45,
+    width: 58,
+    height: 50,
     alignItems: 'center',
-    borderRadius: 14,
+    borderRadius: 18,
   },
   numbers_staff: {
     fontFamily: 'ProximaNova',
-    fontSize:15
+    fontSize:18
   },
   second_section: {
     marginTop: 30,

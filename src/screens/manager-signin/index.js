@@ -10,6 +10,7 @@ import styles from './styles';
 import i18n from '../../li8n';
 import { useMutation } from 'react-query';
 import { LOGIN } from '../../queries';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState();
@@ -23,9 +24,12 @@ const SignIn = ({ navigation }) => {
         password,
       },
       {
-        onSuccess: res => {
+        onSuccess: async () => {
           navigation.navigate('ManagerStaff');
-          // localStorage.setItem('token', res.token);
+          await AsyncStorage.setItem(
+            '@manager_email',
+            JSON.stringify(email),
+          );
         },
         onError: () => {
           alert('Please enter correct email or password!');

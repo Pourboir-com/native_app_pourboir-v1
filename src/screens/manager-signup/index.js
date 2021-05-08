@@ -183,17 +183,17 @@ const ManagerSignUp = ({ navigation }) => {
     }
     setLastIndex(lastIndex - 2);
   };
+  let validate =
+    lastExperience?.last_exp &&
+    address &&
+    postalCode &&
+    lastName &&
+    firstName &&
+    email &&
+    password;
 
   const handleSubmit = async () => {
-    if (
-      lastExperience?.last_exp &&
-      address &&
-      postalCode &&
-      lastName &&
-      firstName &&
-      email &&
-      password
-    ) {
+    if (validate) {
       await signUp(
         {
           full_name: firstName,

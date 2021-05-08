@@ -56,6 +56,8 @@ export default {
   continue_with_google: 'Continuer avec Google',
   I_accept: 'J’accepte les',
   terms_of_use: 'conditions d’utilisation et  la  politique de confidentialité',
+  I_am: 'Je suis',
+  manager_res: 'restaurateur',
 
   //Popup Confirm you are a server
   confrm_you_are_server: 'Confirmez que vous êtes serveur pour',

@@ -7,17 +7,35 @@ import StaffCard from '../../components/manager/staff-card';
 import StaffModal from '../../components/manager/staff-modal';
 import FilterModal from '../../components/manager/filter-modal';
 import i18n from '../../li8n';
+import { useQuery } from 'react-query';
+import { RECRUITMENT_FORM } from '../../queries';
+import { reactQueryConfig } from '../../constants';
 
 const ManagerStaff = () => {
   const [value, setValue] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
-  const [filterModal,setFilterModal] = useState(false)
+  const [filterModal, setFilterModal] = useState(false);
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
   const toggleFilter = () => {
-    setFilterModal(!filterModal)
-  }
+    setFilterModal(!filterModal);
+  };
+
+  const {
+    data: waitersData,
+    isLoading: waitersLoading,
+    refetch: refetchWaiters,
+    isFetching: waitersIsFetching,
+  } = useQuery(['RECRUITMENT_FORM', { search: value }], RECRUITMENT_FORM, {
+    ...reactQueryConfig,
+    onSuccess: res => {
+      console.log(res);
+    },
+    onError: e => {
+      console.log(e?.response?.data?.message);
+    },
+  });
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: '#F9F9F9' }}>
@@ -90,10 +108,10 @@ const ManagerStaff = () => {
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}
       />
-      <FilterModal 
-      toggleFilter={toggleFilter}
-      filterModal={filterModal}
-      setFilterModal={setFilterModal}
+      <FilterModal
+        toggleFilter={toggleFilter}
+        filterModal={filterModal}
+        setFilterModal={setFilterModal}
       />
     </ScrollView>
   );

@@ -34,6 +34,7 @@ import * as Localization from 'expo-localization';
 
 const SocialLogin = ({ navigation, route }) => {
   const [city, setCity] = useState();
+  const [managerEmail, setManagerEmail] = useState();
   const [loading, setLoading] = useState(false);
   const [googleSignup] = useMutation(GOOGLE_SIGNUP);
   const [vote, setVote] = useState(false);
@@ -116,8 +117,9 @@ const SocialLogin = ({ navigation, route }) => {
 
   useEffect(() => {
     async function loadCity() {
-      const { City } = await getAsyncStorageValues();
+      const { City, manager_email } = await getAsyncStorageValues();
       setCity(City?.city);
+      setManagerEmail(manager_email);
     }
     loadCity();
   }, []);
@@ -448,9 +450,6 @@ const SocialLogin = ({ navigation, route }) => {
               </TouchableOpacity>
             </React.Fragment>
           )}
-          <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
-            <Text>Sign In</Text>
-          </TouchableOpacity>
           <CheckBox
             onClick={() => setTermsChecked(!termsChecked)}
             isChecked={termsChecked}
@@ -498,6 +497,32 @@ const SocialLogin = ({ navigation, route }) => {
               </View>
             }
           />
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={{ marginTop: 30 }}
+            onPress={() => {
+              if (managerEmail) {
+                navigation.navigate('ManagerStaff');
+              } else {
+                navigation.navigate('SignIn');
+              }
+            }}
+          >
+            <Text style={{ color: Colors.fontLight }}>
+              {i18n.t('I_am')}{' '}
+              <Text
+                style={{
+                  color: '#0050A0',
+                  fontSize: 14,
+                  fontFamily: 'ProximaNova',
+                  lineHeight: 24,
+                  textAlign: 'center',
+                }}
+              >
+                {i18n.t('manager_res')}
+              </Text>{' '}
+            </Text>
+          </TouchableOpacity>
         </View>
       )}
     </ScrollView>

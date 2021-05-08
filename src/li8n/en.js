@@ -55,6 +55,8 @@ export default {
   continue_with_google: 'Continue with Google',
   I_accept: 'I accept the',
   terms_of_use: 'Terms of use and privacy policy',
+  I_am: 'I am',
+  manager_res: 'manager',
 
   //Popup Confirm you are a server
   confrm_you_are_server: 'Confirm that you are a waiter for',

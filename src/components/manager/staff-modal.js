@@ -6,12 +6,12 @@ import RatingStar from '../../components/RatingComponent';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
 
-const StaffModal = ({ isModalVisible, toggleModal }) => {
+const StaffModal = ({ isModalVisible, toggleModal, setModalVisible }) => {
   const obj = [1, 2, 3, 4, 5];
   const [rating, setRating] = useState(3);
   return (
     <View style={{ flex: 1 }}>
-      <Modal isVisible={isModalVisible}>
+      <Modal onBackdropPress={() => setModalVisible(false)} isVisible={isModalVisible}>
         <View style={styles.modal_container}>
           <View style={{ alignItems: 'center', width: '100%' }}>
             <View style={styles.first_part_modal}>

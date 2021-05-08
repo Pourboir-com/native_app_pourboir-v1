@@ -26,15 +26,16 @@ const SignIn = ({ navigation }) => {
       }}
       source={require('../../assets/images/splashBg.png')}
     >
-      <KeyboardAvoidingView
+      
+        <View style={styles.whiteCard}>
+          <Text style={styles.topHeading}>{i18n.t('already_acc')}</Text>
+          <View style={{ marginVertical: 30, width: '93%' }}>
+          <KeyboardAvoidingView
         keyboardVerticalOffset={-500}
         behavior="position"
         enabled
         style={{ width: '100%' }}
       >
-        <View style={styles.whiteCard}>
-          <Text style={styles.topHeading}>{i18n.t('already_acc')}</Text>
-          <View style={{ marginVertical: 30, width: '93%' }}>
             <TextInput
               style={styles.input}
               onChangeText={e => setEmail(e)}
@@ -57,8 +58,11 @@ const SignIn = ({ navigation }) => {
             >
               <Text style={styles.saveTxt}>{i18n.t('to_login')}</Text>
             </TouchableOpacity>
+            </KeyboardAvoidingView>
+
           </View>
         </View>
+
         <View style={{ paddingVertical: 34 }}>
           <TouchableOpacity
             onPress={() => navigation.navigate('ManagerSignUp')}
@@ -68,7 +72,6 @@ const SignIn = ({ navigation }) => {
             <Text style={styles.signupTxt}>{i18n.t('im_register')}</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
     </ImageBackground>
   );
 };

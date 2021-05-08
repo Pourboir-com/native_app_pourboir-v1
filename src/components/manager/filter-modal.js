@@ -14,7 +14,7 @@ import RangeSlider from 'rn-range-slider';
 import RatingStar from '../../components/RatingComponent';
 import { Radio } from 'galio-framework';
 
-const FilterModal = ({ filterModal, toggleFilter }) => {
+const FilterModal = ({ filterModal, toggleFilter, setFilterModal }) => {
   const [avail, setAvail] = useState('');
   const [low, setLow] = useState();
   const [high, setHigh] = useState();
@@ -41,7 +41,7 @@ console.log(avail)
   };
 
   return (
-    <Modal isVisible={filterModal}>
+    <Modal  onBackdropPress={() => setFilterModal(false)} isVisible={filterModal}>
       <View
         style={{
           backgroundColor: '#fff',
@@ -80,9 +80,9 @@ console.log(avail)
             </View>
             <View>
               <Text style={styles.postsLabel}>Experience</Text>
-              <View style={{ marginHorizontal: 8, marginTop: 12 }}>
+              <View style={{ marginHorizontal: 4, marginTop: 12 }}>
                 <RangeSlider
-                  style={styles.slider}
+                  // style={styles.slider}
                   min={0}
                   max={15}
                   step={1}

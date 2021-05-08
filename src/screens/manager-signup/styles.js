@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontFamily: 'ProximaNova',
     paddingVertical: 15,
-    fontSize: 12,
+    fontSize: 13,
     textAlign: 'center',
   },
   btn_yellow: {

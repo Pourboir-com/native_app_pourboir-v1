@@ -93,6 +93,7 @@ const ManagerStaff = () => {
       <FilterModal 
       toggleFilter={toggleFilter}
       filterModal={filterModal}
+      setFilterModal={setFilterModal}
       />
     </ScrollView>
   );

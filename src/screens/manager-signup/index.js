@@ -159,6 +159,8 @@ const ManagerSignUp = ({ navigation }) => {
     },
   ];
 
+  console.log(index, lastIndex);
+
   const handleNext = () => {
     if (lastIndex === 7) {
       setIndex(0);
@@ -283,26 +285,60 @@ const ManagerSignUp = ({ navigation }) => {
             >
               <Text style={styles.btn_txt}>{i18n.t('return')}</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={
-                name.length > 0 &&
-                address.length > 0 &&
-                postalCode.length > 0 &&
-                lastName.length > 0 &&
-                firstName.length > 0 &&
-                email.length > 0 &&
-                password.length > 0 &&
-                lastIndex === 0
-                  ? 1
-                  : 0.4
-              }
-              style={styles.btn_yellow}
-              onPress={lastIndex === 7 ? handleSubmit : handleNext}
-            >
-              <Text style={styles.btn_txt}>
-                {lastIndex === 7 ? i18n.t('to_login') : i18n.t('carry_on')}
-              </Text>
-            </TouchableOpacity>
+            {lastIndex === 7 ? (
+              <TouchableOpacity
+                disabled={
+                  // lastIndex === 7 ? false  : true &&
+                  name.length > 0 &&
+                  address.length > 0 &&
+                  postalCode.length > 0 &&
+                  lastName.length > 0 &&
+                  firstName.length > 0 &&
+                  email.length > 0 &&
+                  password.length > 0
+                    ? false
+                    : true
+                }
+                activeOpacity={0.5}
+                style={
+                  name.length > 0 &&
+                  address.length > 0 &&
+                  postalCode.length > 0 &&
+                  lastName.length > 0 &&
+                  firstName.length > 0 &&
+                  email.length > 0 &&
+                  password.length > 0
+                    ? styles.btn_yellow
+                    : styles.btn_disable
+                }
+                onPress={
+                  lastIndex > 6
+                    ? handleSubmit
+                    : null &&
+                      name.length > 0 &&
+                      address.length > 0 &&
+                      postalCode.length > 0 &&
+                      lastName.length > 0 &&
+                      firstName.length > 0 &&
+                      email.length > 0 &&
+                      password.length > 0
+                    ? handleSubmit
+                    : handleNext
+                }
+              >
+                <Text style={styles.btn_txt}>
+                  {lastIndex === 7 ? i18n.t('to_login') : i18n.t('carry_on')}
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                activeOpacity={0.5}
+                style={styles.btn_yellow}
+                onPress={handleNext}
+              >
+                <Text style={styles.btn_txt}>{i18n.t('carry_on')}</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </KeyboardAvoidingView>

@@ -44,6 +44,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  btn_disable: {
+    backgroundColor: '#ccc',
+    borderRadius: 12,
+    width: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default styles;

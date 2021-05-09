@@ -493,10 +493,10 @@ const ReviewDetails = ({ navigation, route }) => {
           </Text>
         )}
         {waitersLoading ? (
-          <>
+          <View style={{ width: '90%', alignSelf: 'center' }}>
             <ReviewsSkeleton />
             <ReviewsSkeleton />
-          </>
+          </View>
         ) : (
           <FlatList
             data={waitersLoading ? null : data}

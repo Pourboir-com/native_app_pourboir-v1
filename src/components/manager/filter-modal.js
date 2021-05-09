@@ -1,11 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import {
-  Image,
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import { Image, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import styles from './styles';
 import Modal from 'react-native-modal';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -27,7 +21,6 @@ const FilterModal = ({ filterModal, toggleFilter, setFilterModal }) => {
     setLow(low);
     setHigh(high);
   }, []);
-console.log(avail)
 
   const Rail = () => {
     return <View style={styles.root_r} />;
@@ -41,7 +34,10 @@ console.log(avail)
   };
 
   return (
-    <Modal  onBackdropPress={() => setFilterModal(false)} isVisible={filterModal}>
+    <Modal
+      onBackdropPress={() => setFilterModal(false)}
+      isVisible={filterModal}
+    >
       <View
         style={{
           backgroundColor: '#fff',
@@ -65,15 +61,35 @@ console.log(avail)
             </View>
             <View style={{ marginVertical: 22 }}>
               <Text style={styles.postsLabel}>{i18n.t('availability')}</Text>
-              <View style={{ marginLeft:0 }}>
+              <View style={{ marginLeft: 0 }}>
                 <View style={{ flexDirection: 'row' }}>
-                  <View style={{marginBottom:8}}>
-                  <Radio label="Full Time" onChange={() => setAvail("Full Time")}  color={"#FCDF6F"} labelStyle={{ color: '#1E272E',fontSize:13, fontFamily:'ProximaNovaBold', paddingTop:1  }}  />
+                  <View style={{ marginBottom: 8 }}>
+                    <Radio
+                      label="Full Time"
+                      onChange={() => setAvail('Full Time')}
+                      color={'#FCDF6F'}
+                      labelStyle={{
+                        color: '#1E272E',
+                        fontSize: 13,
+                        fontFamily: 'ProximaNovaBold',
+                        paddingTop: 1,
+                      }}
+                    />
                   </View>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
-                <View>
-                  <Radio onChange={() => setAvail("Part Time")} label="Part Time" color={"#FCDF6F"} labelStyle={{ color: '#1E272E', fontSize:13,  fontFamily:'ProximaNovaBold', paddingTop:1 }}  />
+                  <View>
+                    <Radio
+                      onChange={() => setAvail('Part Time')}
+                      label="Part Time"
+                      color={'#FCDF6F'}
+                      labelStyle={{
+                        color: '#1E272E',
+                        fontSize: 13,
+                        fontFamily: 'ProximaNovaBold',
+                        paddingTop: 1,
+                      }}
+                    />
                   </View>
                 </View>
               </View>

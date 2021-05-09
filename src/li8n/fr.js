@@ -155,7 +155,7 @@ export default {
   code_postal: 'Code postal',
   carry_on: 'Continuer',
   return: 'Retour',
-  resturant: 'Le restaurant',
+  restaurant: 'Le restaurant',
   manager: 'Le gérant',
   recruit_estab: 'Les recrues près de votre établissement',
   search: 'Recherchez',
@@ -169,5 +169,6 @@ export default {
   position_list: 'Liste de position',
   eval: 'Évaluation',
   filter: 'Filtrer',
-  post: 'Poste'
+  post: 'Poste',
+  no_job_found: 'Aucun emploi trouvé.',
 };

@@ -49,7 +49,7 @@ const Find_Job = ({ navigation }) => {
   let validation =
     firstName &&
     lastName &&
-    lastExperience?.last_exp &&
+    lastExperience?.experience &&
     position &&
     experience.replace(/[^0-9]/g, '') &&
     education &&
@@ -63,10 +63,7 @@ const Find_Job = ({ navigation }) => {
         full_name: firstName || '',
         last_name: lastName || '',
         experience: experience || '',
-        last_experience: {
-          last_exp: lastExperience?.last_exp || '',
-          restaurant_id: lastExperience?.res_id || '',
-        },
+        last_experience: lastExperience?.restaurant_id || '',
         education: education || '',
         time: temp || '',
         position: position || '',
@@ -83,11 +80,11 @@ const Find_Job = ({ navigation }) => {
     }
   };
   const handleSearchRestaurant = async () => {
-    if (lastExperience?.last_exp) {
+    if (lastExperience?.experience) {
       setSearchLoading(true);
       setShowDropdown(true);
       await searchRestaurant(
-        { search: lastExperience?.last_exp },
+        { search: lastExperience?.experience },
         {
           onSuccess: res => {
             setSearchLoading(false);
@@ -210,11 +207,11 @@ const Find_Job = ({ navigation }) => {
                     onSubmitEditing={handleSearchRestaurant}
                     onChangeText={e =>
                       setLastExperience({
-                        last_exp: e || '',
-                        res_id: '',
+                        experience: e || '',
+                        restaurant_id: '',
                       })
                     }
-                    value={lastExperience?.last_exp}
+                    value={lastExperience?.experience}
                     style={styles.input_icon_text}
                     placeholder={i18n.t('passedat')}
                     placeholderTextColor={'#707375'}
@@ -240,8 +237,8 @@ const Find_Job = ({ navigation }) => {
                           onPress={() => {
                             setShowDropdown(false);
                             setLastExperience({
-                              last_exp: item?.name || '',
-                              res_id: item?.place_id || '',
+                              experience: item?.name || '',
+                              restaurant_id: item?._id || '',
                             });
                           }}
                         >

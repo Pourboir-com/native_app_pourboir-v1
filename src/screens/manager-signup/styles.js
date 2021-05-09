@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btn_disable: {
-    backgroundColor: '#ccc',
+    backgroundColor: '#EAEAEA',
     borderRadius: 12,
     width: 120,
     justifyContent: 'center',

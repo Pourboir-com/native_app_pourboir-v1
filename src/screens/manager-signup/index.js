@@ -33,11 +33,11 @@ const ManagerSignUp = ({ navigation }) => {
   const [searchRestaurant] = useMutation(SEARCH_RESTAURANTS);
 
   const handleSearchRestaurant = async () => {
-    if (lastExperience?.last_exp) {
+    if (lastExperience?.experience) {
       setSearchLoading(true);
       setShowDropdown(true);
       await searchRestaurant(
-        { search: lastExperience?.last_exp },
+        { search: lastExperience?.experience },
         {
           onSuccess: res => {
             setSearchLoading(false);
@@ -66,11 +66,11 @@ const ManagerSignUp = ({ navigation }) => {
             onSubmitEditing={handleSearchRestaurant}
             onChangeText={e =>
               setLastExperience({
-                last_exp: e || '',
-                res_id: '',
+                experience: e || '',
+                restaurant_id: '',
               })
             }
-            value={lastExperience?.last_exp}
+            value={lastExperience?.experience}
             style={[
               styles.input_icon_text,
               { textAlign: 'center', width: '90%' },
@@ -99,8 +99,8 @@ const ManagerSignUp = ({ navigation }) => {
                   onPress={() => {
                     setShowDropdown(false);
                     setLastExperience({
-                      last_exp: item?.name || '',
-                      res_id: item?.place_id || '',
+                      experience: item?.name || '',
+                      restaurant_id: item?._id || '',
                     });
                   }}
                 >
@@ -159,8 +159,6 @@ const ManagerSignUp = ({ navigation }) => {
     },
   ];
 
-  console.log(index, lastIndex);
-
   const handleNext = () => {
     if (lastIndex === 7) {
       setIndex(0);
@@ -186,7 +184,7 @@ const ManagerSignUp = ({ navigation }) => {
     setLastIndex(lastIndex - 2);
   };
   let validate =
-    lastExperience?.last_exp &&
+    lastExperience?.experience &&
     address &&
     postalCode &&
     lastName &&
@@ -202,7 +200,7 @@ const ManagerSignUp = ({ navigation }) => {
           last_name: lastName,
           password: password,
           email: email,
-          restaurant_id: lastExperience?.res_id || '',
+          restaurant_id: lastExperience?.restaurant_id || '',
           postal_code: postalCode,
           restaurant_address: address,
         },
@@ -242,7 +240,7 @@ const ManagerSignUp = ({ navigation }) => {
         <View style={styles.whiteCard}>
           <Text style={styles.topHeading}>
             {index === 0
-              ? i18n.t('resturant')
+              ? i18n.t('restaurant')
               : index === 3
               ? i18n.t('manager')
               : null}
@@ -289,39 +287,14 @@ const ManagerSignUp = ({ navigation }) => {
               <TouchableOpacity
                 disabled={
                   // lastIndex === 7 ? false  : true &&
-                  name.length > 0 &&
-                  address.length > 0 &&
-                  postalCode.length > 0 &&
-                  lastName.length > 0 &&
-                  firstName.length > 0 &&
-                  email.length > 0 &&
-                  password.length > 0
-                    ? false
-                    : true
+                  validate ? false : true
                 }
                 activeOpacity={0.5}
-                style={
-                  name.length > 0 &&
-                  address.length > 0 &&
-                  postalCode.length > 0 &&
-                  lastName.length > 0 &&
-                  firstName.length > 0 &&
-                  email.length > 0 &&
-                  password.length > 0
-                    ? styles.btn_yellow
-                    : styles.btn_disable
-                }
+                style={validate ? styles.btn_yellow : styles.btn_disable}
                 onPress={
                   lastIndex > 6
                     ? handleSubmit
-                    : null &&
-                      name.length > 0 &&
-                      address.length > 0 &&
-                      postalCode.length > 0 &&
-                      lastName.length > 0 &&
-                      firstName.length > 0 &&
-                      email.length > 0 &&
-                      password.length > 0
+                    : null && validate
                     ? handleSubmit
                     : handleNext
                 }

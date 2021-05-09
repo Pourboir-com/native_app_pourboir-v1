@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ImageBackground } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Dimensions } from 'react-native';
 import { StyleSheet, View, Platform } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import GlobalHeader from '../../components/GlobalHeader';
+// import { getAsyncStorageValues } from '../../constants';
+// import * as Location from 'expo-location';
 
 const MapScreen = ({ navigation, route }) => {
   const { geometry, name } = route?.params;
   const [isMapReady, setIsMapReady] = useState(false);
+  // const [saveLocation, setSaveLocation] = useState({});
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const location = await Location.getCurrentPositionAsync({
+  //       accuracy: Location.Accuracy.Highest,
+  //     });
+  //     setSaveLocation(location.coords);
+  //   })();
+  // }, []);
 
   return (
     <View style={styles.container}>
@@ -39,6 +51,7 @@ const MapScreen = ({ navigation, route }) => {
       </View>
       <View style={{ flex: 1 }}>
         <MapView
+          showsUserLocation
           onLayout={() => setIsMapReady(true)}
           // provider={Platform.OS != 'ios' && PROVIDER_GOOGLE}
           {...(Platform.OS != 'ios'
@@ -55,14 +68,25 @@ const MapScreen = ({ navigation, route }) => {
           }}
         >
           {isMapReady && (
-            <MapView.Marker
-              coordinate={{
-                latitude: geometry?.lat || 0,
-                longitude: geometry?.lng || 0,
-              }}
-              title={'Location'}
-              description={name}
-            />
+            <>
+              <MapView.Marker
+                coordinate={{
+                  latitude: geometry?.lat || 0,
+                  longitude: geometry?.lng || 0,
+                }}
+                title={'Location'}
+                description={name}
+              />
+              {/* <MapView.Marker
+                coordinate={{
+                  latitude: saveLocation?.latitude || 0,
+                  longitude: saveLocation?.longitude || 0,
+                }}
+                pinColor={'#006400'}
+                title={'Home'}
+                // description={name}
+              /> */}
+            </>
           )}
         </MapView>
       </View>

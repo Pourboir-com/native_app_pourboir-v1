@@ -6,7 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Rating } from 'react-native-ratings';
 import RatingStar from '../../components/RatingComponent';
 
-const StaffCard = ({ toggleModal }) => {
+const StaffCard = ({ toggleModal, data }) => {
   const obj = [1, 2, 3, 4, 5];
   const [rating, setRating] = useState(3);
   return (
@@ -18,17 +18,22 @@ const StaffCard = ({ toggleModal }) => {
       <View style={styles.section1}>
         <View>
           <Image
-            source={require('../../assets/images/Bitmap.png')}
+            source={{ uri: data?.user_id.picture }}
             style={{
-              borderRadius: 100,
-              width: 60,
-              height: 60,
-              resizeMode: 'contain',
+              borderRadius: 30,
+              width: 55,
+              height: 55,
             }}
           />
         </View>
         <View style={{ justifyContent: 'center', paddingLeft: 10 }}>
-          <Text style={styles.name_staff}>Amy Farha</Text>
+          <Text
+            ellipsizeMode="tail"
+            numberOfLines={1}
+            style={styles.name_staff}
+          >
+            {data?.user_id?.full_name}
+          </Text>
           <View style={{ flexDirection: 'row', marginTop: 6 }}>
             {obj.map((v, i) => {
               return (

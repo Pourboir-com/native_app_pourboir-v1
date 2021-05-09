@@ -28,10 +28,11 @@ const styles = StyleSheet.create({
   },
   numbers_staff: {
     fontFamily: 'ProximaNova',
-    fontSize:18
+    fontSize: 18,
   },
   second_section: {
     marginTop: 30,
+    paddingBottom: 10,
   },
   main: {
     flexDirection: 'row',
@@ -59,9 +60,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 10,
     paddingTop: 4,
-  },
-  third_section: {
-    marginTop: 40,
   },
 });
 

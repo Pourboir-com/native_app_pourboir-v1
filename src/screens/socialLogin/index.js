@@ -467,7 +467,7 @@ const SocialLogin = ({ navigation, route }) => {
               <CheckBox
                 style={{
                   paddingRight: 10,
-                  marginTop: Platform.OS === 'android' ? -4 : -15,
+                  marginTop: Platform.OS === 'android' ? -4 : -13,
                 }}
                 onClick={() => setTermsChecked(!termsChecked)}
                 isChecked={termsChecked}

@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     width: 120,
     justifyContent: 'center',
     alignItems: 'center',
+    height: 45,
   },
   btn_disable: {
     backgroundColor: '#EAEAEA',

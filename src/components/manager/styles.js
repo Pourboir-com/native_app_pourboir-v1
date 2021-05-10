@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
   btn_green: {
     backgroundColor: '#6DD400',
     borderRadius: 100,
-    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
   text_dispon: {
     fontFamily: 'ProximaNova',
     textAlign: 'center',
-    fontSize: 11,
+    fontSize: 12,
     paddingVertical: 3,
     fontWeight: '700',
     paddingBottom: 4,
@@ -97,14 +96,14 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   petitTxt: {
-    fontSize: 11,
+    fontSize: 12,
     fontFamily: 'ProximaNova',
     textAlign: 'center',
     paddingTop: 15,
     color: '#1E272E',
   },
   qualifDetail: {
-    fontSize: 11,
+    fontSize: 12,
     fontFamily: 'ProximaNova',
     textAlign: 'center',
     paddingTop: 15,

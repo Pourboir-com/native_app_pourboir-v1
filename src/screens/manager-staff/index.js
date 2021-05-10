@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 import { Feather } from '@expo/vector-icons';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import StaffCard from '../../components/manager/staff-card';
 import StaffModal from '../../components/manager/staff-modal';
 import FilterModal from '../../components/manager/filter-modal';
@@ -20,27 +20,75 @@ import { reactQueryConfig } from '../../constants';
 import { ReviewsSkeleton } from '../../components/skeleton';
 
 const ManagerStaff = () => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState('');
   const [isModalVisible, setModalVisible] = useState(false);
   const [filterModal, setFilterModal] = useState(false);
-  const toggleModal = () => {
+  const [formId, setFormId] = useState('');
+  //Filter States
+  const [avail, setAvail] = useState('');
+  const [low, setLow] = useState();
+  const [high, setHigh] = useState();
+  const [rating, setRating] = useState();
+  const [position, setPosition] = useState();
+  const [filterClicked, setFilterClicked] = useState();
+
+  // let filterSearch = () => {
+  //   if (value) {
+  //     return {
+  //       rating: rating || '',
+  //       experience_greater: high || '',
+  //       experience_less: low || '',
+  //       time: [avail] || [],
+  //       position: position || '',
+  //     };
+  //   }
+  //   else {
+  //     return {};
+  //   }
+  // };
+  // console.log(filterSearch());
+  
+  const {
+    data: waitersFormData,
+    isLoading: waitersFormLoading,
+    refetch: refetchFormWaiters,
+    isFetching: waitersFormIsFetching,
+  } = useQuery(
+    ['RECRUITMENT_FORM', { search: value, rating_needed: true }],
+    RECRUITMENT_FORM,
+    {
+      ...reactQueryConfig,
+      onError: e => {
+        alert(e?.response?.data?.message);
+      },
+    },
+  );
+
+  let FilterStates = {
+    avail,
+    setAvail,
+    low,
+    setLow,
+    high,
+    setHigh,
+    rating,
+    setRating,
+    position,
+    setPosition,
+    filterClicked,
+    setFilterClicked,
+    refetchFormWaiters,
+  };
+
+
+  const toggleModal = id => {
+    setFormId(id);
     setModalVisible(!isModalVisible);
   };
   const toggleFilter = () => {
     setFilterModal(!filterModal);
   };
 
-  const {
-    data: waitersFormData,
-    isLoading: waitersFormLoading,
-    refetch: refetchFormWaiters,
-    isFetching: waitersFormIsFetching,
-  } = useQuery(['RECRUITMENT_FORM', { search: value }], RECRUITMENT_FORM, {
-    ...reactQueryConfig,
-    onError: e => {
-      alert(e?.response?.data?.message);
-    },
-  });
 
   return (
     <View style={{ flex: 1, backgroundColor: '#F9F9F9' }}>
@@ -118,23 +166,27 @@ const ManagerStaff = () => {
               )}
             />
           ) : (
-            <Text style={{ fontFamily: 'ProximaNovaSemiBold', fontSize: 16 }}>
+            <Text style={{ fontFamily: 'ProximaNovaSemiBold', fontSize: 16,paddingHorizontal: 25, marginTop: 25 }}>
               {i18n.t('no_job_found')}
             </Text>
           )}
         </>
       )}
-
-      <StaffModal
-        toggleModal={toggleModal}
-        isModalVisible={isModalVisible}
-        setModalVisible={setModalVisible}
-      />
-      <FilterModal
-        toggleFilter={toggleFilter}
-        filterModal={filterModal}
-        setFilterModal={setFilterModal}
-      />
+      {isModalVisible && (
+        <StaffModal
+          formId={formId || ''}
+          isModalVisible={isModalVisible}
+          setModalVisible={setModalVisible}
+        />
+      )}
+      {filterModal && (
+        <FilterModal
+          toggleFilter={toggleFilter}
+          filterModal={filterModal}
+          setFilterModal={setFilterModal}
+          FilterStates={FilterStates}
+        />
+      )}
     </View>
   );
 };

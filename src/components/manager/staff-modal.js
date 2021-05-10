@@ -5,21 +5,43 @@ import Modal from 'react-native-modal';
 import RatingStar from '../../components/RatingComponent';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
+import { useQuery } from 'react-query';
+import { RECRUITMENT_FORM } from '../../queries';
+import { reactQueryConfig } from '../../constants';
 
-const StaffModal = ({ isModalVisible, toggleModal, setModalVisible }) => {
+const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
   const obj = [1, 2, 3, 4, 5];
-  const [rating, setRating] = useState(3);
+  const {
+    data: waiterFormData,
+    // isLoading: waiterFormLoading,
+    // refetch: refetchFormWaiter,
+    // isFetching: waiterFormIsFetching,
+  } = useQuery(
+    ['RECRUITMENT_FORM', { form_id: formId, rating_needed: true }],
+    RECRUITMENT_FORM,
+    {
+      ...reactQueryConfig,
+      onError: e => {
+        alert(e?.response?.data?.message);
+      },
+    },
+  );
+  console.log(waiterFormData);
+
   return (
     <View style={{ flex: 1 }}>
-      <Modal onBackdropPress={() => setModalVisible(false)} isVisible={isModalVisible}>
+      <Modal
+        onBackdropPress={() => setModalVisible(false)}
+        isVisible={isModalVisible}
+      >
         <View style={styles.modal_container}>
           <View style={{ alignItems: 'center', width: '100%' }}>
             <View style={styles.first_part_modal}>
               <View style={{ marginVertical: 20, alignItems: 'center' }}>
                 <View>
                   <Image
-                    source={require('../../assets/images/Bitmap.png')}
-                    style={{ resizeMode: 'contain', width: 110, height: 110 }}
+                    source={{ uri: waiterFormData?.data[0]?.user_id?.picture }}
+                    style={{ width: 90, height: 90, borderRadius: 50 }}
                   />
                 </View>
                 <View style={{ marginTop: 8 }}>
@@ -30,9 +52,9 @@ const StaffModal = ({ isModalVisible, toggleModal, setModalVisible }) => {
                           <RatingStar
                             starSize={17}
                             type={
-                              v <= rating
+                              v <= waiterFormData?.data[0]?.rating
                                 ? 'filled'
-                                : v === rating + 0.5
+                                : v === waiterFormData?.data[0]?.rating + 0.5
                                 ? 'half'
                                 : 'empty'
                             }
@@ -52,7 +74,7 @@ const StaffModal = ({ isModalVisible, toggleModal, setModalVisible }) => {
                     style={styles.btn_green}
                   >
                     <Text style={styles.btnGreen_txt}>
-                      {i18n.t('immediate')}
+                      {waiterFormData?.data[0]?.time}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -72,7 +94,9 @@ const StaffModal = ({ isModalVisible, toggleModal, setModalVisible }) => {
                       paddingHorizontal: 10,
                     }}
                   >
-                    <Text style={styles.exp_year}>5 </Text>
+                    <Text style={styles.exp_year}>
+                      {waiterFormData?.data[0]?.experience}
+                    </Text>
                     <Text style={styles.ansTxt}> {i18n.t('years')}</Text>
                   </View>
                 </View>
@@ -85,7 +109,8 @@ const StaffModal = ({ isModalVisible, toggleModal, setModalVisible }) => {
                     <Text style={styles.expsTxt}>{i18n.t('estb')}</Text>
                   </View>
                   <View>
-                    <Text style={styles.petitTxt}>Le Petit Nice</Text>
+                    {/* <Text style={styles.petitTxt}>{waiterFormData?.data[0]?.last_experience}</Text> */}
+                    <Text style={styles.petitTxt}>null</Text>
                   </View>
                 </View>
               </View>
@@ -98,7 +123,7 @@ const StaffModal = ({ isModalVisible, toggleModal, setModalVisible }) => {
                   </View>
                   <View>
                     <Text style={styles.qualifDetail}>
-                      {i18n.t('mark_cater')}
+                      {waiterFormData?.data[0]?.education}
                     </Text>
                   </View>
                 </View>
@@ -131,7 +156,10 @@ const StaffModal = ({ isModalVisible, toggleModal, setModalVisible }) => {
             </View>
           </View>
 
-          <TouchableOpacity style={styles.cancelBtn} onPress={toggleModal}>
+          <TouchableOpacity
+            style={styles.cancelBtn}
+            onPress={() => setModalVisible(false)}
+          >
             <Image
               source={require('../../assets/images/cross.png')}
               style={{ resizeMode: 'contain' }}

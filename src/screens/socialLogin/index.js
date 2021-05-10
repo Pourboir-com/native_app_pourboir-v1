@@ -11,6 +11,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Constants from 'expo-constants';
+import * as WebBrowser from 'expo-web-browser';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import CheckBox from 'react-native-check-box';
 import { Colors } from '../../constants/Theme';
@@ -450,53 +451,73 @@ const SocialLogin = ({ navigation, route }) => {
               </TouchableOpacity>
             </React.Fragment>
           )}
-          <CheckBox
-            onClick={() => setTermsChecked(!termsChecked)}
-            isChecked={termsChecked}
-            checkedImage={
-              <Image
-                style={{ width: 18 }}
-                resizeMode={'contain'}
-                source={require('../../assets/images/checked.png')}
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginRight: 25,
+                height: 40,
+              }}
+            >
+              <CheckBox
+                style={{ paddingTop: 22, paddingRight: 10 }}
+                onClick={() => setTermsChecked(!termsChecked)}
+                isChecked={termsChecked}
+                checkedImage={
+                  <Image
+                    style={{ width: 18 }}
+                    resizeMode={'contain'}
+                    source={require('../../assets/images/checked.png')}
+                  />
+                }
+                unCheckedImage={
+                  <Image
+                    style={{ width: 16 }}
+                    resizeMode={'contain'}
+                    source={require('../../assets/images/unchecked.png')}
+                  />
+                }
               />
-            }
-            unCheckedImage={
-              <Image
-                style={{ width: 16 }}
-                resizeMode={'contain'}
-                source={require('../../assets/images/unchecked.png')}
-              />
-            }
-            rightTextView={
-              <View>
-                <Text
-                  style={[
-                    styles.txtCreatingAcc,
-                    {
-                      fontSize: 14,
-                      fontFamily: 'ProximaNova',
-                      lineHeight: 24,
-                      width: 250,
-                      textAlign: 'center',
-                    },
-                  ]}
-                >
-                  {i18n.t('I_accept')}{' '}
-                  <Text
-                    style={{
-                      color: '#0050A0',
-                      fontSize: 14,
-                      fontFamily: 'ProximaNova',
-                      lineHeight: 24,
-                      textAlign: 'center',
-                    }}
-                  >
-                    {i18n.t('terms_of_use')}
+              <Text
+                style={[
+                  styles.txtCreatingAcc,
+                  {
+                    fontSize: 14,
+                    fontFamily: 'ProximaNova',
+                    lineHeight: 24,
+                    width: 250,
+                  },
+                ]}
+              >
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ color: Colors.fontLight, marginTop: 1 }}>
+                    {i18n.t('I_accept')}{' '}
                   </Text>
-                </Text>
-              </View>
-            }
-          />
+                  <TouchableOpacity
+                    onPress={() =>
+                      WebBrowser.openBrowserAsync(
+                        'https://pourboir.com/fr/need-help/privacy-policy/',
+                      )
+                    }
+                  >
+                    <Text
+                      style={{
+                        color: '#0050A0',
+                        fontSize: 14,
+                        fontFamily: 'ProximaNova',
+                        lineHeight: 24,
+                        textAlign: 'center',
+                      }}
+                    >
+                      {i18n.t('terms_of_use')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </Text>
+            </View>
+          </View>
+
           <TouchableOpacity
             activeOpacity={0.5}
             style={{ marginTop: 30 }}

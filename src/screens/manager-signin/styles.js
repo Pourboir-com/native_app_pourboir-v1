@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 12,
+    height: 45,
   },
   saveTxt: {
     paddingVertical: 3,

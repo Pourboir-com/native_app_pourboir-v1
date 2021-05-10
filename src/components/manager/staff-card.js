@@ -8,10 +8,10 @@ import RatingStar from '../../components/RatingComponent';
 
 const StaffCard = ({ toggleModal, data }) => {
   const obj = [1, 2, 3, 4, 5];
-  const [rating, setRating] = useState(3);
+
   return (
     <TouchableOpacity
-      onPress={toggleModal}
+      onPress={() => toggleModal(data?._id)}
       activeOpacity={0.8}
       style={styles.main_card_container}
     >
@@ -41,11 +41,11 @@ const StaffCard = ({ toggleModal, data }) => {
                   <RatingStar
                     starSize={17}
                     type={
-                      v <= rating
+                      v <= data?.rating
                         ? 'filled'
-                        : v === rating + 0.5
-                        ? 'half'
-                        : 'empty'
+                        : v === data?.rating + 0.5
+                          ? 'half'
+                          : 'empty'
                     }
                     notRatedStarColor="#f1f1f1"
                   />

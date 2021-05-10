@@ -6,6 +6,8 @@ import {
   TextInput,
   View,
   Image,
+  Platform,
+  ActivityIndicator,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
@@ -14,6 +16,7 @@ import { useMutation } from 'react-query';
 import { SIGN_UP } from '../../queries';
 import { SEARCH_RESTAURANTS } from '../../queries';
 import stylesTextbox from '../find-job/styles';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const ManagerSignUp = ({ navigation }) => {
   const [signUp] = useMutation(SIGN_UP);
@@ -31,7 +34,7 @@ const ManagerSignUp = ({ navigation }) => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [lastExperience, setLastExperience] = useState({});
   const [searchRestaurant] = useMutation(SEARCH_RESTAURANTS);
-
+  const [loading, setLoading] = useState(false);
   const handleSearchRestaurant = async () => {
     if (lastExperience?.experience) {
       setSearchLoading(true);
@@ -54,6 +57,24 @@ const ManagerSignUp = ({ navigation }) => {
   let restaurantNameTextbox = () => {
     return (
       <View style={stylesTextbox.input_box}>
+        <Text>
+          {(!lastExperience?.experience || !lastExperience?.restaurant_id) && (
+            <>
+              {!showDropdown &&
+                lastExperience?.experience &&
+                !lastExperience?.restaurant_id && (
+                  <Text style={{ color: 'red' }}>*Click on search.</Text>
+                )}
+
+              {!lastExperience?.restaurant_id &&
+                lastExperience?.experience &&
+                showDropdown && (
+                  <Text style={{ color: 'red' }}>*Select restaurant.</Text>
+                )}
+            </>
+          )}
+        </Text>
+
         <View
           style={[
             stylesTextbox.input_icon,
@@ -67,7 +88,10 @@ const ManagerSignUp = ({ navigation }) => {
             onChangeText={e =>
               setLastExperience({
                 experience: e || '',
-                restaurant_id: '',
+                restaurant_id:
+                  lastExperience?.experience?.length < 2
+                    ? ''
+                    : lastExperience?.restaurant_id,
               })
             }
             value={lastExperience?.experience}
@@ -184,6 +208,7 @@ const ManagerSignUp = ({ navigation }) => {
     setLastIndex(lastIndex - 2);
   };
   let validate =
+    lastExperience?.restaurant_id &&
     lastExperience?.experience &&
     address &&
     postalCode &&
@@ -194,28 +219,37 @@ const ManagerSignUp = ({ navigation }) => {
 
   const handleSubmit = async () => {
     if (validate) {
+      setLoading(true);
       await signUp(
         {
-          full_name: firstName,
-          last_name: lastName,
-          password: password,
-          email: email,
+          full_name: firstName || '',
+          last_name: lastName || '',
+          password: password || '',
+          email: email || '',
           restaurant_id: lastExperience?.restaurant_id || '',
-          postal_code: postalCode,
-          restaurant_address: address,
+          postal_code: postalCode || '',
+          restaurant_address: address || '',
         },
         {
           onSuccess: () => {
             alert('Sign up successful! Please login now.');
             navigation.navigate('SignIn');
+            setLoading(false);
           },
           onError: e => {
             alert(e.response?.data?.message);
+            setLoading(false);
           },
         },
       );
     } else {
-      alert('Please fill all the fields..');
+      // alert(
+      //   `*${!firstName ? `First name,` : ''} ${!email ? 'email,' : ''} ${!password ?
+      //     'password,' : ''} ${!lastExperience?.restaurant_id ?
+      //       'restaurant name' : ''} is required.`,
+      // );
+      alert('* Please fill all the fields.');
+      setLoading(false);
     }
   };
 
@@ -228,14 +262,19 @@ const ManagerSignUp = ({ navigation }) => {
       }}
       source={require('../../assets/images/splashBg.png')}
     >
-      <KeyboardAvoidingView
-        style={{
+      <KeyboardAwareScrollView
+        bounces={false}
+        enableOnAndroid={true}
+        extraScrollHeight={10}
+        keyboardShouldPersistTaps="handled"
+        scrollToOverflowEnabled={true}
+        enableAutomaticScroll={Platform.OS === 'ios' ? true : false}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle={{
+          width: '100%',
           flex: 1,
           justifyContent: 'center',
         }}
-        behavior="position"
-        keyboardVerticalOffset={-500}
-        enabled
       >
         <View style={styles.whiteCard}>
           <Text style={styles.topHeading}>
@@ -251,22 +290,26 @@ const ManagerSignUp = ({ navigation }) => {
               width: '93%',
             }}
           >
-            {data.slice(index, lastIndex).map(v => (
-              <>
-                {v.id === 1 ? (
-                  restaurantNameTextbox()
-                ) : (
-                  <TextInput
-                    key={v.id}
-                    style={styles.input}
-                    onChangeText={e => v.setValue(e)}
-                    value={v.value}
-                    placeholder={v.placeholder}
-                    placeholderTextColor="#707070"
-                  />
-                )}
-              </>
-            ))}
+            {React.Children.toArray(
+              data
+                .slice(index, lastIndex)
+                .map(v => (
+                  <>
+                    {v.id === 1 ? (
+                      restaurantNameTextbox()
+                    ) : (
+                      <TextInput
+                        style={styles.input}
+                        onChangeText={e => v.setValue(e)}
+                        value={v.value}
+                        placeholder={v.placeholder}
+                        secureTextEntry={v.id === 7 ? true : false}
+                        placeholderTextColor="#707070"
+                      />
+                    )}
+                  </>
+                )),
+            )}
           </View>
           <View
             style={{
@@ -287,10 +330,11 @@ const ManagerSignUp = ({ navigation }) => {
               <TouchableOpacity
                 disabled={
                   // lastIndex === 7 ? false  : true &&
-                  validate ? false : true
+                  loading ? true : false
                 }
                 activeOpacity={0.5}
-                style={validate ? styles.btn_yellow : styles.btn_disable}
+                style={styles.btn_yellow}
+                // style={validate ? styles.btn_yellow : styles.btn_disable}
                 onPress={
                   lastIndex > 6
                     ? handleSubmit
@@ -300,7 +344,15 @@ const ManagerSignUp = ({ navigation }) => {
                 }
               >
                 <Text style={styles.btn_txt}>
-                  {lastIndex === 7 ? i18n.t('to_login') : i18n.t('carry_on')}
+                  {lastIndex === 7 ? (
+                    loading ? (
+                      <ActivityIndicator size={25} color="#EBC11B" />
+                    ) : (
+                      i18n.t('to_login')
+                    )
+                  ) : (
+                    i18n.t('carry_on')
+                  )}
                 </Text>
               </TouchableOpacity>
             ) : (
@@ -314,7 +366,7 @@ const ManagerSignUp = ({ navigation }) => {
             )}
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     </ImageBackground>
   );
 };

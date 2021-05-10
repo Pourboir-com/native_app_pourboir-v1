@@ -8,11 +8,28 @@ import RangeSlider from 'rn-range-slider';
 import RatingStar from '../../components/RatingComponent';
 import { Radio } from 'galio-framework';
 
-const FilterModal = ({ filterModal, toggleFilter, setFilterModal }) => {
-  const [avail, setAvail] = useState('');
-  const [low, setLow] = useState();
-  const [high, setHigh] = useState();
-  const [rating, setRating] = useState();
+const FilterModal = ({
+  filterModal,
+  toggleFilter,
+  setFilterModal,
+  FilterStates,
+}) => {
+  const {
+    avail,
+    setAvail,
+    low,
+    setLow,
+    high,
+    setHigh,
+    rating,
+    setRating,
+    position,
+    setPosition,
+    filterClicked,
+    setFilterClicked,
+    refetchFormWaiters,
+  } = FilterStates;
+
   const obj = [1, 2, 3, 4, 5];
   const renderThumb = useCallback(() => <Thumb />, []);
   const renderRail = useCallback(() => <Rail />, []);
@@ -52,45 +69,104 @@ const FilterModal = ({ filterModal, toggleFilter, setFilterModal }) => {
           </View>
           <View style={{ marginTop: 20, marginHorizontal: 25 }}>
             <View>
-              <Text style={styles.postsLabel}>{i18n.t('post')}</Text>
+              <Text style={styles.postsLabel}>{i18n.t('position')}</Text>
               <TextInput
                 placeholder={i18n.t('position_list')}
                 placeholderTextColor="#707070"
                 style={styles.postsInput}
+                onChangeText={e => setPosition(e)}
+                value={position}
               />
             </View>
             <View style={{ marginVertical: 22 }}>
               <Text style={styles.postsLabel}>{i18n.t('availability')}</Text>
               <View style={{ marginLeft: 0 }}>
                 <View style={{ flexDirection: 'row' }}>
-                  <View style={{ marginBottom: 8 }}>
-                    <Radio
-                      label="Full Time"
-                      onChange={() => setAvail('Full Time')}
-                      color={'#FCDF6F'}
-                      labelStyle={{
-                        color: '#1E272E',
-                        fontSize: 13,
-                        fontFamily: 'ProximaNovaBold',
-                        paddingTop: 1,
+                  <View style={{ marginBottom: 8, flexDirection: 'row' }}>
+                    <TouchableOpacity
+                      onPress={() => setAvail('full')}
+                      activeOpacity={0.5}
+                    >
+                      <View
+                        style={[
+                          {
+                            height: 22,
+                            width: 22,
+                            borderRadius: 12,
+                            borderWidth: 2,
+                            borderColor: '#FCDF6F',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            // flexDirection: 'row',
+                          },
+                          // props.style,
+                        ]}
+                      >
+                        {avail === 'full' ? (
+                          <View
+                            style={{
+                              height: 10,
+                              width: 10,
+                              borderRadius: 6,
+                              backgroundColor: '#FCDF6F',
+                            }}
+                          />
+                        ) : null}
+                      </View>
+                    </TouchableOpacity>
+                    <Text
+                      style={{
+                        paddingLeft: 10,
+                        paddingTop: 2,
+                        fontFamily: 'ProximaNova',
+                        fontWeight: avail === 'full' ? 'bold' : 'normal',
                       }}
-                    />
+                    >
+                      Full Time
+                    </Text>
                   </View>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
-                  <View>
-                    <Radio
-                      onChange={() => setAvail('Part Time')}
-                      label="Part Time"
-                      color={'#FCDF6F'}
-                      labelStyle={{
-                        color: '#1E272E',
-                        fontSize: 13,
-                        fontFamily: 'ProximaNovaBold',
-                        paddingTop: 1,
-                      }}
-                    />
-                  </View>
+                  <TouchableOpacity
+                    onPress={() => setAvail('half')}
+                    activeOpacity={0.5}
+                  >
+                    <View
+                      style={[
+                        {
+                          height: 22,
+                          width: 22,
+                          borderRadius: 12,
+                          borderWidth: 2,
+                          borderColor: '#FCDF6F',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        },
+                        // props.style,
+                      ]}
+                    >
+                      {avail === 'half' ? (
+                        <View
+                          style={{
+                            height: 10,
+                            width: 10,
+                            borderRadius: 6,
+                            backgroundColor: '#FCDF6F',
+                          }}
+                        />
+                      ) : null}
+                    </View>
+                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      paddingLeft: 10,
+                      paddingTop: 1,
+                      fontFamily: 'ProximaNova',
+                      fontWeight: avail === 'half' ? 'bold' : 'normal',
+                    }}
+                  >
+                    Part Time
+                  </Text>
                 </View>
               </View>
             </View>
@@ -155,7 +231,7 @@ const FilterModal = ({ filterModal, toggleFilter, setFilterModal }) => {
                         key={i}
                       >
                         <RatingStar
-                          starSize={17}
+                          starSize={19}
                           type={
                             v <= rating
                               ? 'filled'
@@ -187,12 +263,25 @@ const FilterModal = ({ filterModal, toggleFilter, setFilterModal }) => {
               >
                 <Text style={styles.btnTxt}>{i18n.t('return')}</Text>
               </TouchableOpacity>
-              <TouchableOpacity activeOpacity={0.6} style={styles.btnYellow}>
+              <TouchableOpacity
+                onPress={() => {
+                  // setFilterClicked(true);
+                  toggleFilter();
+                  // refetchFormWaiters();
+                }}
+                activeOpacity={0.6}
+                style={styles.btnYellow}
+              >
                 <Text style={styles.btnTxt}>{i18n.t('filter')}</Text>
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity onPress={toggleFilter} style={styles.cancelBtn}>
+          <TouchableOpacity
+            onPress={() => {
+              toggleFilter();
+            }}
+            style={styles.cancelBtn}
+          >
             <Image source={require('../../assets/images/cross.png')} />
           </TouchableOpacity>
         </ScrollView>

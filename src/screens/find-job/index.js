@@ -49,6 +49,7 @@ const Find_Job = ({ navigation }) => {
   let validation =
     firstName &&
     lastName &&
+    lastExperience?.restaurant_id &&
     lastExperience?.experience &&
     position &&
     experience.replace(/[^0-9]/g, '') &&
@@ -197,9 +198,38 @@ const Find_Job = ({ navigation }) => {
                 </View>
               </View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>
-                  {i18n.t('last_experience')}
-                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <Text style={styles.inputLabel}>
+                    {i18n.t('last_experience')}
+                  </Text>
+                  <Text>
+                    {(!lastExperience?.experience ||
+                      !lastExperience?.restaurant_id) && (
+                      <>
+                        {!showDropdown &&
+                          lastExperience?.experience &&
+                          !lastExperience?.restaurant_id && (
+                            <Text style={{ color: 'red' }}>
+                              *Click on search.
+                            </Text>
+                          )}
+
+                        {!lastExperience?.restaurant_id &&
+                          lastExperience?.experience &&
+                          showDropdown && (
+                            <Text style={{ color: 'red' }}>
+                              *Select restaurant.
+                            </Text>
+                          )}
+                      </>
+                    )}
+                  </Text>
+                </View>
                 <View style={styles.input_icon}>
                   <TextInput
                     returnKeyLabel="Find"
@@ -208,7 +238,10 @@ const Find_Job = ({ navigation }) => {
                     onChangeText={e =>
                       setLastExperience({
                         experience: e || '',
-                        restaurant_id: '',
+                        restaurant_id:
+                          lastExperience?.experience?.length < 2
+                            ? ''
+                            : lastExperience?.restaurant_id,
                       })
                     }
                     value={lastExperience?.experience}

@@ -26,7 +26,6 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
       },
     },
   );
-  console.log(waiterFormData);
 
   return (
     <View style={{ flex: 1 }}>

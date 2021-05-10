@@ -43,7 +43,7 @@ const ManagerStaff = () => {
       rating_needed: true,
     };
   };
-  console.log(filterModal && !filterClicked ? false : true);
+
   const {
     data: waitersFormData,
     isLoading: waitersFormLoading,

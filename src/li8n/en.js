@@ -166,5 +166,5 @@ export default {
   eval: 'Evaluation',
   filter: 'Filter',
   post: 'Post',
-  no_job_found: 'No job from found.',
+  no_job_found: 'No job form found.',
 };

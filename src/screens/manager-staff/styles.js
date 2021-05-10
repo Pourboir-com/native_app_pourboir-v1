@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
   },
   child_one: {
     width: '80%',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
   },
   child_two: {

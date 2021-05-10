@@ -460,7 +460,7 @@ const SocialLogin = ({ navigation, route }) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginRight: 25,
-                height: 40,
+                height: 50,
               }}
             >
               <CheckBox

@@ -51,7 +51,7 @@ const ManagerStaff = () => {
     isFetching: waitersFormIsFetching,
   } = useQuery(['RECRUITMENT_FORM', filterSearch()], RECRUITMENT_FORM, {
     ...reactQueryConfig,
-    enabled: filterModal ? false : true,
+    enabled: filterModal ? true : false,
     onError: e => {
       alert(e?.response?.data?.message);
     },

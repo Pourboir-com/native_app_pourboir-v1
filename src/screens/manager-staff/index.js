@@ -30,6 +30,7 @@ const ManagerStaff = () => {
   const [high, setHigh] = useState(15);
   const [rating, setRating] = useState(1);
   const [position, setPosition] = useState();
+  const [filterClicked, setFilterClicked] = useState(false);
 
   let filterSearch = () => {
     return {
@@ -42,7 +43,7 @@ const ManagerStaff = () => {
       rating_needed: true,
     };
   };
-  console.log(filterModal ? false : true);
+  console.log(filterClicked);
   const {
     data: waitersFormData,
     isLoading: waitersFormLoading,
@@ -50,7 +51,7 @@ const ManagerStaff = () => {
     isFetching: waitersFormIsFetching,
   } = useQuery(['RECRUITMENT_FORM', filterSearch()], RECRUITMENT_FORM, {
     ...reactQueryConfig,
-    enabled: filterModal ? false : true,
+    enabled: filterClicked ? true : false,
     onError: e => {
       alert(e?.response?.data?.message);
     },
@@ -68,6 +69,7 @@ const ManagerStaff = () => {
     position,
     setPosition,
     refetchFormWaiters,
+    setFilterClicked,
   };
 
   const toggleModal = id => {
@@ -112,7 +114,13 @@ const ManagerStaff = () => {
               </View>
             </View>
             <View style={styles.filter}>
-              <TouchableOpacity onPress={toggleFilter} activeOpacity={0.6}>
+              <TouchableOpacity
+                onPress={() => {
+                  toggleFilter();
+                  setFilterClicked(false);
+                }}
+                activeOpacity={0.6}
+              >
                 <Image
                   source={require('../../assets/images/Filter.png')}
                   style={{ width: 40, height: 40, resizeMode: 'contain' }}

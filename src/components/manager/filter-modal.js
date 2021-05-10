@@ -13,6 +13,7 @@ const FilterModal = ({
   toggleFilter,
   setFilterModal,
   FilterStates,
+  filterOnPress,
 }) => {
   const {
     avail,
@@ -267,6 +268,7 @@ const FilterModal = ({
                   setFilterClicked(true);
                   toggleFilter();
                   refetchFormWaiters();
+                  filterOnPress();
                 }}
                 activeOpacity={0.6}
                 style={styles.btnYellow}

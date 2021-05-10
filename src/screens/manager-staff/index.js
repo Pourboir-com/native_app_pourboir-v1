@@ -18,6 +18,7 @@ import { useQuery } from 'react-query';
 import { RECRUITMENT_FORM } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import { ReviewsSkeleton } from '../../components/skeleton';
+import { filterSearch } from '../../util/manager';
 
 const ManagerStaff = () => {
   const [value, setValue] = useState('');
@@ -32,26 +33,15 @@ const ManagerStaff = () => {
   const [position, setPosition] = useState();
   const [filterClicked, setFilterClicked] = useState(false);
 
-  let filterSearch = () => {
-    return {
-      rating: rating || '',
-      experience_greater: high || '',
-      experience_less: low || '',
-      time: avail?.length ? [avail] : [],
-      position: position || '',
-      search: value,
-      rating_needed: true,
-    };
-  };
+  const [queries, setQueries] = useState(filterSearch());
 
   const {
     data: waitersFormData,
     isLoading: waitersFormLoading,
     refetch: refetchFormWaiters,
     isFetching: waitersFormIsFetching,
-  } = useQuery(['RECRUITMENT_FORM', filterSearch()], RECRUITMENT_FORM, {
+  } = useQuery(['RECRUITMENT_FORM', queries], RECRUITMENT_FORM, {
     ...reactQueryConfig,
-    // enabled: filterModal && !filterClicked ? false : true,
     onError: e => {
       alert(e?.response?.data?.message);
     },
@@ -78,6 +68,9 @@ const ManagerStaff = () => {
   };
   const toggleFilter = () => {
     setFilterModal(!filterModal);
+  };
+  const filterOnPress = () => {
+    setQueries(filterSearch(rating, high, low, avail, position, value));
   };
 
   return (
@@ -188,6 +181,7 @@ const ManagerStaff = () => {
           filterModal={filterModal}
           setFilterModal={setFilterModal}
           FilterStates={FilterStates}
+          filterOnPress={filterOnPress}
         />
       )}
     </View>

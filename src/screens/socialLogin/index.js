@@ -465,7 +465,10 @@ const SocialLogin = ({ navigation, route }) => {
               }}
             >
               <CheckBox
-                style={{ paddingRight: 10, marginTop: -4 }}
+                style={{
+                  paddingRight: 10,
+                  marginTop: Platform.OS === 'android' ? -4 : -15,
+                }}
                 onClick={() => setTermsChecked(!termsChecked)}
                 isChecked={termsChecked}
                 checkedImage={
@@ -491,7 +494,10 @@ const SocialLogin = ({ navigation, route }) => {
                 ]}
               >
                 <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ color: Colors.fontLight }}>
+                  <Text
+                    style={{ color: Colors.fontLight }}
+                    onPress={() => setTermsChecked(!termsChecked)}
+                  >
                     {i18n.t('I_accept')}{' '}
                   </Text>
                   <TouchableOpacity
@@ -508,7 +514,7 @@ const SocialLogin = ({ navigation, route }) => {
                         fontFamily: 'ProximaNova',
                         lineHeight: 24,
                         textAlign: 'center',
-                        marginTop: -1,
+                        marginTop: Platform.OS === 'android' ? -1 : -2.5,
                       }}
                     >
                       {i18n.t('terms_of_use')}

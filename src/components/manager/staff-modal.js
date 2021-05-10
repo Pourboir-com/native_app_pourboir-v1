@@ -109,8 +109,13 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                     <Text style={styles.expsTxt}>{i18n.t('estb')}</Text>
                   </View>
                   <View>
-                    {/* <Text style={styles.petitTxt}>{waiterFormData?.data[0]?.last_experience}</Text> */}
-                    <Text style={styles.petitTxt}>null</Text>
+                    <Text style={styles.petitTxt}>
+                      {(waiterFormData?.data[0]?.last_experience?.last_exp
+                        ? waiterFormData?.data[0]?.last_experience?.last_exp
+                        : waiterFormData?.data[0]?.last_experience?.experience
+                        ? waiterFormData?.data[0]?.last_experience?.experience
+                        : waiterFormData?.data[0]?.last_experience) || ''}
+                    </Text>
                   </View>
                 </View>
               </View>

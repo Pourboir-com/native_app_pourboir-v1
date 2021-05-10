@@ -29,7 +29,7 @@ const ManagerStaff = () => {
   const [avail, setAvail] = useState([]);
   const [low, setLow] = useState(0);
   const [high, setHigh] = useState(15);
-  const [rating, setRating] = useState(1);
+  const [rating, setRating] = useState('');
   const [position, setPosition] = useState();
   const [filterClicked, setFilterClicked] = useState(false);
 
@@ -42,7 +42,6 @@ const ManagerStaff = () => {
     isFetching: waitersFormIsFetching,
   } = useQuery(['RECRUITMENT_FORM', queries], RECRUITMENT_FORM, {
     ...reactQueryConfig,
-
     onError: e => {
       alert(e?.response?.data?.message);
     },
@@ -110,8 +109,8 @@ const ManagerStaff = () => {
             <View style={styles.filter}>
               <TouchableOpacity
                 onPress={() => {
-                  toggleFilter();
                   setFilterClicked(false);
+                  toggleFilter();
                 }}
                 activeOpacity={0.6}
               >

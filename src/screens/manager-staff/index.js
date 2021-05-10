@@ -25,7 +25,7 @@ const ManagerStaff = () => {
   const [filterModal, setFilterModal] = useState(false);
   const [formId, setFormId] = useState('');
   //Filter States
-  const [avail, setAvail] = useState('half');
+  const [avail, setAvail] = useState([]);
   const [low, setLow] = useState(0);
   const [high, setHigh] = useState(15);
   const [rating, setRating] = useState(1);
@@ -37,13 +37,13 @@ const ManagerStaff = () => {
       rating: rating || '',
       experience_greater: high || '',
       experience_less: low || '',
-      time: [avail] || [],
+      time: avail?.length ? [avail] : [],
       position: position || '',
       search: value,
       rating_needed: true,
     };
   };
-  console.log(filterModal);
+  console.log(filterModal ? false : true);
   const {
     data: waitersFormData,
     isLoading: waitersFormLoading,
@@ -51,7 +51,7 @@ const ManagerStaff = () => {
     isFetching: waitersFormIsFetching,
   } = useQuery(['RECRUITMENT_FORM', filterSearch()], RECRUITMENT_FORM, {
     ...reactQueryConfig,
-    enabled: filterModal ? true : false,
+    enabled: filterModal ? false : true,
     onError: e => {
       alert(e?.response?.data?.message);
     },

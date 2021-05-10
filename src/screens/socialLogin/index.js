@@ -280,7 +280,6 @@ const SocialLogin = ({ navigation, route }) => {
 
   return (
     <ScrollView
-      scrollEnabled={false}
       contentContainerStyle={[
         styles.container,
         { backgroundColor: loading ? '#fff' : Colors.yellow },

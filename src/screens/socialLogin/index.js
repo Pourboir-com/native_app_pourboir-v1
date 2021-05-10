@@ -280,6 +280,9 @@ const SocialLogin = ({ navigation, route }) => {
 
   return (
     <ScrollView
+      alwaysBounceHorizontal={false}
+      alwaysBounceVertical={false}
+      bounces={false}
       contentContainerStyle={[
         styles.container,
         { backgroundColor: loading ? '#fff' : Colors.yellow },
@@ -553,7 +556,7 @@ export default SocialLogin;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 25,

@@ -523,7 +523,7 @@ const SocialLogin = ({ navigation, route }) => {
 
           <TouchableOpacity
             activeOpacity={0.5}
-            style={{ marginTop: 30 }}
+            style={{ marginTop: 30, marginBottom: 30 }}
             onPress={() => {
               if (managerEmail) {
                 navigation.navigate('ManagerStaff');
@@ -559,7 +559,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 25,
+    paddingTop: 45,
   },
   txtCreatingAcc: {
     color: Colors.fontLight,

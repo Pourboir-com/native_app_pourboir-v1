@@ -25,7 +25,6 @@ const FilterModal = ({
     setRating,
     position,
     setPosition,
-    filterClicked,
     setFilterClicked,
     refetchFormWaiters,
   } = FilterStates;
@@ -265,9 +264,8 @@ const FilterModal = ({
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  // setFilterClicked(true);
                   toggleFilter();
-                  // refetchFormWaiters();
+                  refetchFormWaiters();
                 }}
                 activeOpacity={0.6}
                 style={styles.btnYellow}

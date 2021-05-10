@@ -25,44 +25,37 @@ const ManagerStaff = () => {
   const [filterModal, setFilterModal] = useState(false);
   const [formId, setFormId] = useState('');
   //Filter States
-  const [avail, setAvail] = useState('');
-  const [low, setLow] = useState();
-  const [high, setHigh] = useState();
-  const [rating, setRating] = useState();
+  const [avail, setAvail] = useState('half');
+  const [low, setLow] = useState(0);
+  const [high, setHigh] = useState(15);
+  const [rating, setRating] = useState(1);
   const [position, setPosition] = useState();
   const [filterClicked, setFilterClicked] = useState();
 
-  // let filterSearch = () => {
-  //   if (value) {
-  //     return {
-  //       rating: rating || '',
-  //       experience_greater: high || '',
-  //       experience_less: low || '',
-  //       time: [avail] || [],
-  //       position: position || '',
-  //     };
-  //   }
-  //   else {
-  //     return {};
-  //   }
-  // };
-  // console.log(filterSearch());
-  
+  let filterSearch = () => {
+    return {
+      rating: rating || '',
+      experience_greater: high || '',
+      experience_less: low || '',
+      time: [avail] || [],
+      position: position || '',
+      search: value,
+      rating_needed: true,
+    };
+  };
+  console.log(filterModal);
   const {
     data: waitersFormData,
     isLoading: waitersFormLoading,
     refetch: refetchFormWaiters,
     isFetching: waitersFormIsFetching,
-  } = useQuery(
-    ['RECRUITMENT_FORM', { search: value, rating_needed: true }],
-    RECRUITMENT_FORM,
-    {
-      ...reactQueryConfig,
-      onError: e => {
-        alert(e?.response?.data?.message);
-      },
+  } = useQuery(['RECRUITMENT_FORM', filterSearch()], RECRUITMENT_FORM, {
+    ...reactQueryConfig,
+    enabled: filterModal ? false : true,
+    onError: e => {
+      alert(e?.response?.data?.message);
     },
-  );
+  });
 
   let FilterStates = {
     avail,
@@ -75,11 +68,9 @@ const ManagerStaff = () => {
     setRating,
     position,
     setPosition,
-    filterClicked,
     setFilterClicked,
     refetchFormWaiters,
   };
-
 
   const toggleModal = id => {
     setFormId(id);
@@ -88,7 +79,6 @@ const ManagerStaff = () => {
   const toggleFilter = () => {
     setFilterModal(!filterModal);
   };
-
 
   return (
     <View style={{ flex: 1, backgroundColor: '#F9F9F9' }}>
@@ -166,7 +156,14 @@ const ManagerStaff = () => {
               )}
             />
           ) : (
-            <Text style={{ fontFamily: 'ProximaNovaSemiBold', fontSize: 16,paddingHorizontal: 25, marginTop: 25 }}>
+            <Text
+              style={{
+                fontFamily: 'ProximaNovaSemiBold',
+                fontSize: 16,
+                paddingHorizontal: 25,
+                marginTop: 25,
+              }}
+            >
               {i18n.t('no_job_found')}
             </Text>
           )}

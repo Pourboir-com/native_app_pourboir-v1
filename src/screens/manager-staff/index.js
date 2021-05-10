@@ -98,7 +98,12 @@ const ManagerStaff = () => {
                   placeholder={i18n.t('search')}
                   value={value}
                   placeholderTextColor="#707070"
-                  onChangeText={e => setValue(e)}
+                  onChangeText={e => {
+                    setValue(e);
+                    setQueries(
+                      filterSearch(rating, high, low, avail, position, e),
+                    );
+                  }}
                   style={{ width: '100%', height: 40 }}
                 />
               </View>

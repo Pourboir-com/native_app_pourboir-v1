@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Image, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import styles from './styles';
 import Modal from 'react-native-modal';
@@ -26,8 +26,6 @@ const FilterModal = ({
     setRating,
     position,
     setPosition,
-    refetchFormWaiters,
-    setFilterClicked,
   } = FilterStates;
 
   const obj = [1, 2, 3, 4, 5];
@@ -265,9 +263,7 @@ const FilterModal = ({
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  setFilterClicked(true);
                   toggleFilter();
-                  refetchFormWaiters();
                   filterOnPress();
                 }}
                 activeOpacity={0.6}

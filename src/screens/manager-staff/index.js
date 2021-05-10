@@ -18,7 +18,7 @@ import { useQuery } from 'react-query';
 import { RECRUITMENT_FORM } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import { ReviewsSkeleton } from '../../components/skeleton';
-import { filterSearch } from '../../util/manager';
+import { filterSearch } from '../../util';
 
 const ManagerStaff = () => {
   const [value, setValue] = useState('');
@@ -31,8 +31,6 @@ const ManagerStaff = () => {
   const [high, setHigh] = useState(15);
   const [rating, setRating] = useState('');
   const [position, setPosition] = useState();
-  const [filterClicked, setFilterClicked] = useState(false);
-
   const [queries, setQueries] = useState(filterSearch());
 
   const {
@@ -59,7 +57,6 @@ const ManagerStaff = () => {
     position,
     setPosition,
     refetchFormWaiters,
-    setFilterClicked,
   };
 
   const toggleModal = id => {
@@ -109,7 +106,6 @@ const ManagerStaff = () => {
             <View style={styles.filter}>
               <TouchableOpacity
                 onPress={() => {
-                  setFilterClicked(false);
                   toggleFilter();
                 }}
                 activeOpacity={0.6}

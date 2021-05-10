@@ -8,7 +8,7 @@ import i18n from '../../li8n';
 import { useQuery } from 'react-query';
 import { RECRUITMENT_FORM } from '../../queries';
 import { reactQueryConfig } from '../../constants';
-import {last_exp} from './util';
+import {last_exp} from '../../util';
 const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
   const obj = [1, 2, 3, 4, 5];
   const {

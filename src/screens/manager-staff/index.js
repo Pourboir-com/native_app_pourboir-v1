@@ -30,7 +30,6 @@ const ManagerStaff = () => {
   const [high, setHigh] = useState(15);
   const [rating, setRating] = useState(1);
   const [position, setPosition] = useState();
-  const [filterClicked, setFilterClicked] = useState();
 
   let filterSearch = () => {
     return {
@@ -68,7 +67,6 @@ const ManagerStaff = () => {
     setRating,
     position,
     setPosition,
-    setFilterClicked,
     refetchFormWaiters,
   };
 

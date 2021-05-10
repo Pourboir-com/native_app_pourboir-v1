@@ -460,11 +460,12 @@ const SocialLogin = ({ navigation, route }) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginRight: 25,
-                height: 50,
+                paddingTop: 25,
+                paddingBottom: 10,
               }}
             >
               <CheckBox
-                style={{ paddingTop: 22, paddingRight: 10 }}
+                style={{ paddingRight: 10, marginTop: -4 }}
                 onClick={() => setTermsChecked(!termsChecked)}
                 isChecked={termsChecked}
                 checkedImage={
@@ -484,17 +485,13 @@ const SocialLogin = ({ navigation, route }) => {
               />
               <Text
                 style={[
-                  styles.txtCreatingAcc,
                   {
-                    fontSize: 14,
-                    fontFamily: 'ProximaNova',
-                    lineHeight: 24,
                     width: 250,
                   },
                 ]}
               >
                 <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ color: Colors.fontLight, marginTop: 1 }}>
+                  <Text style={{ color: Colors.fontLight }}>
                     {i18n.t('I_accept')}{' '}
                   </Text>
                   <TouchableOpacity
@@ -511,6 +508,7 @@ const SocialLogin = ({ navigation, route }) => {
                         fontFamily: 'ProximaNova',
                         lineHeight: 24,
                         textAlign: 'center',
+                        marginTop: -1,
                       }}
                     >
                       {i18n.t('terms_of_use')}

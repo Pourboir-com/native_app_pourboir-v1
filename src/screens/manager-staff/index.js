@@ -28,7 +28,7 @@ const ManagerStaff = () => {
   const [avail, setAvail] = useState([]);
   const [low, setLow] = useState(0);
   const [high, setHigh] = useState(15);
-  const [rating, setRating] = useState(1);
+  const [rating, setRating] = useState('');
   const [position, setPosition] = useState();
   const [filterClicked, setFilterClicked] = useState(false);
 
@@ -43,7 +43,7 @@ const ManagerStaff = () => {
       rating_needed: true,
     };
   };
-  console.log(filterClicked);
+  console.log(filterModal && !filterClicked ? false : true);
   const {
     data: waitersFormData,
     isLoading: waitersFormLoading,
@@ -51,7 +51,7 @@ const ManagerStaff = () => {
     isFetching: waitersFormIsFetching,
   } = useQuery(['RECRUITMENT_FORM', filterSearch()], RECRUITMENT_FORM, {
     ...reactQueryConfig,
-    enabled: filterModal && !filterClicked ? false : true,
+    // enabled: filterModal && !filterClicked ? false : true,
     onError: e => {
       alert(e?.response?.data?.message);
     },
@@ -116,8 +116,8 @@ const ManagerStaff = () => {
             <View style={styles.filter}>
               <TouchableOpacity
                 onPress={() => {
-                  toggleFilter();
                   setFilterClicked(false);
+                  toggleFilter();
                 }}
                 activeOpacity={0.6}
               >

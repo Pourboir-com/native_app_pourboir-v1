@@ -117,7 +117,7 @@ const FilterModal = ({
                     <Text
                       style={{
                         paddingLeft: 10,
-                        paddingTop: 2,
+                        alignSelf: 'center',
                         fontFamily: 'ProximaNova',
                         fontWeight: avail === 'full' ? 'bold' : 'normal',
                       }}
@@ -160,7 +160,7 @@ const FilterModal = ({
                   <Text
                     style={{
                       paddingLeft: 10,
-                      paddingTop: 1,
+                      alignSelf: 'center',
                       fontFamily: 'ProximaNova',
                       fontWeight: avail === 'half' ? 'bold' : 'normal',
                     }}

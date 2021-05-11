@@ -233,7 +233,7 @@ const ManagerSignUp = ({ navigation }) => {
         {
           onSuccess: () => {
             alert('Sign up successful! Please login now.');
-            navigation.navigate('SignIn');
+            navigation.replace('SignIn');
             setLoading(false);
           },
           onError: e => {
@@ -343,17 +343,15 @@ const ManagerSignUp = ({ navigation }) => {
                     : handleNext
                 }
               >
-                <Text style={styles.btn_txt}>
-                  {lastIndex === 7 ? (
-                    loading ? (
-                      <ActivityIndicator size={25} color="#EBC11B" />
-                    ) : (
-                      i18n.t('to_login')
-                    )
+                {lastIndex === 7 ? (
+                  loading ? (
+                    <ActivityIndicator size={25} color="#EBC11B" />
                   ) : (
-                    i18n.t('carry_on')
-                  )}
-                </Text>
+                    <Text style={styles.btn_txt}>{i18n.t('to_login')}</Text>
+                  )
+                ) : (
+                  <Text style={styles.btn_txt}>{i18n.t('carry_on')}</Text>
+                )}
               </TouchableOpacity>
             ) : (
               <TouchableOpacity

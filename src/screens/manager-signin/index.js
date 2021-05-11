@@ -28,7 +28,7 @@ const SignIn = ({ navigation }) => {
       },
       {
         onSuccess: async () => {
-          navigation.navigate('ManagerStaff');
+          navigation.replace('ManagerStaff');
           await AsyncStorage.setItem('@manager_email', JSON.stringify(email));
           setLoading(false);
         },
@@ -93,23 +93,21 @@ const SignIn = ({ navigation }) => {
                   : { backgroundColor: '#e0e0e0' },
               ]}
             >
-              <Text style={styles.saveTxt}>
-                {loading ? (
-                  <ActivityIndicator size={25} color="#EBC11B" />
-                ) : (
-                  i18n.t('to_login')
-                )}
-              </Text>
+              {loading ? (
+                <ActivityIndicator size={25} color="#EBC11B" />
+              ) : (
+                <Text style={styles.saveTxt}>{i18n.t('to_login')}</Text>
+              )}
             </TouchableOpacity>
           </View>
         </View>
 
         <View style={{ paddingVertical: 34 }}>
+          <Text style={styles.text1}>{i18n.t('no_acc')}</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate('ManagerSignUp')}
             activeOpacity={0.6}
           >
-            <Text style={styles.text1}>{i18n.t('no_acc')}</Text>
             <Text style={styles.signupTxt}>{i18n.t('im_register')}</Text>
           </TouchableOpacity>
         </View>

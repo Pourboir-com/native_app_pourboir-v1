@@ -9,6 +9,8 @@ import { useQuery } from 'react-query';
 import { RECRUITMENT_FORM } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import {last_exp} from '../../util';
+import Dash from 'react-native-dash';
+
 const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
   const obj = [1, 2, 3, 4, 5];
   const {
@@ -78,6 +80,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                   </TouchableOpacity>
                 </View>
               </View>
+              <Dash dashColor='#FCDF6F' width='100%'/>
             </View>
             <View style={styles.first_part_modal}>
               <View style={{ marginVertical: 20 }}>
@@ -100,6 +103,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                   </View>
                 </View>
               </View>
+              <Dash dashColor='#FCDF6F' width='100%'/>
             </View>
             <View style={styles.first_part_modal}>
               <View style={{ marginVertical: 20, alignItems: 'center' }}>
@@ -114,6 +118,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                   </View>
                 </View>
               </View>
+              <Dash dashColor='#FCDF6F' width='100%'/>
             </View>
             <View style={styles.first_part_modal}>
               <View style={{ marginVertical: 20 }}>
@@ -128,6 +133,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                   </View>
                 </View>
               </View>
+              <Dash dashColor='#FCDF6F' width='100%'/>
             </View>
             <View style={{ marginVertical: 20 }}>
               <View style={{ alignItems: 'center' }}>

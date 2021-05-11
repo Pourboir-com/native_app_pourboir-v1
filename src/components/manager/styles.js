@@ -61,12 +61,8 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
   },
   first_part_modal: {
-    borderBottomColor: '#FDDF6F',
-    borderBottomWidth: 2,
-    borderStyle: 'dotted',
     width: '80%',
     alignItems: 'center',
-    borderBottomRightRadius: 1,
   },
   exp_year: {
     fontFamily: 'ProximaNova',

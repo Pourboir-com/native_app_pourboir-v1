@@ -118,9 +118,8 @@ const SocialLogin = ({ navigation, route }) => {
 
   useEffect(() => {
     async function loadCity() {
-      const { City, manager_email } = await getAsyncStorageValues();
+      const { City } = await getAsyncStorageValues();
       setCity(City?.city);
-      setManagerEmail(manager_email);
     }
     loadCity();
   }, []);
@@ -528,8 +527,9 @@ const SocialLogin = ({ navigation, route }) => {
           <TouchableOpacity
             activeOpacity={0.5}
             style={{ marginTop: 30, marginBottom: 30 }}
-            onPress={() => {
-              if (managerEmail) {
+            onPress={async () => {
+              const { manager_email } = await getAsyncStorageValues();
+              if (manager_email) {
                 navigation.navigate('ManagerStaff');
               } else {
                 navigation.navigate('SignIn');

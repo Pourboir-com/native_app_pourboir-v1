@@ -73,7 +73,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                     style={styles.btn_green}
                   >
                     <Text style={styles.btnGreen_txt}>
-                      {waiterFormData?.data[0]?.time}
+                      {waiterFormData?.data[0]?.time || 'loading..'}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -94,9 +94,9 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                     }}
                   >
                     <Text style={styles.exp_year}>
-                      {waiterFormData?.data[0]?.experience}
+                      {waiterFormData?.data[0]?.experience || ''}
                     </Text>
-                    <Text style={styles.ansTxt}> {i18n.t('years')}</Text>
+                    <Text style={styles.ansTxt}> {waiterFormData?.data[0]?.experience ? i18n.t('years') : 'loading..'}</Text>
                   </View>
                 </View>
               </View>
@@ -109,7 +109,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                   </View>
                   <View>
                     <Text style={styles.petitTxt}>
-                      { last_exp(waiterFormData) || ''}
+                      { last_exp(waiterFormData) || 'loading..'}
                     </Text>
                   </View>
                 </View>
@@ -123,7 +123,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                   </View>
                   <View>
                     <Text style={styles.qualifDetail}>
-                      {waiterFormData?.data[0]?.education}
+                      {waiterFormData?.data[0]?.education || 'loading..'}
                     </Text>
                   </View>
                 </View>

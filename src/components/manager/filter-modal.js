@@ -6,7 +6,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import i18n from '../../li8n';
 import RangeSlider from 'rn-range-slider';
 import RatingStar from '../../components/RatingComponent';
-import { Radio } from 'galio-framework';
 
 const FilterModal = ({
   filterModal,

@@ -54,11 +54,10 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNova',
   },
   text_dispon: {
-    fontFamily: 'ProximaNova',
+    fontFamily: 'ProximaNovaBold',
     textAlign: 'center',
     fontSize: 12,
     paddingVertical: 3,
-    fontWeight: '700',
     paddingBottom: 4,
   },
   first_part_modal: {
@@ -84,9 +83,8 @@ const styles = StyleSheet.create({
   },
   expsTxt: {
     fontSize: 12,
-    fontFamily: 'ProximaNova',
+    fontFamily: 'ProximaNovaBold',
     textAlign: 'center',
-    fontWeight: '700',
   },
   cancelBtn: {
     backgroundColor: '#fff',

@@ -80,7 +80,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <Dash dashColor='#FCDF6F' width='100%'/>
+              <Dash style={{width: '90%', height: 1}} dashColor='#FCDF6F'/>
             </View>
             <View style={styles.first_part_modal}>
               <View style={{ marginVertical: 20 }}>
@@ -103,7 +103,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                   </View>
                 </View>
               </View>
-              <Dash dashColor='#FCDF6F' width='100%'/>
+              <Dash style={{width: '90%', height: 1}} dashColor='#FCDF6F'/>
             </View>
             <View style={styles.first_part_modal}>
               <View style={{ marginVertical: 20, alignItems: 'center' }}>
@@ -118,7 +118,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                   </View>
                 </View>
               </View>
-              <Dash dashColor='#FCDF6F' width='100%'/>
+              <Dash style={{width: '90%', height: 1}} dashColor='#FCDF6F'/>
             </View>
             <View style={styles.first_part_modal}>
               <View style={{ marginVertical: 20 }}>
@@ -133,7 +133,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                   </View>
                 </View>
               </View>
-              <Dash dashColor='#FCDF6F' width='100%'/>
+              <Dash style={{width: '90%', height: 1}} dashColor='#FCDF6F'/>
             </View>
             <View style={{ marginVertical: 20 }}>
               <View style={{ alignItems: 'center' }}>

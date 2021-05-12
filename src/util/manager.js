@@ -7,13 +7,14 @@ export const filterSearch = (rating, high, low, avail, position, value) => {
     position: position || '',
     search: value,
     rating_needed: true,
+    first_item: true,
   };
 };
 
 export const last_exp = waiterFormData => {
-  return waiterFormData?.data[0]?.last_experience?.last_exp
-    ? waiterFormData?.data[0]?.last_experience?.last_exp
-    : waiterFormData?.data[0]?.last_experience?.experience
-    ? waiterFormData?.data[0]?.last_experience?.experience
-    : waiterFormData?.data[0]?.last_experience;
+  return (
+    waiterFormData?.data[0]?.last_experience?.last_exp ||
+    waiterFormData?.data[0]?.last_experience?.experience ||
+    waiterFormData?.data[0]?.last_experience
+  );
 };

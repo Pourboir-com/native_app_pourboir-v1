@@ -531,7 +531,7 @@ const ReviewDetails = ({ navigation, route }) => {
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   {itemData?.item?.user_id ? (
                     <Image
-                      style={{ width: 45, height: 45, borderRadius: 30 }}
+                      style={{ width: 55, height: 55, borderRadius: 30 }}
                       source={{ uri: itemData?.item?.user_id.picture }}
                     />
                   ) : (
@@ -555,7 +555,7 @@ const ReviewDetails = ({ navigation, route }) => {
                     </Text>
                     <View
                       pointerEvents="none"
-                      style={{ flexDirection: 'row', marginTop: 8 }}
+                      style={{ flexDirection: 'row', marginTop: 7 }}
                     >
                       {obj.map((v, i) => {
                         return (
@@ -755,8 +755,7 @@ const styles = StyleSheet.create({
   },
   txtItemName: {
     fontFamily: 'ProximaNova',
-    fontSize: 18,
-    color: Colors.fontLight,
+    fontSize: 17,
     letterSpacing: 0,
     lineHeight: 24,
     width: 180,

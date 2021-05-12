@@ -1,18 +1,11 @@
-import { Platform, StyleSheet } from 'react-native';
+import {
+  StyleSheet,
+} from 'react-native';
 const THUMB_RADIUS = 9;
 
 const styles = StyleSheet.create({
   main_card_container: {
     backgroundColor: '#fff',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 0.2,
-
-    elevation: Platform.OS === 'ios' ? 0 : 1,
     borderRadius: 14,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -28,7 +21,7 @@ const styles = StyleSheet.create({
   },
   name_staff: {
     fontFamily: 'ProximaNova',
-    fontSize: 14,
+    fontSize: 17,
     width: 180,
   },
   modal_container: {
@@ -56,7 +49,7 @@ const styles = StyleSheet.create({
   text_dispon: {
     fontFamily: 'ProximaNovaBold',
     textAlign: 'center',
-    fontSize: 12,
+    fontSize: 13,
     paddingVertical: 3,
     paddingBottom: 4,
   },
@@ -65,20 +58,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   exp_year: {
-    fontFamily: 'ProximaNova',
+    fontFamily: 'ProximaNovaSemiBold',
     fontSize: 20,
     textAlign: 'center',
-    fontWeight: '600',
+    paddingTop: 25,
   },
   ansTxt: {
     fontFamily: 'ProximaNova',
-    fontSize: 12,
+    fontSize: 13,
     paddingLeft: 3,
-    paddingTop: 4,
+    paddingTop: 25,
     textAlign: 'center',
   },
   expsTxt: {
-    fontSize: 12,
+    fontSize: 13,
     fontFamily: 'ProximaNovaBold',
     textAlign: 'center',
   },
@@ -90,17 +83,17 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   petitTxt: {
-    fontSize: 12,
+    fontSize: 13,
     fontFamily: 'ProximaNova',
     textAlign: 'center',
-    paddingTop: 15,
+    paddingTop: 25,
     color: '#1E272E',
   },
   qualifDetail: {
-    fontSize: 12,
+    fontSize: 13,
     fontFamily: 'ProximaNova',
     textAlign: 'center',
-    paddingTop: 15,
+    paddingTop: 25,
     marginHorizontal: 50,
   },
   recruterBtns: {

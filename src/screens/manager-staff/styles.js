@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   first_section: {
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
   first_section_bold: {
     fontFamily: 'ProximaNovaBold',
-    fontSize: 20,
+    fontSize: 24,
   },
   yellow_box: {
     justifyContent: 'center',
@@ -45,15 +45,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 13,
     paddingVertical: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-
-    elevation: Platform.OS === 'ios' ? 0 : 1,
   },
   filter: {
     width: '23%',

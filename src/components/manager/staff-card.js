@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Image, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
 import { AntDesign } from '@expo/vector-icons';
-import { Rating } from 'react-native-ratings';
 import RatingStar from '../../components/RatingComponent';
 
 const StaffCard = ({ toggleModal, data }) => {
@@ -34,7 +33,7 @@ const StaffCard = ({ toggleModal, data }) => {
           >
             {data?.user_id?.full_name}
           </Text>
-          <View style={{ flexDirection: 'row', marginTop: 6 }}>
+          <View style={{ flexDirection: 'row', marginTop: 7 }}>
             {obj.map((v, i) => {
               return (
                 <TouchableOpacity style={{ marginRight: 3 }} key={i}>

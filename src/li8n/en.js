@@ -158,7 +158,7 @@ export default {
   availability: 'Availability',
   immediate: 'Immediate',
   exp: 'Experience',
-  years: 'years',
+  years: 'year',
   estb: 'Establishment',
   mark_cater: 'Bac Pro Marketing and Catering Services',
   recruit: 'Recruit',

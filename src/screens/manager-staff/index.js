@@ -91,7 +91,7 @@ const ManagerStaff = () => {
           <View style={styles.main}>
             <View style={styles.searchBar}>
               <View style={{ justifyContent: 'center', paddingRight: 20 }}>
-                <Feather name="search" size={25} color="#FCDF6F" />
+                <Feather name="search" size={24} color="#FCDF6F" />
               </View>
               <View style={{ width: '77%' }}>
                 <TextInput
@@ -104,7 +104,12 @@ const ManagerStaff = () => {
                       filterSearch(rating, high, low, avail, position, e),
                     );
                   }}
-                  style={{ width: '100%', height: 40 }}
+                  style={{
+                    width: '100%',
+                    height: 40,
+                    fontSize: 16,
+                    fontFamily: 'ProximaNova',
+                  }}
                 />
               </View>
             </View>

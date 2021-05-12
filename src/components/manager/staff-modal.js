@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View, TouchableOpacity } from 'react-native';
+import { Image, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles';
 import Modal from 'react-native-modal';
 import RatingStar from '../../components/RatingComponent';
@@ -8,17 +8,12 @@ import i18n from '../../li8n';
 import { useQuery } from 'react-query';
 import { RECRUITMENT_FORM } from '../../queries';
 import { reactQueryConfig } from '../../constants';
-import {last_exp} from '../../util';
+import { last_exp } from '../../util';
 import Dash from 'react-native-dash';
 
 const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
   const obj = [1, 2, 3, 4, 5];
-  const {
-    data: waiterFormData,
-    // isLoading: waiterFormLoading,
-    // refetch: refetchFormWaiter,
-    // isFetching: waiterFormIsFetching,
-  } = useQuery(
+  const { data: waiterFormData, isLoading: waiterFormLoading } = useQuery(
     ['RECRUITMENT_FORM', { form_id: formId, rating_needed: true }],
     RECRUITMENT_FORM,
     {
@@ -35,7 +30,11 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
         onBackdropPress={() => setModalVisible(false)}
         isVisible={isModalVisible}
       >
-        <View style={styles.modal_container}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          bounces={false}
+          contentContainerStyle={[styles.modal_container]}
+        >
           <View style={{ alignItems: 'center', width: '100%' }}>
             <View style={styles.first_part_modal}>
               <View style={{ marginVertical: 20, alignItems: 'center' }}>
@@ -75,12 +74,13 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                     style={styles.btn_green}
                   >
                     <Text style={styles.btnGreen_txt}>
-                      {waiterFormData?.data[0]?.time || 'loading..'}
+                      {/* {waiterFormData?.data[0]?.time || 'loading..'} */}
+                      available
                     </Text>
                   </TouchableOpacity>
                 </View>
               </View>
-              <Dash style={{width: '90%', height: 1}} dashColor='#FCDF6F'/>
+              <Dash style={{ width: '90%', height: 1 }} dashColor="#FCDF6F" />
             </View>
             <View style={styles.first_part_modal}>
               <View style={{ marginVertical: 20 }}>
@@ -92,18 +92,28 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                     style={{
                       flexDirection: 'row',
                       alignItems: 'center',
-                      paddingTop: 15,
-                      paddingHorizontal: 10,
+                      justifyContent: 'center',
                     }}
                   >
                     <Text style={styles.exp_year}>
-                      {waiterFormData?.data[0]?.experience || ''}
+                      {(!waiterFormLoading &&
+                        waiterFormData?.data[0]?.experience) ||
+                        ''}
                     </Text>
-                    <Text style={styles.ansTxt}> {waiterFormData?.data[0]?.experience ? i18n.t('years') : 'loading..'}</Text>
+                    <Text style={styles.ansTxt}>
+                      {' '}
+                      {waiterFormLoading
+                        ? 'loading..'
+                        : waiterFormData?.data[0]?.experience
+                        ? Number(waiterFormData?.data[0]?.experience) > 1
+                          ? `${i18n.t('years')}s`
+                          : i18n.t('years')
+                        : 'none'}
+                    </Text>
                   </View>
                 </View>
               </View>
-              <Dash style={{width: '90%', height: 1}} dashColor='#FCDF6F'/>
+              <Dash style={{ width: '90%', height: 1 }} dashColor="#FCDF6F" />
             </View>
             <View style={styles.first_part_modal}>
               <View style={{ marginVertical: 20, alignItems: 'center' }}>
@@ -113,12 +123,14 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                   </View>
                   <View>
                     <Text style={styles.petitTxt}>
-                      { last_exp(waiterFormData) || 'loading..'}
+                      {waiterFormLoading
+                        ? 'loading..'
+                        : last_exp(waiterFormData) || 'none'}
                     </Text>
                   </View>
                 </View>
               </View>
-              <Dash style={{width: '90%', height: 1}} dashColor='#FCDF6F'/>
+              <Dash style={{ width: '90%', height: 1 }} dashColor="#FCDF6F" />
             </View>
             <View style={styles.first_part_modal}>
               <View style={{ marginVertical: 20 }}>
@@ -128,12 +140,14 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                   </View>
                   <View>
                     <Text style={styles.qualifDetail}>
-                      {waiterFormData?.data[0]?.education || 'loading..'}
+                      {waiterFormLoading
+                        ? 'loading..'
+                        : waiterFormData?.data[0]?.education || 'none'}
                     </Text>
                   </View>
                 </View>
               </View>
-              <Dash style={{width: '90%', height: 1}} dashColor='#FCDF6F'/>
+              <Dash style={{ width: '90%', height: 1 }} dashColor="#FCDF6F" />
             </View>
             <View style={{ marginVertical: 20 }}>
               <View style={{ alignItems: 'center' }}>
@@ -171,7 +185,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
               style={{ resizeMode: 'contain' }}
             />
           </TouchableOpacity>
-        </View>
+        </ScrollView>
       </Modal>
     </View>
   );

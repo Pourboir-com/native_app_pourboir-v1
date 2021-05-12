@@ -243,6 +243,54 @@ const FilterModal = ({
                   })}
                 </View>
               </View>
+              {/* <View style={{ flexDirection: 'row', marginTop: 20 }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setAvail('');
+                    setRating('');
+                    setHigh(0);
+                    setPosition('');
+                    setLow(0);
+                  }}
+                  activeOpacity={0.5}
+                >
+                  <View
+                    style={[
+                      {
+                        height: 22,
+                        width: 22,
+                        borderRadius: 12,
+                        borderWidth: 2,
+                        borderColor: '#FCDF6F',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      },
+                      // props.style,
+                    ]}
+                  >
+                    {avail === 'half' ? (
+                      <View
+                        style={{
+                          height: 10,
+                          width: 10,
+                          borderRadius: 6,
+                          backgroundColor: '#FCDF6F',
+                        }}
+                      />
+                    ) : null}
+                  </View>
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    paddingLeft: 10,
+                    alignSelf: 'center',
+                    fontFamily: 'ProximaNova',
+                    fontWeight: avail === 'half' ? 'bold' : 'normal',
+                  }}
+                >
+                  Default all
+                </Text>
+              </View> */}
             </View>
             <View
               style={{

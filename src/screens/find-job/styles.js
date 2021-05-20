@@ -1,9 +1,6 @@
-import {
-  StyleSheet,
-} from 'react-native';
-import {
-  Platform,
-} from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
+import { Colors } from '../../constants/Theme';
 
 const styles = StyleSheet.create({
   container: {
@@ -146,6 +143,71 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNova',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
+  },
+  expBox: {
+    backgroundColor: '#fff',
+    borderColor: '#E3E3E3',
+    borderWidth: 2,
+    borderRadius: 13,
+    paddingVertical: 25,
+    paddingHorizontal: 15,
+    marginTop: 10,
+  },
+  expTxt1: {
+    fontFamily: 'ProximaNovaBold',
+    fontSize: 13,
+  },
+  expTxt2: {
+    fontFamily: 'ProximaNova',
+    fontSize: 13,
+    paddingVertical: 10,
+  },
+  expTxt3: {
+    fontFamily: 'ProximaNova',
+    fontSize: 13,
+  },
+  viewAddReview: {
+    width: '110%',
+    alignSelf: 'center',
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    paddingVertical: 10,
+    borderWidth: 2,
+    borderStyle: 'dashed',
+    borderColor: '#DADADA',
+    // height:40,
+    marginTop: 30,
+  },
+  btnAdd: {
+    backgroundColor: Colors.yellow,
+    padding: 4,
+    borderRadius: 6,
+    marginLeft: 10,
+  },
+  txtAddReview: {
+    fontSize: 16,
+    color: Colors.fontDark,
+  },
+  availabilityCard: {
+    backgroundColor: '#fff',
+    borderColor: '#E3E3E3',
+    borderWidth: 2,
+    borderRadius: 13,
+    // paddingHorizontal:-10,
+    paddingVertical: 15,
+    flexDirection: 'row',
+  },
+  availTxt1: {
+    marginLeft: 15,
+    fontFamily: 'ProximaNovaBold',
+    fontSize: 14,
+  },
+  availTxt2: {
+    marginLeft: 25,
+    fontFamily: 'ProximaNova',
+    fontSize: 14,
   },
 });
 

@@ -19,8 +19,9 @@ import { RECRUITMENT_FORM } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { filterSearch } from '../../util';
+import { Ionicons } from '@expo/vector-icons';
 
-const ManagerStaff = () => {
+const ManagerStaff = ({ navigation }) => {
   const [value, setValue] = useState('');
   const [isModalVisible, setModalVisible] = useState(false);
   const [filterModal, setFilterModal] = useState(false);
@@ -32,6 +33,7 @@ const ManagerStaff = () => {
   const [rating, setRating] = useState('');
   const [position, setPosition] = useState();
   const [queries, setQueries] = useState(filterSearch());
+  const [showCross, setShowCross] = useState(false);
 
   const {
     data: waitersFormData,
@@ -72,7 +74,18 @@ const ManagerStaff = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#F9F9F9' }}>
-      <View style={{ paddingHorizontal: 25, marginTop: 80 }}>
+      <TouchableOpacity
+        activeOpacity={0.5}
+        style={{ marginTop: 60, marginLeft: 15 }}
+      >
+        <Ionicons
+          onPress={() => navigation.goBack()}
+          name="arrow-back-outline"
+          size={30}
+          color="black"
+        />
+      </TouchableOpacity>
+      <View style={{ paddingHorizontal: 25, marginTop: 10 }}>
         <View style={styles.first_section}>
           <View style={styles.child_one}>
             <Text style={styles.first_section_bold}>
@@ -93,11 +106,13 @@ const ManagerStaff = () => {
               <View style={{ justifyContent: 'center', paddingRight: 20 }}>
                 <Feather name="search" size={24} color="#FCDF6F" />
               </View>
-              <View style={{ width: '77%' }}>
+              <View style={{ width: '78%', flexDirection: 'row' }}>
                 <TextInput
                   placeholder={i18n.t('search')}
                   value={value}
                   placeholderTextColor="#707070"
+                  onFocus={() => setShowCross(true)}
+                  onBlur={() => setShowCross(false)}
                   onChangeText={e => {
                     setValue(e);
                     setQueries(
@@ -111,6 +126,27 @@ const ManagerStaff = () => {
                     fontFamily: 'ProximaNova',
                   }}
                 />
+
+                {showCross ? (
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      marginLeft: -18,
+                      zIndex: 9999,
+                      backgroundColor: '#fff',
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={() => [setValue(), setShowCross(false)]}
+                      activeOpacity={0.1}
+                    >
+                      <Image
+                        source={require('../../assets/images/cross.png')}
+                        style={{ width: 17, height: 17, marginRight: 80 }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
               </View>
             </View>
             <View style={styles.filter}>

@@ -19,6 +19,9 @@ import { APPLY_WAITER, SEARCH_RESTAURANTS } from '../../queries';
 import { useMutation } from 'react-query';
 import CommonModal from '../../components/modals/HelpUsImproveModal';
 const canidate = require('../../assets/images/canidate.png');
+import { AntDesign } from '@expo/vector-icons';
+import AddExperienceModal from '../../components/modals/AddExperienceModal';
+import AddNicheModal from '../../components/modals/AddNicheModal';
 
 const Find_Job = ({ navigation }) => {
   const { state } = useContext(Context);
@@ -34,7 +37,7 @@ const Find_Job = ({ navigation }) => {
   const [applyWaiter] = useMutation(APPLY_WAITER);
   const [searchRestaurant] = useMutation(SEARCH_RESTAURANTS);
   const [temp, setTemp] = useState('');
-  const [firstName, setFirstName] = useState(savedFirstName);
+  const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState(savedLastName);
   const [education, setEducation] = useState('');
   const [experience, setExperience] = useState('');
@@ -45,6 +48,15 @@ const Find_Job = ({ navigation }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [restaurants, setRestaurants] = useState();
   const [searchLoading, setSearchLoading] = useState(false);
+  const [phone, setPhone] = useState();
+  const [expModalVisible, setExpModalVisible] = useState(false);
+  const [nicheModalVisible, setNicheModalVisible] = useState(false);
+  const [companyName, setCompanyName] = useState('');
+  const [post, setPost] = useState('');
+  const [startDate, setStartDate] = useState(new Date(1495051730000));
+  const [endDate, setEndDate] = useState(new Date(1598051730000));
+  const [data, setData] = useState([]);
+  const [nicheModalData, setNicheModalData] = useState([])
 
   let validation =
     firstName &&
@@ -164,7 +176,7 @@ const Find_Job = ({ navigation }) => {
                   placeholderTextColor={'#707375'}
                 />
               </View>
-              <View
+              {/* <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
@@ -199,8 +211,8 @@ const Find_Job = ({ navigation }) => {
                     placeholderTextColor={'#707375'}
                   />
                 </View>
-              </View>
-              <View style={styles.input_box}>
+              </View> */}
+              {/* <View style={styles.input_box}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -284,9 +296,20 @@ const Find_Job = ({ navigation }) => {
                     )}
                   </View>
                 )}
+              </View> */}
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>{i18n.t('phone')}</Text>
+                <TextInput
+                  style={styles.inputsTopTow}
+                  onChangeText={e => setPhone(e)}
+                  value={phone}
+                  placeholder="06 88 88 88 88"
+                  placeholderTextColor={'#707375'}
+                  keyboardType={'numeric'}
+                />
               </View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('education')}</Text>
+                <Text style={styles.inputLabel}>{i18n.t('diploma')}</Text>
                 <TextInput
                   onFocus={() => showDropdown && setShowDropdown(false)}
                   style={styles.inputsTopTow}
@@ -296,7 +319,69 @@ const Find_Job = ({ navigation }) => {
                   placeholderTextColor={'#707375'}
                 />
               </View>
+              <View style={{ marginVertical: 16 }}>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontFamily: 'ProximaNovaBold',
+                    fontSize: 18,
+                  }}
+                >
+                  {i18n.t('prof_exp')}
+                </Text>
+                {data.map((v, i) => {
+                  return (
+                    <View key={i} style={styles.expBox}>
+                      <View>
+                        <Text style={styles.expTxt1}>{v.companyName}</Text>
+                        <Text style={styles.expTxt2}>{v.post}</Text>
+                        <Text style={styles.expTxt3}>
+                          {i18n.t('of')} {v.startDate} {i18n.t('at')}{' '}
+                          {v.endDate}
+                        </Text>
+                      </View>
+                    </View>
+                  );
+                })}
+                <View style={styles.viewAddReview}>
+                  {/* <Text style={[styles.txtCantFind, { fontFamily: 'ProximaNova' }]}>
+            {i18n.t('cant_find_your_server')}
+          </Text> */}
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text
+                      style={[
+                        styles.txtAddReview,
+                        { fontFamily: 'ProximaNovaBold' },
+                      ]}
+                    >
+                      {/* {i18n.t('add_your_server')} */}
+                      {i18n.t('add_exp')}
+                    </Text>
+                    <TouchableOpacity
+                      activeOpacity={0.5}
+                      onPress={() => setExpModalVisible(true)}
+                      style={styles.btnAdd}
+                    >
+                      <AntDesign
+                        name="plus"
+                        size={16}
+                        color={Colors.fontDark}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
               <View style={styles.input_box}>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontFamily: 'ProximaNovaBold',
+                    fontSize: 18,
+                    marginBottom: 14,
+                  }}
+                >
+                  {i18n.t('availability')}
+                </Text>
                 <Text style={styles.inputLabel}>{i18n.t('Time')}</Text>
                 <View style={styles.chooseButtons_container}>
                   <TouchableOpacity
@@ -330,6 +415,45 @@ const Find_Job = ({ navigation }) => {
                   >
                     <Text style={styles.timeTxt}>{i18n.t('partial')}</Text>
                   </TouchableOpacity>
+                </View>
+              </View>
+              <View>
+                {
+                  nicheModalData.map((v,i) => {
+                    return(
+                      <View key={i} style={{...styles.availabilityCard, marginBottom:8}}>
+                  <Text style={styles.availTxt1}>{v.dayOfWeek}</Text>
+                  <Text style={styles.availTxt2}>{
+                    v.times.map((v,i) => ( <Text key={i}>
+                       {` ${ v.slice(0,4)}`}
+                    </Text>))
+                  }</Text>
+                </View>
+                    )
+                  })
+                }
+                <View style={{ ...styles.viewAddReview, marginBottom: 20 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text
+                      style={[
+                        styles.txtAddReview,
+                        { fontFamily: 'ProximaNovaBold' },
+                      ]}
+                    >
+                      {i18n.t('add_niche')}
+                    </Text>
+                    <TouchableOpacity
+                      activeOpacity={0.5}
+                      onPress={() => setNicheModalVisible(true)}
+                      style={styles.btnAdd}
+                    >
+                      <AntDesign
+                        name="plus"
+                        size={16}
+                        color={Colors.fontDark}
+                      />
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
             </View>
@@ -380,6 +504,26 @@ const Find_Job = ({ navigation }) => {
           buttonText={'OK'}
         />
       )}
+      <AddExperienceModal
+        expModalVisible={expModalVisible}
+        setExpModalVisible={setExpModalVisible}
+        companyName={companyName}
+        post={post}
+        startDate={startDate}
+        endDate={endDate}
+        setCompanyName={setCompanyName}
+        setPost={setPost}
+        setStartDate={setStartDate}
+        setEndDate={setEndDate}
+        data={data}
+        setData={setData}
+      />
+      <AddNicheModal
+        nicheModalVisible={nicheModalVisible}
+        setNicheModalVisible={setNicheModalVisible}
+        nicheModalData={nicheModalData}
+        setNicheModalData={setNicheModalData}
+      />
     </>
   );
 };

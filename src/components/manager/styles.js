@@ -1,16 +1,16 @@
-import {
-  StyleSheet,
-} from 'react-native';
+import { StyleSheet } from 'react-native';
 const THUMB_RADIUS = 9;
 
 const styles = StyleSheet.create({
   main_card_container: {
     backgroundColor: '#fff',
-    borderRadius: 14,
+    // borderRadius: 14,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 10,
+    paddingHorizontal: 8,
     marginBottom: 14,
+    // height:50
+    paddingTop: 20,
   },
   section1: {
     flexDirection: 'row',
@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   section2: {
     justifyContent: 'center',
     alignItems: 'center',
+    paddingRight: 10,
   },
   name_staff: {
     fontFamily: 'ProximaNova',

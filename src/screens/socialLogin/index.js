@@ -32,6 +32,8 @@ import * as Device from 'expo-device';
 import { getAsyncStorageValues } from '../../constants';
 import * as Notifications from 'expo-notifications';
 import * as Localization from 'expo-localization';
+import AddExperienceModal from '../../components/modals/AddExperienceModal';
+import AddNicheModal from '../../components/modals/AddNicheModal';
 
 const SocialLogin = ({ navigation, route }) => {
   const [city, setCity] = useState();
@@ -458,14 +460,17 @@ const SocialLogin = ({ navigation, route }) => {
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginRight: 25,
+                marginRight: 0,
                 paddingTop: 25,
                 paddingBottom: 10,
+                justifyContent: 'center',
+                marginHorizontal: 60,
+                width: '70%',
               }}
             >
               <CheckBox
                 style={{
-                  paddingRight: 10,
+                  paddingRight: -40,
                   marginTop: Platform.OS === 'android' ? -4 : -13,
                 }}
                 onClick={() => setTermsChecked(!termsChecked)}
@@ -488,13 +493,19 @@ const SocialLogin = ({ navigation, route }) => {
               <Text
                 style={[
                   {
-                    width: 250,
+                    width: 320,
+                    textAlign: 'center',
+                    // marginLeft:60
                   },
                 ]}
               >
                 <View style={{ flexDirection: 'row' }}>
                   <Text
-                    style={{ color: Colors.fontLight }}
+                    style={{
+                      color: Colors.fontLight,
+                      textAlign: 'center',
+                      fontSize: 14,
+                    }}
                     onPress={() => setTermsChecked(!termsChecked)}
                   >
                     {i18n.t('I_accept')}{' '}
@@ -509,11 +520,12 @@ const SocialLogin = ({ navigation, route }) => {
                     <Text
                       style={{
                         color: '#0050A0',
-                        fontSize: 14,
+                        fontSize: 13,
                         fontFamily: 'ProximaNova',
                         lineHeight: 24,
                         textAlign: 'center',
                         marginTop: Platform.OS === 'android' ? -1 : -2.5,
+                        // marginLeft:20
                       }}
                     >
                       {i18n.t('terms_of_use')}
@@ -526,7 +538,7 @@ const SocialLogin = ({ navigation, route }) => {
 
           <TouchableOpacity
             activeOpacity={0.5}
-            style={{ marginTop: 30, marginBottom: 30 }}
+            style={{ marginBottom: 30, marginTop: -10 }}
             onPress={async () => {
               const { manager_email } = await getAsyncStorageValues();
               if (manager_email) {
@@ -551,6 +563,10 @@ const SocialLogin = ({ navigation, route }) => {
               </Text>{' '}
             </Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
+            <Text>Navigation</Text>
+          </TouchableOpacity>
+          {/* <AddNicheModal /> */}
         </View>
       )}
     </ScrollView>

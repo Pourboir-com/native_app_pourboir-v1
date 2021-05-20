@@ -156,19 +156,15 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                 </View>
                 <View style={styles.recruterBtns}>
                   <TouchableOpacity>
-                    <AntDesign
-                      name="checkcircleo"
-                      size={20}
-                      color="#6DD400"
-                      style={{ paddingRight: 5 }}
+                    <Image 
+                    source={require('../../assets/images/Call.png')}
+                    style={{width:30, height:30, resizeMode:'contain', marginRight:20}}
                     />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <AntDesign
-                      name="closecircleo"
-                      size={20}
-                      color="#FA6400"
-                      style={{ paddingLeft: 5 }}
+                  <Image 
+                    source={require('../../assets/images/Email.png')}
+                    style={{width:30, height:30, resizeMode:'contain'}}
                     />
                   </TouchableOpacity>
                 </View>

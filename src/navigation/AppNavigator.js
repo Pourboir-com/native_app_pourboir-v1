@@ -24,6 +24,7 @@ import FindJob from '../screens/find-job';
 import SignIn from '../screens/manager-signin';
 import ManagerStaff from '../screens/manager-staff';
 import ManagerSignUp from '../screens/manager-signup';
+import ServerProfile from '../screens/server-profile';
 
 const Stack = createStackNavigator();
 
@@ -264,6 +265,18 @@ function AppNavigator() {
       <Stack.Screen
         name="ManagerSignUp"
         component={ManagerSignUp}
+        options={() => ({
+          headerShown: false,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+        })}
+      />
+       <Stack.Screen
+        name="ServerProfile"
+        component={ServerProfile}
         options={() => ({
           headerShown: false,
           title: '',

@@ -8,6 +8,7 @@ export const filterSearch = (rating, high, low, avail, position, value) => {
     search: value,
     // rating_needed: true,
     first_item: true,
+    filtered_list: true,
   };
 };
 

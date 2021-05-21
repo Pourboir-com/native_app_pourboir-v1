@@ -47,7 +47,7 @@ const Setting = ({ navigation, route }) => {
       payload: {},
     });
     await AsyncStorage.setItem('@userInfo', JSON.stringify({}));
-    await AsyncStorage.setItem('@manager_email', JSON.stringify(''));
+    await AsyncStorage.setItem('@manager_details', JSON.stringify({}));
     setLoading(false);
   };
 
@@ -300,8 +300,8 @@ const Setting = ({ navigation, route }) => {
           activeOpacity={0.5}
           // disabled={loading}
           onPress={async () => {
-            const { manager_email } = await getAsyncStorageValues();
-            if (manager_email) {
+            const { manager_details } = await getAsyncStorageValues();
+            if (manager_details?.token) {
               navigation.navigate('ManagerStaff');
             } else {
               navigation.navigate('SignIn');

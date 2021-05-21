@@ -86,8 +86,10 @@ const StaffCard = ({ toggleModal, data }) => {
             </View>
           </View>
         </View>
-        <View onPress={() => toggleModal(data?._id)} style={styles.section2}>
-          <AntDesign name="right" size={20} color="#485460" />
+        <View style={styles.section2}>
+          <TouchableOpacity onPress={() => toggleModal(data?._id)}>
+            <AntDesign name="right" size={20} color="#485460" />
+          </TouchableOpacity>
         </View>
       </TouchableOpacity>
     </Swipeout>

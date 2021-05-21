@@ -147,12 +147,12 @@ const styles = StyleSheet.create({
   expBox: {
     backgroundColor: '#fff',
     borderColor: '#E3E3E3',
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 13,
     paddingVertical: 15,
     paddingHorizontal: 15,
     marginTop: 10,
-    paddingBottom:22
+    paddingBottom: 22,
   },
   expTxt1: {
     fontFamily: 'ProximaNovaBold',

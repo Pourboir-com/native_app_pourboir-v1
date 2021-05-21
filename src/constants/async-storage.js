@@ -4,14 +4,15 @@ export const getAsyncStorageValues = async () => {
   const location = await AsyncStorage.getItem('@location');
   const Currency = await AsyncStorage.getItem('@Currency');
   const City = await AsyncStorage.getItem('@City');
-  const manager_email = await AsyncStorage.getItem('@manager_email');
+  const manager_details = await AsyncStorage.getItem('@manager_details');
   const userInformation = await AsyncStorage.getItem('@userInfo');
   const userInfo = JSON.parse(userInformation);
+  const manager = JSON.parse(manager_details);
   return {
     location: location,
     userInfo: userInfo,
     Currency: Currency,
     City: JSON.parse(City) || {},
-    manager_email: manager_email,
+    manager_details: manager,
   };
 };

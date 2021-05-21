@@ -543,8 +543,8 @@ const SocialLogin = ({ navigation, route }) => {
             activeOpacity={0.5}
             style={{ marginBottom: 30, marginTop: -10 }}
             onPress={async () => {
-              const { manager_email } = await getAsyncStorageValues();
-              if (manager_email) {
+              const { token } = await getAsyncStorageValues();
+              if (token) {
                 navigation.navigate('ManagerStaff');
               } else {
                 navigation.navigate('SignIn');

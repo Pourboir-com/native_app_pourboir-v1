@@ -6,7 +6,7 @@ export const filterSearch = (rating, high, low, avail, position, value) => {
     time: avail?.length ? [avail] : [],
     position: position || '',
     search: value,
-    rating_needed: true,
+    // rating_needed: true,
     first_item: true,
   };
 };

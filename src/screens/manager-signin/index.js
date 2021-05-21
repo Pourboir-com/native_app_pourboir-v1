@@ -14,6 +14,8 @@ import { useMutation } from 'react-query';
 import { LOGIN } from '../../queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import axios from 'axios';
+
 const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -27,9 +29,10 @@ const SignIn = ({ navigation }) => {
         password,
       },
       {
-        onSuccess: async () => {
+        onSuccess: async res => {
+          axios.defaults.headers.common.Authorization = `Bearer ${res.token}`;
+          await AsyncStorage.setItem('@manager_details', JSON.stringify(res));
           navigation.replace('ManagerStaff');
-          await AsyncStorage.setItem('@manager_email', JSON.stringify(email));
           setLoading(false);
         },
         onError: () => {

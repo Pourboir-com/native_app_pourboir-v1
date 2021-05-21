@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -16,7 +16,7 @@ import FilterModal from '../../components/manager/filter-modal';
 import i18n from '../../li8n';
 import { useQuery } from 'react-query';
 import { RECRUITMENT_FORM } from '../../queries';
-import { reactQueryConfig } from '../../constants';
+import { reactQueryConfig, getAsyncStorageValues } from '../../constants';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { filterSearch } from '../../util';
 import { Ionicons } from '@expo/vector-icons';
@@ -34,18 +34,31 @@ const ManagerStaff = ({ navigation }) => {
   const [position, setPosition] = useState();
   const [queries, setQueries] = useState(filterSearch());
   const [showCross, setShowCross] = useState(false);
+  const [managerId, setManagerId] = useState();
+
+  useEffect(() => {
+    (async () => {
+      const { manager_details } = await getAsyncStorageValues();
+      setManagerId(manager_details?.data?._id);
+    })();
+  }, []);
 
   const {
     data: waitersFormData,
     isLoading: waitersFormLoading,
     refetch: refetchFormWaiters,
     isFetching: waitersFormIsFetching,
-  } = useQuery(['RECRUITMENT_FORM', queries], RECRUITMENT_FORM, {
-    ...reactQueryConfig,
-    onError: e => {
-      alert(e?.response?.data?.message);
+  } = useQuery(
+    ['RECRUITMENT_FORM', { ...queries, manager_id: managerId }],
+    RECRUITMENT_FORM,
+    {
+      ...reactQueryConfig,
+      enabled: managerId ? true : false,
+      onError: e => {
+        alert(e?.response?.data?.message);
+      },
     },
-  });
+  );
 
   let FilterStates = {
     avail,
@@ -118,7 +131,7 @@ const ManagerStaff = ({ navigation }) => {
                     setQueries(
                       filterSearch(rating, high, low, avail, position, e),
                     );
-                    e.length ? setShowCross(true) : setShowCross(false)
+                    e.length ? setShowCross(true) : setShowCross(false);
                   }}
                   style={{
                     width: '100%',
@@ -137,7 +150,13 @@ const ManagerStaff = ({ navigation }) => {
                     }}
                   >
                     <TouchableOpacity
-                      onPress={() => [setValue(), setShowCross(false)]}
+                      onPress={() => [
+                        setValue(''),
+                        setQueries(
+                          filterSearch(rating, high, low, avail, position, ''),
+                        ),
+                        setShowCross(false),
+                      ]}
                       activeOpacity={0.1}
                     >
                       <Image
@@ -210,7 +229,7 @@ const ManagerStaff = ({ navigation }) => {
           )}
         </>
       )}
-      
+
       {isModalVisible && (
         <StaffModal
           formId={formId || ''}

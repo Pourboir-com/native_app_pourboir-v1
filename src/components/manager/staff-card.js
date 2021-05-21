@@ -29,7 +29,6 @@ const StaffCard = ({ toggleModal, data }) => {
       right={swipeoutBtns}
     >
       <TouchableOpacity
-        onPress={() => toggleModal(data?._id)}
         activeOpacity={0.8}
         style={styles.main_card_container}
       >
@@ -73,7 +72,7 @@ const StaffCard = ({ toggleModal, data }) => {
             </View>
           </View>
         </View>
-        <View style={styles.section2}>
+        <View  onPress={() => toggleModal(data?._id)} style={styles.section2}>
           <AntDesign name="right" size={20} color="#485460" />
         </View>
       </TouchableOpacity>

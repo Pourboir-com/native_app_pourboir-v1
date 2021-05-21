@@ -47,6 +47,7 @@ const Setting = ({ navigation, route }) => {
       payload: {},
     });
     await AsyncStorage.setItem('@userInfo', JSON.stringify({}));
+    await AsyncStorage.setItem('@manager_email', JSON.stringify(''));
     setLoading(false);
   };
 

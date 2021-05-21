@@ -123,7 +123,7 @@ const Setting = ({ navigation, route }) => {
         <ImageBackground
           style={{
             width: '100%',
-            height: Dimensions.get('window').height * 0.5,
+            height: Dimensions.get('window').height * 0.43,
           }}
           source={imgBg}
           resizeMode="stretch"
@@ -284,7 +284,7 @@ const Setting = ({ navigation, route }) => {
       </View>
       
 
-      <View style={{position:'absolute', bottom:250, width:'100%'}}>
+      <View style={{position:'absolute', bottom:245, width:'100%'}}>
       <TouchableOpacity
         activeOpacity={0.5}
         // disabled={loading}
@@ -489,7 +489,7 @@ const styles = StyleSheet.create({
   viewProfile: {
     backgroundColor: Colors.yellow,
     width: '100%',
-    height: Dimensions.get('window').height * 0.44,
+    height: Dimensions.get('window').height * 0.43,
     // marginTop: -20,
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,

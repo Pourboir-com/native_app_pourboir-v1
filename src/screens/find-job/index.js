@@ -25,7 +25,7 @@ import AddNicheModal from '../../components/modals/AddNicheModal';
 
 const Find_Job = ({ navigation }) => {
   const { state } = useContext(Context);
-  //getting first and last name saved in state
+  // getting first and last name saved in state
   let fullName = state?.userDetails?.name?.split(' ');
   let savedFirstName =
     fullName?.length > 1
@@ -33,11 +33,11 @@ const Find_Job = ({ navigation }) => {
       : fullName[0];
   let savedLastName =
     fullName?.length > 1 ? fullName[fullName?.length - 1] : '';
-  //states
+  states
   const [applyWaiter] = useMutation(APPLY_WAITER);
   const [searchRestaurant] = useMutation(SEARCH_RESTAURANTS);
   const [temp, setTemp] = useState('');
-  const [firstName, setFirstName] = useState();
+  const [firstName, setFirstName] = useState(savedFirstName);
   const [lastName, setLastName] = useState(savedLastName);
   const [education, setEducation] = useState('');
   const [experience, setExperience] = useState('');

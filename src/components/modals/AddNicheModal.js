@@ -207,12 +207,13 @@ const AddNicheModal = ({
               }
             />
           </View>
-          <View style={{ paddingLeft: 10 }}>
+          <View style={{ paddingLeft: 10, }}>
             <Text
               style={{
                 fontFamily: !morningChecked ? 'ProximaNova' : 'ProximaNovaBold',
                 color: '#1E272E',
                 fontSize: 13,
+                paddingTop:-1 
               }}
             >
               {i18n.t('morning')} 6:00 - 12:00
@@ -260,7 +261,7 @@ const AddNicheModal = ({
               }
             />
           </View>
-          <View style={{ paddingLeft: 10, paddingTop: 1 }}>
+          <View style={{ paddingLeft: 10, paddingTop: 0 }}>
             <Text
               style={{
                 fontFamily: !noonChecked ? 'ProximaNova' : 'ProximaNovaBold',
@@ -313,7 +314,7 @@ const AddNicheModal = ({
               }
             />
           </View>
-          <View style={{ paddingLeft: 10, paddingTop: 1 }}>
+          <View style={{ paddingLeft: 10, }}>
             <Text
               style={{
                 fontFamily: !eveningChecked ? 'ProximaNova' : 'ProximaNovaBold',

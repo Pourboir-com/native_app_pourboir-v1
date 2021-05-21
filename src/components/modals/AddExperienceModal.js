@@ -34,8 +34,11 @@ const AddExperienceModal = ({
   setEndDate,
   data,
   setData,
+  termsChecked,
+  setTermsChecked,
+  workHere,
+  setWorkHere,
 }) => {
-  const [termsChecked, setTermsChecked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modeS, setModeS] = useState('date');
   const [showS, setShowS] = useState(false);
@@ -50,13 +53,15 @@ const AddExperienceModal = ({
         companyName,
         post,
         startDate: startDate.toLocaleDateString(),
-        endDate: endDate.toLocaleDateString(),
+        endDate: termsChecked === false ? endDate.toLocaleDateString() : 'still work here',
       },
-    ]);
+    ]
+    );
     setCompanyName('');
     setPost('');
     setStart('');
     setEnd('');
+    setExpModalVisible(false)
   };
   // console.log( startDate > endDate ? true: false)
 
@@ -231,7 +236,7 @@ const AddExperienceModal = ({
                 paddingRight: -40,
                 marginTop: -5,
               }}
-              onClick={() => setTermsChecked(!termsChecked)}
+              onClick={() => [setTermsChecked(!termsChecked), setWorkHere(workHere === '' ? 'work' : '')]}
               isChecked={termsChecked}
               checkedImage={
                 <Image

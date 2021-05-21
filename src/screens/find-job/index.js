@@ -26,18 +26,18 @@ import AddNicheModal from '../../components/modals/AddNicheModal';
 const Find_Job = ({ navigation }) => {
   const { state } = useContext(Context);
   // getting first and last name saved in state
-  let fullName = state?.userDetails?.name?.split(' ');
-  let savedFirstName =
-    fullName?.length > 1
-      ? fullName?.slice(0, fullName?.length - 1).join(' ')
-      : fullName[0];
-  let savedLastName =
-    fullName?.length > 1 ? fullName[fullName?.length - 1] : '';
+  // let fullName = state?.userDetails?.name?.split(' ');
+  // let savedFirstName =
+  //   fullName?.length > 1
+  //     ? fullName?.slice(0, fullName?.length - 1).join(' ')
+  //     : fullName[0];
+  // let savedLastName =
+  //   fullName?.length > 1 ? fullName[fullName?.length - 1] : '';
   const [applyWaiter] = useMutation(APPLY_WAITER);
   const [searchRestaurant] = useMutation(SEARCH_RESTAURANTS);
   const [temp, setTemp] = useState('');
-  const [firstName, setFirstName] = useState(savedFirstName);
-  const [lastName, setLastName] = useState(savedLastName);
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
   const [education, setEducation] = useState('');
   const [experience, setExperience] = useState('');
   const [lastExperience, setLastExperience] = useState({});
@@ -56,6 +56,8 @@ const Find_Job = ({ navigation }) => {
   const [endDate, setEndDate] = useState(new Date(1598051730000));
   const [data, setData] = useState([]);
   const [nicheModalData, setNicheModalData] = useState([]);
+  const [termsChecked, setTermsChecked] = useState(false);
+  const [workHere, setWorkHere] = useState('');
 
   let validation =
     firstName &&
@@ -335,8 +337,7 @@ const Find_Job = ({ navigation }) => {
                         <Text style={styles.expTxt1}>{v.companyName}</Text>
                         <Text style={styles.expTxt2}>{v.post}</Text>
                         <Text style={styles.expTxt3}>
-                          {i18n.t('of')} {v.startDate} {i18n.t('at')}{' '}
-                          {v.endDate}
+                        {`${i18n.t('of')} ${v.startDate} ${i18n.t('at')} ${v.endDate}`}
                         </Text>
                       </View>
                     </View>
@@ -418,7 +419,7 @@ const Find_Job = ({ navigation }) => {
               </View>
               {temp === 'half' && (
                 <View>
-                  {nicheModalData.map((v, i) => {
+                  {/* {nicheModalData.map((v, i) => {
                     return (
                       <View
                         key={i}
@@ -430,7 +431,7 @@ const Find_Job = ({ navigation }) => {
                         </Text>
                       </View>
                     );
-                  })}
+                  })} */}
 
                   <View style={{ ...styles.viewAddReview, marginBottom: 20 }}>
                     <View
@@ -520,6 +521,10 @@ const Find_Job = ({ navigation }) => {
         setEndDate={setEndDate}
         data={data}
         setData={setData}
+        termsChecked={termsChecked}
+        setTermsChecked={setTermsChecked}
+        workHere={workHere}
+        setWorkHere={setWorkHere}
       />
       <AddNicheModal
         nicheModalVisible={nicheModalVisible}

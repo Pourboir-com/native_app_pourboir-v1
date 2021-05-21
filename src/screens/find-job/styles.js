@@ -149,9 +149,10 @@ const styles = StyleSheet.create({
     borderColor: '#E3E3E3',
     borderWidth: 2,
     borderRadius: 13,
-    paddingVertical: 25,
+    paddingVertical: 15,
     paddingHorizontal: 15,
     marginTop: 10,
+    paddingBottom:22
   },
   expTxt1: {
     fontFamily: 'ProximaNovaBold',

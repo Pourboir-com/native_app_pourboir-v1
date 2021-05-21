@@ -11,7 +11,21 @@ const StaffCard = ({ toggleModal, data }) => {
   const obj = [1, 2, 3, 4, 5];
   var swipeoutBtns = [
     {
-      text: <Feather name="x-circle" size={35} color="#FCDF6F" />,
+      text: (
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={{
+            backgroundColor: '#fff',
+            height: '100%',
+            width: 55,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 15,
+          }}
+        >
+          <Feather name="x-circle" size={34} color="#FCDF6F" />
+        </TouchableOpacity>
+      ),
       height: '100%',
       backgroundColor: '#f1f1f1',
     },
@@ -23,15 +37,12 @@ const StaffCard = ({ toggleModal, data }) => {
         // marginHorizontal: 20,
         borderRadius: 15,
         marginBottom: 14,
-        width:'90%',
-        alignSelf:'center'
+        width: '90%',
+        alignSelf: 'center',
       }}
       right={swipeoutBtns}
     >
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={styles.main_card_container}
-      >
+      <TouchableOpacity activeOpacity={0.8} style={styles.main_card_container}>
         <View style={styles.section1}>
           <View>
             <Image
@@ -52,7 +63,7 @@ const StaffCard = ({ toggleModal, data }) => {
               {data?.user_id?.full_name}
             </Text>
             <View style={{ flexDirection: 'row', marginTop: 7 }}>
-              {obj.map((v, i) => {
+              {/* {obj.map((v, i) => {
                 return (
                   <TouchableOpacity style={{ marginRight: 3 }} key={i}>
                     <RatingStar
@@ -68,11 +79,14 @@ const StaffCard = ({ toggleModal, data }) => {
                     />
                   </TouchableOpacity>
                 );
-              })}
+              })} */}
+              <Text style={{ fontFamily: 'ProximaNovaBold', fontSize: 15 }}>
+                lorem
+              </Text>
             </View>
           </View>
         </View>
-        <View  onPress={() => toggleModal(data?._id)} style={styles.section2}>
+        <View onPress={() => toggleModal(data?._id)} style={styles.section2}>
           <AntDesign name="right" size={20} color="#485460" />
         </View>
       </TouchableOpacity>

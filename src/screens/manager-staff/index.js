@@ -73,7 +73,7 @@ const ManagerStaff = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#F9F9F9' }}>
+    <View style={{ flex: 1, backgroundColor: '#f1f1f1' }}>
       <TouchableOpacity
         activeOpacity={0.5}
         style={{ marginTop: 60, marginLeft: 15 }}
@@ -118,6 +118,7 @@ const ManagerStaff = ({ navigation }) => {
                     setQueries(
                       filterSearch(rating, high, low, avail, position, e),
                     );
+                    e.length ? setShowCross(true) : setShowCross(false)
                   }}
                   style={{
                     width: '100%',
@@ -209,6 +210,7 @@ const ManagerStaff = ({ navigation }) => {
           )}
         </>
       )}
+      
       {isModalVisible && (
         <StaffModal
           formId={formId || ''}

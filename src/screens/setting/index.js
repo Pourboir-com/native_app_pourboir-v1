@@ -138,12 +138,16 @@ const Setting = ({ navigation, route }) => {
             navigation={navigation}
             RightImage
           />
-    <TouchableOpacity activeOpacity={0.5} onPress={handleSignOut} style={styles.logoutBtn}>
-     <Image 
-      source={require('../../assets/images/Disconnect.png')}
-      style={{width:20, height:20}}
-      />
-     </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={handleSignOut}
+            style={styles.logoutBtn}
+          >
+            <Image
+              source={require('../../assets/images/Disconnect.png')}
+              style={{ width: 20, height: 20 }}
+            />
+          </TouchableOpacity>
           <View style={styles.viewImg}>
             {!state?.userDetails?.image ? (
               <Image
@@ -185,7 +189,9 @@ const Setting = ({ navigation, route }) => {
               <FontAwesome name="user-circle-o" size={120} color="#fff" />
             </View> */}
           <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
-            {!state?.userDetails?.name ? 'Bonjour' : userGivenName(state.userDetails.name)}
+            {!state?.userDetails?.name
+              ? 'Bonjour'
+              : userGivenName(state.userDetails.name)}
           </Text>
         </ImageBackground>
       </View>
@@ -226,10 +232,6 @@ const Setting = ({ navigation, route }) => {
             </View>
           </TouchableOpacity> */}
 
-
-
-
-        
           {/* <TouchableOpacity
             activeOpacity={0.5}
             onPress={() =>
@@ -279,103 +281,97 @@ const Setting = ({ navigation, route }) => {
         )}
       </TouchableOpacity> */}
       </View>
-      <View>
+      <View></View>
 
-      </View>
-      
-
-      <View style={{position:'absolute', bottom:245, width:'100%'}}>
-      <TouchableOpacity
-        activeOpacity={0.5}
-        // disabled={loading}
-        onPress={() => navigation.navigate("ServerProfile")}
-        style={{...styles.btnValider, marginBottom:6}}
-      >
-        {loading ? (
-          <ActivityIndicator size={29} color="#EBC11B" />
-        ) : (
+      <View style={{ position: 'absolute', bottom: 245, width: '100%' }}>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          // disabled={loading}
+          onPress={() => navigation.navigate('WaiterProfile')}
+          style={{ ...styles.btnValider, marginBottom: 6 }}
+        >
           <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
             {i18n.t('i_waiter')}
           </Text>
-        )}
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={0.5}
-        // disabled={loading}
-        // onPress={handleSignOut}
-        style={styles.btnValider}
-      >
-        {loading ? (
-          <ActivityIndicator size={29} color="#EBC11B" />
-        ) : (
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          // disabled={loading}
+          onPress={() => navigation.navigate('ManagerStaff')}
+          style={styles.btnValider}
+        >
           <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
             {i18n.t('i_manage')}
           </Text>
-        )}
-      </TouchableOpacity>
+        </TouchableOpacity>
       </View>
 
-
-
       <View
-         style={{position:'absolute', bottom:70, zIndex:9999, width:'90%', }}
-         >
-         <TouchableOpacity
-            activeOpacity={0.5}
-            style={{...styles.viewItem, borderTopRightRadius:13, borderTopLeftRadius:13}}
-            onPress={() => {
-              // Open the iOS App Store directly
+        style={{ position: 'absolute', bottom: 70, zIndex: 9999, width: '90%' }}
+      >
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={{
+            ...styles.viewItem,
+            borderTopRightRadius: 13,
+            borderTopLeftRadius: 13,
+          }}
+          onPress={() => {
+            // Open the iOS App Store directly
 
-              if (Platform.OS === 'ios') {
-                Linking.openURL(
-                  `itms-apps://itunes.apple.com/app/viewContentsUserReviews/id${1552612137}?action=write-review`,
-                );
-              }
-              if (Platform.OS === 'android') {
-                Linking.openURL(
-                  `https://play.google.com/store/apps/details?id=com.developerspourboir.pourboir&showAllReviews=true`,
-                );
-              }
-              // StoreReview.requestReview();
+            if (Platform.OS === 'ios') {
+              Linking.openURL(
+                `itms-apps://itunes.apple.com/app/viewContentsUserReviews/id${1552612137}?action=write-review`,
+              );
+            }
+            if (Platform.OS === 'android') {
+              Linking.openURL(
+                `https://play.google.com/store/apps/details?id=com.developerspourboir.pourboir&showAllReviews=true`,
+              );
+            }
+            // StoreReview.requestReview();
+          }}
+        >
+          <View style={styles.viewIcon}>
+            <FontAwesome name="star" size={20} color={Colors.yellow} />
+          </View>
+          <Text
+            style={{
+              fontFamily: 'ProximaNova',
+              color: Colors.fontDark,
+              fontSize: 16,
             }}
           >
-            <View style={styles.viewIcon}>
-              <FontAwesome name="star" size={20} color={Colors.yellow} />
-            </View>
-            <Text
-              style={{
-                fontFamily: 'ProximaNova',
-                color: Colors.fontDark,
-                fontSize: 16,
-              }}
-            >
-              {i18n.t('rate_application')}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            style={{...styles.viewItem, borderBottomLeftRadius:13, borderBottomRightRadius:13}}
-            onPress={() => {
-              Linking.openURL(`mailto:${email_to}`);
+            {i18n.t('rate_application')}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={{
+            ...styles.viewItem,
+            borderBottomLeftRadius: 13,
+            borderBottomRightRadius: 13,
+          }}
+          onPress={() => {
+            Linking.openURL(`mailto:${email_to}`);
+          }}
+        >
+          <View style={styles.viewIcon}>
+            <FontAwesome name="envelope" size={16} color={Colors.yellow} />
+          </View>
+          <Text
+            style={{
+              fontFamily: 'ProximaNova',
+              color: Colors.fontDark,
+              fontSize: 16,
             }}
           >
-            <View style={styles.viewIcon}>
-              <FontAwesome name="envelope" size={16} color={Colors.yellow} />
-            </View>
-            <Text
-              style={{
-                fontFamily: 'ProximaNova',
-                color: Colors.fontDark,
-                fontSize: 16,
-              }}
-            >
-              {i18n.t('contact_us')}
-            </Text>
-          </TouchableOpacity>
-         </View>
+            {i18n.t('contact_us')}
+          </Text>
+        </TouchableOpacity>
+      </View>
 
- 
-         <View style={{position:'absolute', bottom:20}}>
+      <View style={{ position: 'absolute', bottom: 20 }}>
         <Text style={[styles.versionText, { fontFamily: 'ProximaNova' }]}>
           Version {Constants.manifest.version}
         </Text>
@@ -386,11 +382,11 @@ const Setting = ({ navigation, route }) => {
 export default Setting;
 
 const styles = StyleSheet.create({
-  logoutBtn:{
-    position:'absolute',
-    top:42,
-    right:20,
-    zIndex:9999,
+  logoutBtn: {
+    position: 'absolute',
+    top: 42,
+    right: 20,
+    zIndex: 9999,
   },
   container: {
     flex: 1,
@@ -466,7 +462,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     // position: 'absolute',
     // bottom: 10,
-    alignSelf:'center',
+    alignSelf: 'center',
     marginBottom: Platform.OS === 'ios' ? 15 : 0,
   },
   txtName: {

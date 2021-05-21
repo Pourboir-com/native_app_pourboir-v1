@@ -133,7 +133,6 @@ const ManagerStaff = ({ navigation }) => {
                       justifyContent: 'center',
                       marginLeft: -18,
                       zIndex: 9999,
-                      backgroundColor: '#fff',
                     }}
                   >
                     <TouchableOpacity
@@ -142,7 +141,7 @@ const ManagerStaff = ({ navigation }) => {
                     >
                       <Image
                         source={require('../../assets/images/cross.png')}
-                        style={{ width: 17, height: 17, marginRight: 80 }}
+                        style={{ width: 19, height: 19, marginRight: 80 }}
                       />
                     </TouchableOpacity>
                   </View>
@@ -174,7 +173,7 @@ const ManagerStaff = ({ navigation }) => {
         <>
           {waitersFormData?.data?.length ? (
             <FlatList
-              style={{ paddingHorizontal: 25, marginTop: 25 }}
+              style={{ paddingHorizontal: 7, marginTop: 25 }}
               refreshControl={
                 <RefreshControl
                   //refresh control used for the Pull to Refresh

@@ -1,41 +1,48 @@
-import { useNavigation } from '@react-navigation/core'
-import React, { useState } from 'react'
-import { ActivityIndicator, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { Colors } from '../../constants/Theme'
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import {
+  ActivityIndicator,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { Colors } from '../../constants/Theme';
 
-const CommonButton = (props) => {
-    const [loading,setLoading] = useState(false)
-    const navigation = useNavigation();
-    return (
-        <TouchableOpacity
-        activeOpacity={0.5}
-        // disabled={loading}
-        onPress={() => props.navigation &&  navigation.navigate(props.navigation)}
-        style={styles.btnValider}
-      >
-        {loading ? (
-          <ActivityIndicator size={29} color="#EBC11B" />
-        ) : (
-          <Text style={{ fontFamily: 'ProximaNova', fontSize: 15 }}>
-            {props.title}
-          </Text>
-        )}
-      </TouchableOpacity>
-    )
-}
+const CommonButton = props => {
+  const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
+  return (
+    <TouchableOpacity
+      activeOpacity={0.5}
+      // disabled={loading}
+      onPress={() => props.navigation && navigation.navigate(props.navigation)}
+      style={styles.btnValider}
+    >
+      {loading ? (
+        <ActivityIndicator size={29} color="#EBC11B" />
+      ) : (
+        <Text style={{ fontFamily: 'ProximaNova', fontSize: 15 }}>
+          {props.title}
+        </Text>
+      )}
+    </TouchableOpacity>
+  );
+};
 
-export default CommonButton
+export default CommonButton;
 
 const styles = StyleSheet.create({
-    btnValider: {
-        backgroundColor: Colors.yellow,
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 50,
-        borderRadius: 8,
-        marginTop: 3,
-        alignSelf:'center',
-        marginBottom: Platform.OS === 'ios' ? 15 : 0,
-      },
-})
+  btnValider: {
+    backgroundColor: Colors.yellow,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    borderRadius: 8,
+    marginTop: 3,
+    alignSelf: 'center',
+    marginBottom: Platform.OS === 'ios' ? 15 : 0,
+  },
+});

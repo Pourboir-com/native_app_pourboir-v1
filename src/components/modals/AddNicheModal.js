@@ -6,8 +6,6 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
-  ActivityIndicator,
-  TextInput,
   Platform,
   ActivityIndicatorComponent,
 } from 'react-native';
@@ -19,22 +17,15 @@ const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import CheckBox from 'react-native-check-box';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import DropDownPicker from 'react-native-custom-dropdown';
 import { Picker } from 'native-base';
 
 const AddNicheModal = ({
-  isVisible,
-  handleModalClose,
-  handlePayCash,
-  handlePayDigital,
-  //   loading,
   setNicheModalVisible,
   nicheModalVisible,
-  nicheModalData,
   setNicheModalData,
 }) => {
   const [loading, setLoading] = useState(false);
-  const [dayOfWeek, setDayOfWeek] = useState();
+  const [dayOfWeek, setDayOfWeek] = useState(i18n.t('monday'));
   const [morning, setMorning] = useState();
   const [noon, setNoon] = useState();
   const [evening, setEvening] = useState();
@@ -42,27 +33,22 @@ const AddNicheModal = ({
   const [noonChecked, setNoonChecked] = useState(false);
   const [eveningChecked, setEveningChecked] = useState(false);
   const [times, setTimes] = useState([]);
-  console.log(dayOfWeek);
+
   const Add = () => {
     setNicheModalData(e => {
       return [...e, { dayOfWeek, times }];
     });
-    setDayOfWeek(' ');
-    // setTimes(times.splice(0,times.length))
-    console.log(nicheModalData.length, nicheModalData);
-    // console.log(times)
+    setNicheModalVisible(false);
   };
   const unChecked = day => {
     for (var i = 0; i < times.length; i++) {
       if (times[i] === day) {
         times.splice(i, 1);
-      } else {
-        console.log('not found');
       }
     }
   };
 
-  let validation = dayOfWeek && times.length > 0;
+  let validation = dayOfWeek && times;
 
   return (
     <Overlay
@@ -113,34 +99,6 @@ const AddNicheModal = ({
             marginBottom: 42,
           }}
         >
-          {/* <View style={styles.input_box}>
-            <TextInput
-              style={styles.inputsTopTow}
-              onChangeText={e => setCompanyName(e)}
-              value={companyName}
-              placeholder="Jour de la semaine"
-              placeholderTextColor={'#707375'}
-            />
-          </View> */}
-          {/* <DropDownPicker
-    items={[
-        {label: 'Mon', value: 'Mon'},
-        {label: 'Tue', value: 'Tue'},
-        {label: 'Wed', value: 'Wed'},
-        {label: 'Thr', value: 'Thr'},
-        {label: 'Fri', value: 'Fri'},
-        {label: 'Sat', value: 'Sat'},
-        {label: 'Sun', value: 'Sun'},
-    ]}
-    defaultValue={null}
-    containerStyle={{height: 40, width:'100%'}}
-    style={{backgroundColor: '#fafafa', width:'100%'}}
-    itemStyle={{
-        justifyContent: 'flex-start'
-    }}
-    dropDownStyle={{backgroundColor: '#fafafa'}}
-    onChangeItem={item => setDayOfWeek(item.value)}
-/> */}
           <View
             style={{
               backgroundColor: '#fff',
@@ -172,7 +130,7 @@ const AddNicheModal = ({
             flexDirection: 'row',
             alignSelf: 'flex-start',
             marginLeft: 4,
-            marginBottom: 22,
+            marginBottom: 32,
             marginTop: -17,
           }}
         >
@@ -207,13 +165,13 @@ const AddNicheModal = ({
               }
             />
           </View>
-          <View style={{ paddingLeft: 10, }}>
+          <View style={{ paddingLeft: 10, marginTop: -4 }}>
             <Text
               style={{
                 fontFamily: !morningChecked ? 'ProximaNova' : 'ProximaNovaBold',
                 color: '#1E272E',
-                fontSize: 13,
-                paddingTop:-1 
+                fontSize: 16,
+                paddingTop: -1,
               }}
             >
               {i18n.t('morning')} 6:00 - 12:00
@@ -226,7 +184,7 @@ const AddNicheModal = ({
             flexDirection: 'row',
             alignSelf: 'flex-start',
             marginLeft: 4,
-            marginBottom: 22,
+            marginBottom: 32,
             marginTop: -17,
           }}
         >
@@ -261,12 +219,12 @@ const AddNicheModal = ({
               }
             />
           </View>
-          <View style={{ paddingLeft: 10, paddingTop: 0 }}>
+          <View style={{ paddingLeft: 10, marginTop: -4 }}>
             <Text
               style={{
                 fontFamily: !noonChecked ? 'ProximaNova' : 'ProximaNovaBold',
                 color: '#1E272E',
-                fontSize: 13,
+                fontSize: 16,
               }}
             >
               {i18n.t('noon')} 12:00 - 18:00
@@ -279,7 +237,7 @@ const AddNicheModal = ({
             flexDirection: 'row',
             alignSelf: 'flex-start',
             marginLeft: 4,
-            marginBottom: 22,
+            marginBottom: 32,
             marginTop: -17,
           }}
         >
@@ -314,12 +272,12 @@ const AddNicheModal = ({
               }
             />
           </View>
-          <View style={{ paddingLeft: 10, }}>
+          <View style={{ paddingLeft: 10, marginTop: -4 }}>
             <Text
               style={{
                 fontFamily: !eveningChecked ? 'ProximaNova' : 'ProximaNovaBold',
                 color: '#1E272E',
-                fontSize: 13,
+                fontSize: 16,
               }}
             >
               {/* {i18n.t('still_work')} */}
@@ -344,7 +302,7 @@ const AddNicheModal = ({
             <Text
               style={{
                 fontFamily: 'ProximaNova',
-                fontSize: 14,
+                fontSize: 16,
                 color: Colors.fontDark,
               }}
             >
@@ -406,7 +364,7 @@ const styles = StyleSheet.create({
     height: 200,
   },
   txtConfrm: {
-    fontSize: 15,
+    fontSize: 16,
     color: Colors.fontDark,
     marginTop: 18,
     textAlign: 'center',

@@ -127,7 +127,16 @@ const AddExperienceModal = ({
         </View>
       </ImageBackground>
 
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView
+        bounces={false}
+        enableOnAndroid={true}
+        extraScrollHeight={10}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        scrollToOverflowEnabled={true}
+        enableAutomaticScroll={Platform.OS === 'ios' ? true : false}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+      >
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
           {i18n.t('add_exp')}
         </Text>

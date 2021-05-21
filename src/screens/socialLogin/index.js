@@ -477,14 +477,14 @@ const SocialLogin = ({ navigation, route }) => {
                 isChecked={termsChecked}
                 checkedImage={
                   <Image
-                    style={{ width: 20 }}
+                    style={{ width: 18 }}
                     resizeMode={'contain'}
                     source={require('../../assets/images/checked.png')}
                   />
                 }
                 unCheckedImage={
                   <Image
-                    style={{ width: 18 }}
+                    style={{ width: 16 }}
                     resizeMode={'contain'}
                     source={require('../../assets/images/unchecked.png')}
                   />
@@ -544,7 +544,7 @@ const SocialLogin = ({ navigation, route }) => {
               if (manager_email) {
                 navigation.navigate('ManagerStaff');
               } else {
-                navigation.navigate('ManagerStaff');
+                navigation.navigate('SignIn');
               }
             }}
           >
@@ -562,9 +562,6 @@ const SocialLogin = ({ navigation, route }) => {
                 {i18n.t('manager_res')}
               </Text>{' '}
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('ServerProfile')}>
-            <Text>Navigation</Text>
           </TouchableOpacity>
           {/* <AddNicheModal /> */}
         </View>

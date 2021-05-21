@@ -33,7 +33,6 @@ const Find_Job = ({ navigation }) => {
       : fullName[0];
   let savedLastName =
     fullName?.length > 1 ? fullName[fullName?.length - 1] : '';
-  states
   const [applyWaiter] = useMutation(APPLY_WAITER);
   const [searchRestaurant] = useMutation(SEARCH_RESTAURANTS);
   const [temp, setTemp] = useState('');
@@ -56,7 +55,7 @@ const Find_Job = ({ navigation }) => {
   const [startDate, setStartDate] = useState(new Date(1495051730000));
   const [endDate, setEndDate] = useState(new Date(1598051730000));
   const [data, setData] = useState([]);
-  const [nicheModalData, setNicheModalData] = useState([])
+  const [nicheModalData, setNicheModalData] = useState([]);
 
   let validation =
     firstName &&
@@ -371,7 +370,7 @@ const Find_Job = ({ navigation }) => {
                   </View>
                 </View>
               </View>
-              <View style={styles.input_box}>
+              <View style={{ marginBottom: temp === 'half' ? 9 : 16 }}>
                 <Text
                   style={{
                     color: 'black',
@@ -417,45 +416,49 @@ const Find_Job = ({ navigation }) => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <View>
-                {
-                  nicheModalData.map((v,i) => {
-                    return(
-                      <View key={i} style={{...styles.availabilityCard, marginBottom:8}}>
-                  <Text style={styles.availTxt1}>{v.dayOfWeek}</Text>
-                  <Text style={styles.availTxt2}>{
-                    v.times.map((v,i) => ( <Text key={i}>
-                       {` ${ v.slice(0,4)}`}
-                    </Text>))
-                  }</Text>
-                </View>
-                    )
-                  })
-                }
-                <View style={{ ...styles.viewAddReview, marginBottom: 20 }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text
-                      style={[
-                        styles.txtAddReview,
-                        { fontFamily: 'ProximaNovaBold' },
-                      ]}
+              {temp === 'half' && (
+                <View>
+                  {nicheModalData.map((v, i) => {
+                    return (
+                      <View
+                        key={i}
+                        style={{ ...styles.availabilityCard, marginBottom: 8 }}
+                      >
+                        <Text style={styles.availTxt1}>{v.dayOfWeek}</Text>
+                        <Text style={styles.availTxt2}>
+                          {` ${v.times.join(' - ')}`}
+                        </Text>
+                      </View>
+                    );
+                  })}
+
+                  <View style={{ ...styles.viewAddReview, marginBottom: 20 }}>
+                    <View
+                      style={{ flexDirection: 'row', alignItems: 'center' }}
                     >
-                      {i18n.t('add_niche')}
-                    </Text>
-                    <TouchableOpacity
-                      activeOpacity={0.5}
-                      onPress={() => setNicheModalVisible(true)}
-                      style={styles.btnAdd}
-                    >
-                      <AntDesign
-                        name="plus"
-                        size={16}
-                        color={Colors.fontDark}
-                      />
-                    </TouchableOpacity>
+                      <Text
+                        style={[
+                          styles.txtAddReview,
+                          { fontFamily: 'ProximaNovaBold' },
+                        ]}
+                      >
+                        {i18n.t('add_niche')}
+                      </Text>
+                      <TouchableOpacity
+                        activeOpacity={0.5}
+                        onPress={() => setNicheModalVisible(true)}
+                        style={styles.btnAdd}
+                      >
+                        <AntDesign
+                          name="plus"
+                          size={16}
+                          color={Colors.fontDark}
+                        />
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
-              </View>
+              )}
             </View>
           </View>
         </KeyboardAwareScrollView>

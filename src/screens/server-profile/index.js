@@ -42,27 +42,39 @@ const ServerProfile = ({ navigation }) => {
         </ImageBackground>
         <ScrollView style={{ flex: 1 }}>
           <View style={{ alignItems: 'center', marginTop: 8 }}>
-            <View>
+            <View
+              style={{
+                backgroundColor: '#fff',
+                width: 160,
+                height: 160,
+                borderRadius: 100,
+                marginTop: 70,
+                marginBottom: 30,
+              }}
+            >
               <Image
                 source={require('../../assets/images/emptyRestaurantList.png')}
-                style={{ resizeMode: 'contain', height: 280, width: 280 }}
+                style={{
+                  width: 260,
+                  height: 350,
+                  marginTop: -115,
+                  marginLeft: -40,
+                }}
+                resizeMode="contain"
               />
             </View>
             <View style={{ marginHorizontal: 20 }}>
               <View>
-                <Text style={styles.textBold}>
-                {i18n.t('no_restaurant')}
-                </Text>
+                <Text style={styles.textBold}>{i18n.t('no_restaurant')}</Text>
                 <Text style={styles.textLight}>
-                {i18n.t('search_rest')}:{' '}
-                  <Text style={{ fontWeight: '700' }}>{i18n.t('you_waiter')}</Text>
+                  {i18n.t('search_rest')}:{' '}
+                  <Text style={{ fontFamily: 'ProximaNovaBold' }}>
+                    {i18n.t('you_waiter')}
+                  </Text>
                 </Text>
               </View>
               <View style={{ marginTop: 20 }}>
-                <CommonButton
-                  title={i18n.t('ind_rest')}
-                  navigation={'Home'}
-                />
+                <CommonButton title={i18n.t('ind_rest')} navigation={'Home'} />
               </View>
             </View>
             <View
@@ -75,11 +87,9 @@ const ServerProfile = ({ navigation }) => {
               {state ? (
                 <View>
                   <View>
-                    <Text style={styles.textBold}>
-                    {i18n.t('are_you_job')}
-                    </Text>
+                    <Text style={styles.textBold}>{i18n.t('are_you_job')}</Text>
                     <Text style={{ ...styles.textLight, marginHorizontal: 25 }}>
-                    {i18n.t('comp_job')}
+                      {i18n.t('comp_job')}
                     </Text>
                   </View>
                   <View style={{ marginTop: 20 }}>
@@ -92,10 +102,10 @@ const ServerProfile = ({ navigation }) => {
               ) : (
                 <View>
                   <View>
-                    <Text style={styles.boldTxt2}>{i18n.t('your_cand_prof')}</Text>
-                    <Text style={styles.lighTxt2}>
-                    {i18n.t('prev_rec')}
+                    <Text style={styles.boldTxt2}>
+                      {i18n.t('your_cand_prof')}
                     </Text>
+                    <Text style={styles.lighTxt2}>{i18n.t('prev_rec')}</Text>
                   </View>
                   <View>
                     <TouchableOpacity
@@ -125,7 +135,7 @@ const ServerProfile = ({ navigation }) => {
                           </Text>
                           <View style={{ flexDirection: 'row', marginTop: 7 }}>
                             <Text style={{ fontFamily: 'ProximaNovaBold' }}>
-                            {i18n.t('waitress')}
+                              {i18n.t('waitress')}
                             </Text>
                           </View>
                         </View>
@@ -135,10 +145,8 @@ const ServerProfile = ({ navigation }) => {
                       </View>
                     </TouchableOpacity>
                   </View>
-                  <View style={{marginTop:10}}>
-                  <CommonButton
-                  title={i18n.t('modif_prof')}
-                />
+                  <View style={{ marginTop: 10 }}>
+                    <CommonButton title={i18n.t('modif_prof')} />
                   </View>
                 </View>
               )}

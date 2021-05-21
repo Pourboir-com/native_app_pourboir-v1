@@ -274,8 +274,8 @@ function AppNavigator() {
           headerRightContainerStyle: { paddingRight: spacing(2) },
         })}
       />
-       <Stack.Screen
-        name="ServerProfile"
+      <Stack.Screen
+        name="WaiterProfile"
         component={ServerProfile}
         options={() => ({
           headerShown: false,

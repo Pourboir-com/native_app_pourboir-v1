@@ -544,7 +544,7 @@ const SocialLogin = ({ navigation, route }) => {
               if (manager_email) {
                 navigation.navigate('ManagerStaff');
               } else {
-                navigation.navigate('SignIn');
+                navigation.navigate('ManagerStaff');
               }
             }}
           >

@@ -156,15 +156,20 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                 </View>
                 <View style={styles.recruterBtns}>
                   <TouchableOpacity>
-                    <Image 
-                    source={require('../../assets/images/Call.png')}
-                    style={{width:30, height:30, resizeMode:'contain', marginRight:20}}
+                    <Image
+                      source={require('../../assets/images/Call.png')}
+                      style={{
+                        width: 30,
+                        height: 30,
+                        resizeMode: 'contain',
+                        marginRight: 20,
+                      }}
                     />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                  <Image 
-                    source={require('../../assets/images/Email.png')}
-                    style={{width:30, height:30, resizeMode:'contain'}}
+                    <Image
+                      source={require('../../assets/images/Email.png')}
+                      style={{ width: 30, height: 30, resizeMode: 'contain' }}
                     />
                   </TouchableOpacity>
                 </View>

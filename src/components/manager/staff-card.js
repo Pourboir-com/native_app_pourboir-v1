@@ -20,10 +20,11 @@ const StaffCard = ({ toggleModal, data }) => {
     <Swipeout
       style={{
         backgroundColor: '#fff',
-        marginHorizontal: 20,
+        // marginHorizontal: 20,
         borderRadius: 15,
-        paddingHorizontal: -20,
         marginBottom: 14,
+        width:'90%',
+        alignSelf:'center'
       }}
       right={swipeoutBtns}
     >

@@ -477,14 +477,14 @@ const SocialLogin = ({ navigation, route }) => {
                 isChecked={termsChecked}
                 checkedImage={
                   <Image
-                    style={{ width: 18 }}
+                    style={{ width: 20 }}
                     resizeMode={'contain'}
                     source={require('../../assets/images/checked.png')}
                   />
                 }
                 unCheckedImage={
                   <Image
-                    style={{ width: 16 }}
+                    style={{ width: 18 }}
                     resizeMode={'contain'}
                     source={require('../../assets/images/unchecked.png')}
                   />
@@ -563,7 +563,7 @@ const SocialLogin = ({ navigation, route }) => {
               </Text>{' '}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
+          <TouchableOpacity onPress={() => navigation.navigate('ServerProfile')}>
             <Text>Navigation</Text>
           </TouchableOpacity>
           {/* <AddNicheModal /> */}

@@ -47,14 +47,13 @@ const ServerProfile = ({ navigation }) => {
             justifyContent: 'center',
           }}
         >
-          <View style={{ alignItems: 'center', marginTop: 8 }}>
+          <View style={{ alignItems: 'center', marginTop: '20%' }}>
             <View
               style={{
                 backgroundColor: '#fff',
                 width: 160,
                 height: 160,
                 borderRadius: 100,
-                marginTop: 40,
                 marginBottom: 30,
               }}
             >

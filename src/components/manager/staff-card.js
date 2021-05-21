@@ -35,7 +35,7 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
     <Swipeout
       style={{
         backgroundColor: '#fff',
-        // marginHorizontal: 20,
+        overflow: 'hidden',
         borderRadius: 15,
         marginBottom: 14,
         width: '90%',

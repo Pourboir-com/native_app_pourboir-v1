@@ -15,6 +15,7 @@ import { LOGIN } from '../../queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios';
+import GlobalHeader from '../../components/GlobalHeader';
 
 const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState();
@@ -53,6 +54,15 @@ const SignIn = ({ navigation }) => {
       }}
       source={require('../../assets/images/splashBg.png')}
     >
+      <GlobalHeader
+        arrow={true}
+        fontSize={17}
+        color={'black'}
+        navigation={navigation}
+        setting={false}
+        backgroundColor={'transparent'}
+        borderRadius={true}
+      />
       <KeyboardAwareScrollView
         bounces={false}
         enableOnAndroid={true}

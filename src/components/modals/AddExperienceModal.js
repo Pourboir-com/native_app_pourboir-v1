@@ -61,7 +61,7 @@ const AddExperienceModal = ({
     setPost('');
     setStart('');
     setEnd('');
-    setExpModalVisible(false)
+    setExpModalVisible(false);
   };
   // console.log( startDate > endDate ? true: false)
 
@@ -187,11 +187,12 @@ const AddExperienceModal = ({
             {showS && (
               <DateTimePicker
                 testID="dateTimePicker"
-                value={startDate}
+                value={startDate || new Date()}
                 mode={modeS}
                 is24Hour={true}
                 display="default"
                 onChange={onChangeStartDate}
+                style={{width: 320, backgroundColor: "white"}} 
               />
             )}
           </TouchableOpacity>
@@ -211,11 +212,12 @@ const AddExperienceModal = ({
             {showL && (
               <DateTimePicker
                 testID="dateTimePicker"
-                value={endDate}
+                value={endDate || new Date()}
                 mode={modeL}
                 is24Hour={true}
                 display="default"
                 onChange={onChangeLastDate}
+                style={{width: 320, backgroundColor: "white"}} 
               />
             )}
           </TouchableOpacity>

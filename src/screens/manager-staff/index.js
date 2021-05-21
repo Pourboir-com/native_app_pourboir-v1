@@ -15,13 +15,16 @@ import StaffModal from '../../components/manager/staff-modal';
 import FilterModal from '../../components/manager/filter-modal';
 import i18n from '../../li8n';
 import { useQuery } from 'react-query';
-import { RECRUITMENT_FORM } from '../../queries';
+import { RECRUITMENT_FORM, DELETE_WAITER_FORMS } from '../../queries';
 import { reactQueryConfig, getAsyncStorageValues } from '../../constants';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { filterSearch } from '../../util';
 import { Ionicons } from '@expo/vector-icons';
+import { useMutation } from 'react-query';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const ManagerStaff = ({ navigation }) => {
+  const { mutate: deleteWaiterForm } = useMutation(DELETE_WAITER_FORMS);
   const [value, setValue] = useState('');
   const [isModalVisible, setModalVisible] = useState(false);
   const [filterModal, setFilterModal] = useState(false);
@@ -35,6 +38,7 @@ const ManagerStaff = ({ navigation }) => {
   const [queries, setQueries] = useState(filterSearch());
   const [showCross, setShowCross] = useState(false);
   const [managerId, setManagerId] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -59,6 +63,29 @@ const ManagerStaff = ({ navigation }) => {
       },
     },
   );
+
+  const handleDeleteForm = async id => {
+    // // setLoading(true);
+    // try {
+    await deleteWaiterForm(
+      {
+        form_id: id,
+      },
+      {
+        onSuccess: () => {
+          refetchFormWaiters();
+          setLoading(false);
+        },
+        onError: (e) => {
+          alert(e?.response?.data?.message);
+          setLoading(false);
+        },
+      },
+    );
+    // } catch {
+    //   setLoading(false);
+    // }
+  };
 
   let FilterStates = {
     avail,
@@ -87,6 +114,7 @@ const ManagerStaff = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#f1f1f1' }}>
+      <Spinner visible={loading} />
       <TouchableOpacity
         activeOpacity={0.5}
         style={{ marginTop: 60, marginLeft: 15 }}
@@ -212,6 +240,7 @@ const ManagerStaff = ({ navigation }) => {
                   toggleModal={toggleModal}
                   isModalVisible={isModalVisible}
                   setModalVisible={setModalVisible}
+                  handleDeleteForm={handleDeleteForm}
                 />
               )}
             />

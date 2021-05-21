@@ -7,13 +7,14 @@ import RatingStar from '../../components/RatingComponent';
 import Swipeout from 'react-native-swipeout';
 import { Feather } from '@expo/vector-icons';
 
-const StaffCard = ({ toggleModal, data }) => {
+const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
   const obj = [1, 2, 3, 4, 5];
   var swipeoutBtns = [
     {
       text: (
         <TouchableOpacity
           activeOpacity={0.5}
+          onPress={() => handleDeleteForm(data?._id)}
           style={{
             backgroundColor: '#fff',
             height: '100%',

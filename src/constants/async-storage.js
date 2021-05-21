@@ -13,6 +13,6 @@ export const getAsyncStorageValues = async () => {
     userInfo: userInfo,
     Currency: Currency,
     City: JSON.parse(City) || {},
-    manager_details: manager,
+    manager_details: manager || {},
   };
 };

@@ -31,7 +31,7 @@ import { email_to } from '../../constants/env';
 import Constants from 'expo-constants';
 import { userGivenName } from '../../util';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import Spinner from 'react-native-loading-spinner-overlay';
 const imgBg = require('../../assets/images/Group5.png');
 
 const Setting = ({ navigation, route }) => {
@@ -119,6 +119,7 @@ const Setting = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
+      <Spinner visible={loading} />
       <View style={styles.viewProfile}>
         <ImageBackground
           style={{
@@ -297,7 +298,14 @@ const Setting = ({ navigation, route }) => {
         <TouchableOpacity
           activeOpacity={0.5}
           // disabled={loading}
-          onPress={() => navigation.navigate('ManagerStaff')}
+          onPress={async () => {
+            const { manager_email } = await getAsyncStorageValues();
+            if (manager_email) {
+              navigation.navigate('ManagerStaff');
+            } else {
+              navigation.navigate('SignIn');
+            }
+          }}
           style={styles.btnValider}
         >
           <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>

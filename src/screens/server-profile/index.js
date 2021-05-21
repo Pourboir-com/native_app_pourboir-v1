@@ -40,7 +40,13 @@ const ServerProfile = ({ navigation }) => {
             borderRadius={true}
           />
         </ImageBackground>
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView
+          contentContainerStyle={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
           <View style={{ alignItems: 'center', marginTop: 8 }}>
             <View
               style={{
@@ -48,7 +54,7 @@ const ServerProfile = ({ navigation }) => {
                 width: 160,
                 height: 160,
                 borderRadius: 100,
-                marginTop: 70,
+                marginTop: 40,
                 marginBottom: 30,
               }}
             >

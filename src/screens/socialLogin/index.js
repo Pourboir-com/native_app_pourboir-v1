@@ -466,12 +466,12 @@ const SocialLogin = ({ navigation, route }) => {
                 justifyContent: 'center',
                 marginHorizontal: 60,
                 width: '70%',
+                minHeight: 80,
               }}
             >
               <CheckBox
                 style={{
-                  paddingRight: -40,
-                  marginTop: Platform.OS === 'android' ? -4 : -13,
+                  marginTop: Platform.OS === 'android' ? -3 : -13,
                 }}
                 onClick={() => setTermsChecked(!termsChecked)}
                 isChecked={termsChecked}
@@ -495,7 +495,6 @@ const SocialLogin = ({ navigation, route }) => {
                   {
                     width: 320,
                     textAlign: 'center',
-                    // marginLeft:60
                   },
                 ]}
               >
@@ -536,7 +535,7 @@ const SocialLogin = ({ navigation, route }) => {
             </View>
           </View>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             activeOpacity={0.5}
             style={{ marginBottom: 30, marginTop: -10 }}
             onPress={async () => {
@@ -562,7 +561,7 @@ const SocialLogin = ({ navigation, route }) => {
                 {i18n.t('manager_res')}
               </Text>{' '}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           {/* <AddNicheModal /> */}
         </View>
       )}

@@ -66,7 +66,6 @@ const Find_Job = ({ navigation }) => {
     // experience.replace(/[^0-9]/g, '') &&
     education &&
     temp;
-    // console.log(data);
 
   const handleApplyJob = async () => {
     if (state?.userDetails?.user_id) {
@@ -76,10 +75,10 @@ const Find_Job = ({ navigation }) => {
         full_name: firstName || '',
         last_name: lastName || '',
         experience: experience || '',
-        last_experience: {
-          restaurant_id: lastExperience?.restaurant_id || '',
-          experience: lastExperience?.experience || '',
-        },
+        // last_experience: {
+        //   restaurant_id: lastExperience?.restaurant_id || '',
+        //   experience: lastExperience?.experience || '',
+        // },
         education: education || '',
         time: temp || '',
         position: position || '',

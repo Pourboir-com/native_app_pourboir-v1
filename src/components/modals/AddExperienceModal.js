@@ -227,10 +227,11 @@ const AddExperienceModal = ({
             alignSelf: 'flex-start',
             marginLeft: 4,
             marginBottom: 20,
-            marginTop: -15,
+            marginTop: -5,
+            height: 15,
           }}
         >
-          <View style={{ justifyContent: 'center' }}>
+          <View  style={{ justifyContent: 'center' }}>
             <CheckBox
               style={{
                 paddingRight: -40,
@@ -247,24 +248,25 @@ const AddExperienceModal = ({
               }
               unCheckedImage={
                 <Image
-                  style={{ width: 19 }}
+                  style={{ width: 18 }}
                   resizeMode={'contain'}
                   source={require('../../assets/images/unchecked-modal.png')}
                 />
               }
             />
           </View>
-          <View style={{ paddingLeft: 10, paddingTop: 1 }}>
+          <TouchableOpacity onPress={() => [setTermsChecked(!termsChecked), setWorkHere(workHere === '' ? 'work' : '')]} style={{ paddingLeft: 10, paddingTop: 1 }}>
             <Text
               style={{
                 fontFamily: 'ProximaNova',
                 color: '#1E272E',
                 fontSize: 13,
+                marginTop: -2,
               }}
             >
               {i18n.t('still_work')}
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <TouchableOpacity
           activeOpacity={0.5}

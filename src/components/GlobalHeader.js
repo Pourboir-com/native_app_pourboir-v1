@@ -137,7 +137,7 @@ const GlobalHeader = props => {
                     fontFamily: 'ProximaNovaBold',
                   }}
                 >
-                  {props.headingText}
+                  {props?.headingText || ''}
                 </Text>
                 {props.secondText ? (
                   <Text

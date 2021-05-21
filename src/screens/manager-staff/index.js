@@ -24,7 +24,7 @@ import { useMutation } from 'react-query';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const ManagerStaff = ({ navigation }) => {
-  const { mutate: deleteWaiterForm } = useMutation(DELETE_WAITER_FORMS);
+  const [deleteWaiterForm] = useMutation(DELETE_WAITER_FORMS);
   const [value, setValue] = useState('');
   const [isModalVisible, setModalVisible] = useState(false);
   const [filterModal, setFilterModal] = useState(false);
@@ -67,6 +67,7 @@ const ManagerStaff = ({ navigation }) => {
   const handleDeleteForm = async id => {
     // // setLoading(true);
     // try {
+
     await deleteWaiterForm(
       {
         form_id: id,
@@ -76,7 +77,7 @@ const ManagerStaff = ({ navigation }) => {
           refetchFormWaiters();
           setLoading(false);
         },
-        onError: (e) => {
+        onError: e => {
           alert(e?.response?.data?.message);
           setLoading(false);
         },

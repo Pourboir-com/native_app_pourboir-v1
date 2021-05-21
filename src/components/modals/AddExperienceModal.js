@@ -69,7 +69,7 @@ const AddExperienceModal = ({
     ? companyName && post && start
     : companyName && post && start && end && !(start > end);
   const onChangeStartDate = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
+    const currentDate = selectedDate || startDate;
     setShowS(Platform.OS === 'ios');
     setStartDate(currentDate);
     setStart(currentDate);
@@ -83,7 +83,7 @@ const AddExperienceModal = ({
     setModeS('date');
   };
   const onChangeLastDate = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
+    const currentDate = selectedDate || endDate;
     setShowL(Platform.OS === 'ios');
     setEndDate(currentDate);
     setEnd(currentDate);

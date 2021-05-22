@@ -66,27 +66,26 @@ const ManagerStaff = ({ navigation }) => {
   );
 
   const handleDeleteForm = async id => {
-    // // setLoading(true);
-    // try {
-
-    await deleteWaiterForm(
-      {
-        form_id: id,
-      },
-      {
-        onSuccess: () => {
-          refetchFormWaiters();
-          setLoading(false);
+    setLoading(true);
+    try {
+      await deleteWaiterForm(
+        {
+          form_id: id,
         },
-        onError: e => {
-          alert(e?.response?.data?.message);
-          setLoading(false);
+        {
+          onSuccess: async () => {
+            await refetchFormWaiters();
+            setLoading(false);
+          },
+          onError: e => {
+            alert(e?.response?.data?.message);
+            setLoading(false);
+          },
         },
-      },
-    );
-    // } catch {
-    //   setLoading(false);
-    // }
+      );
+    } catch {
+      setLoading(false);
+    }
   };
 
   let FilterStates = {
@@ -134,7 +133,7 @@ const ManagerStaff = ({ navigation }) => {
           borderRadius={true}
         />
       </View>
-      <View style={{ paddingHorizontal: 25, marginTop: 10 }}>
+      <View style={{ paddingHorizontal: 25 }}>
         <View style={styles.first_section}>
           <View style={styles.child_one}>
             <Text style={styles.first_section_bold}>

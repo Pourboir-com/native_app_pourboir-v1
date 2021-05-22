@@ -21,6 +21,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { SEARCH_RESTAURANTS } from '../../queries';
 import { useMutation } from 'react-query';
+import stylesTextbox from '../../screens/find-job/styles';
 
 const AddExperienceModal = ({
   setExpModalVisible,
@@ -174,7 +175,7 @@ const AddExperienceModal = ({
             marginVertical: 15,
           }}
         >
-          <View style={styles.input_box}>
+          <View style={stylesTextbox.input_box}>
             <View
               style={{
                 flexDirection: 'row',
@@ -201,7 +202,7 @@ const AddExperienceModal = ({
                 )}
               </Text>
             </View>
-            <View style={styles.input_icon}>
+            <View style={stylesTextbox.input_icon}>
               <TextInput
                 returnKeyLabel="Find"
                 returnKeyType="done"
@@ -216,7 +217,7 @@ const AddExperienceModal = ({
                   })
                 }
                 value={restaurant?.name}
-                style={styles.input_icon_text}
+                style={stylesTextbox.input_icon_text}
                 placeholder={i18n.t('name_of_company')}
                 placeholderTextColor={'#707375'}
               />
@@ -230,9 +231,9 @@ const AddExperienceModal = ({
               </TouchableOpacity>
             </View>
             {showDropdown && (
-              <View style={styles.options}>
+              <View style={stylesTextbox.options}>
                 {searchLoading ? (
-                  <Text style={styles.opt_txt}>Loading...</Text>
+                  <Text style={stylesTextbox.opt_txt}>Loading...</Text>
                 ) : (
                   (restaurants?.data || []).map((item, i) => (
                     <TouchableOpacity
@@ -246,7 +247,7 @@ const AddExperienceModal = ({
                         });
                       }}
                     >
-                      <Text style={styles.opt_txt}>{item?.name}</Text>
+                      <Text style={stylesTextbox.opt_txt}>{item?.name}</Text>
                     </TouchableOpacity>
                   ))
                 )}
@@ -548,41 +549,5 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 10,
     alignItems: 'center',
     //  marginTop:40
-  },
-  //Restaurant textbox
-  input_icon: {
-    flexDirection: 'row',
-    borderColor: '#E3E3E3',
-    borderWidth: 1,
-    width: 270,
-    paddingLeft: 10,
-    paddingRight: 10,
-    height: 48,
-    borderRadius: 10,
-    backgroundColor: '#fff',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  input_icon_text: {
-    fontSize: 15,
-    width: 225,
-    textAlign: 'center',
-  },
-  options: {
-    maxHeight: 150,
-    backgroundColor: '#f0f0f0',
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    marginLeft: 7,
-    marginRight: 7,
-  },
-  opt_txt: {
-    fontSize: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-    padding: 10,
-    fontFamily: 'ProximaNova',
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
   },
 });

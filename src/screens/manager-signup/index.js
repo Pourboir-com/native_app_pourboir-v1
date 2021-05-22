@@ -17,6 +17,7 @@ import { SIGN_UP } from '../../queries';
 import { SEARCH_RESTAURANTS } from '../../queries';
 import stylesTextbox from '../find-job/styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+const validator = require('validator');
 
 const ManagerSignUp = ({ navigation }) => {
   const [signUp] = useMutation(SIGN_UP);
@@ -207,6 +208,16 @@ const ManagerSignUp = ({ navigation }) => {
     }
     setLastIndex(lastIndex - 2);
   };
+  let alertValidate =
+    lastExperience?.restaurant_id &&
+    lastExperience?.experience &&
+    address &&
+    postalCode &&
+    lastName &&
+    firstName &&
+    email &&
+    password;
+
   let validate =
     lastExperience?.restaurant_id &&
     lastExperience?.experience &&
@@ -215,6 +226,7 @@ const ManagerSignUp = ({ navigation }) => {
     lastName &&
     firstName &&
     email &&
+    validator?.isEmail(email) &&
     password;
 
   const handleSubmit = async () => {
@@ -248,7 +260,11 @@ const ManagerSignUp = ({ navigation }) => {
       //     'password,' : ''} ${!lastExperience?.restaurant_id ?
       //       'restaurant name' : ''} is required.`,
       // );
-      alert('* Please fill all the fields.');
+      alert(
+        `${!alertValidate ? `* Please fill all the fields.` : ''} ${
+          email && !validator?.isEmail(email) ? 'Email is not correct!' : ''
+        }`,
+      );
       setLoading(false);
     }
   };

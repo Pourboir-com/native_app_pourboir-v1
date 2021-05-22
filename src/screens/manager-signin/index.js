@@ -93,6 +93,7 @@ const SignIn = ({ navigation }) => {
               onChangeText={e => setEmail(e)}
               value={email}
               placeholder={i18n.t('email')}
+              keyboardType="email-address"
               placeholderTextColor="#707070"
             />
             <TextInput

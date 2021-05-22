@@ -178,6 +178,42 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNova',
     fontSize: 14,
   },
+  //Restaurant textbox
+  input_icon: {
+    flexDirection: 'row',
+    borderColor: '#E3E3E3',
+    borderWidth: 1,
+    width: 270,
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 48,
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  input_icon_text: {
+    fontSize: 15,
+    width: 225,
+    textAlign: 'center',
+  },
+  options: {
+    maxHeight: 150,
+    backgroundColor: '#f0f0f0',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    marginLeft: 7,
+    marginRight: 7,
+  },
+  opt_txt: {
+    fontSize: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+    padding: 10,
+    fontFamily: 'ProximaNova',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
 });
 
 export default styles;

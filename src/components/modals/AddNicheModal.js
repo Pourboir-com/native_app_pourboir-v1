@@ -23,6 +23,7 @@ const AddNicheModal = ({
   setNicheModalVisible,
   nicheModalVisible,
   setNicheModalData,
+  nicheModalData
 }) => {
   const [loading, setLoading] = useState(false);
   const [dayOfWeek, setDayOfWeek] = useState(i18n.t('monday'));
@@ -33,10 +34,10 @@ const AddNicheModal = ({
   const [noonChecked, setNoonChecked] = useState(false);
   const [eveningChecked, setEveningChecked] = useState(false);
   const [times, setTimes] = useState([]);
-console.log(times," times")
+
   const Add = () => {
-    setNicheModalData(e => {
-      return [...e, { dayOfWeek, times }];
+    setNicheModalData(() => {
+      return [...nicheModalData, { dayOfWeek, times }];
     });
     setNicheModalVisible(false);
   };

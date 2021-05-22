@@ -232,7 +232,7 @@ const ManagerStaff = ({ navigation }) => {
               refreshControl={
                 <RefreshControl
                   //refresh control used for the Pull to Refresh
-                  refreshing={waitersFormIsFetching}
+                  refreshing={!loading && waitersFormIsFetching}
                   // color="#F9F9F9"
                   // tintColor="#F9F9F9"
                   onRefresh={refetchFormWaiters}

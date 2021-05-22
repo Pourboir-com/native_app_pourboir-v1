@@ -419,7 +419,7 @@ const Find_Job = ({ navigation }) => {
               </View>
               {temp === 'half' && (
                 <View>
-                  {/* {nicheModalData.map((v, i) => {
+                  {nicheModalData.map((v, i) => {
                     return (
                       <View
                         key={i}
@@ -431,7 +431,7 @@ const Find_Job = ({ navigation }) => {
                         </Text>
                       </View>
                     );
-                  })} */}
+                  })}
 
                   <View style={{ ...styles.viewAddReview, marginBottom: 20 }}>
                     <View

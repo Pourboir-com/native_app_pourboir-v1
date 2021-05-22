@@ -118,6 +118,7 @@ const ManagerStaff = ({ navigation }) => {
                     setQueries(
                       filterSearch(rating, high, low, avail, position, e),
                     );
+                    e.length ? setShowCross(true) : setShowCross(false)
                   }}
                   style={{
                     width: '100%',

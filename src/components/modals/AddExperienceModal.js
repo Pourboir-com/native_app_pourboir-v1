@@ -232,7 +232,7 @@ const AddExperienceModal = ({
                 style={{
                   width: '50%',
                   marginTop: 5,
-                  right: 0,
+                  right: -6,
                   position: 'absolute',
                 }}
               />
@@ -296,7 +296,7 @@ const AddExperienceModal = ({
                 style={{
                   width: '50%',
                   marginTop: 5,
-                  right: 0,
+                  right: -5,
                   position: 'absolute',
                 }}
               />

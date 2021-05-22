@@ -141,24 +141,22 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                   <View style={{ alignItems: 'center' }}>
                     <Text style={styles.expsTxt}>{i18n.t('estb')}</Text>
                   </View>
-                  <View>
-                    <View style={styles.petitTxt}>
-                      {/* {waiterFormLoading
+                  <Text style={styles.petitTxt}>
+                    {/* {waiterFormLoading
                         ? 'loading..'
                         : last_exp(waiterFormData) || 'none'} */}
-                      {waiterFormLoading
-                        ? 'loading..'
-                        : waiterFormData?.data[0]?.experience.map(item => (
-                            <View style={{ paddingTop: 10 }}>
-                              <Text>{item?.enterprise_name || 'none'}</Text>
-                              <Text>{`${i18n.t('of')} ${
-                                item?.start_date
-                              } ${i18n.t('at')} ${item?.end_date ||
-                                i18n.t('still_working')}`}</Text>
-                            </View>
-                          ))}
-                    </View>
-                  </View>
+                    {waiterFormLoading
+                      ? 'loading..'
+                      : waiterFormData?.data[0]?.experience.map(item => (
+                          <View style={{ paddingTop: 10 }}>
+                            <Text>{item?.enterprise_name || 'none'}</Text>
+                            <Text>{`${i18n.t('of')} ${
+                              item?.start_date
+                            } ${i18n.t('at')} ${item?.end_date ||
+                              i18n.t('still_working')}`}</Text>
+                          </View>
+                        ))}
+                  </Text>
                 </View>
               </View>
               <Dash style={{ width: '90%', height: 1 }} dashColor="#FCDF6F" />

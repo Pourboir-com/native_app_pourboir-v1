@@ -31,6 +31,7 @@ const ServerProfile = ({ navigation }) => {
       },
     },
   );
+  console.log(waiterFormData)
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>

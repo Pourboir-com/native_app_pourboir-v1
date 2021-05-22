@@ -192,17 +192,27 @@ const Find_Job = ({ navigation, route }) => {
                 </Text>
                 {data.map((v, i) => {
                   return (
-                    <View key={i} style={styles.expBox}>
-                      <View>
-                        <Text style={styles.expTxt1}>{v.enterprise_name}</Text>
-                        <Text style={styles.expTxt2}>{v.position}</Text>
-                        <Text style={styles.expTxt3}>
-                          {`${i18n.t('of')} ${v.start_date} ${i18n.t('at')} ${
-                            v?.end_date ? v?.end_date : i18n.t('still_working')
-                          }`}
-                        </Text>
-                      </View>
-                    </View>
+                    <>
+                      {v?.enterprise_name && (
+                        <View key={i} style={styles.expBox}>
+                          <View>
+                            <Text style={styles.expTxt1}>
+                              {v?.enterprise_name}
+                            </Text>
+                            <Text style={styles.expTxt2}>{v?.position}</Text>
+                            <Text style={styles.expTxt3}>
+                              {`${i18n.t('of')} ${v?.start_date} ${i18n.t(
+                                'at',
+                              )} ${
+                                v?.end_date
+                                  ? v?.end_date
+                                  : i18n.t('still_working')
+                              }`}
+                            </Text>
+                          </View>
+                        </View>
+                      )}
+                    </>
                   );
                 })}
                 <View style={styles.viewAddReview}>

@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNova',
     paddingTop: 25,
     color: '#1E272E',
+    marginLeft: '7%',
   },
   qualifDetail: {
     fontSize: 15,

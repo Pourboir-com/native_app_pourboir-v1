@@ -68,6 +68,7 @@ const AddExperienceModal = ({
   let validation = termsChecked
     ? companyName && post && start
     : companyName && post && start && end && !(start > end);
+
   const onChangeStartDate = (event, selectedDate) => {
     const currentDate = selectedDate || startDate;
     setShowS(Platform.OS === 'ios');
@@ -79,9 +80,6 @@ const AddExperienceModal = ({
     setModeS(currentMode);
   };
 
-  const showDatepickerStartDate = () => {
-    setModeS('date');
-  };
   const onChangeLastDate = (event, selectedDate) => {
     const currentDate = selectedDate || endDate;
     setShowL(Platform.OS === 'ios');
@@ -91,10 +89,6 @@ const AddExperienceModal = ({
   const showModeLastDate = currentMode => {
     setShowL(true);
     setModeL(currentMode);
-  };
-
-  const showDatepickerLastDate = () => {
-    showModeL('date');
   };
 
   return (
@@ -189,7 +183,8 @@ const AddExperienceModal = ({
                 testID="dateTimePicker"
                 value={startDate || new Date()}
                 mode={modeS}
-                is24Hour={"locale"}
+                locale="en_GB"
+                // is24Hour={"locale"}
                 display="default"
                 onChange={onChangeStartDate}
               />
@@ -213,7 +208,8 @@ const AddExperienceModal = ({
                 testID="dateTimePicker"
                 value={endDate || new Date()}
                 mode={modeL}
-                is24Hour={"locale"}
+                locale="en_GB"
+                // is24Hour={"locale"}
                 display="default"
                 onChange={onChangeLastDate}
               />

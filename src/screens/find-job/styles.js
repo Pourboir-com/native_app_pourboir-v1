@@ -122,16 +122,16 @@ const styles = StyleSheet.create({
   },
   expTxt1: {
     fontFamily: 'ProximaNovaBold',
-    fontSize: 13,
+    fontSize: 14,
   },
   expTxt2: {
     fontFamily: 'ProximaNova',
-    fontSize: 13,
+    fontSize: 14,
     paddingVertical: 10,
   },
   expTxt3: {
     fontFamily: 'ProximaNova',
-    fontSize: 13,
+    fontSize: 14,
   },
   viewAddReview: {
     width: '110%',

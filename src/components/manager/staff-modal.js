@@ -1,5 +1,13 @@
 import React from 'react';
-import { Image, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  Image,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Linking,
+  Platform,
+} from 'react-native';
 import styles from './styles';
 import Modal from 'react-native-modal';
 import RatingStar from '../../components/RatingComponent';
@@ -22,6 +30,17 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
       },
     },
   );
+  console.log(waiterFormData);
+
+  const openDialScreen = () => {
+    let number = '';
+    if (Platform.OS === 'ios') {
+      number = `telprompt:${waiterFormData?.data[0]?.telephone_number}`;
+    } else {
+      number = `tel:${waiterFormData?.data[0]?.telephone_number}`;
+    }
+    Linking.openURL(number);
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -97,7 +116,8 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                     <Text style={styles.exp_year}>
                       {/* {(!waiterFormLoading &&
                         waiterFormData?.data[0]?.experience) ||
-                        ''} */} 5
+                        ''} */}{' '}
+                      5
                     </Text>
                     <Text style={styles.ansTxt}>
                       {' '}
@@ -108,7 +128,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                           ? `${i18n.t('years')}s`
                           : i18n.t('years')
                         : 'none'} */}
-                        year
+                      year
                     </Text>
                   </View>
                 </View>
@@ -122,14 +142,22 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                     <Text style={styles.expsTxt}>{i18n.t('estb')}</Text>
                   </View>
                   <View>
-                    <Text style={styles.petitTxt}>
+                    <View style={styles.petitTxt}>
                       {/* {waiterFormLoading
                         ? 'loading..'
                         : last_exp(waiterFormData) || 'none'} */}
-                           {waiterFormLoading
+                      {waiterFormLoading
                         ? 'loading..'
-                        : waiterFormData?.data[0]?.experience?.enterprise_name  || 'none'}
-                    </Text>
+                        : waiterFormData?.data[0]?.experience.map(item => (
+                            <View style={{ paddingTop: 10 }}>
+                              <Text>{item?.enterprise_name || 'none'}</Text>
+                              <Text>{`${i18n.t('of')} ${
+                                item?.start_date
+                              } ${i18n.t('at')} ${item?.end_date ||
+                                i18n.t('still_working')}`}</Text>
+                            </View>
+                          ))}
+                    </View>
                   </View>
                 </View>
               </View>
@@ -145,7 +173,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                     <Text style={styles.qualifDetail}>
                       {waiterFormLoading
                         ? 'loading..'
-                        : waiterFormData?.data[0]?.education || 'none'}
+                        : waiterFormData?.data[0]?.diploma || 'none'}
                     </Text>
                   </View>
                 </View>
@@ -158,7 +186,12 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                   <Text style={styles.expsTxt}>{i18n.t('recruit')}</Text>
                 </View>
                 <View style={styles.recruterBtns}>
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      waiterFormData?.data[0]?.telephone_number &&
+                      openDialScreen()
+                    }
+                  >
                     <Image
                       source={require('../../assets/images/Call.png')}
                       style={{
@@ -169,7 +202,13 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                       }}
                     />
                   </TouchableOpacity>
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      Linking.openURL(
+                        `mailto:${waiterFormData?.data[0]?.user_id?.email}`,
+                      );
+                    }}
+                  >
                     <Image
                       source={require('../../assets/images/Email.png')}
                       style={{ width: 30, height: 30, resizeMode: 'contain' }}

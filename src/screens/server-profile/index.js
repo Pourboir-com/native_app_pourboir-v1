@@ -20,8 +20,8 @@ import Context from '../../contextApi/context';
 import { ReviewsSkeleton } from '../../components/skeleton';
 
 const ServerProfile = ({ navigation }) => {
-  const { state, dispatch } = useContext(Context);
-  const { data: waiterFormData, isLoading: waiterFormLoading } = useQuery(
+  const { state } = useContext(Context);
+  const { data: waiterFormData, isLoading: waiterFormLoading, refetch: refetchWaiterFormData  } = useQuery(
     ['RECRUITMENT_FORM', { user_id: state.userDetails.user_id }],
     RECRUITMENT_FORM,
     {
@@ -57,12 +57,12 @@ const ServerProfile = ({ navigation }) => {
         </ImageBackground>
         <ScrollView
           contentContainerStyle={{
-            flex: 1,
+            flexGrow: 1,
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
-          <View style={{ alignItems: 'center', marginTop: '20%' }}>
+          <View style={{ alignItems: 'center', marginTop: '25%' }}>
             <View
               style={{
                 backgroundColor: '#fff',
@@ -105,8 +105,12 @@ const ServerProfile = ({ navigation }) => {
               }}
             >
               {waiterFormLoading ? (
-                <View style={{ paddingHorizontal: 25, marginTop: 25 }}>
-                  <ReviewsSkeleton />
+                <View
+                  style={{
+                    width: '99%',
+                    flexDirection: 'row',
+                  }}
+                >
                   <ReviewsSkeleton />
                 </View>
               ) : (
@@ -149,7 +153,7 @@ const ServerProfile = ({ navigation }) => {
                             <View style={styles.section1}>
                               <View>
                                 <Image
-                                  source={{uri: item?.user_id?.picture}}
+                                  source={{ uri: item?.user_id?.picture }}
                                   style={{
                                     borderRadius: 30,
                                     width: 57,
@@ -174,7 +178,10 @@ const ServerProfile = ({ navigation }) => {
                                   style={{ flexDirection: 'row', marginTop: 7 }}
                                 >
                                   <Text
-                                    style={{ fontFamily: 'ProximaNovaBold', fontSize: 16 }}
+                                    style={{
+                                      fontFamily: 'ProximaNovaBold',
+                                      fontSize: 16,
+                                    }}
                                   >
                                     {item?.position || 'none'}
                                   </Text>
@@ -193,6 +200,7 @@ const ServerProfile = ({ navigation }) => {
                         <View style={{ marginTop: 10 }}>
                           <CommonButton
                             navigation="FindJob"
+                            navigationData={{ form: waiterFormData || [], refetch: refetchWaiterFormData}}
                             title={i18n.t('modif_prof')}
                           />
                         </View>

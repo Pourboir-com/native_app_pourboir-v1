@@ -22,10 +22,11 @@ import { AntDesign } from '@expo/vector-icons';
 import AddExperienceModal from '../../components/modals/AddExperienceModal';
 import AddNicheModal from '../../components/modals/AddNicheModal';
 
-const Find_Job = ({ navigation }) => {
+const Find_Job = ({ navigation, route }) => {
+  const { form, refetch } = route.params;
   const { state } = useContext(Context);
   // getting first and last name saved in state
-  let fullName = state?.userDetails?.name?.split(' ');
+  let fullName = form.data[0]?.user_id?.full_name?.split(' ');
   let savedFirstName =
     fullName?.length > 1
       ? fullName?.slice(0, fullName?.length - 1).join(' ')
@@ -34,18 +35,18 @@ const Find_Job = ({ navigation }) => {
     fullName?.length > 1 ? fullName[fullName?.length - 1] : '';
 
   const [applyWaiter] = useMutation(APPLY_WAITER);
-  const [temp, setTemp] = useState('');
+  const [temp, setTemp] = useState(form.data[0]?.time || '');
   const [firstName, setFirstName] = useState(savedFirstName);
   const [lastName, setLastName] = useState(savedLastName);
-  const [education, setEducation] = useState('');
+  const [education, setEducation] = useState(form.data[0]?.diploma || '');
   // const [experience, setExperience] = useState('');
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [position, setPosition] = useState('');
-  const [phone, setPhone] = useState();
+  const [position, setPosition] = useState(form.data[0]?.position || '');
+  const [phone, setPhone] = useState(form.data[0]?.telephone_number || '');
   const [expModalVisible, setExpModalVisible] = useState(false);
   const [nicheModalVisible, setNicheModalVisible] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(form.data[0]?.experience || []);
   const [nicheModalData, setNicheModalData] = useState([]);
 
   let validation =
@@ -73,7 +74,8 @@ const Find_Job = ({ navigation }) => {
       };
 
       await applyWaiter(jobForm, {
-        onSuccess: () => {
+        onSuccess: async () => {
+          await refetch();
           setLoading(false);
           setModalVisible(true);
         },

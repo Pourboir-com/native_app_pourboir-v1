@@ -4,14 +4,14 @@ const THUMB_RADIUS = 9;
 const styles = StyleSheet.create({
   main_card_container: {
     backgroundColor: '#fff',
-    borderRadius:20,
+    borderRadius: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 8,
     marginBottom: 14,
     // height:50
     paddingTop: 17,
-    paddingBottom:17,
+    paddingBottom: 17,
   },
   section1: {
     flexDirection: 'row',
@@ -37,22 +37,24 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   btn_green: {
-    backgroundColor: '#6DD400',
-    borderRadius: 100,
+    backgroundColor: '#FCDF6F',
+    borderRadius: 15,
+    paddingVertical: 7,
+    paddingHorizontal: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
   btnGreen_txt: {
-    color: '#fff',
+    color: '#000',
     paddingHorizontal: 15,
     paddingVertical: 8,
-    fontSize: 13,
+    fontSize: 15,
     fontFamily: 'ProximaNova',
   },
   text_dispon: {
     fontFamily: 'ProximaNovaBold',
     textAlign: 'center',
-    fontSize: 13,
+    fontSize: 15,
     paddingVertical: 3,
     paddingBottom: 4,
   },
@@ -68,13 +70,13 @@ const styles = StyleSheet.create({
   },
   ansTxt: {
     fontFamily: 'ProximaNova',
-    fontSize: 13,
+    fontSize: 15,
     paddingLeft: 3,
     paddingTop: 25,
     textAlign: 'center',
   },
   expsTxt: {
-    fontSize: 13,
+    fontSize: 15,
     fontFamily: 'ProximaNovaBold',
     textAlign: 'center',
   },
@@ -88,12 +90,11 @@ const styles = StyleSheet.create({
   petitTxt: {
     fontSize: 13,
     fontFamily: 'ProximaNova',
-    textAlign: 'center',
     paddingTop: 25,
     color: '#1E272E',
   },
   qualifDetail: {
-    fontSize: 13,
+    fontSize: 15,
     fontFamily: 'ProximaNova',
     textAlign: 'center',
     paddingTop: 25,

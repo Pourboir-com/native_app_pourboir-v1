@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,7 +7,6 @@ import {
   Dimensions,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator,
   ImageBackground,
   Linking,
 } from 'react-native';
@@ -34,7 +33,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Spinner from 'react-native-loading-spinner-overlay';
 const imgBg = require('../../assets/images/Group5.png');
 
-const Setting = ({ navigation, route }) => {
+const Setting = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const { state, dispatch } = useContext(Context);
   const [image, setImage] = useState();

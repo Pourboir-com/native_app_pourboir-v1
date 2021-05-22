@@ -173,6 +173,7 @@ export default {
   filter: 'Filtrer',
   post: 'Poste',
   no_job_found: 'Aucun emploi trouvé.',
+  still_working: 'travaille toujours ici',
 
   // Add Experience Modal
   add_exp: 'Ajouter une expérience',

@@ -530,15 +530,10 @@ const SocialLogin = ({ navigation, route }) => {
                       {i18n.t('terms_of_use')}
                     </Text>
                   </TouchableOpacity>
-                  
                 </View>
               </Text>
-              
             </View>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate("FindJob")}>
-                    <Text>NAvigation</Text>
-                  </TouchableOpacity>
           {/* <TouchableOpacity
             activeOpacity={0.5}
             style={{ marginBottom: 30, marginTop: -10 }}

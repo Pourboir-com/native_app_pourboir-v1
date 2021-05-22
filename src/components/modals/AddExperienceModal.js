@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
-  ActivityIndicator,
   TextInput,
   Platform,
   ActivityIndicatorComponent,
@@ -20,56 +19,81 @@ import i18n from '../../li8n';
 import CheckBox from 'react-native-check-box';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { SEARCH_RESTAURANTS } from '../../queries';
+import { useMutation } from 'react-query';
 
 const AddExperienceModal = ({
   setExpModalVisible,
   expModalVisible,
-  companyName,
-  post,
-  startDate,
-  endDate,
-  setCompanyName,
-  setPost,
-  setStartDate,
-  setEndDate,
   data,
   setData,
-  termsChecked,
-  setTermsChecked,
-  workHere,
-  setWorkHere,
 }) => {
-  const [loading, setLoading] = useState(false);
   const [modeS, setModeS] = useState('date');
   const [showS, setShowS] = useState(false);
   const [modeL, setModeL] = useState('date');
   const [showL, setShowL] = useState(false);
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
+  const [post, setPost] = useState('');
+  const [startDate, setStartDate] = useState(new Date(1495051730000));
+  const [endDate, setEndDate] = useState(new Date(1598051730000));
+  const [termsChecked, setTermsChecked] = useState(false);
+  const [workHere, setWorkHere] = useState('');
+  //search textbox
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [restaurants, setRestaurants] = useState();
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [restaurant, setRestaurant] = useState({});
+  const [searchRestaurant] = useMutation(SEARCH_RESTAURANTS);
+
+  const handleSearchRestaurant = async () => {
+    if (restaurant?.name) {
+      setSearchLoading(true);
+      setShowDropdown(true);
+      await searchRestaurant(
+        { search: restaurant?.name },
+        {
+          onSuccess: res => {
+            setSearchLoading(false);
+            setRestaurants(res);
+          },
+          onError: () => {
+            setSearchLoading(false);
+          },
+        },
+      );
+    }
+  };
+
   const AddData = () => {
     setData([
       ...data,
       {
-        companyName,
-        post,
-        startDate: startDate.toLocaleDateString(),
-        endDate:
-          termsChecked === false
-            ? endDate.toLocaleDateString()
-            : 'still work here',
+        enterprise_name: restaurant?.name || '',
+        restaurant_id: restaurant?.restaurant_id || '',
+        position: post || '',
+        still_working: termsChecked,
+        start_date: startDate.toLocaleDateString(),
+        end_date: termsChecked === false ? endDate.toLocaleDateString() : '',
       },
     ]);
-    setCompanyName('');
     setPost('');
     setStart('');
     setEnd('');
+    setTermsChecked(false);
     setExpModalVisible(false);
+    setRestaurant({});
   };
   // console.log( startDate > endDate ? true: false)
 
   let validation = termsChecked
-    ? companyName && post && start
-    : companyName && post && start && end && !(start > end);
+    ? restaurant.name && restaurant.restaurant_id && post && start
+    : restaurant.name &&
+      restaurant.restaurant_id &&
+      post &&
+      start &&
+      end &&
+      !(start > end);
 
   const onChangeStartDate = (event, selectedDate) => {
     const currentDate = selectedDate || startDate;
@@ -151,13 +175,83 @@ const AddExperienceModal = ({
           }}
         >
           <View style={styles.input_box}>
-            <TextInput
-              style={styles.inputsTopTow}
-              onChangeText={e => setCompanyName(e)}
-              value={companyName}
-              placeholder={i18n.t('name_of_company')}
-              placeholderTextColor={'#707375'}
-            />
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Text>
+                {(!restaurant?.name || !restaurant?.restaurant_id) && (
+                  <>
+                    {!showDropdown &&
+                      restaurant?.name &&
+                      !restaurant?.restaurant_id && (
+                        <Text style={{ color: 'red' }}>*Click on search.</Text>
+                      )}
+
+                    {!restaurant?.restaurant_id &&
+                      restaurant?.name &&
+                      showDropdown && (
+                        <Text style={{ color: 'red' }}>
+                          *Select restaurant.
+                        </Text>
+                      )}
+                  </>
+                )}
+              </Text>
+            </View>
+            <View style={styles.input_icon}>
+              <TextInput
+                returnKeyLabel="Find"
+                returnKeyType="done"
+                onSubmitEditing={handleSearchRestaurant}
+                onChangeText={e =>
+                  setRestaurant({
+                    name: e || '',
+                    restaurant_id:
+                      restaurant?.name?.length < 2
+                        ? ''
+                        : restaurant?.restaurant_id,
+                  })
+                }
+                value={restaurant?.name}
+                style={styles.input_icon_text}
+                placeholder={i18n.t('name_of_company')}
+                placeholderTextColor={'#707375'}
+              />
+              <TouchableOpacity
+                activeOpacity={0.5}
+                onPress={() => {
+                  handleSearchRestaurant();
+                }}
+              >
+                <Image source={require('../../assets/images/search.png')} />
+              </TouchableOpacity>
+            </View>
+            {showDropdown && (
+              <View style={styles.options}>
+                {searchLoading ? (
+                  <Text style={styles.opt_txt}>Loading...</Text>
+                ) : (
+                  (restaurants?.data || []).map((item, i) => (
+                    <TouchableOpacity
+                      key={i}
+                      activeOpacity={0.5}
+                      onPress={() => {
+                        setShowDropdown(false);
+                        setRestaurant({
+                          name: item?.name || '',
+                          restaurant_id: item?._id || '',
+                        });
+                      }}
+                    >
+                      <Text style={styles.opt_txt}>{item?.name}</Text>
+                    </TouchableOpacity>
+                  ))
+                )}
+              </View>
+            )}
           </View>
           <View style={styles.input_box}>
             <TextInput
@@ -357,7 +451,7 @@ const AddExperienceModal = ({
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={AddData}
-          disabled={loading ? true : validation ? false : true}
+          disabled={validation ? false : true}
           style={[
             styles.btn_yellow,
             validation && {
@@ -365,19 +459,15 @@ const AddExperienceModal = ({
             },
           ]}
         >
-          {loading ? (
-            <ActivityIndicatorComponent size={29} color="#EBC11B" />
-          ) : (
-            <Text
-              style={{
-                fontFamily: 'ProximaNova',
-                fontSize: 14,
-                color: Colors.fontDark,
-              }}
-            >
-              {i18n.t('add')}
-            </Text>
-          )}
+          <Text
+            style={{
+              fontFamily: 'ProximaNova',
+              fontSize: 14,
+              color: Colors.fontDark,
+            }}
+          >
+            {i18n.t('add')}
+          </Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>
     </Overlay>
@@ -433,7 +523,7 @@ const styles = StyleSheet.create({
     height: 200,
   },
   txtConfrm: {
-    fontSize: 15,
+    fontSize: 16,
     color: Colors.fontDark,
     marginTop: 18,
     textAlign: 'center',
@@ -458,5 +548,41 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 10,
     alignItems: 'center',
     //  marginTop:40
+  },
+  //Restaurant textbox
+  input_icon: {
+    flexDirection: 'row',
+    borderColor: '#E3E3E3',
+    borderWidth: 1,
+    width: 270,
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 48,
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  input_icon_text: {
+    fontSize: 15,
+    width: 225,
+    textAlign: 'center',
+  },
+  options: {
+    maxHeight: 150,
+    backgroundColor: '#f0f0f0',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    marginLeft: 7,
+    marginRight: 7,
+  },
+  opt_txt: {
+    fontSize: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+    padding: 10,
+    fontFamily: 'ProximaNova',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
 });

@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   name_staff: {
     fontFamily: 'ProximaNova',
-    fontSize: 17,
+    fontSize: 18,
     width: 180,
   },
   modal_container: {

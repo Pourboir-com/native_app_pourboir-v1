@@ -19,7 +19,6 @@ import { RECRUITMENT_FORM, DELETE_WAITER_FORMS } from '../../queries';
 import { reactQueryConfig, getAsyncStorageValues } from '../../constants';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { filterSearch } from '../../util';
-import { Ionicons } from '@expo/vector-icons';
 import { useMutation } from 'react-query';
 import Spinner from 'react-native-loading-spinner-overlay';
 import GlobalHeader from '../../components/GlobalHeader';
@@ -219,7 +218,7 @@ const ManagerStaff = ({ navigation }) => {
           </View>
         </View>
       </View>
-      
+
       {waitersFormLoading ? (
         <View style={{ paddingHorizontal: 25, marginTop: 25 }}>
           <ReviewsSkeleton />

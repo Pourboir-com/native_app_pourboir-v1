@@ -7,14 +7,14 @@ const styles = StyleSheet.create({
   },
   textBold: {
     fontFamily: 'ProximaNovaBold',
-    fontSize: 14,
+    fontSize: 15,
     textAlign: 'center',
     lineHeight: 20,
     marginHorizontal: 37,
   },
   textLight: {
     fontFamily: 'ProximaNova',
-    fontSize: 14,
+    fontSize: 15,
     textAlign: 'center',
     lineHeight: 20,
     paddingTop: 10,
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 14,
     marginVertical: 10,
+    width: '96.5%',
   },
   section1: {
     flexDirection: 'row',
@@ -39,17 +40,17 @@ const styles = StyleSheet.create({
   },
   name_staff: {
     fontFamily: 'ProximaNova',
-    fontSize: 15,
+    fontSize: 18,
     width: 180,
   },
   boldTxt2: {
     fontFamily: 'ProximaNovaBold',
-    fontSize: 18,
+    fontSize: 20,
     lineHeight: 20,
   },
   lighTxt2: {
     fontFamily: 'ProximaNova',
-    fontSize: 15,
+    fontSize: 16,
     paddingTop: 10,
   },
 });

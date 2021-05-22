@@ -169,6 +169,7 @@ export default {
   filter: 'Filter',
   post: 'Post',
   no_job_found: 'No job form found.',
+  still_working: 'still working here',
 
   // Add Experience Modal
   add_exp: 'Add Experience',

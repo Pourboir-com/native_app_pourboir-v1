@@ -3,12 +3,11 @@ import { Image, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles';
 import Modal from 'react-native-modal';
 import RatingStar from '../../components/RatingComponent';
-import { AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
 import { useQuery } from 'react-query';
 import { RECRUITMENT_FORM } from '../../queries';
 import { reactQueryConfig } from '../../constants';
-import { last_exp } from '../../util';
+// import { last_exp } from '../../util';
 import Dash from 'react-native-dash';
 
 const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {

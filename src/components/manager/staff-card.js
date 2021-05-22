@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Image, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
@@ -8,7 +8,7 @@ import Swipeout from 'react-native-swipeout';
 import { Feather } from '@expo/vector-icons';
 
 const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
-  const [close,setClose] = useState(false)
+  const [close, setClose] = useState(false);
   const obj = [1, 2, 3, 4, 5];
   var swipeoutBtns = [
     {
@@ -23,7 +23,7 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: 15,
-            marginTop:-14
+            marginTop: -14,
           }}
         >
           <Feather name="x-circle" size={34} color="#FCDF6F" />
@@ -31,7 +31,7 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
       ),
       height: '100%',
       backgroundColor: 'transparent',
-      onPress:()  => setClose(true)
+      onPress: () => setClose(true),
     },
   ];
   return (
@@ -59,7 +59,7 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
               }}
             />
           </View>
-          <View style={{  paddingLeft: 10 }}>
+          <View style={{ paddingLeft: 10 }}>
             <Text
               ellipsizeMode="tail"
               numberOfLines={1}
@@ -85,8 +85,8 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
                   </TouchableOpacity>
                 );
               })} */}
-              <Text style={{ fontFamily: 'ProximaNovaBold', fontSize: 15 }}>
-                lorem
+              <Text style={{ fontFamily: 'ProximaNovaBold', fontSize: 16 }}>
+                {data?.position || 'none'}
               </Text>
             </View>
           </View>

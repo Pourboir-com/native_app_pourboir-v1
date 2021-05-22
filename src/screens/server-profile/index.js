@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Dimensions,
   ImageBackground,
@@ -13,9 +13,24 @@ import GlobalHeader from '../../components/GlobalHeader';
 import styles from './styles';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
+import { useQuery } from 'react-query';
+import { RECRUITMENT_FORM } from '../../queries';
+import { reactQueryConfig } from '../../constants';
+import Context from '../../contextApi/context';
+import { ReviewsSkeleton } from '../../components/skeleton';
 
 const ServerProfile = ({ navigation }) => {
-  const [state, setState] = useState(true);
+  const { state, dispatch } = useContext(Context);
+  const { data: waiterFormData, isLoading: waiterFormLoading } = useQuery(
+    ['RECRUITMENT_FORM', { user_id: state.userDetails.user_id }],
+    RECRUITMENT_FORM,
+    {
+      ...reactQueryConfig,
+      onError: e => {
+        alert(e?.response?.data?.message);
+      },
+    },
+  );
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
@@ -89,71 +104,102 @@ const ServerProfile = ({ navigation }) => {
                 alignSelf: 'flex-start',
               }}
             >
-              {state ? (
-                <View>
-                  <View>
-                    <Text style={styles.textBold}>{i18n.t('are_you_job')}</Text>
-                    <Text style={{ ...styles.textLight, marginHorizontal: 25 }}>
-                      {i18n.t('comp_job')}
-                    </Text>
-                  </View>
-                  <View style={{ marginTop: 20 }}>
-                    <CommonButton
-                      title={i18n.t('look_job')}
-                      navigation="FindJob"
-                    />
-                  </View>
+              {waiterFormLoading ? (
+                <View style={{ paddingHorizontal: 25, marginTop: 25 }}>
+                  <ReviewsSkeleton />
+                  <ReviewsSkeleton />
                 </View>
               ) : (
-                <View>
-                  <View>
-                    <Text style={styles.boldTxt2}>
-                      {i18n.t('your_cand_prof')}
-                    </Text>
-                    <Text style={styles.lighTxt2}>{i18n.t('prev_rec')}</Text>
-                  </View>
-                  <View>
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      style={styles.main_card_container}
-                    >
-                      <View style={styles.section1}>
+                <>
+                  {!waiterFormData?.data[0].position ? (
+                    <View>
+                      <View>
+                        <Text style={styles.textBold}>
+                          {i18n.t('are_you_job')}
+                        </Text>
+                        <Text
+                          style={{ ...styles.textLight, marginHorizontal: 25 }}
+                        >
+                          {i18n.t('comp_job')}
+                        </Text>
+                      </View>
+                      <View style={{ marginTop: 20 }}>
+                        <CommonButton
+                          title={i18n.t('look_job')}
+                          navigation="FindJob"
+                        />
+                      </View>
+                    </View>
+                  ) : (
+                    (waiterFormData.data || []).map(item => (
+                      <View>
                         <View>
-                          <Image
-                            source={require('../../assets/images/Bitmap.png')}
-                            style={{
-                              borderRadius: 30,
-                              width: 57,
-                              height: 57,
-                            }}
+                          <Text style={styles.boldTxt2}>
+                            {i18n.t('your_cand_prof')}
+                          </Text>
+                          <Text style={styles.lighTxt2}>
+                            {i18n.t('prev_rec')}
+                          </Text>
+                        </View>
+                        <View>
+                          <TouchableOpacity
+                            activeOpacity={0.8}
+                            style={styles.main_card_container}
+                          >
+                            <View style={styles.section1}>
+                              <View>
+                                <Image
+                                  source={{uri: item?.user_id?.picture}}
+                                  style={{
+                                    borderRadius: 30,
+                                    width: 57,
+                                    height: 57,
+                                  }}
+                                />
+                              </View>
+                              <View
+                                style={{
+                                  justifyContent: 'center',
+                                  paddingLeft: 10,
+                                }}
+                              >
+                                <Text
+                                  ellipsizeMode="tail"
+                                  numberOfLines={1}
+                                  style={styles.name_staff}
+                                >
+                                  {item?.user_id?.full_name}
+                                </Text>
+                                <View
+                                  style={{ flexDirection: 'row', marginTop: 7 }}
+                                >
+                                  <Text
+                                    style={{ fontFamily: 'ProximaNovaBold', fontSize: 16 }}
+                                  >
+                                    {item?.position || 'none'}
+                                  </Text>
+                                </View>
+                              </View>
+                            </View>
+                            <View style={styles.section2}>
+                              <AntDesign
+                                name="right"
+                                size={20}
+                                color="#485460"
+                              />
+                            </View>
+                          </TouchableOpacity>
+                        </View>
+                        <View style={{ marginTop: 10 }}>
+                          <CommonButton
+                            navigation="FindJob"
+                            title={i18n.t('modif_prof')}
                           />
                         </View>
-                        <View
-                          style={{ justifyContent: 'center', paddingLeft: 10 }}
-                        >
-                          <Text
-                            ellipsizeMode="tail"
-                            numberOfLines={1}
-                            style={styles.name_staff}
-                          >
-                            Ammy Farha
-                          </Text>
-                          <View style={{ flexDirection: 'row', marginTop: 7 }}>
-                            <Text style={{ fontFamily: 'ProximaNovaBold' }}>
-                              {i18n.t('waitress')}
-                            </Text>
-                          </View>
-                        </View>
                       </View>
-                      <View style={styles.section2}>
-                        <AntDesign name="right" size={20} color="#485460" />
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                  <View style={{ marginTop: 10 }}>
-                    <CommonButton title={i18n.t('modif_prof')} />
-                  </View>
-                </View>
+                    ))
+                  )}
+                </>
               )}
             </View>
           </View>

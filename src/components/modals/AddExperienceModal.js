@@ -189,10 +189,9 @@ const AddExperienceModal = ({
                 testID="dateTimePicker"
                 value={startDate || new Date()}
                 mode={modeS}
-                is24Hour={true}
+                is24Hour={"locale"}
                 display="default"
                 onChange={onChangeStartDate}
-                style={{width: 320, backgroundColor: "white"}} 
               />
             )}
           </TouchableOpacity>
@@ -214,10 +213,9 @@ const AddExperienceModal = ({
                 testID="dateTimePicker"
                 value={endDate || new Date()}
                 mode={modeL}
-                is24Hour={true}
+                is24Hour={"locale"}
                 display="default"
                 onChange={onChangeLastDate}
-                style={{width: 320, backgroundColor: "white"}} 
               />
             )}
           </TouchableOpacity>

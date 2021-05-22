@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Image, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
@@ -8,6 +8,7 @@ import Swipeout from 'react-native-swipeout';
 import { Feather } from '@expo/vector-icons';
 
 const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
+  const [close,setClose] = useState(false)
   const obj = [1, 2, 3, 4, 5];
   var swipeoutBtns = [
     {
@@ -17,31 +18,33 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
           onPress={() => handleDeleteForm(data?._id)}
           style={{
             backgroundColor: '#fff',
-            height: '100%',
+            height: '85%',
             width: 55,
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: 15,
+            marginTop:-14
           }}
         >
           <Feather name="x-circle" size={34} color="#FCDF6F" />
         </TouchableOpacity>
       ),
       height: '100%',
-      backgroundColor: '#f1f1f1',
+      backgroundColor: 'transparent',
+      onPress:()  => setClose(true)
     },
   ];
   return (
     <Swipeout
       style={{
-        backgroundColor: '#fff',
+        backgroundColor: 'transparent',
         overflow: 'hidden',
-        borderRadius: 15,
         marginBottom: 14,
         width: '90%',
         alignSelf: 'center',
       }}
       right={swipeoutBtns}
+      close={close}
     >
       <TouchableOpacity activeOpacity={0.8} style={styles.main_card_container}>
         <View style={styles.section1}>
@@ -52,10 +55,11 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
                 borderRadius: 30,
                 width: 55,
                 height: 55,
+                // marginBottom:13,
               }}
             />
           </View>
-          <View style={{ justifyContent: 'center', paddingLeft: 10 }}>
+          <View style={{  paddingLeft: 10 }}>
             <Text
               ellipsizeMode="tail"
               numberOfLines={1}

@@ -4,19 +4,21 @@ const THUMB_RADIUS = 9;
 const styles = StyleSheet.create({
   main_card_container: {
     backgroundColor: '#fff',
-    // borderRadius: 14,
+    borderRadius:20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 8,
     marginBottom: 14,
     // height:50
-    paddingTop: 20,
+    paddingTop: 17,
+    paddingBottom:17,
   },
   section1: {
     flexDirection: 'row',
   },
   section2: {
     justifyContent: 'center',
+    // paddingTop:10,
     alignItems: 'center',
     paddingRight: 10,
   },

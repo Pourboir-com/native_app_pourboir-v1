@@ -536,7 +536,7 @@ const SocialLogin = ({ navigation, route }) => {
               
             </View>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate("WaiterProfile")}>
+          <TouchableOpacity onPress={() => navigation.navigate("FindJob")}>
                     <Text>NAvigation</Text>
                   </TouchableOpacity>
           {/* <TouchableOpacity

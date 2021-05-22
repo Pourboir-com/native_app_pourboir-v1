@@ -69,7 +69,7 @@ const Find_Job = ({ navigation }) => {
     education &&
     temp;
     // console.log(data);
-
+console.log(nicheModalData)
   const handleApplyJob = async () => {
     if (state?.userDetails?.user_id) {
       setLoading(true);
@@ -420,7 +420,7 @@ const Find_Job = ({ navigation }) => {
               </View>
               {temp === 'half' && (
                 <View>
-                  {nicheModalData.map((v, i) => {
+                  {/* {nicheModalData.map((v, i) => {
                     return (
                       <View
                         key={i}
@@ -432,7 +432,7 @@ const Find_Job = ({ navigation }) => {
                         </Text>
                       </View>
                     );
-                  })}
+                  })} */}
 
                   <View style={{ ...styles.viewAddReview, marginBottom: 20 }}>
                     <View

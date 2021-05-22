@@ -22,6 +22,7 @@ import { filterSearch } from '../../util';
 import { Ionicons } from '@expo/vector-icons';
 import { useMutation } from 'react-query';
 import Spinner from 'react-native-loading-spinner-overlay';
+import GlobalHeader from '../../components/GlobalHeader';
 
 const ManagerStaff = ({ navigation }) => {
   const [deleteWaiterForm] = useMutation(DELETE_WAITER_FORMS);
@@ -116,17 +117,23 @@ const ManagerStaff = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: '#f1f1f1' }}>
       <Spinner visible={loading} />
-      <TouchableOpacity
-        activeOpacity={0.5}
-        style={{ marginTop: 60, marginLeft: 15 }}
+      <View
+        style={{
+          width: '100%',
+          height: 100,
+          zIndex: 9999,
+        }}
       >
-        <Ionicons
-          onPress={() => navigation.goBack()}
-          name="arrow-back-outline"
-          size={30}
-          color="black"
+        <GlobalHeader
+          arrow={true}
+          fontSize={17}
+          color={'black'}
+          navigation={navigation}
+          setting={false}
+          backgroundColor={'transparent'}
+          borderRadius={true}
         />
-      </TouchableOpacity>
+      </View>
       <View style={{ paddingHorizontal: 25, marginTop: 10 }}>
         <View style={styles.first_section}>
           <View style={styles.child_one}>

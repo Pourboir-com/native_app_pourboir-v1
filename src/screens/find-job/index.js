@@ -26,7 +26,8 @@ const Find_Job = ({ navigation, route }) => {
   const { form, refetch } = route.params;
   const { state } = useContext(Context);
   // getting first and last name saved in state
-  let fullName = form.data[0]?.user_id?.full_name?.split(' ');
+  let name = form?.user_id?.full_name || state?.userDetails?.name;
+  let fullName = name?.split(' ');
   let savedFirstName =
     fullName?.length > 1
       ? fullName?.slice(0, fullName?.length - 1).join(' ')
@@ -35,18 +36,18 @@ const Find_Job = ({ navigation, route }) => {
     fullName?.length > 1 ? fullName[fullName?.length - 1] : '';
 
   const [applyWaiter] = useMutation(APPLY_WAITER);
-  const [temp, setTemp] = useState(form.data[0]?.time || '');
+  const [temp, setTemp] = useState(form?.time || '');
   const [firstName, setFirstName] = useState(savedFirstName);
   const [lastName, setLastName] = useState(savedLastName);
-  const [education, setEducation] = useState(form.data[0]?.diploma || '');
+  const [education, setEducation] = useState(form?.diploma || '');
   // const [experience, setExperience] = useState('');
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [position, setPosition] = useState(form.data[0]?.position || '');
-  const [phone, setPhone] = useState(form.data[0]?.telephone_number || '');
+  const [position, setPosition] = useState(form?.position || '');
+  const [phone, setPhone] = useState(form?.telephone_number || '');
   const [expModalVisible, setExpModalVisible] = useState(false);
   const [nicheModalVisible, setNicheModalVisible] = useState(false);
-  const [data, setData] = useState(form.data[0]?.experience || []);
+  const [data, setData] = useState(form?.experience || []);
   const [nicheModalData, setNicheModalData] = useState([]);
 
   let validation =

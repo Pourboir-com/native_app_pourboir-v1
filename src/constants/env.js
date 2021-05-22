@@ -8,7 +8,7 @@ function getEnvVars(env = '') {
 }
 export const releaseEnvironment = getEnvVars(Constants.manifest.releaseChannel);
 const apiUrl = () => {
-  let api_url = `http://192.168.10.6:8081/api`;
+  let api_url = `http://192.168.10.33:8081/api`;
   // let api_url = `http://localhost:8081/api`;
 
   if (releaseEnvironment == 'production') {

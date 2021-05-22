@@ -22,7 +22,7 @@ import { ReviewsSkeleton } from '../../components/skeleton';
 const ServerProfile = ({ navigation }) => {
   const { state } = useContext(Context);
   const { data: waiterFormData, isLoading: waiterFormLoading, refetch: refetchWaiterFormData  } = useQuery(
-    ['RECRUITMENT_FORM', { user_id: state.userDetails.user_id }],
+    ['RECRUITMENT_FORM', { user_id: state?.userDetails?.user_id }],
     RECRUITMENT_FORM,
     {
       ...reactQueryConfig,
@@ -115,7 +115,7 @@ const ServerProfile = ({ navigation }) => {
                 </View>
               ) : (
                 <>
-                  {!waiterFormData?.data[0].position ? (
+                  {!waiterFormData?.data[0]?.position ? (
                     <View>
                       <View>
                         <Text style={styles.textBold}>
@@ -131,11 +131,12 @@ const ServerProfile = ({ navigation }) => {
                         <CommonButton
                           title={i18n.t('look_job')}
                           navigation="FindJob"
+                          navigationData={{ form: [], refetch: refetchWaiterFormData}}
                         />
                       </View>
                     </View>
                   ) : (
-                    (waiterFormData.data || []).map(item => (
+                    (waiterFormData?.data || []).map(item => (
                       <View>
                         <View>
                           <Text style={styles.boldTxt2}>
@@ -200,7 +201,7 @@ const ServerProfile = ({ navigation }) => {
                         <View style={{ marginTop: 10 }}>
                           <CommonButton
                             navigation="FindJob"
-                            navigationData={{ form: waiterFormData || [], refetch: refetchWaiterFormData}}
+                            navigationData={{ form: waiterFormData?.data[0] || [], refetch: refetchWaiterFormData}}
                             title={i18n.t('modif_prof')}
                           />
                         </View>

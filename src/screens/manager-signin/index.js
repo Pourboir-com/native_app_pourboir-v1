@@ -54,15 +54,23 @@ const SignIn = ({ navigation }) => {
       }}
       source={require('../../assets/images/splashBg.png')}
     >
-      <GlobalHeader
-        arrow={true}
-        fontSize={17}
-        color={'black'}
-        navigation={navigation}
-        setting={false}
-        backgroundColor={'transparent'}
-        borderRadius={true}
-      />
+      <View
+        style={{
+          width: '100%',
+          height: 100,
+          zIndex: 9999,
+        }}
+      >
+        <GlobalHeader
+          arrow={true}
+          fontSize={17}
+          color={'black'}
+          navigation={navigation}
+          setting={false}
+          backgroundColor={'transparent'}
+          borderRadius={true}
+        />
+      </View>
       <KeyboardAwareScrollView
         bounces={false}
         enableOnAndroid={true}

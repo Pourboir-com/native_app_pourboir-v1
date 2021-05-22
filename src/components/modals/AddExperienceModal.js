@@ -53,10 +53,12 @@ const AddExperienceModal = ({
         companyName,
         post,
         startDate: startDate.toLocaleDateString(),
-        endDate: termsChecked === false ? endDate.toLocaleDateString() : 'still work here',
+        endDate:
+          termsChecked === false
+            ? endDate.toLocaleDateString()
+            : 'still work here',
       },
-    ]
-    );
+    ]);
     setCompanyName('');
     setPost('');
     setStart('');
@@ -166,55 +168,134 @@ const AddExperienceModal = ({
               placeholderTextColor={'#707375'}
             />
           </View>
-          <TouchableOpacity onPress={showModeStartDate} style={styles.btnInput}>
-            <Text
+          {Platform.OS === 'android' && (
+            <TouchableOpacity
+              onPress={showModeStartDate}
+              style={styles.btnInput}
+            >
+              {Platform.OS === 'android' && (
+                <Text
+                  style={{
+                    fontFamily: 'ProximaNova',
+                    color: '#707375',
+                    fontSize: 15,
+                    paddingTop: 15,
+                  }}
+                >
+                  {start === ''
+                    ? i18n.t('start_date')
+                    : startDate.toLocaleDateString()}
+                </Text>
+              )}
+              {(Platform.OS === 'ios' || showS) && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={startDate || new Date()}
+                  mode={'date'}
+                  is24Hour={true}
+                  display="default"
+                  onChange={onChangeStartDate}
+                  style={{
+                    width: 100,
+                    marginTop: 5,
+                  }}
+                />
+              )}
+            </TouchableOpacity>
+          )}
+          {Platform.OS === 'ios' && (
+            <View
               style={{
-                fontFamily: 'ProximaNova',
-                color: '#707375',
-                fontSize: 15,
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: '100%',
+                marginBottom: 30,
               }}
             >
-              {start === ''
-                ? i18n.t('start_date')
-                : startDate.toLocaleDateString()}
-            </Text>
-            {showS && (
+              <Text style={{ fontFamily: 'ProximaNova', fontSize: 14 }}>
+                {i18n.t('start_date')}:{' '}
+              </Text>
               <DateTimePicker
                 testID="dateTimePicker"
                 value={startDate || new Date()}
-                mode={modeS}
-                locale="en_GB"
-                // is24Hour={"locale"}
+                mode={'date'}
+                is24Hour={true}
                 display="default"
                 onChange={onChangeStartDate}
+                style={{
+                  width: '50%',
+                  marginTop: 5,
+                  right: -6,
+                  position: 'absolute',
+                }}
               />
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={showModeLastDate}
-            style={{ ...styles.btnInput, marginTop: 15, marginBottom: 10 }}
-          >
-            <Text
+            </View>
+          )}
+          {Platform.OS === 'android' && (
+            <TouchableOpacity
+              onPress={showModeLastDate}
+              style={{ ...styles.btnInput, marginTop: 15, marginBottom: 10 }}
+            >
+              {Platform.OS === 'android' && (
+                <Text
+                  style={{
+                    fontFamily: 'ProximaNova',
+                    color: '#707375',
+                    fontSize: 15,
+                    paddingTop: 15,
+                  }}
+                >
+                  {end === ''
+                    ? i18n.t('end_date')
+                    : endDate.toLocaleDateString()}
+                </Text>
+              )}
+              {(Platform.OS === 'ios' || showL) && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={endDate || new Date()}
+                  mode={'date'}
+                  is24Hour={true}
+                  display="default"
+                  onChange={onChangeLastDate}
+                  style={{
+                    width: 100,
+                    marginTop: 5,
+                  }}
+                />
+              )}
+            </TouchableOpacity>
+          )}
+          {Platform.OS === 'ios' && (
+            <View
               style={{
-                fontFamily: 'ProximaNova',
-                color: '#707375',
-                fontSize: 15,
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: '100%',
+                marginBottom: 20,
               }}
             >
-              {end === '' ? i18n.t('end_date') : endDate.toLocaleDateString()}
-            </Text>
-            {showL && (
+              <Text style={{ fontFamily: 'ProximaNova', fontSize: 14 }}>
+                {i18n.t('end_date')}:{' '}
+              </Text>
               <DateTimePicker
                 testID="dateTimePicker"
                 value={endDate || new Date()}
-                mode={modeL}
-                locale="en_GB"
-                // is24Hour={"locale"}
+                mode={'date'}
+                is24Hour={true}
                 display="default"
                 onChange={onChangeLastDate}
+                style={{
+                  width: '50%',
+                  marginTop: 5,
+                  right: -5,
+                  position: 'absolute',
+                }}
               />
-            )}
-          </TouchableOpacity>
+            </View>
+          )}
         </View>
 
         <View
@@ -227,13 +308,16 @@ const AddExperienceModal = ({
             height: 15,
           }}
         >
-          <View  style={{ justifyContent: 'center' }}>
+          <View style={{ justifyContent: 'center' }}>
             <CheckBox
               style={{
                 paddingRight: -40,
                 marginTop: -5,
               }}
-              onClick={() => [setTermsChecked(!termsChecked), setWorkHere(workHere === '' ? 'work' : '')]}
+              onClick={() => [
+                setTermsChecked(!termsChecked),
+                setWorkHere(workHere === '' ? 'work' : ''),
+              ]}
               isChecked={termsChecked}
               checkedImage={
                 <Image
@@ -251,7 +335,13 @@ const AddExperienceModal = ({
               }
             />
           </View>
-          <TouchableOpacity onPress={() => [setTermsChecked(!termsChecked), setWorkHere(workHere === '' ? 'work' : '')]} style={{ paddingLeft: 10, paddingTop: 1 }}>
+          <TouchableOpacity
+            onPress={() => [
+              setTermsChecked(!termsChecked),
+              setWorkHere(workHere === '' ? 'work' : ''),
+            ]}
+            style={{ paddingLeft: 10, paddingTop: 1 }}
+          >
             <Text
               style={{
                 fontFamily: 'ProximaNova',
@@ -362,9 +452,10 @@ const styles = StyleSheet.create({
     borderColor: '#E3E3E3',
     borderRadius: 10,
     borderWidth: 1,
-    width: '100%',
-    paddingVertical: 13,
-    paddingHorizontal: 10,
+    width: 270,
+    height: 48,
+    // paddingVertical: 13,
+    // paddingHorizontal: 10,
     alignItems: 'center',
     //  marginTop:40
   },

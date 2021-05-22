@@ -96,19 +96,20 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                     }}
                   >
                     <Text style={styles.exp_year}>
-                      {(!waiterFormLoading &&
+                      {/* {(!waiterFormLoading &&
                         waiterFormData?.data[0]?.experience) ||
-                        ''}
+                        ''} */} 5
                     </Text>
                     <Text style={styles.ansTxt}>
                       {' '}
-                      {waiterFormLoading
+                      {/* {waiterFormLoading
                         ? 'loading..'
                         : waiterFormData?.data[0]?.experience
                         ? Number(waiterFormData?.data[0]?.experience) > 1
                           ? `${i18n.t('years')}s`
                           : i18n.t('years')
-                        : 'none'}
+                        : 'none'} */}
+                        year
                     </Text>
                   </View>
                 </View>
@@ -123,9 +124,12 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                   </View>
                   <View>
                     <Text style={styles.petitTxt}>
-                      {waiterFormLoading
+                      {/* {waiterFormLoading
                         ? 'loading..'
-                        : last_exp(waiterFormData) || 'none'}
+                        : last_exp(waiterFormData) || 'none'} */}
+                           {waiterFormLoading
+                        ? 'loading..'
+                        : waiterFormData?.data[0]?.experience?.enterprise_name  || 'none'}
                     </Text>
                   </View>
                 </View>

@@ -61,13 +61,14 @@ const Find_Job = ({ navigation }) => {
 
   let validation =
     firstName &&
-    lastName &&
-    lastExperience?.restaurant_id &&
-    lastExperience?.experience &&
-    position &&
-    experience.replace(/[^0-9]/g, '') &&
+    // lastName &&
+    // lastExperience?.restaurant_id &&
+    // lastExperience?.experience &&
+    // position &&
+    // experience.replace(/[^0-9]/g, '') &&
     education &&
     temp;
+    // console.log(data);
 
   const handleApplyJob = async () => {
     if (state?.userDetails?.user_id) {

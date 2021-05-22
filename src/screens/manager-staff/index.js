@@ -219,6 +219,7 @@ const ManagerStaff = ({ navigation }) => {
           </View>
         </View>
       </View>
+      
       {waitersFormLoading ? (
         <View style={{ paddingHorizontal: 25, marginTop: 25 }}>
           <ReviewsSkeleton />
@@ -262,6 +263,7 @@ const ManagerStaff = ({ navigation }) => {
             >
               {i18n.t('no_job_found')}
             </Text>
+            
           )}
         </>
       )}

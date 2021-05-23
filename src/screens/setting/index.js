@@ -284,7 +284,13 @@ const Setting = ({ navigation }) => {
       </View>
       <View></View>
 
-      <View style={{ position: 'absolute', bottom: 245, width: '100%' }}>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 215,
+          width: '100%',
+        }}
+      >
         <TouchableOpacity
           activeOpacity={0.5}
           // disabled={loading}

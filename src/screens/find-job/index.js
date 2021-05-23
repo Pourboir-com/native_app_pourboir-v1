@@ -21,7 +21,7 @@ const canidate = require('../../assets/images/canidate.png');
 import { AntDesign } from '@expo/vector-icons';
 import AddExperienceModal from '../../components/modals/AddExperienceModal';
 import AddNicheModal from '../../components/modals/AddNicheModal';
-
+import { removeId, nicheModalDataUpdated } from './util';
 const Find_Job = ({ navigation, route }) => {
   const { form, refetch } = route.params;
   const { state } = useContext(Context);
@@ -61,19 +61,6 @@ const Find_Job = ({ navigation, route }) => {
     // experience.replace(/[^0-9]/g, '') &&
     // education &&
     temp;
-
-  const removeId = experience => {
-    let filtered = [];
-    let exp = experience.map(item => {
-      if (item._id) {
-        let { _id, ...rest } = item;
-        filtered.push(rest);
-      } else {
-        filtered.push(item);
-      }
-    });
-    return filtered;
-  };
 
   const handleApplyJob = async () => {
     if (state?.userDetails?.user_id) {
@@ -321,7 +308,7 @@ const Find_Job = ({ navigation, route }) => {
               </View>
               {temp === 'half' && (
                 <View>
-                  {nicheModalData?.map((v, i) => {
+                  {(nicheModalDataUpdated(nicheModalData) || []).map((v, i) => {
                     return (
                       <View
                         key={i}

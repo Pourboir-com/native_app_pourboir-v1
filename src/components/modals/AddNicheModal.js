@@ -166,7 +166,17 @@ const AddNicheModal = ({
               }
             />
           </View>
-          <View style={{ paddingLeft: 10, marginTop: -4 }}>
+          <TouchableOpacity
+            onPress={() => [
+              setMorning(
+                morningChecked === true
+                  ? unChecked('morning')
+                  : times.push('morning'),
+              ),
+              setMorningChecked(!morningChecked),
+            ]}
+            style={{ paddingLeft: 10, marginTop: -4 }}
+          >
             <Text
               style={{
                 fontFamily: !morningChecked ? 'ProximaNova' : 'ProximaNovaBold',
@@ -177,7 +187,7 @@ const AddNicheModal = ({
             >
               {i18n.t('morning')} 6:00 - 12:00
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
         <View
@@ -218,7 +228,15 @@ const AddNicheModal = ({
               }
             />
           </View>
-          <View style={{ paddingLeft: 10, marginTop: -4 }}>
+          <TouchableOpacity
+            onPress={() => [
+              setNoon(
+                noonChecked ? unChecked('mid-day') : times.push('mid-day'),
+              ),
+              setNoonChecked(!noonChecked),
+            ]}
+            style={{ paddingLeft: 10, marginTop: -4 }}
+          >
             <Text
               style={{
                 fontFamily: !noonChecked ? 'ProximaNova' : 'ProximaNovaBold',
@@ -228,7 +246,7 @@ const AddNicheModal = ({
             >
               {i18n.t('noon')} 12:00 - 18:00
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
         <View
@@ -269,7 +287,15 @@ const AddNicheModal = ({
               }
             />
           </View>
-          <View style={{ paddingLeft: 10, marginTop: -4 }}>
+          <TouchableOpacity
+            onPress={() => [
+              setEvening(
+                eveningChecked ? unChecked('evening') : times.push('evening'),
+              ),
+              setEveningChecked(!eveningChecked),
+            ]}
+            style={{ paddingLeft: 10, marginTop: -4 }}
+          >
             <Text
               style={{
                 fontFamily: !eveningChecked ? 'ProximaNova' : 'ProximaNovaBold',
@@ -280,7 +306,7 @@ const AddNicheModal = ({
               {/* {i18n.t('still_work')} */}
               {i18n.t('evening')} 18:00 - 00:00
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <TouchableOpacity
           activeOpacity={0.5}

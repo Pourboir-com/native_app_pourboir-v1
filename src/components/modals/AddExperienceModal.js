@@ -8,7 +8,6 @@ import {
   ImageBackground,
   TextInput,
   Platform,
-  ActivityIndicatorComponent,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';

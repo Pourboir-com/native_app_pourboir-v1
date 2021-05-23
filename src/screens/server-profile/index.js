@@ -30,6 +30,7 @@ const ServerProfile = ({ navigation }) => {
     RECRUITMENT_FORM,
     {
       ...reactQueryConfig,
+      enabled: state?.userDetails?.user_id ? true : false,
       onError: e => {
         alert(e?.response?.data?.message);
       },

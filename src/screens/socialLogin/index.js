@@ -32,12 +32,9 @@ import * as Device from 'expo-device';
 import { getAsyncStorageValues } from '../../constants';
 import * as Notifications from 'expo-notifications';
 import * as Localization from 'expo-localization';
-import AddExperienceModal from '../../components/modals/AddExperienceModal';
-import AddNicheModal from '../../components/modals/AddNicheModal';
 
 const SocialLogin = ({ navigation, route }) => {
   const [city, setCity] = useState();
-  const [managerEmail, setManagerEmail] = useState();
   const [loading, setLoading] = useState(false);
   const [googleSignup] = useMutation(GOOGLE_SIGNUP);
   const [vote, setVote] = useState(false);

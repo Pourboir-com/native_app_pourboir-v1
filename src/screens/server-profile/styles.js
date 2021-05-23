@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 14,
     marginVertical: 10,
-    width: '96.5%',
+    width: '97%',
   },
   section1: {
     flexDirection: 'row',
@@ -47,11 +47,13 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNovaBold',
     fontSize: 20,
     lineHeight: 20,
+    marginLeft: 5,
   },
   lighTxt2: {
     fontFamily: 'ProximaNova',
     fontSize: 16,
     paddingTop: 10,
+    marginLeft: 6,
   },
 });
 

@@ -7,7 +7,6 @@ import {
   Image,
   ImageBackground,
   Platform,
-  ActivityIndicatorComponent,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -23,9 +22,8 @@ const AddNicheModal = ({
   setNicheModalVisible,
   nicheModalVisible,
   setNicheModalData,
-  nicheModalData
+  nicheModalData,
 }) => {
-  const [loading, setLoading] = useState(false);
   const [dayOfWeek, setDayOfWeek] = useState(i18n.t('monday'));
   const [morning, setMorning] = useState();
   const [noon, setNoon] = useState();
@@ -36,10 +34,12 @@ const AddNicheModal = ({
   const [times, setTimes] = useState([]);
 
   const Add = () => {
-    setNicheModalData(() => {
-      return [...nicheModalData, { dayOfWeek, times }];
-    });
+    setNicheModalData([...nicheModalData, { day: dayOfWeek, slot: times }]);
     setNicheModalVisible(false);
+    setTimes([]);
+    setEveningChecked(false);
+    setNoonChecked(false);
+    setMorningChecked(false);
   };
   const unChecked = day => {
     for (var i = 0; i < times.length; i++) {
@@ -115,13 +115,13 @@ const AddNicheModal = ({
               selectedValue={dayOfWeek}
               onValueChange={e => setDayOfWeek(e)}
             >
-              <Picker.Item label="Mon" value={i18n.t('monday')} />
-              <Picker.Item label="Tue" value={i18n.t('tuesday')} />
-              <Picker.Item label="Wed" value={i18n.t('wednesday')} />
-              <Picker.Item label="Thr" value={i18n.t('thursday')} />
-              <Picker.Item label="Fri" value={i18n.t('friday')} />
-              <Picker.Item label="Sat" value={i18n.t('saturday')} />
-              <Picker.Item label="Sun" value={i18n.t('sunday')} />
+              <Picker.Item label={i18n.t('monday')} value={'Monday'} />
+              <Picker.Item label={i18n.t('tuesday')} value={'Tuesday'} />
+              <Picker.Item label={i18n.t('wednesday')} value={'Wednesday'} />
+              <Picker.Item label={i18n.t('thursday')} value={'Thursday'} />
+              <Picker.Item label={i18n.t('friday')} value={'Friday'} />
+              <Picker.Item label={i18n.t('saturday')} value={'Saturday'} />
+              <Picker.Item label={i18n.t('sunday')} value={'Sunday'} />
             </Picker>
           </View>
         </View>
@@ -144,8 +144,8 @@ const AddNicheModal = ({
               onClick={() => [
                 setMorning(
                   morningChecked === true
-                    ? unChecked(i18n.t('morning'))
-                    : times.push(i18n.t('morning')),
+                    ? unChecked('morning')
+                    : times.push('morning'),
                 ),
                 setMorningChecked(!morningChecked),
               ]}
@@ -197,9 +197,7 @@ const AddNicheModal = ({
               }}
               onClick={() => [
                 setNoon(
-                  noonChecked
-                    ? unChecked(i18n.t('noon'))
-                    : times.push(i18n.t('noon')),
+                  noonChecked ? unChecked('mid-day') : times.push('mid-day'),
                 ),
                 setNoonChecked(!noonChecked),
               ]}
@@ -250,9 +248,7 @@ const AddNicheModal = ({
               }}
               onClick={() => [
                 setEvening(
-                  eveningChecked
-                    ? unChecked(i18n.t('evening'))
-                    : times.push(i18n.t('evening')),
+                  eveningChecked ? unChecked('evening') : times.push('evening'),
                 ),
                 setEveningChecked(!eveningChecked),
               ]}
@@ -289,7 +285,7 @@ const AddNicheModal = ({
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={Add}
-          disabled={loading ? true : validation ? false : true}
+          disabled={validation ? false : true}
           style={[
             styles.btn_yellow,
             validation && {
@@ -297,19 +293,15 @@ const AddNicheModal = ({
             },
           ]}
         >
-          {loading ? (
-            <ActivityIndicatorComponent size={29} color="#EBC11B" />
-          ) : (
-            <Text
-              style={{
-                fontFamily: 'ProximaNova',
-                fontSize: 16,
-                color: Colors.fontDark,
-              }}
-            >
-              {i18n.t('add')}
-            </Text>
-          )}
+          <Text
+            style={{
+              fontFamily: 'ProximaNova',
+              fontSize: 16,
+              color: Colors.fontDark,
+            }}
+          >
+            {i18n.t('add')}
+          </Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>
     </Overlay>

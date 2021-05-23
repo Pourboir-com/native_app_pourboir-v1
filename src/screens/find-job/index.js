@@ -48,7 +48,9 @@ const Find_Job = ({ navigation, route }) => {
   const [expModalVisible, setExpModalVisible] = useState(false);
   const [nicheModalVisible, setNicheModalVisible] = useState(false);
   const [data, setData] = useState(form?.experience || []);
-  const [nicheModalData, setNicheModalData] = useState([]);
+  const [nicheModalData, setNicheModalData] = useState(
+    form?.availability || [],
+  );
 
   let validation =
     firstName &&
@@ -60,19 +62,46 @@ const Find_Job = ({ navigation, route }) => {
     // education &&
     temp;
 
+  const removeId = experience => {
+    let filtered = [];
+    let exp = experience.map(item => {
+      if (item._id) {
+        let { _id, ...rest } = item;
+        filtered.push(rest);
+      } else {
+        filtered.push(item);
+      }
+    });
+    return filtered;
+  };
+
   const handleApplyJob = async () => {
     if (state?.userDetails?.user_id) {
       setLoading(true);
-      let jobForm = {
-        id: state?.userDetails?.user_id || '',
-        full_name: firstName || '',
-        last_name: lastName || '',
-        experience: data || [],
-        telephone_number: phone || '',
-        time: temp || '',
-        diploma: education || '',
-        position: position || '',
-      };
+      let jobForm;
+      if (temp === 'half') {
+        jobForm = {
+          id: state?.userDetails?.user_id || '',
+          full_name: firstName || '',
+          last_name: lastName || '',
+          experience: removeId(data) || [],
+          telephone_number: phone || '',
+          time: temp || '',
+          diploma: education || '',
+          position: position || '',
+          availability: removeId(nicheModalData) || [],
+        };
+      } else if (temp === 'full')
+        jobForm = {
+          id: state?.userDetails?.user_id || '',
+          full_name: firstName || '',
+          last_name: lastName || '',
+          experience: removeId(data) || [],
+          telephone_number: phone || '',
+          time: temp || '',
+          diploma: education || '',
+          position: position || '',
+        };
 
       await applyWaiter(jobForm, {
         onSuccess: async () => {
@@ -80,8 +109,9 @@ const Find_Job = ({ navigation, route }) => {
           setLoading(false);
           setModalVisible(true);
         },
-        onError: () => {
+        onError: e => {
           setLoading(false);
+          alert(e.response?.data?.message);
         },
       });
     }
@@ -291,15 +321,15 @@ const Find_Job = ({ navigation, route }) => {
               </View>
               {temp === 'half' && (
                 <View>
-                  {nicheModalData.map((v, i) => {
+                  {nicheModalData?.map((v, i) => {
                     return (
                       <View
                         key={i}
                         style={{ ...styles.availabilityCard, marginBottom: 8 }}
                       >
-                        <Text style={styles.availTxt1}>{v.dayOfWeek}</Text>
+                        <Text style={styles.availTxt1}>{v?.day}</Text>
                         <Text style={styles.availTxt2}>
-                          {` ${v.times.join(' - ')}`}
+                          {` ${v?.slot.join(' - ')}`}
                         </Text>
                       </View>
                     );

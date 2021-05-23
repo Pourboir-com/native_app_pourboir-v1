@@ -21,7 +21,11 @@ import { ReviewsSkeleton } from '../../components/skeleton';
 
 const ServerProfile = ({ navigation }) => {
   const { state } = useContext(Context);
-  const { data: waiterFormData, isLoading: waiterFormLoading, refetch: refetchWaiterFormData  } = useQuery(
+  const {
+    data: waiterFormData,
+    isLoading: waiterFormLoading,
+    refetch: refetchWaiterFormData,
+  } = useQuery(
     ['RECRUITMENT_FORM', { user_id: state?.userDetails?.user_id }],
     RECRUITMENT_FORM,
     {
@@ -31,7 +35,7 @@ const ServerProfile = ({ navigation }) => {
       },
     },
   );
-  console.log(waiterFormData)
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
@@ -132,13 +136,16 @@ const ServerProfile = ({ navigation }) => {
                         <CommonButton
                           title={i18n.t('look_job')}
                           navigation="FindJob"
-                          navigationData={{ form: [], refetch: refetchWaiterFormData}}
+                          navigationData={{
+                            form: [],
+                            refetch: refetchWaiterFormData,
+                          }}
                         />
                       </View>
                     </View>
                   ) : (
-                    (waiterFormData?.data || []).map(item => (
-                      <View>
+                    (waiterFormData?.data || []).map((item, i) => (
+                      <View key={i}>
                         <View>
                           <Text style={styles.boldTxt2}>
                             {i18n.t('your_cand_prof')}
@@ -202,7 +209,10 @@ const ServerProfile = ({ navigation }) => {
                         <View style={{ marginTop: 10 }}>
                           <CommonButton
                             navigation="FindJob"
-                            navigationData={{ form: waiterFormData?.data[0] || [], refetch: refetchWaiterFormData}}
+                            navigationData={{
+                              form: waiterFormData?.data[0] || [],
+                              refetch: refetchWaiterFormData,
+                            }}
                             title={i18n.t('modif_prof')}
                           />
                         </View>

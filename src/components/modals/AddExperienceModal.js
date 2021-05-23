@@ -17,7 +17,7 @@ const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import CheckBox from 'react-native-check-box';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { SEARCH_RESTAURANTS } from '../../queries';
 import { useMutation } from 'react-query';
 import stylesTextbox from '../../screens/find-job/styles';
@@ -95,9 +95,10 @@ const AddExperienceModal = ({
       end &&
       !(start > end);
 
-  const onChangeStartDate = (event, selectedDate) => {
+  const onChangeStartDate = selectedDate => {
     const currentDate = selectedDate || startDate;
     setShowS(Platform.OS === 'ios');
+    setShowS(false);
     setStartDate(currentDate);
     setStart(currentDate);
   };
@@ -109,6 +110,7 @@ const AddExperienceModal = ({
   const onChangeLastDate = (event, selectedDate) => {
     const currentDate = selectedDate || endDate;
     setShowL(Platform.OS === 'ios');
+    setShowL(false);
     setEndDate(currentDate);
     setEnd(currentDate);
   };
@@ -262,134 +264,49 @@ const AddExperienceModal = ({
               placeholderTextColor={'#707375'}
             />
           </View>
-          {Platform.OS === 'android' && (
-            <TouchableOpacity
-              onPress={showModeStartDate}
-              style={styles.btnInput}
-            >
-              {Platform.OS === 'android' && (
-                <Text
-                  style={{
-                    fontFamily: 'ProximaNova',
-                    color: '#707375',
-                    fontSize: 15,
-                    paddingTop: 15,
-                  }}
-                >
-                  {start === ''
-                    ? i18n.t('start_date')
-                    : startDate.toLocaleDateString()}
-                </Text>
-              )}
-              {(Platform.OS === 'ios' || showS) && (
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={startDate || new Date()}
-                  mode={'date'}
-                  is24Hour={true}
-                  display="default"
-                  onChange={onChangeStartDate}
-                  style={{
-                    width: 100,
-                    marginTop: 5,
-                  }}
-                />
-              )}
-            </TouchableOpacity>
-          )}
-          {Platform.OS === 'ios' && (
-            <View
+
+          <TouchableOpacity onPress={showModeStartDate} style={styles.btnInput}>
+            <Text
               style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                width: '100%',
-                marginBottom: 30,
+                fontFamily: 'ProximaNova',
+                color: '#707375',
+                fontSize: 15,
+                paddingTop: 15,
               }}
             >
-              <Text style={{ fontFamily: 'ProximaNova', fontSize: 14 }}>
-                {i18n.t('start_date')}:{' '}
-              </Text>
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={startDate || new Date()}
-                mode={'date'}
-                is24Hour={true}
-                display="default"
-                onChange={onChangeStartDate}
-                style={{
-                  width: '50%',
-                  marginTop: 5,
-                  right: -6,
-                  position: 'absolute',
-                }}
-              />
-            </View>
-          )}
-          {Platform.OS === 'android' && (
-            <TouchableOpacity
-              onPress={showModeLastDate}
-              style={{ ...styles.btnInput, marginTop: 15, marginBottom: 10 }}
-            >
-              {Platform.OS === 'android' && (
-                <Text
-                  style={{
-                    fontFamily: 'ProximaNova',
-                    color: '#707375',
-                    fontSize: 15,
-                    paddingTop: 15,
-                  }}
-                >
-                  {end === ''
-                    ? i18n.t('end_date')
-                    : endDate.toLocaleDateString()}
-                </Text>
-              )}
-              {(Platform.OS === 'ios' || showL) && (
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={endDate || new Date()}
-                  mode={'date'}
-                  is24Hour={true}
-                  display="default"
-                  onChange={onChangeLastDate}
-                  style={{
-                    width: 100,
-                    marginTop: 5,
-                  }}
-                />
-              )}
-            </TouchableOpacity>
-          )}
-          {Platform.OS === 'ios' && (
-            <View
+              {start === ''
+                ? i18n.t('start_date')
+                : startDate.toLocaleDateString()}
+            </Text>
+            <DateTimePickerModal
+              isVisible={showS}
+              mode="date"
+              onConfirm={onChangeStartDate}
+              onCancel={() => setShowS(false)}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={showModeLastDate}
+            style={{ ...styles.btnInput, marginTop: 15, marginBottom: 10 }}
+          >
+            <Text
               style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                width: '100%',
-                marginBottom: 20,
+                fontFamily: 'ProximaNova',
+                color: '#707375',
+                fontSize: 15,
+                paddingTop: 15,
               }}
             >
-              <Text style={{ fontFamily: 'ProximaNova', fontSize: 14 }}>
-                {i18n.t('end_date')}:{' '}
-              </Text>
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={endDate || new Date()}
-                mode={'date'}
-                is24Hour={true}
-                display="default"
-                onChange={onChangeLastDate}
-                style={{
-                  width: '50%',
-                  marginTop: 5,
-                  right: -5,
-                  position: 'absolute',
-                }}
-              />
-            </View>
-          )}
+              {end === '' ? i18n.t('end_date') : endDate.toLocaleDateString()}
+            </Text>
+            <DateTimePickerModal
+              isVisible={showL}
+              mode="date"
+              onConfirm={onChangeLastDate}
+              onCancel={() => setShowL(false)}
+            />
+          </TouchableOpacity>
         </View>
 
         <View

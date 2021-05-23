@@ -209,9 +209,9 @@ const Find_Job = ({ navigation, route }) => {
                 </Text>
                 {data.map((v, i) => {
                   return (
-                    <>
+                    <View  key={i}>
                       {v?.enterprise_name && (
-                        <View key={i} style={styles.expBox}>
+                        <View style={styles.expBox}>
                           <View>
                             <Text style={styles.expTxt1}>
                               {v?.enterprise_name}
@@ -229,7 +229,7 @@ const Find_Job = ({ navigation, route }) => {
                           </View>
                         </View>
                       )}
-                    </>
+                    </View>
                   );
                 })}
                 <View style={styles.viewAddReview}>

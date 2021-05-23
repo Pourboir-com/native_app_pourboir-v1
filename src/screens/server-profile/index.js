@@ -145,80 +145,77 @@ const ServerProfile = ({ navigation }) => {
                       </View>
                     </View>
                   ) : (
-                    (waiterFormData?.data || []).map((item, i) => (
-                      <View key={i}>
-                        <View>
-                          <Text style={styles.boldTxt2}>
-                            {i18n.t('your_cand_prof')}
-                          </Text>
-                          <Text style={styles.lighTxt2}>
-                            {i18n.t('prev_rec')}
-                          </Text>
-                        </View>
-                        <View>
-                          <TouchableOpacity
-                            activeOpacity={0.8}
-                            style={styles.main_card_container}
-                          >
-                            <View style={styles.section1}>
-                              <View>
-                                <Image
-                                  source={{ uri: item?.user_id?.picture }}
-                                  style={{
-                                    borderRadius: 30,
-                                    width: 57,
-                                    height: 57,
-                                  }}
-                                />
-                              </View>
-                              <View
-                                style={{
-                                  justifyContent: 'center',
-                                  paddingLeft: 10,
+                    <View>
+                      <View>
+                        <Text style={styles.boldTxt2}>
+                          {i18n.t('your_cand_prof')}
+                        </Text>
+                        <Text style={styles.lighTxt2}>
+                          {i18n.t('prev_rec')}
+                        </Text>
+                      </View>
+                      <View>
+                        <TouchableOpacity
+                          activeOpacity={0.8}
+                          style={styles.main_card_container}
+                        >
+                          <View style={styles.section1}>
+                            <View>
+                              <Image
+                                source={{
+                                  uri:
+                                    waiterFormData?.data[0]?.user_id?.picture,
                                 }}
-                              >
-                                <Text
-                                  ellipsizeMode="tail"
-                                  numberOfLines={1}
-                                  style={styles.name_staff}
-                                >
-                                  {item?.user_id?.full_name}
-                                </Text>
-                                <View
-                                  style={{ flexDirection: 'row', marginTop: 7 }}
-                                >
-                                  <Text
-                                    style={{
-                                      fontFamily: 'ProximaNovaBold',
-                                      fontSize: 16,
-                                    }}
-                                  >
-                                    {item?.position || 'none'}
-                                  </Text>
-                                </View>
-                              </View>
-                            </View>
-                            <View style={styles.section2}>
-                              <AntDesign
-                                name="right"
-                                size={20}
-                                color="#485460"
+                                style={{
+                                  borderRadius: 30,
+                                  width: 57,
+                                  height: 57,
+                                }}
                               />
                             </View>
-                          </TouchableOpacity>
-                        </View>
-                        <View style={{ marginTop: 10 }}>
-                          <CommonButton
-                            navigation="FindJob"
-                            navigationData={{
-                              form: waiterFormData?.data[0] || [],
-                              refetch: refetchWaiterFormData,
-                            }}
-                            title={i18n.t('modif_prof')}
-                          />
-                        </View>
+                            <View
+                              style={{
+                                justifyContent: 'center',
+                                paddingLeft: 10,
+                              }}
+                            >
+                              <Text
+                                ellipsizeMode="tail"
+                                numberOfLines={1}
+                                style={styles.name_staff}
+                              >
+                                {waiterFormData?.data[0]?.user_id?.full_name}
+                              </Text>
+                              <View
+                                style={{ flexDirection: 'row', marginTop: 7 }}
+                              >
+                                <Text
+                                  style={{
+                                    fontFamily: 'ProximaNovaBold',
+                                    fontSize: 16,
+                                  }}
+                                >
+                                  {waiterFormData?.data[0]?.position || 'none'}
+                                </Text>
+                              </View>
+                            </View>
+                          </View>
+                          <View style={styles.section2}>
+                            <AntDesign name="right" size={20} color="#485460" />
+                          </View>
+                        </TouchableOpacity>
                       </View>
-                    ))
+                      <View style={{ marginTop: 10 }}>
+                        <CommonButton
+                          navigation="FindJob"
+                          navigationData={{
+                            form: waiterFormData?.data[0] || [],
+                            refetch: refetchWaiterFormData,
+                          }}
+                          title={i18n.t('modif_prof')}
+                        />
+                      </View>
+                    </View>
                   )}
                 </>
               )}

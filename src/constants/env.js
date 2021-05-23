@@ -8,7 +8,7 @@ function getEnvVars(env = '') {
 }
 export const releaseEnvironment = getEnvVars(Constants.manifest.releaseChannel);
 const apiUrl = () => {
-  // let api_url = `http://192.168.10.33:8081/api`;
+  // let api_url = `http://192.168.0.102:8081/api`;
   let api_url = `http://localhost:8081/api`;
 
   if (releaseEnvironment == 'production') {
@@ -18,7 +18,7 @@ const apiUrl = () => {
     // "ACCESS_FINE_LOCATION"
     api_url = 'https://api.pourboir.com/api';
   } else if (releaseEnvironment == 'staging') {
-    // expo publish --release-channel staging-0.0.1
+    // expo publish --release-channel production-1.0.0
     api_url =
       'http://ec2-34-211-185-52.us-west-2.compute.amazonaws.com:8080/api';
   }

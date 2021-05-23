@@ -107,7 +107,7 @@ const AddExperienceModal = ({
     setModeS(currentMode);
   };
 
-  const onChangeLastDate = (event, selectedDate) => {
+  const onChangeLastDate = selectedDate => {
     const currentDate = selectedDate || endDate;
     setShowL(Platform.OS === 'ios');
     setShowL(false);
@@ -279,6 +279,7 @@ const AddExperienceModal = ({
                 : startDate.toLocaleDateString()}
             </Text>
             <DateTimePickerModal
+              date={startDate}
               isVisible={showS}
               mode="date"
               onConfirm={onChangeStartDate}
@@ -301,6 +302,7 @@ const AddExperienceModal = ({
               {end === '' ? i18n.t('end_date') : endDate.toLocaleDateString()}
             </Text>
             <DateTimePickerModal
+              date={endDate}
               isVisible={showL}
               mode="date"
               onConfirm={onChangeLastDate}

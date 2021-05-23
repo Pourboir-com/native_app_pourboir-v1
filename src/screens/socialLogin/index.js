@@ -495,6 +495,7 @@ const SocialLogin = ({ navigation, route }) => {
                   {
                     width: 320,
                     textAlign: 'center',
+                    marginLeft: Platform.OS === 'ios' ? 10 : 0,
                   },
                 ]}
               >

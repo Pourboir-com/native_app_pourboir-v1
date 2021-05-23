@@ -145,7 +145,7 @@ const ServerProfile = ({ navigation }) => {
                       </View>
                     </View>
                   ) : (
-                    <View>
+                    <View style={{ marginHorizontal: 10 }}>
                       <View>
                         <Text style={styles.boldTxt2}>
                           {i18n.t('your_cand_prof')}

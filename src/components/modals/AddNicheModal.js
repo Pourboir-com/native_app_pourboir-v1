@@ -133,6 +133,7 @@ const AddNicheModal = ({
             marginLeft: 4,
             marginBottom: 32,
             marginTop: -17,
+            height: 15,
           }}
         >
           <View style={{ justifyContent: 'center' }}>
@@ -197,6 +198,7 @@ const AddNicheModal = ({
             marginLeft: 4,
             marginBottom: 32,
             marginTop: -17,
+            height: 15,
           }}
         >
           <View style={{ justifyContent: 'center' }}>
@@ -256,6 +258,7 @@ const AddNicheModal = ({
             marginLeft: 4,
             marginBottom: 32,
             marginTop: -17,
+            height: 15,
           }}
         >
           <View style={{ justifyContent: 'center' }}>

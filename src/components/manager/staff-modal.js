@@ -17,6 +17,7 @@ import { RECRUITMENT_FORM } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 // import { last_exp } from '../../util';
 import Dash from 'react-native-dash';
+import { TotalExp } from './util';
 
 const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
   const obj = [1, 2, 3, 4, 5];
@@ -30,12 +31,6 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
       },
     },
   );
-
-  const diff_years = (dt2, dt1) => {
-    var diff = (dt2.getTime() - dt1.getTime()) / 1000;
-    diff /= 60 * 60 * 24;
-    return Math.abs(Math.round(diff / 365.25));
-  };
 
   const openDialScreen = () => {
     let number = '';
@@ -119,21 +114,19 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                     }}
                   >
                     <Text style={styles.exp_year}>
-                      {/* {(!waiterFormLoading &&
-                        waiterFormData?.data[0]?.experience) ||
-                        ''} */}{' '}
-                      5
+                      {(!waiterFormLoading &&
+                        TotalExp(waiterFormData?.data[0]?.experience || [])) ||
+                        '0'}
                     </Text>
                     <Text style={styles.ansTxt}>
                       {' '}
-                      {/* {waiterFormLoading
+                      {waiterFormLoading
                         ? 'loading..'
-                        : waiterFormData?.data[0]?.experience
-                        ? Number(waiterFormData?.data[0]?.experience) > 1
-                          ? `${i18n.t('years')}s`
-                          : i18n.t('years')
-                        : 'none'} */}
-                      year
+                        : Number(
+                            TotalExp(waiterFormData?.data[0]?.experience || []),
+                          ) > 1
+                        ? `${i18n.t('years')}s`
+                        : i18n.t('years')}
                     </Text>
                   </View>
                 </View>

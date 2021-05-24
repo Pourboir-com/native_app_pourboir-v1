@@ -127,7 +127,7 @@ const ManagerStaff = ({ navigation }) => {
           fontSize={17}
           color={'black'}
           navigation={navigation}
-          setting={false}
+          setting={true}
           backgroundColor={'transparent'}
           borderRadius={true}
         />

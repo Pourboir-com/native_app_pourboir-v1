@@ -119,9 +119,6 @@ const ServerProfile = ({ navigation, route }) => {
                 Data={yourRestaurantData?.restaurants?.results || []}
                 saveLocation={saveLocation}
               />
-              <View style={{ marginTop: 20, marginHorizontal: '5%' }}>
-                <CommonButton title={i18n.t('ind_rest')} navigation={'Home'} />
-              </View>
             </View>
             <View
               style={{
@@ -130,6 +127,9 @@ const ServerProfile = ({ navigation, route }) => {
                 alignSelf: 'flex-start',
               }}
             >
+              <View style={{ marginBottom: 20, marginHorizontal: '2%' }}>
+                <CommonButton title={i18n.t('ind_rest')} navigation={'Home'} />
+              </View>
               {waiterFormLoading ? (
                 <View
                   style={{
@@ -168,7 +168,7 @@ const ServerProfile = ({ navigation, route }) => {
                   ) : (
                     <View
                       style={{
-                        marginHorizontal: Platform.OS === 'ios' ? '3%' : '1.5%',
+                        marginHorizontal: Platform.OS === 'ios' ? '3%' : '1.6%',
                       }}
                     >
                       <View>

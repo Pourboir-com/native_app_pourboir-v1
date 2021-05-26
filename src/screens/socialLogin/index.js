@@ -502,6 +502,7 @@ const SocialLogin = ({ navigation, route }) => {
                       color: Colors.fontLight,
                       textAlign: 'center',
                       fontSize: 14,
+                      marginLeft: Platform.OS === 'android' ? 15 : 5,
                     }}
                     onPress={() => setTermsChecked(!termsChecked)}
                   >
@@ -523,7 +524,6 @@ const SocialLogin = ({ navigation, route }) => {
                         lineHeight: 24,
                         textAlign: 'center',
                         marginTop: Platform.OS === 'android' ? -1 : -2.5,
-                        // marginLeft:20
                       }}
                     >
                       {i18n.t('terms_of_use')}

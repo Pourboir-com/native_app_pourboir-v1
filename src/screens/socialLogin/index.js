@@ -42,6 +42,7 @@ const SocialLogin = ({ navigation, route }) => {
   const [HelpUs, setHelpUs] = useState();
   const [termsChecked, setTermsChecked] = useState(false);
   const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
+  const { state, dispatch } = useContext(Context);
   const notificationListener = useRef();
   const responseListener = useRef();
   Notifications.setNotificationHandler({
@@ -123,7 +124,6 @@ const SocialLogin = ({ navigation, route }) => {
     loadCity();
   }, []);
   const os = Platform.OS === 'android' ? 'android' : 'apple';
-  const { state, dispatch } = useContext(Context);
   const handleGoogleSignIn = async () => {
     setLoading(true);
     // First- obtain access token from Expo's Google API
@@ -148,7 +148,8 @@ const SocialLogin = ({ navigation, route }) => {
           } else if (confirmWaiter || HelpUs) {
             navigation.navigate('OpenCardReviews');
           } else {
-            navigation.navigate('Home', { crossIcon: false });
+            // navigation.navigate('Home', { crossIcon: false });
+            navigation.navigate('WaiterProfile', { crossIcon: true });
           }
           let userDetails = {
             name: res?.user?.full_name,
@@ -232,7 +233,8 @@ const SocialLogin = ({ navigation, route }) => {
                 } else if (confirmWaiter || HelpUs) {
                   navigation.navigate('OpenCardReviews');
                 } else {
-                  navigation.navigate('Home', { crossIcon: false });
+                  // navigation.navigate('Home', { crossIcon: false });
+                  navigation.navigate('WaiterProfile', { crossIcon: true });
                 }
                 let userDetails = {
                   name: res?.user?.full_name,
@@ -395,7 +397,8 @@ const SocialLogin = ({ navigation, route }) => {
                         } else if (confirmWaiter || HelpUs) {
                           navigation.navigate('OpenCardReviews');
                         } else {
-                          navigation.navigate('Home', { crossIcon: false });
+                          // navigation.navigate('Home', { crossIcon: false });
+                          navigation.navigate('WaiterProfile', { crossIcon: true });
                         }
                         let userDetails = {
                           name: res?.user?.full_name,

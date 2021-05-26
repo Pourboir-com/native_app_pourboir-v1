@@ -17,7 +17,14 @@ const CommonButton = props => {
     <TouchableOpacity
       activeOpacity={0.5}
       // disabled={loading}
-      onPress={() => props.navigation && navigation.navigate(props.navigation, props.navigationData && props.navigationData, )}
+      onPress={() => {
+        props.navigation &&
+          navigation.navigate(
+            props.navigation,
+            props.navigationData && props.navigationData,
+          );
+        props.dispatch && props.dispatch();
+      }}
       style={styles.btnValider}
     >
       {loading ? (

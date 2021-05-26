@@ -400,12 +400,12 @@ const Find_Job = ({ navigation, route }) => {
           isVisible={modalVisible}
           handleModalClose={() => {
             setModalVisible(false);
-            navigation.navigate('WaiterProfile');
+            navigation.navigate('WaiterProfile', { crossIcon: true });
           }}
           image={canidate}
           onPress={() => {
             setModalVisible(false);
-            navigation.navigate('WaiterProfile');
+            navigation.navigate('WaiterProfile', { crossIcon: true });
           }}
           heading={i18n.t('thank_info')}
           subHeadingText={i18n.t('broadcast')}

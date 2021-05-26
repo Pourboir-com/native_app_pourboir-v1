@@ -185,7 +185,7 @@ export default {
   add_exp: 'Add an experience',
   add_niche: 'Add a niche',
   profile_server: 'Waiter Profile',
-  no_restaurant: 'You hav no restaurant at the moment',
+  no_restaurant: 'You have no restaurant at the moment',
   search_rest: 'Search for your restaurant and add yourself by choosing',
   you_waiter: 'You are a waiter',
   ind_rest: 'I indicate the restaure where I work',

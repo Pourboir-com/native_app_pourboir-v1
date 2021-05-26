@@ -22,11 +22,14 @@ import { ReviewsSkeleton } from '../../components/skeleton';
 import StaffModal from '../../components/manager/staff-modal';
 import { getAsyncStorageValues } from '../../constants';
 import HomeScreenContent from '../../components/HomeContent';
+import * as actionTypes from '../../contextApi/actionTypes';
 
 const ServerProfile = ({ navigation, route }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [formId, setFormId] = useState('');
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
+  const [saveLocation, setSaveLocation] = useState('');
+  const [userInfo, setuserInfo] = useState();
   const {
     data: waiterFormData,
     isLoading: waiterFormLoading,
@@ -42,9 +45,6 @@ const ServerProfile = ({ navigation, route }) => {
       },
     },
   );
-
-  const [saveLocation, setSaveLocation] = useState('');
-  const [userInfo, setuserInfo] = useState();
 
   useEffect(() => {
     (async () => {
@@ -127,8 +127,18 @@ const ServerProfile = ({ navigation, route }) => {
                 alignSelf: 'flex-start',
               }}
             >
-              <View style={{ marginBottom: 20, marginHorizontal: '2%' }}>
-                <CommonButton title={i18n.t('ind_rest')} navigation={'Home'} />
+              <View style={{ marginBottom: 25, marginHorizontal: '2%' }}>
+                <CommonButton
+                  title={i18n.t('ind_rest')}
+                  navigation={'Home'}
+                  navigationData={{ crossIcon: false }}
+                  dispatch={() => {
+                    dispatch({
+                      type: actionTypes.REFRESH_ANIMATION,
+                      payload: !state.refreshAnimation,
+                    });
+                  }}
+                />
               </View>
               {waiterFormLoading ? (
                 <View

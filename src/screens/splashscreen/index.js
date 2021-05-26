@@ -118,6 +118,8 @@ export default function SplashScreen(props) {
 
   const [springValue] = React.useState(new Animated.Value(0.5));
   const locationFunction = async () => {
+    const { userInfo = {} } = await getAsyncStorageValues();
+
     try {
       let values = await Location.requestForegroundPermissionsAsync();
       if (values === 'granted') {
@@ -136,8 +138,10 @@ export default function SplashScreen(props) {
         });
 
         NetInfo.fetch().then(state => {
-          if (state.isConnected) {
+          if (state.isConnected && userInfo?.user_id) {
             props.navigation.replace('Home', { crossIcon: false });
+          } else if (state.isConnected && !userInfo?.user_id) {
+            props.navigation.navigate('socialLogin');
           } else {
             props.navigation.replace('NoWiFi');
           }
@@ -176,10 +180,11 @@ export default function SplashScreen(props) {
         const location = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Highest,
         });
-
         NetInfo.fetch().then(state => {
-          if (state.isConnected) {
+          if (state.isConnected && userInfo?.user_id) {
             props.navigation.replace('Home', { crossIcon: false });
+          } else if (state.isConnected && !userInfo?.user_id) {
+            props.navigation.navigate('socialLogin');
           } else {
             props.navigation.replace('NoWiFi');
           }

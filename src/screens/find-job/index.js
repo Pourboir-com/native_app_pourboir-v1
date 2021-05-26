@@ -52,15 +52,30 @@ const Find_Job = ({ navigation, route }) => {
     form?.availability || [],
   );
 
-  let validation =
-    firstName &&
-    // lastName &&
-    // lastExperience?.restaurant_id &&
-    // lastExperience?.experience &&
-    position &&
-    // experience.replace(/[^0-9]/g, '') &&
-    // education &&
-    temp;
+  const validation = () => {
+    if (temp === 'half') {
+      return (
+        firstName &&
+        lastName &&
+        position &&
+        education &&
+        phone &&
+        data.length &&
+        nicheModalData.length &&
+        temp
+      );
+    } else if (temp === 'full') {
+      return (
+        firstName &&
+        lastName &&
+        position &&
+        education &&
+        phone &&
+        data.length &&
+        temp
+      );
+    }
+  };
 
   const handleApplyJob = async () => {
     if (state?.userDetails?.user_id) {
@@ -147,7 +162,7 @@ const Find_Job = ({ navigation, route }) => {
             </View>
             <View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('first_name')}*</Text>
+                <Text style={styles.inputLabel}>{i18n.t('first_name')}</Text>
                 <TextInput
                   style={styles.inputsTopTow}
                   onChangeText={e => setFirstName(e)}
@@ -167,7 +182,7 @@ const Find_Job = ({ navigation, route }) => {
                 />
               </View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('position')}*</Text>
+                <Text style={styles.inputLabel}>{i18n.t('position')}</Text>
                 <TextInput
                   style={styles.inputsTopTow}
                   onChangeText={e => setPosition(e)}
@@ -209,7 +224,7 @@ const Find_Job = ({ navigation, route }) => {
                 </Text>
                 {data.map((v, i) => {
                   return (
-                    <View  key={i}>
+                    <View key={i}>
                       {v?.enterprise_name && (
                         <View style={styles.expBox}>
                           <View>
@@ -271,7 +286,7 @@ const Find_Job = ({ navigation, route }) => {
                 >
                   {i18n.t('availability')}
                 </Text>
-                <Text style={styles.inputLabel}>{i18n.t('Time')}*</Text>
+                <Text style={styles.inputLabel}>{i18n.t('Time')}</Text>
                 <View style={styles.chooseButtons_container}>
                   <TouchableOpacity
                     activeOpacity={0.7}
@@ -356,10 +371,10 @@ const Find_Job = ({ navigation, route }) => {
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={handleApplyJob}
-          disabled={loading ? true : validation ? false : true}
+          disabled={loading ? true : validation() ? false : true}
           style={[
             styles.btn_yellow,
-            validation && {
+            validation() && {
               backgroundColor: Colors.yellow,
             },
           ]}

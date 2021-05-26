@@ -143,9 +143,12 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                     {/* {waiterFormLoading
                         ? 'loading..'
                         : last_exp(waiterFormData) || 'none'} */}
-                    {waiterFormLoading
-                      ? 'loading..'
-                      : waiterFormData?.data[0]?.experience.map(item => (
+                    {waiterFormLoading ? (
+                      'loading..'
+                    ) : waiterFormData?.data[0]?.experience[0]
+                        ?.enterprise_name ? (
+                      <View style={{ justifyContent: 'center' }}>
+                        {waiterFormData?.data[0]?.experience.map(item => (
                           <View style={{ paddingTop: 10 }}>
                             <Text>{item?.enterprise_name || 'none'}</Text>
                             <Text>{`${i18n.t('of')} ${
@@ -154,6 +157,10 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                               i18n.t('still_working')}`}</Text>
                           </View>
                         ))}
+                      </View>
+                    ) : (
+                      <Text style={{ fontSize: 15, color: 'black' }}>none</Text>
+                    )}
                   </Text>
                 </View>
               </View>

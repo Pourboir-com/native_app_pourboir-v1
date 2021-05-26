@@ -50,6 +50,28 @@ const Setting = ({ navigation }) => {
     setLoading(false);
   };
 
+  //user signout
+  const handleSignOut = async () => {
+    const { userInfo } = await getAsyncStorageValues();
+    const accessToken = userInfo.accessToken;
+    /* Log-Out */
+    if (accessToken) {
+      setLoading(true);
+      try {
+        const auth = await Facebook.getAuthenticationCredentialAsync();
+        if (auth) {
+          Facebook.logOutAsync();
+          resetState();
+        } else {
+          await Google.logOutAsync({ accessToken, ...config });
+          resetState();
+        }
+      } catch {
+        resetState();
+      }
+    }
+  };
+
   const handleChangePicture = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -95,8 +117,6 @@ const Setting = ({ navigation }) => {
     }
   };
 
-
-
   return (
     <View style={styles.container}>
       <Spinner visible={loading} />
@@ -117,7 +137,7 @@ const Setting = ({ navigation }) => {
             Home={true}
             backgroundColor={'transparent'}
             navigation={navigation}
-            logout
+            logout={handleSignOut}
           />
           <View style={styles.viewImg}>
             {!state?.userDetails?.image ? (
@@ -369,7 +389,7 @@ const styles = StyleSheet.create({
   logoutBtn: {
     position: 'absolute',
     top: 42,
-    right:20,
+    right: 20,
     zIndex: 9999,
   },
   container: {

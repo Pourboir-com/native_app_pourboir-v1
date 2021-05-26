@@ -172,7 +172,6 @@ export default {
   still_working: 'still working here',
 
   // Add Experience Modal
-  add_exp: 'Add Experience',
   name_of_company: 'The name of company',
   the_post: 'The post',
   start_date: 'Start date',
@@ -185,8 +184,6 @@ export default {
   prof_exp: 'Professional Experience',
   add_exp: 'Add an experience',
   add_niche: 'Add a niche',
-  start_date: 'Start date',
-  end_date: 'End date',
   profile_server: 'Waiter Profile',
   no_restaurant: 'You hav no restaurant at the moment',
   search_rest: 'Search for your restaurant and add yourself by choosing',

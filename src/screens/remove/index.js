@@ -4,21 +4,15 @@ import { Colors } from '../../constants/Theme';
 import GlobalHeader from '../../components/GlobalHeader';
 import HomeScreenContent from '../../components/HomeContent';
 import i18n from '../../li8n';
-import { View, Text, Platform, StyleSheet } from 'react-native';
 import { Dimensions } from 'react-native';
-// import Context from '../../contextApi/context';
 import { getAsyncStorageValues } from '../../constants';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GET_YOUR_RES } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import { useQuery } from 'react-query';
-// import * as actionTypes from '../../contextApi/actionTypes';
 
 const Remove = props => {
-  // const { state, dispatch } = useContext(Context);
   const [saveLocation, setSaveLocation] = useState('');
   const [userInfo, setuserInfo] = useState();
-  // const { yourRestaurants: data } = state;
 
   useEffect(() => {
     (async () => {
@@ -40,9 +34,6 @@ const Remove = props => {
       {
         location: saveLocation,
         user_id: userInfo?.user_id,
-        // pageToken: nextPageToken,
-        // max_results: 1,
-        // page_no: 1,
       },
     ],
     GET_YOUR_RES,
@@ -83,38 +74,8 @@ const Remove = props => {
         isFetch={true}
         Data={yourRestaurantData?.restaurants?.results || []}
         saveLocation={saveLocation}
-        // handleLoadMore={handleLoadMore}
       />
-      <View style={{ backgroundColor: '#f9f9f9' }}>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => props.navigation.navigate('FindJob')}
-          style={styles.viewLastBtn}
-        >
-          <Text
-            style={{
-              fontFamily: 'ProximaNova',
-              fontSize: 16,
-              color: Colors.fontDark,
-            }}
-          >
-            {i18n.t('looking_for_job')}
-          </Text>
-        </TouchableOpacity>
-      </View>
     </>
   );
 };
 export default Remove;
-const styles = StyleSheet.create({
-  viewLastBtn: {
-    width: '90%',
-    alignSelf: 'center',
-    backgroundColor: Colors.yellow,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    marginBottom: Platform.OS === 'ios' ? 25 : 15,
-  },
-});

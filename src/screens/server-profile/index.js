@@ -108,7 +108,7 @@ const ServerProfile = ({ navigation, route }) => {
             justifyContent: 'center',
           }}
         >
-          <View style={{ alignItems: 'center', marginTop: '5%'}}>
+          <View style={{ alignItems: 'center', marginTop: '5%' }}>
             <View style={{ width: '100%' }}>
               <HomeScreenContent
                 route={route}
@@ -166,7 +166,11 @@ const ServerProfile = ({ navigation, route }) => {
                       </View>
                     </View>
                   ) : (
-                    <View style={{marginHorizontal: '1.5%'}}>
+                    <View
+                      style={{
+                        marginHorizontal: Platform.OS === 'ios' ? '3%' : '1.5%',
+                      }}
+                    >
                       <View>
                         <Text style={styles.boldTxt2}>
                           {i18n.t('your_cand_prof')}

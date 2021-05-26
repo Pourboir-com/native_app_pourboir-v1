@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   SafeAreaView,
   BackHandler,
+  Image
 } from 'react-native';
 import { Body, Right } from 'native-base';
 import { Colors } from '../constants/Theme';
@@ -55,6 +56,28 @@ const GlobalHeader = props => {
       );
     });
   });
+
+    //user signout
+    const handleSignOut = async () => {
+      const { userInfo } = await getAsyncStorageValues();
+      const accessToken = userInfo.accessToken;
+      /* Log-Out */
+      if (accessToken) {
+        setLoading(true);
+        try {
+          const auth = await Facebook.getAuthenticationCredentialAsync();
+          if (auth) {
+            Facebook.logOutAsync();
+            resetState();
+          } else {
+            await Google.logOutAsync({ accessToken, ...config });
+            resetState();
+          }
+        } catch {
+          resetState();
+        }
+      }
+    };
 
   return (
     <SafeAreaView
@@ -170,7 +193,23 @@ const GlobalHeader = props => {
             <View style={styles.viewImg}>
               <FontAwesome name="user-circle-o" size={45} color="#fff" />
             </View>
-          ) : null}
+          ) : 
+            props.logout ? (
+
+              <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={handleSignOut}
+              style={[styles.viewLeft]}
+            >
+              <Image
+                source={require('../assets/images/Disconnect.png')}
+                style={{ width: 18, height: 18 }}
+              />
+            </TouchableOpacity>
+            )
+          
+          
+          : null}
         </Right>
       </View>
       {props.search ? (

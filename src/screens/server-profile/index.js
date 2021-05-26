@@ -6,6 +6,7 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import CommonButton from '../../components/common-button';
@@ -18,8 +19,11 @@ import { RECRUITMENT_FORM } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import Context from '../../contextApi/context';
 import { ReviewsSkeleton } from '../../components/skeleton';
+import StaffModal from '../../components/manager/staff-modal';
 
 const ServerProfile = ({ navigation }) => {
+  const [isModalVisible, setModalVisible] = useState(false)
+
   const { state } = useContext(Context);
   const {
     data: waiterFormData,
@@ -89,7 +93,7 @@ const ServerProfile = ({ navigation }) => {
                 resizeMode="contain"
               />
             </View>
-            <View style={{ marginHorizontal: 20 }}>
+            <View style={{ marginHorizontal: '5.6%' }}>
               <View>
                 <Text style={styles.textBold}>{i18n.t('no_restaurant')}</Text>
                 <Text style={styles.textLight}>
@@ -140,12 +144,13 @@ const ServerProfile = ({ navigation }) => {
                           navigationData={{
                             form: [],
                             refetch: refetchWaiterFormData,
+                            onPress: ''
                           }}
                         />
                       </View>
                     </View>
                   ) : (
-                    <View style={{ marginHorizontal: 10 }}>
+                    <View style={{  marginHorizontal: '3%'  }}>
                       <View>
                         <Text style={styles.boldTxt2}>
                           {i18n.t('your_cand_prof')}
@@ -156,7 +161,8 @@ const ServerProfile = ({ navigation }) => {
                       </View>
                       <View>
                         <TouchableOpacity
-                          activeOpacity={0.8}
+                          activeOpacity={0.1}
+                          onPress={() => setModalVisible(true)}
                           style={styles.main_card_container}
                         >
                           <View style={styles.section1}>
@@ -187,15 +193,15 @@ const ServerProfile = ({ navigation }) => {
                                 {waiterFormData?.data[0]?.user_id?.full_name}
                               </Text>
                               <View
-                                style={{ flexDirection: 'row', marginTop: 7 }}
+                                style={{ flexDirection: 'row', marginTop: Platform.OS === 'ios' ? 10 : 7 }}
                               >
                                 <Text
                                   style={{
                                     fontFamily: 'ProximaNovaBold',
-                                    fontSize: 16,
+                                    fontSize: Platform.OS === 'ios' ? 18 : 16,
                                   }}
                                 >
-                                  {waiterFormData?.data[0]?.position || 'none'}
+                                  {waiterFormData?.data[0]?.position || i18n.t('waiter')}
                                 </Text>
                               </View>
                             </View>
@@ -221,6 +227,15 @@ const ServerProfile = ({ navigation }) => {
               )}
             </View>
           </View>
+
+        {
+          isModalVisible && (
+            <StaffModal
+          isModalVisible={isModalVisible}
+          setModalVisible={setModalVisible}
+        />
+          )
+        }
         </ScrollView>
       </View>
     </View>

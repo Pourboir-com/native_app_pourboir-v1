@@ -6,9 +6,11 @@ import { AntDesign } from '@expo/vector-icons';
 import RatingStar from '../../components/RatingComponent';
 import Swipeout from 'react-native-swipeout';
 import { Feather } from '@expo/vector-icons';
+import i18n from '../../li8n';
 
 const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
   const [close, setClose] = useState(false);
+  const [disabled,setDisabled] = useState(false)
   const obj = [1, 2, 3, 4, 5];
   var swipeoutBtns = [
     {
@@ -45,6 +47,8 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
       }}
       right={swipeoutBtns}
       close={close}
+      autoClose={false}
+      // onClose={() => setDisabled(true)}
     >
       <TouchableOpacity activeOpacity={0.8} style={styles.main_card_container}>
         <View style={styles.section1}>
@@ -86,13 +90,13 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
                 );
               })} */}
               <Text style={{ fontFamily: 'ProximaNovaBold', fontSize: 16 }}>
-                {data?.position || 'none'}
+                {data?.position || i18n.t('waiter')}
               </Text>
             </View>
           </View>
         </View>
         <View style={styles.section2}>
-          <TouchableOpacity onPress={() => toggleModal(data?._id)}>
+          <TouchableOpacity onPress={() => toggleModal(data?._id)}  >
             <AntDesign name="right" size={20} color="#485460" />
           </TouchableOpacity>
         </View>

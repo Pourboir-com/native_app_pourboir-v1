@@ -531,6 +531,9 @@ const SocialLogin = ({ navigation, route }) => {
                 </View>
               </Text>
             </View>
+            <TouchableOpacity onPress={() => navigation.navigate("ManagerStaff")}>
+              <Text>Navigation</Text>
+            </TouchableOpacity>
           </View>
           {/* <TouchableOpacity
             activeOpacity={0.5}

@@ -102,6 +102,7 @@ export default function HomeScreenContent({
                 width: 160,
                 height: 160,
                 borderRadius: 100,
+                marginVertical: 20,
               }}
             >
               <Image
@@ -115,14 +116,15 @@ export default function HomeScreenContent({
                 resizeMode="contain"
               />
             </View>
-            <Text
-              style={[styles.txt1NoRest, { fontFamily: 'ProximaNovaBold' }]}
-            >
-              {i18n.t('you_have_no_restaurant')}
-            </Text>
-            <Text style={[styles.extra_line, { fontFamily: 'ProximaNova' }]}>
-              {i18n.t('search_for_rest_and_add')}
-            </Text>
+            <View>
+              <Text style={styles.textBold}>{i18n.t('no_restaurant')}</Text>
+              <Text style={styles.textLight}>
+                {i18n.t('search_rest')}:{' '}
+                <Text style={{ fontFamily: 'ProximaNovaBold' }}>
+                  {i18n.t('you_waiter')}
+                </Text>
+              </Text>
+            </View>
           </View>
         ) : (
           <View
@@ -328,5 +330,19 @@ const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     color: '#1E272E',
+  },
+  textBold: {
+    fontFamily: 'ProximaNovaBold',
+    fontSize: 15,
+    textAlign: 'center',
+    lineHeight: 20,
+    marginHorizontal: 37,
+  },
+  textLight: {
+    fontFamily: 'ProximaNova',
+    fontSize: 15,
+    textAlign: 'center',
+    lineHeight: 20,
+    paddingTop: 10,
   },
 });

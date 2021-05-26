@@ -93,14 +93,14 @@ const SocialLogin = ({ navigation, route }) => {
     );
     notificationListener.current = Notifications.addNotificationReceivedListener(
       notification => {
-        navigation.navigate('Remove', {
+        navigation.navigate('WaiterProfile', {
           crossIcon: true,
         });
       },
     );
     responseListener.current = Notifications.addNotificationResponseReceivedListener(
       response => {
-        navigation.navigate('Remove', {
+        navigation.navigate('WaiterProfile', {
           crossIcon: true,
         });
       },
@@ -531,9 +531,6 @@ const SocialLogin = ({ navigation, route }) => {
                 </View>
               </Text>
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate("ManagerStaff")}>
-              <Text>Navigation</Text>
-            </TouchableOpacity>
           </View>
           {/* <TouchableOpacity
             activeOpacity={0.5}

@@ -226,7 +226,7 @@ const Setting = ({ navigation }) => {
           {/* <TouchableOpacity
             activeOpacity={0.5}
             onPress={() =>
-              navigation.navigate('Remove', {
+              navigation.navigate('WaiterProfile', {
                 crossIcon: true,
               })
             }
@@ -284,7 +284,9 @@ const Setting = ({ navigation }) => {
         <TouchableOpacity
           activeOpacity={0.5}
           // disabled={loading}
-          onPress={() => navigation.navigate('WaiterProfile')}
+          onPress={() =>
+            navigation.navigate('WaiterProfile', { crossIcon: true })
+          }
           style={{ ...styles.btnValider, marginBottom: 6 }}
         >
           <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>

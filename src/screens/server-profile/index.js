@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Dimensions,
   ImageBackground,
@@ -15,13 +15,15 @@ import styles from './styles';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
 import { useQuery } from 'react-query';
-import { RECRUITMENT_FORM } from '../../queries';
+import { RECRUITMENT_FORM, GET_YOUR_RES } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import Context from '../../contextApi/context';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import StaffModal from '../../components/manager/staff-modal';
+import { getAsyncStorageValues } from '../../constants';
+import HomeScreenContent from '../../components/HomeContent';
 
-const ServerProfile = ({ navigation }) => {
+const ServerProfile = ({ navigation, route }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [formId, setFormId] = useState('');
   const { state } = useContext(Context);
@@ -38,6 +40,38 @@ const ServerProfile = ({ navigation }) => {
       onError: e => {
         alert(e?.response?.data?.message);
       },
+    },
+  );
+
+  const [saveLocation, setSaveLocation] = useState('');
+  const [userInfo, setuserInfo] = useState();
+
+  useEffect(() => {
+    (async () => {
+      const { location } = await getAsyncStorageValues();
+      const { userInfo = {} } = await getAsyncStorageValues();
+      setuserInfo(userInfo);
+      setSaveLocation(location);
+    })();
+  }, []);
+
+  const {
+    data: yourRestaurantData,
+    isLoading: yourRestaurantLoading,
+    refetch: yourRefetchRestaurant,
+    isFetching: yourResIsFetching,
+  } = useQuery(
+    [
+      'GET_YOUR_RES',
+      {
+        location: saveLocation,
+        user_id: userInfo?.user_id,
+      },
+    ],
+    GET_YOUR_RES,
+    {
+      ...reactQueryConfig,
+      enabled: saveLocation && userInfo?.user_id,
     },
   );
 
@@ -66,44 +100,26 @@ const ServerProfile = ({ navigation }) => {
           />
         </ImageBackground>
         <ScrollView
+          showsVerticalScrollIndicator={false}
+          bounces={false}
           contentContainerStyle={{
             flexGrow: 1,
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
-          <View style={{ alignItems: 'center', marginTop: '25%' }}>
-            <View
-              style={{
-                backgroundColor: '#fff',
-                width: 160,
-                height: 160,
-                borderRadius: 100,
-                marginBottom: 30,
-              }}
-            >
-              <Image
-                source={require('../../assets/images/emptyRestaurantList.png')}
-                style={{
-                  width: 260,
-                  height: 350,
-                  marginTop: -115,
-                  marginLeft: -40,
-                }}
-                resizeMode="contain"
+          <View style={{ alignItems: 'center', marginTop: '5%'}}>
+            <View style={{ width: '100%' }}>
+              <HomeScreenContent
+                route={route}
+                restaurantLoading={yourRestaurantLoading}
+                resIsFetching={yourResIsFetching}
+                refetchRestaurant={yourRefetchRestaurant}
+                isFetch={true}
+                Data={yourRestaurantData?.restaurants?.results || []}
+                saveLocation={saveLocation}
               />
-            </View>
-            <View style={{ marginHorizontal: '5.6%' }}>
-              <View>
-                <Text style={styles.textBold}>{i18n.t('no_restaurant')}</Text>
-                <Text style={styles.textLight}>
-                  {i18n.t('search_rest')}:{' '}
-                  <Text style={{ fontFamily: 'ProximaNovaBold' }}>
-                    {i18n.t('you_waiter')}
-                  </Text>
-                </Text>
-              </View>
-              <View style={{ marginTop: 20 }}>
+              <View style={{ marginTop: 20, marginHorizontal: '5%' }}>
                 <CommonButton title={i18n.t('ind_rest')} navigation={'Home'} />
               </View>
             </View>
@@ -150,7 +166,7 @@ const ServerProfile = ({ navigation }) => {
                       </View>
                     </View>
                   ) : (
-                    <View style={{ marginHorizontal: '1.5%' }}>
+                    <View style={{marginHorizontal: '1.5%'}}>
                       <View>
                         <Text style={styles.boldTxt2}>
                           {i18n.t('your_cand_prof')}

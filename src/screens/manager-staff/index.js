@@ -29,6 +29,7 @@ const ManagerStaff = ({ navigation }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [filterModal, setFilterModal] = useState(false);
   const [formId, setFormId] = useState('');
+
   //Filter States
   const [avail, setAvail] = useState([]);
   const [low, setLow] = useState(0);
@@ -262,7 +263,6 @@ const ManagerStaff = ({ navigation }) => {
             >
               {i18n.t('no_job_found')}
             </Text>
-            
           )}
         </>
       )}

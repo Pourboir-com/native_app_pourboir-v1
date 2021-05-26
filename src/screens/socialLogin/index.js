@@ -461,7 +461,7 @@ const SocialLogin = ({ navigation, route }) => {
                 paddingTop: 25,
                 paddingBottom: 10,
                 justifyContent: 'center',
-                marginHorizontal: 60,
+                // marginHorizontal: 60,
                 width: '70%',
                 minHeight: 80,
               }}
@@ -490,9 +490,9 @@ const SocialLogin = ({ navigation, route }) => {
               <Text
                 style={[
                   {
-                    width: 320,
                     textAlign: 'center',
                     marginLeft: Platform.OS === 'ios' ? 10 : 0,
+                    maxWidth: 320,
                   },
                 ]}
               >
@@ -513,6 +513,7 @@ const SocialLogin = ({ navigation, route }) => {
                         'https://pourboir.com/fr/need-help/privacy-policy/',
                       )
                     }
+                    // style={{ textAlign: 'center', width: '100%' }}
                   >
                     <Text
                       style={{

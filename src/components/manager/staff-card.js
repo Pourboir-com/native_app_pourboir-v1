@@ -72,7 +72,7 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
                 }}
               />
             </View>
-            <View style={{ paddingLeft: 10 }}>
+            <View style={{ paddingLeft: 10, alignSelf: 'center' }}>
               <Text
                 ellipsizeMode="tail"
                 numberOfLines={1}

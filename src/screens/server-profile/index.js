@@ -108,7 +108,7 @@ const ServerProfile = ({ navigation, route }) => {
             justifyContent: 'center',
           }}
         >
-          <View style={{ alignItems: 'center', marginTop: '5%'}}>
+          <View style={{ alignItems: 'center', marginTop: '5%' }}>
             <View style={{ width: '100%' }}>
               <HomeScreenContent
                 route={route}
@@ -119,7 +119,7 @@ const ServerProfile = ({ navigation, route }) => {
                 Data={yourRestaurantData?.restaurants?.results || []}
                 saveLocation={saveLocation}
               />
-              <View style={{ marginTop: 20, marginHorizontal: '5%' }}>
+              <View style={{ marginTop: 20, marginHorizontal: '3%' }}>
                 <CommonButton title={i18n.t('ind_rest')} navigation={'Home'} />
               </View>
             </View>
@@ -166,7 +166,7 @@ const ServerProfile = ({ navigation, route }) => {
                       </View>
                     </View>
                   ) : (
-                    <View style={{marginHorizontal: '1.5%'}}>
+                    <View style={{ marginHorizontal: '1.5%' }}>
                       <View>
                         <Text style={styles.boldTxt2}>
                           {i18n.t('your_cand_prof')}

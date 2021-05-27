@@ -219,6 +219,7 @@ const ManagerStaff = ({ navigation }) => {
           </View>
         </View>
       </View>
+      
 
       {waitersFormLoading ? (
         <View style={{ paddingHorizontal: 25, marginTop: 25 }}>

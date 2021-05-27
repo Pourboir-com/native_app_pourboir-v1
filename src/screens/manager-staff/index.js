@@ -31,11 +31,11 @@ const ManagerStaff = ({ navigation }) => {
   const [formId, setFormId] = useState('');
 
   //Filter States
-  const [avail, setAvail] = useState([]);
+  const [avail, setAvail] = useState('');
   const [low, setLow] = useState(0);
   const [high, setHigh] = useState(15);
   const [rating, setRating] = useState('');
-  const [position, setPosition] = useState();
+  const [position, setPosition] = useState('');
   const [queries, setQueries] = useState(filterSearch());
   const [showCross, setShowCross] = useState(false);
   const [managerId, setManagerId] = useState();

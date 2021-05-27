@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Image, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import styles from './styles';
 import Modal from 'react-native-modal';
@@ -14,6 +14,11 @@ const FilterModal = ({
   FilterStates,
   filterOnPress,
 }) => {
+  const [availability, setAvailability] = useState(avail || '');
+  const [expLow, setExpLow] = useState(low || 0);
+  const [expHigh, setExpHigh] = useState(high || 15);
+  const [searchRating, setSearchRating] = useState(rating || 0);
+  const [searchPosition, setSeacrhPosition] = useState(position || '');
   const {
     avail,
     setAvail,
@@ -32,8 +37,8 @@ const FilterModal = ({
   const renderRail = useCallback(() => <Rail />, []);
   const renderRailSelected = useCallback(() => <RailSelected />, []);
   const handleValueChange = useCallback((low, high) => {
-    setLow(low);
-    setHigh(high);
+    setExpLow(low);
+    setExpHigh(high);
   }, []);
 
   const Rail = () => {
@@ -45,6 +50,14 @@ const FilterModal = ({
 
   const Thumb = () => {
     return <View style={styles.root_t} />;
+  };
+
+  const updateSearch = () => {
+    setAvail(availability);
+    setLow(expLow);
+    setHigh(expHigh);
+    setRating(searchRating);
+    setPosition(searchPosition);
   };
 
   return (
@@ -71,8 +84,8 @@ const FilterModal = ({
                 placeholder={i18n.t('position_list')}
                 placeholderTextColor="#707070"
                 style={styles.postsInput}
-                onChangeText={e => setPosition(e)}
-                value={position}
+                onChangeText={e => setSeacrhPosition(e)}
+                value={searchPosition}
               />
             </View>
             <View style={{ marginVertical: 22 }}>
@@ -81,7 +94,7 @@ const FilterModal = ({
                 <View style={{ flexDirection: 'row' }}>
                   <View style={{ marginBottom: 8, flexDirection: 'row' }}>
                     <TouchableOpacity
-                      onPress={() => setAvail('full')}
+                      onPress={() => setAvailability('full')}
                       activeOpacity={0.5}
                     >
                       <View
@@ -99,7 +112,7 @@ const FilterModal = ({
                           // props.style,
                         ]}
                       >
-                        {avail === 'full' ? (
+                        {availability === 'full' ? (
                           <View
                             style={{
                               height: 10,
@@ -116,7 +129,7 @@ const FilterModal = ({
                         paddingLeft: 10,
                         alignSelf: 'center',
                         fontFamily: 'ProximaNova',
-                        fontWeight: avail === 'full' ? 'bold' : 'normal',
+                        fontWeight: availability === 'full' ? 'bold' : 'normal',
                       }}
                     >
                       Full Time
@@ -125,7 +138,7 @@ const FilterModal = ({
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                   <TouchableOpacity
-                    onPress={() => setAvail('half')}
+                    onPress={() => setAvailability('half')}
                     activeOpacity={0.5}
                   >
                     <View
@@ -142,7 +155,7 @@ const FilterModal = ({
                         // props.style,
                       ]}
                     >
-                      {avail === 'half' ? (
+                      {availability === 'half' ? (
                         <View
                           style={{
                             height: 10,
@@ -159,7 +172,7 @@ const FilterModal = ({
                       paddingLeft: 10,
                       alignSelf: 'center',
                       fontFamily: 'ProximaNova',
-                      fontWeight: avail === 'half' ? 'bold' : 'normal',
+                      fontWeight: availability === 'half' ? 'bold' : 'normal',
                     }}
                   >
                     Part Time
@@ -191,10 +204,12 @@ const FilterModal = ({
                 }}
               >
                 <Text style={styles.fontYears}>
-                  {low} <Text style={styles.ansFont}>{i18n.t('years')} </Text>
+                  {expLow}{' '}
+                  <Text style={styles.ansFont}>{i18n.t('years')} </Text>
                 </Text>
                 <Text style={styles.fontYears}>
-                  {high} <Text style={styles.ansFont}>{i18n.t('years')} </Text>
+                  {expHigh}{' '}
+                  <Text style={styles.ansFont}>{i18n.t('years')} </Text>
                 </Text>
               </View>
             </View>
@@ -213,15 +228,15 @@ const FilterModal = ({
                       <TouchableOpacity
                         onPress={() =>
                           v === 1
-                            ? setRating(1)
+                            ? setSearchRating(1)
                             : v === 2
-                            ? setRating(2)
+                            ? setSearchRating(2)
                             : v === 3
-                            ? setRating(3)
+                            ? setSearchRating(3)
                             : v === 4
-                            ? setRating(4)
+                            ? setSearchRating(4)
                             : v === 5
-                            ? setRating(5)
+                            ? setSearchRating(5)
                             : null
                         }
                         style={{ marginRight: 3 }}
@@ -230,9 +245,9 @@ const FilterModal = ({
                         <RatingStar
                           starSize={19}
                           type={
-                            v <= rating
+                            v <= searchRating
                               ? 'filled'
-                              : v === rating + 0.5
+                              : v === searchRating + 0.5
                               ? 'half'
                               : 'empty'
                           }
@@ -311,7 +326,8 @@ const FilterModal = ({
               <TouchableOpacity
                 onPress={() => {
                   toggleFilter();
-                  filterOnPress();
+                  // filterOnPress();
+                  updateSearch();
                 }}
                 activeOpacity={0.6}
                 style={styles.btnYellow}

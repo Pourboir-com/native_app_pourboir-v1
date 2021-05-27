@@ -99,12 +99,9 @@ const ServerProfile = ({ navigation, route }) => {
             borderRadius={true}
           />
         </ImageBackground>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          bounces={false}
-        >
+        <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
           <View style={{ alignItems: 'center', marginTop: '5%' }}>
-            <View style={{ width: '100%' }}>
+            <View style={{ width: '100%', flex: 1 }}>
               <HomeScreenContent
                 route={route}
                 restaurantLoading={yourRestaurantLoading}

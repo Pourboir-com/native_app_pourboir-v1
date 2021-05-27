@@ -139,7 +139,8 @@ export default function HomeScreenContent({
         <View
           style={{
             backgroundColor: '#F9F9F9',
-            marginTop: Platform.OS === 'ios' ? -58 : 0,
+            marginTop:
+              Platform.OS === 'ios' && !route?.params?.crossIcon ? -58 : 0,
             flex: 1,
           }}
         >
@@ -185,7 +186,7 @@ export default function HomeScreenContent({
             resIsFetching && (
               <RefreshControl
                 //refresh control used for the Pull to Refresh
-                refreshing={!deleteLoading && resIsFetching}
+                refreshing={!route.params.crossIcon && resIsFetching}
                 // color="#F9F9F9"
                 // tintColor="#F9F9F9"
                 // onRefresh={refetchRestaurant}

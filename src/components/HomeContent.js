@@ -30,15 +30,11 @@ export default function HomeScreenContent({
   restaurantLoading,
   refetchRestaurant,
   resIsFetching,
-  searchVal,
   searchEnter,
   Data,
-  // isFetch,
-  // handleLoadMore,
   saveLocation,
   route,
 }) {
-  // const data = [...Data];
   const [data, setData] = useState([]);
   const navigation = useNavigation();
   const [deleteLoading, setdeleteLoading] = useState(false);
@@ -67,20 +63,8 @@ export default function HomeScreenContent({
       };
       await deleteRestaurant(userInfo, {
         onSuccess: async () => {
-          // let Restaurants = [...data];
-          // Restaurants = Restaurants.filter(
-          //   item => item?.waiter?._id !== waiter_id,
-          // );
           await refetchRestaurant();
           updateRestaurants(state, place_id);
-          // dispatch({
-          //   type: actionTypes.YOUR_RESTAURANTS,
-          //   payload: Restaurants,
-          // });
-          // dispatch({
-          //   type: actionTypes.REFRESH_ANIMATION,
-          //   payload: !state.refreshAnimation,
-          // });
           setdeleteLoading(false);
         },
         onError: () => {

@@ -14,7 +14,6 @@ import i18n from '../../li8n';
 import { useQuery } from 'react-query';
 import { RECRUITMENT_FORM } from '../../queries';
 import { reactQueryConfig } from '../../constants';
-// import { last_exp } from '../../util';
 import Dash from 'react-native-dash';
 import { TotalExp } from './util';
 
@@ -52,6 +51,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
           showsVerticalScrollIndicator={false}
           bounces={false}
           contentContainerStyle={[styles.modal_container]}
+          keyboardShouldPersistTaps={'handled'}
         >
           <View style={{ alignItems: 'center', width: '100%' }}>
             <View style={styles.first_part_modal}>
@@ -98,9 +98,8 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                     }}
                   >
                     <Text style={styles.exp_year}>
-                      {(!waiterFormLoading &&
-                        TotalExp(waiterFormData?.data[0]?.experience || [])) ||
-                        '0'}
+                      {!waiterFormLoading &&
+                        TotalExp(waiterFormData?.data[0]?.experience || []) || '0'}
                     </Text>
                     <Text style={styles.ansTxt}>
                       {' '}

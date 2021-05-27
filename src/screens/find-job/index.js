@@ -22,6 +22,7 @@ import { AntDesign } from '@expo/vector-icons';
 import AddExperienceModal from '../../components/modals/AddExperienceModal';
 import AddNicheModal from '../../components/modals/AddNicheModal';
 import { removeId, nicheModalDataUpdated } from './util';
+import moment from 'moment';
 const Find_Job = ({ navigation, route }) => {
   const { form, refetch } = route.params;
   const { state } = useContext(Context);
@@ -233,11 +234,11 @@ const Find_Job = ({ navigation, route }) => {
                             </Text>
                             <Text style={styles.expTxt2}>{v?.position}</Text>
                             <Text style={styles.expTxt3}>
-                              {`${i18n.t('of')} ${v?.start_date} ${i18n.t(
-                                'at',
-                              )} ${
+                              {`${i18n.t('of')} ${moment(v?.start_date).format(
+                                'MM/DD/YYYY',
+                              )} ${i18n.t('at')} ${
                                 v?.end_date
-                                  ? v?.end_date
+                                  ? moment(v?.end_date).format('MM/DD/YYYY')
                                   : i18n.t('still_working')
                               }`}
                             </Text>

@@ -16,6 +16,7 @@ import { RECRUITMENT_FORM } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import Dash from 'react-native-dash';
 import { TotalExp } from './util';
+import { formatDate } from '../../util/format-date';
 
 const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
   const { data: waiterFormData, isLoading: waiterFormLoading } = useQuery(
@@ -98,8 +99,9 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                     }}
                   >
                     <Text style={styles.exp_year}>
-                      {!waiterFormLoading &&
-                        TotalExp(waiterFormData?.data[0]?.experience || [])}
+                      {waiterFormLoading
+                        ? 'loading..'
+                        : TotalExp(waiterFormData?.data[0]?.experience || [])}
                     </Text>
                     <Text style={styles.ansTxt}>
                       {' '}
@@ -134,10 +136,13 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                         {waiterFormData?.data[0]?.experience.map(item => (
                           <View style={{ paddingTop: 10 }}>
                             <Text>{item?.enterprise_name || 'none'}</Text>
-                            <Text>{`${i18n.t('of')} ${
-                              item?.start_date
-                            } ${i18n.t('at')} ${item?.end_date ||
-                              i18n.t('still_working')}`}</Text>
+                            <Text>{`${i18n.t('of')} ${formatDate(
+                              item?.start_date,
+                            )} ${i18n.t('at')} ${
+                              item?.end_date
+                                ? formatDate(item?.end_date)
+                                : i18n.t('still_working')
+                            }`}</Text>
                           </View>
                         ))}
                       </View>

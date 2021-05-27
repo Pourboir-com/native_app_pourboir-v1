@@ -105,7 +105,6 @@ const Find_Job = ({ navigation, route }) => {
           diploma: education || '',
           position: position || '',
         };
-
       await applyWaiter(jobForm, {
         onSuccess: async () => {
           await refetch();

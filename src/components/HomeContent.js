@@ -8,6 +8,7 @@ import {
   RefreshControl,
   FlatList,
   Image,
+  Platform,
 } from 'react-native';
 import { Colors } from '../constants/Theme';
 import HomeCard from './HomeCard';
@@ -24,7 +25,6 @@ import { useMutation } from 'react-query';
 import Context from '../contextApi/context';
 import * as actionTypes from '../contextApi/actionTypes';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { Platform } from 'react-native';
 
 export default function HomeScreenContent({
   restaurantLoading,

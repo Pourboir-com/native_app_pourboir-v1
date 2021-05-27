@@ -14,18 +14,20 @@ const FilterModal = ({
   FilterStates,
   filterOnPress,
 }) => {
-  const {
-    avail,
-    low,
-    high,
-    rating,
-    position,
-  } = FilterStates;
+  const { avail, low, high, rating, position } = FilterStates;
   const [availability, setAvailability] = useState(avail || '');
   const [expLow, setExpLow] = useState(low || 0);
   const [expHigh, setExpHigh] = useState(high || 15);
   const [searchRating, setSearchRating] = useState(rating || 0);
   const [searchPosition, setSeacrhPosition] = useState(position || '');
+
+  const resetFilter = () => {
+    setAvailability('');
+    setExpLow(0);
+    setExpHigh(15);
+    setSearchRating(0);
+    setSeacrhPosition('');
+  };
 
   const obj = [1, 2, 3, 4, 5];
   const renderThumb = useCallback(() => <Thumb />, []);
@@ -60,7 +62,7 @@ const FilterModal = ({
           height: 'auto',
         }}
       >
-        <ScrollView>
+        <ScrollView bounces={false} keyboardShouldPersistTaps={'handled'}>
           <View style={{ alignItems: 'center', marginTop: 20 }}>
             <Text style={styles.filterTxt}>{i18n.t('filter')}s</Text>
           </View>
@@ -111,16 +113,22 @@ const FilterModal = ({
                         ) : null}
                       </View>
                     </TouchableOpacity>
-                    <Text
-                      style={{
-                        paddingLeft: 10,
-                        alignSelf: 'center',
-                        fontFamily: 'ProximaNova',
-                        fontWeight: availability === 'full' ? 'bold' : 'normal',
-                      }}
+                    <TouchableOpacity
+                      style={{ alignSelf: 'center' }}
+                      onPress={() => setAvailability('full')}
                     >
-                      Full Time
-                    </Text>
+                      <Text
+                        style={{
+                          paddingLeft: 10,
+                          alignSelf: 'center',
+                          fontFamily: 'ProximaNova',
+                          fontWeight:
+                            availability === 'full' ? 'bold' : 'normal',
+                        }}
+                      >
+                        Full Time
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
@@ -154,16 +162,20 @@ const FilterModal = ({
                       ) : null}
                     </View>
                   </TouchableOpacity>
-                  <Text
-                    style={{
-                      paddingLeft: 10,
-                      alignSelf: 'center',
-                      fontFamily: 'ProximaNova',
-                      fontWeight: availability === 'half' ? 'bold' : 'normal',
-                    }}
+                  <TouchableOpacity
+                    style={{ alignSelf: 'center' }}
+                    onPress={() => setAvailability('half')}
                   >
-                    Part Time
-                  </Text>
+                    <Text
+                      style={{
+                        paddingLeft: 10,
+                        fontFamily: 'ProximaNova',
+                        fontWeight: availability === 'half' ? 'bold' : 'normal',
+                      }}
+                    >
+                      Part Time
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
@@ -171,10 +183,11 @@ const FilterModal = ({
               <Text style={styles.postsLabel}>Experience</Text>
               <View style={{ marginHorizontal: 4, marginTop: 12 }}>
                 <RangeSlider
-                  // style={styles.slider}
                   min={0}
                   max={15}
                   step={1}
+                  low={expLow}
+                  high={expHigh}
                   floatingLabel
                   renderThumb={renderThumb}
                   renderRail={renderRail}
@@ -202,11 +215,16 @@ const FilterModal = ({
             </View>
             <View style={{ marginTop: 20 }}>
               <Text style={styles.postsLabel}>{i18n.t('eval')}</Text>
-              <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginTop: 12,
+                }}
+              >
                 <View
                   style={{
                     flexDirection: 'row',
-                    marginTop: 12,
                     paddingLeft: 2,
                   }}
                 >
@@ -244,6 +262,22 @@ const FilterModal = ({
                     );
                   })}
                 </View>
+                <TouchableOpacity
+                  style={{ alignSelf: 'center' }}
+                  onPress={resetFilter}
+                >
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      fontFamily: 'ProximaNovaBold',
+                      color: '#FCDF6F',
+                      borderBottomWidth: 1,
+                      borderBottomColor: '#FCDF6F',
+                    }}
+                  >
+                    Clear all
+                  </Text>
+                </TouchableOpacity>
               </View>
               {/* <View style={{ flexDirection: 'row', marginTop: 20 }}>
                 <TouchableOpacity

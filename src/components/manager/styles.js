@@ -1,4 +1,6 @@
 import { StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
+
 const THUMB_RADIUS = 9;
 
 const styles = StyleSheet.create({
@@ -33,10 +35,8 @@ const styles = StyleSheet.create({
     height: 'auto',
     alignItems: 'center',
     position: 'relative',
-    borderRadius: 14,
     width: '90%',
     alignSelf: 'center',
-    borderRadius: 25,
   },
   btn_green: {
     backgroundColor: '#FCDF6F',
@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: 'ProximaNovaBold',
     textAlign: 'center',
-    marginBottom: 20,
   },
   cancelBtn: {
     backgroundColor: '#fff',

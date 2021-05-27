@@ -15,7 +15,6 @@ import { useQuery } from 'react-query';
 import { RECRUITMENT_FORM } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import Dash from 'react-native-dash';
-import { TotalExp } from './util';
 import { formatDate } from '../../util/format-date';
 
 const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
@@ -99,16 +98,15 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                     }}
                   >
                     <Text style={styles.exp_year}>
-                      {!waiterFormLoading &&
-                        TotalExp(waiterFormData?.data[0]?.experience || [])}
+                      {(!waiterFormLoading &&
+                        waiterFormData?.data[0]?.experience_count) ||
+                        '0'}
                     </Text>
                     <Text style={styles.ansTxt}>
                       {' '}
                       {waiterFormLoading
                         ? 'loading..'
-                        : Number(
-                            TotalExp(waiterFormData?.data[0]?.experience || []),
-                          ) > 1
+                        : Number(waiterFormData?.data[0]?.experience_count) > 1
                         ? `${i18n.t('years')}s`
                         : i18n.t('years')}
                     </Text>
@@ -121,7 +119,14 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
               <View style={{ marginVertical: 20, alignItems: 'center' }}>
                 <View style={{ alignItems: 'center' }}>
                   <View style={{ alignItems: 'center' }}>
-                    <Text style={styles.expsTxt}>{i18n.t('estb')}</Text>
+                    <Text
+                      style={[
+                        styles.expsTxt,
+                        { marginBottom: Platform.OS === 'ios' ? 20 : 0 },
+                      ]}
+                    >
+                      {i18n.t('estb')}
+                    </Text>
                   </View>
                   <Text style={styles.petitTxt}>
                     {/* {waiterFormLoading

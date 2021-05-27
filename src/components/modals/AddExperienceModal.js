@@ -21,7 +21,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { SEARCH_RESTAURANTS } from '../../queries';
 import { useMutation } from 'react-query';
 import stylesTextbox from '../../screens/find-job/styles';
-
+import moment from 'moment';
 const AddExperienceModal = ({
   setExpModalVisible,
   expModalVisible,
@@ -35,8 +35,8 @@ const AddExperienceModal = ({
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
   const [post, setPost] = useState('');
-  const [startDate, setStartDate] = useState(new Date(1495051730000));
-  const [endDate, setEndDate] = useState(new Date(1598051730000));
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [termsChecked, setTermsChecked] = useState(false);
   const [workHere, setWorkHere] = useState('');
   //search textbox
@@ -73,8 +73,8 @@ const AddExperienceModal = ({
         restaurant_id: restaurant?.restaurant_id || '',
         position: post || '',
         still_working: termsChecked,
-        start_date: startDate.toLocaleDateString(),
-        end_date: termsChecked === false ? endDate.toLocaleDateString() : '',
+        start_date: startDate,
+        end_date: termsChecked === false ? endDate : '',
       },
     ]);
     setPost('');
@@ -97,7 +97,6 @@ const AddExperienceModal = ({
 
   const onChangeStartDate = selectedDate => {
     const currentDate = selectedDate || startDate;
-    setShowS(Platform.OS === 'ios');
     setShowS(false);
     setStartDate(currentDate);
     setStart(currentDate);
@@ -109,7 +108,6 @@ const AddExperienceModal = ({
 
   const onChangeLastDate = selectedDate => {
     const currentDate = selectedDate || endDate;
-    setShowL(Platform.OS === 'ios');
     setShowL(false);
     setEndDate(currentDate);
     setEnd(currentDate);
@@ -284,6 +282,7 @@ const AddExperienceModal = ({
               mode="date"
               onConfirm={onChangeStartDate}
               onCancel={() => setShowS(false)}
+              dateFormat="dayofweek"
             />
           </TouchableOpacity>
 
@@ -304,9 +303,11 @@ const AddExperienceModal = ({
             <DateTimePickerModal
               date={endDate}
               isVisible={showL}
+              minimumDate={startDate}
               mode="date"
               onConfirm={onChangeLastDate}
               onCancel={() => setShowL(false)}
+              dateFormat="dayofweek"
             />
           </TouchableOpacity>
         </View>

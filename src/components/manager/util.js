@@ -1,7 +1,7 @@
 import moment from 'moment';
 export const TotalExp = experience => {
   let totalExp = 0;
-  let calcExp = experience.map(item => {
+  experience.forEach(item => {
     let start_date = moment(item?.start_date).year();
     let end_date;
     if (item?.end_date) {

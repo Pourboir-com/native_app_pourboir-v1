@@ -5,8 +5,7 @@ export const TotalExp = experience => {
     let start_date = moment(item?.start_date).year();
     let end_date;
     if (item?.end_date) {
-      end_date = moment('04/20/2021').year();
-      console.log(moment('04/20/2021'));
+      end_date = moment(item?.end_date).year();
     } else {
       end_date = new Date().getFullYear();
     }

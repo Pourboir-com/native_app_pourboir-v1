@@ -144,6 +144,7 @@ export default {
   broadcast:
     'Nous allons diffuser votre profil aux restaurants correspondants à votre profil',
   thank_info: 'Merci pour vos informations',
+  part_time: 'à temps partiel',
 
   // manager side translations
   already_acc: 'J’ai déjà un compte',

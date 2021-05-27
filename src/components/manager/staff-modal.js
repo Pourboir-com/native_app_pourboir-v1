@@ -45,7 +45,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
       <Modal
         onBackdropPress={() => setModalVisible(false)}
         isVisible={isModalVisible}
-        backdropColor={!profile ? "#F9F9F9" : '#000'}
+        backdropColor={!profile ? '#F9F9F9' : '#000'}
         style={{ borderRadius: 25 }}
       >
         <ScrollView
@@ -64,7 +64,9 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                 </View>
                 <View style={{ marginTop: 14 }}>
                   <Text style={styles.text_dispon}>
-                    {waiterFormData?.data[0]?.position || 'none'}
+                    {waiterFormLoading
+                      ? 'loading..'
+                      : waiterFormData?.data[0]?.position || 'none'}
                   </Text>
                   <TouchableOpacity
                     onPress={() => alert('hello')}
@@ -73,7 +75,9 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                     <Text style={styles.btnGreen_txt}>
                       {waiterFormLoading
                         ? 'loading..'
-                        : waiterFormData?.data[0]?.time}
+                        : waiterFormData?.data[0]?.time === 'half'
+                        ? i18n.t('part_time')
+                        : i18n.t('full')}
                     </Text>
                   </TouchableOpacity>
                 </View>

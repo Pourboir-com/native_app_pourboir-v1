@@ -66,12 +66,12 @@ export default function HomeScreenContent({
         user_id: state.userDetails.user_id,
       };
       await deleteRestaurant(userInfo, {
-        onSuccess: () => {
+        onSuccess: async () => {
           // let Restaurants = [...data];
           // Restaurants = Restaurants.filter(
           //   item => item?.waiter?._id !== waiter_id,
           // );
-          refetchRestaurant();
+          await refetchRestaurant();
           updateRestaurants(state, place_id);
           // dispatch({
           //   type: actionTypes.YOUR_RESTAURANTS,
@@ -201,7 +201,7 @@ export default function HomeScreenContent({
             resIsFetching && (
               <RefreshControl
                 //refresh control used for the Pull to Refresh
-                refreshing={resIsFetching}
+                refreshing={!deleteLoading && resIsFetching}
                 // color="#F9F9F9"
                 // tintColor="#F9F9F9"
                 // onRefresh={refetchRestaurant}

@@ -102,11 +102,6 @@ const ServerProfile = ({ navigation, route }) => {
         <ScrollView
           showsVerticalScrollIndicator={false}
           bounces={false}
-          contentContainerStyle={{
-            flexGrow: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
         >
           <View style={{ alignItems: 'center', marginTop: '5%' }}>
             <View style={{ width: '100%' }}>

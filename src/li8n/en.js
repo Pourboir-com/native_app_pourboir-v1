@@ -131,6 +131,7 @@ export default {
   passedat: 'The Little Nice Passedat',
   full: 'Full',
   partial: 'Partial',
+  part_time: 'part time',
   candidate_btn: 'Create my candidate profile',
   candidate_profile: 'Your Candidate Profile',
   Time: 'Time',

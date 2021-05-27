@@ -149,7 +149,7 @@ const SocialLogin = ({ navigation, route }) => {
             navigation.navigate('OpenCardReviews');
           } else {
             // navigation.navigate('Home', { crossIcon: false });
-            navigation.navigate('WaiterProfile', { crossIcon: true });
+            navigation.replace('WaiterProfile', { crossIcon: true });
           }
           let userDetails = {
             name: res?.user?.full_name,
@@ -234,7 +234,7 @@ const SocialLogin = ({ navigation, route }) => {
                   navigation.navigate('OpenCardReviews');
                 } else {
                   // navigation.navigate('Home', { crossIcon: false });
-                  navigation.navigate('WaiterProfile', { crossIcon: true });
+                  navigation.replace('WaiterProfile', { crossIcon: true });
                 }
                 let userDetails = {
                   name: res?.user?.full_name,
@@ -398,7 +398,7 @@ const SocialLogin = ({ navigation, route }) => {
                           navigation.navigate('OpenCardReviews');
                         } else {
                           // navigation.navigate('Home', { crossIcon: false });
-                          navigation.navigate('WaiterProfile', { crossIcon: true });
+                          navigation.replace('WaiterProfile', { crossIcon: true });
                         }
                         let userDetails = {
                           name: res?.user?.full_name,

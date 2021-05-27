@@ -99,9 +99,8 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                     }}
                   >
                     <Text style={styles.exp_year}>
-                      {waiterFormLoading
-                        ? 'loading..'
-                        : TotalExp(waiterFormData?.data[0]?.experience || [])}
+                      {!waiterFormLoading &&
+                        TotalExp(waiterFormData?.data[0]?.experience || [])}
                     </Text>
                     <Text style={styles.ansTxt}>
                       {' '}

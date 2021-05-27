@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     width: '90%',
     alignSelf: 'center',
+    borderRadius:25
   },
   btn_green: {
     backgroundColor: '#FCDF6F',

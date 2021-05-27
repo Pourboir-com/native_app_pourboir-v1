@@ -41,12 +41,12 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, }}>
       <Modal
         onBackdropPress={() => setModalVisible(false)}
         isVisible={isModalVisible}
-        backdropColor={!profile ? '#F9F9F9' : '#000'}
-        style={{ borderRadius: 25 }}
+        backdropColor={!profile ? '#f9f9f9' : '#000'}
+        style={{ borderRadius: 20 , backgroundColor:'#fff'}}
       >
         <ScrollView
           showsVerticalScrollIndicator={false}

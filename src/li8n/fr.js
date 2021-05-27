@@ -211,5 +211,6 @@ export default {
   morning: 'Matin',
   noon: 'Midi',
   evening: 'Soirée',
-  waiter: 'Serveur'
+  waiter: 'Serveur',
+  contact: 'Contact',
 };

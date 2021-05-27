@@ -46,7 +46,7 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
       style={{
         backgroundColor: 'transparent',
         overflow: 'hidden',
-        marginBottom: 14,
+        marginBottom: 8,
         width: '90%',
         alignSelf: 'center',
       }}

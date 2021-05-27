@@ -179,7 +179,7 @@ export default {
   still_work: 'I still work here',
   diploma: 'Diploma',
   phone: 'Phone number',
-  of: 'from',
+  of: 'From',
   at: 'to',
   prof_exp: 'Professional Experience',
   add_exp: 'Add an experience',
@@ -206,5 +206,6 @@ export default {
   morning: 'Morning',
   noon: 'Noon',
   evening: 'Evening',
-  waiter: 'Waiter'
+  waiter: 'Waiter',
+  contact: 'Contact',
 };

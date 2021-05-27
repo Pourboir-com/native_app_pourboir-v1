@@ -270,6 +270,7 @@ const ServerProfile = ({ navigation, route }) => {
               formId={formId || ''}
               isModalVisible={isModalVisible}
               setModalVisible={setModalVisible}
+              profile={true}
             />
           )}
         </ScrollView>

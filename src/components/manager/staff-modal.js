@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import styles from './styles';
 import Modal from 'react-native-modal';
-import RatingStar from '../../components/RatingComponent';
 import i18n from '../../li8n';
 import { useQuery } from 'react-query';
 import { RECRUITMENT_FORM } from '../../queries';
@@ -19,8 +18,7 @@ import { reactQueryConfig } from '../../constants';
 import Dash from 'react-native-dash';
 import { TotalExp } from './util';
 
-const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
-  const obj = [1, 2, 3, 4, 5];
+const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
   const { data: waiterFormData, isLoading: waiterFormLoading } = useQuery(
     ['RECRUITMENT_FORM', { form_id: formId, rating_needed: true }],
     RECRUITMENT_FORM,
@@ -47,6 +45,8 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
       <Modal
         onBackdropPress={() => setModalVisible(false)}
         isVisible={isModalVisible}
+        backdropColor={!profile ? "#F9F9F9" : '#000'}
+        style={{ borderRadius: 25 }}
       >
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -62,38 +62,18 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
                     style={{ width: 90, height: 90, borderRadius: 50 }}
                   />
                 </View>
-                <View style={{ marginTop: 8 }}>
-                  <View style={{ flexDirection: 'row' }}>
-                    {obj.map((v, i) => {
-                      return (
-                        <TouchableOpacity style={{ marginRight: 3 }} key={i}>
-                          <RatingStar
-                            starSize={17}
-                            type={
-                              v <= waiterFormData?.data[0]?.rating
-                                ? 'filled'
-                                : v === waiterFormData?.data[0]?.rating + 0.5
-                                ? 'half'
-                                : 'empty'
-                            }
-                            notRatedStarColor="#f1f1f1"
-                          />
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                </View>
                 <View style={{ marginTop: 14 }}>
                   <Text style={styles.text_dispon}>
-                    {i18n.t('availability')}
+                    {waiterFormData?.data[0]?.position || 'none'}
                   </Text>
                   <TouchableOpacity
                     onPress={() => alert('hello')}
                     style={styles.btn_green}
                   >
                     <Text style={styles.btnGreen_txt}>
-                      {/* {waiterFormData?.data[0]?.time || 'loading..'} */}
-                      available
+                      {waiterFormLoading
+                        ? 'loading..'
+                        : waiterFormData?.data[0]?.time}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -186,7 +166,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId }) => {
             <View style={{ marginVertical: 20 }}>
               <View style={{ alignItems: 'center' }}>
                 <View>
-                  <Text style={styles.expsTxt}>{i18n.t('recruit')}</Text>
+                  <Text style={styles.expsTxt}>{i18n.t('contact')}</Text>
                 </View>
                 <View style={styles.recruterBtns}>
                   <TouchableOpacity

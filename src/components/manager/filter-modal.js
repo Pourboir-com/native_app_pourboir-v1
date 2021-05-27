@@ -14,23 +14,18 @@ const FilterModal = ({
   FilterStates,
   filterOnPress,
 }) => {
+  const {
+    avail,
+    low,
+    high,
+    rating,
+    position,
+  } = FilterStates;
   const [availability, setAvailability] = useState(avail || '');
   const [expLow, setExpLow] = useState(low || 0);
   const [expHigh, setExpHigh] = useState(high || 15);
   const [searchRating, setSearchRating] = useState(rating || 0);
   const [searchPosition, setSeacrhPosition] = useState(position || '');
-  const {
-    avail,
-    setAvail,
-    low,
-    setLow,
-    high,
-    setHigh,
-    rating,
-    setRating,
-    position,
-    setPosition,
-  } = FilterStates;
 
   const obj = [1, 2, 3, 4, 5];
   const renderThumb = useCallback(() => <Thumb />, []);
@@ -50,14 +45,6 @@ const FilterModal = ({
 
   const Thumb = () => {
     return <View style={styles.root_t} />;
-  };
-
-  const updateSearch = () => {
-    setAvail(availability);
-    setLow(expLow);
-    setHigh(expHigh);
-    setRating(searchRating);
-    setPosition(searchPosition);
   };
 
   return (
@@ -326,8 +313,13 @@ const FilterModal = ({
               <TouchableOpacity
                 onPress={() => {
                   toggleFilter();
-                  // filterOnPress();
-                  updateSearch();
+                  filterOnPress(
+                    availability,
+                    expLow,
+                    expHigh,
+                    searchRating,
+                    searchPosition,
+                  );
                 }}
                 activeOpacity={0.6}
                 style={styles.btnYellow}

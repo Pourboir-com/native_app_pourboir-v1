@@ -90,15 +90,10 @@ const ManagerStaff = ({ navigation }) => {
 
   let FilterStates = {
     avail,
-    setAvail,
     low,
-    setLow,
     high,
-    setHigh,
     rating,
-    setRating,
     position,
-    setPosition,
     refetchFormWaiters,
   };
 
@@ -109,8 +104,28 @@ const ManagerStaff = ({ navigation }) => {
   const toggleFilter = () => {
     setFilterModal(!filterModal);
   };
-  const filterOnPress = () => {
-    setQueries(filterSearch(rating, high, low, avail, position, value));
+  const filterOnPress = (
+    availability,
+    expLow,
+    expHigh,
+    searchRating,
+    searchPosition,
+  ) => {
+    setQueries(
+      filterSearch(
+        searchRating,
+        expHigh,
+        expLow,
+        availability,
+        searchPosition,
+        value,
+      ),
+    );
+    setAvail(availability);
+    setLow(expLow);
+    setHigh(expHigh);
+    setRating(searchRating);
+    setPosition(searchPosition);
   };
 
   return (
@@ -219,7 +234,6 @@ const ManagerStaff = ({ navigation }) => {
           </View>
         </View>
       </View>
-      
 
       {waitersFormLoading ? (
         <View style={{ paddingHorizontal: 25, marginTop: 25 }}>

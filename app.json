@@ -34,7 +34,7 @@
         "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses location for nearby restaurants",
         "NSLocationAlwaysUsageDescription": "This app uses location for nearby restaurants",
         "CFBundleAllowMixedLocalizations": true,
-        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
+        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
       },
       "config": {
         "googleSignIn": {

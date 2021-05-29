@@ -16,6 +16,12 @@ import { useMutation } from 'react-query';
 import { SEND_PUSH_TOKEN } from '../../queries';
 import Constants from 'expo-constants';
 import * as Localization from 'expo-localization';
+import { Linking } from 'react-native';
+
+import {
+  requestTrackingPermissionsAsync,
+  getTrackingPermissionsAsync,
+} from 'expo-tracking-transparency';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -119,7 +125,12 @@ export default function SplashScreen(props) {
   const [springValue] = React.useState(new Animated.Value(0.5));
   const locationFunction = async () => {
     const { userInfo = {} } = await getAsyncStorageValues();
-
+    const { status } = await requestTrackingPermissionsAsync();
+    if (status === 'granted') {
+      console.log('Yay! I have user permission to track data');
+    } else {
+      return Linking.openURL('app-settings:');
+    }
     try {
       let values = await Location.requestForegroundPermissionsAsync();
       if (values === 'granted') {
@@ -238,6 +249,15 @@ export default function SplashScreen(props) {
     }).start();
     // }
   }, []);
+
+  const userTransparency = async () => {
+    const { status } = await requestTrackingPermissionsAsync();
+    if (status === 'granted') {
+      console.log('Yay! I have user permission to track data');
+    } else {
+      return;
+    }
+  };
 
   return (
     <ActivityIndicator style={{ flex: 1 }} size={70} color={Colors.yellow} />

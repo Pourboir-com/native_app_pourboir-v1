@@ -16,7 +16,7 @@ import { useMutation } from 'react-query';
 import { SEND_PUSH_TOKEN } from '../../queries';
 import Constants from 'expo-constants';
 import * as Localization from 'expo-localization';
-import { Linking } from 'react-native';
+import * as Device from 'expo-device';
 
 import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 
@@ -121,6 +121,7 @@ export default function SplashScreen(props) {
 
   const [springValue] = React.useState(new Animated.Value(0.5));
   const locationFunction = async () => {
+    console.log(Device.osVersion);
     const { userInfo = {} } = await getAsyncStorageValues();
     const { status } = await requestTrackingPermissionsAsync();
     if (status === 'granted') {

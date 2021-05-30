@@ -18,9 +18,7 @@ import Constants from 'expo-constants';
 import * as Localization from 'expo-localization';
 import { Linking } from 'react-native';
 
-import {
-  requestTrackingPermissionsAsync,
-} from 'expo-tracking-transparency';
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -128,7 +126,7 @@ export default function SplashScreen(props) {
     if (status === 'granted') {
       console.log('Yay! I have user permission to track data');
     } else {
-      props.navigation.replace('NoTracking');
+      return props.navigation.replace('NoTracking');
     }
     try {
       let values = await Location.requestForegroundPermissionsAsync();

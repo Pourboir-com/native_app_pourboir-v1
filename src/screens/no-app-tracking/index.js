@@ -13,7 +13,7 @@ const NoAppTracking = () => {
   const excessAppTracking = async () => {
     const { status } = await requestTrackingPermissionsAsync();
     if (status === 'granted') {
-      navigation.replace('Home', { crossIcon: false });
+      navigation.navigate('splashScreen');
     } else {
       return Linking.openURL('app-settings:');
     }

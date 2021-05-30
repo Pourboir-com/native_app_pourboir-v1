@@ -68,7 +68,16 @@ const NoLocation = () => {
           zIndex: -10,
         }}
       ></View>
-      <Text style={{ fontSize: 20, color: Colors.fontDark, marginTop: 20 }}>
+      <Text
+        style={{
+          fontSize: 18,
+          color: Colors.fontDark,
+          marginTop: 30,
+          marginHorizontal: 30,
+          textAlign: 'center',
+          fontFamily: 'ProximaNovaSemiBold',
+        }}
+      >
         {i18n.t('activate_your_geolocation')}
       </Text>
       <TouchableOpacity style={styles.btnStyle} onPress={excessLocation}>

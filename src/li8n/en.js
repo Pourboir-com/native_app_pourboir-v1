@@ -209,4 +209,7 @@ export default {
   evening: 'Evening',
   waiter: 'Waiter',
   contact: 'Contact',
+  //no tracking
+  activate_app_tracking: 'To use the app, you must first allow app tracking.',
+  allow_app_tracking: 'Allow app tracking',
 };

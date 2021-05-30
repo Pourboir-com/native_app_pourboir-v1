@@ -214,4 +214,7 @@ export default {
   evening: 'Soirée',
   waiter: 'Serveur',
   contact: 'Contact',
+  //no app tracking
+  activate_app_tracking: `Pour utiliser l'application, vous devez d'abord autoriser le suivi des applications.`,
+  allow_app_tracking: 'Autoriser le suivi des applications',
 };

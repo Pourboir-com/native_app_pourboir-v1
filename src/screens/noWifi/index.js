@@ -30,8 +30,8 @@ const NoWiFi = () => {
           <Text
             style={{
               marginTop: 30,
-              fontFamily: 'ProximaNovaBold',
-              fontSize: 16,
+              fontFamily: 'ProximaNovaSemiBold',
+              fontSize: 18,
               maxWidth: 190,
               textAlign: 'center',
             }}

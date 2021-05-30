@@ -102,7 +102,7 @@ export default function HomeScreenContent({
             </View>
             <View>
               <Text style={styles.textBold}>{i18n.t('no_restaurant')}</Text>
-              <Text style={styles.textLight}>
+              <Text style={[styles.textLight, { marginHorizontal: 25 }]}>
                 {i18n.t('search_rest')}:{' '}
                 <Text style={{ fontFamily: 'ProximaNovaBold' }}>
                   {i18n.t('you_waiter')}
@@ -176,9 +176,9 @@ export default function HomeScreenContent({
         </View>
       ) : (
         <ScrollView
-          // bounces={true}
+          bounces={true}
           scrollEnabled={false}
-          //   alwaysBounceVertical={true}
+          alwaysBounceVertical={true}
           showsVerticalScrollIndicator={false}
           alwaysBounceHorizontal={false}
           refreshControl={
@@ -194,8 +194,6 @@ export default function HomeScreenContent({
               />
             )
           }
-          alwaysBounceVertical={false}
-          bounces={false}
           keyboardShouldPersistTaps={'handled'}
           style={{ backgroundColor: '#F9F9F9' }}
         >
@@ -223,7 +221,7 @@ export default function HomeScreenContent({
               // onEndReachedThreshold={0.5}
               alwaysBounceHorizontal={false}
               keyboardShouldPersistTaps={'handled'}
-              alwaysBounceVertical={false}
+              alwaysBounceVertical={true}
               numColumns={2}
               bounces={false}
               keyExtractor={(item, index) => index}
@@ -308,6 +306,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9F9F9',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 40,
   },
   txtHeading: {
     fontSize: 24,

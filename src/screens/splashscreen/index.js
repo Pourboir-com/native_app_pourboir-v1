@@ -123,11 +123,13 @@ export default function SplashScreen(props) {
   const locationFunction = async () => {
     console.log(Device.osVersion);
     const { userInfo = {} } = await getAsyncStorageValues();
-    const { status } = await requestTrackingPermissionsAsync();
-    if (status === 'granted') {
-      console.log('Yay! I have user permission to track data');
-    } else {
-      return props.navigation.replace('NoTracking');
+    if (Platform.OS === 'ios' && +Device.osVersion >= 14.5) {
+      const { status } = await requestTrackingPermissionsAsync();
+      if (status === 'granted') {
+        console.log('Yay! I have user permission to track data');
+      } else {
+        return props.navigation.replace('NoTracking');
+      }
     }
     try {
       let values = await Location.requestForegroundPermissionsAsync();

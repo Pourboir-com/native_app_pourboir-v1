@@ -125,9 +125,7 @@ const HomeScreen = props => {
           saveLocation={saveLocation}
           searchEnter={searchEnter}
           Data={data}
-          // isFetch={searchVal === '' ? true : false}
           route={props?.route}
-          // handleLoadMore={handleLoadMore}
         />
       </Header>
     </>

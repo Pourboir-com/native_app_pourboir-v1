@@ -9,7 +9,7 @@ export const getAsyncStorageValues = async () => {
   const userInfo = JSON.parse(userInformation);
   const manager = JSON.parse(manager_details);
   return {
-    location: location,
+    location: location || JSON.stringify({ lat: 48.864716, log: 2.349014 }),
     userInfo: userInfo,
     Currency: Currency,
     City: JSON.parse(City) || {},

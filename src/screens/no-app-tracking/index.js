@@ -1,42 +1,38 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Platform,
+  Image,
+} from 'react-native';
 import { Colors } from '../../constants/Theme';
-import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import i18n from '../../li8n';
 import { Linking } from 'react-native';
 import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+import Track from '../../assets/images/track.png';
 
 const NoAppTracking = () => {
   const navigation = useNavigation();
 
   const excessAppTracking = async () => {
-    const { status } = await requestTrackingPermissionsAsync();
-    console.log(status);
-    if (status === 'granted') {
-      navigation.navigate('splashScreen');
+    if (Platform.OS === 'ios') {
+      const { status } = await requestTrackingPermissionsAsync();
+      if (status === 'granted') {
+        navigation.navigate('splashScreen');
+      } else {
+        return Linking.openURL('app-settings:');
+      }
     } else {
-      return Linking.openURL('app-settings:');
+      navigation.navigate('splashScreen');
     }
   };
 
   return (
     <View style={styles.container}>
-      <AntDesign
-        style={{ marginBottom: -135, zIndex: 10, marginLeft: 20 }}
-        name="notification"
-        size={120}
-        color={Colors.yellow}
-      />
-      <View
-        style={{
-          width: 150,
-          height: 150,
-          backgroundColor: '#fff',
-          borderRadius: 100,
-          zIndex: -10,
-        }}
-      ></View>
+      <Image source={Track} />
       <Text
         style={{
           fontSize: 18,

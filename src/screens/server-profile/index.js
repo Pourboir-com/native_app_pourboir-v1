@@ -28,7 +28,7 @@ const ServerProfile = ({ navigation, route }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [formId, setFormId] = useState('');
   const { state, dispatch } = useContext(Context);
-  const [saveLocation, setSaveLocation] = useState('');
+  // const [saveLocation, setSaveLocation] = useState('');
   const [userInfo, setuserInfo] = useState();
   const {
     data: waiterFormData,
@@ -48,10 +48,10 @@ const ServerProfile = ({ navigation, route }) => {
 
   useEffect(() => {
     (async () => {
-      const { location } = await getAsyncStorageValues();
+      // const { location } = await getAsyncStorageValues();
       const { userInfo = {} } = await getAsyncStorageValues();
       setuserInfo(userInfo);
-      setSaveLocation(location);
+      // setSaveLocation(location);
     })();
   }, []);
 
@@ -64,14 +64,14 @@ const ServerProfile = ({ navigation, route }) => {
     [
       'GET_YOUR_RES',
       {
-        location: saveLocation,
+        // location: saveLocation,
         user_id: userInfo?.user_id,
       },
     ],
     GET_YOUR_RES,
     {
       ...reactQueryConfig,
-      enabled: saveLocation && userInfo?.user_id,
+      enabled: userInfo?.user_id ? true : false,
     },
   );
 
@@ -109,7 +109,7 @@ const ServerProfile = ({ navigation, route }) => {
                 refetchRestaurant={yourRefetchRestaurant}
                 isFetch={true}
                 Data={yourRestaurantData?.restaurants?.results || []}
-                saveLocation={saveLocation}
+                // saveLocation={saveLocation}
               />
             </View>
             <View

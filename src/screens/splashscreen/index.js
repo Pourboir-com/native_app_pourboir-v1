@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useRef } from 'react';
 import { Animated, ActivityIndicator, Platform } from 'react-native';
-import { CommonActions } from '@react-navigation/native';
+// import { CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
@@ -16,7 +16,7 @@ import { useMutation } from 'react-query';
 import { SEND_PUSH_TOKEN } from '../../queries';
 import Constants from 'expo-constants';
 import * as Localization from 'expo-localization';
-import * as Device from 'expo-device';
+// import * as Device from 'expo-device';
 
 import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 
@@ -131,12 +131,13 @@ export default function SplashScreen(props) {
     try {
       let values = await Location.requestForegroundPermissionsAsync();
       if (values === 'granted') {
-        props.navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: 'NoLocation' }],
-          }),
-        );
+        // props.navigation.dispatch(
+        //   CommonActions.reset({
+        //     index: 0,
+        //     routes: [{ name: 'NoLocation' }],
+        //   }),
+        // );
+        props.navigation.replace('Home', { crossIcon: false });
       }
 
       const isLocation = await Location.hasServicesEnabledAsync();
@@ -229,12 +230,13 @@ export default function SplashScreen(props) {
         });
       }
     } catch (error) {
-      props.navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: 'NoLocation' }],
-        }),
-      );
+      // props.navigation.dispatch(
+      //   CommonActions.reset({
+      //     index: 0,
+      //     routes: [{ name: 'NoLocation' }],
+      //   }),
+      // );
+      props.navigation.replace('Home', { crossIcon: false });
     }
   };
   React.useEffect(() => {

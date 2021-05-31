@@ -215,6 +215,6 @@ export default {
   waiter: 'Serveur',
   contact: 'Contact',
   //no app tracking
-  activate_app_tracking: `Pour utiliser l'application, vous devez d'abord autoriser le suivi des applications.`,
-  allow_app_tracking: 'Autoriser le suivi des applications',
+  activate_app_tracking: `Il nous faut votre accord pour une meilleure expérience d’utilisation`,
+  allow_app_tracking: 'Activer le suivi d’activité',
 };

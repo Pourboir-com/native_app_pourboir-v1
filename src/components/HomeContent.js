@@ -32,7 +32,7 @@ export default function HomeScreenContent({
   resIsFetching,
   searchEnter,
   Data,
-  saveLocation,
+  // saveLocation,
   route,
 }) {
   const [data, setData] = useState([]);
@@ -74,7 +74,7 @@ export default function HomeScreenContent({
     }
   };
   const noData =
-    !data.length && !restaurantLoading && !resIsFetching && saveLocation;
+    !data.length && !restaurantLoading && !resIsFetching;
   if (noData) {
     return (
       <>

@@ -12,6 +12,7 @@ const NoAppTracking = () => {
 
   const excessAppTracking = async () => {
     const { status } = await requestTrackingPermissionsAsync();
+    console.log(status);
     if (status === 'granted') {
       navigation.navigate('splashScreen');
     } else {

@@ -122,13 +122,13 @@ export default function SplashScreen(props) {
   const [springValue] = React.useState(new Animated.Value(0.5));
   const locationFunction = async () => {
     const { userInfo = {} } = await getAsyncStorageValues();
-    if (Platform.OS === 'ios') {
-      const { status } = await requestTrackingPermissionsAsync();
-      if (status === 'granted') {
-        console.log('Yay! I have user permission to track data');
-      }
-    }
     try {
+      if (Platform.OS === 'ios') {
+        const { status } = await requestTrackingPermissionsAsync();
+        if (status === 'granted') {
+          console.log('Yay! I have user permission to track data');
+        }
+      }
       let values = await Location.requestForegroundPermissionsAsync();
       if (values === 'granted') {
         // props.navigation.dispatch(

@@ -97,6 +97,7 @@ const ServerProfile = ({ navigation, route }) => {
             setting={false}
             backgroundColor={'transparent'}
             borderRadius={true}
+            Home={true}
           />
         </ImageBackground>
         <ScrollView showsVerticalScrollIndicator={false} bounces={false}>

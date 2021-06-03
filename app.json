@@ -5,7 +5,7 @@
     "facebookAppId": "771555200360518",
     "facebookScheme": "fb771555200360518",
     "facebookDisplayName": "Pourboir'",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "orientation": "portrait",
     "icon": "./assets/Serveur-IOS.png",
     "splash": {
@@ -27,14 +27,14 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.developerspourboir.pourboir",
-      "buildNumber": "1.0.2",
+      "buildNumber": "1.0.0",
       "usesAppleSignIn": true,
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "This app uses location for nearby restaurants",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses location for nearby restaurants",
         "NSLocationAlwaysUsageDescription": "This app uses location for nearby restaurants",
         "CFBundleAllowMixedLocalizations": true,
-        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
+        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
       },
       "config": {
         "googleSignIn": {

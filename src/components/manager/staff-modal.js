@@ -139,8 +139,8 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                       <View style={{ justifyContent: 'center' }}>
                         {waiterFormData?.data[0]?.experience.map(item => (
                           <View style={{ paddingTop: 10 }}>
-                            <Text>{item?.enterprise_name || 'none'}</Text>
-                            <Text>{`${i18n.t('of')} ${formatDate(
+                            <Text style={{fontFamily:'ProximaNova', fontSize:15}}>{item?.enterprise_name.slice(0,25) || 'none'}</Text>
+                            <Text style={{fontFamily:'ProximaNova', fontSize:14}}>{`${i18n.t('of')} ${formatDate(
                               item?.start_date,
                             )} ${i18n.t('at')} ${
                               item?.end_date
@@ -180,7 +180,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                 <View>
                   <Text style={styles.expsTxt}>{i18n.t('contact')}</Text>
                 </View>
-                <View style={styles.recruterBtns}>
+                <View style={[...styles.recruterBtns, {marginBottom:30}]}>
                   <TouchableOpacity
                     onPress={() =>
                       waiterFormData?.data[0]?.telephone_number &&
@@ -190,8 +190,8 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                     <Image
                       source={require('../../assets/images/Call.png')}
                       style={{
-                        width: 30,
-                        height: 30,
+                        width: 32,
+                        height: 32,
                         resizeMode: 'contain',
                         marginRight: 20,
                       }}
@@ -206,7 +206,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                   >
                     <Image
                       source={require('../../assets/images/Email.png')}
-                      style={{ width: 30, height: 30, resizeMode: 'contain' }}
+                      style={{ width: 32, height: 32, resizeMode: 'contain' }}
                     />
                   </TouchableOpacity>
                 </View>
@@ -219,8 +219,8 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
             onPress={() => setModalVisible(false)}
           >
             <Image
-              source={require('../../assets/images/cross.png')}
-              style={{ resizeMode: 'contain' }}
+              source={require('../../assets/images/cross-icon.png')}
+              style={{ resizeMode: 'contain', width:22, height:22 }}
             />
           </TouchableOpacity>
         </ScrollView>

@@ -10,14 +10,18 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
     lineHeight: 20,
-    marginHorizontal: 37,
+    // marginHorizontal: 37,
+    width: 250,
+    alignSelf:'center'
   },
   textLight: {
     fontFamily: 'ProximaNova',
-    fontSize: 15,
+    fontSize: 14,
     textAlign: 'center',
     lineHeight: 20,
     paddingTop: 10,
+    alignSelf:'center',
+    width:'80%'
   },
   main_card_container: {
     backgroundColor: '#fff',
@@ -44,7 +48,7 @@ const styles = StyleSheet.create({
   },
   boldTxt2: {
     fontFamily: 'ProximaNovaBold',
-    fontSize: 20,
+    fontSize: 24,
     lineHeight: 20,
   },
   lighTxt2: {

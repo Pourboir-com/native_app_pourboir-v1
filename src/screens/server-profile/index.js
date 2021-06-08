@@ -115,12 +115,12 @@ const ServerProfile = ({ navigation, route }) => {
             </View>
             <View
               style={{
-                marginHorizontal: 20,
-                marginVertical: 30,
-                alignSelf: 'flex-start',
+                marginHorizontal: 10,
+                marginVertical: 15,
+                alignSelf:'center', width:'92%'
               }}
             >
-              <View style={{ marginBottom: 25, marginHorizontal: '2%' }}>
+              <View style={{ marginBottom: 35, }}>
                 <CommonButton
                   title={i18n.t('ind_rest')}
                   navigation={'Home'}
@@ -144,19 +144,19 @@ const ServerProfile = ({ navigation, route }) => {
                 </View>
               ) : (
                 <>
-                  {!waiterFormData?.data[0]?.position ? (
+                  {waiterFormData?.data[0]?.position ? (
                     <View>
                       <View>
                         <Text style={styles.textBold}>
                           {i18n.t('are_you_job')}
                         </Text>
                         <Text
-                          style={{ ...styles.textLight, marginHorizontal: 25 }}
+                          style={{ ...styles.textLight,}}
                         >
                           {i18n.t('comp_job')}
                         </Text>
                       </View>
-                      <View style={{ marginTop: 20 }}>
+                      <View style={{ marginTop: 20, alignSelf:'center', width:'100%' }}>
                         <CommonButton
                           title={i18n.t('look_job')}
                           navigation="FindJob"

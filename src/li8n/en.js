@@ -189,7 +189,7 @@ export default {
   no_restaurant: 'You have no restaurant at the moment',
   search_rest: 'Search for your restaurant and add yourself by choosing',
   you_waiter: 'You are a waiter',
-  ind_rest: 'I indicate the restaure where I work',
+  ind_rest: 'I indicate the restaurant where I work',
   are_you_job: 'Are you looking for a job or want to complete your income',
   comp_job: 'Complete your job search profile and receive o! ers quickly',
   look_job: 'Looking for a job',

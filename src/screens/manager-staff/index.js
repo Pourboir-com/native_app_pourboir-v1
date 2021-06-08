@@ -146,6 +146,7 @@ const ManagerStaff = ({ navigation }) => {
           setting={true}
           backgroundColor={'transparent'}
           borderRadius={true}
+          logout
         />
       </View>
       <View style={{ paddingHorizontal: 25 }}>
@@ -278,10 +279,10 @@ const ManagerStaff = ({ navigation }) => {
             >
               {i18n.t('no_job_found')}
             </Text>
+            
           )}
         </>
       )}
-
       {isModalVisible && (
         <StaffModal
           formId={formId || ''}

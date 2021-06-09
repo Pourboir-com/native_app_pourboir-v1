@@ -144,7 +144,7 @@ const ServerProfile = ({ navigation, route }) => {
                 </View>
               ) : (
                 <>
-                  {waiterFormData?.data[0]?.position ? (
+                  {!waiterFormData?.data[0]?.position ? (
                     <View>
                       <View>
                         <Text style={styles.textBold}>

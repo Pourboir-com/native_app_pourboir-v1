@@ -281,6 +281,7 @@ const ManagerStaff = ({ navigation }) => {
             </Text>
             
           )}
+            
         </>
       )}
       {isModalVisible && (

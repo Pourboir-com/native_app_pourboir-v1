@@ -102,7 +102,7 @@ export default function HomeScreenContent({
             </View>
             <View>
               <Text style={styles.textBold}>{i18n.t('no_restaurant')}</Text>
-              <Text style={[styles.textLight, { width: 320 }]}>
+              <Text style={[styles.textLight, { width: 330 }]}>
                 {i18n.t('search_rest')}:{' '}
                 <Text style={{ fontFamily: 'ProximaNovaBold' }}>
                   {i18n.t('you_waiter')}
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
   },
   textBold: {
     fontFamily: 'ProximaNovaBold',
-    fontSize: 15,
+    fontSize: 16,
     textAlign: 'center',
     lineHeight: 20,
     // marginHorizontal: 37,
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
   },
   textLight: {
     fontFamily: 'ProximaNova',
-    fontSize: 14,
+    fontSize: 16,
     textAlign: 'center',
     lineHeight: 20,
     paddingTop: 10,

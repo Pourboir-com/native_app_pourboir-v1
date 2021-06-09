@@ -7,21 +7,21 @@ const styles = StyleSheet.create({
   },
   textBold: {
     fontFamily: 'ProximaNovaBold',
-    fontSize: 15,
+    fontSize: 16,
     textAlign: 'center',
     lineHeight: 20,
     // marginHorizontal: 37,
-    width: 250,
+    width: 270,
     alignSelf:'center'
   },
   textLight: {
     fontFamily: 'ProximaNova',
-    fontSize: 14,
+    fontSize: 16,
     textAlign: 'center',
     lineHeight: 20,
     paddingTop: 10,
     alignSelf:'center',
-    width:'80%'
+    width:'85%'
   },
   main_card_container: {
     backgroundColor: '#fff',

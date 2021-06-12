@@ -25,6 +25,7 @@ import ManagerStaff from '../screens/manager-staff';
 import ManagerSignUp from '../screens/manager-signup';
 import ServerProfile from '../screens/server-profile';
 import NoAppTracking from '../screens/no-app-tracking';
+import ForgetPassword from '../screens/forget-password';
 
 const Stack = createStackNavigator();
 
@@ -277,6 +278,18 @@ function AppNavigator() {
       <Stack.Screen
         name="NoTracking"
         component={NoAppTracking}
+        options={() => ({
+          headerShown: false,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+        })}
+      />
+      <Stack.Screen
+        name="ForgetPassword"
+        component={ForgetPassword}
         options={() => ({
           headerShown: false,
           title: '',

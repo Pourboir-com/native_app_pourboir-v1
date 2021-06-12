@@ -7,36 +7,31 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import styles from './styles';
+import styles from '../manager-signin/styles';
 import i18n from '../../li8n';
 import { useMutation } from 'react-query';
-import { LOGIN } from '../../queries';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { RESET_PASSWORD } from '../../queries';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import axios from 'axios';
 import GlobalHeader from '../../components/GlobalHeader';
 
-const SignIn = ({ navigation }) => {
+const ForgetPassword = ({ navigation }) => {
   const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [login] = useMutation(LOGIN);
+  const [resetPassword] = useMutation(RESET_PASSWORD);
   const [loading, setLoading] = useState(false);
-  const handleLogin = async () => {
+  const handleResetPassword = async () => {
     setLoading(true);
-    await login(
+    await resetPassword(
       {
         email,
-        password,
       },
       {
         onSuccess: async res => {
-          axios.defaults.headers.common.Authorization = `Bearer ${res.token}`;
-          await AsyncStorage.setItem('@manager_details', JSON.stringify(res));
-          navigation.replace('ManagerStaff');
+          navigation.replace('SignIn');
           setLoading(false);
+          alert('Please check the new password in your email.')
         },
         onError: () => {
-          alert('Please enter correct email or password!');
+          alert('Please enter the correct email.');
           setLoading(false);
         },
       },
@@ -85,7 +80,7 @@ const SignIn = ({ navigation }) => {
         }}
       >
         <View style={styles.whiteCard}>
-          <Text style={styles.topHeading}>{i18n.t('already_acc')}</Text>
+          <Text style={styles.topHeading}>{i18n.t('forget_password')}</Text>
           <View style={{ marginVertical: 30, width: '93%' }}>
             <TextInput
               style={styles.input}
@@ -95,21 +90,14 @@ const SignIn = ({ navigation }) => {
               keyboardType="email-address"
               placeholderTextColor="#707070"
             />
-            <TextInput
-              style={styles.input}
-              onChangeText={e => setPassword(e)}
-              value={password}
-              placeholder={i18n.t('password_sign')}
-              secureTextEntry={true}
-              placeholderTextColor="#707070"
-            />
             <TouchableOpacity
-              onPress={handleLogin}
-              disabled={loading ? true : email && password ? false : true}
+              onPress={handleResetPassword}
+              disabled={loading ? true : email ? false : true}
               activeOpacity={0.6}
               style={[
                 styles.btn_save,
-                email && password
+                {marginTop: 30 },
+                email
                   ? { backgroundColor: '#FCDF6F' }
                   : { backgroundColor: '#e0e0e0' },
               ]}
@@ -120,30 +108,11 @@ const SignIn = ({ navigation }) => {
                 <Text style={styles.saveTxt}>{i18n.t('to_login')}</Text>
               )}
             </TouchableOpacity>
-            <View style={{marginTop: 20, marginBottom: -20, flexDirection:'row', justifyContent:'center'}}>
-              <Text style={styles.text1}>{i18n.t('forget_password')}</Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('ForgetPassword')}
-                activeOpacity={0.6}
-              >
-                <Text style={styles.signupTxt}>{i18n.t('here')}</Text>
-              </TouchableOpacity>
-            </View>
           </View>
-        </View>
-
-        <View style={{ paddingVertical: 34 }}>
-          <Text style={styles.text1}>{i18n.t('no_acc')}</Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('ManagerSignUp')}
-            activeOpacity={0.6}
-          >
-            <Text style={styles.signupTxt}>{i18n.t('im_register')}</Text>
-          </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
     </ImageBackground>
   );
 };
 
-export default SignIn;
+export default ForgetPassword;

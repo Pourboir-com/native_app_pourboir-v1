@@ -300,18 +300,6 @@ const SocialLogin = ({ navigation, route }) => {
               justifyContent: 'center',
             }}
           >
-            <TouchableOpacity
-              style={styles.cross}
-              onPress={() => {
-                navigation.navigate('Home', { crossIcon: false });
-                dispatch({
-                  type: actionTypes.REFRESH_ANIMATION,
-                  payload: !state.refreshAnimation,
-                });
-              }}
-            >
-              <Entypo name="cross" size={32} color="black" />
-            </TouchableOpacity>
             <Image
               style={styles.imgLogoStyle}
               source={imgLogo}
@@ -398,7 +386,9 @@ const SocialLogin = ({ navigation, route }) => {
                           navigation.navigate('OpenCardReviews');
                         } else {
                           // navigation.navigate('Home', { crossIcon: false });
-                          navigation.replace('WaiterProfile', { crossIcon: true });
+                          navigation.replace('WaiterProfile', {
+                            crossIcon: true,
+                          });
                         }
                         let userDetails = {
                           name: res?.user?.full_name,
@@ -460,24 +450,25 @@ const SocialLogin = ({ navigation, route }) => {
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginRight: 0,
-                paddingTop: 25,
-                paddingBottom: 10,
                 justifyContent: 'center',
-                // marginHorizontal: 60,
-                width: '70%',
                 minHeight: 80,
+                marginTop: 30,
+                textAlign: 'center',
+                position: 'relative',
               }}
             >
               <CheckBox
                 style={{
-                  marginTop: Platform.OS === 'android' ? -3 : -13,
+                  position: 'absolute',
+                  left: Localization.locale === 'en-US' ? 0 : 60,
+                  zIndex: 9999,
+                  top: 0,
                 }}
                 onClick={() => setTermsChecked(!termsChecked)}
                 isChecked={termsChecked}
                 checkedImage={
                   <Image
-                    style={{ width: 18 }}
+                    style={{ width: 18, marginTop: -4 }}
                     resizeMode={'contain'}
                     source={require('../../assets/images/checked.png')}
                   />
@@ -494,8 +485,8 @@ const SocialLogin = ({ navigation, route }) => {
                 style={[
                   {
                     textAlign: 'center',
-                    marginLeft: Platform.OS === 'ios' ? 10 : 0,
-                    maxWidth: 320,
+                    marginLeft: 10,
+                    marginTop: Localization.locale === 'en-US' ? -48 : -24,
                   },
                 ]}
               >
@@ -517,12 +508,11 @@ const SocialLogin = ({ navigation, route }) => {
                         'https://pourboir.com/fr/need-help/privacy-policy/',
                       )
                     }
-                    // style={{ textAlign: 'center', width: '100%' }}
                   >
                     <Text
                       style={{
                         color: '#0050A0',
-                        fontSize: 13,
+                        fontSize: 14,
                         fontFamily: 'ProximaNova',
                         lineHeight: 24,
                         textAlign: 'center',
@@ -533,37 +523,30 @@ const SocialLogin = ({ navigation, route }) => {
                     </Text>
                   </TouchableOpacity>
                 </View>
+                <TouchableOpacity
+                  onPress={() =>
+                    WebBrowser.openBrowserAsync(
+                      'https://pourboir.com/fr/need-help/privacy-policy/',
+                    )
+                  }
+                >
+                  <Text
+                    style={{
+                      color: '#0050A0',
+                      fontSize: 14,
+                      fontFamily: 'ProximaNova',
+                      lineHeight: 24,
+                      textAlign: 'center',
+                      marginHorizontal: 5,
+                    }}
+                  >
+                    <Text style={{ color: 'black' }}>{i18n.t('et_la')}</Text>
+                    {i18n.t('confidential')}
+                  </Text>
+                </TouchableOpacity>
               </Text>
             </View>
           </View>
-          {/* <TouchableOpacity
-            activeOpacity={0.5}
-            style={{ marginBottom: 30, marginTop: -10 }}
-            onPress={async () => {
-              const { token } = await getAsyncStorageValues();
-              if (token) {
-                navigation.navigate('ManagerStaff');
-              } else {
-                navigation.navigate('SignIn');
-              }
-            }}
-          >
-            <Text style={{ color: Colors.fontLight }}>
-              {i18n.t('I_am')}{' '}
-              <Text
-                style={{
-                  color: '#0050A0',
-                  fontSize: 14,
-                  fontFamily: 'ProximaNova',
-                  lineHeight: 24,
-                  textAlign: 'center',
-                }}
-              >
-                {i18n.t('manager_res')}
-              </Text>{' '}
-            </Text>
-          </TouchableOpacity> */}
-          {/* <AddNicheModal /> */}
         </View>
       )}
     </ScrollView>
@@ -606,7 +589,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 50,
     position: 'relative',
-    marginRight: '16%',
+    // marginRight: '16%',
     // marginTop: 10,
   },
   btnFb: {

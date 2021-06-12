@@ -5,7 +5,7 @@ import { Colors } from '../../constants/Theme';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9F9F9',
+    backgroundColor: '#f9f9f9',
   },
   btn_yellow: {
     backgroundColor: '#EAEAEA',
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderColor: '#E3E3E3',
     borderWidth: 1,
-    width: 270,
+    // width: '100%',
     paddingLeft: 10,
     paddingRight: 10,
     height: 48,
@@ -198,12 +198,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   options: {
-    maxHeight: 150,
+    maxHeight: 116,
     backgroundColor: '#f0f0f0',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
-    marginLeft: 7,
-    marginRight: 7,
+    marginHorizontal: '3%',
   },
   opt_txt: {
     fontSize: 15,

@@ -22,6 +22,7 @@ import { filterSearch } from '../../util';
 import { useMutation } from 'react-query';
 import Spinner from 'react-native-loading-spinner-overlay';
 import GlobalHeader from '../../components/GlobalHeader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ManagerStaff = ({ navigation }) => {
   const [deleteWaiterForm] = useMutation(DELETE_WAITER_FORMS);
@@ -59,8 +60,14 @@ const ManagerStaff = ({ navigation }) => {
     {
       ...reactQueryConfig,
       enabled: managerId ? true : false,
-      onError: e => {
-        alert(e?.response?.data?.message);
+      onError: async e => {
+        if (e?.response?.data?.statusCode === '401') {
+          navigation.replace('SignIn');
+          alert('Token expired, Please login again.');
+          await AsyncStorage.setItem('@manager_details', JSON.stringify({}));
+        } else {
+          alert(e?.response?.data?.message);
+        }
       },
     },
   );
@@ -129,7 +136,7 @@ const ManagerStaff = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#f1f1f1' }}>
+    <View style={{ flex: 1, backgroundColor: '#f9f9f9' }}>
       <Spinner visible={loading} />
       <View
         style={{
@@ -146,7 +153,10 @@ const ManagerStaff = ({ navigation }) => {
           setting={true}
           backgroundColor={'transparent'}
           borderRadius={true}
-          logout
+          logout={async () => {
+            navigation.replace('SignIn');
+            await AsyncStorage.setItem('@manager_details', JSON.stringify({}));
+          }}
         />
       </View>
       <View style={{ paddingHorizontal: 25 }}>
@@ -279,9 +289,7 @@ const ManagerStaff = ({ navigation }) => {
             >
               {i18n.t('no_job_found')}
             </Text>
-            
           )}
-            
         </>
       )}
       {isModalVisible && (

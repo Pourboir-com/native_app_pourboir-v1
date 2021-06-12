@@ -26,12 +26,15 @@ const HelpUsImproveModal = ({
   subtext,
   restaurant,
   subHeadingText,
+  customHeadingSize,
+  customButtonWidth,
 }) => {
   return (
     <Overlay
       overlayStyle={styles.container}
       isVisible={isVisible}
       onBackdropPress={handleModalClose}
+      backdropStyle={{ opacity: 0.6, backgroundColor: 'black' }}
     >
       <ScrollView
         alwaysBounceHorizontal={false}
@@ -69,7 +72,13 @@ const HelpUsImproveModal = ({
             <Text
               ellipsizeMode="tail"
               numberOfLines={3}
-              style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}
+              style={[
+                styles.txtName,
+                {
+                  fontFamily: 'ProximaNovaBold',
+                  fontSize: customHeadingSize || 16,
+                },
+              ]}
             >
               {heading}
             </Text>
@@ -105,7 +114,7 @@ const HelpUsImproveModal = ({
             activeOpacity={0.5}
             disabled={loading}
             onPress={onPress && onPress}
-            style={styles.btnConfrm}
+            style={[styles.btnConfrm, { width: customButtonWidth || '85%' }]}
           >
             {loading ? (
               <ActivityIndicator size={29} color="#EBC11B" />
@@ -141,10 +150,8 @@ const styles = StyleSheet.create({
     color: Colors.fontDark,
   },
   btnConfrm: {
-    // backgroundColor: Colors.fontLight,
     backgroundColor: Colors.yellow,
     borderRadius: 10,
-    width: '85%',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 25,

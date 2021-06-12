@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     paddingTop: 10,
     alignSelf:'center',
-    width:'85%'
+    width:'85%',
   },
   main_card_container: {
     backgroundColor: '#fff',
@@ -55,6 +55,8 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNova',
     fontSize: 16,
     paddingTop: 10,
+    paddingLeft: 4,
+    color: '#000'
   },
 });
 

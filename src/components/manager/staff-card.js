@@ -14,7 +14,7 @@ import { Feather } from '@expo/vector-icons';
 import i18n from '../../li8n';
 import { set } from 'react-native-reanimated';
 
-const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
+const StaffCard = ({ toggleModal, data, handleDeleteForm, Width }) => {
   const [close, setClose] = useState(false);
   const obj = [1, 2, 3, 4, 5];
   var swipeoutBtns = [
@@ -26,10 +26,10 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
           style={{
             backgroundColor: '#fff',
             height: '85%',
-            width: 55,
+            width: 65,
             justifyContent: 'center',
             alignItems: 'center',
-            borderRadius: 15,
+            borderRadius: 12,
             marginTop: -14,
           }}
         >
@@ -47,7 +47,7 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
         backgroundColor: 'transparent',
         overflow: 'hidden',
         marginBottom: 6,
-        width: '90%',
+        width: Width || '90%',
         alignSelf: 'center',
       }}
       right={swipeoutBtns}
@@ -57,7 +57,7 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm }) => {
       <TouchableHighlight
         onPress={() => toggleModal(data?._id)}
         underlayColor="#f9f9f9"
-        style={styles.main_card_container}
+        style={[styles.main_card_container,{width: '98%'}]}
       >
         <>
           <View style={styles.section1}>

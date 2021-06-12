@@ -8,6 +8,7 @@ import {
   Image,
   Platform,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
@@ -64,13 +65,17 @@ const ManagerSignUp = ({ navigation }) => {
               {!showDropdown &&
                 lastExperience?.experience &&
                 !lastExperience?.restaurant_id && (
-                  <Text style={{ color: 'red' }}>*Click on search.</Text>
+                  <Text style={{ color: 'red' }}>
+                    *{i18n.t('search_click')}.
+                  </Text>
                 )}
 
               {!lastExperience?.restaurant_id &&
                 lastExperience?.experience &&
                 showDropdown && (
-                  <Text style={{ color: 'red' }}>*Select restaurant.</Text>
+                  <Text style={{ color: 'red' }}>
+                    *{i18n.t('select_restaurant')}.
+                  </Text>
                 )}
             </>
           )}
@@ -79,7 +84,7 @@ const ManagerSignUp = ({ navigation }) => {
         <View
           style={[
             stylesTextbox.input_icon,
-            { backgroundColor: '#F8F8F8', borderWidth: 0, marginBottom: -16 },
+            { backgroundColor: '#F8F8F8', borderWidth: 0, marginBottom: -16, width:'100%' },
           ]}
         >
           <TextInput
@@ -98,7 +103,7 @@ const ManagerSignUp = ({ navigation }) => {
             value={lastExperience?.experience}
             style={[
               styles.input_icon_text,
-              { textAlign: 'center', width: '90%' },
+              { textAlign: 'center', width: '90%', fontSize: 16 },
             ]}
             placeholder={i18n.t('passedat')}
             placeholderTextColor={'#707375'}
@@ -113,7 +118,7 @@ const ManagerSignUp = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         {showDropdown && (
-          <View style={[stylesTextbox.options, { marginTop: 16 }]}>
+          <ScrollView style={[stylesTextbox.options, { marginTop: 16 }]}>
             {searchLoading ? (
               <Text style={stylesTextbox.opt_txt}>Loading...</Text>
             ) : (
@@ -133,7 +138,7 @@ const ManagerSignUp = ({ navigation }) => {
                 </TouchableOpacity>
               ))
             )}
-          </View>
+          </ScrollView>
         )}
       </View>
     );

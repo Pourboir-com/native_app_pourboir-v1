@@ -52,11 +52,14 @@ export default {
   i_waiter: 'I am waiter',
   i_manage: 'I manage a restaurant',
 
+
   // Social Login
   continue_with_fb: 'Continue with Facebook',
   continue_with_google: 'Continue with Google',
   I_accept: 'I accept the',
   terms_of_use: 'Terms of use and privacy policy',
+  et_la:'',
+  confidential:'',
   I_am: 'I am',
   manager_res: 'restaurateur',
 
@@ -143,6 +146,8 @@ export default {
   thank_info: 'thank you for your information',
 
   // manager side translations
+  forget_password: 'Password forgotten ? ',
+  here: `here`,
   already_acc: 'I already have an account',
   email: 'E-mail',
   password_sign: 'Password',
@@ -171,6 +176,8 @@ export default {
   post: 'Post',
   no_job_found: 'No job form found.',
   still_working: 'still working here',
+  search_click: 'Click on search',
+  select_restaurant:'Select restaurant',
 
   // Add Experience Modal
   name_of_company: 'The name of company',
@@ -191,7 +198,7 @@ export default {
   you_waiter: 'You are a waiter',
   ind_rest: 'I indicate the restaurant where I work',
   are_you_job: 'Are you looking for a job or want to complete your income',
-  comp_job: 'Complete your job search profile and receive o! ers quickly',
+  comp_job: 'Complete your job search profile and receive offers quickly',
   look_job: 'Looking for a job',
   your_cand_prof: 'Your candidate profile',
   prev_rec: 'Preview how recruiters see your profile',

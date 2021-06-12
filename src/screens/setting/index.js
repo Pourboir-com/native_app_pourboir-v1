@@ -40,13 +40,12 @@ const Setting = ({ navigation }) => {
   const [updatePicture] = useMutation(UPDATE_PICTURE);
 
   const resetState = async () => {
-    navigation.navigate('Home', { crossIcon: false });
+    navigation.navigate('socialLogin');
     dispatch({
       type: actionTypes.USER_DETAILS,
       payload: {},
     });
     await AsyncStorage.setItem('@userInfo', JSON.stringify({}));
-    await AsyncStorage.setItem('@manager_details', JSON.stringify({}));
     setLoading(false);
   };
 

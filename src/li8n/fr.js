@@ -57,7 +57,9 @@ export default {
   continue_with_fb: 'Continuer avec Facebook',
   continue_with_google: 'Continuer avec Google',
   I_accept: 'J’accepte les',
-  terms_of_use: 'conditions d’utilisation et  la  politique de confidentialité',
+  terms_of_use: 'conditions d’utilisation',
+  confidential:'politique de confidentialité',
+  et_la:'et  la ',
   I_am: 'Je suis',
   manager_res: 'restaurateur',
 
@@ -147,9 +149,11 @@ export default {
   part_time: 'à temps partiel',
 
   // manager side translations
+  forget_password: 'mot de passe oublié ? ',
+  here: `c'est ici`,
   already_acc: 'J’ai déjà un compte',
   email: 'e-mail',
-  password_sign: 'mot de passes',
+  password_sign: 'mot de passe',
   to_login: 'Se connecter',
   no_acc: 'Pas encore de compte ?',
   im_register: 'je m’inscris',
@@ -175,6 +179,8 @@ export default {
   post: 'Poste',
   no_job_found: 'Aucun emploi trouvé.',
   still_working: 'travaille toujours ici',
+  search_click: 'Cliquez sur rechercher',
+  select_restaurant:'Sélectionnez le restaurant',
 
   // Add Experience Modal
   add_exp: 'Ajouter une expérience',
@@ -182,7 +188,7 @@ export default {
   the_post: 'Le poste',
   end_date: 'Date de fin',
   still_work: 'Je travaille toujours ici',
-  diploma: 'Diplome',
+  diploma: 'Diplôme',
   phone: 'Numéro de téléphone',
   of: 'du',
   at: 'au',
@@ -196,7 +202,7 @@ export default {
   ind_rest: 'Indique le restaurant où tu travailles',
   are_you_job: ' Vous recherchez un emploi ou souhaitez compléter vos revenus',
   comp_job:
-    'Remplissez votre profil de recherche de poste et recevez des o!res rapidement',
+    'Remplissez votre profil de recherche de poste et recevez des offres rapidement',
   look_job: 'En recherche de poste',
   your_cand_prof: 'Votre profil candidat',
   prev_rec: 'Prévisualiser comment les recruteurs voient votre prof',

@@ -8,6 +8,7 @@ import {
   ImageBackground,
   TextInput,
   Platform,
+  ScrollView,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -66,23 +67,30 @@ const AddExperienceModal = ({
   };
 
   const AddData = () => {
-    setData([
-      ...data,
-      {
-        enterprise_name: restaurant?.name || '',
-        restaurant_id: restaurant?.restaurant_id || '',
-        position: post || '',
-        still_working: termsChecked,
-        start_date: startDate,
-        end_date: termsChecked === false ? endDate : '',
-      },
-    ]);
-    setPost('');
-    setStart('');
-    setEnd('');
-    setTermsChecked(false);
-    setExpModalVisible(false);
-    setRestaurant({});
+    let validateRestaurant = data?.find(
+      item => item.restaurant_id === restaurant?.restaurant_id,
+    );
+    if (!validateRestaurant) {
+      setData([
+        ...data,
+        {
+          enterprise_name: restaurant?.name || '',
+          restaurant_id: restaurant?.restaurant_id || '',
+          position: post || '',
+          still_working: termsChecked,
+          start_date: startDate,
+          end_date: termsChecked === false ? endDate : '',
+        },
+      ]);
+      setPost('');
+      setStart('');
+      setEnd('');
+      setTermsChecked(false);
+      setExpModalVisible(false);
+      setRestaurant({});
+    } else {
+      alert('Cannot add multiple experience from a single place.');
+    }
   };
   // console.log( startDate > endDate ? true: false)
 
@@ -156,6 +164,7 @@ const AddExperienceModal = ({
         bounces={false}
         enableOnAndroid={true}
         extraScrollHeight={10}
+        scrollEnabled={showDropdown ? false : true}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
         scrollToOverflowEnabled={true}
@@ -187,14 +196,16 @@ const AddExperienceModal = ({
                     {!showDropdown &&
                       restaurant?.name &&
                       !restaurant?.restaurant_id && (
-                        <Text style={{ color: 'red' }}>*Click on search.</Text>
+                        <Text style={{ color: 'red' }}>
+                          *{i18n.t('search_click')}.
+                        </Text>
                       )}
 
                     {!restaurant?.restaurant_id &&
                       restaurant?.name &&
                       showDropdown && (
                         <Text style={{ color: 'red' }}>
-                          *Select restaurant.
+                          *{i18n.t('select_restaurant')}.
                         </Text>
                       )}
                   </>
@@ -230,7 +241,7 @@ const AddExperienceModal = ({
               </TouchableOpacity>
             </View>
             {showDropdown && (
-              <View style={stylesTextbox.options}>
+              <ScrollView style={stylesTextbox.options}>
                 {searchLoading ? (
                   <Text style={stylesTextbox.opt_txt}>Loading...</Text>
                 ) : (
@@ -250,7 +261,7 @@ const AddExperienceModal = ({
                     </TouchableOpacity>
                   ))
                 )}
-              </View>
+              </ScrollView>
             )}
           </View>
           <View style={styles.input_box}>

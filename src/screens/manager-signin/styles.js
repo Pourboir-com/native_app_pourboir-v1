@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
     borderRadius: 12,
+    fontSize: 16
   },
   btn_save: {
     width: '100%',
@@ -36,12 +37,12 @@ const styles = StyleSheet.create({
   saveTxt: {
     paddingVertical: 3,
     fontFamily: 'ProximaNova',
-    fontSize: 14,
+    fontSize: 16,
   },
   signupTxt: {
     textAlign: 'center',
     fontFamily: 'ProximaNovaBold',
-    fontSize: 15,
+    fontSize: 14,
     textDecorationLine: 'underline',
   },
   text1: {

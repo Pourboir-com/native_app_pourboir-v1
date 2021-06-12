@@ -6,7 +6,7 @@ const THUMB_RADIUS = 9;
 const styles = StyleSheet.create({
   main_card_container: {
     backgroundColor: '#fff',
-    borderRadius: 20,
+    borderRadius: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 8,
@@ -69,13 +69,13 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNovaSemiBold',
     fontSize: 24,
     textAlign: 'center',
-    paddingTop: 18,
+    paddingTop: 12,
   },
   ansTxt: {
     fontFamily: 'ProximaNova',
     fontSize: 16,
     paddingLeft: 3,
-    paddingTop: 18,
+    paddingTop: 12,
     textAlign: 'center',
   },
   expsTxt: {
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   filterTxt: {
     fontFamily: 'ProximaNovaBold',
-    fontSize: 20,
+    fontSize: 24,
   },
   postsInput: {
     backgroundColor: '#EAEAEA',
@@ -141,9 +141,8 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   ansFont: {
-    fontFamily: 'ProximaNova',
+    fontFamily: 'ProximaNovaBold',
     fontSize: 12,
-    fontWeight: '200',
     paddingLeft: 4,
   },
   btnYellow: {
@@ -156,6 +155,7 @@ const styles = StyleSheet.create({
   btnTxt: {
     paddingVertical: 15,
     fontFamily: 'ProximaNova',
+    fontSize: 16
   },
   btnGray: {
     backgroundColor: '#EAEAEA',

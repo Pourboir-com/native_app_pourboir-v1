@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   },
   topHeading: {
     fontFamily: 'ProximaNovaBold',
-    fontSize: 22,
+    fontSize: 24,
     paddingTop: 10,
   },
   input: {
@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
     borderRadius: 12,
+    fontSize: 16
   },
   btn_return: {
     backgroundColor: '#EAEAEA',
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontFamily: 'ProximaNova',
     paddingVertical: 15,
-    fontSize: 13,
+    fontSize: 16,
     textAlign: 'center',
   },
   btn_yellow: {

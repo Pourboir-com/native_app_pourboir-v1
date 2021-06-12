@@ -82,7 +82,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <Dash style={{ width: '90%', height: 1 }} dashColor="#FCDF6F" />
+              <Dash style={{ width: 170 }} dashColor="#FCDF6F" />
             </View>
             <View style={styles.first_part_modal}>
               <View style={{ marginVertical: 20 }}>
@@ -113,7 +113,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                   </View>
                 </View>
               </View>
-              <Dash style={{ width: '90%', height: 1 }} dashColor="#FCDF6F" />
+              <Dash style={{ width: 170 }} dashColor="#FCDF6F" />
             </View>
             <View style={styles.first_part_modal}>
               <View style={{ marginVertical: 20, alignItems: 'center' }}>
@@ -122,7 +122,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                     <Text
                       style={[
                         styles.expsTxt,
-                        { marginBottom: Platform.OS === 'ios' ? 20 : 0 },
+                        { marginBottom: -15 },
                       ]}
                     >
                       {i18n.t('estb')}
@@ -139,8 +139,20 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                       <View style={{ justifyContent: 'center' }}>
                         {waiterFormData?.data[0]?.experience.map(item => (
                           <View style={{ paddingTop: 10 }}>
-                            <Text style={{fontFamily:'ProximaNova', fontSize:15}}>{item?.enterprise_name.slice(0,25) || 'none'}</Text>
-                            <Text style={{fontFamily:'ProximaNova', fontSize:14}}>{`${i18n.t('of')} ${formatDate(
+                            <Text
+                              style={{
+                                fontFamily: 'ProximaNova',
+                                fontSize: 15,
+                              }}
+                            >
+                              {item?.enterprise_name.slice(0, 25) || 'none'}
+                            </Text>
+                            <Text
+                              style={{
+                                fontFamily: 'ProximaNova',
+                                fontSize: 14,
+                              }}
+                            >{`${i18n.t('of')} ${formatDate(
                               item?.start_date,
                             )} ${i18n.t('at')} ${
                               item?.end_date
@@ -156,7 +168,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                   </Text>
                 </View>
               </View>
-              <Dash style={{ width: '90%', height: 1 }} dashColor="#FCDF6F" />
+              <Dash style={{ width: 170 }} dashColor="#FCDF6F" />
             </View>
             <View style={styles.first_part_modal}>
               <View style={{ marginVertical: 20 }}>
@@ -173,14 +185,14 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                   </View>
                 </View>
               </View>
-              <Dash style={{ width: '90%', height: 1 }} dashColor="#FCDF6F" />
+              <Dash style={{ width: 170 }} dashColor="#FCDF6F" />
             </View>
             <View style={{ marginVertical: 20 }}>
               <View style={{ alignItems: 'center' }}>
                 <View>
                   <Text style={styles.expsTxt}>{i18n.t('contact')}</Text>
                 </View>
-                <View style={[...styles.recruterBtns, {marginBottom:30}]}>
+                <View style={[styles.recruterBtns, { marginBottom: 30 }]}>
                   <TouchableOpacity
                     onPress={() =>
                       waiterFormData?.data[0]?.telephone_number &&
@@ -220,7 +232,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
           >
             <Image
               source={require('../../assets/images/cross-icon.png')}
-              style={{ resizeMode: 'contain', width:22, height:22 }}
+              style={{ resizeMode: 'contain', width: 22, height: 22 }}
             />
           </TouchableOpacity>
         </ScrollView>

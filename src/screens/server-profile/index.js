@@ -14,8 +14,12 @@ import GlobalHeader from '../../components/GlobalHeader';
 import styles from './styles';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
-import { useQuery } from 'react-query';
-import { RECRUITMENT_FORM, GET_YOUR_RES } from '../../queries';
+import { useQuery, useMutation } from 'react-query';
+import {
+  RECRUITMENT_FORM,
+  GET_YOUR_RES,
+  DELETE_WAITER_FORMS,
+} from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import Context from '../../contextApi/context';
 import { ReviewsSkeleton } from '../../components/skeleton';
@@ -23,6 +27,8 @@ import StaffModal from '../../components/manager/staff-modal';
 import { getAsyncStorageValues } from '../../constants';
 import HomeScreenContent from '../../components/HomeContent';
 import * as actionTypes from '../../contextApi/actionTypes';
+import Spinner from 'react-native-loading-spinner-overlay';
+import StaffCard from '../../components/manager/staff-card';
 
 const ServerProfile = ({ navigation, route }) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -30,6 +36,9 @@ const ServerProfile = ({ navigation, route }) => {
   const { state, dispatch } = useContext(Context);
   // const [saveLocation, setSaveLocation] = useState('');
   const [userInfo, setuserInfo] = useState();
+  const [loading, setLoading] = useState(false);
+  const [deleteWaiterForm] = useMutation(DELETE_WAITER_FORMS);
+
   const {
     data: waiterFormData,
     isLoading: waiterFormLoading,
@@ -45,6 +54,34 @@ const ServerProfile = ({ navigation, route }) => {
       },
     },
   );
+
+  const toggleModal = id => {
+    setFormId(id);
+    setModalVisible(!isModalVisible);
+  };
+
+  const handleDeleteForm = async id => {
+    setLoading(true);
+    try {
+      await deleteWaiterForm(
+        {
+          form_id: id,
+        },
+        {
+          onSuccess: async () => {
+            await refetchWaiterFormData();
+            setLoading(false);
+          },
+          onError: e => {
+            alert(e?.response?.data?.message);
+            setLoading(false);
+          },
+        },
+      );
+    } catch {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -77,6 +114,8 @@ const ServerProfile = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
+      <Spinner visible={loading} />
+
       <View style={{ flex: 1 }}>
         <ImageBackground
           style={{
@@ -117,10 +156,11 @@ const ServerProfile = ({ navigation, route }) => {
               style={{
                 marginHorizontal: 10,
                 marginVertical: 15,
-                alignSelf:'center', width:'92%'
+                alignSelf: 'center',
+                width: '92%',
               }}
             >
-              <View style={{ marginBottom: 35, }}>
+              <View style={{ marginBottom: 35 }}>
                 <CommonButton
                   title={i18n.t('ind_rest')}
                   navigation={'Home'}
@@ -147,16 +187,20 @@ const ServerProfile = ({ navigation, route }) => {
                   {!waiterFormData?.data[0]?.position ? (
                     <View>
                       <View>
-                        <Text style={styles.textBold}>
+                        <Text style={[styles.textBold, { width: 240 }]}>
                           {i18n.t('are_you_job')}
                         </Text>
-                        <Text
-                          style={{ ...styles.textLight,}}
-                        >
+                        <Text style={[styles.textLight, { width: 270 }]}>
                           {i18n.t('comp_job')}
                         </Text>
                       </View>
-                      <View style={{ marginTop: 20, alignSelf:'center', width:'100%' }}>
+                      <View
+                        style={{
+                          marginTop: 20,
+                          alignSelf: 'center',
+                          width: '100%',
+                        }}
+                      >
                         <CommonButton
                           title={i18n.t('look_job')}
                           navigation="FindJob"
@@ -182,75 +226,24 @@ const ServerProfile = ({ navigation, route }) => {
                           {i18n.t('prev_rec')}
                         </Text>
                       </View>
-                      <View>
-                        <TouchableOpacity
-                          activeOpacity={0.6}
-                          onPress={() => {
-                            setFormId(waiterFormData?.data[0]?._id);
-                            setModalVisible(true);
-                          }}
-                          style={styles.main_card_container}
-                        >
-                          <View style={styles.section1}>
-                            <View>
-                              <Image
-                                source={{
-                                  uri:
-                                    waiterFormData?.data[0]?.user_id?.picture,
-                                }}
-                                style={{
-                                  borderRadius: 30,
-                                  width: 57,
-                                  height: 57,
-                                }}
-                              />
-                            </View>
-                            <View
-                              style={{
-                                justifyContent: 'center',
-                                paddingLeft: 10,
-                              }}
-                            >
-                              <Text
-                                ellipsizeMode="tail"
-                                numberOfLines={1}
-                                style={styles.name_staff}
-                              >
-                                {waiterFormData?.data[0]?.user_id?.full_name}
-                              </Text>
-                              <View
-                                style={{
-                                  flexDirection: 'row',
-                                  marginTop: Platform.OS === 'ios' ? 10 : 7,
-                                }}
-                              >
-                                <Text
-                                  style={{
-                                    fontFamily: 'ProximaNovaBold',
-                                    fontSize: Platform.OS === 'ios' ? 18 : 16,
-                                  }}
-                                >
-                                  {waiterFormData?.data[0]?.position ||
-                                    i18n.t('waiter')}
-                                </Text>
-                              </View>
-                            </View>
-                          </View>
-                          <View style={styles.section2}>
-                            <AntDesign name="right" size={20} color="#485460" />
-                          </View>
-                        </TouchableOpacity>
-                      </View>
-                      <View style={{ marginTop: 10 }}>
-                        <CommonButton
-                          navigation="FindJob"
-                          navigationData={{
-                            form: waiterFormData?.data[0] || [],
-                            refetch: refetchWaiterFormData,
-                          }}
-                          title={i18n.t('modif_prof')}
+                      <View style={{ marginTop: 15 }}>
+                        <StaffCard
+                          data={waiterFormData?.data[0]}
+                          toggleModal={toggleModal}
+                          isModalVisible={isModalVisible}
+                          setModalVisible={setModalVisible}
+                          handleDeleteForm={handleDeleteForm}
+                          Width={'100%'}
                         />
                       </View>
+                      <CommonButton
+                        navigation="FindJob"
+                        navigationData={{
+                          form: waiterFormData?.data[0] || [],
+                          refetch: refetchWaiterFormData,
+                        }}
+                        title={i18n.t('modif_prof')}
+                      />
                     </View>
                   )}
                 </>

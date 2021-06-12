@@ -11,6 +11,7 @@ import * as actionTypes from '../../contextApi/actionTypes';
 import { isSearch } from '../../util';
 // import * as FacebookAds from 'expo-ads-facebook';
 import * as Location from 'expo-location';
+import {  BackHandler} from 'react-native';
 
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
@@ -19,6 +20,23 @@ const HomeScreen = props => {
   // const [nextPageToken, setnextPageToken] = useState();
   const { state, dispatch } = useContext(Context);
   const { restaurantsDetails: data } = state;
+
+  // React.useEffect(() => {
+  //   const handleBackButtonClick = () => {
+     
+  //   };
+
+  //   props.navigation.addListener('focus', () => {
+  //     BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+  //   });
+  //   props.navigation.addListener('blur', () => {
+  //     BackHandler.removeEventListener(
+  //       'hardwareBackPress',
+  //       handleBackButtonClick,
+  //     );
+  //   });
+  // });
+
 
   useEffect(() => {
     (async () => {

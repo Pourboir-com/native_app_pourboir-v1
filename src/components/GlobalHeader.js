@@ -20,7 +20,7 @@ const GlobalHeader = props => {
     if (props.setting) {
       props.navigation.navigate('Setting');
     } else if (props.Home) {
-      props.navigation.navigate('Home');
+      props.navigation.navigate('Home', { crossIcon: false });
     } else {
       props.navigation.goBack(null);
     }
@@ -42,6 +42,9 @@ const GlobalHeader = props => {
     const handleBackButtonClick = () => {
       if (props.setting) {
         props.navigation.navigate('Setting');
+        return true;
+      } else if (props.Home) {
+        props.navigation.replace('Home', { crossIcon: false });
         return true;
       }
     };

@@ -119,7 +119,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
               <View
                 style={{
                   marginVertical: 20,
-                  marginBottom: Platform.OS === 'ios' ? -5 : 0,
+                  marginBottom: Platform.OS === 'ios' ? -5 : 20,
                   alignItems: 'center',
                 }}
               >

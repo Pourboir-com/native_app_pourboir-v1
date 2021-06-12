@@ -73,8 +73,7 @@ export default function HomeScreenContent({
       });
     }
   };
-  const noData =
-    !data.length && !restaurantLoading && !resIsFetching;
+  const noData = !data.length && !restaurantLoading && !resIsFetching;
   if (noData) {
     return (
       <>
@@ -322,8 +321,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 20,
     // marginHorizontal: 37,
-    width:200,
-    alignSelf:'center'
+    width: 200,
+    alignSelf: 'center',
   },
   textLight: {
     fontFamily: 'ProximaNova',
@@ -331,7 +330,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 20,
     paddingTop: 10,
-    alignSelf:'center',
-    marginTop:-4
+    alignSelf: 'center',
+    marginTop: -4,
   },
 });

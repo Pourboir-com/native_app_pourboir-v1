@@ -116,13 +116,19 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
               <Dash style={{ width: 170 }} dashColor="#FCDF6F" />
             </View>
             <View style={styles.first_part_modal}>
-              <View style={{ marginVertical: 20, alignItems: 'center' }}>
+              <View
+                style={{
+                  marginVertical: 20,
+                  marginBottom: Platform.OS === 'ios' ? -5 : 0,
+                  alignItems: 'center',
+                }}
+              >
                 <View style={{ alignItems: 'center' }}>
                   <View style={{ alignItems: 'center' }}>
                     <Text
                       style={[
                         styles.expsTxt,
-                        { marginBottom: -15 },
+                        { marginBottom: Platform.OS === 'ios' ? 0 : -15 },
                       ]}
                     >
                       {i18n.t('estb')}

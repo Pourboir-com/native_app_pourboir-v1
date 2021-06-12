@@ -23,6 +23,7 @@ import { SEARCH_RESTAURANTS } from '../../queries';
 import { useMutation } from 'react-query';
 import stylesTextbox from '../../screens/find-job/styles';
 import moment from 'moment';
+import { validateAddForm } from '../../util';
 const AddExperienceModal = ({
   setExpModalVisible,
   expModalVisible,
@@ -67,10 +68,13 @@ const AddExperienceModal = ({
   };
 
   const AddData = () => {
-    let validateRestaurant = data?.find(
-      item => item.restaurant_id === restaurant?.restaurant_id,
+    let validateRestaurant = validateAddForm(
+      data,
+      restaurant,
+      startDate,
+      termsChecked === false ? endDate : '',
     );
-    if (!validateRestaurant) {
+    if (validateRestaurant) {
       setData([
         ...data,
         {

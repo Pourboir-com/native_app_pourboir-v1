@@ -202,7 +202,7 @@ const ServerProfile = ({ navigation, route }) => {
                           width: '100%',
                         }}
                       >
-                        <CommonButton
+                        {/* <CommonButton
                           title={i18n.t('look_job')}
                           navigation="FindJob"
                           navigationData={{
@@ -210,7 +210,7 @@ const ServerProfile = ({ navigation, route }) => {
                             refetch: refetchWaiterFormData,
                             onPress: '',
                           }}
-                        />
+                        /> */}
                       </View>
                     </View>
                   ) : (
@@ -237,18 +237,32 @@ const ServerProfile = ({ navigation, route }) => {
                           Width={'100%'}
                         />
                       </View>
-                      <CommonButton
-                        navigation="FindJob"
-                        navigationData={{
-                          form: waiterFormData?.data[0] || [],
-                          refetch: refetchWaiterFormData,
-                        }}
-                        title={i18n.t('modif_prof')}
-                      />
                     </View>
                   )}
                 </>
               )}
+            </View>
+            <View
+              style={{
+                marginHorizontal: 10,
+                marginVertical: 20,
+                marginTop: -10,
+                alignSelf: 'center',
+                width: '92%',
+              }}
+            >
+              <CommonButton
+                navigation="FindJob"
+                navigationData={{
+                  form: waiterFormData?.data[0] || [],
+                  refetch: refetchWaiterFormData,
+                }}
+                title={
+                  waiterFormData?.data[0]?.position
+                    ? i18n.t('modif_prof')
+                    : i18n.t('look_job')
+                }
+              />
             </View>
           </View>
 

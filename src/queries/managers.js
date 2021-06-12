@@ -21,3 +21,10 @@ export const DELETE_WAITER_FORMS = async e => {
   );
   return res.data;
 };
+
+export const DELETE_FORM = async e => {
+  const res = await axios.delete(BASE_URL + `/v1/waiters-job-form`, {
+    data: e,
+  });
+  return res.data;
+};

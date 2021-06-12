@@ -16,8 +16,6 @@ import { useMutation } from 'react-query';
 import { SEND_PUSH_TOKEN } from '../../queries';
 import Constants from 'expo-constants';
 import * as Localization from 'expo-localization';
-// import * as Device from 'expo-device';
-
 import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 
 Notifications.setNotificationHandler({
@@ -119,6 +117,42 @@ export default function SplashScreen(props) {
     })();
   }, []);
 
+  const checkInternet = userInfo => {
+    NetInfo.fetch().then(state => {
+      if (state.isConnected && userInfo?.user_id) {
+        props.navigation.replace('Home', { crossIcon: false });
+      } else if (state.isConnected && !userInfo?.user_id) {
+        props.navigation.navigate('socialLogin');
+      } else {
+        props.navigation.replace('NoWiFi');
+      }
+    });
+  };
+
+  const setCurrency = () => {
+    Location.getCurrentPositionAsync().then(pos => {
+      Location.reverseGeocodeAsync({
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+      }).then(async res => {
+        let currency = getCountry(res[0]?.country);
+        let formattedCurrency = formatCurrency('', currency?.currency);
+        await AsyncStorage.setItem(
+          '@Currency',
+          JSON.stringify({
+            currency: formattedCurrency || '',
+          }),
+        );
+        await AsyncStorage.setItem(
+          '@City',
+          JSON.stringify({
+            city: res[0]?.city || '',
+          }),
+        );
+      });
+    });
+  };
+
   const [springValue] = React.useState(new Animated.Value(0.5));
   const locationFunction = async () => {
     const { userInfo = {} } = await getAsyncStorageValues();
@@ -142,92 +176,14 @@ export default function SplashScreen(props) {
 
       const isLocation = await Location.hasServicesEnabledAsync();
       if (isLocation) {
-        const location = await Location.getCurrentPositionAsync({
-          accuracy: Location.Accuracy.Highest,
-        });
-
-        NetInfo.fetch().then(state => {
-          if (state.isConnected && userInfo?.user_id) {
-            props.navigation.replace('Home', { crossIcon: false });
-          } else if (state.isConnected && !userInfo?.user_id) {
-            props.navigation.navigate('socialLogin');
-          } else {
-            props.navigation.replace('NoWiFi');
-          }
-        });
-
-        await AsyncStorage.setItem(
-          '@location',
-          JSON.stringify({
-            lat: location?.coords.latitude,
-            log: location?.coords.longitude,
-          }),
-        );
-
-        Location.getCurrentPositionAsync().then(pos => {
-          Location.reverseGeocodeAsync({
-            latitude: pos.coords.latitude,
-            longitude: pos.coords.longitude,
-          }).then(async res => {
-            let currency = getCountry(res[0]?.country);
-            let formattedCurrency = formatCurrency('', currency?.currency);
-            await AsyncStorage.setItem(
-              '@Currency',
-              JSON.stringify({
-                currency: formattedCurrency || '',
-              }),
-            );
-            await AsyncStorage.setItem(
-              '@City',
-              JSON.stringify({
-                city: res[0]?.city || '',
-              }),
-            );
-          });
-        });
+        checkInternet(userInfo);
+        setCurrency();
       } else {
         const location = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Highest,
         });
-        NetInfo.fetch().then(state => {
-          if (state.isConnected && userInfo?.user_id) {
-            props.navigation.replace('Home', { crossIcon: false });
-          } else if (state.isConnected && !userInfo?.user_id) {
-            props.navigation.navigate('socialLogin');
-          } else {
-            props.navigation.replace('NoWiFi');
-          }
-        });
-
-        await AsyncStorage.setItem(
-          '@location',
-          JSON.stringify({
-            lat: location?.coords.latitude,
-            log: location?.coords.longitude,
-          }),
-        );
-
-        Location.getCurrentPositionAsync().then(pos => {
-          Location.reverseGeocodeAsync({
-            latitude: pos.coords.latitude,
-            longitude: pos.coords.longitude,
-          }).then(async res => {
-            let currency = getCountry(res[0]?.country);
-            let formattedCurrency = formatCurrency('', currency?.currency);
-            await AsyncStorage.setItem(
-              '@Currency',
-              JSON.stringify({
-                currency: formattedCurrency || '',
-              }),
-            );
-            await AsyncStorage.setItem(
-              '@City',
-              JSON.stringify({
-                city: res[0]?.city || '',
-              }),
-            );
-          });
-        });
+        checkInternet(userInfo);
+        setCurrency();
       }
     } catch (error) {
       // props.navigation.dispatch(

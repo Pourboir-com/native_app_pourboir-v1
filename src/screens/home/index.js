@@ -10,6 +10,7 @@ import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import { isSearch } from '../../util';
 // import * as FacebookAds from 'expo-ads-facebook';
+import * as Location from 'expo-location';
 
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
@@ -19,24 +20,22 @@ const HomeScreen = props => {
   const { state, dispatch } = useContext(Context);
   const { restaurantsDetails: data } = state;
 
-  // FacebookAds.AdSettings.addTestDevice(
-  //   FacebookAds.AdSettings.currentDeviceHash,
-  // );
-  // FacebookAds.AdSettings.setAdvertisingTrackingEnabled(true);
-  // const VALID_ANDROID_PLACEMENT_ID = 'IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID';
-  // useEffect(() => {
-  //   FacebookAds.InterstitialAdManager.showAd(VALID_ANDROID_PLACEMENT_ID)
-  //     .then(didClick => {
-  //     })
-  //     .catch(error => {
-  //       // call other ads
-  //     });
-  // }, []);
-
   useEffect(() => {
     (async () => {
-      const { location } = await getAsyncStorageValues();
-      setSaveLocation(location);
+      const isLocation = await Location.hasServicesEnabledAsync();
+      if (isLocation) {
+        const location = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.Highest,
+        });
+        setSaveLocation(
+          JSON.stringify({
+            lat: location?.coords.latitude,
+            log: location?.coords.longitude,
+          }),
+        );
+      } else {
+        setSaveLocation(JSON.stringify({ lat: 48.864716, log: 2.349014 }));
+      }
     })();
   }, []);
 
@@ -45,30 +44,6 @@ const HomeScreen = props => {
       setsearchEnter('');
     }
   }, [searchVal]);
-
-  // useQuery(
-  //   [
-  //     'GET_YOUR_RES',
-  //     {
-  //       location: saveLocation,
-  //       user_id: userDetails.user_id,
-  //       // pageToken: nextPageToken,
-  //       // max_results: 1,
-  //       // page_no: 1,
-  //     },
-  //   ],
-  //   GET_YOUR_RES,
-  //   {
-  //     ...reactQueryConfig,
-  //     enabled: saveLocation && userDetails.user_id,
-  //     onSuccess: res => {
-  //       dispatch({
-  //         type: actionTypes.YOUR_RESTAURANTS,
-  //         payload: res?.restaurants?.results || [],
-  //       });
-  //     },
-  //   },
-  // );
 
   const {
     data: restaurantData,
@@ -86,8 +61,8 @@ const HomeScreen = props => {
     ],
     GET_RESTAURANT,
     {
-      ...reactQueryConfig,
       enabled: saveLocation,
+      ...reactQueryConfig,
       onSuccess: res => {
         dispatch({
           type: actionTypes.RESTAURANTS_DETAILS,
@@ -132,3 +107,17 @@ const HomeScreen = props => {
   );
 };
 export default HomeScreen;
+
+// FacebookAds.AdSettings.addTestDevice(
+//   FacebookAds.AdSettings.currentDeviceHash,
+// );
+// FacebookAds.AdSettings.setAdvertisingTrackingEnabled(true);
+// const VALID_ANDROID_PLACEMENT_ID = 'IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID';
+// useEffect(() => {
+//   FacebookAds.InterstitialAdManager.showAd(VALID_ANDROID_PLACEMENT_ID)
+//     .then(didClick => {
+//     })
+//     .catch(error => {
+//       // call other ads
+//     });
+// }, []);

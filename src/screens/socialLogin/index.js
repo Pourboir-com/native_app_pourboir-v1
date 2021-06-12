@@ -458,7 +458,7 @@ const SocialLogin = ({ navigation, route }) => {
               <CheckBox
                 style={{
                   zIndex: 9999,
-                  marginTop: -3,
+                  marginTop: Platform.OS === 'ios' ? -10 : -2,
                 }}
                 onClick={() => setTermsChecked(!termsChecked)}
                 isChecked={termsChecked}

@@ -452,17 +452,13 @@ const SocialLogin = ({ navigation, route }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 minHeight: 80,
-                marginTop: 30,
                 textAlign: 'center',
-                position: 'relative',
               }}
             >
               <CheckBox
                 style={{
-                  position: 'absolute',
-                  left: Localization.locale === 'en-US' ? 0 : 60,
                   zIndex: 9999,
-                  top: 0,
+                  marginTop: -3,
                 }}
                 onClick={() => setTermsChecked(!termsChecked)}
                 isChecked={termsChecked}
@@ -485,8 +481,6 @@ const SocialLogin = ({ navigation, route }) => {
                 style={[
                   {
                     textAlign: 'center',
-                    marginLeft: 10,
-                    marginTop: Localization.locale === 'en-US' ? -48 : -24,
                   },
                 ]}
               >
@@ -523,28 +517,33 @@ const SocialLogin = ({ navigation, route }) => {
                     </Text>
                   </TouchableOpacity>
                 </View>
-                <TouchableOpacity
-                  onPress={() =>
-                    WebBrowser.openBrowserAsync(
-                      'https://pourboir.com/fr/need-help/privacy-policy/',
-                    )
-                  }
-                >
-                  <Text
-                    style={{
-                      color: '#0050A0',
-                      fontSize: 14,
-                      fontFamily: 'ProximaNova',
-                      lineHeight: 24,
-                      textAlign: 'center',
-                      marginHorizontal: 5,
-                    }}
-                  >
-                    <Text style={{ color: 'black' }}>{i18n.t('et_la')}</Text>
-                    {i18n.t('confidential')}
-                  </Text>
-                </TouchableOpacity>
               </Text>
+            </View>
+
+            <View
+              style={{
+                justifyContent: 'center',
+                flexDirection: 'row',
+                marginTop: -27,
+                marginLeft: 30,
+              }}
+            >
+              <Text
+                style={{ color: Colors.fontLight, fontFamily: 'ProximaNova' }}
+              >
+                {i18n.t('et_la')}
+              </Text>
+              <TouchableOpacity
+                onPress={() =>
+                  WebBrowser.openBrowserAsync(
+                    'https://pourboir.com/fr/need-help/privacy-policy/',
+                  )
+                }
+              >
+                <Text style={{ color: '#0050A0', fontFamily: 'ProximaNova' }}>
+                  {i18n.t('confidential')}
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

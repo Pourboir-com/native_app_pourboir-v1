@@ -105,7 +105,7 @@ const ForgetPassword = ({ navigation }) => {
               {loading ? (
                 <ActivityIndicator size={25} color="#EBC11B" />
               ) : (
-                <Text style={styles.saveTxt}>{i18n.t('to_login')}</Text>
+                <Text style={styles.saveTxt}>{i18n.t('reinitialiser')}</Text>
               )}
             </TouchableOpacity>
           </View>

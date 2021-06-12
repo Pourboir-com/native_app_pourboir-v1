@@ -219,4 +219,5 @@ export default {
   //no tracking
   activate_app_tracking: 'We need your permission to track your activity and offer you a better user experience',
   allow_app_tracking: 'Authorise to track my activity',
+  reinitialiser: 'Request new password',
 };

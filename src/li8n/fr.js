@@ -59,7 +59,7 @@ export default {
   I_accept: 'J’accepte les',
   terms_of_use: 'conditions d’utilisation',
   confidential:'politique de confidentialité',
-  et_la:'et  la ',
+  et_la:'et  la  ',
   I_am: 'Je suis',
   manager_res: 'restaurateur',
 
@@ -223,4 +223,5 @@ export default {
   //no app tracking
   activate_app_tracking: `Il nous faut votre accord pour une meilleure expérience d’utilisation`,
   allow_app_tracking: 'Activer le suivi d’activité',
+  reinitialiser: 'Réinitialiser',
 };

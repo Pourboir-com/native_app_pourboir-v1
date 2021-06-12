@@ -19,6 +19,7 @@ import {
   RECRUITMENT_FORM,
   GET_YOUR_RES,
   DELETE_WAITER_FORMS,
+  DELETE_FORM,
 } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import Context from '../../contextApi/context';
@@ -37,7 +38,7 @@ const ServerProfile = ({ navigation, route }) => {
   // const [saveLocation, setSaveLocation] = useState('');
   const [userInfo, setuserInfo] = useState();
   const [loading, setLoading] = useState(false);
-  const [deleteWaiterForm] = useMutation(DELETE_WAITER_FORMS);
+  const [deleteWaiterForm] = useMutation(DELETE_FORM);
 
   const {
     data: waiterFormData,
@@ -65,7 +66,7 @@ const ServerProfile = ({ navigation, route }) => {
     try {
       await deleteWaiterForm(
         {
-          form_id: id,
+          ids: [id],
         },
         {
           onSuccess: async () => {

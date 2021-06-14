@@ -410,7 +410,7 @@ const Find_Job = ({ navigation, route }) => {
           heading={i18n.t('thank_info')}
           subHeadingText={i18n.t('broadcast')}
           buttonText={'OK'}
-          customHeadingSize={24}
+          customHeadingSize={Platform.OS === 'ios' ? 26 : 24}
           customButtonWidth={130}
         />
       )}

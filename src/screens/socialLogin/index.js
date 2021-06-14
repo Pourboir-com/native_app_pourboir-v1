@@ -123,7 +123,9 @@ const SocialLogin = ({ navigation, route }) => {
     }
     loadCity();
   }, []);
+
   const os = Platform.OS === 'android' ? 'android' : 'apple';
+
   const handleGoogleSignIn = async () => {
     setLoading(true);
     // First- obtain access token from Expo's Google API
@@ -149,7 +151,7 @@ const SocialLogin = ({ navigation, route }) => {
             navigation.navigate('OpenCardReviews');
           } else {
             // navigation.navigate('Home', { crossIcon: false });
-            navigation.replace('WaiterProfile', { crossIcon: true });
+            navigation.replace('Setting');
           }
           let userDetails = {
             name: res?.user?.full_name,
@@ -234,7 +236,7 @@ const SocialLogin = ({ navigation, route }) => {
                   navigation.navigate('OpenCardReviews');
                 } else {
                   // navigation.navigate('Home', { crossIcon: false });
-                  navigation.replace('WaiterProfile', { crossIcon: true });
+                  navigation.replace('Setting');
                 }
                 let userDetails = {
                   name: res?.user?.full_name,
@@ -315,8 +317,11 @@ const SocialLogin = ({ navigation, route }) => {
           </View>
           <TouchableOpacity
             activeOpacity={0.5}
-            disabled={termsChecked ? false : true}
-            onPress={facebookLogin}
+            onPress={() =>
+              termsChecked
+                ? facebookLogin()
+                : alert('Please accept condition to continue.')
+            }
             style={styles.btnFb}
           >
             <FontAwesome name="facebook" color="#fff" size={20} />
@@ -334,8 +339,11 @@ const SocialLogin = ({ navigation, route }) => {
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.5}
-            disabled={termsChecked ? false : true}
-            onPress={handleGoogleSignIn}
+            onPress={() =>
+              termsChecked
+                ? handleGoogleSignIn()
+                : alert('Please accept condition to continue.')
+            }
             style={styles.btnGoogle}
           >
             <FontAwesome name="google" color="#fff" size={20} />
@@ -355,77 +363,79 @@ const SocialLogin = ({ navigation, route }) => {
             <React.Fragment>
               <TouchableOpacity
                 activeOpacity={0.5}
-                disabled={termsChecked ? false : true}
                 onPress={async () => {
-                  try {
-                    const credential = await AppleAuthentication.signInAsync({
-                      requestedScopes: [
-                        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-                        AppleAuthentication.AppleAuthenticationScope.EMAIL,
-                      ],
-                    });
+                  if (termsChecked) {
+                    try {
+                      const credential = await AppleAuthentication.signInAsync({
+                        requestedScopes: [
+                          AppleAuthentication.AppleAuthenticationScope
+                            .FULL_NAME,
+                          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+                        ],
+                      });
 
-                    let user = {
-                      name: iPhoneLoginName(credential.fullName) || '',
-                      email: credential.email || '',
-                      family_name: credential.fullName?.familyName || '',
-                      id: credential.user || '',
-                      picture: credential.image || '',
-                      city: city,
-                      login_type: 'Facebook',
-                      mobile_type: Device.deviceName || '',
-                      os,
-                    };
+                      let user = {
+                        name: iPhoneLoginName(credential.fullName) || '',
+                        email: credential.email || '',
+                        family_name: credential.fullName?.familyName || '',
+                        id: credential.user || '',
+                        picture: credential.image || '',
+                        city: city,
+                        login_type: 'Facebook',
+                        mobile_type: Device.deviceName || '',
+                        os,
+                      };
 
-                    await googleSignup(user, {
-                      onSuccess: async res => {
-                        if (vote) {
-                          navigation.navigate('RateYourService');
-                          setVote(false);
-                        } else if (confirmWaiter || HelpUs) {
-                          navigation.navigate('OpenCardReviews');
-                        } else {
-                          // navigation.navigate('Home', { crossIcon: false });
-                          navigation.replace('WaiterProfile', {
-                            crossIcon: true,
+                      await googleSignup(user, {
+                        onSuccess: async res => {
+                          if (vote) {
+                            navigation.navigate('RateYourService');
+                            setVote(false);
+                          } else if (confirmWaiter || HelpUs) {
+                            navigation.navigate('OpenCardReviews');
+                          } else {
+                            // navigation.navigate('Home', { crossIcon: false });
+                            navigation.replace('Setting');
+                          }
+                          let userDetails = {
+                            name: res?.user?.full_name,
+                            // ? userGivenName(res?.user?.full_name)
+                            // : '',
+                            image: res?.user?.picture || '',
+                            email: res?.user?.email || '',
+                            accessToken: credential.authorizationCode || '',
+                            user_id: res?.user?._id || '',
+                          };
+
+                          dispatch({
+                            type: actionTypes.USER_DETAILS,
+                            payload: userDetails,
                           });
-                        }
-                        let userDetails = {
-                          name: res?.user?.full_name,
-                          // ? userGivenName(res?.user?.full_name)
-                          // : '',
-                          image: res?.user?.picture || '',
-                          email: res?.user?.email || '',
-                          accessToken: credential.authorizationCode || '',
-                          user_id: res?.user?._id || '',
-                        };
 
-                        dispatch({
-                          type: actionTypes.USER_DETAILS,
-                          payload: userDetails,
-                        });
-
-                        await AsyncStorage.setItem(
-                          '@userInfo',
-                          JSON.stringify({
-                            ...userDetails,
-                          }),
-                        );
-                        registerForPushNotifications(res?.user?._id);
-                        setLoading(false);
-                      },
-                      onError: e => {
-                        setLoading(false);
-                        alert(`Apple Login Error: ${e}`);
-                      },
-                    });
-                    // signed in
-                  } catch (e) {
-                    if (e.code === 'ERR_CANCELED') {
-                      // handle that the user canceled the sign-in flow
-                    } else {
-                      // handle other errors
+                          await AsyncStorage.setItem(
+                            '@userInfo',
+                            JSON.stringify({
+                              ...userDetails,
+                            }),
+                          );
+                          registerForPushNotifications(res?.user?._id);
+                          setLoading(false);
+                        },
+                        onError: e => {
+                          setLoading(false);
+                          alert(`Apple Login Error: ${e}`);
+                        },
+                      });
+                      // signed in
+                    } catch (e) {
+                      if (e.code === 'ERR_CANCELED') {
+                        // handle that the user canceled the sign-in flow
+                      } else {
+                        // handle other errors
+                      }
                     }
+                  } else {
+                    alert('Please accept condition to continue.');
                   }
                 }}
                 style={styles.btnApple}

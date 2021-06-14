@@ -183,7 +183,7 @@ const AddExperienceModal = ({
             flexDirection: 'column',
             justifyContent: 'space-around',
             alignItems: 'center',
-            width: '100%',
+            width: 270,
             marginVertical: 15,
           }}
         >
@@ -216,7 +216,7 @@ const AddExperienceModal = ({
                 )}
               </Text>
             </View>
-            <View style={stylesTextbox.input_icon}>
+            <View style={[stylesTextbox.input_icon,{width:'80%'}]}>
               <TextInput
                 returnKeyLabel="Find"
                 returnKeyType="done"

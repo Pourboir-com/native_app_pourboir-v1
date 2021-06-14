@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
@@ -14,13 +14,21 @@ import {
 import { Body, Right } from 'native-base';
 import { Colors } from '../constants/Theme';
 import { MaterialIcons, FontAwesome, Fontisto } from '@expo/vector-icons';
+import Context from '../contextApi/context';
+import * as actionTypes from '../contextApi/actionTypes';
 
 const GlobalHeader = props => {
+  const { state, dispatch } = useContext(Context);
+
   const goBackHandler = props => {
     if (props.setting) {
       props.navigation.navigate('Setting');
     } else if (props.Home) {
       props.navigation.navigate('Home', { crossIcon: false });
+      // dispatch({
+      //   type: actionTypes.REFRESH_ANIMATION,
+      //   payload: !state.refreshAnimation,
+      // });
     } else {
       props.navigation.goBack(null);
     }
@@ -44,7 +52,11 @@ const GlobalHeader = props => {
         props.navigation.navigate('Setting');
         return true;
       } else if (props.Home) {
-        props.navigation.replace('Home', { crossIcon: false });
+        props.navigation.navigate('Home', { crossIcon: false });
+        // dispatch({
+        //   type: actionTypes.REFRESH_ANIMATION,
+        //   payload: !state.refreshAnimation,
+        // });
         return true;
       }
     };

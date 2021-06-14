@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   options: {
-    maxHeight: 116,
+    maxHeight: 77,
     backgroundColor: '#f0f0f0',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,

@@ -40,12 +40,12 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
       <Modal
         onBackdropPress={() => setModalVisible(false)}
         isVisible={isModalVisible}
         backdropColor={!profile ? '#f9f9f9' : '#000'}
-        style={{ borderRadius: 20, backgroundColor: '#fff' }}
+        style={{ borderRadius: 20, backgroundColor: '#fff', flex: 0}}
+        backdropOpacity={1}
       >
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -85,7 +85,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
               <Dash style={{ width: 170 }} dashColor="#FCDF6F" />
             </View>
             <View style={styles.first_part_modal}>
-              <View style={{ marginVertical: 20 }}>
+              <View style={{ marginVertical: 15, marginBottom: 19 }}>
                 <View>
                   <View>
                     <Text style={styles.expsTxt}>{i18n.t('exp')} </Text>
@@ -95,6 +95,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                       flexDirection: 'row',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      marginTop: -7
                     }}
                   >
                     <Text style={styles.exp_year}>
@@ -118,8 +119,8 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
             <View style={styles.first_part_modal}>
               <View
                 style={{
-                  marginVertical: 20,
-                  marginBottom: Platform.OS === 'ios' ? -5 : 20,
+                  marginVertical: 15,
+                  marginBottom: Platform.OS === 'ios' ? 10 : 35,
                   alignItems: 'center',
                 }}
               >
@@ -148,7 +149,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                             <Text
                               style={{
                                 fontFamily: 'ProximaNova',
-                                fontSize: 15,
+                                fontSize: 16,
                               }}
                             >
                               {item?.enterprise_name.slice(0, 25) || 'none'}
@@ -156,7 +157,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                             <Text
                               style={{
                                 fontFamily: 'ProximaNova',
-                                fontSize: 14,
+                                fontSize: 16,
                               }}
                             >{`${i18n.t('of')} ${formatDate(
                               item?.start_date,
@@ -169,7 +170,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                         ))}
                       </View>
                     ) : (
-                      <Text style={{ fontSize: 15, color: 'black' }}>none</Text>
+                      <Text style={{ fontSize: 16, color: 'black' }}>none</Text>
                     )}
                   </Text>
                 </View>
@@ -177,7 +178,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
               <Dash style={{ width: 170 }} dashColor="#FCDF6F" />
             </View>
             <View style={styles.first_part_modal}>
-              <View style={{ marginVertical: 20 }}>
+              <View style={{ marginVertical: 15, marginBottom: 55 }}>
                 <View>
                   <View>
                     <Text style={styles.expsTxt}>Qualifications</Text>
@@ -198,7 +199,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                 <View>
                   <Text style={styles.expsTxt}>{i18n.t('contact')}</Text>
                 </View>
-                <View style={[styles.recruterBtns, { marginBottom: 30 }]}>
+                <View style={[styles.recruterBtns, { marginBottom: 40 }]}>
                   <TouchableOpacity
                     onPress={() =>
                       waiterFormData?.data[0]?.telephone_number &&
@@ -243,7 +244,6 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
           </TouchableOpacity>
         </ScrollView>
       </Modal>
-    </View>
   );
 };
 

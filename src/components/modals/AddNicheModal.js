@@ -49,7 +49,7 @@ const AddNicheModal = ({
     }
   };
 
-  let validation = dayOfWeek && times;
+  let validation = dayOfWeek && times?.length;
 
   return (
     <Overlay
@@ -87,43 +87,41 @@ const AddNicheModal = ({
       </ImageBackground>
 
       <KeyboardAwareScrollView style={{ width: '90%' }}>
-        <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
+        <Text
+          style={[
+            styles.txtConfrm,
+            { fontFamily: 'ProximaNovaBold', fontSize: 18 },
+          ]}
+        >
           {i18n.t('add_niche')}
         </Text>
         <View
           style={{
-            flexDirection: 'column',
-            // justifyContent: 'space-around',
-            // alignItems: 'center',
             width: '100%',
             marginVertical: 26,
             marginBottom: 42,
+            borderRadius: 15,
+            borderColor: '#ccc',
+            borderWidth: 1,
           }}
         >
-          <View
-            style={{
-              backgroundColor: '#fff',
-              borderRadius: 15,
-              borderColor: '#ccc',
-              borderWidth: 1,
-            }}
+          <Picker
+            mode="dropdown"
+            iosHeader="Jour de la semaine"
+            style={{ height: 50, paddingHorizontal: 8, width: '100%' }}
+            selectedValue={dayOfWeek}
+            onValueChange={e => setDayOfWeek(e)}
+            iosIcon={<AntDesign  name="caretdown" style={{ width: '10%' }} />}
+            textStyle={{ width: '90%' }}
           >
-            <Picker
-              mode="dropdown"
-              iosHeader="Jour de la semaine"
-              style={{ height: 50, paddingHorizontal: 8 }}
-              selectedValue={dayOfWeek}
-              onValueChange={e => setDayOfWeek(e)}
-            >
-              <Picker.Item label={i18n.t('monday')} value={'Monday'} />
-              <Picker.Item label={i18n.t('tuesday')} value={'Tuesday'} />
-              <Picker.Item label={i18n.t('wednesday')} value={'Wednesday'} />
-              <Picker.Item label={i18n.t('thursday')} value={'Thursday'} />
-              <Picker.Item label={i18n.t('friday')} value={'Friday'} />
-              <Picker.Item label={i18n.t('saturday')} value={'Saturday'} />
-              <Picker.Item label={i18n.t('sunday')} value={'Sunday'} />
-            </Picker>
-          </View>
+            <Picker.Item label={i18n.t('monday')} value={'Monday'} />
+            <Picker.Item label={i18n.t('tuesday')} value={'Tuesday'} />
+            <Picker.Item label={i18n.t('wednesday')} value={'Wednesday'} />
+            <Picker.Item label={i18n.t('thursday')} value={'Thursday'} />
+            <Picker.Item label={i18n.t('friday')} value={'Friday'} />
+            <Picker.Item label={i18n.t('saturday')} value={'Saturday'} />
+            <Picker.Item label={i18n.t('sunday')} value={'Sunday'} />
+          </Picker>
         </View>
 
         <View

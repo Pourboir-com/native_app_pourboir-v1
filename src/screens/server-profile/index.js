@@ -134,10 +134,9 @@ const ServerProfile = ({ navigation, route }) => {
             fontSize={17}
             color={'black'}
             navigation={navigation}
-            setting={false}
+            setting={true}
             backgroundColor={'transparent'}
             borderRadius={true}
-            Home={true}
           />
         </ImageBackground>
         <ScrollView showsVerticalScrollIndicator={false} bounces={false}>

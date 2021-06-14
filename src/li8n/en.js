@@ -143,7 +143,7 @@ export default {
   //canidate modal
   broadcast:
     'We will broadcast your profile to the corresponding restaurants to your profile',
-  thank_info: 'thank you for your information',
+  thank_info: 'Thank you for your information',
 
   // manager side translations
   forget_password: 'Password forgotten ? ',
@@ -191,7 +191,7 @@ export default {
   at: 'to',
   prof_exp: 'Professional Experience',
   add_exp: 'Add an experience',
-  add_niche: 'Add a niche',
+  add_niche: 'Add a time',
   profile_server: 'Waiter Profile',
   no_restaurant: 'You have no restaurant at the moment',
   search_rest: 'Search for your restaurant and add yourself by choosing',

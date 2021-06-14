@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
     height: 45,
   },
   txtConfrm: {
-    fontSize: 16,
+    fontSize: Platform.OS === 'ios' ? 17 : 16,
     color: Colors.fontLight,
     marginTop: 20,
     textAlign: 'center',

@@ -40,7 +40,7 @@ const Setting = ({ navigation }) => {
   const [updatePicture] = useMutation(UPDATE_PICTURE);
 
   const resetState = async () => {
-    navigation.navigate('socialLogin');
+    navigation.replace('socialLogin');
     dispatch({
       type: actionTypes.USER_DETAILS,
       payload: {},

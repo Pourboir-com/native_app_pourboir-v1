@@ -122,7 +122,7 @@ export default function SplashScreen(props) {
       if (state.isConnected && userInfo?.user_id) {
         props.navigation.replace('Home', { crossIcon: false });
       } else if (state.isConnected && !userInfo?.user_id) {
-        props.navigation.navigate('socialLogin');
+        props.navigation.replace('socialLogin');
       } else {
         props.navigation.replace('NoWiFi');
       }

@@ -23,12 +23,8 @@ const GlobalHeader = props => {
   const goBackHandler = props => {
     if (props.setting) {
       props.navigation.navigate('Setting');
-    } else if (props.Home) {
-      props.navigation.navigate('Home', { crossIcon: false });
-      // dispatch({
-      //   type: actionTypes.REFRESH_ANIMATION,
-      //   payload: !state.refreshAnimation,
-      // });
+    } else if (props.Home == 'true' && !state?.restaurantsDetails?.length) {
+      props.navigation.replace('Home', { crossIcon: false });
     } else {
       props.navigation.goBack(null);
     }
@@ -51,12 +47,8 @@ const GlobalHeader = props => {
       if (props.setting) {
         props.navigation.navigate('Setting');
         return true;
-      } else if (props.Home) {
-        props.navigation.navigate('Home', { crossIcon: false });
-        // dispatch({
-        //   type: actionTypes.REFRESH_ANIMATION,
-        //   payload: !state.refreshAnimation,
-        // });
+      } else if (props.Home == 'true' && !state?.restaurantsDetails?.length) {
+        props.navigation.replace('Home', { crossIcon: false });
         return true;
       }
     };

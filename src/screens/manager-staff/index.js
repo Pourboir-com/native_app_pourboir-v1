@@ -197,7 +197,7 @@ const ManagerStaff = ({ navigation }) => {
                   style={{
                     width: '100%',
                     height: 40,
-                    fontSize: 16,
+                    fontSize: 17,
                     fontFamily: 'ProximaNova',
                   }}
                 />
@@ -238,7 +238,7 @@ const ManagerStaff = ({ navigation }) => {
               >
                 <Image
                   source={require('../../assets/images/Filter.png')}
-                  style={{ width: 40, height: 40, resizeMode: 'contain' }}
+                  style={{ width: 47, height: 47, resizeMode: 'contain' }}
                 />
               </TouchableOpacity>
             </View>

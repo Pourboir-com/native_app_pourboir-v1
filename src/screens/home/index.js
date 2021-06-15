@@ -21,23 +21,6 @@ const HomeScreen = props => {
   const { state, dispatch } = useContext(Context);
   const { restaurantsDetails: data } = state;
 
-  // React.useEffect(() => {
-  //   const handleBackButtonClick = () => {
-     
-  //   };
-
-  //   props.navigation.addListener('focus', () => {
-  //     BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
-  //   });
-  //   props.navigation.addListener('blur', () => {
-  //     BackHandler.removeEventListener(
-  //       'hardwareBackPress',
-  //       handleBackButtonClick,
-  //     );
-  //   });
-  // });
-
-
   useEffect(() => {
     (async () => {
       const isLocation = await Location.hasServicesEnabledAsync();

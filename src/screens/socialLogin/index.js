@@ -9,6 +9,7 @@ import {
   Platform,
   ActivityIndicator,
   ScrollView,
+  BackHandler,
 } from 'react-native';
 import Constants from 'expo-constants';
 import * as WebBrowser from 'expo-web-browser';
@@ -53,6 +54,21 @@ const SocialLogin = ({ navigation, route }) => {
     }),
   });
 
+  React.useEffect(() => {
+    const handleBackButtonClick = () => {
+      return true;
+    };
+
+    navigation.addListener('focus', () => {
+      BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+    });
+    navigation.addListener('blur', () => {
+      BackHandler.removeEventListener(
+        'hardwareBackPress',
+        handleBackButtonClick,
+      );
+    });
+  });
   const registerForPushNotifications = async user_id => {
     let token;
     if (Constants.isDevice) {
@@ -144,15 +160,6 @@ const SocialLogin = ({ navigation, route }) => {
       };
       await googleSignup(userSignInDetails, {
         onSuccess: async res => {
-          if (vote) {
-            navigation.navigate('RateYourService');
-            setVote(false);
-          } else if (confirmWaiter || HelpUs) {
-            navigation.navigate('OpenCardReviews');
-          } else {
-            // navigation.navigate('Home', { crossIcon: false });
-            navigation.replace('Setting');
-          }
           let userDetails = {
             name: res?.user?.full_name,
             // ? userGivenName(res?.user?.full_name)
@@ -174,6 +181,16 @@ const SocialLogin = ({ navigation, route }) => {
             }),
           );
           registerForPushNotifications(res?.user?._id);
+
+          if (vote) {
+            navigation.replace('RateYourService');
+            setVote(false);
+          } else if (confirmWaiter || HelpUs) {
+            navigation.replace('OpenCardReviews');
+          } else {
+            // navigation.navigate('Home', { crossIcon: false });
+            navigation.replace('Setting', { login: true });
+          }
           setLoading(false);
         },
         onError: error => {
@@ -229,15 +246,6 @@ const SocialLogin = ({ navigation, route }) => {
             };
             await googleSignup(user, {
               onSuccess: async res => {
-                if (vote) {
-                  navigation.navigate('RateYourService');
-                  setVote(false);
-                } else if (confirmWaiter || HelpUs) {
-                  navigation.navigate('OpenCardReviews');
-                } else {
-                  // navigation.navigate('Home', { crossIcon: false });
-                  navigation.replace('Setting');
-                }
                 let userDetails = {
                   name: res?.user?.full_name,
                   // ? userGivenName(res?.user?.full_name)
@@ -260,6 +268,16 @@ const SocialLogin = ({ navigation, route }) => {
                   }),
                 );
                 registerForPushNotifications(res?.user?._id);
+
+                if (vote) {
+                  navigation.replace('RateYourService');
+                  setVote(false);
+                } else if (confirmWaiter || HelpUs) {
+                  navigation.replace('OpenCardReviews');
+                } else {
+                  // navigation.navigate('Home', { crossIcon: false });
+                  navigation.replace('Setting', { login: true });
+                }
                 setLoading(false);
               },
               onError: e => {
@@ -388,15 +406,6 @@ const SocialLogin = ({ navigation, route }) => {
 
                       await googleSignup(user, {
                         onSuccess: async res => {
-                          if (vote) {
-                            navigation.navigate('RateYourService');
-                            setVote(false);
-                          } else if (confirmWaiter || HelpUs) {
-                            navigation.navigate('OpenCardReviews');
-                          } else {
-                            // navigation.navigate('Home', { crossIcon: false });
-                            navigation.replace('Setting');
-                          }
                           let userDetails = {
                             name: res?.user?.full_name,
                             // ? userGivenName(res?.user?.full_name)
@@ -419,6 +428,15 @@ const SocialLogin = ({ navigation, route }) => {
                             }),
                           );
                           registerForPushNotifications(res?.user?._id);
+                          if (vote) {
+                            navigation.replace('RateYourService');
+                            setVote(false);
+                          } else if (confirmWaiter || HelpUs) {
+                            navigation.replace('OpenCardReviews');
+                          } else {
+                            // navigation.navigate('Home', { crossIcon: false });
+                            navigation.replace('Setting', { login: true });
+                          }
                           setLoading(false);
                         },
                         onError: e => {

@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     width: '23%',
     alignItems: 'center',
     paddingLeft: 10,
-    paddingTop: 4,
+    paddingTop: 1.5
   },
 });
 

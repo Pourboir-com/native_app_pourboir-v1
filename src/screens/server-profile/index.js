@@ -134,7 +134,7 @@ const ServerProfile = ({ navigation, route }) => {
             fontSize={17}
             color={'black'}
             navigation={navigation}
-            setting={true}
+            setting
             backgroundColor={'transparent'}
             borderRadius={true}
           />

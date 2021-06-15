@@ -458,7 +458,7 @@ const styles = StyleSheet.create({
     height: 200,
   },
   txtConfrm: {
-    fontSize: 16,
+    fontSize: 18,
     color: Colors.fontDark,
     marginTop: 18,
     textAlign: 'center',

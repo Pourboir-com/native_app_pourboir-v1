@@ -32,8 +32,9 @@ import { userGivenName } from '../../util';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Spinner from 'react-native-loading-spinner-overlay';
 const imgBg = require('../../assets/images/Group5.png');
+import { StatusBar } from 'expo-status-bar';
 
-const Setting = ({ navigation }) => {
+const Setting = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const { state, dispatch } = useContext(Context);
   const [image, setImage] = useState();
@@ -118,6 +119,7 @@ const Setting = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar translucent={true} style="dark" />
       <Spinner visible={loading} />
       <View style={styles.viewProfile}>
         <ImageBackground
@@ -133,7 +135,7 @@ const Setting = ({ navigation }) => {
             headingText={i18n.t('setting')}
             fontSize={17}
             color={'black'}
-            Home={true}
+            Home={route?.params?.login ? 'true' : 'false'}
             backgroundColor={'transparent'}
             navigation={navigation}
             logout={handleSignOut}

@@ -209,7 +209,7 @@ const HomeScreen = props => {
                 //   <ActivityIndicator color="black" size={38} />
                 // ) : (
                 <TouchableOpacity
-                  onPress={() => props.navigation.navigate('Setting')}
+                  onPress={() => props.navigation.navigate('Setting', { settingsBack: true })}
                 >
                   <Image
                     style={{
@@ -227,7 +227,9 @@ const HomeScreen = props => {
                 //   <ActivityIndicator color="black" size={38} />
                 // ) : (
                 <TouchableOpacity
-                  onPress={() => props.navigation.navigate('Setting')}
+                  onPress={() =>
+                    props.navigation.navigate('Setting', { settingsBack: true })
+                  }
                 >
                   <FontAwesome name="user-circle-o" size={37} color="black" />
                 </TouchableOpacity>

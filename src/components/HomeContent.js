@@ -17,6 +17,7 @@ import {
   distributeInArray,
   restaurantDistance,
   filteredMinusRestaurant,
+  sortRestaurant,
 } from '../util';
 import { HomeCardSkeleton } from '../components/skeleton';
 import NoListImg from '../assets/images/emptyRestaurantList.png';
@@ -212,9 +213,7 @@ export default function HomeScreenContent({
             }}
           >
             <FlatList
-              data={
-                restaurantLoading ? dummyArray : distributeInArray(data).all
-              }
+              data={restaurantLoading ? dummyArray : sortRestaurant(data)}
               showsVerticalScrollIndicator={false}
               // onEndReached={handleLoadMore}
               // onEndReachedThreshold={0.5}

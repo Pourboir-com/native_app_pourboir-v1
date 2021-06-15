@@ -180,8 +180,6 @@ const SocialLogin = ({ navigation, route }) => {
               ...userDetails,
             }),
           );
-          registerForPushNotifications(res?.user?._id);
-
           if (vote) {
             navigation.replace('RateYourService');
             setVote(false);
@@ -191,6 +189,7 @@ const SocialLogin = ({ navigation, route }) => {
             // navigation.navigate('Home', { crossIcon: false });
             navigation.replace('Setting', { login: true });
           }
+          registerForPushNotifications(res?.user?._id);
           setLoading(false);
         },
         onError: error => {
@@ -267,8 +266,7 @@ const SocialLogin = ({ navigation, route }) => {
                     ...userDetails,
                   }),
                 );
-                registerForPushNotifications(res?.user?._id);
-
+                
                 if (vote) {
                   navigation.replace('RateYourService');
                   setVote(false);
@@ -278,6 +276,7 @@ const SocialLogin = ({ navigation, route }) => {
                   // navigation.navigate('Home', { crossIcon: false });
                   navigation.replace('Setting', { login: true });
                 }
+                registerForPushNotifications(res?.user?._id);
                 setLoading(false);
               },
               onError: e => {
@@ -427,7 +426,6 @@ const SocialLogin = ({ navigation, route }) => {
                               ...userDetails,
                             }),
                           );
-                          registerForPushNotifications(res?.user?._id);
                           if (vote) {
                             navigation.replace('RateYourService');
                             setVote(false);
@@ -437,6 +435,7 @@ const SocialLogin = ({ navigation, route }) => {
                             // navigation.navigate('Home', { crossIcon: false });
                             navigation.replace('Setting', { login: true });
                           }
+                          registerForPushNotifications(res?.user?._id);
                           setLoading(false);
                         },
                         onError: e => {

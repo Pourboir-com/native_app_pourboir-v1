@@ -156,12 +156,9 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                             {item?.enterprise_name.slice(0, 25) || 'none'}
                           </Text>
                           <Text
-                           ellipsizeMode="tail"
-                           numberOfLines={1}
                             style={{
                               fontFamily: 'ProximaNova',
                               fontSize: 16,
-                              width:'95%'
                             }}
                           >{`${i18n.t('of')} ${formatDate(
                             item?.start_date,

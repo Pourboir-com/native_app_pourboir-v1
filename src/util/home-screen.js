@@ -32,8 +32,21 @@ export const distributeInArray = restaurants => {
   };
 };
 
+export const sortRestaurant = res => {
+  return res.sort((a, b) => {
+    return (
+      _get(a, 'distance.rows[0].elements[0].distance.value') -
+      _get(b, 'distance.rows[0].elements[0].distance.value', '')
+    );
+  });
+};
+
 export const restaurantCompareDistance = item => {
-  return _get(item, 'item?.distance?.rows[0]?.elements[0]?.distance?.value', '');
+  return _get(
+    item,
+    'item?.distance?.rows[0]?.elements[0]?.distance?.value',
+    '',
+  );
 };
 
 export const restaurantDistance = item => {

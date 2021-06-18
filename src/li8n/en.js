@@ -7,7 +7,7 @@ export default {
   hello: 'Welcome',
   find_your_restaurant: 'Find your restaurant',
   around_you: 'Around you',
-  result_distance: 'Result around you',
+  result_distance: 'The result of your search',
   you_have_no_restaurant: 'You have no restaurant at the moment',
   search_for_rest_and_add:
     'Search for your restaurant and add yourself by choosing: You are a waiter',

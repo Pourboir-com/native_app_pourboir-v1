@@ -6,12 +6,8 @@ import {
   ImageBackground,
   ScrollView,
   Image,
-  // Dimensions,
   TouchableOpacity,
   FlatList,
-  // SafeAreaView,
-  // KeyboardAvoidingView,
-  // RefreshControl,
   Animated,
   Platform,
   Linking,
@@ -88,26 +84,6 @@ const ReviewDetails = ({ navigation, route }) => {
     restaurant_id,
     geometry,
   } = route?.params;
-  // const updateRestaurants = (state, placeId) => {
-  //   let FilteredRestaurant = filteredRestaurant(state, placeId);
-  //   dispatch({
-  //     type: actionTypes.RESTAURANTS_DETAILS,
-  //     payload: FilteredRestaurant,
-  //   });
-  // };
-
-  // const updateRestaurants_AddWaiter = (state, placeId) => {
-  //   let FilteredRestaurant = filteredRestaurant(state, placeId);
-  //   dispatch({
-  //     type: actionTypes.RESTAURANTS_DETAILS,
-  //     payload: FilteredRestaurant,
-  //   });
-  //   let YourFilteredRestaurant = yourFilteredRestaurant(state, placeId);
-  //   dispatch({
-  //     type: actionTypes.YOUR_RESTAURANTS,
-  //     payload: YourFilteredRestaurant,
-  //   });
-  // };
 
   const {
     data: waitersData,
@@ -189,10 +165,8 @@ const ReviewDetails = ({ navigation, route }) => {
         },
         email: email,
       };
-      // updateRestaurants_AddWaiter(state, place_id);
       await AddWaiters(newWaiter, {
         onSuccess: () => {
-          // await refetchWaiters();
           handleRefferedModalClose();
           setRefferedLoading(false);
           setRefferedThanksModalVisible(true);
@@ -225,25 +199,9 @@ const ReviewDetails = ({ navigation, route }) => {
           international_phone_number:
             RestaurantDetails?.data?.international_phone_number,
         },
-        // company_name: companyName,
-        // business_registration_number: businessRegNumber,
-        // manager_name: bossName,
-        // manager_contact: bossContact,
       };
-      // updateRestaurants(state, place_id);
       await IAMWAITER(IWaiter, {
         onSuccess: async res => {
-          // const restaurant = state.restaurantsDetails.find(
-          //   res => res.place_id === place_id,
-          // );
-          // dispatch({
-          //   type: actionTypes.YOUR_RESTAURANTS,
-          //   payload: [
-          //     ...state.yourRestaurants,
-          //     { ...res.data.data, distance, servers: restaurant.servers + 1 },
-          //   ],
-          // });
-          // await refetchWaiters();
           handleUserModalClose();
           setUserLoading(false);
           setUserThanksModalVisible(true);
@@ -263,7 +221,6 @@ const ReviewDetails = ({ navigation, route }) => {
             ],
             { cancelable: false },
           );
-          // alert('You are already waiter in this restaurant.');
         },
       });
     } else {
@@ -343,21 +300,12 @@ const ReviewDetails = ({ navigation, route }) => {
                     fontSize: 16,
                   }}
                 >
-                  {distance ? distance + 'm' : ''}
+                  {Number(distance) > 2000
+                    ? Number(distance) / 1000 + 'km'
+                    : distance
+                    ? distance + 'm'
+                    : ''}
                 </Text>
-                {/* <TouchableOpacity
-                  style={{
-                    paddingHorizontal: 10,
-                    paddingVertical: 5,
-                    borderWidth: 1,
-                    borderColor: '#fff',
-                    borderRadius: 7,
-                  }}
-                >
-                  <Text style={{ color: '#fff' }}>
-                    {i18n.t('see_the_menu')}
-                  </Text>
-                </TouchableOpacity> */}
               </View>
             </View>
           </ImageBackground>
@@ -547,11 +495,6 @@ const ReviewDetails = ({ navigation, route }) => {
                       {itemData?.item?.user_id?.full_name ||
                         itemData?.item?.full_name ||
                         'name missing'}
-                      {/* {itemData?.item?.user_id
-                        ? itemData?.item?.user_id?.full_name
-                        : itemData?.item?.full_name
-                        ? itemData?.item.full_name
-                        : 'name missing'} */}
                     </Text>
                     <View
                       pointerEvents="none"
@@ -583,9 +526,6 @@ const ReviewDetails = ({ navigation, route }) => {
           />
         )}
         <View style={styles.viewAddReview}>
-          {/* <Text style={[styles.txtCantFind, { fontFamily: 'ProximaNova' }]}>
-            {i18n.t('cant_find_your_server')}
-          </Text> */}
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text
               style={[styles.txtAddReview, { fontFamily: 'ProximaNovaBold' }]}
@@ -684,65 +624,6 @@ const ReviewDetails = ({ navigation, route }) => {
           buttonText={i18n.t('Thank_you')}
         />
       )}
-
-      {/* <Animated.View
-        style={[
-          styles.viewBottom,
-          { transform: [{ translateY: translateY }], elevation: 0, zIndex: 9 },
-        ]}
-      >
-        <View pointerEvents="none" style={{ flexDirection: 'row' }}>
-          {obj.map((v, i) => {
-            return (
-              <TouchableOpacity style={{ marginRight: 3 }} key={i}>
-                <RatingStar
-                  starSize={17}
-                  type={
-                    v <= rating
-                      ? 'filled'
-                      : v === rating + 0.5
-                      ? 'half'
-                      : 'empty'
-                  }
-                  notRatedStarColor="rgba(255,255,255, 0.6)"
-                />
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-        <View style={{ alignItems: 'flex-end' }}>
-          <Text
-            style={{
-              color: '#fff',
-              marginBottom: 10,
-              fontFamily: 'ProximaNova',
-              fontSize: 16,
-            }}
-          >
-            {distance ? distance + 'm' : ''}
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              if (menu_url) {
-                WebBrowser.openBrowserAsync(menu_url);
-              }
-            }}
-            style={{
-              paddingHorizontal: 10,
-              paddingVertical: 5,
-              borderWidth: 1,
-              borderColor: '#fff',
-              borderRadius: 7,
-            }}
-          >
-            <Text style={{ color: '#fff' }}>{i18n.t('see_the_menu')}</Text>
-          </TouchableOpacity>
-        </View>
-      </Animated.View> */}
-      {/* <KeyboardAvoidingView>
-        <ScrollView> */}
-      {/* </ScrollView>
-        </KeyboardAvoidingView> */}
     </View>
   );
 };
@@ -798,16 +679,12 @@ const styles = StyleSheet.create({
     marginTop: 1,
   },
   txtNumRaters: {
-    // backgroundColor: Colors.yellow, paddingVertical: 3, paddingHorizontal: 9,
-    // marginLeft: 10,
     fontSize: 18,
-    //  borderRadius: 15
   },
   viewNumRaters: {
     backgroundColor: Colors.yellow,
     marginLeft: 23,
     borderRadius: 9,
-    // paddingHorizontal:8,
     paddingTop: 1,
     paddingLeft: 7,
     paddingRight: 8,
@@ -878,7 +755,6 @@ const styles = StyleSheet.create({
   viewIcon: {
     width: 30,
     height: 30,
-    // backgroundColor: '#FFF6D4',
     borderRadius: 5,
     marginRight: 10,
     justifyContent: 'center',

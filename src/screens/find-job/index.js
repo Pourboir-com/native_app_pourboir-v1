@@ -21,7 +21,7 @@ const canidate = require('../../assets/images/canidate.png');
 import { AntDesign } from '@expo/vector-icons';
 import AddExperienceModal from '../../components/modals/AddExperienceModal';
 import AddNicheModal from '../../components/modals/AddNicheModal';
-import { removeId, nicheModalDataUpdated } from './util';
+import { removeId, nicheModalDataUpdated, checkExeperience } from './util';
 import moment from 'moment';
 const Find_Job = ({ navigation, route }) => {
   const { form, refetch } = route.params;
@@ -48,7 +48,7 @@ const Find_Job = ({ navigation, route }) => {
   const [phone, setPhone] = useState(form?.telephone_number || '');
   const [expModalVisible, setExpModalVisible] = useState(false);
   const [nicheModalVisible, setNicheModalVisible] = useState(false);
-  const [data, setData] = useState(form?.experience || []);
+  const [data, setData] = useState(checkExeperience(form) || []);
   const [nicheModalData, setNicheModalData] = useState(
     form?.availability || [],
   );

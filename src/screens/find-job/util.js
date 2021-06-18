@@ -21,7 +21,7 @@ export const nicheModalDataUpdated = nicheModalData => {
 export const removeId = experience => {
   let filtered = [];
   let exp = experience.map(item => {
-    if (item._id) {
+    if (item?._id) {
       let { _id, ...rest } = item;
       filtered.push(rest);
     } else {
@@ -30,3 +30,8 @@ export const removeId = experience => {
   });
   return filtered;
 };
+
+export const checkExeperience = form =>
+  form?.experience?.length !== 0
+    ? form?.experience?.filter(value => Object.keys(value).length !== 0)
+    : [];

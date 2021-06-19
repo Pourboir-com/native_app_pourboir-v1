@@ -32,11 +32,9 @@ const styles = StyleSheet.create({
   },
   modal_container: {
     backgroundColor: '#fff',
-    height: 'auto',
     alignItems: 'center',
     position: 'relative',
-    width: '90%',
-    alignSelf: 'center',
+    borderRadius: 20,
   },
   btn_green: {
     backgroundColor: '#FCDF6F',

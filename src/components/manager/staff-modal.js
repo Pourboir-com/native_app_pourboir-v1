@@ -44,16 +44,15 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
       onBackdropPress={() => setModalVisible(false)}
       isVisible={isModalVisible}
       backdropColor={!profile ? '#f9f9f9' : '#000'}
-      style={{ borderRadius: 20, backgroundColor: '#fff', flex: 0 }}
-      backdropOpacity={1}
+      backdropOpacity={0.7}
     >
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        bounces={false}
-        contentContainerStyle={[styles.modal_container]}
-        keyboardShouldPersistTaps={'handled'}
-      >
-        <View style={{ alignItems: 'center', width: '100%' }}>
+      <View style={styles.modal_container}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          bounces={false}
+          keyboardShouldPersistTaps={'handled'}
+          contentContainerStyle={[{alignItems:'center', width: '100%'}]}
+        >
           <View style={styles.first_part_modal}>
             <View style={{ marginVertical: 20, alignItems: 'center' }}>
               <View>
@@ -232,8 +231,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
               </View>
             </View>
           </View>
-        </View>
-
+        </ScrollView>
         <TouchableOpacity
           style={styles.cancelBtn}
           onPress={() => setModalVisible(false)}
@@ -243,7 +241,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
             style={{ resizeMode: 'contain', width: 22, height: 22 }}
           />
         </TouchableOpacity>
-      </ScrollView>
+      </View>
     </Modal>
   );
 };

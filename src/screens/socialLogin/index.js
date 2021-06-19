@@ -56,9 +56,11 @@ const SocialLogin = ({ navigation, route }) => {
 
   React.useEffect(() => {
     const handleBackButtonClick = () => {
+      BackHandler.exitApp();
       return true;
     };
 
+    navigation.addListener('gestureEnd', handleBackButtonClick);
     navigation.addListener('focus', () => {
       BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
     });
@@ -68,7 +70,12 @@ const SocialLogin = ({ navigation, route }) => {
         handleBackButtonClick,
       );
     });
+
+    return () => {
+      navigation.removeListener('gestureEnd', handleBackButtonClick);
+    };
   });
+
   const registerForPushNotifications = async user_id => {
     let token;
     if (Constants.isDevice) {
@@ -266,7 +273,7 @@ const SocialLogin = ({ navigation, route }) => {
                     ...userDetails,
                   }),
                 );
-                
+
                 if (vote) {
                   navigation.replace('RateYourService');
                   setVote(false);

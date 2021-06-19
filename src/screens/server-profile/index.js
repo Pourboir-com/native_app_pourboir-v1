@@ -114,94 +114,95 @@ const ServerProfile = ({ navigation, route }) => {
   );
 
   return (
-    <View style={styles.container}>
-      <Spinner visible={loading} />
+    <>
+      <View style={styles.container}>
+        <Spinner visible={loading} />
 
-      <View style={{ flex: 1 }}>
-        <ImageBackground
-          style={{
-            width: '100%',
-            height: 100,
-            borderBottomLeftRadius: Dimensions.get('window').width * 0.06,
-            borderBottomRightRadius: Dimensions.get('window').width * 0.06,
-            overflow: 'hidden',
-          }}
-          source={require('../../assets/images/Group3.png')}
-        >
-          <GlobalHeader
-            arrow={true}
-            headingText={i18n.t('profile_server')}
-            fontSize={17}
-            color={'black'}
-            navigation={navigation}
-            setting
-            backgroundColor={'transparent'}
-            borderRadius={true}
-          />
-        </ImageBackground>
-        <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
-          <View style={{ alignItems: 'center', marginTop: '5%' }}>
-            <View style={{ width: '100%', flex: 1 }}>
-              <HomeScreenContent
-                route={route}
-                restaurantLoading={yourRestaurantLoading}
-                resIsFetching={yourResIsFetching}
-                refetchRestaurant={yourRefetchRestaurant}
-                isFetch={true}
-                Data={yourRestaurantData?.restaurants?.results || []}
-                // saveLocation={saveLocation}
-              />
-            </View>
-            <View
-              style={{
-                marginHorizontal: 10,
-                marginVertical: 15,
-                alignSelf: 'center',
-                width: '92%',
-              }}
-            >
-              <View style={{ marginBottom: 35 }}>
-                <CommonButton
-                  title={i18n.t('ind_rest')}
-                  navigation={'Home'}
-                  navigationData={{ crossIcon: false }}
-                  dispatch={() => {
-                    dispatch({
-                      type: actionTypes.REFRESH_ANIMATION,
-                      payload: !state.refreshAnimation,
-                    });
-                  }}
+        <View style={{ flex: 1 }}>
+          <ImageBackground
+            style={{
+              width: '100%',
+              height: 100,
+              borderBottomLeftRadius: Dimensions.get('window').width * 0.06,
+              borderBottomRightRadius: Dimensions.get('window').width * 0.06,
+              overflow: 'hidden',
+            }}
+            source={require('../../assets/images/Group3.png')}
+          >
+            <GlobalHeader
+              arrow={true}
+              headingText={i18n.t('profile_server')}
+              fontSize={17}
+              color={'black'}
+              navigation={navigation}
+              setting
+              backgroundColor={'transparent'}
+              borderRadius={true}
+            />
+          </ImageBackground>
+          <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
+            <View style={{ alignItems: 'center', marginTop: '5%' }}>
+              <View style={{ width: '100%', flex: 1 }}>
+                <HomeScreenContent
+                  route={route}
+                  restaurantLoading={yourRestaurantLoading}
+                  resIsFetching={yourResIsFetching}
+                  refetchRestaurant={yourRefetchRestaurant}
+                  isFetch={true}
+                  Data={yourRestaurantData?.restaurants?.results || []}
+                  // saveLocation={saveLocation}
                 />
               </View>
-              {waiterFormLoading ? (
-                <View
-                  style={{
-                    width: '99%',
-                    flexDirection: 'row',
-                  }}
-                >
-                  <ReviewsSkeleton />
+              <View
+                style={{
+                  marginHorizontal: 10,
+                  marginVertical: 15,
+                  alignSelf: 'center',
+                  width: '92%',
+                }}
+              >
+                <View style={{ marginBottom: 35 }}>
+                  <CommonButton
+                    title={i18n.t('ind_rest')}
+                    navigation={'Home'}
+                    navigationData={{ crossIcon: false }}
+                    dispatch={() => {
+                      dispatch({
+                        type: actionTypes.REFRESH_ANIMATION,
+                        payload: !state.refreshAnimation,
+                      });
+                    }}
+                  />
                 </View>
-              ) : (
-                <>
-                  {!waiterFormData?.data[0]?.position ? (
-                    <View>
+                {waiterFormLoading ? (
+                  <View
+                    style={{
+                      width: '99%',
+                      flexDirection: 'row',
+                    }}
+                  >
+                    <ReviewsSkeleton />
+                  </View>
+                ) : (
+                  <>
+                    {!waiterFormData?.data[0]?.position ? (
                       <View>
-                        <Text style={[styles.textBold, { width: 240 }]}>
-                          {i18n.t('are_you_job')}
-                        </Text>
-                        <Text style={[styles.textLight, { width: 270 }]}>
-                          {i18n.t('comp_job')}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          marginTop: 20,
-                          alignSelf: 'center',
-                          width: '100%',
-                        }}
-                      >
-                        {/* <CommonButton
+                        <View>
+                          <Text style={[styles.textBold, { width: 240 }]}>
+                            {i18n.t('are_you_job')}
+                          </Text>
+                          <Text style={[styles.textLight, { width: 270 }]}>
+                            {i18n.t('comp_job')}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            marginTop: 20,
+                            alignSelf: 'center',
+                            width: '100%',
+                          }}
+                        >
+                          {/* <CommonButton
                           title={i18n.t('look_job')}
                           navigation="FindJob"
                           navigationData={{
@@ -210,72 +211,73 @@ const ServerProfile = ({ navigation, route }) => {
                             onPress: '',
                           }}
                         /> */}
+                        </View>
                       </View>
-                    </View>
-                  ) : (
-                    <View
-                      style={{
-                        marginHorizontal: Platform.OS === 'ios' ? '3%' : '1.6%',
-                      }}
-                    >
-                      <View>
-                        <Text style={styles.boldTxt2}>
-                          {i18n.t('your_cand_prof')}
-                        </Text>
-                        <Text style={styles.lighTxt2}>
-                          {i18n.t('prev_rec')}
-                        </Text>
+                    ) : (
+                      <View
+                        style={{
+                          marginHorizontal:
+                            Platform.OS === 'ios' ? '3%' : '1.6%',
+                        }}
+                      >
+                        <View>
+                          <Text style={styles.boldTxt2}>
+                            {i18n.t('your_cand_prof')}
+                          </Text>
+                          <Text style={styles.lighTxt2}>
+                            {i18n.t('prev_rec')}
+                          </Text>
+                        </View>
+                        <View style={{ marginTop: 15 }}>
+                          <StaffCard
+                            data={waiterFormData?.data[0]}
+                            toggleModal={toggleModal}
+                            isModalVisible={isModalVisible}
+                            setModalVisible={setModalVisible}
+                            handleDeleteForm={handleDeleteForm}
+                            Width={'100%'}
+                          />
+                        </View>
                       </View>
-                      <View style={{ marginTop: 15 }}>
-                        <StaffCard
-                          data={waiterFormData?.data[0]}
-                          toggleModal={toggleModal}
-                          isModalVisible={isModalVisible}
-                          setModalVisible={setModalVisible}
-                          handleDeleteForm={handleDeleteForm}
-                          Width={'100%'}
-                        />
-                      </View>
-                    </View>
-                  )}
-                </>
-              )}
-            </View>
-            <View
-              style={{
-                marginHorizontal: 10,
-                marginVertical: 20,
-                marginTop: -10,
-                alignSelf: 'center',
-                width: '92%',
-              }}
-            >
-              <CommonButton
-                navigation="FindJob"
-                navigationData={{
-                  form: waiterFormData?.data[0] || [],
-                  refetch: refetchWaiterFormData,
+                    )}
+                  </>
+                )}
+              </View>
+              <View
+                style={{
+                  marginHorizontal: 10,
+                  marginVertical: 20,
+                  marginTop: -10,
+                  alignSelf: 'center',
+                  width: '92%',
                 }}
-                title={
-                  waiterFormData?.data[0]?.position
-                    ? i18n.t('modif_prof')
-                    : i18n.t('look_job')
-                }
-              />
+              >
+                <CommonButton
+                  navigation="FindJob"
+                  navigationData={{
+                    form: waiterFormData?.data[0] || [],
+                    refetch: refetchWaiterFormData,
+                  }}
+                  title={
+                    waiterFormData?.data[0]?.position
+                      ? i18n.t('modif_prof')
+                      : i18n.t('look_job')
+                  }
+                />
+              </View>
             </View>
-          </View>
-
-          {isModalVisible && (
-            <StaffModal
-              formId={formId || ''}
-              isModalVisible={isModalVisible}
-              setModalVisible={setModalVisible}
-              profile={true}
-            />
-          )}
-        </ScrollView>
+          </ScrollView>
+        </View>
       </View>
-    </View>
+      {isModalVisible && (
+        <StaffModal
+          formId={formId || ''}
+          isModalVisible={isModalVisible}
+          setModalVisible={setModalVisible}
+          profile={true}
+        />
+      )}
+    </>
   );
 };
 

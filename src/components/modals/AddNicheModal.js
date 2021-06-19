@@ -111,8 +111,7 @@ const AddNicheModal = ({
             style={{ height: 50, paddingHorizontal: 8, width: '100%' }}
             selectedValue={dayOfWeek}
             onValueChange={e => setDayOfWeek(e)}
-            iosIcon={<AntDesign  name="caretdown" style={{ width: '10%' }} />}
-            textStyle={{ width: '90%' }}
+            textStyle={{ width: '100%' }}
           >
             <Picker.Item label={i18n.t('monday')} value={'Monday'} />
             <Picker.Item label={i18n.t('tuesday')} value={'Tuesday'} />

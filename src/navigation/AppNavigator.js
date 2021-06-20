@@ -50,6 +50,7 @@ function AppNavigator() {
       <Stack.Screen
         name="socialLogin"
         component={socialLogin}
+
         options={() => ({
           headerShown: true,
           title: '',
@@ -57,6 +58,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: false
         })}
       />
       <Stack.Screen

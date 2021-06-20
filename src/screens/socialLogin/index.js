@@ -60,7 +60,6 @@ const SocialLogin = ({ navigation, route }) => {
       return true;
     };
 
-    navigation.addListener('gestureEnd', handleBackButtonClick);
     navigation.addListener('focus', () => {
       BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
     });
@@ -70,10 +69,6 @@ const SocialLogin = ({ navigation, route }) => {
         handleBackButtonClick,
       );
     });
-
-    return () => {
-      navigation.removeListener('gestureEnd', handleBackButtonClick);
-    };
   });
 
   const registerForPushNotifications = async user_id => {

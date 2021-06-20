@@ -45,6 +45,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -58,7 +59,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
-          gestureEnabled: false
+          gestureEnabled: false,
         })}
       />
       <Stack.Screen
@@ -71,6 +72,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -83,6 +85,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -95,6 +98,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -107,6 +111,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -119,6 +124,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -131,6 +137,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -143,6 +150,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -155,6 +163,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -167,6 +176,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -179,6 +189,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -191,6 +202,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -203,6 +215,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -215,6 +228,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -227,6 +241,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -239,6 +254,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -251,6 +267,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -263,6 +280,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -275,6 +293,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -287,6 +306,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
       <Stack.Screen
@@ -299,6 +319,7 @@ function AppNavigator() {
           headerTransparent: true,
           headerTitleAlign: 'left',
           headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
         })}
       />
     </Stack.Navigator>

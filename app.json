@@ -39,7 +39,8 @@
       "config": {
         "googleSignIn": {
           "reservedClientId": "com.googleusercontent.apps.849073051273-p2rjj7ir7cmkscv26p5o6il9t4ombfk5"
-        }
+        },
+        "googleMobileAdsAppId": "ca-app-pub-3363550540559109~9789730426"
       }
     },
     "android": {
@@ -53,7 +54,8 @@
         },
         "googleMaps": {
           "apiKey": "AIzaSyDHVUwmNlKIiTNhnOi8xzM_vnsilLrJhkA"
-        }
+        },
+        "googleMobileAdsAppId": "ca-app-pub-3363550540559109~4728975435"
       },
       "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json",

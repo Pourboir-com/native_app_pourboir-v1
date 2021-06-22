@@ -48,9 +48,9 @@ export default function SplashScreen(props) {
 
   let productionID = Platform.select({
     // https://developers.google.com/admob/ios/test-ads
-    ios: 'ca-app-pub-3940256099942544/1712485313',
+    ios: 'ca-app-pub-3363550540559109/5850485412',
     // https://developers.google.com/admob/android/test-ads
-    android: 'ca-app-pub-3940256099942544/5224354917',
+    android: 'ca-app-pub-3363550540559109/4439339000',
   });
 
   // Is a real device and running in production.

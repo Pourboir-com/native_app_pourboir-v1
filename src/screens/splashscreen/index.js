@@ -17,13 +17,13 @@ import { SEND_PUSH_TOKEN } from '../../queries';
 import Constants from 'expo-constants';
 import * as Localization from 'expo-localization';
 import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
-import {
-  AdMobBanner,
-  AdMobInterstitial,
-  PublisherBanner,
-  AdMobRewarded,
-  setTestDeviceIDAsync,
-} from 'expo-ads-admob';
+// import {
+//   AdMobBanner,
+//   AdMobInterstitial,
+//   PublisherBanner,
+//   AdMobRewarded,
+//   setTestDeviceIDAsync,
+// } from 'expo-ads-admob';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -39,28 +39,28 @@ export default function SplashScreen(props) {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  const testID = Platform.select({
-    // https://developers.google.com/admob/ios/test-ads
-    ios: 'ca-app-pub-3940256099942544/1712485313',
-    // https://developers.google.com/admob/android/test-ads
-    android: 'ca-app-pub-3940256099942544/5224354917',
-  });
+  // const testID = Platform.select({
+  //   // https://developers.google.com/admob/ios/test-ads
+  //   ios: 'ca-app-pub-3940256099942544/1712485313',
+  //   // https://developers.google.com/admob/android/test-ads
+  //   android: 'ca-app-pub-3940256099942544/5224354917',
+  // });
 
-  let productionID = Platform.select({
-    // https://developers.google.com/admob/ios/test-ads
-    ios: 'ca-app-pub-3363550540559109/5850485412',
-    // https://developers.google.com/admob/android/test-ads
-    android: 'ca-app-pub-3363550540559109/4439339000',
-  });
+  // let productionID = Platform.select({
+  //   // https://developers.google.com/admob/ios/test-ads
+  //   ios: 'ca-app-pub-3363550540559109/5850485412',
+  //   // https://developers.google.com/admob/android/test-ads
+  //   android: 'ca-app-pub-3363550540559109/4439339000',
+  // });
 
-  // Is a real device and running in production.
-  const adUnitID = Constants.isDevice && !__DEV__ ? productionID : testID;
+  // // Is a real device and running in production.
+  // const adUnitID = Constants.isDevice && !__DEV__ ? productionID : testID;
 
-  let showAd = async () => {
-    await AdMobInterstitial.setAdUnitID(adUnitID); // Test ID, Replace with your-admob-unit-id
-    await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
-    await AdMobInterstitial.showAdAsync();
-  };
+  // let showAd = async () => {
+  //   await AdMobInterstitial.setAdUnitID(adUnitID); // Test ID, Replace with your-admob-unit-id
+  //   await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
+  //   await AdMobInterstitial.showAdAsync();
+  // };
 
   async function registerForPushNotificationsAsync() {
     let token;
@@ -201,36 +201,20 @@ export default function SplashScreen(props) {
         //     routes: [{ name: 'NoLocation' }],
         //   }),
         // );
-        try {
-          await showAd();
-          props.navigation.replace('Home', { crossIcon: false });
-        } catch {
-          props.navigation.replace('Home', { crossIcon: false });
-        }
+
+        props.navigation.replace('Home', { crossIcon: false });
       }
 
       const isLocation = await Location.hasServicesEnabledAsync();
       if (isLocation) {
-        try {
-          await showAd();
-          checkInternet(userInfo);
-          setCurrency();
-        } catch {
-          checkInternet(userInfo);
-          setCurrency();
-        }
+        checkInternet(userInfo);
+        setCurrency();
       } else {
         const location = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Highest,
         });
-        try {
-          await showAd();
-          checkInternet(userInfo);
-          setCurrency();
-        } catch {
-          checkInternet(userInfo);
-          setCurrency();
-        }
+        checkInternet(userInfo);
+        setCurrency();
       }
     } catch (error) {
       // props.navigation.dispatch(
@@ -239,12 +223,8 @@ export default function SplashScreen(props) {
       //     routes: [{ name: 'NoLocation' }],
       //   }),
       // );
-      try {
-        await showAd();
-        props.navigation.replace('Home', { crossIcon: false });
-      } catch {
-        props.navigation.replace('Home', { crossIcon: false });
-      }
+
+      props.navigation.replace('Home', { crossIcon: false });
     }
   };
   React.useEffect(() => {

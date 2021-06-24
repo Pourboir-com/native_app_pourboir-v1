@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import Header from './HeaderAnimated';
 import HomeScreenContent from '../../components/HomeContent';
 import { StatusBar } from 'expo-status-bar';
-import { getAsyncStorageValues } from '../../constants';
 import { GET_RESTAURANT } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import { useQuery } from 'react-query';
@@ -11,7 +10,7 @@ import * as actionTypes from '../../contextApi/actionTypes';
 import { isSearch } from '../../util';
 // import * as FacebookAds from 'expo-ads-facebook';
 import * as Location from 'expo-location';
-import {  BackHandler} from 'react-native';
+// import AdModal from '../../components/modals/AdModal';
 
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
@@ -20,6 +19,7 @@ const HomeScreen = props => {
   // const [nextPageToken, setnextPageToken] = useState();
   const { state, dispatch } = useContext(Context);
   const { restaurantsDetails: data } = state;
+  // const [adModalVisible, setAdModalVisible] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -38,6 +38,11 @@ const HomeScreen = props => {
         setSaveLocation(JSON.stringify({ lat: 48.864716, log: 2.349014 }));
       }
     })();
+    // if (props?.route?.params?.ad) {
+    //   setTimeout(() => {
+    //     setAdModalVisible(true);
+    //   }, 2000);
+    // }
   }, []);
 
   useEffect(() => {
@@ -104,6 +109,10 @@ const HomeScreen = props => {
           route={props?.route}
         />
       </Header>
+      {/* <AdModal
+        adModalVisible={adModalVisible}
+        setAdModalVisible={setAdModalVisible}
+      /> */}
     </>
   );
 };

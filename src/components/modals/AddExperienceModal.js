@@ -216,7 +216,7 @@ const AddExperienceModal = ({
                 )}
               </Text>
             </View>
-            <View style={[stylesTextbox.input_icon,{width:'80%'}]}>
+            <View style={[stylesTextbox.input_icon, { width: '80%' }]}>
               <TextInput
                 returnKeyLabel="Find"
                 returnKeyType="done"

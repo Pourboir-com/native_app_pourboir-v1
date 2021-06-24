@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useRef } from 'react';
+import React, { useEffect, useContext, useRef, useState } from 'react';
 import { Animated, ActivityIndicator, Platform } from 'react-native';
 // import { CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
@@ -17,14 +17,6 @@ import { SEND_PUSH_TOKEN } from '../../queries';
 import Constants from 'expo-constants';
 import * as Localization from 'expo-localization';
 import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
-// import {
-//   AdMobBanner,
-//   AdMobInterstitial,
-//   PublisherBanner,
-//   AdMobRewarded,
-//   setTestDeviceIDAsync,
-// } from 'expo-ads-admob';
-
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -38,29 +30,6 @@ export default function SplashScreen(props) {
   const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
   const notificationListener = useRef();
   const responseListener = useRef();
-
-  // const testID = Platform.select({
-  //   // https://developers.google.com/admob/ios/test-ads
-  //   ios: 'ca-app-pub-3940256099942544/1712485313',
-  //   // https://developers.google.com/admob/android/test-ads
-  //   android: 'ca-app-pub-3940256099942544/5224354917',
-  // });
-
-  // let productionID = Platform.select({
-  //   // https://developers.google.com/admob/ios/test-ads
-  //   ios: 'ca-app-pub-3363550540559109/5850485412',
-  //   // https://developers.google.com/admob/android/test-ads
-  //   android: 'ca-app-pub-3363550540559109/4439339000',
-  // });
-
-  // // Is a real device and running in production.
-  // const adUnitID = Constants.isDevice && !__DEV__ ? productionID : testID;
-
-  // let showAd = async () => {
-  //   await AdMobInterstitial.setAdUnitID(adUnitID); // Test ID, Replace with your-admob-unit-id
-  //   await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
-  //   await AdMobInterstitial.showAdAsync();
-  // };
 
   async function registerForPushNotificationsAsync() {
     let token;
@@ -150,7 +119,7 @@ export default function SplashScreen(props) {
   const checkInternet = userInfo => {
     NetInfo.fetch().then(state => {
       if (state.isConnected && userInfo?.user_id) {
-        props.navigation.replace('Home', { crossIcon: false });
+        props.navigation.replace('Home', { crossIcon: false, ad: true });
       } else if (state.isConnected && !userInfo?.user_id) {
         props.navigation.replace('socialLogin');
       } else {
@@ -201,8 +170,7 @@ export default function SplashScreen(props) {
         //     routes: [{ name: 'NoLocation' }],
         //   }),
         // );
-
-        props.navigation.replace('Home', { crossIcon: false });
+        props.navigation.replace('Home', { crossIcon: false, ad: true });
       }
 
       const isLocation = await Location.hasServicesEnabledAsync();
@@ -224,7 +192,7 @@ export default function SplashScreen(props) {
       //   }),
       // );
 
-      props.navigation.replace('Home', { crossIcon: false });
+      props.navigation.replace('Home', { crossIcon: false, ad: true });
     }
   };
   React.useEffect(() => {
@@ -236,6 +204,8 @@ export default function SplashScreen(props) {
   }, []);
 
   return (
-    <ActivityIndicator style={{ flex: 1 }} size={70} color={Colors.yellow} />
+    <>
+      <ActivityIndicator style={{ flex: 1 }} size={70} color={Colors.yellow} />
+    </>
   );
 }

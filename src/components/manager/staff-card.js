@@ -8,15 +8,14 @@ import {
 } from 'react-native';
 import styles from './styles';
 import { AntDesign } from '@expo/vector-icons';
-import RatingStar from '../../components/RatingComponent';
+// import RatingStar from '../../components/RatingComponent';
 import Swipeout from 'react-native-swipeout';
 import { Feather } from '@expo/vector-icons';
 import i18n from '../../li8n';
-import { set } from 'react-native-reanimated';
 
 const StaffCard = ({ toggleModal, data, handleDeleteForm, Width }) => {
   const [close, setClose] = useState(false);
-  const obj = [1, 2, 3, 4, 5];
+  // const obj = [1, 2, 3, 4, 5];
   var swipeoutBtns = [
     {
       text: (
@@ -57,7 +56,7 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm, Width }) => {
       <TouchableHighlight
         onPress={() => toggleModal(data?._id)}
         underlayColor="#f9f9f9"
-        style={[styles.main_card_container,{width: '98%'}]}
+        style={[styles.main_card_container, { width: '98%' }]}
       >
         <>
           <View style={styles.section1}>

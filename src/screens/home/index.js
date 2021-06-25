@@ -10,7 +10,7 @@ import * as actionTypes from '../../contextApi/actionTypes';
 import { isSearch } from '../../util';
 // import * as FacebookAds from 'expo-ads-facebook';
 import * as Location from 'expo-location';
-// import AdModal from '../../components/modals/AdModal';
+import AdModal from '../../components/modals/AdModal';
 
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
@@ -19,7 +19,7 @@ const HomeScreen = props => {
   // const [nextPageToken, setnextPageToken] = useState();
   const { state, dispatch } = useContext(Context);
   const { restaurantsDetails: data } = state;
-  // const [adModalVisible, setAdModalVisible] = useState(false);
+  const [adModalVisible, setAdModalVisible] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -38,11 +38,11 @@ const HomeScreen = props => {
         setSaveLocation(JSON.stringify({ lat: 48.864716, log: 2.349014 }));
       }
     })();
-    // if (props?.route?.params?.ad) {
-    //   setTimeout(() => {
-    //     setAdModalVisible(true);
-    //   }, 2000);
-    // }
+    if (props?.route?.params?.ad) {
+      setTimeout(() => {
+        setAdModalVisible(true);
+      }, 2000);
+    }
   }, []);
 
   useEffect(() => {
@@ -109,10 +109,10 @@ const HomeScreen = props => {
           route={props?.route}
         />
       </Header>
-      {/* <AdModal
+      <AdModal
         adModalVisible={adModalVisible}
         setAdModalVisible={setAdModalVisible}
-      /> */}
+      />
     </>
   );
 };

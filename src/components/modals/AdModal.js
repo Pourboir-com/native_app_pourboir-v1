@@ -35,61 +35,66 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
       // }}
       isVisible={adModalVisible}
       backdropOpacity={0}
+      style={{
+        width: '100%',
+        marginHorizontal: 0,
+        marginBottom: 0,
+        position: 'relative',
+      }}
     >
       <View
         style={{
-          position: 'relative',
+          opacity: 0.5,
+          backgroundColor: '#000',
+          borderTopLeftRadius: 16,
+          borderTopRightRadius: 16,
+          height: 35,
+        }}
+      ></View>
+      <View
+        style={{
           justifyContent: 'center',
           alignItems: 'center',
+          height: '100%',
+          backgroundColor: '#fff',
         }}
       >
-        <View
+        <AdMobBanner
+          bannerSize="mediumRectangle"
+          adUnitID="ca-app-pub-3940256099942544/6300978111" // Test ID, Replace with your-admob-unit-id
+          servePersonalizedAds // true or false
+          onDidFailToReceiveAdWithError={() => setError(true)}
+        />
+      </View>
+      {error && (
+        <Text
           style={{
-            backgroundColor: '#000',
-            opacity: 0.5,
-            alignItems: 'center',
-            width: 299,
+            position: 'absolute',
+            fontSize: 16,
+            fontFamily: 'ProximaNova',
             alignSelf: 'center',
-            borderRadius: 16,
-            paddingVertical: 40,
+            color: '#000',
           }}
         >
-          <AdMobBanner
-            bannerSize="mediumRectangle"
-            adUnitID="ca-app-pub-3940256099942544/6300978111" // Test ID, Replace with your-admob-unit-id
-            servePersonalizedAds // true or false
-            onDidFailToReceiveAdWithError={() => setError(true)}
-          />
-        </View>
-        {error && (
-          <Text
-            style={{
-              color: 'white',
-              position: 'absolute',
-              fontSize: 16,
-              fontFamily: 'ProximaNova',
-            }}
-          >
-            Failed to load Ad
-          </Text>
-        )}
-        {showCross && (
-          <TouchableOpacity
-            onPress={() => {
-              setAdModalVisible(false);
-              refreshAnimation();
-            }}
-            style={{
-              alignSelf: 'flex-end',
-              top: 5,
-              right: 20,
-              position: 'absolute',
-            }}
-          >
-            <AntDesign name="close" size={29} color="white" />
-          </TouchableOpacity>
-        )}
-      </View>
+          Failed to load Ad
+        </Text>
+      )}
+      {showCross && (
+        <TouchableOpacity
+          onPress={() => {
+            setAdModalVisible(false);
+            refreshAnimation();
+          }}
+          style={{
+            alignSelf: 'flex-end',
+            position: 'absolute',
+            top: -14,
+            right: 7,
+          }}
+        >
+          <AntDesign name="close" size={29} color="white" />
+        </TouchableOpacity>
+      )}
     </Modal>
   );
 };

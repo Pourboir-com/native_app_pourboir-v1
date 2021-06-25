@@ -29,10 +29,6 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
   };
   return (
     <Modal
-      // onBackdropPress={() => {
-      //   setAdModalVisible(false);
-      //   refreshAnimation();
-      // }}
       isVisible={adModalVisible}
       backdropOpacity={0}
       style={{

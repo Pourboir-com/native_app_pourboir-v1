@@ -52,14 +52,13 @@ export default {
   i_waiter: 'I am waiter',
   i_manage: 'I manage a restaurant',
 
-
   // Social Login
   continue_with_fb: 'Continue with Facebook',
   continue_with_google: 'Continue with Google',
   I_accept: 'I accept the',
   terms_of_use: 'Terms of use and privacy policy',
-  et_la:'',
-  confidential:'',
+  et_la: '',
+  confidential: '',
   I_am: 'I am',
   manager_res: 'restaurateur',
 
@@ -132,9 +131,9 @@ export default {
   education: 'Education',
   last_experience: 'Last Experience',
   passedat: 'The Little Nice Passedat',
-  full: 'Full',
+  full: 'Full time',
   partial: 'Partial',
-  part_time: 'part time',
+  part_time: 'Part time',
   candidate_btn: 'Create my candidate profile',
   candidate_profile: 'Your Candidate Profile',
   Time: 'Time',
@@ -177,7 +176,7 @@ export default {
   no_job_found: 'No job form found.',
   still_working: 'still working here',
   search_click: 'Click on search',
-  select_restaurant:'Select restaurant',
+  select_restaurant: 'Select restaurant',
 
   // Add Experience Modal
   name_of_company: 'The name of company',
@@ -217,7 +216,9 @@ export default {
   waiter: 'Waiter',
   contact: 'Contact',
   //no tracking
-  activate_app_tracking: 'We need your permission to track your activity and offer you a better user experience',
+  activate_app_tracking:
+    'We need your permission to track your activity and offer you a better user experience',
   allow_app_tracking: 'Authorise to track my activity',
   reinitialiser: 'Request new password',
+  clear_all: 'Clear all',
 };

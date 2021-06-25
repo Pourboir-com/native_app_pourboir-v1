@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FCDF6F',
     borderRadius: 15,
     paddingVertical: 7,
-    width:160,
+    width: 160,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   btnTxt: {
     paddingVertical: 15,
     fontFamily: 'ProximaNova',
-    fontSize: 16
+    fontSize: 16,
   },
   btnGray: {
     backgroundColor: '#EAEAEA',
@@ -177,6 +177,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#FDDF6F',
     backgroundColor: '#FDDF6F',
+  },
+  full_name: {
+    paddingTop: 10,
+    paddingBottom: 10,
   },
 });
 

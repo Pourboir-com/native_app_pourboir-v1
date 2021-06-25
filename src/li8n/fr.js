@@ -58,8 +58,8 @@ export default {
   continue_with_google: 'Continuer avec Google',
   I_accept: 'J’accepte les',
   terms_of_use: 'conditions d’utilisation',
-  confidential:'politique de confidentialité',
-  et_la:'et  la  ',
+  confidential: 'politique de confidentialité',
+  et_la: 'et  la  ',
   I_am: 'Je suis',
   manager_res: 'restaurateur',
 
@@ -135,18 +135,18 @@ export default {
   education: 'Éducation',
   last_experience: 'Dernière expérience',
   passedat: 'Le Petit Nice Passedat',
-  full: 'Plein',
+  full: 'Temps plein',
   partial: 'Partiel',
   candidate_btn: 'Je crée mon profil candidat',
   candidate_profile: 'Votre profil de candidat',
   Time: 'Temps',
   year: 'Année',
-  position: 'Position',
+  position: 'Positionner',
   //canidate modal
   broadcast:
     'Nous allons diffuser votre profil aux restaurants correspondants à votre profil',
   thank_info: 'Merci pour vos informations',
-  part_time: 'à temps partiel',
+  part_time: 'Temps partiel',
 
   // manager side translations
   forget_password: 'mot de passe oublié ? ',
@@ -169,7 +169,7 @@ export default {
   availability: 'Disponibilité',
   immediate: 'Immédiate',
   exp: 'Expérience',
-  years: 'ans',
+  years: 'an',
   estb: 'Etablissement',
   mark_cater: ' Bac Pro Commercialisation et Services en Restauration',
   recruit: 'Recruter',
@@ -180,7 +180,7 @@ export default {
   no_job_found: 'Aucun emploi trouvé.',
   still_working: 'travaille toujours ici',
   search_click: 'Cliquez sur rechercher',
-  select_restaurant:'Sélectionnez le restaurant',
+  select_restaurant: 'Sélectionnez le restaurant',
 
   // Add Experience Modal
   add_exp: 'Ajouter une expérience',
@@ -210,7 +210,7 @@ export default {
   modif_prof: 'Je modifie mon profil candidat',
   monday: 'Lundi',
   tuesday: 'Mardi',
-  wedensday: 'Mercredi',
+  wednesday: 'Mercredi',
   thursday: 'jeudi',
   friday: 'Vendredi',
   saturday: 'Samedi',
@@ -224,4 +224,5 @@ export default {
   activate_app_tracking: `Il nous faut votre accord pour une meilleure expérience d’utilisation`,
   allow_app_tracking: 'Activer le suivi d’activité',
   reinitialiser: 'Réinitialiser',
+  clear_all: 'Tout effacer',
 };

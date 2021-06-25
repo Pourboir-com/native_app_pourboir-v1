@@ -51,7 +51,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
           showsVerticalScrollIndicator={false}
           bounces={false}
           keyboardShouldPersistTaps={'handled'}
-          contentContainerStyle={[{alignItems:'center', width: '100%'}]}
+          contentContainerStyle={[{ alignItems: 'center', width: '100%' }]}
         >
           <View style={styles.first_part_modal}>
             <View style={{ marginVertical: 20, alignItems: 'center' }}>
@@ -62,6 +62,11 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                 />
               </View>
               <View style={{ marginTop: 14, alignItems: 'center' }}>
+                <Text style={styles.full_name}>
+                  {waiterFormLoading
+                    ? 'loading..'
+                    : waiterFormData?.data[0]?.user_id?.full_name || 'none'}
+                </Text>
                 <Text
                   ellipsizeMode="tail"
                   numberOfLines={1}

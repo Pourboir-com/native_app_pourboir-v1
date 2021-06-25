@@ -38,11 +38,11 @@ const HomeScreen = props => {
         setSaveLocation(JSON.stringify({ lat: 48.864716, log: 2.349014 }));
       }
     })();
-    if (props?.route?.params?.ad) {
-      setTimeout(() => {
-        setAdModalVisible(true);
-      }, 2000);
-    }
+    // if (props?.route?.params?.ad) {
+    //   setTimeout(() => {
+    //     setAdModalVisible(true);
+    //   }, 2000);
+    // }
   }, []);
 
   useEffect(() => {

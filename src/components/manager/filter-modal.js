@@ -126,7 +126,7 @@ const FilterModal = ({
                             availability === 'full' ? 'bold' : 'normal',
                         }}
                       >
-                        Full Time
+                        {i18n.t('full')}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -173,7 +173,7 @@ const FilterModal = ({
                         fontWeight: availability === 'half' ? 'bold' : 'normal',
                       }}
                     >
-                      Part Time
+                      {i18n.t('part_time')}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -275,7 +275,7 @@ const FilterModal = ({
                       borderBottomColor: '#FCDF6F',
                     }}
                   >
-                    Clear all
+                    {i18n.t('clear_all')}
                   </Text>
                 </TouchableOpacity>
               </View>

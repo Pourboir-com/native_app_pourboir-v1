@@ -71,7 +71,7 @@ export default {
   help_us_improve:
     'Aidez-nous à enrichir les données. Donnez nous le nom de votre serveur',
   will_contact_shortly:
-    'Nous le contacterons rapidement pour l’ajouter dans l&apos;application.',
+    'Nous le contacterons rapidement pour l’ajouter dans l’application.',
   name_of_your_server: 'Le nom de votre serveur',
   waiter_email: 'L’email de votre serveur',
   add: 'Ajouter',

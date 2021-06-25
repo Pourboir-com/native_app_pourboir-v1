@@ -34,25 +34,20 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
       style={{
         width: '100%',
         marginHorizontal: 0,
+        marginTop: 18,
         marginBottom: 0,
         position: 'relative',
       }}
     >
       <View
         style={{
-          opacity: 0.5,
-          backgroundColor: '#000',
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16,
-          height: 35,
-        }}
-      ></View>
-      <View
-        style={{
           justifyContent: 'center',
           alignItems: 'center',
           height: '100%',
-          backgroundColor: '#fff',
+          backgroundColor: '#000',
+          borderTopLeftRadius: 16,
+          borderTopRightRadius: 16,
+          opacity: 0.7,
         }}
       >
         <AdMobBanner
@@ -84,8 +79,8 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
           style={{
             alignSelf: 'flex-end',
             position: 'absolute',
-            top: -14,
-            right: 7,
+            top: 10,
+            right: 10,
           }}
         >
           <AntDesign name="close" size={29} color="white" />

@@ -19,7 +19,7 @@ import { Colors } from '../../constants/Theme';
 import * as Google from 'expo-google-app-auth';
 import i18n from '../../li8n';
 import { config } from '../../constants';
-import { userSignUp, iPhoneLoginName } from '../../util';
+import { userSignUp, iPhoneLoginName, upperTitleCase } from '../../util';
 import { useMutation } from 'react-query';
 import { GOOGLE_SIGNUP, SEND_PUSH_TOKEN } from '../../queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -163,7 +163,7 @@ const SocialLogin = ({ navigation, route }) => {
       await googleSignup(userSignInDetails, {
         onSuccess: async res => {
           let userDetails = {
-            name: res?.user?.full_name,
+            name: upperTitleCase(res?.user?.full_name),
             // ? userGivenName(res?.user?.full_name)
             // : '',
             image: res?.user?.picture || '',
@@ -248,7 +248,7 @@ const SocialLogin = ({ navigation, route }) => {
             await googleSignup(user, {
               onSuccess: async res => {
                 let userDetails = {
-                  name: res?.user?.full_name,
+                  name: upperTitleCase(res?.user?.full_name),
                   // ? userGivenName(res?.user?.full_name)
                   // : '',
                   image: res?.user?.picture || '',
@@ -408,7 +408,7 @@ const SocialLogin = ({ navigation, route }) => {
                       await googleSignup(user, {
                         onSuccess: async res => {
                           let userDetails = {
-                            name: res?.user?.full_name,
+                            name: upperTitleCase(res?.user?.full_name),
                             // ? userGivenName(res?.user?.full_name)
                             // : '',
                             image: res?.user?.picture || '',

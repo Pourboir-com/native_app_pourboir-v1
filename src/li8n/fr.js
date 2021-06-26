@@ -175,7 +175,7 @@ export default {
   recruit: 'Recruter',
   position_list: 'Liste de position',
   eval: 'Évaluation',
-  filter: 'Filtrer',
+  filter: 'Filtre',
   post: 'Poste',
   no_job_found: 'Aucun emploi trouvé.',
   still_working: 'travaille toujours ici',

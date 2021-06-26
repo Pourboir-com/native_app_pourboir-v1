@@ -5,3 +5,4 @@ export * from './your-restaurant';
 export * from './manager';
 export * from './job-form';
 export * from './format-date';
+export * from './common';

@@ -12,6 +12,7 @@ import { AntDesign } from '@expo/vector-icons';
 import Swipeout from 'react-native-swipeout';
 import { Feather } from '@expo/vector-icons';
 import i18n from '../../li8n';
+import { upperTitleCase } from '../../util';
 
 const StaffCard = ({ toggleModal, data, handleDeleteForm, Width }) => {
   const [close, setClose] = useState(false);
@@ -77,7 +78,7 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm, Width }) => {
                 numberOfLines={1}
                 style={styles.name_staff}
               >
-                {data?.user_id?.full_name}
+                {upperTitleCase(data?.user_id?.full_name)}
               </Text>
               <View style={{ flexDirection: 'row', marginTop: 7 }}>
                 {/* {obj.map((v, i) => {

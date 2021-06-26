@@ -17,6 +17,10 @@ import { SEND_PUSH_TOKEN } from '../../queries';
 import Constants from 'expo-constants';
 import * as Localization from 'expo-localization';
 import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+import moment from 'moment';
+import 'moment/locale/fr';
+import 'moment/locale/es';
+import { upperTitleCase } from '../../util';
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -66,6 +70,7 @@ export default function SplashScreen(props) {
     registerForPushNotificationsAsync().then(async token => {
       const { userInfo = {} } = await getAsyncStorageValues();
       const { locale } = await Localization.getLocalizationAsync();
+      moment.locale(locale);
       if (userInfo?.user_id) {
         await sendNotificationToken({
           id: userInfo?.user_id || '',
@@ -94,7 +99,7 @@ export default function SplashScreen(props) {
     (async () => {
       const { userInfo = {} } = await getAsyncStorageValues();
       let userDetails = {
-        name: userInfo?.name,
+        name: upperTitleCase(userInfo?.name),
         image: userInfo?.image,
         email: userInfo?.email,
         accessToken: userInfo?.accessToken,

@@ -180,7 +180,7 @@ const FilterModal = ({
               </View>
             </View>
             <View>
-              <Text style={styles.postsLabel}>Experience</Text>
+              <Text style={styles.postsLabel}>{i18n.t('experience')}</Text>
               <View style={{ marginHorizontal: 4, marginTop: 12 }}>
                 <RangeSlider
                   min={0}
@@ -209,7 +209,9 @@ const FilterModal = ({
                 </Text>
                 <Text style={styles.fontYears}>
                   {expHigh}{' '}
-                  <Text style={styles.ansFont}>{i18n.t('years')} </Text>
+                  <Text style={styles.ansFont}>
+                    {expHigh > 1 ? i18n.t('years') + 's' : i18n.t('years')}{' '}
+                  </Text>
                 </Text>
               </View>
             </View>

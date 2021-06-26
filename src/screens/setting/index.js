@@ -28,7 +28,7 @@ import { Platform } from 'react-native';
 // import * as StoreReview from 'expo-store-review';
 import { email_to } from '../../constants/env';
 import Constants from 'expo-constants';
-import { userGivenName } from '../../util';
+import { upperTitleCase, userGivenName } from '../../util';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Spinner from 'react-native-loading-spinner-overlay';
 const imgBg = require('../../assets/images/Group5.png');
@@ -183,7 +183,7 @@ const Setting = ({ navigation, route }) => {
           <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
             {!state?.userDetails?.name
               ? 'Bonjour'
-              : userGivenName(state.userDetails.name)}
+              : upperTitleCase(userGivenName(state.userDetails.name))}
           </Text>
         </ImageBackground>
       </View>

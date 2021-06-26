@@ -16,6 +16,7 @@ import { RECRUITMENT_FORM } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import Dash from 'react-native-dash';
 import { formatDate } from '../../util/format-date';
+import { upperTitleCase } from '../../util';
 
 const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
   const { data: waiterFormData, isLoading: waiterFormLoading } = useQuery(
@@ -65,7 +66,11 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                 <Text style={styles.full_name}>
                   {waiterFormLoading
                     ? 'loading..'
-                    : waiterFormData?.data[0]?.user_id?.full_name || 'none'}
+                    : waiterFormData?.data[0]?.user_id?.full_name
+                    ? upperTitleCase(
+                        waiterFormData?.data[0]?.user_id?.full_name,
+                      )
+                    : 'none'}
                 </Text>
                 <Text
                   ellipsizeMode="tail"

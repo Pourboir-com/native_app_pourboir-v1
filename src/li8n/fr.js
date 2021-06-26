@@ -25,7 +25,7 @@ export default {
   siren: 'Numéro de SIREN',
   nom_de_boss: 'Nom du responsable légal',
   contact_du_boss: 'Téléphone du responsable',
-  please_wait: `S'il vous plaît, attendez`,
+  please_wait: `Attendez, s'il vous plaît`,
   none: 'rien',
 
   // Rate your server
@@ -47,7 +47,7 @@ export default {
   setting: 'Paramètre',
   rate_application: "Notez l'application",
   contact_us: 'Contactez nous',
-  personal_data: 'Données personnels',
+  personal_data: 'Données personnelles',
   // are_you_a_waiter   open card reviews
   sign_out: 'Se déconnecter',
   i_waiter: 'Je suis serveur',
@@ -106,7 +106,7 @@ export default {
   checked: 'Vérifié',
   payment_methods: 'Modes de paiement',
   add_pay_method: 'Ajoutez un mode de paiement',
-  your_personal_details: 'Vos données personnels',
+  your_personal_details: 'Vos données personnelles',
 
   // Apple Pay
   pay_with_apple: 'Payer avec Apple Pay',
@@ -115,7 +115,7 @@ export default {
 
   // Master Card
   date_of_exp: "Date d'expiration",
-  master_card: 'Carte maîtresse',
+  master_card: 'Carte Master Card',
   delete_card: 'Effacer la carte',
 
   // Add a map
@@ -128,7 +128,7 @@ export default {
   delete_paypal: 'Effacer ce compte Paypal',
 
   //Remove
-  looking_for_job: `Je recherche de poste`,
+  looking_for_job: `Je recherche un poste`,
 
   // candidate profile
   experience: 'Expérience',
@@ -136,12 +136,12 @@ export default {
   last_experience: 'Dernière expérience',
   passedat: 'Le Petit Nice Passedat',
   full: 'Temps plein',
-  partial: 'Partiel',
+  partial: 'Temps partiel',
   candidate_btn: 'Je crée mon profil candidat',
   candidate_profile: 'Votre profil de candidat',
   Time: 'Temps',
   year: 'Année',
-  position: 'Positionner',
+  position: 'Position',
   //canidate modal
   broadcast:
     'Nous allons diffuser votre profil aux restaurants correspondants à votre profil',
@@ -205,13 +205,13 @@ export default {
     'Remplissez votre profil de recherche de poste et recevez des offres rapidement',
   look_job: 'En recherche de poste',
   your_cand_prof: 'Votre profil candidat',
-  prev_rec: 'Prévisualiser comment les recruteurs voient votre prof',
+  prev_rec: 'Prévisualiser comment les recruteurs voient votre profil',
   waitress: 'Serveuse',
   modif_prof: 'Je modifie mon profil candidat',
   monday: 'Lundi',
   tuesday: 'Mardi',
   wednesday: 'Mercredi',
-  thursday: 'jeudi',
+  thursday: 'Jeudi',
   friday: 'Vendredi',
   saturday: 'Samedi',
   sunday: 'Dimanche',

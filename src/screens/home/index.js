@@ -41,7 +41,7 @@ const HomeScreen = props => {
     if (props?.route?.params?.ad) {
       setTimeout(() => {
         setAdModalVisible(true);
-      }, 2000);
+      }, 100);
     }
   }, []);
 

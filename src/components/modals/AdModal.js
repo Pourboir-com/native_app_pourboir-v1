@@ -14,12 +14,12 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
   const showCrossDelay = () => {
     setTimeout(() => {
       setShowCross(true);
-    }, 8000);
+    }, 5000);
   };
 
   useEffect(() => {
     showCrossDelay();
-  });
+  }, []);
 
   const refreshAnimation = () => {
     dispatch({

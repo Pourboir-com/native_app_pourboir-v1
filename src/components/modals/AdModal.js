@@ -10,6 +10,7 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
   const [error, setError] = useState();
   const { state, dispatch } = useContext(Context);
   const [showCross, setShowCross] = useState(false);
+  const [Ad, setAd] = useState(false);
 
   const showCrossDelay = () => {
     setTimeout(() => {
@@ -31,6 +32,8 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
     <Modal
       isVisible={adModalVisible}
       backdropOpacity={0}
+      animationInTiming={1500}
+      animationOutTiming={1500}
       style={{
         width: '100%',
         marginHorizontal: 0,
@@ -55,19 +58,33 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
           adUnitID="ca-app-pub-3940256099942544/6300978111" // Test ID, Replace with your-admob-unit-id
           servePersonalizedAds // true or false
           onDidFailToReceiveAdWithError={() => setError(true)}
+          onAdViewDidReceiveAd={() => setAd(true)}
         />
       </View>
       {error && (
         <Text
           style={{
             position: 'absolute',
-            fontSize: 16,
+            fontSize: 18,
             fontFamily: 'ProximaNova',
             alignSelf: 'center',
-            color: '#000',
+            color: '#fff',
           }}
         >
           Failed to load Ad
+        </Text>
+      )}
+      {(!Ad && !error) && (
+        <Text
+          style={{
+            position: 'absolute',
+            fontSize: 18,
+            fontFamily: 'ProximaNova',
+            alignSelf: 'center',
+            color: '#fff',
+          }}
+        >
+          Loading Ad..
         </Text>
       )}
       {showCross && (

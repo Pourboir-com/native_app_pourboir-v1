@@ -19,7 +19,7 @@ const HomeScreen = props => {
   // const [nextPageToken, setnextPageToken] = useState();
   const { state, dispatch } = useContext(Context);
   const { restaurantsDetails: data } = state;
-  const [adModalVisible, setAdModalVisible] = useState(false);
+  const [adModalVisible, setAdModalVisible] = useState(true);
 
   useEffect(() => {
     (async () => {

@@ -32,8 +32,8 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
     <Modal
       isVisible={adModalVisible}
       backdropOpacity={0}
-      animationInTiming={1500}
-      animationOutTiming={1500}
+      animationInTiming={700}
+      animationOutTiming={700}
       style={{
         width: '100%',
         marginHorizontal: 0,

@@ -19,7 +19,7 @@ const HomeScreen = props => {
   // const [nextPageToken, setnextPageToken] = useState();
   const { state, dispatch } = useContext(Context);
   const { restaurantsDetails: data } = state;
-  const [adModalVisible, setAdModalVisible] = useState(true);
+  const [adModalVisible, setAdModalVisible] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -41,7 +41,7 @@ const HomeScreen = props => {
     if (props?.route?.params?.ad) {
       setTimeout(() => {
         setAdModalVisible(true);
-      }, 2000);
+      }, 200);
     }
   }, []);
 

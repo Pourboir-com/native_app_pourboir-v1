@@ -5,7 +5,6 @@ import { AdMobBanner } from 'expo-ads-admob';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as actionTypes from '../../contextApi/actionTypes';
 import Context from '../../contextApi/context';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const AdModal = ({ adModalVisible, setAdModalVisible }) => {
   const [error, setError] = useState();
@@ -38,7 +37,6 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
       style={{
         width: '100%',
         marginHorizontal: 0,
-        marginTop: getStatusBarHeight() || 18,
         marginBottom: 0,
         position: 'relative',
       }}
@@ -52,6 +50,7 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
           opacity: 0.7,
+          marginTop: 30,
         }}
       >
         <AdMobBanner
@@ -97,7 +96,7 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
           style={{
             alignSelf: 'flex-end',
             position: 'absolute',
-            top: 10,
+            top: 30,
             right: 10,
           }}
         >

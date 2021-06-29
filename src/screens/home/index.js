@@ -38,13 +38,14 @@ const HomeScreen = props => {
         setSaveLocation(JSON.stringify({ lat: 48.864716, log: 2.349014 }));
       }
     })();
-    if (props?.route?.params?.ad) {
+  }, []);
+  useEffect(() => {
+    if (props?.route?.params?.ad && saveLocation) {
       setTimeout(() => {
         setAdModalVisible(true);
-      }, 200);
+      }, 500);
     }
-  }, []);
-
+  }, [saveLocation]);
   useEffect(() => {
     if (!searchVal) {
       setsearchEnter('');

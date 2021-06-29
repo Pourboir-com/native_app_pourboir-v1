@@ -150,7 +150,7 @@ const ServerProfile = ({ navigation, route }) => {
                   refetchRestaurant={yourRefetchRestaurant}
                   isFetch={true}
                   Data={yourRestaurantData?.restaurants?.results || []}
-                  // saveLocation={saveLocation}
+                  saveLocation
                 />
               </View>
               <View

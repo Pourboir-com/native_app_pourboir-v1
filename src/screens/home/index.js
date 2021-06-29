@@ -41,12 +41,12 @@ const HomeScreen = props => {
   }, []);
 
   useEffect(() => {
-    if (props?.route?.params?.ad && saveLocation) {
+    if (props?.route?.params?.ad) {
       setTimeout(() => {
         setAdModalVisible(true);
-      }, 200);
+      }, 300);
     }
-  }, [saveLocation]);
+  }, []);
 
   useEffect(() => {
     if (!searchVal) {

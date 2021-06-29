@@ -13,8 +13,8 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
     android: 'ca-app-pub-3940256099942544/6300978111',
   });
   const productionID = Platform.select({
-    ios: 'ca-app-pub-9868358871342497/3246508386',
-    android: 'ca-app-pub-9868358871342497/5094776670',
+    ios: 'ca-app-pub-3363550540559109/3556164413',
+    android: 'ca-app-pub-3363550540559109/9191634478',
   });
 
   const adUnitID = Constants.isDevice && !__DEV__ ? productionID : testID;

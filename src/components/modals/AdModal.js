@@ -1,12 +1,24 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, Platform } from 'react-native';
 import Modal from 'react-native-modal';
 import { AdMobBanner } from 'expo-ads-admob';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as actionTypes from '../../contextApi/actionTypes';
 import Context from '../../contextApi/context';
+import Constants from 'expo-constants';
 
 const AdModal = ({ adModalVisible, setAdModalVisible }) => {
+  const testID = Platform.select({
+    ios: 'ca-app-pub-3940256099942544/2934735716',
+    android: 'ca-app-pub-3940256099942544/6300978111',
+  });
+  const productionID = Platform.select({
+    ios: 'ca-app-pub-9868358871342497/3246508386',
+    android: 'ca-app-pub-9868358871342497/5094776670',
+  });
+
+  const adUnitID = Constants.isDevice && !__DEV__ ? productionID : testID;
+
   const [error, setError] = useState();
   const { state, dispatch } = useContext(Context);
   const [showCross, setShowCross] = useState(false);
@@ -55,7 +67,7 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
       >
         <AdMobBanner
           bannerSize="mediumRectangle"
-          adUnitID="ca-app-pub-3940256099942544/6300978111" // Test ID, Replace with your-admob-unit-id
+          adUnitID={adUnitID} // Test ID, Replace with your-admob-unit-id
           servePersonalizedAds // true or false
           onDidFailToReceiveAdWithError={() => setError(true)}
           onAdViewDidReceiveAd={() => setAd(true)}
@@ -74,7 +86,7 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
           Failed to load Ad
         </Text>
       )}
-      {(!Ad && !error) && (
+      {!Ad && !error && (
         <Text
           style={{
             position: 'absolute',

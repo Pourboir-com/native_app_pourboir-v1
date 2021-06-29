@@ -39,13 +39,15 @@ const HomeScreen = props => {
       }
     })();
   }, []);
+
   useEffect(() => {
     if (props?.route?.params?.ad && saveLocation) {
       setTimeout(() => {
         setAdModalVisible(true);
-      }, 500);
+      }, 200);
     }
   }, [saveLocation]);
+
   useEffect(() => {
     if (!searchVal) {
       setsearchEnter('');
@@ -110,10 +112,12 @@ const HomeScreen = props => {
           route={props?.route}
         />
       </Header>
-      <AdModal
-        adModalVisible={adModalVisible}
-        setAdModalVisible={setAdModalVisible}
-      />
+      {adModalVisible && (
+        <AdModal
+          adModalVisible={adModalVisible}
+          setAdModalVisible={setAdModalVisible}
+        />
+      )}
     </>
   );
 };

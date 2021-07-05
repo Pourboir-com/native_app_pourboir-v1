@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -43,8 +43,11 @@ import i18n from '../../li8n';
 // import { filteredRestaurant, yourFilteredRestaurant } from '../../util';
 import Spinner from 'react-native-loading-spinner-overlay';
 // import { set } from 'react-native-reanimated';
+import RBSheet from "react-native-raw-bottom-sheet";
 
 const ReviewDetails = ({ navigation, route }) => {
+  const [added, setAdded] = useState(false)
+  const refRBSheet = useRef();
   const openDialScreen = () => {
     let number = '';
     if (Platform.OS === 'ios') {
@@ -322,6 +325,54 @@ const ReviewDetails = ({ navigation, route }) => {
         <View
           style={{ marginTop: 220, marginHorizontal: 24, marginBottom: 20 }}
         >
+
+
+          <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:29, marginHorizontal:10}}>
+            <TouchableOpacity
+             activeOpacity={0.6}
+             onPress={() => refRBSheet.current.open()}
+            >
+              <Text
+              style={{fontFamily:'ProximaNovaBold', fontWeight:'bold', fontSize:24, textAlign:'center'}}
+              >888</Text>
+              <Text
+              tyle={{fontFamily:'ProximaNova', fontSize:18}}
+              >{i18n.t('fav')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+            activeOpacity={0.6}
+            style={{
+              backgroundColor: added === true ? '#EAEAEA' : Colors.yellow,
+              paddingVertical:14,
+              width:156,
+              borderRadius:12,
+              alignItems:'center',
+              justifyContent:'center'
+            }}
+            onPress={() => setAdded(!added)}
+            >
+              <Text style={{fontSize:15, fontFamily:'ProximaNova'}}>{added === true ? i18n.t('added') : i18n.t('add_fav')}</Text>
+            </TouchableOpacity>
+          </View>
+
+          <RBSheet
+        ref={refRBSheet}
+        closeOnDragDown={true}
+        closeOnPressMask={true}
+        height={180}
+        customStyles={{
+          wrapper: {
+            backgroundColor: 'rgba(52, 52, 52, 0.8)',
+          },
+          draggableIcon: {
+            backgroundColor: "#000"
+          }
+        }}
+      >
+        <Text style={{textAlign:'center', fontFamily:'ProximaNova', fontSize:16}}>{i18n.t('fav_list')}</Text>
+      </RBSheet>
+
+
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={() =>
@@ -567,7 +618,7 @@ const ReviewDetails = ({ navigation, route }) => {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         activeOpacity={0.5}
         onPress={handleUserModalOpen}
         style={styles.viewLastBtn}
@@ -581,7 +632,7 @@ const ReviewDetails = ({ navigation, route }) => {
         >
           {i18n.t('are_you_waiter')}
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       {RefferedWaiterModalVisible && (
         <RefferedWaiterModal

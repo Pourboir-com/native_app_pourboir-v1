@@ -19,6 +19,7 @@ import { getAsyncStorageValues } from '../../constants';
 import { UPDATE_PICTURE } from '../../queries';
 import { useMutation } from 'react-query';
 import i18n from '../../li8n';
+import CommonButton from '../../components/common-button';
 
 const PersonalDetails = ({ navigation }) => {
   const { state, dispatch } = useContext(Context);
@@ -31,10 +32,14 @@ const PersonalDetails = ({ navigation }) => {
 
   const [text, onChangeText] = React.useState(firstName);
   const [text2, onChangeText2] = React.useState(lastName);
-  const [text3, onChangeText3] = React.useState();
+  const [text3, onChangeText3] = React.useState('');
   const [text4, onChangeText4] = React.useState(state?.userDetails?.email);
   const [image, setImage] = useState();
+  const [username, setUsername] = useState('');
+  const [about, setAbout] = useState('');
   const [updatePicture] = useMutation(UPDATE_PICTURE);
+  const validate = text !== '' && text2 !== '' && text3 !== '' && text4 !== '' && username !== ''
+  const validateBlue = text !== '' && text2 !== '' && text3 !== '' && text4 !== '' && username !== ''
 
   const handleChangePicture = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -207,7 +212,7 @@ const PersonalDetails = ({ navigation }) => {
                   style={{ width: '60%' }}
                   placeholderTextColor={'#485460'}
                 />
-                <Text
+                {/* <Text
                   style={{
                     color: '#E02020',
                     width: '40%',
@@ -217,7 +222,7 @@ const PersonalDetails = ({ navigation }) => {
                   }}
                 >
                   {i18n.t('not_verified')}
-                </Text>
+                </Text> */}
               </View>
             </View>
 
@@ -232,7 +237,7 @@ const PersonalDetails = ({ navigation }) => {
                   style={{ width: '70%' }}
                   placeholderTextColor={'#485460'}
                 />
-                <Text
+                {/* <Text
                   style={{
                     color: '#6DD400',
                     width: '30%',
@@ -242,16 +247,45 @@ const PersonalDetails = ({ navigation }) => {
                   }}
                 >
                   {i18n.t('checked')}
-                </Text>
+                </Text> */}
               </View>
             </View>
-          </View>
-          <View style={{ alignItems: 'center', marginBottom: 40 }}>
-            <View>
-              <Text style={styles.heading1}>{i18n.t('payment_methods')}</Text>
+            <View style={styles.input_box}>
+              <Text style={styles.inputLabel}>{i18n.t('username')}</Text>
+              <TextInput
+                style={styles.inputsTopTow}
+                onChangeText={e => setUsername(e)}
+                value={username}
+                placeholder="@christine_zhou"
+                placeholderTextColor={'#485460'}
+              />
             </View>
+            <View style={styles.input_box}>
+              <Text style={styles.inputLabel}>{i18n.t('about_me')}</Text>
+              <TextInput
+                style={{ ...styles.inputsTopTow, paddingBottom: 50 }}
+                onChangeText={e => setAbout(e)}
+                multiline={true}
+                value={about}
+                placeholder={i18n.t('describe')}
+                placeholderTextColor={'#485460'}
+              />
+            </View>
+          </View>
+          <View style={{marginHorizontal:'4%', marginVertical:15}}>
+            <View>
+            <CommonButton title={i18n.t('confirm')} validate={validate} />
+            </View>
+            <View style={{marginTop:15}}>
+            <CommonButton title={i18n.t('i_prof')} navigation="ProfessionalArea" validateBlue={validateBlue} />
+            </View>
+          </View>
+          {/* <View style={{ alignItems: 'center', marginBottom: 40 }}> */}
+          {/* <View>
+              <Text style={styles.heading1}>{i18n.t('payment_methods')}</Text>
+            </View> */}
 
-            <View style={styles.payment_container}>
+          {/* <View style={styles.payment_container}>
               <TouchableOpacity
                 onPress={() => navigation.navigate('paypalPayment')}
                 activeOpacity={0.6}
@@ -323,8 +357,8 @@ const PersonalDetails = ({ navigation }) => {
                   <AntDesign name="right" size={20} color="lightgray" />
                 </View>
               </TouchableOpacity>
-            </View>
-          </View>
+            </View> */}
+          {/* </View> */}
         </View>
       </ScrollView>
     </View>

@@ -23,6 +23,7 @@ import AddExperienceModal from '../../components/modals/AddExperienceModal';
 import AddNicheModal from '../../components/modals/AddNicheModal';
 import { removeId, nicheModalDataUpdated, checkExeperience } from './util';
 import moment from 'moment';
+import CurrentPositionModal from '../../components/modals/CurrentPositionModal';
 const Find_Job = ({ navigation, route }) => {
   const { form, refetch } = route.params;
   const { state } = useContext(Context);
@@ -47,8 +48,14 @@ const Find_Job = ({ navigation, route }) => {
   const [position, setPosition] = useState(form?.position || '');
   const [phone, setPhone] = useState(form?.telephone_number || '');
   const [expModalVisible, setExpModalVisible] = useState(false);
+  const [currentModal, setCurrentModal] = useState(false);
   const [nicheModalVisible, setNicheModalVisible] = useState(false);
   const [data, setData] = useState(checkExeperience(form) || []);
+  const [currentData, setCurrentData] = useState([]);
+  const [job, setJob] = useState('')
+  const [confirmed, setConfirmed] = useState(false)
+
+  console.log(job)
   const [nicheModalData, setNicheModalData] = useState(
     form?.availability || [],
   );
@@ -130,13 +137,13 @@ const Find_Job = ({ navigation, route }) => {
             borderBottomRightRadius: Dimensions.get('window').width * 0.06,
             overflow: 'hidden',
           }}
-          source={require('../../assets/images/Group3.png')}
+          source={require('../../assets/images/blue-head.png')}
         >
           <GlobalHeader
             arrow={true}
-            headingText={i18n.t('candidate_profile')}
+            headingText={i18n.t('area_prof')}
             fontSize={17}
-            color={'black'}
+            color={'white'}
             navigation={navigation}
             setting={false}
             backgroundColor={'transparent'}
@@ -191,17 +198,7 @@ const Find_Job = ({ navigation, route }) => {
                   placeholderTextColor={'#707375'}
                 />
               </View>
-              <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('phone')}</Text>
-                <TextInput
-                  style={styles.inputsTopTow}
-                  onChangeText={e => setPhone(e)}
-                  value={phone}
-                  placeholder="06 88 88 88 88"
-                  placeholderTextColor={'#707375'}
-                  keyboardType={'numeric'}
-                />
-              </View>
+              
               <View style={styles.input_box}>
                 <Text style={styles.inputLabel}>{i18n.t('diploma')}</Text>
                 <TextInput
@@ -214,11 +211,12 @@ const Find_Job = ({ navigation, route }) => {
               </View>
               <View style={{ marginVertical: 16 }}>
                 <Text
-                  style={{
-                    color: 'black',
-                    fontFamily: 'ProximaNovaBold',
-                    fontSize: 18,
-                  }}
+                 style={{
+                  color: 'black',
+                  fontFamily: 'ProximaNovaBold',
+                  fontSize: 20,
+                  marginBottom: 14,
+                }}
                 >
                   {i18n.t('prof_exp')}
                 </Text>
@@ -247,10 +245,74 @@ const Find_Job = ({ navigation, route }) => {
                     </View>
                   );
                 })}
-                <View style={styles.viewAddReview}>
+                
+              <View style={{ marginTop: 30,}}>
+                
+                <Text style={{paddingBottom:10, fontSize:16, fontFamily:'ProximaNovaBold'}}>{i18n.t('current_pos')}</Text>
+                <View style={{marginBottom:currentData.length ? 20 : 0}}>
+                  {
+                    currentData.map((v,i) => {
+                      return (
+                        <View key={i}>
+                        <View style={{...styles.expBox, backgroundColor: !confirmed ? '#FFF6D4' : null}}>
+                          <View >
+                            <View style={{justifyContent:'space-between', flexDirection:'row'}}> 
+                            <Text style={styles.expTxt1}>
+                              {v.restaurant_name}
+                            </Text>
+                            <Text style={styles.expTxt1}>
+                              {confirmed === false ? i18n.t('confirm') : null}
+                            </Text>
+                            </View>
+                            {/* <Text style={styles.expTxt2}>{v?.position}</Text> */}
+                            <Text style={{...styles.expTxt3, paddingTop:10}}>
+                             {i18n.t('since')} {v.start_date}
+                            </Text>
+                          </View>
+                        </View>
+                    </View>
+                      )
+                    })
+                  }
+                </View>
+              
+              <View style={styles.viewAddReview}>
                   {/* <Text style={[styles.txtCantFind, { fontFamily: 'ProximaNova' }]}>
                       {i18n.t('cant_find_your_server')}
                       </Text> */}
+                      
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text
+                      style={[
+                        styles.txtAddReview,
+                        { fontFamily: 'ProximaNovaBold' },
+                      ]}
+                    >
+                      {/* {i18n.t('add_your_server')} */}
+                      {i18n.t('add_exp')}
+                    </Text>
+                    <TouchableOpacity
+                      activeOpacity={0.5}
+                      onPress={() => setCurrentModal(true)}
+                      style={styles.btnAdd}
+                    >
+                      <AntDesign
+                        name="plus"
+                        size={16}
+                        color={Colors.fontDark}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+
+              <View style={{ marginTop: 30,}}>
+                <Text style={{paddingBottom:10, fontSize:16, fontFamily:'ProximaNovaBold'}}>{i18n.t('past_pos')}</Text>
+              <View style={styles.viewAddReview}>
+                  {/* <Text style={[styles.txtCantFind, { fontFamily: 'ProximaNova' }]}>
+                      {i18n.t('cant_find_your_server')}
+                      </Text> */}
+                      
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text
                       style={[
@@ -275,12 +337,62 @@ const Find_Job = ({ navigation, route }) => {
                   </View>
                 </View>
               </View>
-              <View style={{ marginBottom: temp === 'half' ? 9 : 16 }}>
+
+              </View>
+              <View style={{ marginBottom: temp === 'half' ? 9 : 16, marginBottom:20 }}>
                 <Text
                   style={{
                     color: 'black',
                     fontFamily: 'ProximaNovaBold',
-                    fontSize: 18,
+                    fontSize: 20,
+                    marginBottom: 14,
+                  }}
+                >
+                  {i18n.t('look_job')}
+                </Text>
+                {/* <Text style={styles.inputLabel}>{i18n.t('Time')}</Text> */}
+                <View style={styles.chooseButtons_container}>
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    style={[
+                      styles.time_opt,
+                      job === 'yes' && {
+                        backgroundColor: Colors.yellow,
+                        borderTopLeftRadius: 7,
+                        borderBottomLeftRadius: 7,
+                      },
+                    ]}
+                    onPress={() => setJob('yes')}
+                    value={job}
+                  >
+                    <Text style={styles.timeTxt}>{i18n.t('yes')}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    style={[
+                      styles.time_opt,
+                      { borderLeftWidth: 1 },
+                      job === 'No' && {
+                        backgroundColor: Colors.yellow,
+                        borderTopRightRadius: 7,
+                        borderBottomRightRadius: 7,
+                      },
+                    ]}
+                    onPress={() => setJob('No')}
+                    value={job}
+                  >
+                    <Text style={styles.timeTxt}>{i18n.t('no')}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+             {
+               job === 'yes' && (
+                <View style={{ marginBottom: temp === 'half' ? 9 : 16 }}>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontFamily: 'ProximaNovaBold',
+                    fontSize: 20,
                     marginBottom: 14,
                   }}
                 >
@@ -321,6 +433,8 @@ const Find_Job = ({ navigation, route }) => {
                   </TouchableOpacity>
                 </View>
               </View>
+               )
+             }
               {temp === 'half' && (
                 <View>
                   {(nicheModalDataUpdated(nicheModalData) || []).map((v, i) => {
@@ -337,7 +451,7 @@ const Find_Job = ({ navigation, route }) => {
                     );
                   })}
 
-                  <View style={{ ...styles.viewAddReview, marginBottom: 20 }}>
+                  <View style={{ ...styles.viewAddReview, marginBottom: 20, marginTop:10 }}>
                     <View
                       style={{ flexDirection: 'row', alignItems: 'center' }}
                     >
@@ -365,6 +479,32 @@ const Find_Job = ({ navigation, route }) => {
                 </View>
               )}
             </View>
+            {
+              job === 'yes' && (
+                <View>
+              <Text
+              style={{
+                color: 'black',
+                fontFamily: 'ProximaNovaBold',
+                fontSize: 20,
+                marginBottom: 14,
+                marginTop:5
+              }}
+              >{i18n.t('contact_me')}</Text>
+            <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>{i18n.t('phone')}</Text>
+                <TextInput
+                  style={styles.inputsTopTow}
+                  onChangeText={e => setPhone(e)}
+                  value={phone}
+                  placeholder="06 88 88 88 88"
+                  placeholderTextColor={'#707375'}
+                  keyboardType={'numeric'}
+                />
+              </View>
+            </View>
+              )
+            }
           </View>
         </KeyboardAwareScrollView>
 
@@ -389,7 +529,7 @@ const Find_Job = ({ navigation, route }) => {
                 color: Colors.fontDark,
               }}
             >
-              {i18n.t('candidate_btn')}
+              {i18n.t('save')}
             </Text>
           )}
         </TouchableOpacity>
@@ -419,6 +559,12 @@ const Find_Job = ({ navigation, route }) => {
         setExpModalVisible={setExpModalVisible}
         data={data}
         setData={setData}
+      />
+       <CurrentPositionModal
+        currentModal={currentModal}
+        setCurrentModal={setCurrentModal}
+        currentData={currentData}
+        setCurrentData={setCurrentData}
       />
       <AddNicheModal
         nicheModalVisible={nicheModalVisible}

@@ -26,6 +26,7 @@ import ManagerSignUp from '../screens/manager-signup';
 import ServerProfile from '../screens/server-profile';
 import NoAppTracking from '../screens/no-app-tracking';
 import ForgetPassword from '../screens/forget-password';
+import ProfessionalArea from '../screens/professional-area';
 
 const Stack = createStackNavigator();
 
@@ -312,6 +313,19 @@ function AppNavigator() {
       <Stack.Screen
         name="ForgetPassword"
         component={ForgetPassword}
+        options={() => ({
+          headerShown: false,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
+        })}
+      />
+        <Stack.Screen
+        name="ProfessionalArea"
+        component={ProfessionalArea}
         options={() => ({
           headerShown: false,
           title: '',

@@ -13,10 +13,11 @@ import { Colors } from '../../constants/Theme';
 const CommonButton = props => {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  console.log(props)
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      // disabled={loading}
+      disabled={ props.disable === false ? props.disable : (props.validate || props.validateBlue ? false : true)   }
       onPress={() => {
         props.navigation &&
           navigation.navigate(
@@ -25,12 +26,12 @@ const CommonButton = props => {
           );
         props.dispatch && props.dispatch();
       }}
-      style={styles.btnValider}
+      style={{...styles.btnValider, backgroundColor: (props.color) ? props.color : (props.validate ? Colors.yellow  : '#EAEAEA' && props.validateBlue ? '#2F3676'  : '#EAEAEA' ) }}
     >
       {loading ? (
         <ActivityIndicator size={29} color="#EBC11B" />
       ) : (
-        <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
+        <Text style={{ fontFamily: 'ProximaNova', fontSize: 16, color: props.validateBlue ? 'white': 'black' }}>
           {props.title}
         </Text>
       )}

@@ -114,11 +114,11 @@ export default function HomeScreenContent({
           <View
             style={{
               backgroundColor: '#F9F9F9',
-              marginTop: 0,
+              marginTop: 10,
               flex: 1,
             }}
           >
-            <Text
+            {/* <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
               {searchEnter ? i18n.t('result_distance') : i18n.t('around_you')}
@@ -127,7 +127,10 @@ export default function HomeScreenContent({
               style={[styles.txt2NoRest, { fontFamily: 'ProximaNovaSemiBold' }]}
             >
               {i18n.t('no_restaurant_found')}
-            </Text>
+            </Text> */}
+            <Image 
+              source={require('../assets/images/no-data.png')}
+            />
           </View>
         )}
       </>
@@ -151,7 +154,7 @@ export default function HomeScreenContent({
               alignItems: 'center',
             }}
           >
-            <FlatList
+            {/* <FlatList
               data={dummyArray}
               showsVerticalScrollIndicator={false}
               alwaysBounceHorizontal={false}
@@ -171,7 +174,21 @@ export default function HomeScreenContent({
               bounces={false}
               keyExtractor={(item, index) => index.toString()}
               renderItem={() => <HomeCardSkeleton />}
-            />
+            /> */}
+            <View>
+              <Image 
+              source={require('../assets/images/loading.png')}
+              />
+              <Text
+              style={{
+                fontSize:18,
+                fontFamily:'ProximaNova',
+                textAlign:'center'
+              }}
+              >
+                {i18n.t('be_patient')}
+              </Text>
+            </View>
           </View>
         </View>
       ) : (

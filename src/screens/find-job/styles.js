@@ -145,7 +145,6 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     borderColor: '#DADADA',
     // height:40,
-    marginTop: 30,
   },
   btnAdd: {
     backgroundColor: Colors.yellow,

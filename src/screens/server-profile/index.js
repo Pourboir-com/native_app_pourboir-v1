@@ -30,6 +30,7 @@ import HomeScreenContent from '../../components/HomeContent';
 import * as actionTypes from '../../contextApi/actionTypes';
 import Spinner from 'react-native-loading-spinner-overlay';
 import StaffCard from '../../components/manager/staff-card';
+import { Colors } from '../../constants/Theme';
 
 const ServerProfile = ({ navigation, route }) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -165,6 +166,8 @@ const ServerProfile = ({ navigation, route }) => {
                   <CommonButton
                     title={i18n.t('ind_rest')}
                     navigation={'Home'}
+                    disable={false}
+                    color={Colors.yellow}
                     navigationData={{ crossIcon: false }}
                     dispatch={() => {
                       dispatch({
@@ -254,6 +257,8 @@ const ServerProfile = ({ navigation, route }) => {
               >
                 <CommonButton
                   navigation="FindJob"
+                  disable={false}
+                    color={Colors.yellow}
                   navigationData={{
                     form: waiterFormData?.data[0] || [],
                     refetch: refetchWaiterFormData,

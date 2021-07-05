@@ -377,6 +377,9 @@ const Setting = ({ navigation, route }) => {
           </Text>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity  onPress={() => navigation.navigate("personalDetails")} style={{backgroundColor:'yellow', position:'absolute', bottom:50,}} >
+        <Text>Navigation</Text>
+      </TouchableOpacity>
 
       <View style={{ position: 'absolute', bottom: 20 }}>
         <Text style={[styles.versionText, { fontFamily: 'ProximaNova' }]}>

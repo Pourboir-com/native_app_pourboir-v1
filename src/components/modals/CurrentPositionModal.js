@@ -24,11 +24,12 @@ import { useMutation } from 'react-query';
 import stylesTextbox from '../../screens/find-job/styles';
 import moment from 'moment';
 import { validateAddForm } from '../../util';
-const AddExperienceModal = ({
-  setExpModalVisible,
-  expModalVisible,
-  data,
-  setData,
+
+const CurrentPositionModal = ({
+  setCurrentModal,
+  currentModal,
+  currentData,
+  setCurrentData,
 }) => {
   const [modeS, setModeS] = useState('date');
   const [showS, setShowS] = useState(false);
@@ -36,18 +37,18 @@ const AddExperienceModal = ({
   const [showL, setShowL] = useState(false);
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
-  const [post, setPost] = useState('');
+//   const [post, setPost] = useState('');
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+//   const [endDate, setEndDate] = useState(new Date());
   const [termsChecked, setTermsChecked] = useState(false);
   const [workHere, setWorkHere] = useState('');
   //search textbox
   const [showDropdown, setShowDropdown] = useState(false);
   const [restaurants, setRestaurants] = useState();
   const [searchLoading, setSearchLoading] = useState(false);
-  const [restaurant, setRestaurant] = useState({});
+  const [restaurant, setRestaurant] = useState('');
   const [searchRestaurant] = useMutation(SEARCH_RESTAURANTS);
-
+console.log(startDate.toLocaleDateString())
   const handleSearchRestaurant = async () => {
     if (restaurant?.name) {
       setSearchLoading(true);
@@ -68,44 +69,54 @@ const AddExperienceModal = ({
   };
 
   const AddData = () => {
-    let validateRestaurant = validateAddForm(
-      data,
-      restaurant,
-      startDate,
-      termsChecked === false ? endDate : '',
-    );
-    if (validateRestaurant) {
-      setData([
-        ...data,
-        {
-          enterprise_name: restaurant?.name || '',
-          restaurant_id: restaurant?.restaurant_id || '',
-          position: post || '',
-          still_working: termsChecked,
-          start_date: startDate,
-          end_date: termsChecked === false ? endDate : '',
-        },
-      ]);
-      setPost('');
-      setStart('');
-      setEnd('');
-      setTermsChecked(false);
-      setExpModalVisible(false);
-      setRestaurant({});
-    } else {
-      alert('Cannot add multiple experience from a single place.');
-    }
-  };
+    setCurrentData([...currentData, {restaurant_name: restaurant, start_date: startDate.toLocaleDateString()}])
+    setRestaurant('');
+    // setStartDate()
+    // setStart()
+    setCurrentModal(false)
+    console.log(currentData)
+  }
+  console.log(currentData)
+//   const AddData = () => {
+//     let validateRestaurant = validateAddForm(
+//       data,
+//       restaurant,
+//       startDate,
+//       termsChecked === false ? endDate : '',
+//     );
+//     if (validateRestaurant) {
+//       setData([
+//         ...data,
+//         {
+//           enterprise_name: restaurant?.name || '',
+//           restaurant_id: restaurant?.restaurant_id || '',
+//           position: post || '',
+//           still_working: termsChecked,
+//           start_date: startDate,
+//           end_date: termsChecked === false ? endDate : '',
+//         },
+//       ]);
+//       setPost('');
+//       setStart('');
+//       setEnd('');
+//       setTermsChecked(false);
+//       setCurrentModal(false);
+//       setRestaurant({});
+//     } else {
+//       alert('Cannot add multiple experience from a single place.');
+//     }
+//   };
   // console.log( startDate > endDate ? true: false)
 
-  let validation = termsChecked
-    ? restaurant.name && restaurant.restaurant_id && post && start
-    : restaurant.name &&
-      restaurant.restaurant_id &&
-      post &&
-      start &&
-      end &&
-      !(start > end);
+  let validation = 
+//   termsChecked
+//     ? restaurant.name && restaurant.restaurant_id && post && start
+//     : restaurant.name &&
+//       restaurant.restaurant_id &&
+      restaurant &&
+      start 
+    //   end &&
+    //   !(start > end);
 
   const onChangeStartDate = selectedDate => {
     const currentDate = selectedDate || startDate;
@@ -132,8 +143,8 @@ const AddExperienceModal = ({
   return (
     <Overlay
       overlayStyle={styles.container}
-      isVisible={expModalVisible}
-      onBackdropPress={() => setExpModalVisible(false)}
+      isVisible={currentModal}
+      onBackdropPress={() => setCurrentModal(false)}
     >
       <ImageBackground
         style={styles.imgBgStyle}
@@ -142,7 +153,7 @@ const AddExperienceModal = ({
       >
         <View style={styles.viewImg}>
           <TouchableOpacity
-            onPress={() => setExpModalVisible(false)}
+            onPress={() => setCurrentModal(false)}
             style={{ alignSelf: 'flex-end', margin: 10 }}
           >
             <AntDesign name="close" size={29} color="#485460" />
@@ -176,7 +187,7 @@ const AddExperienceModal = ({
         resetScrollToCoords={{ x: 0, y: 0 }}
       >
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-          {i18n.t('add_exp')}
+          {i18n.t('add_curr_pos')}
         </Text>
         <View
           style={{
@@ -221,16 +232,18 @@ const AddExperienceModal = ({
                 returnKeyLabel="Find"
                 returnKeyType="done"
                 onSubmitEditing={handleSearchRestaurant}
-                onChangeText={e =>
-                  setRestaurant({
-                    name: e || '',
-                    restaurant_id:
-                      restaurant?.name?.length < 2
-                        ? ''
-                        : restaurant?.restaurant_id,
-                  })
-                }
-                value={restaurant?.name}
+                // onChangeText={e =>
+                //   setRestaurant({
+                //     name: e || '',
+                //     restaurant_id:
+                //       restaurant?.name?.length < 2
+                //         ? ''
+                //         : restaurant?.restaurant_id,
+                //   })
+                // }
+                // value={restaurant?.name}
+                value={restaurant}
+                onChangeText={(e) => setRestaurant(e)}
                 style={stylesTextbox.input_icon_text}
                 placeholder={i18n.t('name_of_company')}
                 placeholderTextColor={'#707375'}
@@ -268,7 +281,7 @@ const AddExperienceModal = ({
               </ScrollView>
             )}
           </View>
-          <View style={styles.input_box}>
+          {/* <View style={styles.input_box}>
             <TextInput
               style={styles.inputsTopTow}
               onChangeText={e => setPost(e)}
@@ -276,7 +289,7 @@ const AddExperienceModal = ({
               placeholder={i18n.t('the_post')}
               placeholderTextColor={'#707375'}
             />
-          </View>
+          </View> */}
 
           <TouchableOpacity onPress={showModeStartDate} style={styles.btnInput}>
             <Text
@@ -301,7 +314,7 @@ const AddExperienceModal = ({
             />
           </TouchableOpacity>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={showModeLastDate}
             style={{ ...styles.btnInput, marginTop: 15, marginBottom: 10 }}
           >
@@ -324,7 +337,7 @@ const AddExperienceModal = ({
               onCancel={() => setShowL(false)}
               dateFormat="dayofweek"
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         {/* <View
@@ -409,7 +422,7 @@ const AddExperienceModal = ({
   );
 };
 
-export default AddExperienceModal;
+export default CurrentPositionModal;
 
 const styles = StyleSheet.create({
   inputsTopTow: {

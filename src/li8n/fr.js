@@ -236,14 +236,15 @@ export default {
   past_pos: 'Position passée',
   current_pos: 'Position actuelle',
   look_job: 'En recherche de poste',
-  yes:'Oui',
-  no:'Non',
+  yes: 'Oui',
+  no: 'Non',
   contact_me: 'Me contacter',
   add_cur_pos: 'Ajouter votre poste actuel',
   since: 'depuis',
-  be_patient: 'Soyez patient, nous recherchons les établissements les plus proches de vous',
-  fav_list:'Liste des favoris',
+  be_patient:
+    'Soyez patient, nous recherchons les établissements les plus proches de vous',
+  fav_list: 'Liste des favoris',
   add_fav: 'Ajouter au favoris',
   fav: 'Favoris',
-  added:'Ajouté'
+  added: 'Ajouté',
 };

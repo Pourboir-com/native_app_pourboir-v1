@@ -111,7 +111,13 @@ const GlobalHeader = props => {
                   }}
                   name="arrow-back"
                   size={props.Arrowsize ? props.Arrowsize : 24}
-                  color={props.BackIconColor ? props.BackIconColor : '#000'}
+                  color={
+                    props.BackIconColor
+                      ? props.BackIconColor
+                      : props.whiteIcon
+                      ? '#fff'
+                      : '#000'
+                  }
                 />
               )}
             </View>

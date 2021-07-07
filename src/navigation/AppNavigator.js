@@ -52,7 +52,6 @@ function AppNavigator() {
       <Stack.Screen
         name="socialLogin"
         component={socialLogin}
-
         options={() => ({
           headerShown: true,
           title: '',
@@ -323,7 +322,7 @@ function AppNavigator() {
           gestureEnabled: true,
         })}
       />
-        <Stack.Screen
+      <Stack.Screen
         name="ProfessionalArea"
         component={ProfessionalArea}
         options={() => ({

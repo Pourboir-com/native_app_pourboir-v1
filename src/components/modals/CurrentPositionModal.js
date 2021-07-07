@@ -72,9 +72,10 @@ console.log(startDate.toLocaleDateString())
     setCurrentData([...currentData, {restaurant_name: restaurant, start_date: startDate.toLocaleDateString()}])
     setRestaurant('');
     // setStartDate()
-    // setStart()
     setCurrentModal(false)
-    console.log(currentData)
+    setTimeout(() => {
+      setStart('')
+    },1300)
   }
   console.log(currentData)
 //   const AddData = () => {

@@ -27,6 +27,7 @@ const ProfessionalArea = ({ navigation }) => {
         source={require('../../assets/images/blue-head.png')}
       >
         <GlobalHeader
+          whiteIcon={true}
           arrow={true}
           headingText={i18n.t('area_prof')}
           fontSize={17}

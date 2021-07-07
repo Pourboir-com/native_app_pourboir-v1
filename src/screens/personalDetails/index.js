@@ -1,7 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { ImageBackground } from 'react-native';
 // import { KeyboardAvoidingView } from 'react-native';
-import { Text, View, Dimensions, Image } from 'react-native';
+import {
+  Text,
+  View,
+  Dimensions,
+  Image,
+  KeyboardAvoidingView,
+} from 'react-native';
 import {
   ScrollView,
   TextInput,
@@ -22,6 +28,7 @@ import i18n from '../../li8n';
 import CommonButton from '../../components/common-button';
 
 const PersonalDetails = ({ navigation }) => {
+  const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : -450;
   const { state, dispatch } = useContext(Context);
   let fullName = state?.userDetails?.name?.split(' ');
   let firstName =
@@ -38,8 +45,18 @@ const PersonalDetails = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [about, setAbout] = useState('');
   const [updatePicture] = useMutation(UPDATE_PICTURE);
-  const validate = text !== '' && text2 !== '' && text3 !== '' && text4 !== '' && username !== ''
-  const validateBlue = text !== '' && text2 !== '' && text3 !== '' && text4 !== '' && username !== ''
+  const validate =
+    text !== '' &&
+    text2 !== '' &&
+    text3 !== '' &&
+    text4 !== '' &&
+    username !== '';
+  const validateBlue =
+    text !== '' &&
+    text2 !== '' &&
+    text3 !== '' &&
+    text4 !== '' &&
+    username !== '';
 
   const handleChangePicture = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -88,38 +105,46 @@ const PersonalDetails = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        style={{
-          width: '100%',
-          height: 100,
-          borderBottomLeftRadius: Dimensions.get('window').width * 0.06,
-          borderBottomRightRadius: Dimensions.get('window').width * 0.06,
-          overflow: 'hidden',
-        }}
-        source={require('../../assets/images/Group3.png')}
-      >
-        <GlobalHeader
-          arrow={true}
-          headingText={i18n.t('your_personal_details')}
-          fontSize={17}
-          color={'black'}
-          navigation={navigation}
-          setting={false}
-          backgroundColor={'transparent'}
-          borderRadius={true}
-        />
-      </ImageBackground>
+      <View style={{ flex: -1 }}>
+        <ImageBackground
+          style={{
+            width: '100%',
+            height: 100,
+            borderBottomLeftRadius: Dimensions.get('window').width * 0.06,
+            borderBottomRightRadius: Dimensions.get('window').width * 0.06,
+            overflow: 'hidden',
+          }}
+          source={require('../../assets/images/Group3.png')}
+        >
+          <GlobalHeader
+            arrow={true}
+            headingText={i18n.t('your_personal_details')}
+            fontSize={17}
+            color={'black'}
+            navigation={navigation}
+            setting={false}
+            backgroundColor={'transparent'}
+            borderRadius={true}
+          />
+        </ImageBackground>
+      </View>
+
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         bounces={false}
         scrollEnabled={true}
         style={{
           width: '100%',
+          flex: 11,
         }}
       >
-        <View>
-          <View style={styles.avatar}>
-            {/* <TouchableOpacity style={styles.viewImg}>
+        <KeyboardAvoidingView
+          behavior="position"
+          keyboardVerticalOffset={keyboardVerticalOffset}
+        >
+          <View>
+            <View style={styles.avatar}>
+              {/* <TouchableOpacity style={styles.viewImg}>
                   <Image
                     style={{
                       width: '100%',
@@ -132,87 +157,87 @@ const PersonalDetails = ({ navigation }) => {
                     }}
                   />
                 </TouchableOpacity> */}
-            <TouchableOpacity
-              // onPress={() => navigation.navigate('personalDetails')}
-              onPress={handleChangePicture}
-              style={styles.viewImg}
-              activeOpacity={0.6}
-            >
-              {state.userDetails.image === null ||
-              state.userDetails.image === undefined ||
-              state.userDetails.image === '' ? (
-                // <FontAwesome name="user-circle-o" size={110} color="#fff" />
-                <Image
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: 60,
-                  }}
-                  source={{
-                    uri:
-                      'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png',
-                  }}
-                />
-              ) : (
-                <Image
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: 60,
-                  }}
-                  source={{ uri: image ? image : state.userDetails.image }}
-                  resizeMode="cover"
-                />
-              )}
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={handleChangePicture}
-              style={styles.btnPencil}
-            >
-              <View style={styles.viewPencil}>
-                <MaterialCommunityIcons
-                  name="pencil-outline"
-                  color="#fff"
-                  size={15}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity
+                // onPress={() => navigation.navigate('personalDetails')}
+                onPress={handleChangePicture}
+                style={styles.viewImg}
+                activeOpacity={0.6}
+              >
+                {state.userDetails.image === null ||
+                state.userDetails.image === undefined ||
+                state.userDetails.image === '' ? (
+                  // <FontAwesome name="user-circle-o" size={110} color="#fff" />
+                  <Image
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: 60,
+                    }}
+                    source={{
+                      uri:
+                        'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png',
+                    }}
+                  />
+                ) : (
+                  <Image
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: 60,
+                    }}
+                    source={{ uri: image ? image : state.userDetails.image }}
+                    resizeMode="cover"
+                  />
+                )}
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={handleChangePicture}
+                style={styles.btnPencil}
+              >
+                <View style={styles.viewPencil}>
+                  <MaterialCommunityIcons
+                    name="pencil-outline"
+                    color="#fff"
+                    size={15}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
 
-          <View style={{ marginHorizontal: 30, alignItems: 'center' }}>
-            <Text style={styles.heading1}> {i18n.t('personal_info')}</Text>
-            <View style={styles.input_box}>
-              <Text style={styles.inputLabel}>{i18n.t('first_name')}</Text>
-              <TextInput
-                style={styles.inputsTopTow}
-                onChangeText={onChangeText}
-                value={text}
-                placeholder="Christine"
-                placeholderTextColor={'#485460'}
-              />
-            </View>
-            <View style={styles.input_box}>
-              <Text style={styles.inputLabel}>{i18n.t('last_name')}</Text>
-              <TextInput
-                style={styles.inputsTopTow}
-                onChangeText={onChangeText2}
-                value={text2}
-                placeholder="Zhou"
-                placeholderTextColor={'#485460'}
-              />
-            </View>
-            <View style={styles.input_box}>
-              <Text style={styles.inputLabel}>{i18n.t('phone_num')}</Text>
-              <View style={styles.inputsBottomTwo}>
+            <View style={{ marginHorizontal: 30, alignItems: 'center' }}>
+              <Text style={styles.heading1}> {i18n.t('personal_info')}</Text>
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>{i18n.t('first_name')}</Text>
                 <TextInput
-                  onChangeText={onChangeText3}
-                  value={text3}
-                  placeholder="+33 6 88 88 88"
-                  keyboardType="number-pad"
-                  style={{ width: '60%' }}
+                  style={styles.inputsTopTow}
+                  onChangeText={onChangeText}
+                  value={text}
+                  placeholder="Christine"
                   placeholderTextColor={'#485460'}
                 />
-                {/* <Text
+              </View>
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>{i18n.t('last_name')}</Text>
+                <TextInput
+                  style={styles.inputsTopTow}
+                  onChangeText={onChangeText2}
+                  value={text2}
+                  placeholder="Zhou"
+                  placeholderTextColor={'#485460'}
+                />
+              </View>
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>{i18n.t('phone_num')}</Text>
+                <View style={styles.inputsTopTow}>
+                  <TextInput
+                    onChangeText={onChangeText3}
+                    value={text3}
+                    placeholder="+33 6 88 88 88"
+                    keyboardType="number-pad"
+                    style={{ width: '100%' }}
+                    placeholderTextColor={'#485460'}
+                  />
+                  {/* <Text
                   style={{
                     color: '#E02020',
                     width: '40%',
@@ -223,21 +248,21 @@ const PersonalDetails = ({ navigation }) => {
                 >
                   {i18n.t('not_verified')}
                 </Text> */}
+                </View>
               </View>
-            </View>
 
-            <View style={styles.input_box}>
-              <Text style={styles.inputLabel}>E-mail</Text>
-              <View style={styles.inputsBottomTwo}>
-                <TextInput
-                  onChangeText={onChangeText4}
-                  value={text4}
-                  placeholder="christine@zhou.com"
-                  keyboardType="email-address"
-                  style={{ width: '70%' }}
-                  placeholderTextColor={'#485460'}
-                />
-                {/* <Text
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>E-mail</Text>
+                <View style={styles.inputsTopTow}>
+                  <TextInput
+                    onChangeText={onChangeText4}
+                    value={text4}
+                    placeholder="christine@zhou.com"
+                    keyboardType="email-address"
+                    style={{ width: '70%' }}
+                    placeholderTextColor={'#485460'}
+                  />
+                  {/* <Text
                   style={{
                     color: '#6DD400',
                     width: '30%',
@@ -248,44 +273,37 @@ const PersonalDetails = ({ navigation }) => {
                 >
                   {i18n.t('checked')}
                 </Text> */}
+                </View>
+              </View>
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>{i18n.t('username')}</Text>
+                <TextInput
+                  style={styles.inputsTopTow}
+                  onChangeText={e => setUsername(e)}
+                  value={username}
+                  placeholder="@christine_zhou"
+                  placeholderTextColor={'#485460'}
+                />
+              </View>
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>{i18n.t('about_me')}</Text>
+                <TextInput
+                  style={{ ...styles.inputsTopTow, paddingBottom: 50 }}
+                  onChangeText={e => setAbout(e)}
+                  multiline={true}
+                  value={about}
+                  placeholder={i18n.t('describe')}
+                  placeholderTextColor={'#485460'}
+                />
               </View>
             </View>
-            <View style={styles.input_box}>
-              <Text style={styles.inputLabel}>{i18n.t('username')}</Text>
-              <TextInput
-                style={styles.inputsTopTow}
-                onChangeText={e => setUsername(e)}
-                value={username}
-                placeholder="@christine_zhou"
-                placeholderTextColor={'#485460'}
-              />
-            </View>
-            <View style={styles.input_box}>
-              <Text style={styles.inputLabel}>{i18n.t('about_me')}</Text>
-              <TextInput
-                style={{ ...styles.inputsTopTow, paddingBottom: 50 }}
-                onChangeText={e => setAbout(e)}
-                multiline={true}
-                value={about}
-                placeholder={i18n.t('describe')}
-                placeholderTextColor={'#485460'}
-              />
-            </View>
-          </View>
-          <View style={{marginHorizontal:'4%', marginVertical:15}}>
-            <View>
-            <CommonButton title={i18n.t('confirm')} validate={validate} />
-            </View>
-            <View style={{marginTop:15}}>
-            <CommonButton title={i18n.t('i_prof')} navigation="ProfessionalArea" validateBlue={validateBlue} />
-            </View>
-          </View>
-          {/* <View style={{ alignItems: 'center', marginBottom: 40 }}> */}
-          {/* <View>
+
+            {/* <View style={{ alignItems: 'center', marginBottom: 40 }}> */}
+            {/* <View>
               <Text style={styles.heading1}>{i18n.t('payment_methods')}</Text>
             </View> */}
 
-          {/* <View style={styles.payment_container}>
+            {/* <View style={styles.payment_container}>
               <TouchableOpacity
                 onPress={() => navigation.navigate('paypalPayment')}
                 activeOpacity={0.6}
@@ -358,9 +376,30 @@ const PersonalDetails = ({ navigation }) => {
                 </View>
               </TouchableOpacity>
             </View> */}
-          {/* </View> */}
-        </View>
+            {/* </View> */}
+          </View>
+        </KeyboardAvoidingView>
       </ScrollView>
+      <View>
+        <View
+          style={{
+            marginHorizontal: '4%',
+            marginVertical: 15,
+            backgroundColor: 'transparent',
+          }}
+        >
+          <View>
+            <CommonButton title={i18n.t('confirm')} validate={validate} />
+          </View>
+          <View style={{ marginTop: 15 }}>
+            <CommonButton
+              title={i18n.t('i_prof')}
+              navigation="ProfessionalArea"
+              validateBlue={validateBlue}
+            />
+          </View>
+        </View>
+      </View>
     </View>
   );
 };

@@ -43,10 +43,10 @@ import i18n from '../../li8n';
 // import { filteredRestaurant, yourFilteredRestaurant } from '../../util';
 import Spinner from 'react-native-loading-spinner-overlay';
 // import { set } from 'react-native-reanimated';
-import RBSheet from "react-native-raw-bottom-sheet";
+import RBSheet from 'react-native-raw-bottom-sheet';
 
 const ReviewDetails = ({ navigation, route }) => {
-  const [added, setAdded] = useState(false)
+  const [added, setAdded] = useState(false);
   const refRBSheet = useRef();
   const openDialScreen = () => {
     let number = '';
@@ -325,53 +325,172 @@ const ReviewDetails = ({ navigation, route }) => {
         <View
           style={{ marginTop: 220, marginHorizontal: 24, marginBottom: 20 }}
         >
-
-
-          <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:29, marginHorizontal:10}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              marginBottom: 29,
+            }}
+          >
             <TouchableOpacity
-             activeOpacity={0.6}
-             onPress={() => refRBSheet.current.open()}
+              activeOpacity={0.6}
+              onPress={() => refRBSheet.current.open()}
             >
               <Text
-              style={{fontFamily:'ProximaNovaBold', fontWeight:'bold', fontSize:24, textAlign:'center'}}
-              >888</Text>
-              <Text
-              tyle={{fontFamily:'ProximaNova', fontSize:18}}
-              >{i18n.t('fav')}</Text>
+                style={{
+                  fontFamily: 'ProximaNovaBold',
+                  fontWeight: 'bold',
+                  fontSize: 24,
+                  textAlign: 'center',
+                }}
+              >
+                888
+              </Text>
+              <Text tyle={{ fontFamily: 'ProximaNova', fontSize: 18 }}>
+                {i18n.t('fav')}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
-            activeOpacity={0.6}
-            style={{
-              backgroundColor: added === true ? '#EAEAEA' : Colors.yellow,
-              paddingVertical:14,
-              width:156,
-              borderRadius:12,
-              alignItems:'center',
-              justifyContent:'center'
-            }}
-            onPress={() => setAdded(!added)}
+              activeOpacity={0.6}
+              style={{
+                backgroundColor: added === true ? '#EAEAEA' : Colors.yellow,
+                paddingVertical: 14,
+                width: 156,
+                borderRadius: 12,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: -20,
+              }}
+              onPress={() => setAdded(!added)}
             >
-              <Text style={{fontSize:15, fontFamily:'ProximaNova'}}>{added === true ? i18n.t('added') : i18n.t('add_fav')}</Text>
+              <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
+                {added === true ? i18n.t('added') : i18n.t('add_fav')}
+              </Text>
             </TouchableOpacity>
           </View>
 
           <RBSheet
-        ref={refRBSheet}
-        closeOnDragDown={true}
-        closeOnPressMask={true}
-        height={180}
-        customStyles={{
-          wrapper: {
-            backgroundColor: 'rgba(52, 52, 52, 0.8)',
-          },
-          draggableIcon: {
-            backgroundColor: "#000"
-          }
-        }}
-      >
-        <Text style={{textAlign:'center', fontFamily:'ProximaNova', fontSize:16}}>{i18n.t('fav_list')}</Text>
-      </RBSheet>
+            ref={refRBSheet}
+            closeOnDragDown={true}
+            closeOnPressMask={true}
+            height={350}
+            customStyles={{
+              wrapper: {
+                backgroundColor: 'rgba(52, 52, 52, 0.8)',
+              },
+              draggableIcon: {
+                backgroundColor: '#000',
+              },
+            }}
+          >
+            <Text
+              style={{
+                textAlign: 'center',
+                fontFamily: 'ProximaNova',
+                fontSize: 16,
+              }}
+            >
+              {i18n.t('fav_list')}
+            </Text>
 
+            <View style={{ alignItems: 'center', marginVertical: 15 }}>
+              {!waitersLoading ? (
+                <View style={{ width: '90%', alignSelf: 'center' }}>
+                  <ReviewsSkeleton />
+                  <ReviewsSkeleton />
+                </View>
+              ) : (
+                <FlatList
+                  data={waitersLoading ? null : data}
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={item => item._id}
+                  renderItem={itemData => (
+                    <TouchableOpacity
+                      activeOpacity={0.5}
+                      key={itemData?.item?._id}
+                      onPress={() => {
+                        if (
+                          state.userDetails.user_id !==
+                          itemData.item?.user_id?._id
+                        ) {
+                          navigation.navigate('RateYourService', {
+                            name:
+                              itemData?.item?.user_id?.full_name ||
+                              itemData?.item.full_name ||
+                              'name missing',
+                            image:
+                              itemData?.item?.user_id &&
+                              itemData?.item?.user_id?.picture,
+                            restaurant_id: place_id,
+                            waiter_id: itemData?.item?._id,
+                            place_id: restaurant_id,
+                          });
+                        } else {
+                          alert(i18n.t('cannot_vote'));
+                        }
+                      }}
+                      style={styles.viewItemConatier}
+                    >
+                      <View
+                        style={{ flexDirection: 'row', alignItems: 'center' }}
+                      >
+                        {itemData?.item?.user_id ? (
+                          <Image
+                            style={{ width: 55, height: 55, borderRadius: 30 }}
+                            source={{ uri: itemData?.item?.user_id.picture }}
+                          />
+                        ) : (
+                          <SvgHeaderUserIcon height={45} width={45} />
+                        )}
+
+                        <View style={{ marginLeft: 10 }}>
+                          <Text
+                            ellipsizeMode="tail"
+                            numberOfLines={1}
+                            style={styles.txtItemName}
+                          >
+                            {itemData?.item?.user_id?.full_name ||
+                              itemData?.item?.full_name ||
+                              'name missing'}
+                          </Text>
+                          <View
+                            pointerEvents="none"
+                            style={{ flexDirection: 'row', marginTop: 7 }}
+                          >
+                            {obj.map((v, i) => {
+                              return (
+                                <TouchableOpacity
+                                  style={{ marginRight: 3 }}
+                                  key={i}
+                                >
+                                  <RatingStar
+                                    starSize={16}
+                                    type={
+                                      v <= itemData.item.rating
+                                        ? 'filled'
+                                        : v === itemData.item.rating + 0.5
+                                        ? 'half'
+                                        : 'empty'
+                                    }
+                                    notRatedStarColor="rgba(0,0,0,0.1)"
+                                  />
+                                </TouchableOpacity>
+                              );
+                            })}
+                          </View>
+                        </View>
+                      </View>
+                      <MaterialIcons
+                        name="chevron-right"
+                        size={28}
+                        color="grey"
+                      />
+                    </TouchableOpacity>
+                  )}
+                />
+              )}
+            </View>
+          </RBSheet>
 
           <TouchableOpacity
             activeOpacity={0.5}

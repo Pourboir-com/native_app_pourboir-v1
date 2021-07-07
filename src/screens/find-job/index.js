@@ -148,6 +148,7 @@ const Find_Job = ({ navigation, route }) => {
             setting={false}
             backgroundColor={'transparent'}
             borderRadius={true}
+            whiteIcon={true}
           />
         </ImageBackground>
 

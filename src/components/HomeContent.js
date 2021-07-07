@@ -203,7 +203,7 @@ export default function HomeScreenContent({
             resIsFetching && (
               <RefreshControl
                 //refresh control used for the Pull to Refresh
-                refreshing={!route.params.crossIcon && resIsFetching}
+                refreshing={!route?.params?.crossIcon && resIsFetching}
                 // color="#F9F9F9"
                 // tintColor="#F9F9F9"
                 // onRefresh={refetchRestaurant}
@@ -216,7 +216,7 @@ export default function HomeScreenContent({
         >
           {/* {resIsFetching && <BallIndicator style={{ marginTop: 25 }} size={25} color="black" />} */}
           <Spinner visible={deleteLoading} />
-          {!route.params.crossIcon && (
+          {!route?.params?.crossIcon && (
             <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
@@ -274,7 +274,7 @@ export default function HomeScreenContent({
                         distance={restaurantDistance(itemData)}
                         services={itemData?.item.servers}
                         loading={restaurantLoading}
-                        crossIcon={route.params.crossIcon}
+                        crossIcon={route?.params?.crossIcon}
                         place_id={itemData?.item?.place_id}
                         vicinity={itemData?.item?.vicinity}
                         our_rating={String(itemData?.item?.our_rating) || '0'}

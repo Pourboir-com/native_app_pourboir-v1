@@ -25,7 +25,7 @@ import { removeId, nicheModalDataUpdated, checkExeperience } from './util';
 import moment from 'moment';
 import CurrentPositionModal from '../../components/modals/CurrentPositionModal';
 const Find_Job = ({ navigation, route }) => {
-  const { form, refetch } = route.params;
+  const { form, refetch } = route?.params;
   const { state } = useContext(Context);
   // getting first and last name saved in state
   let name = form?.user_id?.full_name || state?.userDetails?.name;
@@ -52,10 +52,10 @@ const Find_Job = ({ navigation, route }) => {
   const [nicheModalVisible, setNicheModalVisible] = useState(false);
   const [data, setData] = useState(checkExeperience(form) || []);
   const [currentData, setCurrentData] = useState([]);
-  const [job, setJob] = useState('')
-  const [confirmed, setConfirmed] = useState(false)
+  const [job, setJob] = useState('');
+  const [confirmed, setConfirmed] = useState(false);
 
-  console.log(job)
+  console.log(job);
   const [nicheModalData, setNicheModalData] = useState(
     form?.availability || [],
   );
@@ -198,7 +198,7 @@ const Find_Job = ({ navigation, route }) => {
                   placeholderTextColor={'#707375'}
                 />
               </View>
-              
+
               <View style={styles.input_box}>
                 <Text style={styles.inputLabel}>{i18n.t('diploma')}</Text>
                 <TextInput
@@ -211,12 +211,12 @@ const Find_Job = ({ navigation, route }) => {
               </View>
               <View style={{ marginVertical: 16 }}>
                 <Text
-                 style={{
-                  color: 'black',
-                  fontFamily: 'ProximaNovaBold',
-                  fontSize: 20,
-                  marginBottom: 14,
-                }}
+                  style={{
+                    color: 'black',
+                    fontFamily: 'ProximaNovaBold',
+                    fontSize: 20,
+                    marginBottom: 14,
+                  }}
                 >
                   {i18n.t('prof_exp')}
                 </Text>
@@ -245,101 +245,136 @@ const Find_Job = ({ navigation, route }) => {
                     </View>
                   );
                 })}
-                
-              <View style={{ marginTop: 30,}}>
-                
-                <Text style={{paddingBottom:10, fontSize:16, fontFamily:'ProximaNovaBold'}}>{i18n.t('current_pos')}</Text>
-                <View style={{marginBottom:currentData.length ? 20 : 0}}>
-                  {
-                    currentData.map((v,i) => {
+
+                <View style={{ marginTop: 30 }}>
+                  <Text
+                    style={{
+                      paddingBottom: 10,
+                      fontSize: 16,
+                      fontFamily: 'ProximaNovaBold',
+                    }}
+                  >
+                    {i18n.t('current_pos')}
+                  </Text>
+                  <View style={{ marginBottom: currentData.length ? 20 : 0 }}>
+                    {currentData.map((v, i) => {
                       return (
                         <View key={i}>
-                        <View style={{...styles.expBox, backgroundColor: !confirmed ? '#FFF6D4' : null}}>
-                          <View >
-                            <View style={{justifyContent:'space-between', flexDirection:'row'}}> 
-                            <Text style={styles.expTxt1}>
-                              {v.restaurant_name}
-                            </Text>
-                            <Text style={styles.expTxt1}>
-                              {confirmed === false ? i18n.t('confirm') : null}
-                            </Text>
+                          <View
+                            style={{
+                              ...styles.expBox,
+                              backgroundColor: !confirmed ? '#FFF6D4' : null,
+                            }}
+                          >
+                            <View>
+                              <View
+                                style={{
+                                  justifyContent: 'space-between',
+                                  flexDirection: 'row',
+                                }}
+                              >
+                                <Text style={styles.expTxt1}>
+                                  {v.restaurant_name}
+                                </Text>
+                                <Text style={styles.expTxt1}>
+                                  {confirmed === false
+                                    ? i18n.t('confirm')
+                                    : null}
+                                </Text>
+                              </View>
+                              {/* <Text style={styles.expTxt2}>{v?.position}</Text> */}
+                              <Text
+                                style={{ ...styles.expTxt3, paddingTop: 10 }}
+                              >
+                                {i18n.t('since')} {v.start_date}
+                              </Text>
                             </View>
-                            {/* <Text style={styles.expTxt2}>{v?.position}</Text> */}
-                            <Text style={{...styles.expTxt3, paddingTop:10}}>
-                             {i18n.t('since')} {v.start_date}
-                            </Text>
                           </View>
                         </View>
+                      );
+                    })}
+                  </View>
+
+                  <View style={styles.viewAddReview}>
+                    {/* <Text style={[styles.txtCantFind, { fontFamily: 'ProximaNova' }]}>
+                      {i18n.t('cant_find_your_server')}
+                      </Text> */}
+
+                    <View
+                      style={{ flexDirection: 'row', alignItems: 'center' }}
+                    >
+                      <Text
+                        style={[
+                          styles.txtAddReview,
+                          { fontFamily: 'ProximaNovaBold' },
+                        ]}
+                      >
+                        {/* {i18n.t('add_your_server')} */}
+                        {i18n.t('add_exp')}
+                      </Text>
+                      <TouchableOpacity
+                        activeOpacity={0.5}
+                        onPress={() => setCurrentModal(true)}
+                        style={styles.btnAdd}
+                      >
+                        <AntDesign
+                          name="plus"
+                          size={16}
+                          color={Colors.fontDark}
+                        />
+                      </TouchableOpacity>
                     </View>
-                      )
-                    })
-                  }
+                  </View>
                 </View>
-              
-              <View style={styles.viewAddReview}>
-                  {/* <Text style={[styles.txtCantFind, { fontFamily: 'ProximaNova' }]}>
+
+                <View style={{ marginTop: 30 }}>
+                  <Text
+                    style={{
+                      paddingBottom: 10,
+                      fontSize: 16,
+                      fontFamily: 'ProximaNovaBold',
+                    }}
+                  >
+                    {i18n.t('past_pos')}
+                  </Text>
+                  <View style={styles.viewAddReview}>
+                    {/* <Text style={[styles.txtCantFind, { fontFamily: 'ProximaNova' }]}>
                       {i18n.t('cant_find_your_server')}
                       </Text> */}
-                      
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text
-                      style={[
-                        styles.txtAddReview,
-                        { fontFamily: 'ProximaNovaBold' },
-                      ]}
+
+                    <View
+                      style={{ flexDirection: 'row', alignItems: 'center' }}
                     >
-                      {/* {i18n.t('add_your_server')} */}
-                      {i18n.t('add_exp')}
-                    </Text>
-                    <TouchableOpacity
-                      activeOpacity={0.5}
-                      onPress={() => setCurrentModal(true)}
-                      style={styles.btnAdd}
-                    >
-                      <AntDesign
-                        name="plus"
-                        size={16}
-                        color={Colors.fontDark}
-                      />
-                    </TouchableOpacity>
+                      <Text
+                        style={[
+                          styles.txtAddReview,
+                          { fontFamily: 'ProximaNovaBold' },
+                        ]}
+                      >
+                        {/* {i18n.t('add_your_server')} */}
+                        {i18n.t('add_exp')}
+                      </Text>
+                      <TouchableOpacity
+                        activeOpacity={0.5}
+                        onPress={() => setExpModalVisible(true)}
+                        style={styles.btnAdd}
+                      >
+                        <AntDesign
+                          name="plus"
+                          size={16}
+                          color={Colors.fontDark}
+                        />
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
               </View>
-
-              <View style={{ marginTop: 30,}}>
-                <Text style={{paddingBottom:10, fontSize:16, fontFamily:'ProximaNovaBold'}}>{i18n.t('past_pos')}</Text>
-              <View style={styles.viewAddReview}>
-                  {/* <Text style={[styles.txtCantFind, { fontFamily: 'ProximaNova' }]}>
-                      {i18n.t('cant_find_your_server')}
-                      </Text> */}
-                      
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text
-                      style={[
-                        styles.txtAddReview,
-                        { fontFamily: 'ProximaNovaBold' },
-                      ]}
-                    >
-                      {/* {i18n.t('add_your_server')} */}
-                      {i18n.t('add_exp')}
-                    </Text>
-                    <TouchableOpacity
-                      activeOpacity={0.5}
-                      onPress={() => setExpModalVisible(true)}
-                      style={styles.btnAdd}
-                    >
-                      <AntDesign
-                        name="plus"
-                        size={16}
-                        color={Colors.fontDark}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-
-              </View>
-              <View style={{ marginBottom: temp === 'half' ? 9 : 16, marginBottom:20 }}>
+              <View
+                style={{
+                  marginBottom: temp === 'half' ? 9 : 16,
+                  marginBottom: 20,
+                }}
+              >
                 <Text
                   style={{
                     color: 'black',
@@ -385,56 +420,54 @@ const Find_Job = ({ navigation, route }) => {
                   </TouchableOpacity>
                 </View>
               </View>
-             {
-               job === 'yes' && (
+              {job === 'yes' && (
                 <View style={{ marginBottom: temp === 'half' ? 9 : 16 }}>
-                <Text
-                  style={{
-                    color: 'black',
-                    fontFamily: 'ProximaNovaBold',
-                    fontSize: 20,
-                    marginBottom: 14,
-                  }}
-                >
-                  {i18n.t('availability')}
-                </Text>
-                <Text style={styles.inputLabel}>{i18n.t('Time')}</Text>
-                <View style={styles.chooseButtons_container}>
-                  <TouchableOpacity
-                    activeOpacity={0.7}
-                    style={[
-                      styles.time_opt,
-                      temp === 'full' && {
-                        backgroundColor: Colors.yellow,
-                        borderTopLeftRadius: 7,
-                        borderBottomLeftRadius: 7,
-                      },
-                    ]}
-                    onPress={() => setTemp('full')}
-                    value={temp}
+                  <Text
+                    style={{
+                      color: 'black',
+                      fontFamily: 'ProximaNovaBold',
+                      fontSize: 20,
+                      marginBottom: 14,
+                    }}
                   >
-                    <Text style={styles.timeTxt}>{i18n.t('full')}</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.7}
-                    style={[
-                      styles.time_opt,
-                      { borderLeftWidth: 1 },
-                      temp === 'half' && {
-                        backgroundColor: Colors.yellow,
-                        borderTopRightRadius: 7,
-                        borderBottomRightRadius: 7,
-                      },
-                    ]}
-                    onPress={() => setTemp('half')}
-                    value={temp}
-                  >
-                    <Text style={styles.timeTxt}>{i18n.t('partial')}</Text>
-                  </TouchableOpacity>
+                    {i18n.t('availability')}
+                  </Text>
+                  <Text style={styles.inputLabel}>{i18n.t('Time')}</Text>
+                  <View style={styles.chooseButtons_container}>
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      style={[
+                        styles.time_opt,
+                        temp === 'full' && {
+                          backgroundColor: Colors.yellow,
+                          borderTopLeftRadius: 7,
+                          borderBottomLeftRadius: 7,
+                        },
+                      ]}
+                      onPress={() => setTemp('full')}
+                      value={temp}
+                    >
+                      <Text style={styles.timeTxt}>{i18n.t('full')}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      style={[
+                        styles.time_opt,
+                        { borderLeftWidth: 1 },
+                        temp === 'half' && {
+                          backgroundColor: Colors.yellow,
+                          borderTopRightRadius: 7,
+                          borderBottomRightRadius: 7,
+                        },
+                      ]}
+                      onPress={() => setTemp('half')}
+                      value={temp}
+                    >
+                      <Text style={styles.timeTxt}>{i18n.t('partial')}</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
-               )
-             }
+              )}
               {temp === 'half' && (
                 <View>
                   {(nicheModalDataUpdated(nicheModalData) || []).map((v, i) => {
@@ -451,7 +484,13 @@ const Find_Job = ({ navigation, route }) => {
                     );
                   })}
 
-                  <View style={{ ...styles.viewAddReview, marginBottom: 20, marginTop:10 }}>
+                  <View
+                    style={{
+                      ...styles.viewAddReview,
+                      marginBottom: 20,
+                      marginTop: 10,
+                    }}
+                  >
                     <View
                       style={{ flexDirection: 'row', alignItems: 'center' }}
                     >
@@ -479,32 +518,32 @@ const Find_Job = ({ navigation, route }) => {
                 </View>
               )}
             </View>
-            {
-              job === 'yes' && (
-                <View>
-              <Text
-              style={{
-                color: 'black',
-                fontFamily: 'ProximaNovaBold',
-                fontSize: 20,
-                marginBottom: 14,
-                marginTop:5
-              }}
-              >{i18n.t('contact_me')}</Text>
-            <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('phone')}</Text>
-                <TextInput
-                  style={styles.inputsTopTow}
-                  onChangeText={e => setPhone(e)}
-                  value={phone}
-                  placeholder="06 88 88 88 88"
-                  placeholderTextColor={'#707375'}
-                  keyboardType={'numeric'}
-                />
+            {job === 'yes' && (
+              <View>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontFamily: 'ProximaNovaBold',
+                    fontSize: 20,
+                    marginBottom: 14,
+                    marginTop: 5,
+                  }}
+                >
+                  {i18n.t('contact_me')}
+                </Text>
+                <View style={styles.input_box}>
+                  <Text style={styles.inputLabel}>{i18n.t('phone')}</Text>
+                  <TextInput
+                    style={styles.inputsTopTow}
+                    onChangeText={e => setPhone(e)}
+                    value={phone}
+                    placeholder="06 88 88 88 88"
+                    placeholderTextColor={'#707375'}
+                    keyboardType={'numeric'}
+                  />
+                </View>
               </View>
-            </View>
-              )
-            }
+            )}
           </View>
         </KeyboardAwareScrollView>
 
@@ -560,7 +599,7 @@ const Find_Job = ({ navigation, route }) => {
         data={data}
         setData={setData}
       />
-       <CurrentPositionModal
+      <CurrentPositionModal
         currentModal={currentModal}
         setCurrentModal={setCurrentModal}
         currentData={currentData}

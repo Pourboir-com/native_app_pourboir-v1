@@ -87,7 +87,7 @@ const RateService = ({ navigation, route }) => {
   //   }
   // }, [isVisible]);
 
-  const { name, image, restaurant_id, waiter_id, place_id } = route.params;
+  const { name, image, restaurant_id, waiter_id, place_id } = route?.params;
 
   const handleAddRatings = async () => {
     if (state.userDetails.user_id) {

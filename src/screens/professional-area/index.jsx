@@ -12,10 +12,12 @@ import CommonButton from '../../components/common-button';
 import GlobalHeader from '../../components/GlobalHeader';
 import { Colors } from '../../constants/Theme';
 import i18n from '../../li8n';
+import { StatusBar } from 'expo-status-bar';
 
 const ProfessionalArea = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
+      <StatusBar translucent={true} style="light" />
       <ImageBackground
         style={{
           width: '100%',
@@ -47,7 +49,10 @@ const ProfessionalArea = ({ navigation }) => {
             height: '100%',
           }}
         >
-          <Image source={require('../../assets/images/Waiters-cuate.png')} />
+          <Image
+            style={{ width: 350, height: 350 }}
+            source={require('../../assets/images/Waiters-cuate.png')}
+          />
         </View>
         <View style={{ marginHorizontal: '4%' }}>
           <View style={{ marginTop: 20 }}>

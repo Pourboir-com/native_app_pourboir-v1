@@ -74,7 +74,8 @@ export default function HomeScreenContent({
       });
     }
   };
-  const noData = !data.length && !restaurantLoading && !resIsFetching && saveLocation;
+  const noData =
+    !data.length && !restaurantLoading && !resIsFetching && saveLocation;
   if (noData) {
     return (
       <>
@@ -114,8 +115,9 @@ export default function HomeScreenContent({
           <View
             style={{
               backgroundColor: '#F9F9F9',
-              marginTop: 10,
+              marginTop: 40,
               flex: 1,
+              alignItems: 'center',
             }}
           >
             {/* <Text
@@ -128,9 +130,7 @@ export default function HomeScreenContent({
             >
               {i18n.t('no_restaurant_found')}
             </Text> */}
-            <Image 
-              source={require('../assets/images/no-data.png')}
-            />
+            <Image style={{width: 350, height: 350}} source={require('../assets/images/no-data.png')} />
           </View>
         )}
       </>
@@ -138,7 +138,7 @@ export default function HomeScreenContent({
   }
   return (
     <>
-      {(restaurantLoading || !saveLocation) ? (
+      {restaurantLoading || !saveLocation ? (
         <View
           style={{
             backgroundColor: '#F9F9F9',
@@ -176,15 +176,13 @@ export default function HomeScreenContent({
               renderItem={() => <HomeCardSkeleton />}
             /> */}
             <View>
-              <Image 
-              source={require('../assets/images/loading.png')}
-              />
+              <Image style={{width: 350, height: 350}}  source={require('../assets/images/loading.png')} />
               <Text
-              style={{
-                fontSize:18,
-                fontFamily:'ProximaNova',
-                textAlign:'center'
-              }}
+                style={{
+                  fontSize: 18,
+                  fontFamily: 'ProximaNova',
+                  textAlign: 'center',
+                }}
               >
                 {i18n.t('be_patient')}
               </Text>

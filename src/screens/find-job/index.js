@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { ImageBackground } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import {
   Text,
   View,
@@ -129,6 +130,7 @@ const Find_Job = ({ navigation, route }) => {
   return (
     <>
       <View style={styles.container}>
+        <StatusBar translucent={true} style="light" />
         <ImageBackground
           style={{
             width: '100%',

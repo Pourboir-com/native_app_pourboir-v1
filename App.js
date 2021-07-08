@@ -15,11 +15,15 @@ export default function App() {
   const [state, dispatch] = useReducer(Reducer, initialState);
   useEffect(() => {
     (async () => {
-      const { locale } = await Localization.getLocalizationAsync();
-      moment.locale(locale.includes('fr') ? 'fr-US' : 'en');
-      const { manager_details = {} } = await getAsyncStorageValues();
-      if (manager_details?.token)
-        axios.defaults.headers.common.Authorization = `Bearer ${manager_details?.token}`;
+      try {
+        const { locale } = await Localization.getLocalizationAsync();
+        moment.locale(locale.includes('fr') ? 'fr' : 'en');
+        const { manager_details = {} } = await getAsyncStorageValues();
+        if (manager_details?.token)
+          axios.defaults.headers.common.Authorization = `Bearer ${manager_details?.token}`;
+      } catch {
+        console.log('App.js Error');
+      }
     })();
   }, []);
 

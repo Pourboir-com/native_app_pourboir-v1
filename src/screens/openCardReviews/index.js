@@ -328,12 +328,13 @@ const ReviewDetails = ({ navigation, route }) => {
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'space-around',
+              justifyContent: 'space-between',
               marginBottom: 29,
             }}
           >
             <TouchableOpacity
               activeOpacity={0.6}
+              style={{marginLeft:'12%'}}
               onPress={() => refRBSheet.current.open()}
             >
               <Text
@@ -359,7 +360,6 @@ const ReviewDetails = ({ navigation, route }) => {
                 borderRadius: 12,
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginRight: -20,
               }}
               onPress={() => setAdded(!added)}
             >

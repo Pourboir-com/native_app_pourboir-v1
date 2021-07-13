@@ -25,6 +25,7 @@ import AddNicheModal from '../../components/modals/AddNicheModal';
 import { removeId, nicheModalDataUpdated, checkExeperience } from './util';
 import moment from 'moment';
 import CurrentPositionModal from '../../components/modals/CurrentPositionModal';
+import CommonTabs from '../../components/common-tabs';
 const Find_Job = ({ navigation, route }) => {
   const { form, refetch } = route?.params;
   const { state } = useContext(Context);
@@ -389,39 +390,14 @@ const Find_Job = ({ navigation, route }) => {
                   {i18n.t('look_job')}
                 </Text>
                 {/* <Text style={styles.inputLabel}>{i18n.t('Time')}</Text> */}
-                <View style={styles.chooseButtons_container}>
-                  <TouchableOpacity
-                    activeOpacity={0.7}
-                    style={[
-                      styles.time_opt,
-                      job === 'yes' && {
-                        backgroundColor: Colors.yellow,
-                        borderTopLeftRadius: 7,
-                        borderBottomLeftRadius: 7,
-                      },
-                    ]}
-                    onPress={() => setJob('yes')}
-                    value={job}
-                  >
-                    <Text style={styles.timeTxt}>{i18n.t('yes')}</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.7}
-                    style={[
-                      styles.time_opt,
-                      { borderLeftWidth: 1 },
-                      job === 'No' && {
-                        backgroundColor: Colors.yellow,
-                        borderTopRightRadius: 7,
-                        borderBottomRightRadius: 7,
-                      },
-                    ]}
-                    onPress={() => setJob('No')}
-                    value={job}
-                  >
-                    <Text style={styles.timeTxt}>{i18n.t('no')}</Text>
-                  </TouchableOpacity>
-                </View>
+                <CommonTabs 
+                tab1={i18n.t('yes')}
+                tab2={i18n.t('no')}
+                job={job}
+                setJob={setJob}
+                diff={true}
+                />
+               
               </View>
               {job === 'yes' && (
                 <View style={{ marginBottom: temp === 'half' ? 9 : 16 }}>
@@ -436,42 +412,17 @@ const Find_Job = ({ navigation, route }) => {
                     {i18n.t('availability')}
                   </Text>
                   <Text style={styles.inputLabel}>{i18n.t('Time')}</Text>
-                  <View style={styles.chooseButtons_container}>
-                    <TouchableOpacity
-                      activeOpacity={0.7}
-                      style={[
-                        styles.time_opt,
-                        temp === 'full' && {
-                          backgroundColor: Colors.yellow,
-                          borderTopLeftRadius: 7,
-                          borderBottomLeftRadius: 7,
-                        },
-                      ]}
-                      onPress={() => setTemp('full')}
-                      value={temp}
-                    >
-                      <Text style={styles.timeTxt}>{i18n.t('full')}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      activeOpacity={0.7}
-                      style={[
-                        styles.time_opt,
-                        { borderLeftWidth: 1 },
-                        temp === 'half' && {
-                          backgroundColor: Colors.yellow,
-                          borderTopRightRadius: 7,
-                          borderBottomRightRadius: 7,
-                        },
-                      ]}
-                      onPress={() => setTemp('half')}
-                      value={temp}
-                    >
-                      <Text style={styles.timeTxt}>{i18n.t('partial')}</Text>
-                    </TouchableOpacity>
-                  </View>
+                  <CommonTabs 
+                tab1={i18n.t('full')}
+                tab2={i18n.t('partial')}
+                temp={temp}
+                setTemp={setTemp}
+                diff={false}
+                />
+               
                 </View>
               )}
-              {temp === 'half' && (
+              {temp === 'half' && job === 'yes'  && (
                 <View>
                   {(nicheModalDataUpdated(nicheModalData) || []).map((v, i) => {
                     return (

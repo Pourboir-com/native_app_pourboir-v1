@@ -20,6 +20,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import CommonModal from '../../components/modals/HelpUsImproveModal';
+import StarCard from '../../components/star-card';
 import { Colors } from '../../constants/Theme';
 import RatingStar from '../../components/RatingComponent';
 import GlobalHeader from '../../components/GlobalHeader';
@@ -32,6 +33,8 @@ import {
   I_AM_WAITER,
   ADDING_WAITERS,
   GET_RESTAURANT_DETAILS,
+  ADD_FAVORITE,
+  GET_FAVORITES,
 } from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
@@ -72,6 +75,7 @@ const ReviewDetails = ({ navigation, route }) => {
   const { state, dispatch } = useContext(Context);
   const [IAMWAITER] = useMutation(I_AM_WAITER);
   const [AddWaiters] = useMutation(ADDING_WAITERS);
+  const [AddFavorite] = useMutation(ADD_FAVORITE);
   const [Refferedloading, setRefferedLoading] = useState(false);
   const [Userloading, setUserLoading] = useState(false);
 
@@ -104,6 +108,7 @@ const ReviewDetails = ({ navigation, route }) => {
       },
     },
   );
+
   const {
     data: RestaurantDetails,
     isLoading: RestaurantDetailsLoading,
@@ -116,6 +121,30 @@ const ReviewDetails = ({ navigation, route }) => {
       ...reactQueryConfig,
     },
   );
+
+  const {
+    data: favoritesData,
+    isLoading: favoritesLoading,
+    refetch: refetchFavorites,
+    isFetching: favoritesIsFetching,
+  } = useQuery(
+    [
+      'GET_FAVORITES',
+      { place_id: restaurant_id, user_id: state?.userDetails?.user_id },
+    ],
+    GET_FAVORITES,
+    {
+      ...reactQueryConfig,
+      enabled: restaurant_id,
+      onSuccess: res => {
+        console.log(res);
+      },
+      onError: e => {
+        console.log(e);
+      },
+    },
+  );
+  console.log(favoritesData);
 
   const scrollY = new Animated.Value(0);
   const diffClamp = Animated.diffClamp(scrollY, 0, 55);
@@ -133,21 +162,21 @@ const ReviewDetails = ({ navigation, route }) => {
     setRefferedWaiterModalVisible(true);
   };
 
-  const handleUserModalClose = () => {
-    setUserLoading(false);
-    setUserWaiterModalVisible(false);
-  };
+  // const handleUserModalClose = () => {
+  //   setUserLoading(false);
+  //   setUserWaiterModalVisible(false);
+  // };
 
-  const handleUserModalOpen = () => {
-    const isUserAlreadyWaiter = data.find(
-      item => item?.user_id?._id === state.userDetails.user_id,
-    );
-    if (isUserAlreadyWaiter) {
-      alert(i18n.t('already_waiter'));
-    } else {
-      setUserWaiterModalVisible(true);
-    }
-  };
+  // const handleUserModalOpen = () => {
+  //   const isUserAlreadyWaiter = data.find(
+  //     item => item?.user_id?._id === state.userDetails.user_id,
+  //   );
+  //   if (isUserAlreadyWaiter) {
+  //     alert(i18n.t('already_waiter'));
+  //   } else {
+  //     setUserWaiterModalVisible(true);
+  //   }
+  // };
 
   const handleAddWaiter = async (fullName, email) => {
     if (state.userDetails.user_id) {
@@ -186,10 +215,10 @@ const ReviewDetails = ({ navigation, route }) => {
     }
   };
 
-  const handleIAMWAITER = async () => {
+  const handleAddFavorite = async () => {
     if (state.userDetails.user_id) {
-      setUserLoading(true);
-      let IWaiter = {
+      setRefferedLoading(true);
+      let newFavorite = {
         user_id: state.userDetails.user_id,
         restaurant: {
           place_id: place_id,
@@ -203,34 +232,61 @@ const ReviewDetails = ({ navigation, route }) => {
             RestaurantDetails?.data?.international_phone_number,
         },
       };
-      await IAMWAITER(IWaiter, {
-        onSuccess: async res => {
-          handleUserModalClose();
-          setUserLoading(false);
-          setUserThanksModalVisible(true);
-        },
-        onError: e => {
-          setUserLoading(false);
-          Alert.alert(
-            'Error',
-            e.response?.data?.message,
-            [
-              {
-                text: 'Cancel',
-                onPress: () => handleUserModalClose(),
-                style: 'cancel',
-              },
-              { text: 'OK', onPress: () => handleUserModalClose() },
-            ],
-            { cancelable: false },
-          );
+      await AddFavorite(newFavorite, {
+        onSuccess: () => {
+          console.log('favorite added!');
         },
       });
     } else {
-      handleUserModalClose();
       navigation.navigate('socialLogin', { confirmWaiter: true });
     }
   };
+
+  // const handleIAMWAITER = async () => {
+  //   if (state.userDetails.user_id) {
+  //     setUserLoading(true);
+  //     let IWaiter = {
+  //       user_id: state.userDetails.user_id,
+  //       restaurant: {
+  //         place_id: place_id,
+  //         rating: rating,
+  //         photos: [img],
+  //         name: name,
+  //         formatted_address: vicinity,
+  //         our_rating: String(our_rating),
+  //         location: geometry,
+  //         international_phone_number:
+  //           RestaurantDetails?.data?.international_phone_number,
+  //       },
+  //     };
+  //     await IAMWAITER(IWaiter, {
+  //       onSuccess: async res => {
+  //         handleUserModalClose();
+  //         setUserLoading(false);
+  //         setUserThanksModalVisible(true);
+  //       },
+  //       onError: e => {
+  //         setUserLoading(false);
+  //         Alert.alert(
+  //           'Error',
+  //           e.response?.data?.message,
+  //           [
+  //             {
+  //               text: 'Cancel',
+  //               onPress: () => handleUserModalClose(),
+  //               style: 'cancel',
+  //             },
+  //             { text: 'OK', onPress: () => handleUserModalClose() },
+  //           ],
+  //           { cancelable: false },
+  //         );
+  //       },
+  //     });
+  //   } else {
+  //     handleUserModalClose();
+  //     navigation.navigate('socialLogin', { confirmWaiter: true });
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
@@ -334,7 +390,7 @@ const ReviewDetails = ({ navigation, route }) => {
           >
             <TouchableOpacity
               activeOpacity={0.6}
-              style={{marginLeft:'12%'}}
+              style={{ marginLeft: '12%' }}
               onPress={() => refRBSheet.current.open()}
             >
               <Text
@@ -361,7 +417,7 @@ const ReviewDetails = ({ navigation, route }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              onPress={() => setAdded(!added)}
+              onPress={handleAddFavorite}
             >
               <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
                 {added === true ? i18n.t('added') : i18n.t('add_fav')}
@@ -394,7 +450,7 @@ const ReviewDetails = ({ navigation, route }) => {
             </Text>
 
             <View style={{ alignItems: 'center', marginVertical: 15 }}>
-              {!waitersLoading ? (
+              {waitersLoading ? (
                 <View style={{ width: '90%', alignSelf: 'center' }}>
                   <ReviewsSkeleton />
                   <ReviewsSkeleton />
@@ -405,87 +461,13 @@ const ReviewDetails = ({ navigation, route }) => {
                   showsVerticalScrollIndicator={false}
                   keyExtractor={item => item._id}
                   renderItem={itemData => (
-                    <TouchableOpacity
-                      activeOpacity={0.5}
-                      key={itemData?.item?._id}
-                      onPress={() => {
-                        if (
-                          state.userDetails.user_id !==
-                          itemData.item?.user_id?._id
-                        ) {
-                          navigation.navigate('RateYourService', {
-                            name:
-                              itemData?.item?.user_id?.full_name ||
-                              itemData?.item.full_name ||
-                              'name missing',
-                            image:
-                              itemData?.item?.user_id &&
-                              itemData?.item?.user_id?.picture,
-                            restaurant_id: place_id,
-                            waiter_id: itemData?.item?._id,
-                            place_id: restaurant_id,
-                          });
-                        } else {
-                          alert(i18n.t('cannot_vote'));
-                        }
-                      }}
-                      style={styles.viewItemConatier}
-                    >
-                      <View
-                        style={{ flexDirection: 'row', alignItems: 'center' }}
-                      >
-                        {itemData?.item?.user_id ? (
-                          <Image
-                            style={{ width: 55, height: 55, borderRadius: 30 }}
-                            source={{ uri: itemData?.item?.user_id.picture }}
-                          />
-                        ) : (
-                          <SvgHeaderUserIcon height={45} width={45} />
-                        )}
-
-                        <View style={{ marginLeft: 10 }}>
-                          <Text
-                            ellipsizeMode="tail"
-                            numberOfLines={1}
-                            style={styles.txtItemName}
-                          >
-                            {itemData?.item?.user_id?.full_name ||
-                              itemData?.item?.full_name ||
-                              'name missing'}
-                          </Text>
-                          <View
-                            pointerEvents="none"
-                            style={{ flexDirection: 'row', marginTop: 7 }}
-                          >
-                            {obj.map((v, i) => {
-                              return (
-                                <TouchableOpacity
-                                  style={{ marginRight: 3 }}
-                                  key={i}
-                                >
-                                  <RatingStar
-                                    starSize={16}
-                                    type={
-                                      v <= itemData.item.rating
-                                        ? 'filled'
-                                        : v === itemData.item.rating + 0.5
-                                        ? 'half'
-                                        : 'empty'
-                                    }
-                                    notRatedStarColor="rgba(0,0,0,0.1)"
-                                  />
-                                </TouchableOpacity>
-                              );
-                            })}
-                          </View>
-                        </View>
-                      </View>
-                      <MaterialIcons
-                        name="chevron-right"
-                        size={28}
-                        color="grey"
-                      />
-                    </TouchableOpacity>
+                    <StarCard
+                      itemData={itemData}
+                      state={state}
+                      navigation={navigation}
+                      place_id={place_id}
+                      restaurant_id={restaurant_id}
+                    />
                   )}
                 />
               )}
@@ -621,77 +603,13 @@ const ReviewDetails = ({ navigation, route }) => {
             showsVerticalScrollIndicator={false}
             keyExtractor={item => item._id}
             renderItem={itemData => (
-              <TouchableOpacity
-                activeOpacity={0.5}
-                key={itemData?.item?._id}
-                onPress={() => {
-                  if (
-                    state.userDetails.user_id !== itemData.item?.user_id?._id
-                  ) {
-                    navigation.navigate('RateYourService', {
-                      name:
-                        itemData?.item?.user_id?.full_name ||
-                        itemData?.item.full_name ||
-                        'name missing',
-                      image:
-                        itemData?.item?.user_id &&
-                        itemData?.item?.user_id?.picture,
-                      restaurant_id: place_id,
-                      waiter_id: itemData?.item?._id,
-                      place_id: restaurant_id,
-                    });
-                  } else {
-                    alert(i18n.t('cannot_vote'));
-                  }
-                }}
-                style={styles.viewItemConatier}
-              >
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  {itemData?.item?.user_id ? (
-                    <Image
-                      style={{ width: 55, height: 55, borderRadius: 30 }}
-                      source={{ uri: itemData?.item?.user_id.picture }}
-                    />
-                  ) : (
-                    <SvgHeaderUserIcon height={45} width={45} />
-                  )}
-
-                  <View style={{ marginLeft: 10 }}>
-                    <Text
-                      ellipsizeMode="tail"
-                      numberOfLines={1}
-                      style={styles.txtItemName}
-                    >
-                      {itemData?.item?.user_id?.full_name ||
-                        itemData?.item?.full_name ||
-                        'name missing'}
-                    </Text>
-                    <View
-                      pointerEvents="none"
-                      style={{ flexDirection: 'row', marginTop: 7 }}
-                    >
-                      {obj.map((v, i) => {
-                        return (
-                          <TouchableOpacity style={{ marginRight: 3 }} key={i}>
-                            <RatingStar
-                              starSize={16}
-                              type={
-                                v <= itemData.item.rating
-                                  ? 'filled'
-                                  : v === itemData.item.rating + 0.5
-                                  ? 'half'
-                                  : 'empty'
-                              }
-                              notRatedStarColor="rgba(0,0,0,0.1)"
-                            />
-                          </TouchableOpacity>
-                        );
-                      })}
-                    </View>
-                  </View>
-                </View>
-                <MaterialIcons name="chevron-right" size={28} color="grey" />
-              </TouchableOpacity>
+              <StarCard
+                itemData={itemData}
+                state={state}
+                navigation={navigation}
+                place_id={place_id}
+                restaurant_id={restaurant_id}
+              />
             )}
           />
         )}
@@ -772,7 +690,7 @@ const ReviewDetails = ({ navigation, route }) => {
           buttonText={i18n.t('close')}
         />
       )}
-      {userWaiterModalVisible && (
+      {/* {userWaiterModalVisible && (
         <CommonModal
           isVisible={userWaiterModalVisible}
           handleModalClose={handleUserModalClose}
@@ -783,7 +701,7 @@ const ReviewDetails = ({ navigation, route }) => {
           subHeadingText={i18n.t('confrm_you_are_server')}
           restaurant={name}
         />
-      )}
+      )} */}
       {userThanksModalVisible && (
         <CommonModal
           isVisible={userThanksModalVisible}
@@ -803,13 +721,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f9f9f9',
-  },
-  txtItemName: {
-    fontFamily: 'ProximaNova',
-    fontSize: 17,
-    letterSpacing: 0,
-    lineHeight: 24,
-    width: 180,
   },
   btnAdd: {
     backgroundColor: Colors.yellow,
@@ -875,7 +786,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   viewBottom: {
-    // top: 125,
     flexDirection: 'row',
     marginBottom: 10,
     justifyContent: 'space-between',
@@ -901,18 +811,6 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-  },
-  viewItemConatier: {
-    width: '90%',
-    backgroundColor: '#fff',
-    alignSelf: 'center',
-    height: 80,
-    marginVertical: 10,
-    borderRadius: 10,
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: 15,
-    justifyContent: 'space-between',
   },
   no_waiter_found: {
     fontSize: 16,

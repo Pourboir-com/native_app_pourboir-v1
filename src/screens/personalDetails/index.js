@@ -7,6 +7,7 @@ import {
   Dimensions,
   Image,
   KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {
   ScrollView,
@@ -15,7 +16,7 @@ import {
 } from 'react-native-gesture-handler';
 import GlobalHeader from '../../components/GlobalHeader';
 // import { Colors } from '../../constants/Theme';
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from './styles';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
@@ -384,19 +385,12 @@ const PersonalDetails = ({ navigation }) => {
         <View
           style={{
             marginHorizontal: '4%',
-            marginVertical: 15,
+            marginBottom: Platform.OS === 'ios' ? 25 : 15,
             backgroundColor: 'transparent',
           }}
         >
           <View>
             <CommonButton title={i18n.t('confirm')} validate={validate} />
-          </View>
-          <View style={{ marginTop: 15 }}>
-            <CommonButton
-              title={i18n.t('i_prof')}
-              navigation="ProfessionalArea"
-              validateBlue={validateBlue}
-            />
           </View>
         </View>
       </View>

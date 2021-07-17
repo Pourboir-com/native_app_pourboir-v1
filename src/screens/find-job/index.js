@@ -57,7 +57,6 @@ const Find_Job = ({ navigation, route }) => {
   const [job, setJob] = useState('');
   const [confirmed, setConfirmed] = useState(false);
 
-  console.log(job);
   const [nicheModalData, setNicheModalData] = useState(
     form?.availability || [],
   );
@@ -224,33 +223,7 @@ const Find_Job = ({ navigation, route }) => {
                 >
                   {i18n.t('prof_exp')}
                 </Text>
-                {data.map((v, i) => {
-                  return (
-                    <View key={i}>
-                      {v?.enterprise_name && (
-                        <View style={styles.expBox}>
-                          <View>
-                            <Text style={styles.expTxt1}>
-                              {v?.enterprise_name}
-                            </Text>
-                            <Text style={styles.expTxt2}>{v?.position}</Text>
-                            <Text style={styles.expTxt3}>
-                              {`${i18n.t('of')} ${moment(v?.start_date).format(
-                                'MM/DD/YYYY',
-                              )} ${i18n.t('at')} ${
-                                v?.end_date
-                                  ? moment(v?.end_date).format('MM/DD/YYYY')
-                                  : i18n.t('still_working')
-                              }`}
-                            </Text>
-                          </View>
-                        </View>
-                      )}
-                    </View>
-                  );
-                })}
-
-                <View style={{ marginTop: 30 }}>
+                <View style={{ marginTop: 10 }}>
                   <Text
                     style={{
                       paddingBottom: 10,
@@ -260,7 +233,7 @@ const Find_Job = ({ navigation, route }) => {
                   >
                     {i18n.t('current_pos')}
                   </Text>
-                  <View style={{ marginBottom: currentData.length ? 20 : 0 }}>
+                  <View style={{ marginBottom: currentData?.length ? 20 : 0 }}>
                     {currentData.map((v, i) => {
                       return (
                         <View key={i}>
@@ -298,12 +271,7 @@ const Find_Job = ({ navigation, route }) => {
                       );
                     })}
                   </View>
-
                   <View style={styles.viewAddReview}>
-                    {/* <Text style={[styles.txtCantFind, { fontFamily: 'ProximaNova' }]}>
-                      {i18n.t('cant_find_your_server')}
-                      </Text> */}
-
                     <View
                       style={{ flexDirection: 'row', alignItems: 'center' }}
                     >
@@ -330,7 +298,6 @@ const Find_Job = ({ navigation, route }) => {
                     </View>
                   </View>
                 </View>
-
                 <View style={{ marginTop: 30 }}>
                   <Text
                     style={{
@@ -341,11 +308,36 @@ const Find_Job = ({ navigation, route }) => {
                   >
                     {i18n.t('past_pos')}
                   </Text>
+                  <View style={{ marginBottom: data?.length ? 20 : 0 }}>
+                    {data?.map((v, i) => {
+                      return (
+                        <View key={i}>
+                          {v?.enterprise_name && (
+                            <View style={styles.expBox}>
+                              <View>
+                                <Text style={styles.expTxt1}>
+                                  {v?.enterprise_name}
+                                </Text>
+                                <Text style={styles.expTxt2}>
+                                  {v?.position}
+                                </Text>
+                                <Text style={styles.expTxt3}>
+                                  {`${i18n.t('of')} ${moment(
+                                    v?.start_date,
+                                  ).format('MM/DD/YYYY')} ${i18n.t('at')} ${
+                                    v?.end_date
+                                      ? moment(v?.end_date).format('MM/DD/YYYY')
+                                      : i18n.t('still_working')
+                                  }`}
+                                </Text>
+                              </View>
+                            </View>
+                          )}
+                        </View>
+                      );
+                    })}
+                  </View>
                   <View style={styles.viewAddReview}>
-                    {/* <Text style={[styles.txtCantFind, { fontFamily: 'ProximaNova' }]}>
-                      {i18n.t('cant_find_your_server')}
-                      </Text> */}
-
                     <View
                       style={{ flexDirection: 'row', alignItems: 'center' }}
                     >
@@ -376,7 +368,6 @@ const Find_Job = ({ navigation, route }) => {
               <View
                 style={{
                   marginBottom: temp === 'half' ? 9 : 16,
-                  marginBottom: 20,
                 }}
               >
                 <Text
@@ -390,14 +381,13 @@ const Find_Job = ({ navigation, route }) => {
                   {i18n.t('look_job')}
                 </Text>
                 {/* <Text style={styles.inputLabel}>{i18n.t('Time')}</Text> */}
-                <CommonTabs 
-                tab1={i18n.t('yes')}
-                tab2={i18n.t('no')}
-                job={job}
-                setJob={setJob}
-                diff={true}
+                <CommonTabs
+                  tab1={i18n.t('yes')}
+                  tab2={i18n.t('no')}
+                  job={job}
+                  setJob={setJob}
+                  diff={true}
                 />
-               
               </View>
               {job === 'yes' && (
                 <View style={{ marginBottom: temp === 'half' ? 9 : 16 }}>
@@ -412,17 +402,16 @@ const Find_Job = ({ navigation, route }) => {
                     {i18n.t('availability')}
                   </Text>
                   <Text style={styles.inputLabel}>{i18n.t('Time')}</Text>
-                  <CommonTabs 
-                tab1={i18n.t('full')}
-                tab2={i18n.t('partial')}
-                temp={temp}
-                setTemp={setTemp}
-                diff={false}
-                />
-               
+                  <CommonTabs
+                    tab1={i18n.t('full')}
+                    tab2={i18n.t('partial')}
+                    temp={temp}
+                    setTemp={setTemp}
+                    diff={false}
+                  />
                 </View>
               )}
-              {temp === 'half' && job === 'yes'  && (
+              {temp === 'half' && job === 'yes' && (
                 <View>
                   {(nicheModalDataUpdated(nicheModalData) || []).map((v, i) => {
                     return (

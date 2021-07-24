@@ -1,31 +1,26 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Dimensions,
   ImageBackground,
   Text,
   View,
-  Image,
-  TouchableOpacity,
   Platform,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import CommonButton from '../../components/common-button';
 import GlobalHeader from '../../components/GlobalHeader';
 import styles from './styles';
-import { AntDesign } from '@expo/vector-icons';
 import i18n from '../../li8n';
 import { useQuery, useMutation } from 'react-query';
 import {
   RECRUITMENT_FORM,
   GET_YOUR_RES,
-  DELETE_WAITER_FORMS,
   DELETE_FORM,
 } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import Context from '../../contextApi/context';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import StaffModal from '../../components/manager/staff-modal';
-import { getAsyncStorageValues } from '../../constants';
 import HomeScreenContent from '../../components/HomeContent';
 import * as actionTypes from '../../contextApi/actionTypes';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -36,8 +31,6 @@ const ServerProfile = ({ navigation, route }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [formId, setFormId] = useState('');
   const { state, dispatch } = useContext(Context);
-  // const [saveLocation, setSaveLocation] = useState('');
-  const [userInfo, setuserInfo] = useState();
   const [loading, setLoading] = useState(false);
   const [deleteWaiterForm] = useMutation(DELETE_FORM);
 
@@ -85,15 +78,6 @@ const ServerProfile = ({ navigation, route }) => {
     }
   };
 
-  useEffect(() => {
-    (async () => {
-      // const { location } = await getAsyncStorageValues();
-      const { userInfo = {} } = await getAsyncStorageValues();
-      setuserInfo(userInfo);
-      // setSaveLocation(location);
-    })();
-  }, []);
-
   const {
     data: yourRestaurantData,
     isLoading: yourRestaurantLoading,
@@ -103,14 +87,14 @@ const ServerProfile = ({ navigation, route }) => {
     [
       'GET_YOUR_RES',
       {
-        // location: saveLocation,
-        user_id: userInfo?.user_id,
+        user_id: state?.userDetails?.user_id,
+        status: 'active',
       },
     ],
     GET_YOUR_RES,
     {
       ...reactQueryConfig,
-      enabled: userInfo?.user_id ? true : false,
+      enabled: state?.userDetails?.user_id ? true : false,
     },
   );
 
@@ -205,15 +189,6 @@ const ServerProfile = ({ navigation, route }) => {
                             width: '100%',
                           }}
                         >
-                          {/* <CommonButton
-                          title={i18n.t('look_job')}
-                          navigation="FindJob"
-                          navigationData={{
-                            form: [],
-                            refetch: refetchWaiterFormData,
-                            onPress: '',
-                          }}
-                        /> */}
                         </View>
                       </View>
                     ) : (
@@ -258,7 +233,7 @@ const ServerProfile = ({ navigation, route }) => {
                 <CommonButton
                   navigation="FindJob"
                   disable={false}
-                    color={Colors.yellow}
+                  color={Colors.yellow}
                   navigationData={{
                     form: waiterFormData?.data[0] || [],
                     refetch: refetchWaiterFormData,

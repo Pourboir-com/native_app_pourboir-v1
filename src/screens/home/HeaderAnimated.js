@@ -279,11 +279,11 @@ const HomeScreen = props => {
                 ellipsizeMode="tail"
                 numberOfLines={1}
               >
-                {!state.userDetails.name
+                {!state?.userDetails?.name
                   ? i18n.t('hello')
                   : i18n.t('hello') +
                     ' ' +
-                    userGivenName(state.userDetails.name)}
+                    userGivenName(state?.userDetails?.name)}
               </Text>
             </Animated.View>
           </View>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -16,39 +16,37 @@ import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/job-hunt.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
-import CheckBox from 'react-native-check-box';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { SEARCH_RESTAURANTS } from '../../queries';
 import { useMutation } from 'react-query';
 import stylesTextbox from '../../screens/find-job/styles';
-import moment from 'moment';
-import { validateAddForm } from '../../util';
+import Context from '../../contextApi/context';
+import {
+  validateCurrentPositions,
+  validateSelectedPositions,
+} from '../../util';
 
 const CurrentPositionModal = ({
   setCurrentModal,
   currentModal,
   currentData,
   setCurrentData,
+  setCurrentPositionsData,
+  currentPositionsData,
 }) => {
   const [modeS, setModeS] = useState('date');
   const [showS, setShowS] = useState(false);
-  const [modeL, setModeL] = useState('date');
-  const [showL, setShowL] = useState(false);
   const [start, setStart] = useState('');
-  const [end, setEnd] = useState('');
-//   const [post, setPost] = useState('');
   const [startDate, setStartDate] = useState(new Date());
-//   const [endDate, setEndDate] = useState(new Date());
-  const [termsChecked, setTermsChecked] = useState(false);
-  const [workHere, setWorkHere] = useState('');
   //search textbox
   const [showDropdown, setShowDropdown] = useState(false);
   const [restaurants, setRestaurants] = useState();
   const [searchLoading, setSearchLoading] = useState(false);
   const [restaurant, setRestaurant] = useState('');
   const [searchRestaurant] = useMutation(SEARCH_RESTAURANTS);
-console.log(startDate.toLocaleDateString())
+  const { state } = useContext(Context);
+
   const handleSearchRestaurant = async () => {
     if (restaurant?.name) {
       setSearchLoading(true);
@@ -69,55 +67,59 @@ console.log(startDate.toLocaleDateString())
   };
 
   const AddData = () => {
-    setCurrentData([...currentData, {restaurant_name: restaurant, start_date: startDate.toLocaleDateString()}])
-    setRestaurant('');
-    // setStartDate()
-    setCurrentModal(false)
-    setTimeout(() => {
-      setStart('')
-    },1300)
-  }
-  console.log(currentData)
-//   const AddData = () => {
-//     let validateRestaurant = validateAddForm(
-//       data,
-//       restaurant,
-//       startDate,
-//       termsChecked === false ? endDate : '',
-//     );
-//     if (validateRestaurant) {
-//       setData([
-//         ...data,
-//         {
-//           enterprise_name: restaurant?.name || '',
-//           restaurant_id: restaurant?.restaurant_id || '',
-//           position: post || '',
-//           still_working: termsChecked,
-//           start_date: startDate,
-//           end_date: termsChecked === false ? endDate : '',
-//         },
-//       ]);
-//       setPost('');
-//       setStart('');
-//       setEnd('');
-//       setTermsChecked(false);
-//       setCurrentModal(false);
-//       setRestaurant({});
-//     } else {
-//       alert('Cannot add multiple experience from a single place.');
-//     }
-//   };
-  // console.log( startDate > endDate ? true: false)
+    let validateRestaurant = validateCurrentPositions(
+      currentPositionsData,
+      restaurant,
+    );
+    let validateSelectedRestaurants = validateSelectedPositions(
+      currentData,
+      restaurant,
+    );
+    if (!validateRestaurant && !validateSelectedRestaurants) {
+      setCurrentPositionsData([
+        ...currentPositionsData,
+        {
+          status: 'pending',
+          start_date: startDate,
+          user_id: state?.userDetails?.user_id || '',
+          restaurant: {
+            place_id: restaurant?.place_id || '',
+            rating: restaurant?.rating || '',
+            photos: restaurant?.photos || [],
+            name: restaurant?.name || '',
+            formatted_address: restaurant?.formatted_address || '',
+            our_rating: restaurant?.our_rating || '',
+            location: restaurant?.location,
+          },
+        },
+      ]);
+      setCurrentData([
+        ...currentData,
+        {
+          start_date: startDate,
+          user_id: state?.userDetails?.user_id || '',
+          restaurant: {
+            place_id: restaurant?.place_id || '',
+            rating: restaurant?.rating || '',
+            photos: restaurant?.photos || [],
+            name: restaurant?.name || '',
+            formatted_address: restaurant?.formatted_address || '',
+            our_rating: restaurant?.our_rating || '',
+            location: restaurant?.location,
+          },
+        },
+      ]);
+      setCurrentModal(false);
+      setRestaurant({});
+      setTimeout(() => {
+        setStart('');
+      }, 1300);
+    } else {
+      alert('This place is already added in your current experiences.');
+    }
+  };
 
-  let validation = 
-//   termsChecked
-//     ? restaurant.name && restaurant.restaurant_id && post && start
-//     : restaurant.name &&
-//       restaurant.restaurant_id &&
-      restaurant &&
-      start 
-    //   end &&
-    //   !(start > end);
+  let validation = restaurant && start;
 
   const onChangeStartDate = selectedDate => {
     const currentDate = selectedDate || startDate;
@@ -128,17 +130,6 @@ console.log(startDate.toLocaleDateString())
   const showModeStartDate = currentMode => {
     setShowS(true);
     setModeS(currentMode);
-  };
-
-  const onChangeLastDate = selectedDate => {
-    const currentDate = selectedDate || endDate;
-    setShowL(false);
-    setEndDate(currentDate);
-    setEnd(currentDate);
-  };
-  const showModeLastDate = currentMode => {
-    setShowL(true);
-    setModeL(currentMode);
   };
 
   return (
@@ -233,18 +224,16 @@ console.log(startDate.toLocaleDateString())
                 returnKeyLabel="Find"
                 returnKeyType="done"
                 onSubmitEditing={handleSearchRestaurant}
-                // onChangeText={e =>
-                //   setRestaurant({
-                //     name: e || '',
-                //     restaurant_id:
-                //       restaurant?.name?.length < 2
-                //         ? ''
-                //         : restaurant?.restaurant_id,
-                //   })
-                // }
-                // value={restaurant?.name}
-                value={restaurant}
-                onChangeText={(e) => setRestaurant(e)}
+                onChangeText={e =>
+                  setRestaurant({
+                    name: e || '',
+                    restaurant_id:
+                      restaurant?.name?.length < 2
+                        ? ''
+                        : restaurant?.restaurant_id,
+                  })
+                }
+                value={restaurant?.name}
                 style={stylesTextbox.input_icon_text}
                 placeholder={i18n.t('name_of_company')}
                 placeholderTextColor={'#707375'}
@@ -272,6 +261,12 @@ console.log(startDate.toLocaleDateString())
                         setRestaurant({
                           name: item?.name || '',
                           restaurant_id: item?._id || '',
+                          place_id: item?.place_id || '',
+                          rating: item?.rating,
+                          photos: item?.photos,
+                          formatted_address: item?.formatted_address || '',
+                          our_rating: item?.our_rating,
+                          location: item?.location,
                         });
                       }}
                     >
@@ -282,15 +277,6 @@ console.log(startDate.toLocaleDateString())
               </ScrollView>
             )}
           </View>
-          {/* <View style={styles.input_box}>
-            <TextInput
-              style={styles.inputsTopTow}
-              onChangeText={e => setPost(e)}
-              value={post}
-              placeholder={i18n.t('the_post')}
-              placeholderTextColor={'#707375'}
-            />
-          </View> */}
 
           <TouchableOpacity onPress={showModeStartDate} style={styles.btnInput}>
             <Text
@@ -314,89 +300,8 @@ console.log(startDate.toLocaleDateString())
               dateFormat="dayofweek"
             />
           </TouchableOpacity>
-
-          {/* <TouchableOpacity
-            onPress={showModeLastDate}
-            style={{ ...styles.btnInput, marginTop: 15, marginBottom: 10 }}
-          >
-            <Text
-              style={{
-                fontFamily: 'ProximaNova',
-                color: '#707375',
-                fontSize: 15,
-                paddingTop: 15,
-              }}
-            >
-              {end === '' ? i18n.t('end_date') : endDate.toLocaleDateString()}
-            </Text>
-            <DateTimePickerModal
-              date={endDate}
-              isVisible={showL}
-              minimumDate={startDate}
-              mode="date"
-              onConfirm={onChangeLastDate}
-              onCancel={() => setShowL(false)}
-              dateFormat="dayofweek"
-            />
-          </TouchableOpacity> */}
         </View>
 
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            alignSelf: 'flex-start',
-            marginLeft: 4,
-            marginBottom: 20,
-            marginTop: -5,
-            height: 15,
-          }}
-        >
-          <View style={{ justifyContent: 'center' }}>
-            <CheckBox
-              style={{
-                paddingRight: -40,
-                marginTop: -5,
-              }}
-              onClick={() => [
-                setTermsChecked(!termsChecked),
-                setWorkHere(workHere === '' ? 'work' : ''),
-              ]}
-              isChecked={termsChecked}
-              checkedImage={
-                <Image
-                  style={{ width: 18 }}
-                  resizeMode={'contain'}
-                  source={require('../../assets/images/checked-modal.png')}
-                />
-              }
-              unCheckedImage={
-                <Image
-                  style={{ width: 18 }}
-                  resizeMode={'contain'}
-                  source={require('../../assets/images/unchecked-modal.png')}
-                />
-              }
-            />
-          </View>
-          <TouchableOpacity
-            onPress={() => [
-              setTermsChecked(!termsChecked),
-              setWorkHere(workHere === '' ? 'work' : ''),
-            ]}
-            style={{ paddingLeft: 10, paddingTop: 1 }}
-          >
-            <Text
-              style={{
-                fontFamily: 'ProximaNova',
-                color: '#1E272E',
-                fontSize: 13,
-                marginTop: -2,
-              }}
-            >
-              {i18n.t('still_work')}
-            </Text>
-          </TouchableOpacity>
-        </View> */}
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={AddData}
@@ -493,9 +398,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 270,
     height: 48,
-    // paddingVertical: 13,
-    // paddingHorizontal: 10,
     alignItems: 'center',
-    //  marginTop:40
   },
 });

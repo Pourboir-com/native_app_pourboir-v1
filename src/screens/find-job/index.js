@@ -15,8 +15,8 @@ import i18n from '../../li8n';
 import styles from './styles';
 import { Colors } from '../../constants/Theme';
 import Context from '../../contextApi/context';
-import { APPLY_WAITER } from '../../queries';
-import { useMutation } from 'react-query';
+import { APPLY_WAITER, ADD_PAST_EXP, GET_YOUR_ALL_RES } from '../../queries';
+import { useMutation, useQuery } from 'react-query';
 import CommonModal from '../../components/modals/HelpUsImproveModal';
 const canidate = require('../../assets/images/canidate.png');
 import { AntDesign } from '@expo/vector-icons';
@@ -26,62 +26,106 @@ import { removeId, nicheModalDataUpdated, checkExeperience } from './util';
 import moment from 'moment';
 import CurrentPositionModal from '../../components/modals/CurrentPositionModal';
 import CommonTabs from '../../components/common-tabs';
+import { reactQueryConfig } from '../../constants';
+
 const Find_Job = ({ navigation, route }) => {
   const { form, refetch } = route?.params;
   const { state } = useContext(Context);
+
   // getting first and last name saved in state
-  let name = form?.user_id?.full_name || state?.userDetails?.name;
-  let fullName = name?.split(' ');
-  let savedFirstName =
-    fullName?.length > 1
-      ? fullName?.slice(0, fullName?.length - 1).join(' ')
-      : fullName[0] && fullName[0];
-  let savedLastName =
-    fullName?.length > 1 ? fullName[fullName?.length - 1] : '';
+  let savedFirstName = form?.user_id?.full_name || state?.userDetails?.name;
+  let savedLastName = form?.user_id?.last_name || state?.userDetails?.last_name;
 
   const [applyWaiter] = useMutation(APPLY_WAITER);
   const [temp, setTemp] = useState(form?.time || '');
   const [firstName, setFirstName] = useState(savedFirstName);
   const [lastName, setLastName] = useState(savedLastName);
   const [education, setEducation] = useState(form?.diploma || '');
-  // const [experience, setExperience] = useState('');
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [position, setPosition] = useState(form?.position || '');
-  const [phone, setPhone] = useState(form?.telephone_number || '');
+  const [phone, setPhone] = useState(form?.user_id?.phone_number || '');
   const [expModalVisible, setExpModalVisible] = useState(false);
   const [currentModal, setCurrentModal] = useState(false);
   const [nicheModalVisible, setNicheModalVisible] = useState(false);
-  const [data, setData] = useState(checkExeperience(form) || []);
   const [currentData, setCurrentData] = useState([]);
-  const [job, setJob] = useState('');
-  const [confirmed, setConfirmed] = useState(false);
+  const [currentPositionsData, setCurrentPositionsData] = useState();
+
+  const [data, setData] = useState(checkExeperience(form) || []);
+  const [job, setJob] = useState(form?.looking_for_job ? 'yes' : 'No');
+  const [addPastExperience] = useMutation(ADD_PAST_EXP);
 
   const [nicheModalData, setNicheModalData] = useState(
     form?.availability || [],
   );
 
+  const {
+    refetch: refetchCurrentPositions,
+    isLoading: currentPositionLoading,
+    isFetching: currentPositionIsFetching,
+  } = useQuery(
+    [
+      'GET_YOUR_ALL_RES',
+      {
+        user_id: state?.userDetails?.user_id,
+      },
+    ],
+    GET_YOUR_ALL_RES,
+    {
+      ...reactQueryConfig,
+      enabled: state?.userDetails?.user_id ? true : false,
+      onSuccess: res => {
+        let currentPosition = [];
+        (res?.restaurants?.results || []).map(item => {
+          let positionArray = currentPosition.push({
+            restaurant_id: item?._id,
+            status: item?.waiter?.status || '',
+            start_date: item?.waiter?.start_date || '',
+            user_id: state?.userDetails?.user_id || '',
+            restaurant: {
+              place_id: item?.place_id || '',
+              rating: item?.rating || '',
+              photos: item?.photos || [],
+              name: item?.name || '',
+              formatted_address: item?.vicinity || '',
+              our_rating: item?.our_rating || '',
+            },
+          });
+        });
+        setCurrentPositionsData(currentPosition);
+      },
+    },
+  );
+
   const validation = () => {
-    if (temp === 'half') {
+    if (job === 'yes') {
+      if (temp === 'half') {
+        return (
+          firstName &&
+          lastName &&
+          position &&
+          education &&
+          job &&
+          phone &&
+          data.length &&
+          nicheModalData.length &&
+          temp
+        );
+      } else if (temp === 'full') {
+        return (
+          firstName &&
+          lastName &&
+          position &&
+          education &&
+          job &&
+          phone &&
+          data.length &&
+          temp
+        );
+      }
+    } else {
       return (
-        firstName &&
-        lastName &&
-        position &&
-        education &&
-        phone &&
-        data.length &&
-        nicheModalData.length &&
-        temp
-      );
-    } else if (temp === 'full') {
-      return (
-        firstName &&
-        lastName &&
-        position &&
-        education &&
-        phone &&
-        data.length &&
-        temp
+        firstName && lastName && position && education && job && data.length
       );
     }
   };
@@ -90,29 +134,58 @@ const Find_Job = ({ navigation, route }) => {
     if (state?.userDetails?.user_id) {
       setLoading(true);
       let jobForm;
-      if (temp === 'half') {
+      if (job === 'yes') {
+        if (temp === 'half') {
+          jobForm = {
+            id: state?.userDetails?.user_id || '',
+            full_name: firstName || '',
+            last_name: lastName || '',
+            experience: removeId(data) || [],
+            telephone_number: phone || '',
+            time: temp || '',
+            diploma: education || '',
+            position: position || '',
+            availability: removeId(nicheModalData) || [],
+            looking_for_job: true,
+          };
+        } else if (temp === 'full')
+          jobForm = {
+            id: state?.userDetails?.user_id || '',
+            full_name: firstName || '',
+            last_name: lastName || '',
+            experience: removeId(data) || [],
+            telephone_number: phone || '',
+            time: temp || '',
+            diploma: education || '',
+            position: position || '',
+            looking_for_job: true,
+          };
+      } else {
         jobForm = {
           id: state?.userDetails?.user_id || '',
           full_name: firstName || '',
           last_name: lastName || '',
           experience: removeId(data) || [],
-          telephone_number: phone || '',
-          time: temp || '',
           diploma: education || '',
           position: position || '',
-          availability: removeId(nicheModalData) || [],
+          looking_for_job: false,
         };
-      } else if (temp === 'full')
-        jobForm = {
-          id: state?.userDetails?.user_id || '',
-          full_name: firstName || '',
-          last_name: lastName || '',
-          experience: removeId(data) || [],
-          telephone_number: phone || '',
-          time: temp || '',
-          diploma: education || '',
-          position: position || '',
-        };
+      }
+
+      if (currentData?.length) {
+        await addPastExperience(
+          { data: currentData },
+          {
+            onSuccess: () => {
+              refetchCurrentPositions();
+            },
+            onError: e => {
+              alert(e.response?.data?.message);
+            },
+          },
+        );
+      }
+
       await applyWaiter(jobForm, {
         onSuccess: async () => {
           await refetch();
@@ -233,44 +306,70 @@ const Find_Job = ({ navigation, route }) => {
                   >
                     {i18n.t('current_pos')}
                   </Text>
-                  <View style={{ marginBottom: currentData?.length ? 20 : 0 }}>
-                    {currentData.map((v, i) => {
-                      return (
-                        <View key={i}>
-                          <View
-                            style={{
-                              ...styles.expBox,
-                              backgroundColor: !confirmed ? '#FFF6D4' : null,
-                            }}
-                          >
-                            <View>
-                              <View
-                                style={{
-                                  justifyContent: 'space-between',
-                                  flexDirection: 'row',
-                                }}
-                              >
-                                <Text style={styles.expTxt1}>
-                                  {v.restaurant_name}
-                                </Text>
-                                <Text style={styles.expTxt1}>
-                                  {confirmed === false
-                                    ? i18n.t('confirm')
-                                    : null}
+                  {(currentPositionLoading || currentPositionIsFetching) ? (
+                    <Text
+                      style={{
+                        paddingBottom: 10,
+                        fontSize: 15,
+                        fontFamily: 'ProximaNova',
+                      }}
+                    >
+                      Loading...
+                    </Text>
+                  ) : (
+                    <View
+                      style={{
+                        marginBottom: currentPositionsData?.length ? 20 : 0,
+                      }}
+                    >
+                      {(currentPositionsData || []).map((v, i) => {
+                        return (
+                          <View key={i}>
+                            <View
+                              style={{
+                                ...styles.expBox,
+                                backgroundColor:
+                                  v?.status === 'active' ? '#FFF6D4' : '#fff',
+                              }}
+                            >
+                              <View>
+                                <View
+                                  style={{
+                                    justifyContent: 'space-between',
+                                    flexDirection: 'row',
+                                  }}
+                                >
+                                  <Text
+                                    style={[styles.expTxt1, { width: 160 }]}
+                                  >
+                                    {v?.restaurant?.name || v?.name}
+                                  </Text>
+                                  <Text style={styles.expTxt1}>
+                                    {v?.status
+                                      ? v?.status === 'active'
+                                        ? i18n.t('confirm')
+                                        : v?.status
+                                      : 'pending'}
+                                  </Text>
+                                </View>
+                                <Text
+                                  style={[
+                                    styles.expTxt3,
+                                    { paddingTop: v?.start_date ? 10 : 0 },
+                                  ]}
+                                >
+                                  {v?.start_date &&
+                                    `${i18n.t('since')} ${moment(
+                                      v?.start_date,
+                                    ).format('MM/DD/YYYY')}`}
                                 </Text>
                               </View>
-                              {/* <Text style={styles.expTxt2}>{v?.position}</Text> */}
-                              <Text
-                                style={{ ...styles.expTxt3, paddingTop: 10 }}
-                              >
-                                {i18n.t('since')} {v.start_date}
-                              </Text>
                             </View>
                           </View>
-                        </View>
-                      );
-                    })}
-                  </View>
+                        );
+                      })}
+                    </View>
+                  )}
                   <View style={styles.viewAddReview}>
                     <View
                       style={{ flexDirection: 'row', alignItems: 'center' }}
@@ -281,7 +380,6 @@ const Find_Job = ({ navigation, route }) => {
                           { fontFamily: 'ProximaNovaBold' },
                         ]}
                       >
-                        {/* {i18n.t('add_your_server')} */}
                         {i18n.t('add_exp')}
                       </Text>
                       <TouchableOpacity
@@ -298,6 +396,7 @@ const Find_Job = ({ navigation, route }) => {
                     </View>
                   </View>
                 </View>
+
                 <View style={{ marginTop: 30 }}>
                   <Text
                     style={{
@@ -347,7 +446,6 @@ const Find_Job = ({ navigation, route }) => {
                           { fontFamily: 'ProximaNovaBold' },
                         ]}
                       >
-                        {/* {i18n.t('add_your_server')} */}
                         {i18n.t('add_exp')}
                       </Text>
                       <TouchableOpacity
@@ -380,7 +478,6 @@ const Find_Job = ({ navigation, route }) => {
                 >
                   {i18n.t('look_job')}
                 </Text>
-                {/* <Text style={styles.inputLabel}>{i18n.t('Time')}</Text> */}
                 <CommonTabs
                   tab1={i18n.t('yes')}
                   tab2={i18n.t('no')}
@@ -547,6 +644,8 @@ const Find_Job = ({ navigation, route }) => {
         setCurrentModal={setCurrentModal}
         currentData={currentData}
         setCurrentData={setCurrentData}
+        setCurrentPositionsData={setCurrentPositionsData}
+        currentPositionsData={currentPositionsData}
       />
       <AddNicheModal
         nicheModalVisible={nicheModalVisible}
@@ -559,39 +658,3 @@ const Find_Job = ({ navigation, route }) => {
 };
 
 export default Find_Job;
-{
-  /* <View
-style={{
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-}}
-> */
-}
-// <View style={styles.input_box}>
-//             <Text style={styles.inputLabel}>{i18n.t('experience')}</Text>
-//             <View style={{ flexDirection: 'row' }}>
-//               <TextInput
-//                 style={styles.smallInput}
-//                 onChangeText={e => setExperience(e)}
-//                 value={experience}
-//                 placeholder="5"
-//                 maxLength={2}
-//                 keyboardType="numeric"
-//                 placeholderTextColor={'#707375'}
-//               />
-//               <Text style={styles.experience}>
-//                 {Number(experience) > 1 ? `${i18n.t('year')}s` : i18n.t('year')}
-//               </Text>
-//             </View>
-//           </View>
-//           <View style={styles.input_box}>
-//             <Text style={styles.inputLabel}>{i18n.t('position')}</Text>
-//             <TextInput
-//               style={styles.waiterInput}
-//               onChangeText={e => setPosition(e)}
-//               value={position}
-//               placeholder="Waiter"
-//               placeholderTextColor={'#707375'}
-//             />
-//           </View>
-//         </View>

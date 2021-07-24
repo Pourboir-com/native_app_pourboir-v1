@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Colors } from '../../constants/Theme';
 import { Entypo } from '@expo/vector-icons';
 import * as Location from 'expo-location';
-import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 var getCountry = require('country-currency-map').getCountry;
 var formatCurrency = require('country-currency-map').formatCurrency;
@@ -11,9 +10,7 @@ import i18n from '../../li8n';
 import { Platform } from 'react-native';
 import { Linking } from 'react-native';
 
-const NoLocation = () => {
-  const navigation = useNavigation();
-
+const NoLocation = ({ navigation }) => {
   const excessLocation = async () => {
     let locationStats = await Location.requestForegroundPermissionsAsync();
     if (locationStats.status !== 'granted') {
@@ -48,7 +45,7 @@ const NoLocation = () => {
       });
     });
 
-    navigation.replace('Home', { crossIcon: false });
+    navigation.replace('NoTracking');
   };
 
   return (
@@ -81,7 +78,7 @@ const NoLocation = () => {
         {i18n.t('activate_your_geolocation')}
       </Text>
       <TouchableOpacity style={styles.btnStyle} onPress={excessLocation}>
-        <Text style={styles.txtColor}>{i18n.t('activate_geoloc')}</Text>
+        <Text style={styles.txtColor}>{i18n.t('carry_on')}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -91,7 +88,7 @@ export default NoLocation;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EEEFEE',
+    backgroundColor: '#F9F9F9',
     justifyContent: 'center',
     alignItems: 'center',
   },

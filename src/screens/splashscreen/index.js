@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useRef, useState } from 'react';
 import { Animated, ActivityIndicator, Platform } from 'react-native';
-// import { CommonActions } from '@react-navigation/native';
+import { CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
@@ -10,7 +10,6 @@ import { Colors } from '../../constants/Theme';
 import * as actionTypes from '../../contextApi/actionTypes';
 var getCountry = require('country-currency-map').getCountry;
 var formatCurrency = require('country-currency-map').formatCurrency;
-import { loadAsync } from 'expo-font';
 import * as Notifications from 'expo-notifications';
 import { useMutation } from 'react-query';
 import { SEND_PUSH_TOKEN } from '../../queries';
@@ -91,38 +90,34 @@ export default function SplashScreen(props) {
     });
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      const { userInfo = {} } = await getAsyncStorageValues();
+  const checkInternet = async () => {
+    const { userInfo = {} } = await getAsyncStorageValues();
+    if (userInfo?.user_id) {
       let userDetails = {
         name: upperTitleCase(userInfo?.name),
         image: userInfo?.image,
         email: userInfo?.email,
         accessToken: userInfo?.accessToken,
         user_id: userInfo?.user_id,
+        phone_number: userInfo.phone_number || '',
+        username: userInfo?.username || '',
+        description: userInfo?.description || '',
+        last_name: userInfo?.last_name || '',
       };
+
       dispatch({
         type: actionTypes.USER_DETAILS,
         payload: userDetails,
       });
-      async function loadFont() {
-        await loadAsync({
-          // Load a font `Montserrat` from a static resource
-          ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
-          ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
-          ProximaNovaSemiBold: require('../../assets/fonts/ProximaNova/ProximaNova-Semibold.otf'),
-        });
-      }
-      loadFont();
-    })();
-  }, []);
+    };
 
-  const checkInternet = userInfo => {
     NetInfo.fetch().then(state => {
-      if (state.isConnected && userInfo?.user_id) {
-        props.navigation.replace('Home', { crossIcon: false, ad: true });
-      } else if (state.isConnected && !userInfo?.user_id) {
-        props.navigation.replace('socialLogin');
+      if (state.isConnected) {
+        if (userInfo?.user_id) {
+          props.navigation.replace('Home', { crossIcon: false, ad: true });
+        } else if (!userInfo?.user_id) {
+          props.navigation.replace('socialLogin');
+        }
       } else {
         props.navigation.replace('NoWiFi');
       }
@@ -155,7 +150,6 @@ export default function SplashScreen(props) {
 
   const [springValue] = React.useState(new Animated.Value(0.5));
   const locationFunction = async () => {
-    const { userInfo = {} } = await getAsyncStorageValues();
     try {
       if (Platform.OS === 'ios') {
         const { status } = await requestTrackingPermissionsAsync();
@@ -176,24 +170,23 @@ export default function SplashScreen(props) {
 
       const isLocation = await Location.hasServicesEnabledAsync();
       if (isLocation) {
-        checkInternet(userInfo);
+        checkInternet();
         setCurrency();
       } else {
         const location = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Highest,
         });
-        checkInternet(userInfo);
+        checkInternet();
         setCurrency();
       }
     } catch (error) {
-      // props.navigation.dispatch(
-      //   CommonActions.reset({
-      //     index: 0,
-      //     routes: [{ name: 'NoLocation' }],
-      //   }),
-      // );
-
-      props.navigation.replace('Home', { crossIcon: false, ad: true });
+      props.navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'NoLocation' }],
+        }),
+      );
+      // props.navigation.replace('Home', { crossIcon: false, ad: true });
     }
   };
   React.useEffect(() => {

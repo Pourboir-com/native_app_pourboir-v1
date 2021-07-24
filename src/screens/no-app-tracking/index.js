@@ -46,7 +46,7 @@ const NoAppTracking = () => {
         {i18n.t('activate_app_tracking')}
       </Text>
       <TouchableOpacity style={styles.btnStyle} onPress={excessAppTracking}>
-        <Text style={styles.txtColor}>{i18n.t('allow_app_tracking')}</Text>
+        <Text style={styles.txtColor}>{i18n.t('carry_on')}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -56,7 +56,7 @@ export default NoAppTracking;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EEEFEE',
+    backgroundColor: '#F9F9F9',
     justifyContent: 'center',
     alignItems: 'center',
   },

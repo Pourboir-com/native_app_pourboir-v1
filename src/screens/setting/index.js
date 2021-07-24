@@ -47,6 +47,7 @@ const Setting = ({ navigation, route }) => {
       payload: {},
     });
     await AsyncStorage.setItem('@userInfo', JSON.stringify({}));
+    await AsyncStorage.setItem('@profileInfo', JSON.stringify({info: false}));
     setLoading(false);
   };
 
@@ -140,7 +141,13 @@ const Setting = ({ navigation, route }) => {
             navigation={navigation}
             logout={handleSignOut}
           />
-          <View style={styles.viewImg}>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => {
+              navigation.navigate('personalDetails');
+            }}
+            style={styles.viewImg}
+          >
             {!state?.userDetails?.image ? (
               <Image
                 style={{
@@ -164,8 +171,8 @@ const Setting = ({ navigation, route }) => {
                 resizeMode="cover"
               />
             )}
-          </View>
-          <TouchableOpacity
+          </TouchableOpacity>
+          {/* <TouchableOpacity
             onPress={handleChangePicture}
             style={styles.btnPencil}
           >
@@ -176,7 +183,7 @@ const Setting = ({ navigation, route }) => {
                 size={15}
               />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           {/* <View style={styles.viewImg}>
               <FontAwesome name="user-circle-o" size={120} color="#fff" />
             </View> */}
@@ -377,9 +384,6 @@ const Setting = ({ navigation, route }) => {
           </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity  onPress={() => navigation.navigate("personalDetails")} style={{backgroundColor:'yellow', position:'absolute', bottom:50,}} >
-        <Text>Navigation</Text>
-      </TouchableOpacity>
 
       <View style={{ position: 'absolute', bottom: 20 }}>
         <Text style={[styles.versionText, { fontFamily: 'ProximaNova' }]}>

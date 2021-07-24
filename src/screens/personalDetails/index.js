@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { ImageBackground } from 'react-native';
-// import { KeyboardAvoidingView } from 'react-native';
 import {
   Text,
   View,
@@ -15,7 +14,6 @@ import {
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import GlobalHeader from '../../components/GlobalHeader';
-// import { Colors } from '../../constants/Theme';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from './styles';
 import Context from '../../contextApi/context';
@@ -23,7 +21,7 @@ import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import { getAsyncStorageValues } from '../../constants';
-import { UPDATE_PICTURE } from '../../queries';
+import { UPDATE_PICTURE, EDIT_USER } from '../../queries';
 import { useMutation } from 'react-query';
 import i18n from '../../li8n';
 import CommonButton from '../../components/common-button';
@@ -31,33 +29,20 @@ import CommonButton from '../../components/common-button';
 const PersonalDetails = ({ navigation }) => {
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : -450;
   const { state, dispatch } = useContext(Context);
-  let fullName = state?.userDetails?.name?.split(' ');
-  let firstName =
-    fullName?.length > 1
-      ? fullName?.slice(0, fullName?.length - 1).join(' ')
-      : fullName[0];
-  let lastName = fullName?.length > 1 ? fullName[fullName?.length - 1] : '';
 
-  const [text, onChangeText] = React.useState(firstName);
-  const [text2, onChangeText2] = React.useState(lastName);
-  const [text3, onChangeText3] = React.useState('');
-  const [text4, onChangeText4] = React.useState(state?.userDetails?.email);
-  const [image, setImage] = useState();
-  const [username, setUsername] = useState('');
-  const [about, setAbout] = useState('');
+  //States
+  const [FirstName, setFirstName] = useState(state?.userDetails?.name || '');
+  const [LastName, setLastName] = useState(state?.userDetails?.last_name || '');
+  const [email, setEmail] = useState(state?.userDetails?.email);
+  const [phone, setPhone] = useState(state?.userDetails?.phone_number);
+  const [image, setImage] = useState(state.userDetails.image);
+  const [username, setUsername] = useState(state?.userDetails?.username);
+  const [about, setAbout] = useState(state?.userDetails?.description);
+  const [loading, setLoading] = useState();
+  //Mutation
   const [updatePicture] = useMutation(UPDATE_PICTURE);
-  const validate =
-    text !== '' &&
-    text2 !== '' &&
-    text3 !== '' &&
-    text4 !== '' &&
-    username !== '';
-  const validateBlue =
-    text !== '' &&
-    text2 !== '' &&
-    text3 !== '' &&
-    text4 !== '' &&
-    username !== '';
+  const [editUser] = useMutation(EDIT_USER);
+  const validate = FirstName && LastName && email && username && phone;
 
   const handleChangePicture = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -68,39 +53,66 @@ const PersonalDetails = ({ navigation }) => {
     });
     if (!result.cancelled) {
       setImage(result.uri);
+    }
+  };
 
-      const { userInfo } = await getAsyncStorageValues();
-      dispatch({
-        type: actionTypes.USER_DETAILS,
-        payload: {
-          ...state.userDetails,
-          image: result.uri,
-        },
-      });
-
-      await AsyncStorage.setItem(
-        '@userInfo',
-        JSON.stringify({
-          ...userInfo,
-          image: result.uri,
-        }),
-      );
-
+  const handleEditProfile = async () => {
+    if (state?.userDetails?.user_id) {
+      setLoading(true);
+      let userDetails = {
+        ...state.userDetails,
+        name: FirstName || '',
+        last_name: LastName || '',
+        email: email || '',
+        phone_number: phone || '',
+        username: username || '',
+        description: about || '',
+        image: image || '',
+      };
+      let editProfile = {
+        id: state.userDetails.user_id,
+        first_name: FirstName || '',
+        last_name: LastName || '',
+        phone_number: phone || '',
+        email: email || '',
+        username: username || '',
+        description: about || '',
+      };
       let formData = new FormData();
       formData.append('image', {
-        uri: result.uri,
-        type: `image/${result.uri.split('.')[1]}`,
-        name: result.uri.substr(result.uri.lastIndexOf('/') + 1),
+        uri: image,
+        type: `image/${image.split('.')[1]}`,
+        name: image.substr(image.lastIndexOf('/') + 1),
       });
-
       let UploadData = {
         user_id: state.userDetails.user_id,
         image: formData,
       };
 
-      await updatePicture(UploadData, {
-        onSuccess: res => {},
+      await updatePicture(UploadData, {});
+      await editUser(editProfile, {});
+
+      dispatch({
+        type: actionTypes.USER_DETAILS,
+        payload: { ...state.userDetails, ...userDetails },
       });
+      const { userInfo } = await getAsyncStorageValues();
+      await AsyncStorage.setItem(
+        '@userInfo',
+        JSON.stringify({
+          ...userInfo,
+          ...userDetails,
+        }),
+      );
+      await AsyncStorage.setItem(
+        '@profileInfo',
+        JSON.stringify({
+          info: true,
+        }),
+      );
+      setLoading(false);
+      alert('Your profile has been updated.');
+      navigation.replace('Setting', { login: true });
     }
   };
 
@@ -145,29 +157,12 @@ const PersonalDetails = ({ navigation }) => {
         >
           <View>
             <View style={styles.avatar}>
-              {/* <TouchableOpacity style={styles.viewImg}>
-                  <Image
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      borderRadius: 80,
-                    }}
-                    source={{
-                      uri:
-                        'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png',
-                    }}
-                  />
-                </TouchableOpacity> */}
               <TouchableOpacity
-                // onPress={() => navigation.navigate('personalDetails')}
                 onPress={handleChangePicture}
                 style={styles.viewImg}
                 activeOpacity={0.6}
               >
-                {state.userDetails.image === null ||
-                state.userDetails.image === undefined ||
-                state.userDetails.image === '' ? (
-                  // <FontAwesome name="user-circle-o" size={110} color="#fff" />
+                {image === null || image === undefined || image === '' ? (
                   <Image
                     style={{
                       width: '100%',
@@ -186,7 +181,7 @@ const PersonalDetails = ({ navigation }) => {
                       height: '100%',
                       borderRadius: 60,
                     }}
-                    source={{ uri: image ? image : state.userDetails.image }}
+                    source={{ uri: image }}
                     resizeMode="cover"
                   />
                 )}
@@ -211,8 +206,8 @@ const PersonalDetails = ({ navigation }) => {
                 <Text style={styles.inputLabel}>{i18n.t('first_name')}</Text>
                 <TextInput
                   style={styles.inputsTopTow}
-                  onChangeText={onChangeText}
-                  value={text}
+                  onChangeText={setFirstName}
+                  value={FirstName}
                   placeholder="Christine"
                   placeholderTextColor={'#485460'}
                 />
@@ -221,8 +216,8 @@ const PersonalDetails = ({ navigation }) => {
                 <Text style={styles.inputLabel}>{i18n.t('last_name')}</Text>
                 <TextInput
                   style={styles.inputsTopTow}
-                  onChangeText={onChangeText2}
-                  value={text2}
+                  onChangeText={setLastName}
+                  value={LastName}
                   placeholder="Zhou"
                   placeholderTextColor={'#485460'}
                 />
@@ -231,8 +226,8 @@ const PersonalDetails = ({ navigation }) => {
                 <Text style={styles.inputLabel}>{i18n.t('phone_num')}</Text>
                 <View style={styles.inputsTopTow}>
                   <TextInput
-                    onChangeText={onChangeText3}
-                    value={text3}
+                    onChangeText={setPhone}
+                    value={phone}
                     placeholder="+33 6 88 88 88"
                     keyboardType="number-pad"
                     style={{ width: '100%' }}
@@ -256,8 +251,8 @@ const PersonalDetails = ({ navigation }) => {
                 <Text style={styles.inputLabel}>E-mail</Text>
                 <View style={styles.inputsTopTow}>
                   <TextInput
-                    onChangeText={onChangeText4}
-                    value={text4}
+                    onChangeText={setEmail}
+                    value={email}
                     placeholder="christine@zhou.com"
                     keyboardType="email-address"
                     style={{ width: '70%' }}
@@ -381,18 +376,20 @@ const PersonalDetails = ({ navigation }) => {
           </View>
         </KeyboardAvoidingView>
       </ScrollView>
-      <View>
-        <View
-          style={{
-            marginHorizontal: '4%',
-            marginBottom: Platform.OS === 'ios' ? 25 : 15,
-            backgroundColor: 'transparent',
-          }}
-        >
-          <View>
-            <CommonButton title={i18n.t('confirm')} validate={validate} />
-          </View>
-        </View>
+      <View
+        style={{
+          marginHorizontal: '4%',
+          marginBottom: Platform.OS === 'ios' ? 25 : 15,
+          backgroundColor: 'transparent',
+        }}
+      >
+        <CommonButton
+          dispatch={handleEditProfile}
+          loading={loading}
+          title={i18n.t('confirm')}
+          validate={validate}
+          conditional
+        />
       </View>
     </View>
   );

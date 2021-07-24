@@ -31,6 +31,11 @@ export const I_AM_WAITER = async e => {
   return res;
 };
 
+export const ADD_PAST_EXP = async e => {
+  let res = await axios.post(BASE_URL + `/v1/users/bulk-add-to-waiters`, e);
+  return res;
+};
+
 export const GET_RESTAURANT_DETAILS = async (get, e = {}) => {
   const {_id, ...rest} = e;
   const res = await axios.get(

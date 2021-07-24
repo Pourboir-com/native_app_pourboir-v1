@@ -79,6 +79,11 @@ export default function HomeScreenContent({
   if (noData) {
     return (
       <>
+        {!route?.params?.crossIcon && (
+          <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
+            {i18n.t('no_result')}
+          </Text>
+        )}
         {route?.params?.crossIcon ? (
           <View style={styles.viewEmptyList}>
             <View
@@ -130,7 +135,10 @@ export default function HomeScreenContent({
             >
               {i18n.t('no_restaurant_found')}
             </Text> */}
-            <Image style={{width: 350, height: 350}} source={require('../assets/images/no-data.png')} />
+            <Image
+              style={{ width: 350, height: 350 }}
+              source={require('../assets/images/no-data.png')}
+            />
           </View>
         )}
       </>
@@ -149,44 +157,25 @@ export default function HomeScreenContent({
         >
           <View
             style={{
-              flexDirection: 'row',
               marginTop: 17,
               alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            {/* <FlatList
-              data={dummyArray}
-              showsVerticalScrollIndicator={false}
-              alwaysBounceHorizontal={false}
-              scrollEnabled={false}
-              alwaysBounceVertical={false}
-              bounces={false}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={() => <HomeCardSkeleton />}
+            <Image
+              style={{ width: 350, height: 350 }}
+              source={require('../assets/images/loading.png')}
             />
-            <FlatList
-              data={dummyArray}
-              showsVerticalScrollIndicator={false}
-              style={{ marginTop: 15 }}
-              alwaysBounceHorizontal={false}
-              scrollEnabled={false}
-              alwaysBounceVertical={false}
-              bounces={false}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={() => <HomeCardSkeleton />}
-            /> */}
-            <View>
-              <Image style={{width: 350, height: 350}}  source={require('../assets/images/loading.png')} />
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontFamily: 'ProximaNova',
-                  textAlign: 'center',
-                }}
-              >
-                {i18n.t('be_patient')}
-              </Text>
-            </View>
+            <Text
+              style={{
+                fontSize: 18,
+                fontFamily: 'ProximaNova',
+                textAlign: 'center',
+                width: 300,
+              }}
+            >
+              {i18n.t('be_patient')}
+            </Text>
           </View>
         </View>
       ) : (

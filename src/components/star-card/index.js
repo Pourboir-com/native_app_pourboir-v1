@@ -37,10 +37,10 @@ const StarCard = ({ itemData, state, navigation, place_id, restaurant_id }) => {
       style={styles.viewItemConatier}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        {itemData?.item?.user_id ? (
+        {(itemData?.item?.picture || itemData?.item?.user_id) ? (
           <Image
             style={{ width: 55, height: 55, borderRadius: 30 }}
-            source={{ uri: itemData?.item?.user_id.picture }}
+            source={{ uri: itemData?.item?.picture || itemData?.item?.user_id?.picture }}
           />
         ) : (
           <SvgHeaderUserIcon height={45} width={45} />

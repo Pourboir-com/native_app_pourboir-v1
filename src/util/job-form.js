@@ -32,3 +32,17 @@ export const validateAddForm = (data, restaurant, start_date, end_date) => {
   }
   return true;
 };
+
+export const validateCurrentPositions = (data, restaurant) => {
+  let validateRestaurant = data?.find(
+    item => item.restaurant_id === restaurant?.restaurant_id,
+  );
+  return validateRestaurant;
+};
+
+export const validateSelectedPositions = (data, restaurant) => {
+  let validateRestaurant = data?.find(
+    item => item.restaurant?.place_id === restaurant?.place_id,
+  );
+  return validateRestaurant;
+};

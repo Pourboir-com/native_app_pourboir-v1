@@ -13,6 +13,7 @@ export default {
     'Recherchez votre restaurant et ajoutez vous en choisissant: Vous êtes serveur',
   no_restaurant_found: 'Désolé, aucun restaurant n’a été trouvé',
   no_waiter_found: 'Désolé, aucun serveur inscrit à ce jour',
+  no_result: 'Aucun résultat trouvé',
 
   // Open card reviews
   waiters: 'Les serveurs',
@@ -51,7 +52,6 @@ export default {
   // are_you_a_waiter   open card reviews
   sign_out: 'Se déconnecter',
   i_waiter: 'Je suis serveur',
-  i_manage: 'Je gère un restaurant',
 
   // Social Login
   continue_with_fb: 'Continuer avec Facebook',
@@ -203,7 +203,6 @@ export default {
   are_you_job: ' Vous recherchez un emploi ou souhaitez compléter vos revenus',
   comp_job:
     'Remplissez votre profil de recherche de poste et recevez des offres rapidement',
-  look_job: 'En recherche de poste',
   your_cand_prof: 'Votre profil candidat',
   prev_rec: 'Prévisualiser comment les recruteurs voient votre profil',
   waitress: 'Serveuse',
@@ -228,7 +227,7 @@ export default {
   username: 'Nom d’utilisateur',
   about_me: 'A propos de moi',
   describe: 'Décrivez vous en 150 charactères',
-  confirm: 'Confirmer',
+  confirm: 'confirmer',
   i_prof: 'Je suis professionnel de la restauration',
   area_prof: 'Espace professionel',
   prof_pofile: 'Je crée mon profil professionnel',

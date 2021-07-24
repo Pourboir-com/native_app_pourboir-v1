@@ -16,14 +16,13 @@ import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/job-hunt.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
-import CheckBox from 'react-native-check-box';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { SEARCH_RESTAURANTS } from '../../queries';
 import { useMutation } from 'react-query';
 import stylesTextbox from '../../screens/find-job/styles';
-import moment from 'moment';
 import { validateAddForm } from '../../util';
+
 const AddExperienceModal = ({
   setExpModalVisible,
   expModalVisible,
@@ -40,7 +39,7 @@ const AddExperienceModal = ({
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [termsChecked, setTermsChecked] = useState(false);
-  const [workHere, setWorkHere] = useState('');
+
   //search textbox
   const [showDropdown, setShowDropdown] = useState(false);
   const [restaurants, setRestaurants] = useState();
@@ -93,7 +92,7 @@ const AddExperienceModal = ({
       setExpModalVisible(false);
       setRestaurant({});
     } else {
-      alert('Cannot add multiple experience from a single place.');
+      alert('This place is already added in your past experiences.');
     }
   };
   // console.log( startDate > endDate ? true: false)

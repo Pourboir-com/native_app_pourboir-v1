@@ -146,6 +146,7 @@ const SocialLogin = ({ navigation, route }) => {
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
+    const { profileInfo = {} } = await getAsyncStorageValues();
     // First- obtain access token from Expo's Google API
     const { type, accessToken, user } = await Google.logInAsync(config);
     if (type === 'success') {
@@ -163,14 +164,16 @@ const SocialLogin = ({ navigation, route }) => {
       await googleSignup(userSignInDetails, {
         onSuccess: async res => {
           let userDetails = {
-            name: upperTitleCase(res?.user?.full_name),
-            // ? userGivenName(res?.user?.full_name)
-            // : '',
+            name: res?.user?.full_name || '',
+            last_name: res.user?.last_name || '',
             image: res?.user?.picture || '',
             email: res?.user?.email || '',
             accessToken: accessToken || '',
             user_id: res?.user?._id || '',
             os,
+            phone_number: res?.user?.phone_number || '',
+            username: res?.user?.username || '',
+            description: res?.user?.description || '',
           };
           dispatch({
             type: actionTypes.USER_DETAILS,
@@ -187,6 +190,8 @@ const SocialLogin = ({ navigation, route }) => {
             setVote(false);
           } else if (confirmWaiter || HelpUs) {
             navigation.replace('OpenCardReviews');
+          } else if (!profileInfo?.info) {
+            navigation.replace('personalDetails');
           } else {
             // navigation.navigate('Home', { crossIcon: false });
             navigation.replace('Setting', { login: true });
@@ -233,7 +238,7 @@ const SocialLogin = ({ navigation, route }) => {
           .then(response => response.json())
           .then(async data => {
             setLoading(true);
-
+            const { profileInfo = {} } = await getAsyncStorageValues();
             let user = {
               name: data?.name || '',
               email: data?.email || '',
@@ -248,13 +253,15 @@ const SocialLogin = ({ navigation, route }) => {
             await googleSignup(user, {
               onSuccess: async res => {
                 let userDetails = {
-                  name: upperTitleCase(res?.user?.full_name),
-                  // ? userGivenName(res?.user?.full_name)
-                  // : '',
+                  name: res?.user?.full_name || '',
+                  last_name: res.user?.last_name || '',
                   image: res?.user?.picture || '',
                   email: res?.user?.email || '',
                   accessToken: token || '',
                   user_id: res?.user?._id || '',
+                  phone_number: res?.user?.phone_number || '',
+                  username: res?.user?.username || '',
+                  description: res?.user?.description || '',
                 };
 
                 dispatch({
@@ -274,6 +281,8 @@ const SocialLogin = ({ navigation, route }) => {
                   setVote(false);
                 } else if (confirmWaiter || HelpUs) {
                   navigation.replace('OpenCardReviews');
+                } else if (!profileInfo?.info) {
+                  navigation.replace('personalDetails');
                 } else {
                   // navigation.navigate('Home', { crossIcon: false });
                   navigation.replace('Setting', { login: true });
@@ -393,6 +402,8 @@ const SocialLogin = ({ navigation, route }) => {
                         ],
                       });
 
+                      const { profileInfo = {} } = await getAsyncStorageValues();
+
                       let user = {
                         name: iPhoneLoginName(credential.fullName) || '',
                         email: credential.email || '',
@@ -408,13 +419,15 @@ const SocialLogin = ({ navigation, route }) => {
                       await googleSignup(user, {
                         onSuccess: async res => {
                           let userDetails = {
-                            name: upperTitleCase(res?.user?.full_name),
-                            // ? userGivenName(res?.user?.full_name)
-                            // : '',
+                            name: res?.user?.full_name || '',
+                            last_name: res.user?.last_name || '',
                             image: res?.user?.picture || '',
                             email: res?.user?.email || '',
                             accessToken: credential.authorizationCode || '',
                             user_id: res?.user?._id || '',
+                            phone_number: res?.user?.phone_number || '',
+                            username: res?.user?.username || '',
+                            description: res?.user?.description || '',
                           };
 
                           dispatch({
@@ -433,6 +446,8 @@ const SocialLogin = ({ navigation, route }) => {
                             setVote(false);
                           } else if (confirmWaiter || HelpUs) {
                             navigation.replace('OpenCardReviews');
+                          } else if (!profileInfo?.info) {
+                            navigation.replace('personalDetails');
                           } else {
                             // navigation.navigate('Home', { crossIcon: false });
                             navigation.replace('Setting', { login: true });

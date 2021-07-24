@@ -12,6 +12,7 @@ import {
   Platform,
   Linking,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import RefferedWaiterModal from '../../components/modals/ConfirmModal';
@@ -69,6 +70,7 @@ const ReviewDetails = ({ navigation, route }) => {
     false,
   );
   const [userThanksModalVisible, setUserThanksModalVisible] = useState(false);
+  const [favLoading, setFavLoading] = useState(false);
   const [refferedThanksModalVisible, setRefferedThanksModalVisible] = useState(
     false,
   );
@@ -92,12 +94,7 @@ const ReviewDetails = ({ navigation, route }) => {
     geometry,
   } = route?.params;
 
-  const {
-    data: waitersData,
-    isLoading: waitersLoading,
-    refetch: refetchWaiters,
-    isFetching: waitersIsFetching,
-  } = useQuery(
+  const { isLoading: waitersLoading, isFetching: waitersIsFetching } = useQuery(
     ['GET_WAITERS', { restaurant_id: place_id, statuses: ['active'] }],
     GET_WAITERS,
     {
@@ -112,8 +109,6 @@ const ReviewDetails = ({ navigation, route }) => {
   const {
     data: RestaurantDetails,
     isLoading: RestaurantDetailsLoading,
-    refetch: refetchRestaurantDetails,
-    isFetching: RestaurantDetailsIsFetching,
   } = useQuery(
     ['GET_RESTAURANT_DETAILS', { _id: place_id }],
     GET_RESTAURANT_DETAILS,
@@ -124,27 +119,17 @@ const ReviewDetails = ({ navigation, route }) => {
 
   const {
     data: favoritesData,
-    isLoading: favoritesLoading,
     refetch: refetchFavorites,
-    isFetching: favoritesIsFetching,
+    isLoading: favoritesLoading,
+    isFetching: isFavoriteLoading,
   } = useQuery(
-    [
-      'GET_FAVORITES',
-      { place_id: restaurant_id, user_id: state?.userDetails?.user_id },
-    ],
+    ['GET_FAVORITES', { google_place_id: place_id }],
     GET_FAVORITES,
     {
       ...reactQueryConfig,
-      enabled: restaurant_id,
-      onSuccess: res => {
-        console.log(res);
-      },
-      onError: e => {
-        console.log(e);
-      },
+      enabled: place_id,
     },
   );
-  console.log(favoritesData);
 
   const scrollY = new Animated.Value(0);
   const diffClamp = Animated.diffClamp(scrollY, 0, 55);
@@ -217,7 +202,7 @@ const ReviewDetails = ({ navigation, route }) => {
 
   const handleAddFavorite = async () => {
     if (state.userDetails.user_id) {
-      setRefferedLoading(true);
+      setFavLoading(true);
       let newFavorite = {
         user_id: state.userDetails.user_id,
         restaurant: {
@@ -233,14 +218,23 @@ const ReviewDetails = ({ navigation, route }) => {
         },
       };
       await AddFavorite(newFavorite, {
-        onSuccess: () => {
-          console.log('favorite added!');
+        onSuccess: async () => {
+          await refetchFavorites();
+          setFavLoading(false);
+        },
+        onError: () => {
+          setFavLoading(false);
         },
       });
     } else {
       navigation.navigate('socialLogin', { confirmWaiter: true });
     }
   };
+
+  const checkFavorite = () =>
+    (favoritesData?.data[0]?.user_id || []).find(
+      item => item?._id === state?.userDetails?.user_id,
+    );
 
   // const handleIAMWAITER = async () => {
   //   if (state.userDetails.user_id) {
@@ -401,7 +395,7 @@ const ReviewDetails = ({ navigation, route }) => {
                   textAlign: 'center',
                 }}
               >
-                888
+                {favoritesData?.data[0]?.user_id?.length || '0'}
               </Text>
               <Text tyle={{ fontFamily: 'ProximaNova', fontSize: 18 }}>
                 {i18n.t('fav')}
@@ -409,8 +403,9 @@ const ReviewDetails = ({ navigation, route }) => {
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.6}
+              disabled={favoritesLoading || isFavoriteLoading}
               style={{
-                backgroundColor: added === true ? '#EAEAEA' : Colors.yellow,
+                backgroundColor: checkFavorite() ? '#EAEAEA' : Colors.yellow,
                 paddingVertical: 14,
                 width: 156,
                 borderRadius: 12,
@@ -419,9 +414,13 @@ const ReviewDetails = ({ navigation, route }) => {
               }}
               onPress={handleAddFavorite}
             >
-              <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
-                {added === true ? i18n.t('added') : i18n.t('add_fav')}
-              </Text>
+              {favLoading ? (
+                <ActivityIndicator size={23} color="#EBC11B" />
+              ) : (
+                <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
+                  {checkFavorite() ? i18n.t('added') : i18n.t('add_fav')}
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
 
@@ -450,14 +449,16 @@ const ReviewDetails = ({ navigation, route }) => {
             </Text>
 
             <View style={{ alignItems: 'center', marginVertical: 15 }}>
-              {waitersLoading ? (
+              {favoritesLoading || isFavoriteLoading ? (
                 <View style={{ width: '90%', alignSelf: 'center' }}>
                   <ReviewsSkeleton />
                   <ReviewsSkeleton />
                 </View>
               ) : (
                 <FlatList
-                  data={waitersLoading ? null : data}
+                  data={
+                    favoritesLoading ? null : favoritesData?.data[0]?.user_id
+                  }
                   showsVerticalScrollIndicator={false}
                   keyExtractor={item => item._id}
                   renderItem={itemData => (

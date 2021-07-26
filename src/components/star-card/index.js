@@ -1,17 +1,18 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import RatingStar from '../../components/RatingComponent';
 import i18n from '../../li8n';
 
-const StarCard = ({ itemData, state, navigation, place_id, restaurant_id }) => {
+const StarCard = ({
+  itemData,
+  state,
+  navigation,
+  place_id,
+  restaurant_id,
+  navigationDisable,
+}) => {
   const obj = [1, 2, 3, 4, 5];
 
   return (
@@ -19,28 +20,33 @@ const StarCard = ({ itemData, state, navigation, place_id, restaurant_id }) => {
       activeOpacity={0.5}
       key={itemData?.item?._id}
       onPress={() => {
-        if (state.userDetails.user_id !== itemData.item?.user_id?._id) {
-          navigation.navigate('RateYourService', {
-            name:
-              itemData?.item?.user_id?.full_name ||
-              itemData?.item.full_name ||
-              'name missing',
-            image: itemData?.item?.user_id && itemData?.item?.user_id?.picture,
-            restaurant_id: place_id,
-            waiter_id: itemData?.item?._id,
-            place_id: restaurant_id,
-          });
-        } else {
-          alert(i18n.t('cannot_vote'));
+        if (!navigationDisable) {
+          if (state.userDetails.user_id !== itemData.item?.user_id?._id) {
+            navigation.navigate('RateYourService', {
+              name:
+                itemData?.item?.user_id?.full_name ||
+                itemData?.item.full_name ||
+                'name missing',
+              image:
+                itemData?.item?.user_id && itemData?.item?.user_id?.picture,
+              restaurant_id: place_id,
+              waiter_id: itemData?.item?._id,
+              place_id: restaurant_id,
+            });
+          } else {
+            alert(i18n.t('cannot_vote'));
+          }
         }
       }}
       style={styles.viewItemConatier}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        {(itemData?.item?.picture || itemData?.item?.user_id) ? (
+        {itemData?.item?.picture || itemData?.item?.user_id ? (
           <Image
             style={{ width: 55, height: 55, borderRadius: 30 }}
-            source={{ uri: itemData?.item?.picture || itemData?.item?.user_id?.picture }}
+            source={{
+              uri: itemData?.item?.picture || itemData?.item?.user_id?.picture,
+            }}
           />
         ) : (
           <SvgHeaderUserIcon height={45} width={45} />

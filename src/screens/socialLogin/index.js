@@ -185,13 +185,14 @@ const SocialLogin = ({ navigation, route }) => {
               ...userDetails,
             }),
           );
-          if (vote) {
+
+          if (!res?.user?.username) {
+            navigation.replace('personalDetails');
+          } else if (vote) {
             navigation.replace('RateYourService');
             setVote(false);
           } else if (confirmWaiter || HelpUs) {
             navigation.replace('OpenCardReviews');
-          } else if (!profileInfo?.info) {
-            navigation.replace('personalDetails');
           } else {
             // navigation.navigate('Home', { crossIcon: false });
             navigation.replace('Setting', { login: true });
@@ -276,13 +277,13 @@ const SocialLogin = ({ navigation, route }) => {
                   }),
                 );
 
-                if (vote) {
+                if (!res?.user?.username) {
+                  navigation.replace('personalDetails');
+                } else if (vote) {
                   navigation.replace('RateYourService');
                   setVote(false);
                 } else if (confirmWaiter || HelpUs) {
                   navigation.replace('OpenCardReviews');
-                } else if (!profileInfo?.info) {
-                  navigation.replace('personalDetails');
                 } else {
                   // navigation.navigate('Home', { crossIcon: false });
                   navigation.replace('Setting', { login: true });
@@ -402,7 +403,9 @@ const SocialLogin = ({ navigation, route }) => {
                         ],
                       });
 
-                      const { profileInfo = {} } = await getAsyncStorageValues();
+                      const {
+                        profileInfo = {},
+                      } = await getAsyncStorageValues();
 
                       let user = {
                         name: iPhoneLoginName(credential.fullName) || '',
@@ -441,13 +444,13 @@ const SocialLogin = ({ navigation, route }) => {
                               ...userDetails,
                             }),
                           );
-                          if (vote) {
+                          if (!res?.user?.username) {
+                            navigation.replace('personalDetails');
+                          } else if (vote) {
                             navigation.replace('RateYourService');
                             setVote(false);
                           } else if (confirmWaiter || HelpUs) {
                             navigation.replace('OpenCardReviews');
-                          } else if (!profileInfo?.info) {
-                            navigation.replace('personalDetails');
                           } else {
                             // navigation.navigate('Home', { crossIcon: false });
                             navigation.replace('Setting', { login: true });

@@ -246,4 +246,6 @@ export default {
   add_fav: 'Ajouter au favoris',
   fav: 'Favoris',
   added: 'Ajouté',
+  //Notification
+  notification: 'Activez les notifications pour recevoir des notifications de la part de vos restaurants favoris.',
 };

@@ -1,6 +1,5 @@
-import React, { useEffect, useContext, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Animated, ActivityIndicator, Platform } from 'react-native';
-import { CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
@@ -13,10 +12,11 @@ var formatCurrency = require('country-currency-map').formatCurrency;
 import * as Notifications from 'expo-notifications';
 import { useMutation } from 'react-query';
 import { SEND_PUSH_TOKEN } from '../../queries';
-import Constants from 'expo-constants';
 import * as Localization from 'expo-localization';
-import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+import { getTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import { upperTitleCase } from '../../util';
+import Constants from 'expo-constants';
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -31,26 +31,20 @@ export default function SplashScreen(props) {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  async function registerForPushNotificationsAsync() {
+  const checkNotificationPermission = async () => {
     let token;
     if (Constants.isDevice) {
       const {
         status: existingStatus,
       } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
       if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
+        props.navigation.replace('Notification');
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
     } else {
       alert('Must use physical device for Push Notifications');
     }
-
     if (Platform.OS === 'android') {
       Notifications.setNotificationChannelAsync('default', {
         name: 'default',
@@ -60,37 +54,9 @@ export default function SplashScreen(props) {
       });
     }
     return token;
-  }
+  };
 
-  useEffect(() => {
-    registerForPushNotificationsAsync().then(async token => {
-      const { userInfo = {} } = await getAsyncStorageValues();
-      const { locale } = await Localization.getLocalizationAsync();
-      if (userInfo?.user_id) {
-        await sendNotificationToken({
-          id: userInfo?.user_id || '',
-          expo_notification_token: token || '',
-          lang: locale || '',
-        });
-        notificationListener.current = Notifications.addNotificationReceivedListener(
-          notification => {
-            props.navigation.navigate('WaiterProfile', {
-              crossIcon: true,
-            });
-          },
-        );
-        responseListener.current = Notifications.addNotificationResponseReceivedListener(
-          response => {
-            props.navigation.navigate('WaiterProfile', {
-              crossIcon: true,
-            });
-          },
-        );
-      }
-    });
-  }, []);
-
-  const checkInternet = async () => {
+  const InitializeStates = async () => {
     const { userInfo = {} } = await getAsyncStorageValues();
     if (userInfo?.user_id) {
       let userDetails = {
@@ -104,24 +70,17 @@ export default function SplashScreen(props) {
         description: userInfo?.description || '',
         last_name: userInfo?.last_name || '',
       };
-
       dispatch({
         type: actionTypes.USER_DETAILS,
         payload: userDetails,
       });
-    };
 
-    NetInfo.fetch().then(state => {
-      if (state.isConnected) {
-        if (userInfo?.user_id) {
-          props.navigation.replace('Home', { crossIcon: false, ad: true });
-        } else if (!userInfo?.user_id) {
-          props.navigation.replace('socialLogin');
-        }
-      } else {
-        props.navigation.replace('NoWiFi');
+      if (userInfo?.user_id) {
+        props.navigation.replace('Home', { crossIcon: false, ad: true });
+      } else if (!userInfo?.user_id) {
+        props.navigation.replace('socialLogin');
       }
-    });
+    }
   };
 
   const setCurrency = () => {
@@ -148,53 +107,70 @@ export default function SplashScreen(props) {
     });
   };
 
-  const [springValue] = React.useState(new Animated.Value(0.5));
-  const locationFunction = async () => {
-    try {
-      if (Platform.OS === 'ios') {
-        const { status } = await requestTrackingPermissionsAsync();
-        if (status === 'granted') {
-          console.log('Yay! I have user permission to track data');
-        }
+  const checkTrackingPermission = async () => {
+    if (Platform.OS === 'ios') {
+      const { granted } = await getTrackingPermissionsAsync();
+      if (!granted) {
+        props.navigation.replace('NoTracking');
+        return;
       }
-      let values = await Location.requestForegroundPermissionsAsync();
-      if (values === 'granted') {
-        // props.navigation.dispatch(
-        //   CommonActions.reset({
-        //     index: 0,
-        //     routes: [{ name: 'NoLocation' }],
-        //   }),
-        // );
-        props.navigation.replace('Home', { crossIcon: false, ad: true });
-      }
-
-      const isLocation = await Location.hasServicesEnabledAsync();
-      if (isLocation) {
-        checkInternet();
-        setCurrency();
-      } else {
-        const location = await Location.getCurrentPositionAsync({
-          accuracy: Location.Accuracy.Highest,
-        });
-        checkInternet();
-        setCurrency();
-      }
-    } catch (error) {
-      props.navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: 'NoLocation' }],
-        }),
-      );
-      // props.navigation.replace('Home', { crossIcon: false, ad: true });
     }
   };
+
+  const locationFunction = async () => {
+    const isLocation = await Location.hasServicesEnabledAsync();
+    if (isLocation) {
+      InitializeStates();
+      setCurrency();
+    } else {
+      props.navigation.replace('NoLocation', { InitializeStates });
+      return;
+    }
+  };
+
+  const [springValue] = React.useState(new Animated.Value(0.5));
+
   React.useEffect(() => {
-    locationFunction();
-    Animated.spring(springValue, {
-      toValue: 1,
-      friction: 1,
-    }).start();
+    try {
+      NetInfo.fetch().then(state => {
+        if (state.isConnected) {
+          checkTrackingPermission();
+          locationFunction();
+          checkNotificationPermission().then(async token => {
+            const { userInfo = {} } = await getAsyncStorageValues();
+            const { locale } = await Localization.getLocalizationAsync();
+            if (userInfo?.user_id) {
+              await sendNotificationToken({
+                id: userInfo?.user_id || '',
+                expo_notification_token: token || '',
+                lang: locale || '',
+              });
+              notificationListener.current = Notifications.addNotificationReceivedListener(
+                notification => {
+                  props.navigation.navigate('WaiterProfile', {
+                    crossIcon: true,
+                  });
+                },
+              );
+              responseListener.current = Notifications.addNotificationResponseReceivedListener(
+                response => {
+                  props.navigation.navigate('WaiterProfile', {
+                    crossIcon: true,
+                  });
+                },
+              );
+            }
+          });
+
+          Animated.spring(springValue, {
+            toValue: 1,
+            friction: 1,
+          }).start();
+        } else {
+          props.navigation.replace('NoWiFi');
+        }
+      });
+    } catch {}
   }, []);
 
   return (

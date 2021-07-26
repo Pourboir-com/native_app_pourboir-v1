@@ -8,25 +8,24 @@ import {
   Image,
 } from 'react-native';
 import { Colors } from '../../constants/Theme';
-import { useNavigation } from '@react-navigation/native';
 import i18n from '../../li8n';
 import { Linking } from 'react-native';
 import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import Track from '../../assets/images/track.png';
 
-const NoAppTracking = () => {
-  const navigation = useNavigation();
-
+const NoAppTracking = ({ navigation }) => {
   const excessAppTracking = async () => {
     if (Platform.OS === 'ios') {
       const { status } = await requestTrackingPermissionsAsync();
       if (status === 'granted') {
-        navigation.navigate('splashScreen');
+        navigation.replace('NoLocation');
+        return;
       } else {
         return Linking.openURL('app-settings:');
       }
     } else {
-      navigation.navigate('splashScreen');
+      navigation.replace('NoLocation');
+      return;
     }
   };
 
@@ -68,7 +67,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 15,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   txtColor: {
     color: Colors.fontLight,

@@ -468,6 +468,7 @@ const ReviewDetails = ({ navigation, route }) => {
                       navigation={navigation}
                       place_id={place_id}
                       restaurant_id={restaurant_id}
+                      navigationDisable={true}
                     />
                   )}
                 />

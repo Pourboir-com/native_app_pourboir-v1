@@ -49,7 +49,7 @@ const Find_Job = ({ navigation, route }) => {
   const [currentModal, setCurrentModal] = useState(false);
   const [nicheModalVisible, setNicheModalVisible] = useState(false);
   const [currentData, setCurrentData] = useState([]);
-  const [currentPositionsData, setCurrentPositionsData] = useState();
+  const [currentPositionsData, setCurrentPositionsData] = useState([]);
 
   const [data, setData] = useState(checkExeperience(form) || []);
   const [job, setJob] = useState(form?.looking_for_job ? 'yes' : 'No');
@@ -109,6 +109,7 @@ const Find_Job = ({ navigation, route }) => {
           phone &&
           data.length &&
           nicheModalData.length &&
+          currentPositionsData.length &&
           temp
         );
       } else if (temp === 'full') {
@@ -120,12 +121,19 @@ const Find_Job = ({ navigation, route }) => {
           job &&
           phone &&
           data.length &&
+          currentPositionsData.length &&
           temp
         );
       }
     } else {
       return (
-        firstName && lastName && position && education && job && data.length
+        firstName &&
+        lastName &&
+        position &&
+        education &&
+        job &&
+        data.length &&
+        currentPositionsData.length
       );
     }
   };
@@ -306,7 +314,7 @@ const Find_Job = ({ navigation, route }) => {
                   >
                     {i18n.t('current_pos')}
                   </Text>
-                  {(currentPositionLoading || currentPositionIsFetching) ? (
+                  {currentPositionLoading || currentPositionIsFetching ? (
                     <Text
                       style={{
                         paddingBottom: 10,

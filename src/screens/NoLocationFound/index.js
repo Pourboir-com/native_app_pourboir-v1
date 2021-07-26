@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Colors } from '../../constants/Theme';
 import { Entypo } from '@expo/vector-icons';
@@ -7,45 +7,57 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 var getCountry = require('country-currency-map').getCountry;
 var formatCurrency = require('country-currency-map').formatCurrency;
 import i18n from '../../li8n';
-import { Platform } from 'react-native';
-import { Linking } from 'react-native';
+import { getAsyncStorageValues } from '../../constants';
+import { upperTitleCase } from '../../util';
+import Context from '../../contextApi/context';
+import * as actionTypes from '../../contextApi/actionTypes';
 
 const NoLocation = ({ navigation }) => {
-  const excessLocation = async () => {
-    let locationStats = await Location.requestForegroundPermissionsAsync();
-    if (locationStats.status !== 'granted') {
-      if (Platform.OS === 'ios') {
-        Linking.openURL('app-settings:');
-      }
-      return;
-    }
-    const location = await Location.getCurrentPositionAsync({
-      accuracy: Location.Accuracy.Highest,
-    });
-    await AsyncStorage.setItem(
-      '@location',
-      JSON.stringify({
-        lat: location?.coords.latitude,
-        log: location?.coords.longitude,
-      }),
-    );
-    Location.getCurrentPositionAsync().then(pos => {
-      Location.reverseGeocodeAsync({
-        latitude: pos.coords.latitude,
-        longitude: pos.coords.longitude,
-      }).then(async res => {
-        let currency = getCountry(res[0]?.country);
-        let formattedCurrency = formatCurrency('', currency?.currency);
-        await AsyncStorage.setItem(
-          '@Currency',
-          JSON.stringify({
-            currency: formattedCurrency || '',
-          }),
-        );
+  const { dispatch } = useContext(Context);
+  const InitializeStates = async () => {
+    const { userInfo = {} } = await getAsyncStorageValues();
+    if (userInfo?.user_id) {
+      let userDetails = {
+        name: upperTitleCase(userInfo?.name),
+        image: userInfo?.image,
+        email: userInfo?.email,
+        accessToken: userInfo?.accessToken,
+        user_id: userInfo?.user_id,
+        phone_number: userInfo.phone_number || '',
+        username: userInfo?.username || '',
+        description: userInfo?.description || '',
+        last_name: userInfo?.last_name || '',
+      };
+      dispatch({
+        type: actionTypes.USER_DETAILS,
+        payload: userDetails,
       });
-    });
+    }
+  };
 
-    navigation.replace('NoTracking');
+  const excessLocation = async () => {
+    Location.getCurrentPositionAsync()
+      .then(pos => {
+        Location.reverseGeocodeAsync({
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude,
+        }).then(async res => {
+          let currency = getCountry(res[0]?.country);
+          let formattedCurrency = formatCurrency('', currency?.currency);
+          await AsyncStorage.setItem(
+            '@Currency',
+            JSON.stringify({
+              currency: formattedCurrency || '',
+            }),
+          );
+        });
+        InitializeStates();
+        navigation.replace('Notification');
+      })
+      .catch(() => {
+        InitializeStates();
+        navigation.replace('Notification');
+      });
   };
 
   return (
@@ -100,7 +112,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 15,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   txtColor: {
     color: Colors.fontLight,

@@ -241,4 +241,5 @@ export default {
   add_fav: 'Add to favorites',
   fav: 'Favorites',
   added: 'Added',
+  notification: 'Activate notifications to receive notifications from your favorite restaurants.',
 };

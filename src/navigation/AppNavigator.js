@@ -25,6 +25,7 @@ import ManagerStaff from '../screens/manager-staff';
 import ManagerSignUp from '../screens/manager-signup';
 import ServerProfile from '../screens/server-profile';
 import NoAppTracking from '../screens/no-app-tracking';
+import NotificationPermission from '../screens/notification-permission';
 import ForgetPassword from '../screens/forget-password';
 import ProfessionalArea from '../screens/professional-area';
 
@@ -117,6 +118,19 @@ function AppNavigator() {
       <Stack.Screen
         name="NoLocation"
         component={NoLocation}
+        options={() => ({
+          headerShown: true,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
+        })}
+      />
+      <Stack.Screen
+        name="Notification"
+        component={NotificationPermission}
         options={() => ({
           headerShown: true,
           title: '',

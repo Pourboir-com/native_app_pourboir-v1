@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useEffect, useState } from 'react';
+import React, { useContext, useReducer, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import RootNavigator from './src/navigation/AppNavigator';
 import Context from './src/contextApi/context';
@@ -9,11 +9,11 @@ import moment from 'moment';
 import 'moment/locale/fr';
 // import 'moment/locale/en';
 import * as Localization from 'expo-localization';
-import AppLoading from 'expo-app-loading';
+// import AppLoading from 'expo-app-loading';
 import { loadAsync } from 'expo-font';
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   const initialState = useContext(Context);
   const [state, dispatch] = useReducer(Reducer, initialState);
@@ -33,16 +33,16 @@ export default function App() {
           });
         }
         loadFont();
-        setLoading(false);
+        // setLoading(false);
       })();
     } catch {
       alert('App.js Error');
     }
   }, []);
 
-  if (loading) {
-    return <AppLoading />;
-  }
+  // if (loading) {
+  //   return <AppLoading />;
+  // }
 
   return (
     <Context.Provider value={{ state, dispatch }}>

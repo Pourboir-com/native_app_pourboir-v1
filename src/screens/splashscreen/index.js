@@ -123,7 +123,7 @@ export default function SplashScreen(props) {
       InitializeStates();
       setCurrency();
     } else {
-      props.navigation.replace('NoLocation', { InitializeStates });
+      props.navigation.replace('NoLocation');
       return;
     }
   };

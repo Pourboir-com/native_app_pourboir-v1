@@ -7,13 +7,10 @@ import axios from 'axios';
 import { getAsyncStorageValues } from './src/constants';
 import moment from 'moment';
 import 'moment/locale/fr';
-// import 'moment/locale/en';
 import * as Localization from 'expo-localization';
-// import AppLoading from 'expo-app-loading';
 import { loadAsync } from 'expo-font';
 
 export default function App() {
-  // const [loading, setLoading] = useState(true);
 
   const initialState = useContext(Context);
   const [state, dispatch] = useReducer(Reducer, initialState);
@@ -33,16 +30,11 @@ export default function App() {
           });
         }
         loadFont();
-        // setLoading(false);
       })();
     } catch {
       alert('App.js Error');
     }
   }, []);
-
-  // if (loading) {
-  //   return <AppLoading />;
-  // }
 
   return (
     <Context.Provider value={{ state, dispatch }}>

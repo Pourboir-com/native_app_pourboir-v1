@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Colors } from '../../constants/Theme';
 import { Entypo } from '@expo/vector-icons';
@@ -36,6 +36,11 @@ const NoLocation = ({ navigation }) => {
   };
 
   const excessLocation = async () => {
+    let values = await Location.requestForegroundPermissionsAsync();
+    if (values === 'granted') {
+      InitializeStates();
+      navigation.replace('Notification');
+    }
     Location.getCurrentPositionAsync()
       .then(pos => {
         Location.reverseGeocodeAsync({

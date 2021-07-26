@@ -26,10 +26,10 @@ import { useMutation } from 'react-query';
 import i18n from '../../li8n';
 import CommonButton from '../../components/common-button';
 
-const PersonalDetails = ({ navigation }) => {
+const PersonalDetails = ({ navigation, route }) => {
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : -450;
   const { state, dispatch } = useContext(Context);
-
+  const { login } = route?.params;
   //States
   const [FirstName, setFirstName] = useState(state?.userDetails?.name || '');
   const [LastName, setLastName] = useState(state?.userDetails?.last_name || '');
@@ -112,7 +112,7 @@ const PersonalDetails = ({ navigation }) => {
       );
       setLoading(false);
       alert('Your profile has been updated.');
-      navigation.replace('Setting', { login: true });
+      navigation.navigate('Setting', { login });
     }
   };
 
@@ -134,8 +134,8 @@ const PersonalDetails = ({ navigation }) => {
             headingText={i18n.t('your_personal_details')}
             fontSize={17}
             color={'black'}
+            login={login}
             navigation={navigation}
-            setting
             backgroundColor={'transparent'}
             borderRadius={true}
           />

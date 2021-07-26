@@ -74,16 +74,14 @@ export default function SplashScreen(props) {
         type: actionTypes.USER_DETAILS,
         payload: userDetails,
       });
-
-      if (userInfo?.user_id) {
-        props.navigation.replace('Home', { crossIcon: false, ad: true });
-      } else if (!userInfo?.user_id) {
-        props.navigation.replace('socialLogin');
-      }
+      props.navigation.replace('Home', { crossIcon: false, ad: true });
+    } else {
+      props.navigation.replace('socialLogin');
     }
   };
 
-  const setCurrency = () => {
+  const setCurrency = async () => {
+    let values = await Location.requestForegroundPermissionsAsync();
     Location.getCurrentPositionAsync().then(pos => {
       Location.reverseGeocodeAsync({
         latitude: pos.coords.latitude,
@@ -120,8 +118,8 @@ export default function SplashScreen(props) {
   const locationFunction = async () => {
     const isLocation = await Location.hasServicesEnabledAsync();
     if (isLocation) {
-      InitializeStates();
       setCurrency();
+      InitializeStates();
     } else {
       props.navigation.replace('NoLocation');
       return;

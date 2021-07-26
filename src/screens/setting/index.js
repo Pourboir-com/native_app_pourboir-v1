@@ -13,7 +13,7 @@ import {
 import { FontAwesome } from '@expo/vector-icons';
 import GlobalHeader from '../../components/GlobalHeader';
 import { Colors } from '../../constants/Theme';
-import * as ImagePicker from 'expo-image-picker';
+// import * as ImagePicker from 'expo-image-picker';
 import { getAsyncStorageValues } from '../../constants';
 import * as Google from 'expo-google-app-auth';
 import { config } from '../../constants';
@@ -22,14 +22,14 @@ import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Facebook from 'expo-facebook';
-import { UPDATE_PICTURE } from '../../queries';
-import { useMutation } from 'react-query';
+// import { UPDATE_PICTURE } from '../../queries';
+// import { useMutation } from 'react-query';
 import { Platform } from 'react-native';
 // import * as StoreReview from 'expo-store-review';
 import { email_to } from '../../constants/env';
 import Constants from 'expo-constants';
 import { upperTitleCase, userGivenName } from '../../util';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+// import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Spinner from 'react-native-loading-spinner-overlay';
 const imgBg = require('../../assets/images/Group5.png');
 import { StatusBar } from 'expo-status-bar';
@@ -37,8 +37,8 @@ import { StatusBar } from 'expo-status-bar';
 const Setting = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const { state, dispatch } = useContext(Context);
-  const [image, setImage] = useState();
-  const [updatePicture] = useMutation(UPDATE_PICTURE);
+  // const [image, setImage] = useState();
+  // const [updatePicture] = useMutation(UPDATE_PICTURE);
 
   const resetState = async () => {
     navigation.replace('socialLogin');
@@ -47,7 +47,7 @@ const Setting = ({ navigation, route }) => {
       payload: {},
     });
     await AsyncStorage.setItem('@userInfo', JSON.stringify({}));
-    await AsyncStorage.setItem('@profileInfo', JSON.stringify({info: false}));
+    await AsyncStorage.setItem('@profileInfo', JSON.stringify({ info: false }));
     setLoading(false);
   };
 
@@ -73,50 +73,50 @@ const Setting = ({ navigation, route }) => {
     }
   };
 
-  const handleChangePicture = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 1,
-    });
-    if (!result.cancelled) {
-      setImage(result.uri);
+  // const handleChangePicture = async () => {
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [4, 4],
+  //     quality: 1,
+  //   });
+  //   if (!result.cancelled) {
+  //     setImage(result.uri);
 
-      const { userInfo } = await getAsyncStorageValues();
-      dispatch({
-        type: actionTypes.USER_DETAILS,
-        payload: {
-          ...state.userDetails,
-          image: result.uri,
-        },
-      });
+  //     const { userInfo } = await getAsyncStorageValues();
+  //     dispatch({
+  //       type: actionTypes.USER_DETAILS,
+  //       payload: {
+  //         ...state.userDetails,
+  //         image: result.uri,
+  //       },
+  //     });
 
-      await AsyncStorage.setItem(
-        '@userInfo',
-        JSON.stringify({
-          ...userInfo,
-          image: result.uri,
-        }),
-      );
+  //     await AsyncStorage.setItem(
+  //       '@userInfo',
+  //       JSON.stringify({
+  //         ...userInfo,
+  //         image: result.uri,
+  //       }),
+  //     );
 
-      let formData = new FormData();
-      formData.append('image', {
-        uri: result.uri,
-        type: `image/${result.uri.split('.')[1]}`,
-        name: result.uri.substr(result.uri.lastIndexOf('/') + 1),
-      });
+  //     let formData = new FormData();
+  //     formData.append('image', {
+  //       uri: result.uri,
+  //       type: `image/${result.uri.split('.')[1]}`,
+  //       name: result.uri.substr(result.uri.lastIndexOf('/') + 1),
+  //     });
 
-      let UploadData = {
-        user_id: state.userDetails.user_id,
-        image: formData,
-      };
+  //     let UploadData = {
+  //       user_id: state.userDetails.user_id,
+  //       image: formData,
+  //     };
 
-      await updatePicture(UploadData, {
-        onSuccess: res => {},
-      });
-    }
-  };
+  //     await updatePicture(UploadData, {
+  //       onSuccess: res => {},
+  //     });
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
@@ -144,7 +144,7 @@ const Setting = ({ navigation, route }) => {
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
-              navigation.navigate('personalDetails');
+              navigation.navigate('personalDetails', { login: false });
             }}
             style={styles.viewImg}
           >
@@ -167,7 +167,7 @@ const Setting = ({ navigation, route }) => {
                   height: '100%',
                   borderRadius: 60,
                 }}
-                source={{ uri: image ? image : state?.userDetails?.image }}
+                source={{ uri: state?.userDetails?.image }}
                 resizeMode="cover"
               />
             )}

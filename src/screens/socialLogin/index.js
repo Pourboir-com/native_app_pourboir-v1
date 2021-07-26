@@ -187,7 +187,7 @@ const SocialLogin = ({ navigation, route }) => {
           );
 
           if (!res?.user?.username) {
-            navigation.replace('personalDetails');
+            navigation.replace('personalDetails', { login: true });
           } else if (vote) {
             navigation.replace('RateYourService');
             setVote(false);
@@ -278,7 +278,7 @@ const SocialLogin = ({ navigation, route }) => {
                 );
 
                 if (!res?.user?.username) {
-                  navigation.replace('personalDetails');
+                  navigation.replace('personalDetails', { login: true });
                 } else if (vote) {
                   navigation.replace('RateYourService');
                   setVote(false);
@@ -445,7 +445,7 @@ const SocialLogin = ({ navigation, route }) => {
                             }),
                           );
                           if (!res?.user?.username) {
-                            navigation.replace('personalDetails');
+                            navigation.replace('personalDetails', { login: true });
                           } else if (vote) {
                             navigation.replace('RateYourService');
                             setVote(false);

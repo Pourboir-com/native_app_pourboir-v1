@@ -37,10 +37,6 @@ const NoLocation = ({ navigation }) => {
 
   const excessLocation = async () => {
     let values = await Location.requestForegroundPermissionsAsync();
-    if (values === 'granted') {
-      InitializeStates();
-      navigation.replace('Notification');
-    }
     Location.getCurrentPositionAsync()
       .then(pos => {
         Location.reverseGeocodeAsync({

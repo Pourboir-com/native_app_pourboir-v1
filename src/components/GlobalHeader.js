@@ -15,13 +15,15 @@ import { Body, Right } from 'native-base';
 import { Colors } from '../constants/Theme';
 import { MaterialIcons, FontAwesome, Fontisto } from '@expo/vector-icons';
 import Context from '../contextApi/context';
-import * as actionTypes from '../contextApi/actionTypes';
 
 const GlobalHeader = props => {
-  const { state, dispatch } = useContext(Context);
+  const { state } = useContext(Context);
+  console.log(props.login)
 
   const goBackHandler = props => {
-    if (props.setting) {
+    if (props.login) {
+      props.navigation.navigate('Setting', { login: props.login });
+    } else if (props.setting) {
       props.navigation.navigate('Setting');
     } else if (props.Home == 'true' && !state?.restaurantsDetails?.length) {
       props.navigation.replace('Home', { crossIcon: false });
@@ -44,7 +46,9 @@ const GlobalHeader = props => {
 
   React.useEffect(() => {
     const handleBackButtonClick = () => {
-      if (props.setting) {
+      if (props.login) {
+        props.navigation.navigate('Setting', { login: props.login });
+      } else if (props.setting) {
         props.navigation.navigate('Setting');
         return true;
       } else if (props.Home == 'true' && !state?.restaurantsDetails?.length) {

@@ -448,7 +448,9 @@ const ReviewDetails = ({ navigation, route }) => {
               {i18n.t('fav_list')}
             </Text>
 
-            <View style={{ alignItems: 'center', marginVertical: 15 }}>
+            <View
+              style={{ alignItems: 'center', marginTop: 15, marginBottom: 30 }}
+            >
               {favoritesLoading || isFavoriteLoading ? (
                 <View style={{ width: '90%', alignSelf: 'center' }}>
                   <ReviewsSkeleton />
@@ -462,14 +464,24 @@ const ReviewDetails = ({ navigation, route }) => {
                   showsVerticalScrollIndicator={false}
                   keyExtractor={item => item._id}
                   renderItem={itemData => (
-                    <StarCard
-                      itemData={itemData}
-                      state={state}
-                      navigation={navigation}
-                      place_id={place_id}
-                      restaurant_id={restaurant_id}
-                      navigationDisable={true}
-                    />
+                    <>
+                      <StarCard
+                        itemData={itemData}
+                        state={state}
+                        navigation={navigation}
+                        place_id={place_id}
+                        restaurant_id={restaurant_id}
+                        navigationDisable={true}
+                      />
+                      <StarCard
+                        itemData={itemData}
+                        state={state}
+                        navigation={navigation}
+                        place_id={place_id}
+                        restaurant_id={restaurant_id}
+                        navigationDisable={true}
+                      />
+                    </>
                   )}
                 />
               )}

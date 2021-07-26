@@ -135,7 +135,7 @@ const PersonalDetails = ({ navigation }) => {
             fontSize={17}
             color={'black'}
             navigation={navigation}
-            setting={false}
+            setting
             backgroundColor={'transparent'}
             borderRadius={true}
           />

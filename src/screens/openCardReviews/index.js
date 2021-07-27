@@ -464,24 +464,14 @@ const ReviewDetails = ({ navigation, route }) => {
                   showsVerticalScrollIndicator={false}
                   keyExtractor={item => item._id}
                   renderItem={itemData => (
-                    <>
-                      <StarCard
-                        itemData={itemData}
-                        state={state}
-                        navigation={navigation}
-                        place_id={place_id}
-                        restaurant_id={restaurant_id}
-                        navigationDisable={true}
-                      />
-                      <StarCard
-                        itemData={itemData}
-                        state={state}
-                        navigation={navigation}
-                        place_id={place_id}
-                        restaurant_id={restaurant_id}
-                        navigationDisable={true}
-                      />
-                    </>
+                    <StarCard
+                      itemData={itemData}
+                      state={state}
+                      navigation={navigation}
+                      place_id={place_id}
+                      restaurant_id={restaurant_id}
+                      navigationDisable={true}
+                    />
                   )}
                 />
               )}

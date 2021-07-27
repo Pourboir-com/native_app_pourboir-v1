@@ -18,7 +18,6 @@ import Context from '../contextApi/context';
 
 const GlobalHeader = props => {
   const { state } = useContext(Context);
-  console.log(props.login)
 
   const goBackHandler = props => {
     if (props.login) {
@@ -27,6 +26,8 @@ const GlobalHeader = props => {
       props.navigation.navigate('Setting');
     } else if (props.Home == 'true' && !state?.restaurantsDetails?.length) {
       props.navigation.replace('Home', { crossIcon: false });
+    } else if (props.Home == 'true' && state?.restaurantsDetails?.length) {
+      props.navigation.navigate('Home', { crossIcon: false });
     } else {
       props.navigation.goBack(null);
     }
@@ -48,6 +49,7 @@ const GlobalHeader = props => {
     const handleBackButtonClick = () => {
       if (props.login) {
         props.navigation.navigate('Setting', { login: props.login });
+        return true;
       } else if (props.setting) {
         props.navigation.navigate('Setting');
         return true;

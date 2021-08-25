@@ -19,17 +19,29 @@ import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr }) => {
   const [category, setCategory] = useState('');
-  // const validation = category  !== ''
+  const [menu_id, setMenuId] = useState(new Date().valueOf())
+  console.log(category)
   const AddCateg = async () => {
+    // setCategArr([...categArr, { category: "", menu_id: "" }])
     try {
-     await setCategArr([...categArr, category])
+     await setCategArr([...categArr, {
+       category: category,
+       menu_id: menu_id,
+     }])
       setCategory('')
+      setMenuId()
       setCategModal(false)
     console.log(categArr)
     } catch (error) {
       console.log(error)
     }
   }
+  // let handleChange = (i, e) => {
+  //   let newFormValues = [...categArr];
+  //   newFormValues[i][e.target.name] = e.target.value;
+  //   setCategArr(newFormValues);
+  //   console.log(categArr)
+  // }
   return (
     <Overlay
       overlayStyle={styles.container}
@@ -78,8 +90,7 @@ const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr }) 
         style={{ marginTop: 50 }}
       >
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-          {/* {i18n.t('add_exp')} */}
-          New Category
+        {i18n.t('new_categ')}
         </Text>
         <Text
           style={{
@@ -90,8 +101,7 @@ const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr }) 
             paddingTop: 10,
           }}
         >
-          {/* {i18n.t('add_exp')} */}
-          Choose a category, for example : Main course
+          {i18n.t('choose_categ')}
         </Text>
 
         <View
@@ -107,9 +117,9 @@ const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr }) 
           <View style={(styles.input_box, { alignItems: 'center' })}>
             <TextInput
               style={styles.inputsTopTow}
-              onChangeText={e => setCategory(e)}
+              onChangeText={(e) => setCategory(e)}
               value={category}
-              placeholder={'Category'}
+              placeholder={i18n.t('category')}
               placeholderTextColor={'#707375'}
             />
           </View>
@@ -118,7 +128,7 @@ const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr }) 
         <TouchableOpacity
           activeOpacity={0.5}
             onPress={AddCateg}
-            disabled={!category ? true : false}
+            disabled={category === ' ' ? true : false}
             style={[
               styles.btn_yellow,
               category && {
@@ -135,8 +145,8 @@ const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr }) 
               color: Colors.fontDark,
             }}
           >
-            {/* {i18n.t('add')} */}
-            Confirm
+            {i18n.t('confirm')}
+            {/* Confirm */}
           </Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>

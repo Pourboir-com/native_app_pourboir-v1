@@ -14,14 +14,14 @@ const Team = () => {
         <View style={{marginTop:30,}}>
            <View style={styles.team_common_sec}>
                <View>
-                   <Text style={styles.mainHeading}>Waiters</Text>
+                   <Text style={styles.mainHeading}>{i18n.t('waiters')}</Text>
                </View>
                <View style={styles.numberBox}>
                    <Text style={styles.numberTxt}>2</Text>
                </View>
            </View>
            <View>
-               <Text style={styles.numberTxt, {...styles.numberTxt,fontSize:15, marginTop:20}}>Sorry, there is no waiters at the moment. </Text>
+               <Text style={styles.numberTxt, {...styles.numberTxt,fontSize:15, marginTop:20}}>{i18n.t('no_waiter')} </Text>
            </View>
            <View style={{marginTop:20}}>
               <CommonCard />
@@ -39,14 +39,14 @@ const Team = () => {
         <View style={{marginTop:30}}>
         <View style={styles.team_common_sec}>
             <View>
-                <Text style={styles.mainHeading}>Cooks</Text>
+                <Text style={styles.mainHeading}>{i18n.t('cook')}</Text>
             </View>
             <View style={styles.numberBox}>
                 <Text style={styles.numberTxt}>3</Text>
             </View>
         </View>
         <View>
-            <Text style={styles.numberTxt, {...styles.numberTxt,fontSize:15, marginTop:20}}>Sorry, there is no waiters at the moment. </Text>
+            <Text style={styles.numberTxt, {...styles.numberTxt,fontSize:15, marginTop:20}}>{i18n.t('no_cook')} </Text>
         </View>
         <View style={{marginTop:20}}>
               <CommonCard />
@@ -55,7 +55,7 @@ const Team = () => {
           </View>
         <View style={{marginHorizontal:18, marginTop:20, justifyContent:'center', alignItems:'center'}}>
             <AddBtn 
-            title={'Add your Cooks'}
+            title={i18n.t('add_cooks')}
             onPress={() => alert('clicked cook')}
             />
         </View>

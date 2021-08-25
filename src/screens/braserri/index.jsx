@@ -12,6 +12,9 @@ import styles from './styles'
 const Braserri = ({navigation}) => {
     const [currentTab, setCurrentTab] = useState('team')
     console.log(currentTab)
+    const [dishName, setDishName] = useState('');
+    const [price, setPrice] = useState('');
+    const [description, setDescription] = useState('');
     return (
         <View style={{flex:1 , backgroundColor:'#f9f9f9'}}>
             <ImageBackground
@@ -51,20 +54,27 @@ const Braserri = ({navigation}) => {
                   source={require('../../assets/images/team.png')}
                   style={{width:18, height:18, resizeMode:'contain',}}
                   />
-                <Text style={styles.tabTxt}>The Team</Text>
+                <Text style={styles.tabTxt}>{i18n.t('the_team')}</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => setCurrentTab('menu')} style={styles.tabBtn, currentTab != 'menu' ? {...styles.tabBtn, backgroundColor:'#fff'} : styles.tabBtn} activeOpacity={0.6}>
                   <Image 
                   source={require('../../assets/images/menu.png')}
                   style={{width:18, height:18, resizeMode:'contain',}}
                   />
-                <Text style={styles.tabTxt}>The Menu</Text>
+                <Text style={styles.tabTxt}>{i18n.t('the_menu')}</Text>
               </TouchableOpacity>
             </View>
             <View style={{marginBottom:20, flex:2,}} >
                 {
                     currentTab === 'menu' ? (
-                        <Menu currentTab={currentTab} />
+                        <Menu currentTab={currentTab} 
+                        dishName={dishName}
+                        setDishName={setDishName}
+                        description={description}
+                        setDescription={setDescription}
+                        price={price}
+                        setPrice={setPrice}
+                        />
                     ) : (
                         <Team />
                     )

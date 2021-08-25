@@ -72,7 +72,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         fontFamily: 'ProximaNova',
         fontSize: 16,
-        textAlign: 'center',
+        // textAlign: 'center',
+        paddingLeft:15
       },
       inputLabel: {
         color: 'black',

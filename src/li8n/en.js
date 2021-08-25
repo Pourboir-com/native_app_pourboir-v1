@@ -221,4 +221,22 @@ export default {
   allow_app_tracking: 'Authorise to track my activity',
   reinitialiser: 'Request new password',
   clear_all: 'Clear all',
+  
+  the_team:'The Team',
+  the_menu: 'The Menu',
+  waiters:'Waiters',
+  no_waiter:'Sorry, there is no waiters at the moment.',
+  cook:' Cooks',
+  no_cook:'Sorry, there is no waiters at the moment.',
+  add_cooks:'Add your Cooks',
+  add_categ:'Add Category',
+  dish_name:'Name of the dish',
+  price:'Prce',
+  add_dish:'Add dish',
+  publish_menu:'Publish your menu',
+  confirm:'Confirm',
+  new_categ:'New Category',
+  choose_categ:'Choose a category, for example: Main course',
+  category:'Category'
+
 };

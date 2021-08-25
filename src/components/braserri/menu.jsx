@@ -5,27 +5,49 @@ import styles from '../../screens/braserri/styles'
 import AddBtn from '../add-common-btn'
 import CommonButton from '../common-button'
 import AddCategoryModal from '../modals/AddCategoryModal'
+import DeleteDishModal from '../modals/DeleteDishModal'
 import Categories from './categories'
 
-const Menu = ({currentTab}) => {
-    const [categModal, setCategModal] = useState(false)
-    const [categArr, setCategArr] = useState([])
 
+// {
+//     category: "Starter",
+//     menu_id: Math.floor(Math.random() * 100),
+//     dishes:[{name: 'Starter', description: 'Description of dish', price: '230'}]
+// }
+
+const Menu = ({currentTab, dishName, setDishName, price, setPrice, description, setDescription}) => {
+    const [categModal, setCategModal] = useState(false)
+    const [deleteDishModal, setDeleteDishModal] = useState(false)
+    console.log(deleteDishModal, " ss")
+    const [categArr, setCategArr] = useState([{category: ' ', menu_id: '', dishes:[]}])
+    console.log(categArr)
     return (
         <>
         <View style={{marginHorizontal:0, marginTop:20, }}>
             <View>
                {
-                   categArr.map((v,i) => {
+                  categArr.map((v,i) => {
                        return (
-                        <Categories key={i} category={v} categArr={categArr} />
+                        <Categories key={i} category={v} categArr={categArr} 
+                        setCategArr={setCategArr}
+                        description={description}  
+                        setDescription={setDescription}
+                        dishName={dishName}
+                        setDishName={setDishName}
+                        setPrice={setPrice}
+                        price={price}
+                        category={v.category}
+                        menu_id={v.menu_id}
+                        deleteDishModal={deleteDishModal}
+                        setDeleteDishModal={setDeleteDishModal}
+                        />
                        )
-                   })
+                   }) 
                }
             </View>
              <View style={{ marginTop:24, justifyContent:'center', alignItems:'center', marginHorizontal:18}}>
                <AddBtn 
-               title={'Add Category'}
+               title={i18n.t('add_categ')}
                onPress={() => setCategModal(true)}
                />
            </View>
@@ -35,11 +57,14 @@ const Menu = ({currentTab}) => {
             categArr={categArr}
             setCategArr={setCategArr}
            />
-          
+          <DeleteDishModal 
+          deleteDishModal={deleteDishModal}
+          setDeleteDishModal={setDeleteDishModal}
+          />
         </View>
         {
           currentTab == 'menu' && categArr.length ? (
-            <View style={{marginTop:90, width:'100%', justifyContent:'center', alignItems:'center'}}>
+            <View style={{marginTop:150, width:'100%', justifyContent:'center', alignItems:'center'}}>
          <CommonButton title="Publish your menu" />
      </View>
           ) : null

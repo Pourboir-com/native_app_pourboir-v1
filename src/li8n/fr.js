@@ -225,4 +225,21 @@ export default {
   allow_app_tracking: 'Activer le suivi d’activité',
   reinitialiser: 'Réinitialiser',
   clear_all: 'Tout effacer',
+
+  the_team:'L’équipe',
+  the_menu: 'Le menu',
+  waiters:'La salle',
+  no_waiter:'Désolé, aucun serveur inscrit à ce jour',
+  cook:' La cuisine',
+  no_cook:'Désolé, aucun cuisinier inscrit à ce jour',
+  add_cooks:'Ajoutez vos cuisinier',
+  add_categ:'Ajoutez une catégorie',
+  dish_name:'Nom du plat',
+  price:'Prix',
+  add_dish:'Ajoutez un plat',
+  publish_menu:'Publier votre menu',
+  new_categ:'Nouvelle catégorie',
+  choose_categ:'Choissisez une catégorie, par example : entrées',
+  confirm:'Valider',
+  category:'Catégorie'
 };

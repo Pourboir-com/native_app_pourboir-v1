@@ -17,21 +17,32 @@ const imgWaiter = require('../../assets/images/Choose-rafiki.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr }) => {
+import uuid from 'react-native-uuid';
+
+
+const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr, dishState, setDishState }) => {
   const [category, setCategory] = useState('');
   const [menu_id, setMenuId] = useState(new Date().valueOf())
-  console.log(category)
+  // console.log(category)
+
   const AddCateg = async () => {
     // setCategArr([...categArr, { category: "", menu_id: "" }])
     try {
      await setCategArr([...categArr, {
        category: category,
-       menu_id: menu_id,
+       menu_id: uuid.v4(),
+       dishes:[]
      }])
       setCategory('')
       setMenuId()
       setCategModal(false)
     console.log(categArr)
+    // await setDishState([...dishState, {
+    //   dishName: '',
+    //   price: '',
+    //   description: '',
+    // }])
+    // console.log(dishState)
     } catch (error) {
       console.log(error)
     }

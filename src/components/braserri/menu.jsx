@@ -28,6 +28,9 @@ const Menu = ({
   console.log(deleteDishModal, ' ss');
   const [categArr, setCategArr] = useState([]);
   const [dishState, setDishState] = useState([]);
+  const [dishId, setDishId] = useState()
+  const [dishes, setDishes] = useState()
+  console.log(dishes, " dishes")
   return (
     <>
       <View style={{ marginHorizontal: 0, marginTop: 20 }}>
@@ -52,6 +55,10 @@ const Menu = ({
                 setDeleteDishModal={setDeleteDishModal}
                 dishState={dishState}
                 setDishState={setDishState}
+                dishId={dishId}
+                setDishId={setDishId}
+                dishess={dishes}
+                setDishess={setDishes}
               />
             );
           })}
@@ -78,6 +85,10 @@ const Menu = ({
         <DeleteDishModal
           deleteDishModal={deleteDishModal}
           setDeleteDishModal={setDeleteDishModal}
+          dishId={dishId}
+          setDishId={setDishId}
+          dishes={dishes}
+          setDishes={setDishes}
         />
       </View>
       {currentTab == 'menu' && categArr.length ? (

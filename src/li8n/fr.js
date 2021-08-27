@@ -241,5 +241,9 @@ export default {
   new_categ:'Nouvelle catégorie',
   choose_categ:'Choissisez une catégorie, par example : entrées',
   confirm:'Valider',
-  category:'Catégorie'
+  category:'Catégorie',
+  are_u_sure: 'Êtes vous certain ?',
+  delete_dish:'Vous étes sur le point de supprimer ce plat/catégorie',
+  no:'Non',
+  yes:'Oui'
 };

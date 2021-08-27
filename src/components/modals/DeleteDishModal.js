@@ -15,17 +15,17 @@ const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import NumberFormat from 'react-number-format';
 
-const DeleteDishModal = ({ deleteDishModal ,setDeleteDishModal }) => {
-  function pad(n, width, z) {
-    z = z || '0';
-    n = n + '';
-    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-  }
-  console.log(deleteDishModal)
+const DeleteDishModal = ({ deleteDishModal ,setDeleteDishModal, dishId, setDishId, dishes, setDishes }) => {
+
   const handleClose = () => {
       setDeleteDishModal(false)
   }
-  console.log(deleteDishModal, " modal")
+  // console.log(dishId, " dishId")
+  const deleteDish =  (id) => {
+     setDishes(dishes.filter((item) => {
+      return item.id !== id
+    }))
+  }
   return (
     <Overlay
       overlayStyle={styles.container}
@@ -66,20 +66,20 @@ const DeleteDishModal = ({ deleteDishModal ,setDeleteDishModal }) => {
                 
             <View>
             <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-        {/* {i18n.t('thanks_for_vote')} */}
-        Are you sure?
+        {i18n.t('are_u_sure')}
       </Text>
       <Text style={[styles.txtName, { fontFamily: 'ProximaNova' }]}>
         {/* {i18n.t('will_contact_by_email')} */}
-        You are about to delete this dish/category. 
+        {i18n.t('delete_dish')}
+
       </Text>
             </View>
             <View style={{marginVertical:20, flexDirection:'row', justifyContent:'space-between'}}>
-                <TouchableOpacity style={styles.btns}>
-                    <Text style={{fontFamily:'ProximaNova'}}>No</Text>
+                <TouchableOpacity onPress={handleClose} style={styles.btns}>
+                    <Text style={{fontFamily:'ProximaNova'}}>{i18n.t('no')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btns,  {...styles.btns, backgroundColor:'#FCDF6F'}}>
-                    <Text style={{fontFamily:'ProximaNova'}}>Yes</Text>
+                <TouchableOpacity onPress={() => deleteDish(dishId)} style={styles.btns,  {...styles.btns, backgroundColor:'#FCDF6F'}}>
+                    <Text style={{fontFamily:'ProximaNova'}}>{i18n.t('yes')}</Text>
                 </TouchableOpacity>
             </View>
             </View>

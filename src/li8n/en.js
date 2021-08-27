@@ -231,12 +231,16 @@ export default {
   add_cooks:'Add your Cooks',
   add_categ:'Add Category',
   dish_name:'Name of the dish',
-  price:'Prce',
+  price:'Price',
   add_dish:'Add dish',
   publish_menu:'Publish your menu',
   confirm:'Confirm',
   new_categ:'New Category',
   choose_categ:'Choose a category, for example: Main course',
-  category:'Category'
+  category:'Category',
+  are_u_sure: 'Are you sure ?',
+  delete_dish:'You are about to delete this dish/category. ',
+  no:'No',
+  yes:'Yes'
 
 };

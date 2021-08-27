@@ -11,7 +11,7 @@ import styles from './styles'
 
 const Braserri = ({navigation}) => {
     const [currentTab, setCurrentTab] = useState('team')
-    console.log(currentTab)
+    // console.log(currentTab)
     const [dishName, setDishName] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');

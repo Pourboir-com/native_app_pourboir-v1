@@ -8,7 +8,7 @@ import AddCategoryModal from '../modals/AddCategoryModal';
 import DeleteDishModal from '../modals/DeleteDishModal';
 import Categories from './categories';
 import { useQuery, useMutation } from 'react-query';
-import { handleDeleteItem } from './util';
+import { handleMutation } from './util';
 import {
   PUBLISH_MENU,
   DELETE_DISH,
@@ -57,11 +57,23 @@ const Menu = ({
       alert(e?.response?.data?.message);
     },
   });
-  console.log(menus);
+  console.log(categArr);
   console.log(state.userDetails.user_id);
 
   const submitCategory = () => {
-    console.log(categArr);
+    // handleMutation(
+    //   publishMenu,
+    //   [
+    //     {
+    //       category: '',
+    //       menu_id: '',
+    //       dishes: [{}],
+    //       user_id: state.userDetails.user_id,
+    //       place_id: '',
+    //     },
+    //   ],
+    //   {},
+    // );
     setCategArr([]);
   };
 

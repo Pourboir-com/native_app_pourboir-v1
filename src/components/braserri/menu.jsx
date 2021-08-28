@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Dimensions, Text, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import i18n from '../../li8n';
-import styles from '../../screens/braserri/styles';
 import AddBtn from '../add-common-btn';
 import CommonButton from '../common-button';
 import AddCategoryModal from '../modals/AddCategoryModal';
 import DeleteDishModal from '../modals/DeleteDishModal';
 import Categories from './categories';
-
-// {
-//     category: "Starter",
-//     menu_id: Math.floor(Math.random() * 100),
-//     dishes:[{name: 'Starter', description: 'Description of dish', price: '230'}]
-// }
 
 const Menu = ({
   currentTab,
@@ -25,43 +19,56 @@ const Menu = ({
 }) => {
   const [categModal, setCategModal] = useState(false);
   const [deleteDishModal, setDeleteDishModal] = useState(false);
-  console.log(deleteDishModal, ' ss');
   const [categArr, setCategArr] = useState([]);
   const [dishState, setDishState] = useState([]);
   const [dishId, setDishId] = useState();
-  const [dishes, setDishes] = useState();
-  console.log(dishes, ' dishes');
+  const [dishes, setDishes] = useState([]);
+  let ScreenHeight = Dimensions.get('window').height / 1.5;
+
+  const submitCategory = () => {
+    console.log(categArr);
+    setCategArr([]);
+  };
+
   return (
     <>
-      <View style={{ marginHorizontal: 0, marginTop: 20 }}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{
+          marginHorizontal: 0,
+          marginTop: 20,
+          marginBottom: 60,
+          height: ScreenHeight,
+        }}
+      >
         <View>
-          {categArr.map((v, i) => {
-            return (
-              <Categories
-                key={i}
-                category={v}
-                categArr={categArr}
-                setCategArr={setCategArr}
-                description={description}
-                setDescription={setDescription}
-                dishName={dishName}
-                setDishName={setDishName}
-                setPrice={setPrice}
-                price={price}
-                category={v.category}
-                dishes={v.dishes}
-                menu_id={v.menu_id}
-                deleteDishModal={deleteDishModal}
-                setDeleteDishModal={setDeleteDishModal}
-                dishState={dishState}
-                setDishState={setDishState}
-                dishId={dishId}
-                setDishId={setDishId}
-                dishess={dishes}
-                setDishess={setDishes}
-              />
-            );
-          })}
+          {categArr &&
+            categArr.map((v, i) => {
+              return (
+                <Categories
+                  key={i}
+                  categArr={categArr}
+                  setCategArr={setCategArr}
+                  description={description}
+                  setDescription={setDescription}
+                  dishName={dishName}
+                  setDishName={setDishName}
+                  setPrice={setPrice}
+                  price={price}
+                  category={v.category}
+                  dishes={v.dishes}
+                  menu_id={v.menu_id}
+                  deleteDishModal={deleteDishModal}
+                  setDeleteDishModal={setDeleteDishModal}
+                  dishState={dishState}
+                  setDishState={setDishState}
+                  dishId={dishId}
+                  setDishId={setDishId}
+                  dishess={dishes}
+                  setDishess={setDishes}
+                />
+              );
+            })}
         </View>
         <View
           style={{
@@ -90,17 +97,18 @@ const Menu = ({
           dishes={dishes}
           setDishes={setDishes}
         />
-      </View>
+      </ScrollView>
       {currentTab == 'menu' && categArr.length ? (
         <View
           style={{
-            marginTop: 150,
+            position: 'absolute',
+            bottom: 0,
             width: '100%',
             justifyContent: 'center',
             alignItems: 'center',
           }}
         >
-          <CommonButton title="Publish your menu" />
+          <CommonButton onPress={submitCategory} title="Publish your menu" />
         </View>
       ) : null}
     </>

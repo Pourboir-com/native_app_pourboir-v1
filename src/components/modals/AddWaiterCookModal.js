@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -8,41 +8,49 @@ import {
   ImageBackground,
   TextInput,
   Platform,
-  ScrollView,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
-const imgWaiter = require('../../assets/images/Choose-rafiki.png');
+const imgWaiter = require('../../assets/images/sittingtable.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import uuid from 'react-native-uuid';
 
+const AddWaiterCookModal = ({
+  addModal,
+  setAddModal,
+  modalType,
+  name,
+  setName,
+  email,
+  setEmail,
+  setWaiters,
+  setCooks,
+  waiters,
+  cooks,
+}) => {
+  const validation = name && email;
 
-const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr, dishState, setDishState }) => {
-  const [category, setCategory] = useState('');
-  const [menu_id, setMenuId] = useState(new Date().valueOf())
-  const validation = category
-  const AddCateg = async () => {
-    try {
-     await setCategArr([...categArr, {
-       category: category,
-       menu_id: uuid.v4(),
-       dishes:[]
-     }])
-      setCategory('')
-      setMenuId()
-      setCategModal(false)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const AddWaiter = () => {
+    setWaiters([...waiters, { waiter_name: name, waiter_email: email }]);
+    setAddModal(false);
+    setName();
+    setEmail();
+  };
+
+  const AddCook = () => {
+    setCooks([...cooks, { cook_name: name, cook_email: email }]);
+    setAddModal(false);
+    setEmail();
+    setName();
+  };
+
   return (
     <Overlay
       overlayStyle={styles.container}
-      isVisible={categModal}
-      onBackdropPress={() => setCategModal(false)}
+      isVisible={addModal}
+      onBackdropPress={() => setAddModal(false)}
     >
       <ImageBackground
         style={styles.imgBgStyle}
@@ -51,7 +59,7 @@ const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr, di
       >
         <View style={styles.viewImg}>
           <TouchableOpacity
-            onPress={() => setCategModal(false)}
+            onPress={() => setAddModal(false)}
             style={{ alignSelf: 'flex-end', margin: 10 }}
           >
             <AntDesign name="close" size={29} color="#485460" />
@@ -77,27 +85,17 @@ const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr, di
         bounces={false}
         enableOnAndroid={true}
         extraScrollHeight={10}
-        // scrollEnabled={showDropdown ? false : true}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
         scrollToOverflowEnabled={true}
         enableAutomaticScroll={Platform.OS === 'ios' ? true : false}
         resetScrollToCoords={{ x: 0, y: 0 }}
-        style={{ marginTop: 50 }}
+        style={{ marginTop: 20 }}
       >
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-        {i18n.t('new_categ')}
-        </Text>
-        <Text
-          style={{
-            fontFamily: 'ProximaNova',
-            fontSize: 14,
-            color: Colors.fontDark,
-            textAlign: 'center',
-            paddingTop: 10,
-          }}
-        >
-          {i18n.t('choose_categ')}
+          {modalType === 'waiter'
+            ? i18n.t('name_of_waiter')
+            : i18n.t('name_of_cook')}
         </Text>
 
         <View
@@ -107,15 +105,34 @@ const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr, di
             alignItems: 'center',
             // width: 270,
             marginVertical: 15,
-            marginTop: 35,
+            marginTop: 25,
           }}
         >
           <View style={(styles.input_box, { alignItems: 'center' })}>
             <TextInput
               style={styles.inputsTopTow}
-              onChangeText={(e) => setCategory(e)}
-              value={category}
-              placeholder={i18n.t('category')}
+              onChangeText={e => setName(e)}
+              value={name}
+              placeholder={
+                modalType === 'waiter'
+                  ? i18n.t('waiter_name_placeholder')
+                  : i18n.t('cook_name_placeholder')
+              }
+              placeholderTextColor={'#707375'}
+            />
+          </View>
+          <View
+            style={(styles.input_box, { alignItems: 'center', marginTop: 16 })}
+          >
+            <TextInput
+              style={styles.inputsTopTow}
+              onChangeText={e => setEmail(e)}
+              value={email}
+              placeholder={
+                modalType === 'waiter'
+                  ? i18n.t('waiter_email')
+                  : i18n.t('cook_email')
+              }
               placeholderTextColor={'#707375'}
             />
           </View>
@@ -123,14 +140,14 @@ const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr, di
 
         <TouchableOpacity
           activeOpacity={0.5}
-            onPress={AddCateg}
-            disabled={validation ? false : true}
-            style={[
-              styles.btn_yellow,
-              validation && {
-                backgroundColor: Colors.yellow,
-              },
-            ]}
+          onPress={modalType === 'waiter' ? AddWaiter : AddCook}
+          disabled={validation ? false : true}
+          style={[
+            styles.btn_yellow,
+            validation && {
+              backgroundColor: Colors.yellow,
+            },
+          ]}
         >
           <Text
             style={{
@@ -140,7 +157,6 @@ const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr, di
             }}
           >
             {i18n.t('confirm')}
-            {/* Confirm */}
           </Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>
@@ -148,15 +164,13 @@ const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr, di
   );
 };
 
-export default AddCategoryModal;
+export default AddWaiterCookModal;
 
 const styles = StyleSheet.create({
   inputsTopTow: {
     borderColor: '#E3E3E3',
     borderWidth: 1,
     width: 270,
-    // paddingLeft: 10,
-    // paddingRight: 10,
     alignSelf: 'center',
     height: 48,
     borderRadius: 10,
@@ -181,7 +195,7 @@ const styles = StyleSheet.create({
   },
   btn_yellow: {
     backgroundColor: '#EAEAEA',
-    width: '86%',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     height: 46,
@@ -199,7 +213,7 @@ const styles = StyleSheet.create({
   },
   imgBgStyle: {
     width: '100%',
-    height: 200,
+    height: 220,
   },
   txtConfrm: {
     fontSize: 15,
@@ -211,7 +225,7 @@ const styles = StyleSheet.create({
     width: 240,
     height: 220,
     alignSelf: 'center',
-    marginTop: -72,
+    marginTop: -112,
   },
   viewImg: {
     width: '100%',
@@ -223,9 +237,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 270,
     height: 48,
-    // paddingVertical: 13,
-    // paddingHorizontal: 10,
     alignItems: 'center',
-    //  marginTop:40
   },
 });

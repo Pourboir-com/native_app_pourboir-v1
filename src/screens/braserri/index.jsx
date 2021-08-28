@@ -11,14 +11,12 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'react-native-svg';
 import Menu from '../../components/braserri/menu';
 import Team from '../../components/braserri/team';
-import CommonButton from '../../components/common-button';
 import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';
 import styles from './styles';
 
 const Braserri = ({ navigation }) => {
   const [currentTab, setCurrentTab] = useState('team');
-  // console.log(currentTab)
   const [dishName, setDishName] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
@@ -77,7 +75,7 @@ const Braserri = ({ navigation }) => {
           >
             <Image
               source={require('../../assets/images/team.png')}
-              style={{ width: 18, height: 18, resizeMode: 'contain' }}
+              style={{ width: 24, height: 24, resizeMode: 'contain' }}
             />
             <Text style={styles.tabTxt}>{i18n.t('the_team')}</Text>
           </TouchableOpacity>
@@ -93,12 +91,12 @@ const Braserri = ({ navigation }) => {
           >
             <Image
               source={require('../../assets/images/menu.png')}
-              style={{ width: 18, height: 18, resizeMode: 'contain' }}
+              style={{ width: 22, height: 22, resizeMode: 'contain' }}
             />
             <Text style={styles.tabTxt}>{i18n.t('the_menu')}</Text>
           </TouchableOpacity>
         </View>
-        <View style={{ marginBottom: 20, flex: 2 }}>
+        <View style={{ marginBottom: 20 }}>
           {currentTab === 'menu' ? (
             <Menu
               currentTab={currentTab}

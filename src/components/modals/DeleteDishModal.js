@@ -13,19 +13,27 @@ import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/delete-dish.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
-import NumberFormat from 'react-number-format';
 
-const DeleteDishModal = ({ deleteDishModal ,setDeleteDishModal, dishId, setDishId, dishes, setDishes }) => {
-
+const DeleteDishModal = ({
+  deleteDishModal,
+  setDeleteDishModal,
+  dishId,
+  setDishId,
+  dishes,
+  setDishes,
+}) => {
   const handleClose = () => {
-      setDeleteDishModal(false)
-  }
+    setDeleteDishModal(false);
+  };
   // console.log(dishId, " dishId")
-  const deleteDish =  (id) => {
-     setDishes(dishes.filter((item) => {
-      return item.id !== id
-    }))
-  }
+  const deleteDish = async id => {
+    await dishes.filter(item => {
+      return item.id !== id;
+    });
+    setTimeout(() => {
+      setDeleteDishModal(false);
+    }, 300);
+  };
   return (
     <Overlay
       overlayStyle={styles.container}
@@ -62,27 +70,36 @@ const DeleteDishModal = ({ deleteDishModal ,setDeleteDishModal, dishId, setDishI
           />
         </View>
       </ImageBackground>
-            <View style={{marginTop:100}}>
-                
-            <View>
-            <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-        {i18n.t('are_u_sure')}
-      </Text>
-      <Text style={[styles.txtName, { fontFamily: 'ProximaNova' }]}>
-        {/* {i18n.t('will_contact_by_email')} */}
-        {i18n.t('delete_dish')}
-
-      </Text>
-            </View>
-            <View style={{marginVertical:20, flexDirection:'row', justifyContent:'space-between'}}>
-                <TouchableOpacity onPress={handleClose} style={styles.btns}>
-                    <Text style={{fontFamily:'ProximaNova'}}>{i18n.t('no')}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => deleteDish(dishId)} style={styles.btns,  {...styles.btns, backgroundColor:'#FCDF6F'}}>
-                    <Text style={{fontFamily:'ProximaNova'}}>{i18n.t('yes')}</Text>
-                </TouchableOpacity>
-            </View>
-            </View>
+      <View style={{ marginTop: 100 }}>
+        <View>
+          <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
+            {i18n.t('are_u_sure')}
+          </Text>
+          <Text style={[styles.txtName, { fontFamily: 'ProximaNova' }]}>
+            {/* {i18n.t('will_contact_by_email')} */}
+            {i18n.t('delete_dish')}
+          </Text>
+        </View>
+        <View
+          style={{
+            marginVertical: 20,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}
+        >
+          <TouchableOpacity onPress={handleClose} style={styles.btns}>
+            <Text style={{ fontFamily: 'ProximaNova' }}>{i18n.t('no')}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => deleteDish(dishId)}
+            style={
+              (styles.btns, { ...styles.btns, backgroundColor: '#FCDF6F' })
+            }
+          >
+            <Text style={{ fontFamily: 'ProximaNova' }}>{i18n.t('yes')}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </Overlay>
   );
 };
@@ -101,7 +118,6 @@ const styles = StyleSheet.create({
   imgBgStyle: {
     width: '100%',
     height: 160,
-    // overflow:"hidden"
   },
   txtBtnConfrm: {
     fontSize: 16,
@@ -140,14 +156,13 @@ const styles = StyleSheet.create({
   viewImg: {
     width: '100%',
     height: 240,
-    // backgroundColor:"red"
   },
- btns: {
-    backgroundColor:'#EAEAEA',
-    width:130,
-    borderRadius:12,
-    justifyContent:'center',
-    alignItems:'center',
-    paddingVertical:17,
- }
+  btns: {
+    backgroundColor: '#EAEAEA',
+    width: 130,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 17,
+  },
 });

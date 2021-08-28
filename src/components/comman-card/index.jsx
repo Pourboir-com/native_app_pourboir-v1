@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import styles from '../../screens/braserri/styles'
 import RatingStar from '../RatingComponent';
 
-const CommonCard = () => {
+const CommonCard = ({waiter_name, waiter_email, cook_name, cook_email}) => {
     const obj = [1, 2, 3, 4, 5];
     return (
         <TouchableOpacity
@@ -33,7 +33,7 @@ const CommonCard = () => {
                 style={styles.name_staff}
               >
                 {/* {upperTitleCase(data?.user_id?.full_name)} */}
-                Ammy Farha
+                {waiter_name || cook_name}
               </Text>
               <View style={{ flexDirection: 'row', marginTop: 7 }}>
                 {obj.map((v, i) => {

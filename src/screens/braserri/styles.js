@@ -22,13 +22,13 @@ const styles = StyleSheet.create({
         backgroundColor:'#FCDF6F',
         marginLeft:30,
         borderRadius:8,
-        width:22,
+        width:'auto' || 30,
         alignItems:'center',
         justifyContent:'center',
-        padding:1
+        paddingHorizontal:5
     },
     numberTxt:{
-        fontSize:18,
+        fontSize:15,
         fontFamily:'ProximaNova',
         textAlign:'center'
     },

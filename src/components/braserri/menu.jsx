@@ -28,9 +28,9 @@ const Menu = ({
   console.log(deleteDishModal, ' ss');
   const [categArr, setCategArr] = useState([]);
   const [dishState, setDishState] = useState([]);
-  const [dishId, setDishId] = useState()
-  const [dishes, setDishes] = useState()
-  console.log(dishes, " dishes")
+  const [dishId, setDishId] = useState();
+  const [dishes, setDishes] = useState();
+  console.log(dishes, ' dishes');
   return (
     <>
       <View style={{ marginHorizontal: 0, marginTop: 20 }}>

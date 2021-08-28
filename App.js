@@ -9,6 +9,7 @@ import moment from 'moment';
 import 'moment/locale/fr';
 // import 'moment/locale/en';
 import * as Localization from 'expo-localization';
+import { loadAsync } from 'expo-font';
 
 export default function App() {
   const initialState = useContext(Context);
@@ -19,8 +20,15 @@ export default function App() {
         const { locale } = await Localization.getLocalizationAsync();
         moment.locale(locale.includes('fr') ? 'fr' : 'en');
         const { manager_details = {} } = await getAsyncStorageValues();
-        if (manager_details?.token)
+        if (manager_details?.token) {
           axios.defaults.headers.common.Authorization = `Bearer ${manager_details?.token}`;
+        }
+        await loadAsync({
+          // Load a font `Montserrat` from a static resource
+          ProximaNova: require('./src/assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
+          ProximaNovaBold: require('./src/assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
+          ProximaNovaSemiBold: require('./src/assets/fonts/ProximaNova/ProximaNova-Semibold.otf'),
+        });
       } catch {
         console.log('App.js Error');
       }

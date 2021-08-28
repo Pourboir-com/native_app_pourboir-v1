@@ -10,7 +10,6 @@ import { Colors } from '../../constants/Theme';
 import * as actionTypes from '../../contextApi/actionTypes';
 var getCountry = require('country-currency-map').getCountry;
 var formatCurrency = require('country-currency-map').formatCurrency;
-import { loadAsync } from 'expo-font';
 import * as Notifications from 'expo-notifications';
 import { useMutation } from 'react-query';
 import { SEND_PUSH_TOKEN } from '../../queries';
@@ -105,15 +104,6 @@ export default function SplashScreen(props) {
         type: actionTypes.USER_DETAILS,
         payload: userDetails,
       });
-      async function loadFont() {
-        await loadAsync({
-          // Load a font `Montserrat` from a static resource
-          ProximaNova: require('../../assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
-          ProximaNovaBold: require('../../assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
-          ProximaNovaSemiBold: require('../../assets/fonts/ProximaNova/ProximaNova-Semibold.otf'),
-        });
-      }
-      loadFont();
     })();
   }, []);
 

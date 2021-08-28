@@ -474,9 +474,6 @@ const SocialLogin = ({ navigation, route }) => {
               </TouchableOpacity>
             </React.Fragment>
           )}
-           <TouchableOpacity onPress={() => navigation.navigate("Braserri")}>
-            <Text>Braserrri</Text>
-          </TouchableOpacity>
           <View>
             <View
               style={{

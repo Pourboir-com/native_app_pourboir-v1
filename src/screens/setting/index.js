@@ -377,12 +377,14 @@ const Setting = ({ navigation, route }) => {
           </Text>
         </TouchableOpacity>
       </View>
-          
+
       <View style={{ position: 'absolute', bottom: 20 }}>
         <Text style={[styles.versionText, { fontFamily: 'ProximaNova' }]}>
           Version {Constants.manifest.version}
         </Text>
-       
+        <TouchableOpacity onPress={() => navigation.navigate('Braserri')}>
+          <Text>Braserrri</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

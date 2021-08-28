@@ -51,12 +51,14 @@ const Menu = ({
     isLoading: menusLoading,
     isFetching: menusIsFetching,
     refetch: refetchMenus,
-  } = useQuery(['GET_MENU', { user_id: state.userDetails.user_id }], GET_MENU, {
+  } = useQuery(['GET_MENU', { restaurant_id: 'ssd2' }], GET_MENU, {
     ...reactQueryConfig,
     onError: e => {
       alert(e?.response?.data?.message);
     },
   });
+  console.log(menus);
+  console.log(state.userDetails.user_id);
 
   const submitCategory = () => {
     console.log(categArr);

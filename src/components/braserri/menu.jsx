@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Dimensions, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import i18n from '../../li8n';
@@ -8,6 +8,7 @@ import AddCategoryModal from '../modals/AddCategoryModal';
 import DeleteDishModal from '../modals/DeleteDishModal';
 import Categories from './categories';
 import { useQuery, useMutation } from 'react-query';
+import { handleDeleteItem } from './util';
 import {
   PUBLISH_MENU,
   DELETE_DISH,
@@ -15,6 +16,7 @@ import {
   DELETE_MENU,
 } from '../../queries';
 import { reactQueryConfig } from '../../constants';
+import Context from '../../contextApi/context';
 
 const Menu = ({
   currentTab,
@@ -25,6 +27,9 @@ const Menu = ({
   description,
   setDescription,
 }) => {
+  const { state } = useContext(Context);
+
+  let ScreenHeight = Dimensions.get('window').height / 1.5;
   const [categModal, setCategModal] = useState(false);
   const [deleteDishModal, setDeleteDishModal] = useState(false);
   const [categArr, setCategArr] = useState([]);
@@ -44,30 +49,18 @@ const Menu = ({
   const {
     data: menus,
     isLoading: menusLoading,
+    isFetching: menusIsFetching,
     refetch: refetchMenus,
-  } = useQuery(['GET_MENU'], GET_MENU, {
+  } = useQuery(['GET_MENU', { user_id: state.userDetails.user_id }], GET_MENU, {
     ...reactQueryConfig,
     onError: e => {
       alert(e?.response?.data?.message);
     },
   });
 
-  let ScreenHeight = Dimensions.get('window').height / 1.5;
-
   const submitCategory = () => {
     console.log(categArr);
     setCategArr([]);
-  };
-
-  const handleDeleteItem = async (fn, body, successFn) => {
-    await fn(body, {
-      onSuccess: async () => {
-        successFn();
-      },
-      onError: e => {
-        alert(e?.response?.data?.message);
-      },
-    });
   };
 
   return (

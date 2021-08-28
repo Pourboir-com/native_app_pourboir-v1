@@ -19,25 +19,34 @@ import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import uuid from 'react-native-uuid';
 
-
-const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr, dishState, setDishState }) => {
+const AddCategoryModal = ({
+  setCategModal,
+  categModal,
+  categArr,
+  setCategArr,
+  dishState,
+  setDishState,
+}) => {
   const [category, setCategory] = useState('');
-  const [menu_id, setMenuId] = useState(new Date().valueOf())
-  const validation = category
+  const [menu_id, setMenuId] = useState(new Date().valueOf());
+  const validation = category;
   const AddCateg = async () => {
     try {
-     await setCategArr([...categArr, {
-       category: category,
-       menu_id: uuid.v4(),
-       dishes:[]
-     }])
-      setCategory('')
-      setMenuId()
-      setCategModal(false)
+      await setCategArr([
+        ...categArr,
+        {
+          category: category,
+          menu_id: uuid.v4(),
+          dishes: [],
+        },
+      ]);
+      setCategory('');
+      setMenuId();
+      setCategModal(false);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   return (
     <Overlay
       overlayStyle={styles.container}
@@ -77,7 +86,6 @@ const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr, di
         bounces={false}
         enableOnAndroid={true}
         extraScrollHeight={10}
-        // scrollEnabled={showDropdown ? false : true}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
         scrollToOverflowEnabled={true}
@@ -86,7 +94,7 @@ const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr, di
         style={{ marginTop: 50 }}
       >
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-        {i18n.t('new_categ')}
+          {i18n.t('new_categ')}
         </Text>
         <Text
           style={{
@@ -113,7 +121,7 @@ const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr, di
           <View style={(styles.input_box, { alignItems: 'center' })}>
             <TextInput
               style={styles.inputsTopTow}
-              onChangeText={(e) => setCategory(e)}
+              onChangeText={e => setCategory(e)}
               value={category}
               placeholder={i18n.t('category')}
               placeholderTextColor={'#707375'}
@@ -123,14 +131,14 @@ const AddCategoryModal = ({ setCategModal, categModal, categArr, setCategArr, di
 
         <TouchableOpacity
           activeOpacity={0.5}
-            onPress={AddCateg}
-            disabled={validation ? false : true}
-            style={[
-              styles.btn_yellow,
-              validation && {
-                backgroundColor: Colors.yellow,
-              },
-            ]}
+          onPress={AddCateg}
+          disabled={validation ? false : true}
+          style={[
+            styles.btn_yellow,
+            validation && {
+              backgroundColor: Colors.yellow,
+            },
+          ]}
         >
           <Text
             style={{

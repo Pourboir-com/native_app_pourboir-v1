@@ -7,6 +7,14 @@ import CommonButton from '../common-button';
 import AddCategoryModal from '../modals/AddCategoryModal';
 import DeleteDishModal from '../modals/DeleteDishModal';
 import Categories from './categories';
+import { useQuery, useMutation } from 'react-query';
+import {
+  PUBLISH_MENU,
+  DELETE_DISH,
+  GET_MENU,
+  DELETE_MENU,
+} from '../../queries';
+import { reactQueryConfig } from '../../constants';
 
 const Menu = ({
   currentTab,
@@ -23,11 +31,43 @@ const Menu = ({
   const [dishState, setDishState] = useState([]);
   const [dishId, setDishId] = useState();
   const [dishes, setDishes] = useState([]);
+  const [deleteMenu, { isLoading: deleteMenuLoading }] = useMutation(
+    DELETE_MENU,
+  );
+  const [publishMenu, { isLoading: publishMenuLoading }] = useMutation(
+    PUBLISH_MENU,
+  );
+  const [deleteDish, { isLoading: deleteDishLoading }] = useMutation(
+    DELETE_DISH,
+  );
+
+  const {
+    data: menus,
+    isLoading: menusLoading,
+    refetch: refetchMenus,
+  } = useQuery(['GET_MENU'], GET_MENU, {
+    ...reactQueryConfig,
+    onError: e => {
+      alert(e?.response?.data?.message);
+    },
+  });
+
   let ScreenHeight = Dimensions.get('window').height / 1.5;
 
   const submitCategory = () => {
     console.log(categArr);
     setCategArr([]);
+  };
+
+  const handleDeleteItem = async (fn, body, successFn) => {
+    await fn(body, {
+      onSuccess: async () => {
+        successFn();
+      },
+      onError: e => {
+        alert(e?.response?.data?.message);
+      },
+    });
   };
 
   return (

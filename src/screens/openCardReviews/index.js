@@ -83,7 +83,7 @@ const ReviewDetails = ({ navigation, route }) => {
     our_rating,
     restaurant_id,
     geometry,
-  } = route?.params;
+  } = route?.params || {};
 
   const {
     data: waitersData,
@@ -251,7 +251,7 @@ const ReviewDetails = ({ navigation, route }) => {
         position="absolute"
         navigation={navigation}
         settingBtn={true}
-        settingBtnFunc={navigation.navigate("Braserri")}
+        settingBtnFunc={navigation.navigate('Braserri', { restaurant_id })}
       />
       <Animated.View
         style={{

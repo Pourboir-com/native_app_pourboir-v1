@@ -26,9 +26,10 @@ const Menu = ({
   setPrice,
   description,
   setDescription,
+  route,
 }) => {
   const { state } = useContext(Context);
-
+  const { restaurant_id } = route?.params || {};
   let ScreenHeight = Dimensions.get('window').height / 1.5;
   const [categModal, setCategModal] = useState(false);
   const [deleteDishModal, setDeleteDishModal] = useState(false);
@@ -51,14 +52,14 @@ const Menu = ({
     isLoading: menusLoading,
     isFetching: menusIsFetching,
     refetch: refetchMenus,
-  } = useQuery(['GET_MENU', { restaurant_id: 'ssd2' }], GET_MENU, {
+  } = useQuery(['GET_MENU', { place_id: restaurant_id }], GET_MENU, {
     ...reactQueryConfig,
     onError: e => {
       alert(e?.response?.data?.message);
     },
   });
-  console.log(categArr);
-  console.log(state.userDetails.user_id);
+  console.log(menus);
+  // console.log(state.userDetails.user_id);
 
   const submitCategory = () => {
     // handleMutation(

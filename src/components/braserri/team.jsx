@@ -7,10 +7,7 @@ import CommonCard from '../comman-card';
 import AddWaiterCookModal from '../modals/AddWaiterCookModal';
 import { useQuery, useMutation } from 'react-query';
 import { handleMutation } from './util';
-import {
-  STAFF,
-  ADD_STAFF,
-} from '../../queries';
+import { STAFF, ADD_STAFF } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import Context from '../../contextApi/context';
 
@@ -22,16 +19,22 @@ const Team = () => {
   const [cooks, setCooks] = useState([]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [addStaff, { isLoading: addStaffLoading }] = useMutation(
-    ADD_STAFF,
-  );
+  const [addStaff, { isLoading: addStaffLoading }] = useMutation(ADD_STAFF);
 
-  const { data: waiterData, refetch: refetchWaiterData } = useQuery(['STAFF', { type: ['waiter'] }], STAFF, {
-    ...reactQueryConfig,
-  });
-  const { data: cookData, refetch: refetchCookData } = useQuery(['STAFF', { type: ['cook'] }], STAFF, {
-    ...reactQueryConfig,
-  });
+  const { data: waiterData, refetch: refetchWaiterData } = useQuery(
+    ['STAFF', { type: ['waiter'] }],
+    STAFF,
+    {
+      ...reactQueryConfig,
+    },
+  );
+  const { data: cookData, refetch: refetchCookData } = useQuery(
+    ['STAFF', { type: ['cook'] }],
+    STAFF,
+    {
+      ...reactQueryConfig,
+    },
+  );
 
   const openWaiterModal = () => {
     setAddModal(true);
@@ -45,7 +48,12 @@ const Team = () => {
 
   const handleAddStaff = async (email, name) => {
     await addStaff(
-      { manager_id: state.userDetails.user_id || '', type: modalType, email: email, full_name: name },
+      {
+        manager_id: state.userDetails.user_id || '',
+        type: modalType,
+        email: email,
+        full_name: name,
+      },
       {
         onSuccess: () => {
           if (modalType === 'waiter') {

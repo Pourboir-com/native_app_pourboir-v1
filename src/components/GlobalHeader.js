@@ -191,15 +191,15 @@ const GlobalHeader = props => {
             </TouchableOpacity>
           ) : props.settingBtn ? (
             <TouchableOpacity
-            activeOpacity={0.5}
-            onPress={props.settingBtnFunc && props.settingBtnFunc}
-            style={[styles.viewLeft, { marginTop: -3, marginRight:0 }]}
-          >
-            <Image
-              source={require('../assets/images/gear.png')}
-              style={{ width: 20, height: 20 }}
-            />
-          </TouchableOpacity>
+              activeOpacity={0.5}
+              onPress={props.settingBtnFunc && props.settingBtnFunc}
+              style={[styles.viewLeft, { marginTop: -3, marginRight: 0 }]}
+            >
+              <Image
+                source={require('../assets/images/gear.png')}
+                style={{ width: 20, height: 20 }}
+              />
+            </TouchableOpacity>
           ) : null}
         </Right>
       </View>

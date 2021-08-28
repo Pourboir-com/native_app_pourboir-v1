@@ -9,7 +9,7 @@ import GlobalHeader from '../../components/GlobalHeader';
 // import * as Location from 'expo-location';
 
 const MapScreen = ({ navigation, route }) => {
-  const { geometry, name } = route?.params;
+  const { geometry, name } = route?.params || {};
   const [isMapReady, setIsMapReady] = useState(false);
   // const [saveLocation, setSaveLocation] = useState({});
 

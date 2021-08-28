@@ -1,18 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Text, View } from 'react-native';
 import i18n from '../../li8n';
 import styles from '../../screens/braserri/styles';
 import AddBtn from '../add-common-btn';
 import CommonCard from '../comman-card';
 import AddWaiterCookModal from '../modals/AddWaiterCookModal';
+import { useQuery, useMutation } from 'react-query';
+import { handleMutation } from './util';
+import {
+  STAFF,
+  ADD_STAFF,
+} from '../../queries';
+import { reactQueryConfig } from '../../constants';
+import Context from '../../contextApi/context';
 
 const Team = () => {
+  const { state } = useContext(Context);
   const [addModal, setAddModal] = useState(false);
   const [modalType, setModalType] = useState();
   const [waiters, setWaiters] = useState([]);
   const [cooks, setCooks] = useState([]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [addStaff, { isLoading: addStaffLoading }] = useMutation(
+    ADD_STAFF,
+  );
+
+  const { data: waiterData, refetch: refetchWaiterData } = useQuery(['STAFF', { type: ['waiter'] }], STAFF, {
+    ...reactQueryConfig,
+  });
+  const { data: cookData, refetch: refetchCookData } = useQuery(['STAFF', { type: ['cook'] }], STAFF, {
+    ...reactQueryConfig,
+  });
 
   const openWaiterModal = () => {
     setAddModal(true);
@@ -22,6 +41,24 @@ const Team = () => {
   const openCookModal = () => {
     setAddModal(true);
     setModalType('cook');
+  };
+
+  const handleAddStaff = async (email, name) => {
+    await addStaff(
+      { manager_id: state.userDetails.user_id || '', type: modalType, email: email, full_name: name },
+      {
+        onSuccess: () => {
+          if (modalType === 'waiter') {
+            refetchWaiterData();
+          } else if (modalType === 'cook') {
+            refetchCookData();
+          }
+        },
+        onError: () => {
+          alert('Duplicate email not allowed!');
+        },
+      },
+    );
   };
 
   return (

@@ -6,7 +6,6 @@ import AddBtn from '../add-common-btn';
 import CommonCard from '../comman-card';
 import AddWaiterCookModal from '../modals/AddWaiterCookModal';
 import { useQuery, useMutation } from 'react-query';
-import { handleMutation } from './util';
 import { STAFF, ADD_STAFF } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import Context from '../../contextApi/context';

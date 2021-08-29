@@ -8,7 +8,6 @@ import AddCategoryModal from '../modals/AddCategoryModal';
 import DeleteDishModal from '../modals/DeleteDishModal';
 import Categories from './categories';
 import { useQuery, useMutation } from 'react-query';
-import { handleMutation } from './util';
 import {
   PUBLISH_MENU,
   DELETE_DISH,
@@ -61,13 +60,29 @@ const Menu = ({
   // console.log("start ", menus.data[0], " end");
   // console.log(state.userDetails.user_id);
 
-  const submitCategory = () => {
-    handleMutation(
-      publishMenu,
-     categArr,
-      {},
+  const submitCategory = async () => {
+    await publishMenu(categArr, {
+      onSuccess: () => {},
+      onError: () => {},
+    });
+    // setCategArr([]);
+  };
+
+  const DeleteMenu = async id => {
+    await deleteMenu(
+      //body
+      { menu_ids: [id] },
+      //api response below
+      {
+        onSuccess: () => {
+          refetchMenus();
+        },
+        onError: e => {
+          alert(e.response?.data?.message);
+        },
+      },
     );
-    setCategArr([]);
+    // setCategArr([]);
   };
 
   return (
@@ -82,36 +97,37 @@ const Menu = ({
         }}
       >
         <View>
-          {!menusLoading ?
-           ( menus.data.map((v, i) => {
-              return (
-                <Categories
-                  key={i}
-                  id={v._id}
-                  categArr={menus.data}
-                  setCategArr={setCategArr}
-                  description={description}
-                  setDescription={setDescription}
-                  dishName={dishName}
-                  setDishName={setDishName}
-                  setPrice={setPrice}
-                  price={price}
-                  category={v.category}
-                  dishes={v.dishes}
-                  menu_id={v.menu_id}
-                  deleteDishModal={deleteDishModal}
-                  setDeleteDishModal={setDeleteDishModal}
-                  dishState={dishState}
-                  setDishState={setDishState}
-                  dishId={dishId}
-                  setDishId={setDishId}
-                  dishess={dishes}
-                  setDishess={setDishes}
-                  deleteDish={deleteDish}
-                  deleteMenu={deleteMenu}
-                />
-              );
-            })) : null}
+          {!menusLoading
+            ? menus.data.map((v, i) => {
+                return (
+                  <Categories
+                    key={i}
+                    id={v._id}
+                    categArr={menus.data}
+                    setCategArr={setCategArr}
+                    description={description}
+                    setDescription={setDescription}
+                    dishName={dishName}
+                    setDishName={setDishName}
+                    setPrice={setPrice}
+                    price={price}
+                    category={v.category}
+                    dishes={v.dishes}
+                    menu_id={v.menu_id}
+                    deleteDishModal={deleteDishModal}
+                    setDeleteDishModal={setDeleteDishModal}
+                    dishState={dishState}
+                    setDishState={setDishState}
+                    dishId={dishId}
+                    setDishId={setDishId}
+                    dishess={dishes}
+                    setDishess={setDishes}
+                    deleteDish={deleteDish}
+                    deleteMenu={DeleteMenu}
+                  />
+                );
+              })
+            : null}
         </View>
         <View
           style={{

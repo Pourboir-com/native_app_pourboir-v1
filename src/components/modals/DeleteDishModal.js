@@ -14,10 +14,7 @@ import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/delete-dish.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
-import {
-  DELETE_DISH,
-} from '../../queries';
-import { handleMutation } from '../braserri/util';
+import { DELETE_DISH } from '../../queries';
 
 const DeleteDishModal = ({
   deleteDishModal,
@@ -33,12 +30,14 @@ const DeleteDishModal = ({
   const handleClose = () => {
     setDeleteDishModal(false);
   };
-  console.log(dishId, " dishId")
-  const DeleteDish =  id => {
-    handleMutation(
-      deleteDish,
-     id,
-     () => alert("sicces")
+  const DeleteDish = id => {
+    console.log(dishId, ' dishId');
+    deleteDish(
+      { dish_id: id, menu_id: '' },
+      {
+        onSuccess: () => {},
+        onError: () => {},
+      },
     );
   };
   return (

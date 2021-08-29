@@ -36,7 +36,7 @@ const AddCategoryModal = ({
         ...categArr,
         {
           category: category,
-          menu_id: uuid.v4(),
+          menu_id: "",
           dishes: [],
         },
       ]);

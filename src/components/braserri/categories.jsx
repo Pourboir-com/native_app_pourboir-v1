@@ -7,6 +7,8 @@ import AddBtn from '../add-common-btn';
 import i18n from '../../li8n';
 import uuid from 'react-native-uuid';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import NumberFormat from 'react-number-format';
+import { handleMutation } from './util';
 
 const Categories = props => {
   const [categ, setCateg] = useState();
@@ -19,27 +21,39 @@ const Categories = props => {
   }, [props.dishess]);
   const addDish = async () => {
     const list = await props.dishes.push({
-      id: uuid.v4(),
+      id: "",
       dishName: '',
-      price: '',
+      price: parseInt(''),
       description: '',
     });
-    props.setDishess(list);
-    console.log(props.dishess, ' ssssss');
+    // props.setDishess(list);
+    // console.log(props.dishess, ' ssssss');
   };
+
+  
 
   const handleInputChange = (value, index, name) => {
     props.dishes[index][name] = value;
     props.setDishess((props.dishes[index][name] = value));
-    console.log(props.categArr);
+    console.log(props.dishes[index]);
   };
 
   async function deleteCategory(id) {
-    await props.setCategArr(
-      props.categArr.filter(item => {
-        return item.menu_id != id;
-      }),
-    );
+    // await props.setCategArr(
+    //   props.categArr.filter(item => {
+    //     return item.menu_id != id;
+    //   }),
+    // );
+    if(id){
+    handleMutation(
+      props.deleteMenu(),
+     id,
+    () => {
+      alert("Deleted categ.")
+    },
+    )}else{
+      alert("No id")
+    }
   }
 
   const openDeleteModal = id => {
@@ -69,7 +83,7 @@ const Categories = props => {
       >
         <Text style={styles.mainHeading}>{props.category}</Text>
         <TouchableOpacity
-          onPress={() => deleteCategory(menuId)}
+          onPress={() => deleteCategory(props.id)}
           activeOpacity={0.3}
         >
           <Image
@@ -99,7 +113,7 @@ const Categories = props => {
                         onChangeText={name =>
                           handleInputChange(name, i, 'dishName')
                         }
-                        value={v.dishName}
+                        value={v.name}
                         placeholder={i18n.t('dish_name')}
                         placeholderTextColor={'#707375'}
                       />
@@ -128,10 +142,11 @@ const Categories = props => {
                         }
                         value={v.price}
                         placeholder={i18n.t('price')}
+                        // keyboardType={NumberFormat}
                         placeholderTextColor={'#707375'}
                       />
                       <TouchableOpacity
-                        onPress={() => openDeleteModal(v.id)}
+                        onPress={() => openDeleteModal(v._id)}
                         style={{ justifyContent: 'center' }}
                         activeOpacity={0.3}
                       >

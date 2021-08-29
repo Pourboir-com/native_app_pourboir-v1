@@ -9,10 +9,15 @@ import {
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useMutation } from 'react-query';
 import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/delete-dish.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
+import {
+  DELETE_DISH,
+} from '../../queries';
+import { handleMutation } from '../braserri/util';
 
 const DeleteDishModal = ({
   deleteDishModal,
@@ -22,17 +27,19 @@ const DeleteDishModal = ({
   dishes,
   setDishes,
 }) => {
+  const [deleteDish, { isLoading: deleteDishLoading }] = useMutation(
+    DELETE_DISH,
+  );
   const handleClose = () => {
     setDeleteDishModal(false);
   };
-  // console.log(dishId, " dishId")
-  const deleteDish = async id => {
-    await dishes.filter(item => {
-      return item.id !== id;
-    });
-    setTimeout(() => {
-      setDeleteDishModal(false);
-    }, 300);
+  console.log(dishId, " dishId")
+  const DeleteDish =  id => {
+    handleMutation(
+      deleteDish,
+     id,
+     () => alert("sicces")
+    );
   };
   return (
     <Overlay
@@ -91,7 +98,7 @@ const DeleteDishModal = ({
             <Text style={{ fontFamily: 'ProximaNova' }}>{i18n.t('no')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => deleteDish(dishId)}
+            onPress={() => DeleteDish(dishId)}
             style={
               (styles.btns, { ...styles.btns, backgroundColor: '#FCDF6F' })
             }

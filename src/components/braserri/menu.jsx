@@ -58,23 +58,15 @@ const Menu = ({
       alert(e?.response?.data?.message);
     },
   });
-  console.log(menus);
+  // console.log("start ", menus.data[0], " end");
   // console.log(state.userDetails.user_id);
 
   const submitCategory = () => {
-    // handleMutation(
-    //   publishMenu,
-    //   [
-    //     {
-    //       category: '',
-    //       menu_id: '',
-    //       dishes: [{}],
-    //       user_id: state.userDetails.user_id,
-    //       place_id: '',
-    //     },
-    //   ],
-    //   {},
-    // );
+    handleMutation(
+      publishMenu,
+     categArr,
+      {},
+    );
     setCategArr([]);
   };
 
@@ -90,12 +82,13 @@ const Menu = ({
         }}
       >
         <View>
-          {categArr &&
-            categArr.map((v, i) => {
+          {!menusLoading ?
+           ( menus.data.map((v, i) => {
               return (
                 <Categories
                   key={i}
-                  categArr={categArr}
+                  id={v._id}
+                  categArr={menus.data}
                   setCategArr={setCategArr}
                   description={description}
                   setDescription={setDescription}
@@ -114,9 +107,11 @@ const Menu = ({
                   setDishId={setDishId}
                   dishess={dishes}
                   setDishess={setDishes}
+                  deleteDish={deleteDish}
+                  deleteMenu={deleteMenu}
                 />
               );
-            })}
+            })) : null}
         </View>
         <View
           style={{

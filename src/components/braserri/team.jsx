@@ -34,6 +34,8 @@ const Team = () => {
       ...reactQueryConfig,
     },
   );
+  console.log(waiterData);
+  console.log(cookData);
 
   const openWaiterModal = () => {
     setAddModal(true);

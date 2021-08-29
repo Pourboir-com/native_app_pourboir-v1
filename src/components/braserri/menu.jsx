@@ -25,10 +25,9 @@ const Menu = ({
   setPrice,
   description,
   setDescription,
-  route,
+  restaurant_id,
 }) => {
   const { state } = useContext(Context);
-  const { restaurant_id } = route?.params || {};
   let ScreenHeight = Dimensions.get('window').height / 1.5;
   const [categModal, setCategModal] = useState(false);
   const [deleteDishModal, setDeleteDishModal] = useState(false);
@@ -53,10 +52,16 @@ const Menu = ({
     refetch: refetchMenus,
   } = useQuery(['GET_MENU', { place_id: restaurant_id }], GET_MENU, {
     ...reactQueryConfig,
+    onSuccess: (res) =>{
+      //  setCategArr(res.data);
+      console.log(restaurant_id);
+
+    },
     onError: e => {
       alert(e?.response?.data?.message);
     },
   });
+  // console.log(menus);
   // console.log("start ", menus.data[0], " end");
   // console.log(state.userDetails.user_id);
 
@@ -69,6 +74,7 @@ const Menu = ({
   };
 
   const DeleteMenu = async id => {
+    console.log(id);
     await deleteMenu(
       //body
       { menu_ids: [id] },

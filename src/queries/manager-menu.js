@@ -19,6 +19,10 @@ export const DELETE_DISH = async e => {
 };
 
 export const DELETE_MENU = async e => {
-  let res = await axios.delete(BASE_URL + `/v1/menu`, e);
+  let res = await axios.delete(BASE_URL + `/v1/menu`, {
+    data: {
+      ...e,
+    },
+  });
   return res;
 };

@@ -251,7 +251,13 @@ const ReviewDetails = ({ navigation, route }) => {
         position="absolute"
         navigation={navigation}
         settingBtn={true}
-        settingBtnFunc={navigation.navigate('Braserri', { restaurant_id })}
+        settingBtnFunc={() =>
+          navigation.navigate('Braserri', {
+            restaurant_id,
+            img,
+            name,
+          })
+        }
       />
       <Animated.View
         style={{

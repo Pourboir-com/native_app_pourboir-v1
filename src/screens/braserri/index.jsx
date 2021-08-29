@@ -15,7 +15,8 @@ import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';
 import styles from './styles';
 
-const Braserri = ({ navigation }) => {
+const Braserri = ({ navigation, route }) => {
+  const { restaurant_id, img, name } = route?.params || {};
   const [currentTab, setCurrentTab] = useState('team');
   const [dishName, setDishName] = useState('');
   const [price, setPrice] = useState('');
@@ -30,7 +31,7 @@ const Braserri = ({ navigation }) => {
           borderBottomRightRadius: Dimensions.get('window').width * 0.06,
           overflow: 'hidden',
         }}
-        source={require('../../assets/images/Group3.png')}
+        source={img || ''}
       >
         <LinearGradient
           style={{
@@ -43,7 +44,7 @@ const Braserri = ({ navigation }) => {
         ></LinearGradient>
         <GlobalHeader
           arrow={true}
-          headingText={'Brasserie Le Soleil'}
+          headingText={name}
           fontSize={17}
           color={'black'}
           navigation={navigation}
@@ -105,8 +106,9 @@ const Braserri = ({ navigation }) => {
               setDishName={setDishName}
               description={description}
               setDescription={setDescription}
-              price={price}
+              price={price || ''}
               setPrice={setPrice}
+              restaurant_id={restaurant_id || ''}
             />
           ) : (
             <Team />

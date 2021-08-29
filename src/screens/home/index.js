@@ -73,6 +73,8 @@ const HomeScreen = props => {
       enabled: saveLocation,
       ...reactQueryConfig,
       onSuccess: res => {
+        console.log(res?.restaurants?.results);
+
         dispatch({
           type: actionTypes.RESTAURANTS_DETAILS,
           payload: res?.restaurants?.results || [],

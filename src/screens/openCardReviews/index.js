@@ -250,6 +250,8 @@ const ReviewDetails = ({ navigation, route }) => {
         backgroundColor={'transparent'}
         position="absolute"
         navigation={navigation}
+        settingBtn={true}
+        settingBtnFunc={navigation.navigate("Braserri")}
       />
       <Animated.View
         style={{

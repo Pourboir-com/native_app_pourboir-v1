@@ -50,6 +50,7 @@ const Braserri = ({ navigation }) => {
           setting={false}
           backgroundColor={'transparent'}
           borderRadius={true}
+          // settingBtn={true}
         />
       </ImageBackground>
       <ScrollView

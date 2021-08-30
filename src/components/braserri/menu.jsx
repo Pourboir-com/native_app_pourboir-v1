@@ -79,9 +79,12 @@ const Menu = ({
   // const all_categories = set
   console.log('new ', newCategories);
   const submitCategory = async () => {
+    console.log(newCategories);
     await publishMenu(
       {
-        data: newCategories,
+        data: newCategories || [],
+        user_id: state.userDetails.user_id || '',
+        place_id: restaurant_id || '',
       },
       {
         onSuccess: () => {

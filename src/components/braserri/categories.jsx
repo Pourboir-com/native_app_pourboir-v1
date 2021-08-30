@@ -93,7 +93,10 @@ const Categories = props => {
                   >
                     <View style={(styles.input_box, { width: '60%' })}>
                       <TextInput
-                        style={styles.inputsTopTow}
+                        style={[
+                          styles.inputsTopTow,
+                          { fontWeight: 'bold', color: 'black' },
+                        ]}
                         onChangeText={name =>
                           handleInputChange(name, i, 'dishName')
                         }
@@ -119,6 +122,8 @@ const Categories = props => {
                             ...styles.inputsTopTow,
                             width: 80,
                             marginRight: 10,
+                            fontWeight: 'bold',
+                            color: 'black',
                           })
                         }
                         onChangeText={name =>

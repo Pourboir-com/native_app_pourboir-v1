@@ -106,7 +106,7 @@ const DeleteDishModal = ({
           }}
         >
           <TouchableOpacity onPress={handleClose} style={styles.btns}>
-            <Text style={{ fontFamily: 'ProximaNova' }}>{i18n.t('no')}</Text>
+            <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>{i18n.t('no')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
@@ -116,7 +116,7 @@ const DeleteDishModal = ({
               (styles.btns, { ...styles.btns, backgroundColor: '#FCDF6F' })
             }
           >
-            <Text style={{ fontFamily: 'ProximaNova' }}>{i18n.t('yes')}</Text>
+            <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>{i18n.t('yes')}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -183,6 +183,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 17,
+    paddingVertical: 14,
   },
 });

@@ -31,7 +31,7 @@ const Braserri = ({ navigation, route }) => {
           borderBottomRightRadius: Dimensions.get('window').width * 0.06,
           overflow: 'hidden',
         }}
-        source={img || ''}
+        source={{uri: img || 'https://www.tandoor.pk/img/sl3.jpg'}}
       >
         <LinearGradient
           style={{
@@ -44,9 +44,10 @@ const Braserri = ({ navigation, route }) => {
         ></LinearGradient>
         <GlobalHeader
           arrow={true}
+          BackIconColor={'#fff'}
           headingText={name}
           fontSize={17}
-          color={'black'}
+          color={'white'}
           navigation={navigation}
           setting={false}
           backgroundColor={'transparent'}

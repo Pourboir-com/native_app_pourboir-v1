@@ -9,21 +9,20 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 const Categories = props => {
   const [categ, setCateg] = useState();
-  const [menuId, setMenuId] = useState();
+  // const [menuId, setMenuId] = useState();
   useEffect(() => {
     setCateg(props.categArr);
-    setMenuId(props.menu_id);
+    // props.setMenuId(props.id);
     props.setDishess(props.dishes);
     // console.log(props.dishes, ' s');
   }, [props.dishess]);
   const addDish = async () => {
     const list = await props.dishes.push({
-      id: '',
       dishName: '',
       price: parseInt(''),
       description: '',
     });
-    // props.setDishess(list);
+    props.setDishess(list);
     // console.log(props.dishess, ' ssssss');
   };
 
@@ -33,10 +32,18 @@ const Categories = props => {
     // console.log(props.dishes[index]);
   };
 
-  const openDeleteModal = id => {
+  const openDeleteDish = id => {
     props.setDishId(id);
     props.setDeleteDishModal(true);
     props.setDishess(props.dishes);
+    props.setMenuId(props.id);
+    props.setDeleteType('dish');
+  };
+
+  const openDeleteMenu = id => {
+    props.setDeleteDishModal(true);
+    props.setMenuId(id);
+    props.setDeleteType('menu');
   };
 
   return (
@@ -60,7 +67,7 @@ const Categories = props => {
       >
         <Text style={styles.mainHeading}>{props.category}</Text>
         <TouchableOpacity
-          onPress={() => props.deleteMenu(props.id)}
+          onPress={() => openDeleteMenu(props.id)}
           activeOpacity={0.3}
         >
           <Image
@@ -119,11 +126,11 @@ const Categories = props => {
                         }
                         value={v.price}
                         placeholder={i18n.t('price')}
-                        // keyboardType={NumberFormat}
+                        keyboardType={'numeric'}
                         placeholderTextColor={'#707375'}
                       />
                       <TouchableOpacity
-                        onPress={() => openDeleteModal(v._id)}
+                        onPress={() => openDeleteDish(v._id, props.id)}
                         style={{ justifyContent: 'center' }}
                         activeOpacity={0.3}
                       >

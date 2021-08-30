@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Dimensions, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import i18n from '../../li8n';
@@ -34,7 +34,9 @@ const Menu = ({
   const [categArr, setCategArr] = useState([]);
   const [dishState, setDishState] = useState([]);
   const [dishId, setDishId] = useState();
+  const [menuId, setMenuId] = useState();
   const [dishes, setDishes] = useState([]);
+  const [deleteType, setDeleteType] = useState();
   const [deleteMenu, { isLoading: deleteMenuLoading }] = useMutation(
     DELETE_MENU,
   );
@@ -52,10 +54,9 @@ const Menu = ({
     refetch: refetchMenus,
   } = useQuery(['GET_MENU', { place_id: restaurant_id }], GET_MENU, {
     ...reactQueryConfig,
-    onSuccess: (res) =>{
+    onSuccess: res => {
       //  setCategArr(res.data);
       console.log(restaurant_id);
-
     },
     onError: e => {
       alert(e?.response?.data?.message);
@@ -65,11 +66,33 @@ const Menu = ({
   // console.log("start ", menus.data[0], " end");
   // console.log(state.userDetails.user_id);
 
+  useEffect(() => {
+    if (!menusLoading) {
+      setCategArr(menus.data);
+    }
+  }, []);
+  console.log(categArr, ' categarr');
+
+  const newCategories = categArr.filter(v => {
+    return !v._id;
+  });
+  // const all_categories = set
+  console.log('new ', newCategories);
   const submitCategory = async () => {
-    await publishMenu(categArr, {
-      onSuccess: () => {},
-      onError: () => {},
-    });
+    await publishMenu(
+      {
+        data: newCategories,
+      },
+      {
+        onSuccess: () => {
+          alert('added new category successfully');
+          refetchMenus();
+        },
+        onError: e => {
+          alert('err new categ');
+        },
+      },
+    );
     // setCategArr([]);
   };
 
@@ -104,7 +127,7 @@ const Menu = ({
       >
         <View>
           {!menusLoading
-            ? menus.data.map((v, i) => {
+            ? categArr.map((v, i) => {
                 return (
                   <Categories
                     key={i}
@@ -124,12 +147,16 @@ const Menu = ({
                     setDeleteDishModal={setDeleteDishModal}
                     dishState={dishState}
                     setDishState={setDishState}
+                    menuId={menuId}
+                    setMenuId={setMenuId}
                     dishId={dishId}
                     setDishId={setDishId}
                     dishess={dishes}
                     setDishess={setDishes}
                     deleteDish={deleteDish}
                     deleteMenu={DeleteMenu}
+                    deleteType={deleteType}
+                    setDeleteType={setDeleteType}
                   />
                 );
               })
@@ -161,6 +188,11 @@ const Menu = ({
           setDishId={setDishId}
           dishes={dishes}
           setDishes={setDishes}
+          menuId={menuId}
+          setMenuId={setMenuId}
+          deleteMenu={DeleteMenu}
+          deleteType={deleteType}
+          setDeleteType={setDeleteType}
         />
       </ScrollView>
       {currentTab == 'menu' && categArr.length ? (

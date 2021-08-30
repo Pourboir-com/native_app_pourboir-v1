@@ -23,6 +23,9 @@ const DeleteDishModal = ({
   setDishId,
   dishes,
   setDishes,
+  menuId,
+  deleteType,
+  deleteMenu,
 }) => {
   const [deleteDish, { isLoading: deleteDishLoading }] = useMutation(
     DELETE_DISH,
@@ -30,13 +33,20 @@ const DeleteDishModal = ({
   const handleClose = () => {
     setDeleteDishModal(false);
   };
-  const DeleteDish = id => {
-    console.log(dishId, ' dishId');
-    deleteDish(
-      { dish_id: id, menu_id: '' },
+  console.log(menuId, 'menuId');
+  console.log(deleteType);
+  console.log(dishId, ' dishId');
+  console.log(menuId, 'menuId');
+  const DeleteDish = async id => {
+    await deleteDish(
+      { dish_id: dishId, menu_id: menuId },
       {
-        onSuccess: () => {},
-        onError: () => {},
+        onSuccess: () => {
+          alert('Dish deleted successfully');
+        },
+        onError: e => {
+          alert('Err', e);
+        },
       },
     );
   };
@@ -83,7 +93,9 @@ const DeleteDishModal = ({
           </Text>
           <Text style={[styles.txtName, { fontFamily: 'ProximaNova' }]}>
             {/* {i18n.t('will_contact_by_email')} */}
-            {i18n.t('delete_dish')}
+            {deleteType === 'menu'
+              ? i18n.t('delete_menu')
+              : i18n.t('delete_dish')}
           </Text>
         </View>
         <View
@@ -97,7 +109,9 @@ const DeleteDishModal = ({
             <Text style={{ fontFamily: 'ProximaNova' }}>{i18n.t('no')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => DeleteDish(dishId)}
+            onPress={() =>
+              deleteType === 'menu' ? deleteMenu(menuId) : DeleteDish(dishId)
+            }
             style={
               (styles.btns, { ...styles.btns, backgroundColor: '#FCDF6F' })
             }

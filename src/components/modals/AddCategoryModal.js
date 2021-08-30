@@ -35,7 +35,7 @@ const AddCategoryModal = ({
         ...categArr,
         {
           category: category,
-          menu_id: "",
+          // menu_id: "",
           dishes: [],
         },
       ]);

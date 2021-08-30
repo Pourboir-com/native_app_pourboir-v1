@@ -98,7 +98,7 @@ const Categories = props => {
                           { fontWeight: 'bold', color: 'black' },
                         ]}
                         onChangeText={name =>
-                          handleInputChange(name, i, 'dishName')
+                          handleInputChange(name, i, 'name')
                         }
                         value={v.name}
                         placeholder={i18n.t('dish_name')}

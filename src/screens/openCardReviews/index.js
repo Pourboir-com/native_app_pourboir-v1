@@ -84,6 +84,7 @@ const ReviewDetails = ({ navigation, route }) => {
     restaurant_id,
     geometry,
   } = route?.params || {};
+  console.log(restaurant_id);
 
   const {
     data: waitersData,
@@ -253,7 +254,7 @@ const ReviewDetails = ({ navigation, route }) => {
         settingBtn={true}
         settingBtnFunc={() =>
           navigation.navigate('Braserri', {
-            restaurant_id: restaurant_id || place_id,
+            restaurant_id: restaurant_id || '',
             img,
             name,
           })

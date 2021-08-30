@@ -71,15 +71,19 @@ const Menu = ({
       setCategArr(menus.data);
     }
   }, []);
-  console.log(categArr, ' categarr');
+  // console.log(categArr, ' categarr');
 
   const newCategories = categArr.filter(v => {
     return !v._id;
   });
   // const all_categories = set
-  console.log('new ', newCategories);
+  console.log( {
+    data: newCategories || [],
+    user_id: state.userDetails.user_id || '',
+    place_id: restaurant_id || '',
+  });
   const submitCategory = async () => {
-    console.log(newCategories);
+    // console.log(newCategories);
     await publishMenu(
       {
         data: newCategories || [],

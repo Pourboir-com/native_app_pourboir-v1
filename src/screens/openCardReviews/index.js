@@ -253,7 +253,7 @@ const ReviewDetails = ({ navigation, route }) => {
         settingBtn={true}
         settingBtnFunc={() =>
           navigation.navigate('Braserri', {
-            restaurant_id,
+            restaurant_id: restaurant_id || place_id,
             img,
             name,
           })

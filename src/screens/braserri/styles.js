@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
   numberBox: {
     backgroundColor: '#FCDF6F',
-    marginLeft: 30,
+    marginLeft: 20,
     borderRadius: 8,
     width: 'auto' || 30,
     alignItems: 'center',
@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
   numberTxt: {
     fontSize: 15,
     fontFamily: 'ProximaNova',
-    textAlign: 'center',
   },
   mainHeading: {
     fontSize: 22,

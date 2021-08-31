@@ -152,7 +152,7 @@ const AddWaiterCookModal = ({
           <Text
             style={{
               fontFamily: 'ProximaNova',
-              fontSize: 12,
+              fontSize: 14,
               color: Colors.fontDark,
             }}
           >

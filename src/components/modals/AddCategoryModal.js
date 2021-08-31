@@ -143,7 +143,7 @@ const AddCategoryModal = ({
           <Text
             style={{
               fontFamily: 'ProximaNova',
-              fontSize: 12,
+              fontSize: 14,
               color: Colors.fontDark,
             }}
           >
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   },
   btn_yellow: {
     backgroundColor: '#EAEAEA',
-    width: '86%',
+    width: 270,
     justifyContent: 'center',
     alignItems: 'center',
     height: 46,

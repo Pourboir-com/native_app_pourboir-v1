@@ -92,6 +92,7 @@ const ReviewDetails = ({ navigation, route }) => {
     restaurant_id,
     geometry,
   } = route?.params || {};
+  console.log(restaurant_id);
 
   const {
     data: waitersData,
@@ -292,6 +293,7 @@ const ReviewDetails = ({ navigation, route }) => {
         position="absolute"
         navigation={navigation}
         settingBtn={true}
+<<<<<<< HEAD
         settingBtnFunc={
           // navigation.navigate('Braserri', {
           //   restaurant_id: restaurant_id || place_id,
@@ -299,6 +301,14 @@ const ReviewDetails = ({ navigation, route }) => {
           //   name,
           // })
           () => setApprovalModal(true)
+=======
+        settingBtnFunc={() =>
+          navigation.navigate('Braserri', {
+            restaurant_id: restaurant_id || '',
+            img,
+            name,
+          })
+>>>>>>> 4e1bdae61cab6b564de71442e97840a2f0c40bdc
         }
       />
       <Animated.View

@@ -82,7 +82,7 @@ const HomeScreen = props => {
       },
     },
   );
-  console.log(restaurantData);
+  // console.log(restaurantData);
 
   // const handleLoadMore = () => {
   //   setnextPageToken(restaurantData.restaurants.next_page_token);

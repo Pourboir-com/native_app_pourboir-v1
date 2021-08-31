@@ -66,20 +66,33 @@ const Menu = ({
   // console.log("start ", menus.data[0], " end");
   // console.log(state.userDetails.user_id);
 
+<<<<<<< HEAD
   // useEffect(() => {
   //   if (!menusLoading) {
   //     setCategArr(menus.data ? menus.data : []);
   //   }
   // }, []);
   console.log(categArr, ' categarr');
+=======
+  useEffect(() => {
+    if (!menusLoading) {
+      setCategArr(menus.data);
+    }
+  }, []);
+  // console.log(categArr, ' categarr');
+>>>>>>> 4e1bdae61cab6b564de71442e97840a2f0c40bdc
 
   const newCategories = categArr.filter(v => {
     return !v._id;
   });
   // const all_categories = set
-  console.log('new ', newCategories);
+  console.log( {
+    data: newCategories || [],
+    user_id: state.userDetails.user_id || '',
+    place_id: restaurant_id || '',
+  });
   const submitCategory = async () => {
-    console.log(newCategories);
+    // console.log(newCategories);
     await publishMenu(
       {
         data: newCategories || [],

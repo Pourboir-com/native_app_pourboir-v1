@@ -17,6 +17,7 @@ const imgWaiter = require('../../assets/images/Choose-rafiki.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import uuid from 'react-native-uuid'
 
 const AddCategoryModal = ({
   setCategModal,
@@ -35,7 +36,7 @@ const AddCategoryModal = ({
         ...categArr,
         {
           category: category,
-          // menu_id: "",
+          idMenu: uuid.v4(),
           dishes: [],
         },
       ]);

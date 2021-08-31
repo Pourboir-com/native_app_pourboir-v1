@@ -18,7 +18,7 @@ const Categories = props => {
   }, [props.dishess]);
   const addDish = async () => {
     const list = await props.dishes.push({
-      dishName: '',
+      name: '',
       price: parseInt(''),
       description: '',
     });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -37,7 +37,18 @@ const DeleteDishModal = ({
   console.log(deleteType);
   console.log(dishId, ' dishId');
   console.log(menuId, 'menuId');
+  const [d, setD] = useState([])
+  useEffect(() => {
+    setD(dishes)
+  },[dishes])
+  console.log(d, ' dd')
   const DeleteDish = async id => {
+   if(id.charAt(0) == 'y'){
+    setDishes(  d.filter((v) => {
+      return v.idDish !== id
+    }))
+    
+   }else{
     await deleteDish(
       { dish_id: dishId, menu_id: menuId },
       {
@@ -49,6 +60,7 @@ const DeleteDishModal = ({
         },
       },
     );
+   }
   };
   return (
     <Overlay

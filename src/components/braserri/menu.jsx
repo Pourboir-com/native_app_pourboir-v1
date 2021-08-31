@@ -66,11 +66,11 @@ const Menu = ({
   // console.log("start ", menus.data[0], " end");
   // console.log(state.userDetails.user_id);
 
-  useEffect(() => {
-    if (!menusLoading) {
-      setCategArr(menus.data);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!menusLoading) {
+  //     setCategArr(menus.data ? menus.data : []);
+  //   }
+  // }, []);
   console.log(categArr, ' categarr');
 
   const newCategories = categArr.filter(v => {
@@ -101,20 +101,27 @@ const Menu = ({
 
   const DeleteMenu = async id => {
     console.log(id);
-    await deleteMenu(
-      //body
-      { menu_ids: [id] },
-      //api response below
-      {
-        onSuccess: () => {
-          refetchMenus();
+    if(id.charAt(0) == 'x'){
+     setCategArr( categArr.filter((v) => {
+      return v.idMenu !== id
+    }))
+    setDeleteDishModal(false)
+    }else{
+      await deleteMenu(
+        //body
+        { menu_ids: [id] },
+        //api response below
+        {
+          onSuccess: () => {
+            refetchMenus();
+          },
+          onError: e => {
+            alert(e.response?.data?.message);
+          },
         },
-        onError: e => {
-          alert(e.response?.data?.message);
-        },
-      },
-    );
-    // setCategArr([]);
+      );
+      // setCategArr([]);
+    }
   };
 
   return (
@@ -129,13 +136,13 @@ const Menu = ({
         }}
       >
         <View>
-          {!menusLoading
+          {categArr.length
             ? categArr.map((v, i) => {
                 return (
                   <Categories
                     key={i}
                     id={v._id}
-                    categArr={menus.data}
+                    categArr={categArr}
                     setCategArr={setCategArr}
                     description={description}
                     setDescription={setDescription}
@@ -160,6 +167,7 @@ const Menu = ({
                     deleteMenu={DeleteMenu}
                     deleteType={deleteType}
                     setDeleteType={setDeleteType}
+                    idMenu={v.idMenu}
                   />
                 );
               })

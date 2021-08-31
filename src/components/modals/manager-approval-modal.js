@@ -13,45 +13,38 @@ import {
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
-const imgWaiter = require('../../assets/images/Choose-rafiki.png');
+const imgWaiter = require('../../assets/images/Version-control-pana.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import uuid from 'react-native-uuid'
+import uuid from 'react-native-uuid';
+import CheckBox from 'react-native-check-box';
 
-const AddCategoryModal = ({
-  setCategModal,
-  categModal,
-  categArr,
-  setCategArr,
-  dishState,
-  setDishState,
+const ManagerApprovalModal = ({
+  termsChecked,
+  setTermsChecked,
+  cellPhone,
+  setCellPhone,
+  siretNumber,
+  setSiretNumber,
+  approvalModal,
+  setApprovalModal,
+  setReceivedModal,
+  submitApproval,
 }) => {
-  const [category, setCategory] = useState('');
-  const [menu_id, setMenuId] = useState(new Date().valueOf());
-  const validation = category;
-  const AddCateg = async () => {
-    try {
-      await setCategArr([
-        ...categArr,
-        {
-          category: category,
-          idMenu: "x"+uuid.v4(),
-          dishes: [],
-        },
-      ]);
-      setCategory('');
-      setMenuId();
-      setCategModal(false);
-    } catch (error) {
-      console.log(error);
-    }
+  const validation = termsChecked && cellPhone && siretNumber;
+
+  const Claim = () => {
+    setApprovalModal(false);
+    setReceivedModal(true);
+    console.log(approvalModal);
   };
+
   return (
     <Overlay
       overlayStyle={styles.container}
-      isVisible={categModal}
-      onBackdropPress={() => setCategModal(false)}
+      isVisible={approvalModal}
+      onBackdropPress={() => setApprovalModal(false)}
     >
       <ImageBackground
         style={styles.imgBgStyle}
@@ -60,7 +53,7 @@ const AddCategoryModal = ({
       >
         <View style={styles.viewImg}>
           <TouchableOpacity
-            onPress={() => setCategModal(false)}
+            onPress={() => setApprovalModal(false)}
             style={{ alignSelf: 'flex-end', margin: 10 }}
           >
             <AntDesign name="close" size={29} color="#485460" />
@@ -91,10 +84,11 @@ const AddCategoryModal = ({
         scrollToOverflowEnabled={true}
         enableAutomaticScroll={Platform.OS === 'ios' ? true : false}
         resetScrollToCoords={{ x: 0, y: 0 }}
-        style={{ marginTop: 50 }}
+        style={{ marginTop: 20 }}
       >
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-          {i18n.t('new_categ')}
+          {/* {i18n.t('new_categ')} */}
+          Fill in the information
         </Text>
         <Text
           style={{
@@ -103,9 +97,12 @@ const AddCategoryModal = ({
             color: Colors.fontDark,
             textAlign: 'center',
             paddingTop: 10,
+            paddingHorizontal: 25,
           }}
         >
-          {i18n.t('choose_categ')}
+          {/* {i18n.t('choose_categ')} */}
+          We must verify that you are the owner of the establishment. Thanks for
+          filling in the information.
         </Text>
 
         <View
@@ -121,17 +118,83 @@ const AddCategoryModal = ({
           <View style={(styles.input_box, { alignItems: 'center' })}>
             <TextInput
               style={styles.inputsTopTow}
-              onChangeText={e => setCategory(e)}
-              value={category}
-              placeholder={i18n.t('category')}
+              onChangeText={e => setSiretNumber(e)}
+              value={siretNumber}
+              placeholder="SIRET Number"
+              keyboardType={'numeric'}
               placeholderTextColor={'#707375'}
             />
+          </View>
+          <View
+            style={(styles.input_box, { alignItems: 'center', marginTop: 15 })}
+          >
+            <TextInput
+              style={styles.inputsTopTow}
+              onChangeText={e => setCellPhone(e)}
+              value={cellPhone}
+              placeholder="Cellphone number"
+              placeholderTextColor={'#707375'}
+            />
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginLeft: 9,
+            marginBottom: 14,
+            justifyContent: 'center',
+          }}
+        >
+          <View style={{ paddingTop: 0 }}>
+            <CheckBox
+              style={{
+                zIndex: 9999,
+                marginTop: Platform.OS === 'ios' ? -10 : -2,
+              }}
+              onClick={() => setTermsChecked(!termsChecked)}
+              isChecked={termsChecked}
+              checkedImage={
+                <Image
+                  style={{ width: 18, marginTop: -4 }}
+                  resizeMode={'contain'}
+                  source={require('../../assets/images/checked.png')}
+                />
+              }
+              unCheckedImage={
+                <Image
+                  style={{ width: 16 }}
+                  resizeMode={'contain'}
+                  source={require('../../assets/images/unchecked.png')}
+                />
+              }
+            />
+          </View>
+          <View
+            style={{
+              marginHorizontal: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            activeOpacity={0.5}
+          >
+            <Text
+              style={{
+                fontSize: Platform.OS == 'ios' ? 13 : 13,
+                color: '#000',
+                fontFamily: 'ProximaNova',
+              }}
+            >
+              I accept the profesional{' '}
+              <Text
+                style={{ color: '#0050A0' }}
+              >{`terms and \nconditions.`}</Text>
+            </Text>
           </View>
         </View>
 
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={AddCateg}
+          onPress={submitApproval}
           disabled={validation ? false : true}
           style={[
             styles.btn_yellow,
@@ -147,8 +210,8 @@ const AddCategoryModal = ({
               color: Colors.fontDark,
             }}
           >
-            {i18n.t('confirm')}
-            {/* Confirm */}
+            {/* {i18n.t('confirm')} */}
+            Claim Business
           </Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>
@@ -156,7 +219,7 @@ const AddCategoryModal = ({
   );
 };
 
-export default AddCategoryModal;
+export default ManagerApprovalModal;
 
 const styles = StyleSheet.create({
   inputsTopTow: {
@@ -207,7 +270,7 @@ const styles = StyleSheet.create({
   },
   imgBgStyle: {
     width: '100%',
-    height: 200,
+    height: 225,
   },
   txtConfrm: {
     fontSize: 15,
@@ -216,10 +279,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   imgStyle: {
-    width: 240,
-    height: 220,
+    width: 210,
+    height: 200,
     alignSelf: 'center',
-    marginTop: -72,
+    marginTop: -52,
   },
   viewImg: {
     width: '100%',

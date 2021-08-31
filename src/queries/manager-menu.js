@@ -13,6 +13,11 @@ export const PUBLISH_MENU = async e => {
   return res;
 };
 
+export const MANAGER_APPROVAL = async e => {
+  let res = await axios.post(BASE_URL + `/v1/manager/user-manager`, e);
+  return res;
+};
+
 export const DELETE_DISH = async e => {
   let res = await axios.delete(BASE_URL + `/v1/menu/dish`, e);
   return res;

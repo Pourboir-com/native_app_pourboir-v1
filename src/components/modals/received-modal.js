@@ -13,45 +13,19 @@ import {
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
-const imgWaiter = require('../../assets/images/Choose-rafiki.png');
+const imgWaiter = require('../../assets/images/Appreciation-bro.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import uuid from 'react-native-uuid'
+import uuid from 'react-native-uuid';
+import CheckBox from 'react-native-check-box';
 
-const AddCategoryModal = ({
-  setCategModal,
-  categModal,
-  categArr,
-  setCategArr,
-  dishState,
-  setDishState,
-}) => {
-  const [category, setCategory] = useState('');
-  const [menu_id, setMenuId] = useState(new Date().valueOf());
-  const validation = category;
-  const AddCateg = async () => {
-    try {
-      await setCategArr([
-        ...categArr,
-        {
-          category: category,
-          idMenu: "x"+uuid.v4(),
-          dishes: [],
-        },
-      ]);
-      setCategory('');
-      setMenuId();
-      setCategModal(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const ReceivedModal = ({ receivedModal, setReceivedModal }) => {
   return (
     <Overlay
       overlayStyle={styles.container}
-      isVisible={categModal}
-      onBackdropPress={() => setCategModal(false)}
+      isVisible={receivedModal}
+      onBackdropPress={() => setReceivedModal(false)}
     >
       <ImageBackground
         style={styles.imgBgStyle}
@@ -60,7 +34,7 @@ const AddCategoryModal = ({
       >
         <View style={styles.viewImg}>
           <TouchableOpacity
-            onPress={() => setCategModal(false)}
+            onPress={() => setReceivedModal(false)}
             style={{ alignSelf: 'flex-end', margin: 10 }}
           >
             <AntDesign name="close" size={29} color="#485460" />
@@ -91,10 +65,11 @@ const AddCategoryModal = ({
         scrollToOverflowEnabled={true}
         enableAutomaticScroll={Platform.OS === 'ios' ? true : false}
         resetScrollToCoords={{ x: 0, y: 0 }}
-        style={{ marginTop: 50 }}
+        style={{ marginTop: 80 }}
       >
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-          {i18n.t('new_categ')}
+          {/* {i18n.t('new_categ')} */}
+          Thank you !
         </Text>
         <Text
           style={{
@@ -103,42 +78,18 @@ const AddCategoryModal = ({
             color: Colors.fontDark,
             textAlign: 'center',
             paddingTop: 10,
+            paddingHorizontal: 25,
           }}
         >
-          {i18n.t('choose_categ')}
+          {/* {i18n.t('choose_categ')} */}
+          We have received your claim, one person from our team will reach out
+          to you soon.
         </Text>
-
-        <View
-          style={{
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            // width: 270,
-            marginVertical: 15,
-            marginTop: 35,
-          }}
-        >
-          <View style={(styles.input_box, { alignItems: 'center' })}>
-            <TextInput
-              style={styles.inputsTopTow}
-              onChangeText={e => setCategory(e)}
-              value={category}
-              placeholder={i18n.t('category')}
-              placeholderTextColor={'#707375'}
-            />
-          </View>
-        </View>
 
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={AddCateg}
-          disabled={validation ? false : true}
-          style={[
-            styles.btn_yellow,
-            validation && {
-              backgroundColor: Colors.yellow,
-            },
-          ]}
+          onPress={() => setReceivedModal(false)}
+          style={[styles.btn_yellow]}
         >
           <Text
             style={{
@@ -147,8 +98,8 @@ const AddCategoryModal = ({
               color: Colors.fontDark,
             }}
           >
-            {i18n.t('confirm')}
-            {/* Confirm */}
+            {/* {i18n.t('confirm')} */}
+            Close
           </Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>
@@ -156,7 +107,7 @@ const AddCategoryModal = ({
   );
 };
 
-export default AddCategoryModal;
+export default ReceivedModal;
 
 const styles = StyleSheet.create({
   inputsTopTow: {
@@ -188,7 +139,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   btn_yellow: {
-    backgroundColor: '#EAEAEA',
+    backgroundColor: '#FCDF6F',
     width: 270,
     justifyContent: 'center',
     alignItems: 'center',
@@ -196,6 +147,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: Platform.OS === 'ios' ? 25 : 15,
     alignSelf: 'center',
+    marginTop: 30,
   },
   container: {
     width: '88%',
@@ -207,7 +159,7 @@ const styles = StyleSheet.create({
   },
   imgBgStyle: {
     width: '100%',
-    height: 200,
+    height: 150,
   },
   txtConfrm: {
     fontSize: 15,
@@ -216,10 +168,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   imgStyle: {
-    width: 240,
-    height: 220,
+    width: 210,
+    height: 200,
     alignSelf: 'center',
-    marginTop: -72,
+    marginTop: -84,
   },
   viewImg: {
     width: '100%',

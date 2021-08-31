@@ -6,24 +6,27 @@ import styles from '../../screens/braserri/styles';
 import AddBtn from '../add-common-btn';
 import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import uuid from 'react-native-uuid'
 
 const Categories = props => {
   const [categ, setCateg] = useState();
   // const [menuId, setMenuId] = useState();
   useEffect(() => {
-    setCateg(props.categArr);
     // props.setMenuId(props.id);
     props.setDishess(props.dishes);
     // console.log(props.dishes, ' s');
+    setCateg(props.categArr);
+    // console.log(props.dishess, " dihieh")
   }, [props.dishess]);
   const addDish = async () => {
     const list = await props.dishes.push({
+      idDish: "y"+uuid.v4(),
       name: '',
       price: parseInt(''),
       description: '',
     });
     props.setDishess(list);
-    // console.log(props.dishess, ' ssssss');
+    console.log(props.dishess, ' ssssss');
   };
 
   const handleInputChange = (value, index, name) => {
@@ -32,19 +35,25 @@ const Categories = props => {
     // console.log(props.dishes[index]);
   };
 
-  const openDeleteDish = id => {
+  const openDeleteDish = (id) => {
     props.setDishId(id);
     props.setDeleteDishModal(true);
     props.setDishess(props.dishes);
-    props.setMenuId(props.id);
+    props.setMenuId(props.id ? props.id : props.idMenu);
     props.setDeleteType('dish');
   };
 
-  const openDeleteMenu = id => {
+  const openDeleteMenu = (id) => {
     props.setDeleteDishModal(true);
     props.setMenuId(id);
     props.setDeleteType('menu');
   };
+
+  // const dltDish = (id) => {
+  //   props.setDesh(props.dishes.filter((v) => {
+  //     console.log(v.idDish !== id)
+  //    }))
+  // }
 
   return (
     <KeyboardAwareScrollView
@@ -67,7 +76,7 @@ const Categories = props => {
       >
         <Text style={styles.mainHeading}>{props.category}</Text>
         <TouchableOpacity
-          onPress={() => openDeleteMenu(props.id)}
+          onPress={() => openDeleteMenu(props.id || props.idMenu)}
           activeOpacity={0.3}
         >
           <Image
@@ -77,7 +86,7 @@ const Categories = props => {
         </TouchableOpacity>
       </View>
 
-      {props.dishes ? (
+      {props.dishes  ? (
         <>
           {props.dishes &&
             props.dishes.map((v, i) => {
@@ -98,7 +107,7 @@ const Categories = props => {
                           { fontWeight: 'bold', color: 'black' },
                         ]}
                         onChangeText={name =>
-                          handleInputChange(name, i, 'dishName')
+                          handleInputChange(name, i, 'name')
                         }
                         value={v.name}
                         placeholder={i18n.t('dish_name')}
@@ -135,7 +144,7 @@ const Categories = props => {
                         placeholderTextColor={'#707375'}
                       />
                       <TouchableOpacity
-                        onPress={() => openDeleteDish(v._id, props.id)}
+                        onPress={() => openDeleteDish(v.idDish) } //openDeleteDish(v._id ? v.id : v.idDish)
                         style={{ justifyContent: 'center' }}
                         activeOpacity={0.3}
                       >

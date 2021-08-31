@@ -32,6 +32,7 @@ import {
   I_AM_WAITER,
   ADDING_WAITERS,
   GET_RESTAURANT_DETAILS,
+  MANAGER_APPROVAL,
 } from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
@@ -42,6 +43,8 @@ const waiter = require('../../assets/images/waiter2.png');
 import i18n from '../../li8n';
 // import { filteredRestaurant, yourFilteredRestaurant } from '../../util';
 import Spinner from 'react-native-loading-spinner-overlay';
+import ManagerApprovalModal from '../../components/modals/manager-approval-modal';
+import ReceivedModal from '../../components/modals/received-modal';
 // import { set } from 'react-native-reanimated';
 
 const ReviewDetails = ({ navigation, route }) => {
@@ -71,6 +74,11 @@ const ReviewDetails = ({ navigation, route }) => {
   const [AddWaiters] = useMutation(ADDING_WAITERS);
   const [Refferedloading, setRefferedLoading] = useState(false);
   const [Userloading, setUserLoading] = useState(false);
+  const [cellPhone, setCellPhone] = useState();
+  const [siretNumber, setSiretNumber] = useState();
+  const [termsChecked, setTermsChecked] = useState(false);
+  const [approvalModal, setApprovalModal] = useState(false);
+  const [receivedModal, setReceivedModal] = useState(false);
 
   const {
     img,
@@ -228,6 +236,39 @@ const ReviewDetails = ({ navigation, route }) => {
       navigation.navigate('socialLogin', { confirmWaiter: true });
     }
   };
+  const [managerApproval, { isLoading: publishMenuLoading }] = useMutation(
+    MANAGER_APPROVAL,
+  );
+
+  const submitApproval = async () => {
+    await managerApproval(
+      {
+        user_id: state.userDetails.user_id,
+        siret_number: siretNumber,
+        cell_number: cellPhone,
+        restaurant: {
+          place_id: place_id,
+          rating: rating,
+          photos: [img],
+          name: name,
+          formatted_address: vicinity,
+          our_rating: String(our_rating),
+          location: geometry,
+          international_phone_number:
+            RestaurantDetails?.data?.international_phone_number,
+        },
+      },
+      {
+        onSuccess: () => {
+          setReceivedModal(true);
+          console.log('approval submitted');
+        },
+        onError: e => {
+          alert('approval error');
+        },
+      },
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -251,12 +292,13 @@ const ReviewDetails = ({ navigation, route }) => {
         position="absolute"
         navigation={navigation}
         settingBtn={true}
-        settingBtnFunc={() =>
-          navigation.navigate('Braserri', {
-            restaurant_id: restaurant_id || place_id,
-            img,
-            name,
-          })
+        settingBtnFunc={
+          // navigation.navigate('Braserri', {
+          //   restaurant_id: restaurant_id || place_id,
+          //   img,
+          //   name,
+          // })
+          () => setApprovalModal(true)
         }
       />
       <Animated.View
@@ -328,7 +370,14 @@ const ReviewDetails = ({ navigation, route }) => {
         bounces={false}
       >
         <View
-          style={{ marginTop: 220, marginHorizontal: 24, marginBottom: 20 }}
+          style={{
+            marginTop: 220,
+            width: '95%',
+            alignSelf: 'center',
+            marginBottom: 20,
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+          }}
         >
           <TouchableOpacity
             activeOpacity={0.5}
@@ -338,18 +387,10 @@ const ReviewDetails = ({ navigation, route }) => {
                 name,
               })
             }
-            style={[
-              styles.viewItem,
-              {
-                borderBottomColor: '#f9f9f9',
-                borderBottomWidth: 1,
-                borderTopLeftRadius: 12,
-                borderTopRightRadius: 12,
-              },
-            ]}
+            style={[styles.viewItem]}
           >
             <View style={styles.viewIcon}>
-              <Feather name="send" size={18} color={Colors.yellow} />
+              <Feather name="send" size={26} color={Colors.yellow} />
             </View>
             <Text
               ellipsizeMode="tail"
@@ -360,21 +401,41 @@ const ReviewDetails = ({ navigation, route }) => {
                 fontSize: 14,
                 width: '70%',
                 lineHeight: 17,
+                textAlign: 'center',
               }}
             >
-              {vicinity || name}
+              {/* {vicinity || name} */}
+              Address
             </Text>
-
-            <View
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            // onPress={() =>
+            //   navigation.navigate('MapScreen', {
+            //     geometry,
+            //     name,
+            //   })
+            // }
+            style={[styles.viewItem]}
+          >
+            <View style={styles.viewIcon}>
+              <Feather name="check-square" size={26} color={Colors.yellow} />
+            </View>
+            <Text
+              ellipsizeMode="tail"
+              numberOfLines={2}
               style={{
-                flex: 1,
-                flexDirection: 'row-reverse',
+                fontFamily: 'ProximaNova',
+                color: Colors.fontDark,
+                fontSize: 14,
+                width: '70%',
+                lineHeight: 17,
+                textAlign: 'center',
               }}
             >
-              <View style={[styles.viewIcon2]}>
-                <FontAwesome name="angle-right" size={26} color={'grey'} />
-              </View>
-            </View>
+              {/* {vicinity || name} */}
+              Check-in
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.5}
@@ -385,29 +446,29 @@ const ReviewDetails = ({ navigation, route }) => {
             style={[
               styles.viewItem,
               {
-                marginBottom: 0,
-                borderBottomRightRadius: 12,
-                borderBottomLeftRadius: 12,
+                paddingVertical: 10,
               },
             ]}
           >
             <View style={styles.viewIcon}>
-              <Feather name="phone" size={18} color={Colors.yellow} />
+              <Feather name="phone" size={23} color={Colors.yellow} />
             </View>
             <Text
               style={{
                 fontFamily: 'ProximaNova',
                 color: Colors.fontDark,
                 fontSize: 14,
+                textAlign: 'center',
               }}
             >
-              {RestaurantDetailsLoading
+              {/* {RestaurantDetailsLoading
                 ? i18n.t('please_wait')
                 : RestaurantDetails?.data?.international_phone_number ||
-                  i18n.t('none')}
+                  i18n.t('none')} */}
+              Telephone
             </Text>
 
-            <View
+            {/* <View
               style={{
                 flex: 1,
                 flexDirection: 'row-reverse',
@@ -416,7 +477,7 @@ const ReviewDetails = ({ navigation, route }) => {
               <View style={[styles.viewIcon2]}>
                 <FontAwesome name="angle-right" size={26} color={'grey'} />
               </View>
-            </View>
+            </View> */}
           </TouchableOpacity>
         </View>
 
@@ -632,6 +693,23 @@ const ReviewDetails = ({ navigation, route }) => {
           buttonText={i18n.t('Thank_you')}
         />
       )}
+      <ManagerApprovalModal
+        siretNumber={siretNumber}
+        setSiretNumber={setSiretNumber}
+        cellPhone={cellPhone}
+        setCellPhone={setCellPhone}
+        termsChecked={termsChecked}
+        setTermsChecked={setTermsChecked}
+        approvalModal={approvalModal}
+        setApprovalModal={setApprovalModal}
+        receivedModal={receivedModal}
+        setReceivedModal={setReceivedModal}
+        submitApproval={submitApproval}
+      />
+      <ReceivedModal
+        receivedModal={receivedModal}
+        setReceivedModal={setReceivedModal}
+      />
     </View>
   );
 };
@@ -777,20 +855,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   viewBtnConatiner: {
-    width: '90%',
+    width: '100%',
     alignSelf: 'center',
     borderRadius: 15,
     marginTop: -45,
     overflow: 'hidden',
     backgroundColor: 'transparent',
+    // flexDirection:'row'
   },
   viewItem: {
-    width: '100%',
+    width: 110,
+    marginHorizontal: 10,
     height: 55,
     backgroundColor: '#fff',
     marginBottom: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     paddingHorizontal: 10,
+    borderRadius: 9,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -263,11 +263,11 @@ const ReviewDetails = ({ navigation, route }) => {
       },
       {
         onSuccess: () => {
+          setApprovalModal(false);
           setReceivedModal(true);
-          console.log('approval submitted');
         },
         onError: e => {
-          alert('approval error');
+          alert(e.response?.data?.message);
         },
       },
     );
@@ -346,9 +346,12 @@ const ReviewDetails = ({ navigation, route }) => {
                 })}
               </View>
               <View>
-              <TouchableOpacity style={{marginRight:15, zIndex:99999}} activeOpacity={0.6}>
-              <FontAwesome name="share-square-o" size={24} color="white" />
-              </TouchableOpacity>
+                <TouchableOpacity
+                  style={{ marginRight: 15, zIndex: 99999 }}
+                  activeOpacity={0.6}
+                >
+                  <FontAwesome name="share-square-o" size={24} color="white" />
+                </TouchableOpacity>
               </View>
               <View>
                 <Text
@@ -488,26 +491,37 @@ const ReviewDetails = ({ navigation, route }) => {
             </View> */}
           </TouchableOpacity>
         </View>
-            <View
-            style={{
-              flexDirection: 'row',
-              // marginTop: 220,
-              marginHorizontal: 15,
-              marginBottom: 10,
-              alignItems: 'center',
-            }}
+        <View
+          style={{
+            flexDirection: 'row',
+            // marginTop: 220,
+            marginHorizontal: 15,
+            marginBottom: 10,
+            alignItems: 'center',
+          }}
+        >
+          <View>
+            <Text
+              style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
-              <View>
-              <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
-            Reviews
-          </Text>
-              </View>
-              <TouchableOpacity onPress={() => setLeaveRevModal(true)} activeOpacity={0.5} style={{marginLeft: 15, backgroundColor:'#FCDF6F', padding:2, borderRadius:100}}>
-                <View>
-                <Entypo name="plus" size={22} color="white" />
-                </View>
-              </TouchableOpacity>
+              Reviews
+            </Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => setLeaveRevModal(true)}
+            activeOpacity={0.5}
+            style={{
+              marginLeft: 15,
+              backgroundColor: '#FCDF6F',
+              padding: 2,
+              borderRadius: 100,
+            }}
+          >
+            <View>
+              <Entypo name="plus" size={22} color="white" />
             </View>
+          </TouchableOpacity>
+        </View>
         <View
           style={{
             flexDirection: 'row',
@@ -737,9 +751,9 @@ const ReviewDetails = ({ navigation, route }) => {
         receivedModal={receivedModal}
         setReceivedModal={setReceivedModal}
       />
-      <LeaveReviewModal 
-      leaveRevModal={leaveRevModal}
-      setLeaveRevModal={setLeaveRevModal}
+      <LeaveReviewModal
+        leaveRevModal={leaveRevModal}
+        setLeaveRevModal={setLeaveRevModal}
       />
     </View>
   );

@@ -63,8 +63,8 @@ const Team = () => {
             refetchCookData();
           }
         },
-        onError: () => {
-          alert('Duplicate email not allowed!');
+        onError: (e) => {
+          alert(e.response?.data?.message);
         },
       },
     );

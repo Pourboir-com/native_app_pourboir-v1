@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import RefferedWaiterModal from '../../components/modals/ConfirmModal';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
@@ -45,6 +45,7 @@ import i18n from '../../li8n';
 import Spinner from 'react-native-loading-spinner-overlay';
 import ManagerApprovalModal from '../../components/modals/manager-approval-modal';
 import ReceivedModal from '../../components/modals/received-modal';
+import LeaveReviewModal from '../../components/modals/leave-review-modal';
 // import { set } from 'react-native-reanimated';
 
 const ReviewDetails = ({ navigation, route }) => {
@@ -74,11 +75,12 @@ const ReviewDetails = ({ navigation, route }) => {
   const [AddWaiters] = useMutation(ADDING_WAITERS);
   const [Refferedloading, setRefferedLoading] = useState(false);
   const [Userloading, setUserLoading] = useState(false);
-  const [cellPhone, setCellPhone] = useState();
-  const [siretNumber, setSiretNumber] = useState();
+  const [cellPhone, setCellPhone] = useState('');
+  const [siretNumber, setSiretNumber] = useState(parseInt());
   const [termsChecked, setTermsChecked] = useState(false);
   const [approvalModal, setApprovalModal] = useState(false);
   const [receivedModal, setReceivedModal] = useState(false);
+  const [leaveRevModal, setLeaveRevModal] = useState(false);
 
   const {
     img,
@@ -293,22 +295,13 @@ const ReviewDetails = ({ navigation, route }) => {
         position="absolute"
         navigation={navigation}
         settingBtn={true}
-<<<<<<< HEAD
-        settingBtnFunc={
+        settingBtnFunc={() =>
           // navigation.navigate('Braserri', {
-          //   restaurant_id: restaurant_id || place_id,
+          //   restaurant_id: restaurant_id || '',
           //   img,
           //   name,
           // })
-          () => setApprovalModal(true)
-=======
-        settingBtnFunc={() =>
-          navigation.navigate('Braserri', {
-            restaurant_id: restaurant_id || '',
-            img,
-            name,
-          })
->>>>>>> 4e1bdae61cab6b564de71442e97840a2f0c40bdc
+          setApprovalModal(true)
         }
       />
       <Animated.View
@@ -351,6 +344,11 @@ const ReviewDetails = ({ navigation, route }) => {
                     </TouchableOpacity>
                   );
                 })}
+              </View>
+              <View>
+              <TouchableOpacity style={{marginRight:15, zIndex:99999}} activeOpacity={0.6}>
+              <FontAwesome name="share-square-o" size={24} color="white" />
+              </TouchableOpacity>
               </View>
               <View>
                 <Text
@@ -490,7 +488,26 @@ const ReviewDetails = ({ navigation, route }) => {
             </View> */}
           </TouchableOpacity>
         </View>
-
+            <View
+            style={{
+              flexDirection: 'row',
+              // marginTop: 220,
+              marginHorizontal: 15,
+              marginBottom: 10,
+              alignItems: 'center',
+            }}
+            >
+              <View>
+              <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
+            Reviews
+          </Text>
+              </View>
+              <TouchableOpacity onPress={() => setLeaveRevModal(true)} activeOpacity={0.5} style={{marginLeft: 15, backgroundColor:'#FCDF6F', padding:2, borderRadius:100}}>
+                <View>
+                <Entypo name="plus" size={22} color="white" />
+                </View>
+              </TouchableOpacity>
+            </View>
         <View
           style={{
             flexDirection: 'row',
@@ -719,6 +736,10 @@ const ReviewDetails = ({ navigation, route }) => {
       <ReceivedModal
         receivedModal={receivedModal}
         setReceivedModal={setReceivedModal}
+      />
+      <LeaveReviewModal 
+      leaveRevModal={leaveRevModal}
+      setLeaveRevModal={setLeaveRevModal}
       />
     </View>
   );

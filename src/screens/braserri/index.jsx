@@ -22,7 +22,7 @@ const Braserri = ({ navigation, route }) => {
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   return (
-    <View style={{ flex: 1, backgroundColor: '#f9f9f9' }}>
+    <View style={{ flex: 1, backgroundColor: '#f9f9f9', }}>
       <ImageBackground
         style={{
           width: '100%',
@@ -57,7 +57,7 @@ const Braserri = ({ navigation, route }) => {
       </ImageBackground>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1, marginHorizontal: 20, marginTop: 30 }}
+        style={{ flex: 1, marginHorizontal: 20, marginTop: 30,  }}
       >
         <View
           style={{

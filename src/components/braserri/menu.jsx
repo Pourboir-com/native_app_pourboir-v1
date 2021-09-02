@@ -28,7 +28,7 @@ const Menu = ({
   restaurant_id,
 }) => {
   const { state } = useContext(Context);
-  let ScreenHeight = Dimensions.get('window').height / 1.5;
+  let ScreenHeight = Dimensions.get('window').height;
   const [categModal, setCategModal] = useState(false);
   const [deleteDishModal, setDeleteDishModal] = useState(false);
   const [categArr, setCategArr] = useState([]);
@@ -40,13 +40,9 @@ const Menu = ({
   const [deleteMenu, { isLoading: deleteMenuLoading }] = useMutation(
     DELETE_MENU,
   );
-  const [publishMenu, { isLoading: publishMenuLoading }] = useMutation(
-    PUBLISH_MENU,
-  );
   const [deleteDish, { isLoading: deleteDishLoading }] = useMutation(
     DELETE_DISH,
   );
-
   const {
     data: menus,
     isLoading: menusLoading,
@@ -55,71 +51,38 @@ const Menu = ({
   } = useQuery(['GET_MENU', { place_id: restaurant_id }], GET_MENU, {
     ...reactQueryConfig,
     onSuccess: res => {
-      //  setCategArr(res.data);
       console.log(restaurant_id);
     },
     onError: e => {
       alert(e?.response?.data?.message);
     },
   });
-  // console.log(menus);
-  // console.log("start ", menus.data[0], " end");
-  // console.log(state.userDetails.user_id);
-
-<<<<<<< HEAD
-  // useEffect(() => {
-  //   if (!menusLoading) {
-  //     setCategArr(menus.data ? menus.data : []);
-  //   }
-  // }, []);
   console.log(categArr, ' categarr');
-=======
   useEffect(() => {
     if (!menusLoading) {
       setCategArr(menus.data);
     }
   }, []);
-  // console.log(categArr, ' categarr');
->>>>>>> 4e1bdae61cab6b564de71442e97840a2f0c40bdc
 
   const newCategories = categArr.filter(v => {
     return !v._id;
   });
-  // const all_categories = set
-  console.log( {
+  console.log({
     data: newCategories || [],
     user_id: state.userDetails.user_id || '',
     place_id: restaurant_id || '',
   });
-  const submitCategory = async () => {
-    // console.log(newCategories);
-    await publishMenu(
-      {
-        data: newCategories || [],
-        user_id: state.userDetails.user_id || '',
-        place_id: restaurant_id || '',
-      },
-      {
-        onSuccess: () => {
-          alert('added new category successfully');
-          refetchMenus();
-        },
-        onError: e => {
-          alert('err new categ');
-        },
-      },
-    );
-    // setCategArr([]);
-  };
 
   const DeleteMenu = async id => {
     console.log(id);
-    if(id.charAt(0) == 'x'){
-     setCategArr( categArr.filter((v) => {
-      return v.idMenu !== id
-    }))
-    setDeleteDishModal(false)
-    }else{
+    if (id.charAt(0) == 'x') {
+      setCategArr(
+        categArr.filter(v => {
+          return v.idMenu !== id;
+        }),
+      );
+      setDeleteDishModal(false);
+    } else {
       await deleteMenu(
         //body
         { menu_ids: [id] },
@@ -144,7 +107,7 @@ const Menu = ({
         style={{
           marginHorizontal: 0,
           marginTop: 20,
-          marginBottom: 60,
+          marginBottom: 160,
           height: ScreenHeight,
         }}
       >
@@ -154,7 +117,11 @@ const Menu = ({
                 return (
                   <Categories
                     key={i}
+                    category={v.category}
                     id={v._id}
+                    place_id={restaurant_id}
+                    user_id={state.userDetails.user_id}
+                    refetchMenus={refetchMenus}
                     categArr={categArr}
                     setCategArr={setCategArr}
                     description={description}
@@ -180,7 +147,6 @@ const Menu = ({
                     deleteMenu={DeleteMenu}
                     deleteType={deleteType}
                     setDeleteType={setDeleteType}
-                    idMenu={v.idMenu}
                   />
                 );
               })
@@ -204,6 +170,8 @@ const Menu = ({
           setCategModal={setCategModal}
           categArr={categArr}
           setCategArr={setCategArr}
+          refetchMenus={refetchMenus}
+          restaurant_id={restaurant_id}
         />
         <DeleteDishModal
           deleteDishModal={deleteDishModal}
@@ -219,19 +187,6 @@ const Menu = ({
           setDeleteType={setDeleteType}
         />
       </ScrollView>
-      {currentTab == 'menu' && categArr.length ? (
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <CommonButton onPress={submitCategory} title="Publish your menu" />
-        </View>
-      ) : null}
     </>
   );
 };

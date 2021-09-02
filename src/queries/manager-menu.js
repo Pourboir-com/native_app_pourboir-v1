@@ -9,12 +9,16 @@ export const GET_MENU = async (get, e = {}) => {
 };
 
 export const PUBLISH_MENU = async e => {
-  let res = await axios.post(BASE_URL + `/v1/menu/bulk`, e);
+  let res = await axios.post(BASE_URL + `/v1/menu`, e);
   return res;
 };
 
 export const MANAGER_APPROVAL = async e => {
   let res = await axios.post(BASE_URL + `/v1/manager/user-manager`, e);
+  return res;
+};
+export const SAVE_CHANGES = async e => {
+  let res = await axios.post(BASE_URL + `/v1/menu`, e);
   return res;
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   View,
   Text,
@@ -18,6 +18,9 @@ const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import uuid from 'react-native-uuid'
+import { useMutation } from 'react-query';
+import Context from '../../contextApi/context';
+import { PUBLISH_MENU } from '../../queries';
 
 const AddCategoryModal = ({
   setCategModal,
@@ -26,26 +29,52 @@ const AddCategoryModal = ({
   setCategArr,
   dishState,
   setDishState,
+  refetchMenus,
+  restaurant_id,
 }) => {
+  const { state } = useContext(Context);
+
   const [category, setCategory] = useState('');
   const [menu_id, setMenuId] = useState(new Date().valueOf());
+  const [publishMenu, { isLoading: publishMenuLoading }] = useMutation(
+    PUBLISH_MENU,
+  );
   const validation = category;
   const AddCateg = async () => {
-    try {
-      await setCategArr([
-        ...categArr,
-        {
-          category: category,
-          idMenu: "x"+uuid.v4(),
-          dishes: [],
+    // try {
+    //   await setCategArr([
+    //     ...categArr,
+    //     {
+    //       category: category,
+    //       idMenu: "x"+uuid.v4(),
+    //       dishes: [],
+    //     },
+    //   ]);
+    //   setCategory('');
+    //   setMenuId();
+    //   setCategModal(false);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+
+    await publishMenu(
+      {
+        category: category || '',
+        user_id: state.userDetails.user_id || '',
+        place_id: restaurant_id || '',
+        dishes: []
+      },
+      {
+        onSuccess: () => {
+          // alert('added new category successfully');
+          setCategModal(false)
+          refetchMenus();
         },
-      ]);
-      setCategory('');
-      setMenuId();
-      setCategModal(false);
-    } catch (error) {
-      console.log(error);
-    }
+        onError: e => {
+          alert('err new categ');
+        },
+      },
+    );
   };
   return (
     <Overlay

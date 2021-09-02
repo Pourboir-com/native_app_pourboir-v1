@@ -6,21 +6,20 @@ import styles from '../../screens/braserri/styles';
 import AddBtn from '../add-common-btn';
 import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import uuid from 'react-native-uuid'
+import uuid from 'react-native-uuid';
+import CommonButton from '../common-button';
+import { SAVE_CHANGES } from '../../queries';
+import { useMutation } from 'react-query';
 
 const Categories = props => {
   const [categ, setCateg] = useState();
-  // const [menuId, setMenuId] = useState();
   useEffect(() => {
-    // props.setMenuId(props.id);
     props.setDishess(props.dishes);
-    // console.log(props.dishes, ' s');
     setCateg(props.categArr);
-    // console.log(props.dishess, " dihieh")
   }, [props.dishess]);
   const addDish = async () => {
     const list = await props.dishes.push({
-      idDish: "y"+uuid.v4(),
+      idDish: 'y' + uuid.v4(),
       name: '',
       price: parseInt(''),
       description: '',
@@ -32,10 +31,9 @@ const Categories = props => {
   const handleInputChange = (value, index, name) => {
     props.dishes[index][name] = value;
     props.setDishess((props.dishes[index][name] = value));
-    // console.log(props.dishes[index]);
   };
 
-  const openDeleteDish = (id) => {
+  const openDeleteDish = id => {
     props.setDishId(id);
     props.setDeleteDishModal(true);
     props.setDishess(props.dishes);
@@ -43,17 +41,42 @@ const Categories = props => {
     props.setDeleteType('dish');
   };
 
-  const openDeleteMenu = (id) => {
+  const openDeleteMenu = id => {
     props.setDeleteDishModal(true);
     props.setMenuId(id);
     props.setDeleteType('menu');
   };
 
-  // const dltDish = (id) => {
-  //   props.setDesh(props.dishes.filter((v) => {
-  //     console.log(v.idDish !== id)
-  //    }))
-  // }
+  const [saveChanges, { isLoading: publishMenuLoading }] = useMutation(
+    SAVE_CHANGES,
+  );
+
+  const resolvedDishes = dishes => {
+    const result = dishes.map(({ idDish, ...rest }) => ({ ...rest }));
+    return result;
+  };
+
+  const saveMenu = async () => {
+    await saveChanges(
+      {
+        category: props.category || '',
+        menu_id: props.id || '',
+        user_id: props.user_id || '',
+        place_id: props.place_id || '',
+        dishes: resolvedDishes(props.dishes) || [],
+      },
+      {
+        onSuccess: () => {
+          alert('Changes saved successfully');
+          // setCategModal(false)
+          props.refetchMenus();
+        },
+        onError: e => {
+          alert('error save changes');
+        },
+      },
+    );
+  };
 
   return (
     <KeyboardAwareScrollView
@@ -86,7 +109,7 @@ const Categories = props => {
         </TouchableOpacity>
       </View>
 
-      {props.dishes  ? (
+      {props.dishes ? (
         <>
           {props.dishes &&
             props.dishes.map((v, i) => {
@@ -144,7 +167,7 @@ const Categories = props => {
                         placeholderTextColor={'#707375'}
                       />
                       <TouchableOpacity
-                        onPress={() => openDeleteDish(v.idDish) } //openDeleteDish(v._id ? v.id : v.idDish)
+                        onPress={() => openDeleteDish(v.idDish)} //openDeleteDish(v._id ? v.id : v.idDish)
                         style={{ justifyContent: 'center' }}
                         activeOpacity={0.3}
                       >
@@ -188,6 +211,11 @@ const Categories = props => {
       >
         <AddBtn title={i18n.t('add_dish')} onPress={() => addDish()} />
       </View>
+      {props.dishes && props.dishes.length ? (
+        <View style={{ marginVertical: 14 }}>
+          <CommonButton onPress={saveMenu} title="Save your changes" />
+        </View>
+      ) : null}
     </KeyboardAwareScrollView>
   );
 };

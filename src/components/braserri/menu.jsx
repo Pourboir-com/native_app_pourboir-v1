@@ -51,18 +51,12 @@ const Menu = ({
   } = useQuery(['GET_MENU', { place_id: restaurant_id }], GET_MENU, {
     ...reactQueryConfig,
     onSuccess: res => {
-      console.log(restaurant_id);
+      setCategArr(menus.data);
     },
     onError: e => {
       alert(e?.response?.data?.message);
     },
   });
-  console.log(categArr, ' categarr');
-  useEffect(() => {
-    if (!menusLoading) {
-      setCategArr(menus.data);
-    }
-  }, []);
 
   const newCategories = categArr.filter(v => {
     return !v._id;
@@ -72,7 +66,6 @@ const Menu = ({
     user_id: state.userDetails.user_id || '',
     place_id: restaurant_id || '',
   });
-
 
   const DeleteMenu = async id => {
     console.log(id);
@@ -133,7 +126,6 @@ const Menu = ({
                     setDishName={setDishName}
                     setPrice={setPrice}
                     price={price}
-                    category={v.category}
                     dishes={v.dishes}
                     menu_id={v.menu_id}
                     deleteDishModal={deleteDishModal}

@@ -17,7 +17,7 @@ const imgWaiter = require('../../assets/images/Choose-rafiki.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import uuid from 'react-native-uuid'
+import uuid from 'react-native-uuid';
 import { useMutation } from 'react-query';
 import Context from '../../contextApi/context';
 import { PUBLISH_MENU } from '../../queries';
@@ -62,16 +62,16 @@ const AddCategoryModal = ({
         category: category || '',
         user_id: state.userDetails.user_id || '',
         place_id: restaurant_id || '',
-        dishes: []
+        dishes: [],
       },
       {
         onSuccess: () => {
           // alert('added new category successfully');
-          setCategModal(false)
+          setCategModal(false);
           refetchMenus();
         },
         onError: e => {
-          alert('err new categ');
+          alert(e.response?.data?.message);
         },
       },
     );

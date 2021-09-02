@@ -131,6 +131,7 @@ const ManagerApprovalModal = ({
             <TextInput
               style={styles.inputsTopTow}
               onChangeText={e => setCellPhone(e)}
+              keyboardType={'numeric'}
               value={cellPhone}
               placeholder="Cellphone number"
               placeholderTextColor={'#707375'}
@@ -140,7 +141,6 @@ const ManagerApprovalModal = ({
         <View
           style={{
             flexDirection: 'row',
-            marginLeft: 9,
             marginBottom: 14,
             justifyContent: 'center',
           }}
@@ -149,20 +149,20 @@ const ManagerApprovalModal = ({
             <CheckBox
               style={{
                 zIndex: 9999,
-                marginTop: Platform.OS === 'ios' ? -10 : -2,
+                marginTop: Platform.OS === 'ios' ? -14 : -6,
               }}
               onClick={() => setTermsChecked(!termsChecked)}
               isChecked={termsChecked}
               checkedImage={
                 <Image
-                  style={{ width: 18, marginTop: -4 }}
+                  style={{ width: 17, marginTop: -4 }}
                   resizeMode={'contain'}
                   source={require('../../assets/images/checked.png')}
                 />
               }
               unCheckedImage={
                 <Image
-                  style={{ width: 16 }}
+                  style={{ width: 15 }}
                   resizeMode={'contain'}
                   source={require('../../assets/images/unchecked.png')}
                 />

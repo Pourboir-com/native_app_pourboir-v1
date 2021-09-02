@@ -21,14 +21,14 @@ const Team = () => {
   const [addStaff, { isLoading: addStaffLoading }] = useMutation(ADD_STAFF);
 
   const { data: waiterData, refetch: refetchWaiterData } = useQuery(
-    ['STAFF', { type: ['waiter'] }],
+    ['STAFF', { type: ['waiter'], user_id: state.userDetails.user_id }],
     STAFF,
     {
       ...reactQueryConfig,
     },
   );
   const { data: cookData, refetch: refetchCookData } = useQuery(
-    ['STAFF', { type: ['cook'] }],
+    ['STAFF', { type: ['cook'], user_id: state.userDetails.user_id }],
     STAFF,
     {
       ...reactQueryConfig,

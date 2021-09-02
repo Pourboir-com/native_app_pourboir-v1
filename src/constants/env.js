@@ -19,7 +19,8 @@ const apiUrl = () => {
     api_url = 'https://api.pourboir.com/api';
   } else if (releaseEnvironment == 'staging') {
     // expo publish --release-channel staging-1.0.0
-    api_url = 'https://api.pourboir.com/api';
+    api_url =
+      'http://ec2-34-211-185-52.us-west-2.compute.amazonaws.com:8080/api';
   }
   return api_url;
 };

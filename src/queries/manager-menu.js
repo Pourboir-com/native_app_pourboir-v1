@@ -23,7 +23,9 @@ export const SAVE_CHANGES = async e => {
 };
 
 export const DELETE_DISH = async e => {
-  let res = await axios.delete(BASE_URL + `/v1/menu/dish`, e);
+  let res = await axios.delete(BASE_URL + `/v1/menu/dish`, {
+    data: e,
+  });
   return res;
 };
 

@@ -50,13 +50,16 @@ const Menu = ({
     refetch: refetchMenus,
   } = useQuery(['GET_MENU', { place_id: restaurant_id }], GET_MENU, {
     ...reactQueryConfig,
-    onSuccess: res => {
-      setCategArr(menus.data);
+    onSuccess: async  res => {
+      const data = await res
+     setCategArr(data.data);
+      console.log("menus loaded ")
     },
     onError: e => {
       alert(e?.response?.data?.message);
     },
   });
+
 
   const newCategories = categArr.filter(v => {
     return !v._id;
@@ -85,6 +88,7 @@ const Menu = ({
           onSuccess: () => {
             refetchMenus();
             setDeleteDishModal(false);
+            
           },
           onError: e => {
             alert(e.response?.data?.message);

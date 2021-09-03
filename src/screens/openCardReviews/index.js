@@ -263,11 +263,11 @@ const ReviewDetails = ({ navigation, route }) => {
       },
       {
         onSuccess: () => {
+          setApprovalModal(false);
           setReceivedModal(true);
-          console.log('approval submitted');
         },
         onError: e => {
-          alert('approval error');
+          alert(e.response?.data?.message);
         },
       },
     );

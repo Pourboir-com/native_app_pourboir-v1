@@ -16,8 +16,6 @@ const Team = () => {
   const [modalType, setModalType] = useState();
   const [waiters, setWaiters] = useState([]);
   const [cooks, setCooks] = useState([]);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [addStaff, { isLoading: addStaffLoading }] = useMutation(ADD_STAFF);
 
   const { data: waiterData, refetch: refetchWaiterData } = useQuery(
@@ -35,7 +33,7 @@ const Team = () => {
     },
   );
   console.log(waiterData);
-  // console.log(cookData);
+  console.log(cookData);
 
   const openWaiterModal = () => {
     setAddModal(true);
@@ -52,8 +50,8 @@ const Team = () => {
       {
         manager_id: state.userDetails.user_id || '',
         type: modalType,
-        email: email,
-        full_name: name,
+        email: email || '',
+        full_name: name || '',
       },
       {
         onSuccess: () => {
@@ -167,14 +165,11 @@ const Team = () => {
           setAddModal={setAddModal}
           addModal={addModal}
           modalType={modalType}
-          name={name}
-          setName={setName}
-          email={email}
-          setEmail={setEmail}
           setCooks={setCooks}
           setWaiters={setWaiters}
           waiters={waiters}
           cooks={cooks}
+          handleAddStaff={handleAddStaff}
         />
       </View>
     </>

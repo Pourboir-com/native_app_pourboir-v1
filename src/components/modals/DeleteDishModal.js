@@ -37,30 +37,30 @@ const DeleteDishModal = ({
   console.log(menuId, 'menuId');
 
   const DeleteDish = async () => {
-  //  if(id.charAt(0) == 'y'){
-  //   setDishes(  d.filter((v) => {
-  //     return v.idDish !== id
-  //   }))
-    
-  //  }else{
+    //  if(id.charAt(0) == 'y'){
+    //   setDishes(  d.filter((v) => {
+    //     return v.idDish !== id
+    //   }))
+
+    //  }else{
     await deleteDish(
-      { 
+      {
         dish_id: dishId || '',
-        menu_id: menuId || ''
+        menu_id: menuId || '',
       },
       {
         onSuccess: () => {
-          refetchMenus()
+          refetchMenus();
           alert('Dish deleted successfully');
-          setDeleteDishModal(false)
+          setDeleteDishModal(false);
         },
         onError: e => {
-          alert("Error ")
+          alert('Error ');
           console.log(e);
         },
       },
-    ) 
-   }
+    );
+  };
   // };
   return (
     <Overlay
@@ -118,7 +118,9 @@ const DeleteDishModal = ({
           }}
         >
           <TouchableOpacity onPress={handleClose} style={styles.btns}>
-            <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>{i18n.t('no')}</Text>
+            <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
+              {i18n.t('no')}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
@@ -128,7 +130,9 @@ const DeleteDishModal = ({
               (styles.btns, { ...styles.btns, backgroundColor: '#FCDF6F' })
             }
           >
-            <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>{i18n.t('yes')}</Text>
+            <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
+              {i18n.t('yes')}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

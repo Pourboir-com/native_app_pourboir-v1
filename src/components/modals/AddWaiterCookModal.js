@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -21,29 +21,21 @@ const AddWaiterCookModal = ({
   addModal,
   setAddModal,
   modalType,
-  name,
-  setName,
-  email,
-  setEmail,
   setWaiters,
   setCooks,
   waiters,
   cooks,
+  handleAddStaff,
 }) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const validation = name && email;
-
-  const AddWaiter = () => {
-    setWaiters([...waiters, { waiter_name: name, waiter_email: email }]);
+  const handleAdd = () => {
+    handleAddStaff(email, name);
+    // setWaiters([...waiters, { waiter_name: name, waiter_email: email }]);
     setAddModal(false);
-    setName();
-    setEmail();
-  };
-
-  const AddCook = () => {
-    setCooks([...cooks, { cook_name: name, cook_email: email }]);
-    setAddModal(false);
-    setEmail();
-    setName();
+    setName('');
+    setEmail('');
   };
 
   return (
@@ -140,7 +132,7 @@ const AddWaiterCookModal = ({
 
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={modalType === 'waiter' ? AddWaiter : AddCook}
+          onPress={handleAdd}
           disabled={validation ? false : true}
           style={[
             styles.btn_yellow,

@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { BASE_URL } from 'constant/index';
+import { BASE_URL } from '../constants';
 
 export const STAFF = async e => {
   const res = await axios.get(BASE_URL + `/v1/staff`, {
-    params: e.queryKey[1],
+    params: e,
   });
   return res.data;
 };

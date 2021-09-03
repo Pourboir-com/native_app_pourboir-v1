@@ -264,10 +264,20 @@ const ReviewDetails = ({ navigation, route }) => {
       {
         onSuccess: () => {
           setApprovalModal(false);
-          setReceivedModal(true);
+          // setReceivedModal(true);
+          navigation.navigate('Braserri', {
+            restaurant_id: restaurant_id || '',
+            img,
+            name,
+          });
         },
         onError: e => {
-          alert(e.response?.data?.message);
+          // alert(e.response?.data?.message);
+          navigation.navigate('Braserri', {
+            restaurant_id: restaurant_id || '',
+            img,
+            name,
+          });
         },
       },
     );
@@ -295,13 +305,12 @@ const ReviewDetails = ({ navigation, route }) => {
         position="absolute"
         navigation={navigation}
         settingBtn={true}
-        settingBtnFunc={
-          () =>
-            navigation.navigate('Braserri', {
-              restaurant_id: restaurant_id || '',
-              img,
-              name,
-            })
+        settingBtnFunc={() =>
+          navigation.navigate('Braserri', {
+            restaurant_id: restaurant_id || '',
+            img,
+            name,
+          })
           // setApprovalModal(true)
         }
       />

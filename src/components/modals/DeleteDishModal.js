@@ -20,9 +20,7 @@ const DeleteDishModal = ({
   deleteDishModal,
   setDeleteDishModal,
   dishId,
-  setDishId,
-  dishes,
-  setDishes,
+  refetchMenus,
   menuId,
   deleteType,
   deleteMenu,
@@ -52,7 +50,9 @@ const DeleteDishModal = ({
       },
       {
         onSuccess: () => {
+          refetchMenus()
           alert('Dish deleted successfully');
+          setDeleteDishModal(false)
         },
         onError: e => {
           alert("Error ")

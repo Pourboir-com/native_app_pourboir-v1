@@ -188,6 +188,7 @@ const Menu = ({
           deleteMenu={DeleteMenu}
           deleteType={deleteType}
           setDeleteType={setDeleteType}
+          refetchMenus={refetchMenus}
         />
       </ScrollView>
     </>

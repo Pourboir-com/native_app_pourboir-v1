@@ -42,7 +42,7 @@ const Categories = props => {
     const list = await dishes.push({
       idDish: 'y' + uuid.v4(),
       name: '',
-      price: parseInt('') ,
+      price: Number(''),
       description: '',
     });
     props.setDishess(list);
@@ -81,7 +81,9 @@ const Categories = props => {
   );
 
   const resolvedDishes = dishes => {
-    const result = dishes.map(({ idDish,updatedAt, ...rest }) => ({ ...rest }));
+    const result = dishes.map(({ idDish, updatedAt, ...rest }) => ({
+      ...rest,
+    }));
     return result;
   };
 

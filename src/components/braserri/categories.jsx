@@ -13,10 +13,13 @@ import { useMutation } from 'react-query';
 
 const Categories = props => {
   const [categ, setCateg] = useState();
+  const [dishes, setDishes] = useState();
+  console.log(dishes);
   useEffect(() => {
-    props.setDishess(props.dishes);
-    setCateg(props.categArr);
-  }, [props.dishess]);
+    if (props.dishes) {
+      setDishes(props.dishes);
+    }
+  }, []);
   const addDish = async () => {
     const list = await props.dishes.push({
       idDish: 'y' + uuid.v4(),
@@ -39,6 +42,14 @@ const Categories = props => {
     props.setDishess(props.dishes);
     props.setMenuId(props.id ? props.id : props.idMenu);
     props.setDeleteType('dish');
+  };
+
+  const deleteDish = id => {
+    setDishes(
+      dishes.filter(v => {
+        return v.idDish != id;
+      }),
+    );
   };
 
   const openDeleteMenu = id => {
@@ -109,10 +120,10 @@ const Categories = props => {
         </TouchableOpacity>
       </View>
 
-      {props.dishes ? (
+      {dishes ? (
         <>
-          {props.dishes &&
-            props.dishes.map((v, i) => {
+          {dishes &&
+            dishes.map((v, i) => {
               return (
                 <View key={i}>
                   <View
@@ -167,7 +178,11 @@ const Categories = props => {
                         placeholderTextColor={'#707375'}
                       />
                       <TouchableOpacity
-                        onPress={() => openDeleteDish(v.idDish)} //openDeleteDish(v._id ? v.id : v.idDish)
+                        onPress={() =>
+                          !v.idDish
+                            ? openDeleteDish(v._id)
+                            : deleteDish(v.idDish)
+                        } //openDeleteDish(v._id ? v.id : v.idDish)
                         style={{ justifyContent: 'center' }}
                         activeOpacity={0.3}
                       >
@@ -213,7 +228,7 @@ const Categories = props => {
       </View>
       {props.dishes && props.dishes.length ? (
         <View style={{ marginVertical: 14 }}>
-          <CommonButton onPress={saveMenu} title="Save your changes" />
+          <CommonButton onPress={saveMenu} title={i18n.t('save_changes')} />
         </View>
       ) : null}
     </KeyboardAwareScrollView>

@@ -87,8 +87,7 @@ const ManagerApprovalModal = ({
         style={{ marginTop: 20 }}
       >
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-          {/* {i18n.t('new_categ')} */}
-          Fill in the information
+          {i18n.t('fill_info')}
         </Text>
         <Text
           style={{
@@ -100,9 +99,7 @@ const ManagerApprovalModal = ({
             paddingHorizontal: 25,
           }}
         >
-          {/* {i18n.t('choose_categ')} */}
-          We must verify that you are the owner of the establishment. Thanks for
-          filling in the information.
+          {i18n.t('thanks_filling')}
         </Text>
 
         <View
@@ -120,7 +117,7 @@ const ManagerApprovalModal = ({
               style={styles.inputsTopTow}
               onChangeText={e => setSiretNumber(e)}
               value={siretNumber}
-              placeholder="SIRET Number"
+              placeholder={i18n.t('siret_num')}
               keyboardType={'numeric'}
               placeholderTextColor={'#707375'}
             />
@@ -132,7 +129,7 @@ const ManagerApprovalModal = ({
               style={styles.inputsTopTow}
               onChangeText={e => setCellPhone(e)}
               value={cellPhone}
-              placeholder="Cellphone number"
+              placeholder={i18n.t('cellPhone')}
               placeholderTextColor={'#707375'}
             />
           </View>
@@ -184,10 +181,8 @@ const ManagerApprovalModal = ({
                 fontFamily: 'ProximaNova',
               }}
             >
-              I accept the profesional{' '}
-              <Text
-                style={{ color: '#0050A0' }}
-              >{`terms and \nconditions.`}</Text>
+              {i18n.t('i_accepts')}
+              <Text style={{ color: '#0050A0' }}> {i18n.t('term_cond')}</Text>
             </Text>
           </View>
         </View>
@@ -210,8 +205,7 @@ const ManagerApprovalModal = ({
               color: Colors.fontDark,
             }}
           >
-            {/* {i18n.t('confirm')} */}
-            Claim Business
+            {i18n.t('claim')}
           </Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>

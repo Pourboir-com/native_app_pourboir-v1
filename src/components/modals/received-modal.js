@@ -68,8 +68,7 @@ const ReceivedModal = ({ receivedModal, setReceivedModal }) => {
         style={{ marginTop: 80 }}
       >
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-          {/* {i18n.t('new_categ')} */}
-          Thank you !
+          {i18n.t('thank_u')} !
         </Text>
         <Text
           style={{
@@ -81,9 +80,7 @@ const ReceivedModal = ({ receivedModal, setReceivedModal }) => {
             paddingHorizontal: 25,
           }}
         >
-          {/* {i18n.t('choose_categ')} */}
-          We have received your claim, one person from our team will reach out
-          to you soon.
+          {i18n.t('claim_received')}
         </Text>
 
         <TouchableOpacity
@@ -98,8 +95,7 @@ const ReceivedModal = ({ receivedModal, setReceivedModal }) => {
               color: Colors.fontDark,
             }}
           >
-            {/* {i18n.t('confirm')} */}
-            Close
+            {i18n.t('close')}
           </Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>

@@ -37,31 +37,31 @@ const DeleteDishModal = ({
   console.log(deleteType);
   console.log(dishId, ' dishId');
   console.log(menuId, 'menuId');
-  const [d, setD] = useState([])
-  useEffect(() => {
-    setD(dishes)
-  },[dishes])
-  console.log(d, ' dd')
-  const DeleteDish = async id => {
-   if(id.charAt(0) == 'y'){
-    setDishes(  d.filter((v) => {
-      return v.idDish !== id
-    }))
+
+  const DeleteDish = async () => {
+  //  if(id.charAt(0) == 'y'){
+  //   setDishes(  d.filter((v) => {
+  //     return v.idDish !== id
+  //   }))
     
-   }else{
+  //  }else{
     await deleteDish(
-      { dish_id: dishId, menu_id: menuId },
+      { 
+        dish_id: dishId || '',
+        menu_id: menuId || ''
+      },
       {
         onSuccess: () => {
           alert('Dish deleted successfully');
         },
         onError: e => {
-          alert('Err', e);
+          alert("Error ")
+          console.log(e);
         },
       },
-    );
+    ) 
    }
-  };
+  // };
   return (
     <Overlay
       overlayStyle={styles.container}

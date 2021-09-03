@@ -243,11 +243,27 @@ export default {
   delete_menu: 'You are about to delete this menu. ',
   no: 'No',
   yes: 'Yes',
-  name_of_waiter:'Give us the name of your waiter',
-  name_of_cook:'Give us name of your cook',
-  waiter_name_placeholder:'The name of your waiter',
-  cook_name_placeholder:'The name of your cook',
-  add:'Add',
-  waiter_email:'Your waiter email',
-  cook_email:'Your cook email'
+  name_of_waiter: 'Give us the name of your waiter',
+  name_of_cook: 'Give us name of your cook',
+  waiter_name_placeholder: 'The name of your waiter',
+  cook_name_placeholder: 'The name of your cook',
+  add: 'Add',
+  waiter_email: 'Your waiter email',
+  cook_email: 'Your cook email',
+
+  // manager modal
+
+  fill_info: 'Fill in the information',
+  thanks_filling:
+    'We must verify that you are the owner of the establishment. Thanks for filling in the information. ',
+  siret_num: 'SIRET Number',
+  cellPhone: 'Cellphone number',
+  i_accepts: 'I accept the profesional',
+  term_cond: `terms and \nconditions.`,
+  claim: 'Claim Business',
+  thank_u: 'Thank you',
+  claim_received:
+    ' We have received your claim, one person from our team will reach out to you soon.',
+  close: 'Close',
+  save_changes: 'Save your changes',
 };

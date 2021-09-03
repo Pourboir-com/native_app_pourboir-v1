@@ -33,8 +33,8 @@ const Menu = ({
   const [deleteDishModal, setDeleteDishModal] = useState(false);
   const [categArr, setCategArr] = useState([]);
   const [dishState, setDishState] = useState([]);
-  const [dishId, setDishId] = useState();
-  const [menuId, setMenuId] = useState();
+  const [dishId, setDishId] = useState('');
+  const [menuId, setMenuId] = useState('');
   const [dishes, setDishes] = useState([]);
   const [deleteType, setDeleteType] = useState();
   const [deleteMenu, { isLoading: deleteMenuLoading }] = useMutation(
@@ -73,6 +73,7 @@ const Menu = ({
     place_id: restaurant_id || '',
   });
 
+
   const DeleteMenu = async id => {
     console.log(id);
     if (id.charAt(0) == 'x') {
@@ -90,6 +91,7 @@ const Menu = ({
         {
           onSuccess: () => {
             refetchMenus();
+            setDeleteDishModal(false);
           },
           onError: e => {
             alert(e.response?.data?.message);
@@ -107,8 +109,9 @@ const Menu = ({
         style={{
           marginHorizontal: 0,
           marginTop: 20,
-          marginBottom: 160,
+          marginBottom: 0,
           height: ScreenHeight,
+          // backgroundColor:''
         }}
       >
         <View>

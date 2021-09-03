@@ -254,4 +254,18 @@ export default {
   add: 'Ajouter',
   waiter_email: 'L’email de votre serveur',
   cook_email: 'L’email de votre cuisinier',
+
+    // manager modal
+
+    fill_info: 'Renseigner ces informations',
+    thanks_filling: "Nous devons vérifier que vous êtes bien le propriétaire de cet établissement. Merci de renseigner les informations suivantes ." ,
+    siret_num:'Numéro de SIRET',
+    cellPhone:'Numéro de téléphone portable',
+    i_accepts:"J'accepte les professionnel",
+    term_cond:`termes et \nconditions.`,
+    claim:'Réclamer',
+    thank_u:'Merci',
+  claim_received:"Nous avons bien reçu votre demande, un membre de notre équipe va prendre contact avec vous rapidement. ",
+  close:'Fermer',
+  save_changes:'Enregistrez vos modifications'
 };

@@ -21,7 +21,7 @@ const Categories = props => {
   const [categ, setCateg] = useState();
   const [dishes, setDishes] = useState([]);
   const [disable, setDisable] = useState(true);
-  const [newDishes, setNewDishes] = useState([])
+  const [newDishes, setNewDishes] = useState([]);
   console.log(dishes);
   useEffect(() => {
     if (props.dishes) {
@@ -29,15 +29,14 @@ const Categories = props => {
     }
   }, [props.dishes]);
 
-
-  const addDish = async () => {
-    const list = await props.dishes.push({
+  const addDish = () => {
+    const list = props.dishes.push({
       idDish: 'y' + uuid.v4(),
       name: '',
       price: Number(''),
       description: '',
     });
-    setDishes([...dishes])
+    setDishes([...dishes]);
     props.setDishess(list);
     // setDishes([...di])
     // console.log(newDishes, ' ssssss');
@@ -62,7 +61,7 @@ const Categories = props => {
         return v.idDish != id;
       }),
     );
-    props.refetchMenus()
+    props.refetchMenus();
   };
 
   const openDeleteMenu = id => {
@@ -71,21 +70,19 @@ const Categories = props => {
     props.setDeleteType('menu');
   };
   // const dishesLength = newDishes.length;
-  console.log(newDishes.length, " length")
+  console.log(newDishes.length, ' length');
   const validator = () => {
-   
-     if(newDishes.length){
-       setDisable(true)
-     }else{
-       setDisable(false)
-     }
-    
-  }
+    if (newDishes.length) {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  };
 
-useEffect(() => {
-  validator()
-},[newDishes])
-console.log(disable, " btn")
+  useEffect(() => {
+    validator();
+  }, [newDishes]);
+  console.log(disable, ' btn');
 
   const [saveChanges, { isLoading: publishMenuLoading }] = useMutation(
     SAVE_CHANGES,
@@ -113,7 +110,7 @@ console.log(disable, " btn")
           // setCategModal(false)
           await props.refetchMenus();
           // setDishes([...props.dishes])
-          setNewDishes([])
+          setNewDishes([]);
         },
         onError: e => {
           alert('error save changes');

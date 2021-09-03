@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { BASE_URL } from '../constants';
 
-export const STAFF = async e => {
+export const STAFF = async (get, e = {}) => {
+  // console.log(e);
   const res = await axios.get(BASE_URL + `/v1/staff`, {
     params: e,
   });

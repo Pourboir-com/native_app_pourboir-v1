@@ -25,6 +25,7 @@ const Team = () => {
       ...reactQueryConfig,
     },
   );
+
   const { data: cookData, refetch: refetchCookData } = useQuery(
     ['STAFF', { type: ['cook'], user_id: state.userDetails.user_id }],
     STAFF,
@@ -46,6 +47,12 @@ const Team = () => {
   };
 
   const handleAddStaff = async (email, name) => {
+    console.log({
+      manager_id: state.userDetails.user_id || '',
+      type: modalType,
+      email: email || '',
+      full_name: name || '',
+    });
     await addStaff(
       {
         manager_id: state.userDetails.user_id || '',
@@ -55,6 +62,7 @@ const Team = () => {
       },
       {
         onSuccess: () => {
+          console.log('success');
           if (modalType === 'waiter') {
             refetchWaiterData();
           } else if (modalType === 'cook') {
@@ -77,17 +85,17 @@ const Team = () => {
             <Text style={styles.mainHeading}>{i18n.t('waiters')}</Text>
           </View>
           <View style={styles.numberBox}>
-            <Text style={styles.numberTxt}>{waiters.length}</Text>
+            <Text style={styles.numberTxt}>{waiterData?.data?.length}</Text>
           </View>
         </View>
         <View style={{ marginTop: 20 }}>
-          {waiters.length ? (
-            waiters.map((v, i) => {
+          {waiterData?.data?.length ? (
+            (waiterData?.data || [])?.map((v, i) => {
               return (
                 <CommonCard
                   key={i}
-                  waiter_name={v.waiter_name}
-                  waiter_email={v.waiter_email}
+                  waiter_name={v.full_name}
+                  waiter_email={v.email}
                 />
               );
             })
@@ -123,18 +131,18 @@ const Team = () => {
             <Text style={styles.mainHeading}>{i18n.t('cook')}</Text>
           </View>
           <View style={styles.numberBox}>
-            <Text style={styles.numberTxt}>{cooks.length}</Text>
+            <Text style={styles.numberTxt}>{cookData?.data?.length}</Text>
           </View>
         </View>
 
         <View style={{ marginTop: 20 }}>
-          {cooks.length ? (
-            cooks.map((v, i) => {
+          {cookData?.data?.length ? (
+            (cookData?.data || []).map((v, i) => {
               return (
                 <CommonCard
                   key={i}
-                  cook_name={v.cook_name}
-                  cook_email={v.cook_email}
+                  cook_name={v.full_name}
+                  cook_email={v.email}
                 />
               );
             })

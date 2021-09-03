@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Platform, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Platform, Text, TouchableOpacity, View } from 'react-native';
 import { Image } from 'react-native';
 import { TextInput } from 'react-native';
 import styles from '../../screens/braserri/styles';
@@ -14,12 +14,12 @@ import { useMutation } from 'react-query';
 const Categories = props => {
   const [categ, setCateg] = useState();
   const [dishes, setDishes] = useState();
-  console.log(dishes);
+  // console.log(dishes);
   useEffect(() => {
     if (props.dishes) {
       setDishes(props.dishes);
     }
-  }, []);
+  }, [props.dishes]);
   const addDish = async () => {
     const list = await props.dishes.push({
       idDish: 'y' + uuid.v4(),
@@ -28,7 +28,7 @@ const Categories = props => {
       description: '',
     });
     props.setDishess(list);
-    console.log(props.dishess, ' ssssss');
+    console.log(dishes, ' ssssss');
   };
 
   const handleInputChange = (value, index, name) => {
@@ -77,10 +77,12 @@ const Categories = props => {
         dishes: resolvedDishes(props.dishes) || [],
       },
       {
-        onSuccess: () => {
-          alert('Changes saved successfully');
+        onSuccess: async (res) => {
+          // alert('Changes saved successfully');
           // setCategModal(false)
-          props.refetchMenus();
+         await props.refetchMenus();
+          // setDishes([...props.dishes])
+          
         },
         onError: e => {
           alert('error save changes');
@@ -228,7 +230,11 @@ const Categories = props => {
       </View>
       {props.dishes && props.dishes.length ? (
         <View style={{ marginVertical: 14 }}>
-          <CommonButton onPress={saveMenu} title={i18n.t('save_changes')} />
+        {!publishMenuLoading ?  <CommonButton Loading={publishMenuLoading} onPress={saveMenu} title={i18n.t('save_changes')} /> : (
+          <View style={{alignItems:'center', justifyContent:'center'}}>
+           <ActivityIndicator size="small" color="#0000ff" />
+          </View>
+        )}
         </View>
       ) : null}
     </KeyboardAwareScrollView>

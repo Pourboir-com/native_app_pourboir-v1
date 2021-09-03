@@ -50,8 +50,8 @@ const Menu = ({
     refetch: refetchMenus,
   } = useQuery(['GET_MENU', { place_id: restaurant_id }], GET_MENU, {
     ...reactQueryConfig,
-    onSuccess: res => {
-      setCategArr(menus?.data);
+    onSuccess: async res => {
+      setCategArr(res.data);
     },
     onError: e => {
       alert(e?.response?.data?.message);

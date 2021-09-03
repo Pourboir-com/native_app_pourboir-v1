@@ -69,6 +69,7 @@ const AddCategoryModal = ({
           // alert('added new category successfully');
           setCategModal(false);
           refetchMenus();
+          setCategArr(categArr);
         },
         onError: e => {
           alert(e.response?.data?.message);

@@ -16,6 +16,7 @@ const CommonButton = props => {
   return (
     <TouchableOpacity
       activeOpacity={0.5}
+      disabled={props.disable === false ? false : true}
       onPress={
         props.onPress
           ? props.onPress
@@ -28,7 +29,7 @@ const CommonButton = props => {
               props.dispatch && props.dispatch();
             }
       }
-      style={styles.btnValider}
+      style={styles.btnValider, {...styles.btnValider, backgroundColor: props.disable ? 'red' : Colors.yellow}}
     >
       {props.loading ? (
         <ActivityIndicator size={29} color="#EBC11B" />

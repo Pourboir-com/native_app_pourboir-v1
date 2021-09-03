@@ -86,6 +86,7 @@ const ManagerApprovalModal = ({
         resetScrollToCoords={{ x: 0, y: 0 }}
         style={{ marginTop: 20 }}
       >
+        <View style={{alignItems:'center'}}>
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
           {i18n.t('fill_info')}
         </Text>
@@ -134,19 +135,18 @@ const ManagerApprovalModal = ({
               placeholderTextColor={'#707375'}
             />
           </View>
-        </View>
-        <View
+          <View
           style={{
             flexDirection: 'row',
-            marginBottom: 14,
-            justifyContent: 'center',
+            // justifyContent: 'center',
+            marginTop:20
           }}
         >
-          <View style={{ paddingTop: 0 }}>
+          <View style={{ justifyContent:'center' }}>
             <CheckBox
               style={{
                 zIndex: 9999,
-                marginTop: Platform.OS === 'ios' ? -14 : -6,
+                marginTop: Platform.OS === 'ios' ? -14 : -13,
               }}
               onClick={() => setTermsChecked(!termsChecked)}
               isChecked={termsChecked}
@@ -169,23 +169,38 @@ const ManagerApprovalModal = ({
           <View
             style={{
               marginHorizontal: 10,
-              alignItems: 'center',
-              justifyContent: 'center',
+              // alignItems: 'center',
+              flexDirection:'row',
+              flexWrap:'wrap',
+              // justifyContent:'center'
             }}
             activeOpacity={0.5}
           >
+            <TouchableOpacity>
             <Text
+            // onPress={() =>alert('clicked')}
               style={{
-                fontSize: Platform.OS == 'ios' ? 13 : 13,
+                fontSize: 13,
                 color: '#000',
                 fontFamily: 'ProximaNova',
               }}
             >
-              {i18n.t('i_accepts')}
-              <Text style={{ color: '#0050A0' }}> {i18n.t('term_cond')}</Text>
+              {' '}
+              {i18n.t('i_accepts')}{' '}
+              
+              <Text style={{ 
+                color: '#0050A0',
+                fontSize: 13,
+                fontFamily: 'ProximaNova',
+            
+            }}> {i18n.t('term_cond')}</Text>
             </Text>
+              </TouchableOpacity>
+              
           </View>
         </View>
+        </View>
+      
 
         <TouchableOpacity
           activeOpacity={0.5}
@@ -208,6 +223,7 @@ const ManagerApprovalModal = ({
             {i18n.t('claim')}
           </Text>
         </TouchableOpacity>
+        </View>
       </KeyboardAwareScrollView>
     </Overlay>
   );

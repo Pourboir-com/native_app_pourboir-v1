@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Platform, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Image } from 'react-native';
 import { TextInput } from 'react-native';
 import styles from '../../screens/braserri/styles';
@@ -77,12 +83,11 @@ const Categories = props => {
         dishes: resolvedDishes(props.dishes) || [],
       },
       {
-        onSuccess: async (res) => {
+        onSuccess: async res => {
           // alert('Changes saved successfully');
           // setCategModal(false)
-         await props.refetchMenus();
+          await props.refetchMenus();
           // setDishes([...props.dishes])
-          
         },
         onError: e => {
           alert('error save changes');
@@ -230,11 +235,11 @@ const Categories = props => {
       </View>
       {props.dishes && props.dishes.length ? (
         <View style={{ marginVertical: 14 }}>
-        {!publishMenuLoading ?  <CommonButton Loading={publishMenuLoading} onPress={saveMenu} title={i18n.t('save_changes')} /> : (
-          <View style={{alignItems:'center', justifyContent:'center'}}>
-           <ActivityIndicator size="small" color="#0000ff" />
-          </View>
-        )}
+          <CommonButton
+            loading={publishMenuLoading}
+            onPress={saveMenu}
+            title={i18n.t('save_changes')}
+          />
         </View>
       ) : null}
     </KeyboardAwareScrollView>

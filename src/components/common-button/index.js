@@ -30,7 +30,7 @@ const CommonButton = props => {
       }
       style={styles.btnValider}
     >
-      { props.loading ? (
+      {props.loading ? (
         <ActivityIndicator size={29} color="#EBC11B" />
       ) : (
         <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>

@@ -20,7 +20,8 @@ import { useMutation } from 'react-query';
 const Categories = props => {
   const [categ, setCateg] = useState();
   const [dishes, setDishes] = useState([]);
-  // const [disable, setDisable] = useState(true);
+  const [disable, setDisable] = useState(true);
+  const [newDishes, setNewDishes] = useState([])
   console.log(dishes);
   useEffect(() => {
     if (props.dishes) {
@@ -28,25 +29,18 @@ const Categories = props => {
     }
   }, [props.dishes]);
 
-  // const validator = () => {
-  //   if(props.dishes.length + 1 ){
-  //     setDisable(false)
-  //   }
-  // }
-  // useEffect(() => {
-  //   validator()
-  // },[dishes])
-  // console.log(disable, " btn")
 
   const addDish = async () => {
-    const list = await dishes.push({
+    const list = await props.dishes.push({
       idDish: 'y' + uuid.v4(),
       name: '',
       price: parseInt('') ,
       description: '',
     });
+    setDishes([...dishes])
     props.setDishess(list);
-    console.log(props.dishes, ' ssssss');
+    // setDishes([...di])
+    // console.log(newDishes, ' ssssss');
   };
 
   const handleInputChange = (value, index, name) => {
@@ -68,6 +62,7 @@ const Categories = props => {
         return v.idDish != id;
       }),
     );
+    props.refetchMenus()
   };
 
   const openDeleteMenu = id => {
@@ -75,6 +70,22 @@ const Categories = props => {
     props.setMenuId(id);
     props.setDeleteType('menu');
   };
+  // const dishesLength = newDishes.length;
+  console.log(newDishes.length, " length")
+  const validator = () => {
+   
+     if(newDishes.length){
+       setDisable(true)
+     }else{
+       setDisable(false)
+     }
+    
+  }
+
+useEffect(() => {
+  validator()
+},[newDishes])
+console.log(disable, " btn")
 
   const [saveChanges, { isLoading: publishMenuLoading }] = useMutation(
     SAVE_CHANGES,
@@ -100,6 +111,7 @@ const Categories = props => {
           // setCategModal(false)
           await props.refetchMenus();
           // setDishes([...props.dishes])
+          setNewDishes([])
         },
         onError: e => {
           alert('error save changes');
@@ -251,7 +263,8 @@ const Categories = props => {
             loading={publishMenuLoading}
             onPress={saveMenu}
             title={i18n.t('save_changes')}
-            // disable={disable}
+            disable={disable}
+            // validation={validation}
           />
         </View>
       ) : null}

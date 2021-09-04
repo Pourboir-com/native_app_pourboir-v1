@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   Image,
+  Platform,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'react-native-svg';
@@ -22,7 +23,7 @@ const Braserri = ({ navigation, route }) => {
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   return (
-    <View style={{ flex: 1, backgroundColor: '#f9f9f9', }}>
+    <View style={{ flex: 1, backgroundColor: '#f9f9f9',alignItems:'center' }}>
       <ImageBackground
         style={{
           width: '100%',
@@ -57,9 +58,10 @@ const Braserri = ({ navigation, route }) => {
       </ImageBackground>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1, marginHorizontal: 20, marginTop: 30,  }}
+        style={{ flex: 1, width:'90%', marginTop: 30,   }}
       >
-        <View
+       <View>
+       <View
           style={{
             justifyContent: 'space-between',
             flexDirection: 'row',
@@ -115,6 +117,7 @@ const Braserri = ({ navigation, route }) => {
             <Team />
           )}
         </View>
+       </View>
       </ScrollView>
     </View>
   );

@@ -77,7 +77,7 @@ const Team = () => {
   };
 
   return (
-    <>
+    <View>
       {/* //waiters */}
       <View style={{ marginTop: 30 }}>
         <View style={styles.team_common_sec}>
@@ -85,7 +85,7 @@ const Team = () => {
             <Text style={styles.mainHeading}>{i18n.t('waiters')}</Text>
           </View>
           <View style={styles.numberBox}>
-            <Text style={styles.numberTxt}>{waiterData?.data?.length}</Text>
+            <Text style={styles.numberTxt}>{waiterData?.data?.length ? waiterData?.data?.length : 0}</Text>
           </View>
         </View>
         <View style={{ marginTop: 20 }}>
@@ -131,7 +131,7 @@ const Team = () => {
             <Text style={styles.mainHeading}>{i18n.t('cook')}</Text>
           </View>
           <View style={styles.numberBox}>
-            <Text style={styles.numberTxt}>{cookData?.data?.length}</Text>
+            <Text style={styles.numberTxt}>{cookData?.data?.length ? cookData?.data?.length : 0}</Text>
           </View>
         </View>
 
@@ -180,7 +180,7 @@ const Team = () => {
           handleAddStaff={handleAddStaff}
         />
       </View>
-    </>
+    </View>
   );
 };
 

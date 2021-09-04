@@ -30,8 +30,8 @@ const Categories = props => {
   }, [props.dishes]);
 
 
-  const addDish = async () => {
-    const list = await props.dishes.push({
+  const addDish =  () => {
+    const list =  dishes.push({
       idDish: 'y' + uuid.v4(),
       name: '',
       price: parseInt('') ,
@@ -62,7 +62,6 @@ const Categories = props => {
         return v.idDish != id;
       }),
     );
-    props.refetchMenus()
   };
 
   const openDeleteMenu = id => {

@@ -382,9 +382,9 @@ const Setting = ({ navigation, route }) => {
         <Text style={[styles.versionText, { fontFamily: 'ProximaNova' }]}>
           Version {Constants.manifest.version}
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Braserri')}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate('Braserri')}>
           <Text>Braserrri</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );

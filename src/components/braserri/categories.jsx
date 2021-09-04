@@ -38,7 +38,7 @@ const Categories = props => {
   };
 
   const handleInputChange = (value, index, name) => {
-    props.dishes[index][name] = value;
+    dishes[index][name] = value;
     props?.setDishess((dishes[index][name] = value));
   };
 

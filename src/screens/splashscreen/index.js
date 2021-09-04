@@ -120,7 +120,9 @@ export default function SplashScreen(props) {
   };
 
   const setCurrency = () => {
-    Location.getCurrentPositionAsync().then(pos => {
+    Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Highest,
+    }).then(pos => {
       Location.reverseGeocodeAsync({
         latitude: pos.coords.latitude,
         longitude: pos.coords.longitude,

@@ -9,7 +9,7 @@ import {
   Platform,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { LinearGradient } from 'react-native-svg';
+import { LinearGradient } from 'expo-linear-gradient';
 import Menu from '../../components/braserri/menu';
 import Team from '../../components/braserri/team';
 import GlobalHeader from '../../components/GlobalHeader';
@@ -23,7 +23,7 @@ const Braserri = ({ navigation, route }) => {
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   return (
-    <View style={{ flex: 1, backgroundColor: '#f9f9f9',alignItems:'center' }}>
+    <View style={{ flex: 1, backgroundColor: '#f9f9f9', alignItems: 'center' }}>
       <ImageBackground
         style={{
           width: '100%',
@@ -32,11 +32,10 @@ const Braserri = ({ navigation, route }) => {
           borderBottomRightRadius: Dimensions.get('window').width * 0.06,
           overflow: 'hidden',
         }}
-        source={{uri: img || 'https://www.tandoor.pk/img/sl3.jpg'}}
+        source={{ uri: img || 'https://www.tandoor.pk/img/sl3.jpg' }}
       >
         <LinearGradient
           style={{
-            zIndex: 101,
             position: 'absolute',
             width: '100%',
             height: '100%',
@@ -58,66 +57,66 @@ const Braserri = ({ navigation, route }) => {
       </ImageBackground>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1, width:'90%', marginTop: 30,   }}
+        style={{ flex: 1, width: '90%', marginTop: 30 }}
       >
-       <View>
-       <View
-          style={{
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-            flex: 1,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => setCurrentTab('team')}
-            style={
-              (styles.tabBtn,
-              currentTab != 'team'
-                ? { ...styles.tabBtn, backgroundColor: '#fff' }
-                : styles.tabBtn)
-            }
-            activeOpacity={0.6}
+        <View>
+          <View
+            style={{
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+              flex: 1,
+            }}
           >
-            <Image
-              source={require('../../assets/images/team.png')}
-              style={{ width: 24, height: 24, resizeMode: 'contain' }}
-            />
-            <Text style={styles.tabTxt}>{i18n.t('the_team')}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => setCurrentTab('menu')}
-            style={
-              (styles.tabBtn,
-              currentTab != 'menu'
-                ? { ...styles.tabBtn, backgroundColor: '#fff' }
-                : styles.tabBtn)
-            }
-            activeOpacity={0.6}
-          >
-            <Image
-              source={require('../../assets/images/menu.png')}
-              style={{ width: 22, height: 22, resizeMode: 'contain' }}
-            />
-            <Text style={styles.tabTxt}>{i18n.t('the_menu')}</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setCurrentTab('team')}
+              style={
+                (styles.tabBtn,
+                currentTab != 'team'
+                  ? { ...styles.tabBtn, backgroundColor: '#fff' }
+                  : styles.tabBtn)
+              }
+              activeOpacity={0.6}
+            >
+              <Image
+                source={require('../../assets/images/team.png')}
+                style={{ width: 24, height: 24, resizeMode: 'contain' }}
+              />
+              <Text style={styles.tabTxt}>{i18n.t('the_team')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setCurrentTab('menu')}
+              style={
+                (styles.tabBtn,
+                currentTab != 'menu'
+                  ? { ...styles.tabBtn, backgroundColor: '#fff' }
+                  : styles.tabBtn)
+              }
+              activeOpacity={0.6}
+            >
+              <Image
+                source={require('../../assets/images/menu.png')}
+                style={{ width: 22, height: 22, resizeMode: 'contain' }}
+              />
+              <Text style={styles.tabTxt}>{i18n.t('the_menu')}</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ marginBottom: 20 }}>
+            {currentTab === 'menu' ? (
+              <Menu
+                currentTab={currentTab}
+                dishName={dishName}
+                setDishName={setDishName}
+                description={description}
+                setDescription={setDescription}
+                price={price || ''}
+                setPrice={setPrice}
+                restaurant_id={restaurant_id || ''}
+              />
+            ) : (
+              <Team />
+            )}
+          </View>
         </View>
-        <View style={{ marginBottom: 20 }}>
-          {currentTab === 'menu' ? (
-            <Menu
-              currentTab={currentTab}
-              dishName={dishName}
-              setDishName={setDishName}
-              description={description}
-              setDescription={setDescription}
-              price={price || ''}
-              setPrice={setPrice}
-              restaurant_id={restaurant_id || ''}
-            />
-          ) : (
-            <Team />
-          )}
-        </View>
-       </View>
       </ScrollView>
     </View>
   );

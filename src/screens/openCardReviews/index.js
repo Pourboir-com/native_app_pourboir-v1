@@ -124,7 +124,6 @@ const ReviewDetails = ({ navigation, route }) => {
       ...reactQueryConfig,
     },
   );
-  console.log(RestaurantDetails);
 
   const scrollY = new Animated.Value(0);
   const diffClamp = Animated.diffClamp(scrollY, 0, 55);
@@ -307,10 +306,19 @@ const ReviewDetails = ({ navigation, route }) => {
         navigation={navigation}
         settingBtn={true}
         settingBtnFunc={() =>
-          RestaurantDetails?.data?.manager?.user_id === state.userDetails.user_id &&
-          RestaurantDetails?.data?.manager?.status === 'active'
+          RestaurantDetails?.data?.manager?.user_id ===
+            state.userDetails.user_id &&
+          RestaurantDetails?.data?.manager?.status === 'pending'
+            ? alert('We are reviewing your application for manager position.')
+            : RestaurantDetails?.data?.manager?.user_id !=
+                state.userDetails.user_id &&
+              RestaurantDetails?.data?.manager?.status === 'active'
+            ? alert('This restaurant already has a manager.')
+            : RestaurantDetails?.data?.manager?.user_id ===
+                state.userDetails.user_id &&
+              RestaurantDetails?.data?.manager?.status === 'active'
             ? navigation.navigate('Braserri', {
-                restaurant_id: restaurant_id || '',
+                restaurant_id: RestaurantDetails?.data?._id || '',
                 img,
                 name,
               })

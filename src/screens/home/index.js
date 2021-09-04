@@ -25,7 +25,7 @@ const HomeScreen = props => {
     (async () => {
       const isLocation = await Location.hasServicesEnabledAsync();
       if (isLocation) {
-        const location = await Location.getLastKnownPositionAsync({
+        const location = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Highest,
         });
         setSaveLocation(

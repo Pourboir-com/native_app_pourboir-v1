@@ -124,6 +124,7 @@ const ReviewDetails = ({ navigation, route }) => {
       ...reactQueryConfig,
     },
   );
+  console.log(RestaurantDetails);
 
   const scrollY = new Animated.Value(0);
   const diffClamp = Animated.diffClamp(scrollY, 0, 55);
@@ -264,20 +265,20 @@ const ReviewDetails = ({ navigation, route }) => {
       {
         onSuccess: () => {
           setApprovalModal(false);
-          // setReceivedModal(true);
-          navigation.navigate('Braserri', {
-            restaurant_id: restaurant_id || '',
-            img,
-            name,
-          });
+          setReceivedModal(true);
+          // navigation.navigate('Braserri', {
+          //   restaurant_id: restaurant_id || '',
+          //   img,
+          //   name,
+          // });
         },
         onError: e => {
-          // alert(e.response?.data?.message);
-          navigation.navigate('Braserri', {
-            restaurant_id: restaurant_id || '',
-            img,
-            name,
-          });
+          alert(e.response?.data?.message);
+          // navigation.navigate('Braserri', {
+          //   restaurant_id: restaurant_id || '',
+          //   img,
+          //   name,
+          // });
         },
       },
     );
@@ -306,12 +307,14 @@ const ReviewDetails = ({ navigation, route }) => {
         navigation={navigation}
         settingBtn={true}
         settingBtnFunc={() =>
-          // navigation.navigate('Braserri', {
-          //   restaurant_id: restaurant_id || '',
-          //   img,
-          //   name,
-          // })
-          setApprovalModal(true)
+          RestaurantDetails?.data?.manager?.user_id === state.userDetails.user_id &&
+          RestaurantDetails?.data?.manager?.status === 'active'
+            ? navigation.navigate('Braserri', {
+                restaurant_id: restaurant_id || '',
+                img,
+                name,
+              })
+            : setApprovalModal(true)
         }
       />
       <Animated.View

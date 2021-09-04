@@ -18,42 +18,36 @@ import { SAVE_CHANGES } from '../../queries';
 import { useMutation } from 'react-query';
 
 const Categories = props => {
-  const [categ, setCateg] = useState();
   const [dishes, setDishes] = useState([]);
   const [disable, setDisable] = useState(true);
-  const [newDishes, setNewDishes] = useState([]);
-  console.log(dishes);
   useEffect(() => {
-    if (props.dishes) {
-      setDishes(props.dishes);
+    if (props?.dishes) {
+      setDishes(props?.dishes);
     }
-  }, [props.dishes]);
+  }, [props?.dishes]);
 
-
-  const addDish =  () => {
-    const list =  dishes.push({
+  const addDish = () => {
+    const list = dishes.push({
       idDish: 'y' + uuid.v4(),
       name: '',
       price: Number(''),
       description: '',
     });
     setDishes([...dishes]);
-    props.setDishess(list);
-    // setDishes([...di])
-    // console.log(newDishes, ' ssssss');
+    props?.setDishess(list);
   };
 
   const handleInputChange = (value, index, name) => {
     props.dishes[index][name] = value;
-    props.setDishess((dishes[index][name] = value));
+    props?.setDishess((dishes[index][name] = value));
   };
 
   const openDeleteDish = id => {
-    props.setDishId(id);
-    props.setDeleteDishModal(true);
-    props.setDishess(props.dishes);
-    props.setMenuId(props.id ? props.id : props.idMenu);
-    props.setDeleteType('dish');
+    props?.setDishId(id);
+    props?.setDeleteDishModal(true);
+    props?.setDishess(props?.dishes);
+    props?.setMenuId(props?.id ? props?.id : props?.idMenu);
+    props?.setDeleteType('dish');
   };
 
   const deleteDish = id => {
@@ -65,24 +59,24 @@ const Categories = props => {
   };
 
   const openDeleteMenu = id => {
-    props.setDeleteDishModal(true);
-    props.setMenuId(id);
-    props.setDeleteType('menu');
+    props?.setDeleteDishModal(true);
+    props?.setMenuId(id);
+    props?.setDeleteType('menu');
   };
   // const dishesLength = newDishes.length;
-  console.log(newDishes.length, ' length');
   const validator = () => {
-    if (newDishes.length) {
-      setDisable(true);
-    } else {
-      setDisable(false);
-    }
+    dishes.find(v => {
+      if (!v.name || !v.description || !v.price) {
+        setDisable(true);
+      } else {
+        setDisable(false);
+      }
+    });
   };
 
   useEffect(() => {
     validator();
-  }, [newDishes]);
-  console.log(disable, ' btn');
+  }, [props?.dishess, dishes]);
 
   const [saveChanges, { isLoading: publishMenuLoading }] = useMutation(
     SAVE_CHANGES,
@@ -98,22 +92,19 @@ const Categories = props => {
   const saveMenu = async () => {
     await saveChanges(
       {
-        category: props.category || '',
-        menu_id: props.id || '',
-        user_id: props.user_id || '',
-        place_id: props.place_id || '',
-        dishes: resolvedDishes(props.dishes) || [],
+        category: props?.category || '',
+        menu_id: props?.id || '',
+        user_id: props?.user_id || '',
+        place_id: props?.place_id || '',
+        dishes: resolvedDishes(props?.dishes) || [],
       },
       {
         onSuccess: async res => {
-          // alert('Changes saved successfully');
-          // setCategModal(false)
-          await props.refetchMenus();
-          // setDishes([...props.dishes])
-          setNewDishes([]);
+          await props?.refetchMenus();
+          alert('The menu has been updated successfully!');
         },
         onError: e => {
-          alert('error save changes');
+          alert('Something went wrong!');
         },
       },
     );
@@ -138,9 +129,9 @@ const Categories = props => {
           width: '100%',
         }}
       >
-        <Text style={styles.mainHeading}>{props.category}</Text>
+        <Text style={styles.mainHeading}>{props?.category}</Text>
         <TouchableOpacity
-          onPress={() => openDeleteMenu(props.id || props.idMenu)}
+          onPress={() => openDeleteMenu(props?.id || props?.idMenu)}
           activeOpacity={0.3}
         >
           <Image
@@ -256,14 +247,13 @@ const Categories = props => {
       >
         <AddBtn title={i18n.t('add_dish')} onPress={() => addDish()} />
       </View>
-      {props.dishes && props.dishes.length ? (
+      {props?.dishes && props?.dishes.length ? (
         <View style={{ marginVertical: 14 }}>
           <CommonButton
             loading={publishMenuLoading}
             onPress={saveMenu}
             title={i18n.t('save_changes')}
             disable={disable}
-            // validation={validation}
           />
         </View>
       ) : null}

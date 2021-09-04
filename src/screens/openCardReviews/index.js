@@ -529,7 +529,7 @@ const ReviewDetails = ({ navigation, route }) => {
             </Text>
           </View>
           <TouchableOpacity
-            onPress={() => setLeaveRevModal(true)}
+            // onPress={() => setLeaveRevModal(true)}
             activeOpacity={0.5}
             style={{
               marginLeft: 15,

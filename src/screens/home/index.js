@@ -26,7 +26,7 @@ const HomeScreen = props => {
       const isLocation = await Location.hasServicesEnabledAsync();
       if (isLocation) {
         const location = await Location.getCurrentPositionAsync({
-          accuracy: Location.Accuracy.Highest,
+          accuracy: Location.Accuracy.Lowest,
         });
         setSaveLocation(
           JSON.stringify({
@@ -39,7 +39,6 @@ const HomeScreen = props => {
       }
     })();
   }, []);
-  console.log(saveLocation);
 
   // useEffect(() => {
   //   if (props?.route?.params?.ad) {

@@ -121,7 +121,7 @@ export default function SplashScreen(props) {
 
   const setCurrency = () => {
     Location.getCurrentPositionAsync({
-      accuracy: Location.Accuracy.Highest,
+      accuracy: Location.Accuracy.Lowest,
     }).then(pos => {
       Location.reverseGeocodeAsync({
         latitude: pos.coords.latitude,
@@ -172,7 +172,7 @@ export default function SplashScreen(props) {
         setCurrency();
       } else {
         const location = await Location.getCurrentPositionAsync({
-          accuracy: Location.Accuracy.Highest,
+          accuracy: Location.Accuracy.Lowest,
         });
         checkInternet(userInfo);
         setCurrency();

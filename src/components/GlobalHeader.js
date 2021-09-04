@@ -200,7 +200,20 @@ const GlobalHeader = props => {
                 style={{ width: 20, height: 20 }}
               />
             </TouchableOpacity>
-          ) : null}
+          ) : props.menu ? (
+            <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={props.menuBtn && props.menuBtn}
+            style={[styles.viewLeft, { marginTop: -3, marginRight: 0 }]}
+          >
+            <Image
+              source={require('../assets/images/list.png')}
+              style={{ width: 15, height: 15 }}
+            />
+          </TouchableOpacity>
+          ) : null
+          
+          }
         </Right>
       </View>
       {props.search ? (

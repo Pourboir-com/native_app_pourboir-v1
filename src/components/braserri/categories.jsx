@@ -18,29 +18,23 @@ import { SAVE_CHANGES } from '../../queries';
 import { useMutation } from 'react-query';
 
 const Categories = props => {
-  const [categ, setCateg] = useState();
   const [dishes, setDishes] = useState([]);
   const [disable, setDisable] = useState(true);
-  const [newDishes, setNewDishes] = useState([])
-  console.log(dishes);
   useEffect(() => {
     if (props.dishes) {
       setDishes(props.dishes);
     }
   }, [props.dishes]);
 
-
-  const addDish =  () => {
-    const list =  dishes.push({
+  const addDish = () => {
+    const list = dishes.push({
       idDish: 'y' + uuid.v4(),
       name: '',
-      price: parseInt('') ,
+      price: Number(''),
       description: '',
     });
-    setDishes([...dishes])
+    setDishes([...dishes]);
     props.setDishess(list);
-    // setDishes([...di])
-    // console.log(newDishes, ' ssssss');
   };
 
   const handleInputChange = (value, index, name) => {
@@ -70,28 +64,28 @@ const Categories = props => {
     props.setDeleteType('menu');
   };
   // const dishesLength = newDishes.length;
-  console.log(newDishes.length, " length")
   const validator = () => {
-   
-     if(newDishes.length){
-       setDisable(true)
-     }else{
-       setDisable(false)
-     }
-    
-  }
+    dishes.find(v => {
+      if (!v.name || !v.description || !v.price) {
+        setDisable(true);
+      } else {
+        setDisable(false);
+      }
+    });
+  };
 
-useEffect(() => {
-  validator()
-},[newDishes])
-console.log(disable, " btn")
+  useEffect(() => {
+    validator();
+  }, [props.dishess, dishes]);
 
   const [saveChanges, { isLoading: publishMenuLoading }] = useMutation(
     SAVE_CHANGES,
   );
 
   const resolvedDishes = dishes => {
-    const result = dishes.map(({ idDish,updatedAt, ...rest }) => ({ ...rest }));
+    const result = dishes.map(({ idDish, updatedAt, ...rest }) => ({
+      ...rest,
+    }));
     return result;
   };
 
@@ -106,11 +100,7 @@ console.log(disable, " btn")
       },
       {
         onSuccess: async res => {
-          // alert('Changes saved successfully');
-          // setCategModal(false)
           await props.refetchMenus();
-          // setDishes([...props.dishes])
-          setNewDishes([])
         },
         onError: e => {
           alert('error save changes');
@@ -263,7 +253,6 @@ console.log(disable, " btn")
             onPress={saveMenu}
             title={i18n.t('save_changes')}
             disable={disable}
-            // validation={validation}
           />
         </View>
       ) : null}

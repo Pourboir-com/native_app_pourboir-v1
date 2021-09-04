@@ -259,7 +259,7 @@ export default {
   siret_num: 'SIRET Number',
   cellPhone: 'Cellphone number',
   i_accepts: 'I accept the profesional',
-  term_cond: `terms and \nconditions`,
+  term_cond: `terms and conditions`,
   claim: 'Claim Business',
   thank_u: 'Thank you',
   claim_received:

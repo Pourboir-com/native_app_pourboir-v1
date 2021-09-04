@@ -306,12 +306,12 @@ const ReviewDetails = ({ navigation, route }) => {
         navigation={navigation}
         settingBtn={true}
         settingBtnFunc={() =>
-          navigation.navigate('Braserri', {
-            restaurant_id: restaurant_id || '',
-            img,
-            name,
-          })
-          // setApprovalModal(true)
+          // navigation.navigate('Braserri', {
+          //   restaurant_id: restaurant_id || '',
+          //   img,
+          //   name,
+          // })
+          setApprovalModal(true)
         }
       />
       <Animated.View

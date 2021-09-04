@@ -29,7 +29,13 @@ const CommonButton = props => {
               props.dispatch && props.dispatch();
             }
       }
-      style={styles.btnValider, {...styles.btnValider, backgroundColor: props.disable ? 'red' : Colors.yellow}}
+      style={
+        (styles.btnValider,
+        {
+          ...styles.btnValider,
+          backgroundColor: props.disable ? '#EAEAEA' : Colors.yellow,
+        })
+      }
     >
       {props.loading ? (
         <ActivityIndicator size={29} color="#EBC11B" />

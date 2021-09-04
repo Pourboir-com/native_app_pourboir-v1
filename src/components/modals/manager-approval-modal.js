@@ -17,7 +17,6 @@ const imgWaiter = require('../../assets/images/Version-control-pana.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import uuid from 'react-native-uuid';
 import CheckBox from 'react-native-check-box';
 
 const ManagerApprovalModal = ({
@@ -84,145 +83,165 @@ const ManagerApprovalModal = ({
         scrollToOverflowEnabled={true}
         enableAutomaticScroll={Platform.OS === 'ios' ? true : false}
         resetScrollToCoords={{ x: 0, y: 0 }}
-        style={{ marginTop: 20 }}
+        style={{ marginTop: 20, width: '93%' }}
       >
-        <View style={{alignItems:'center'}}>
-        <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-          {i18n.t('fill_info')}
-        </Text>
-        <Text
-          style={{
-            fontFamily: 'ProximaNova',
-            fontSize: 14,
-            color: Colors.fontDark,
-            textAlign: 'center',
-            paddingTop: 10,
-            paddingHorizontal: 25,
-          }}
-        >
-          {i18n.t('thanks_filling')}
-        </Text>
-
-        <View
-          style={{
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            // width: 270,
-            marginVertical: 15,
-            marginTop: 35,
-          }}
-        >
-          <View style={(styles.input_box, { alignItems: 'center' })}>
-            <TextInput
-              style={styles.inputsTopTow}
-              onChangeText={e => setSiretNumber(e)}
-              value={siretNumber}
-              placeholder={i18n.t('siret_num')}
-              keyboardType={'numeric'}
-              placeholderTextColor={'#707375'}
-            />
-          </View>
-          <View
-            style={(styles.input_box, { alignItems: 'center', marginTop: 15 })}
-          >
-            <TextInput
-              style={styles.inputsTopTow}
-              onChangeText={e => setCellPhone(e)}
-              keyboardType={'numeric'}
-              value={cellPhone}
-              placeholder={i18n.t('cellPhone')}
-              placeholderTextColor={'#707375'}
-            />
-          </View>
-          <View
-          style={{
-            flexDirection: 'row',
-            // justifyContent: 'center',
-            marginTop:20
-          }}
-        >
-          <View style={{ justifyContent:'center' }}>
-            <CheckBox
-              style={{
-                zIndex: 9999,
-                marginTop: Platform.OS === 'ios' ? -14 : -13,
-              }}
-              onClick={() => setTermsChecked(!termsChecked)}
-              isChecked={termsChecked}
-              checkedImage={
-                <Image
-                  style={{ width: 17, marginTop: -4 }}
-                  resizeMode={'contain'}
-                  source={require('../../assets/images/checked.png')}
-                />
-              }
-              unCheckedImage={
-                <Image
-                  style={{ width: 15 }}
-                  resizeMode={'contain'}
-                  source={require('../../assets/images/unchecked.png')}
-                />
-              }
-            />
-          </View>
-          <View
-            style={{
-              marginHorizontal: 10,
-              // alignItems: 'center',
-              flexDirection:'row',
-              flexWrap:'wrap',
-              // justifyContent:'center'
-            }}
-            activeOpacity={0.5}
-          >
-            <TouchableOpacity>
-            <Text
-            // onPress={() =>alert('clicked')}
-              style={{
-                fontSize: 13,
-                color: '#000',
-                fontFamily: 'ProximaNova',
-              }}
-            >
-              {' '}
-              {i18n.t('i_accepts')}{' '}
-              
-              <Text style={{ 
-                color: '#0050A0',
-                fontSize: 13,
-                fontFamily: 'ProximaNova',
-            
-            }}> {i18n.t('term_cond')}</Text>
-            </Text>
-              </TouchableOpacity>
-              
-          </View>
-        </View>
-        </View>
-      
-
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={submitApproval}
-          disabled={validation ? false : true}
-          style={[
-            styles.btn_yellow,
-            validation && {
-              backgroundColor: Colors.yellow,
-            },
-          ]}
-        >
+        <View>
+          <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
+            {i18n.t('fill_info')}
+          </Text>
           <Text
             style={{
               fontFamily: 'ProximaNova',
               fontSize: 14,
               color: Colors.fontDark,
+              textAlign: 'center',
+              paddingTop: 10,
+              paddingHorizontal: 25,
             }}
           >
-            {i18n.t('claim')}
+            {i18n.t('thanks_filling')}
           </Text>
-        </TouchableOpacity>
+
+          <View
+            style={{
+              flexDirection: 'column',
+              // justifyContent: 'center',
+              // alignItems: 'center',
+              // width: 270,
+              marginVertical: 15,
+              marginTop: 35,
+            }}
+          >
+            <View style={(styles.input_box, { alignItems: 'center' })}>
+              <TextInput
+                style={styles.inputsTopTow}
+                onChangeText={e => setSiretNumber(e)}
+                value={siretNumber}
+                placeholder={i18n.t('siret_num')}
+                keyboardType={'numeric'}
+                placeholderTextColor={'#707375'}
+              />
+            </View>
+            <View
+              style={
+                (styles.input_box, { alignItems: 'center', marginTop: 15 })
+              }
+            >
+              <TextInput
+                style={styles.inputsTopTow}
+                onChangeText={e => setCellPhone(e)}
+                keyboardType={'numeric'}
+                value={cellPhone}
+                placeholder={i18n.t('cellPhone')}
+                placeholderTextColor={'#707375'}
+              />
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 10,
+                // alignSelf:'center',
+                width: '100%',
+                // marginHorizontal:50
+              }}
+            >
+              <View>
+                <CheckBox
+                  style={{
+                    zIndex: 9999,
+                    marginTop: Platform.OS === 'ios' ? -14 : -13,
+                  }}
+                  onClick={() => setTermsChecked(!termsChecked)}
+                  isChecked={termsChecked}
+                  checkedImage={
+                    <Image
+                      style={{ width: 15, marginTop: -4 }}
+                      resizeMode={'contain'}
+                      source={require('../../assets/images/checked.png')}
+                    />
+                  }
+                  unCheckedImage={
+                    <Image
+                      style={{ width: 12 }}
+                      resizeMode={'contain'}
+                      source={require('../../assets/images/unchecked.png')}
+                    />
+                  }
+                />
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  paddingLeft: 2,
+                  paddingTop: 1,
+                  justifyContent: 'center',
+                }}
+              >
+                <Text
+                  // onPress={() =>alert('clicked')}
+                  style={{
+                    fontSize: 12,
+                    color: '#000',
+                    fontFamily: 'ProximaNova',
+                    flexDirection: 'row',
+                  }}
+                >
+                  {' '}
+                  {i18n.t('i_accepts')}{' '}
+                </Text>
+                <TouchableOpacity>
+                  <Text
+                    style={{
+                      color: '#0050A0',
+                      fontSize: 12,
+                      fontFamily: 'ProximaNova',
+                    }}
+                  >
+                    {i18n.t('term_cond')}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              {/* <View
+            style={{
+              // marginHorizontal: 10,
+              // alignItems: 'center',
+              flexDirection:'row',
+              // justifyContent:'center'
+            }}
+            activeOpacity={0.5}
+          >
+              
+            <TouchableOpacity>
+
+              
+                          </TouchableOpacity>
+
+          </View> */}
+            </View>
+          </View>
+
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={submitApproval}
+            disabled={validation ? false : true}
+            style={[
+              styles.btn_yellow,
+              validation && {
+                backgroundColor: Colors.yellow,
+              },
+            ]}
+          >
+            <Text
+              style={{
+                fontFamily: 'ProximaNova',
+                fontSize: 14,
+                color: Colors.fontDark,
+              }}
+            >
+              {i18n.t('claim')}
+            </Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
     </Overlay>
@@ -235,7 +254,7 @@ const styles = StyleSheet.create({
   inputsTopTow: {
     borderColor: '#E3E3E3',
     borderWidth: 1,
-    width: 270,
+    width: '100%',
     // paddingLeft: 10,
     // paddingRight: 10,
     alignSelf: 'center',
@@ -262,7 +281,7 @@ const styles = StyleSheet.create({
   },
   btn_yellow: {
     backgroundColor: '#EAEAEA',
-    width: 270,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     height: 46,

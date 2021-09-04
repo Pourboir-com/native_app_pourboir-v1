@@ -19,27 +19,39 @@ import { useMutation } from 'react-query';
 
 const Categories = props => {
   const [categ, setCateg] = useState();
-  const [dishes, setDishes] = useState();
-  // console.log(dishes);
+  const [dishes, setDishes] = useState([]);
+  // const [disable, setDisable] = useState(true);
+  console.log(dishes);
   useEffect(() => {
     if (props.dishes) {
       setDishes(props.dishes);
     }
   }, [props.dishes]);
+
+  // const validator = () => {
+  //   if(props.dishes.length + 1 ){
+  //     setDisable(false)
+  //   }
+  // }
+  // useEffect(() => {
+  //   validator()
+  // },[dishes])
+  // console.log(disable, " btn")
+
   const addDish = async () => {
-    const list = await props.dishes.push({
+    const list = await dishes.push({
       idDish: 'y' + uuid.v4(),
       name: '',
-      price: parseInt(''),
+      price: parseInt('') ,
       description: '',
     });
     props.setDishess(list);
-    console.log(dishes, ' ssssss');
+    console.log(props.dishes, ' ssssss');
   };
 
   const handleInputChange = (value, index, name) => {
     props.dishes[index][name] = value;
-    props.setDishess((props.dishes[index][name] = value));
+    props.setDishess((dishes[index][name] = value));
   };
 
   const openDeleteDish = id => {
@@ -69,7 +81,7 @@ const Categories = props => {
   );
 
   const resolvedDishes = dishes => {
-    const result = dishes.map(({ idDish, ...rest }) => ({ ...rest }));
+    const result = dishes.map(({ idDish,updatedAt, ...rest }) => ({ ...rest }));
     return result;
   };
 
@@ -239,6 +251,7 @@ const Categories = props => {
             loading={publishMenuLoading}
             onPress={saveMenu}
             title={i18n.t('save_changes')}
+            // disable={disable}
           />
         </View>
       ) : null}

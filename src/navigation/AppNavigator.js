@@ -27,6 +27,8 @@ import ServerProfile from '../screens/server-profile';
 import NoAppTracking from '../screens/no-app-tracking';
 import ForgetPassword from '../screens/forget-password';
 import Braserri from '../screens/braserri';
+import PublicProfile from '../screens/public-profile';
+import YourTickets from '../screens/your-tickets';
 
 const Stack = createStackNavigator();
 
@@ -326,6 +328,32 @@ function AppNavigator() {
        <Stack.Screen
         name="Braserri"
         component={Braserri}
+        options={() => ({
+          headerShown: false,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
+        })}
+      />
+      <Stack.Screen
+        name="PublicProfile"
+        component={PublicProfile}
+        options={() => ({
+          headerShown: false,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
+        })}
+      />
+       <Stack.Screen
+        name="YourTickets"
+        component={YourTickets}
         options={() => ({
           headerShown: false,
           title: '',

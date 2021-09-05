@@ -11081,6 +11081,11 @@
   "resolved" "https://registry.npmjs.org/react-native-dashed-line/-/react-native-dashed-line-1.1.0.tgz"
   "version" "1.1.0"
 
+"react-native-device-settings@^1.2.0":
+  "integrity" "sha512-h1bD0d+9AMYGmoG2yJaOPwv5ux2KLkZur0/hKlSYBrb7hbz1YZZs5mOYK/jBNR9/sO+C2oSRJ3zy8cSOU6t5BA=="
+  "resolved" "https://registry.npmjs.org/react-native-device-settings/-/react-native-device-settings-1.2.0.tgz"
+  "version" "1.2.0"
+
 "react-native-drawer@2.5.1":
   "integrity" "sha512-cxcQNbSWy5sbGi7anSVp6EDr6JarOBMY9lbFOeLFeVYbONiudoqRKbgEsSDgSw3/LFCLvUXK5zdjXCOedeytxQ=="
   "resolved" "https://registry.npmjs.org/react-native-drawer/-/react-native-drawer-2.5.1.tgz"

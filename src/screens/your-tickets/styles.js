@@ -29,12 +29,12 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNovaBold',
     fontSize: 24,
   },
-  container_number:{
+  container_number: {
     width: '100%',
     alignSelf: 'center',
     alignItems: 'center',
     marginTop: 40,
-  }
+  },
 });
 
 export default styles;

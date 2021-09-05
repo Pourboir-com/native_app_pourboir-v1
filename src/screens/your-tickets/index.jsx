@@ -55,9 +55,7 @@ const YourTickets = ({ navigation }) => {
           <Text style={styles.text}>
             Collect tickets to increase your chance of winning.{' '}
           </Text>
-          <View
-            style={styles.container_number}
-          >
+          <View style={styles.container_number}>
             <Text style={styles.monthTxt}>July</Text>
             <NumberFormat
               value={pad(3, 8, 2)}

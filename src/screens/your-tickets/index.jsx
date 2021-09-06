@@ -34,7 +34,7 @@ const YourTickets = ({ navigation }) => {
         >
           <GlobalHeader
             arrow={true}
-            headingText={`Your Tickets`}
+            headingText={i18n.t('your_tickets')}
             fontSize={17}
             color={'black'}
             navigation={navigation}
@@ -52,9 +52,7 @@ const YourTickets = ({ navigation }) => {
             justifyContent: 'center',
           }}
         >
-          <Text style={styles.text}>
-            Collect tickets to increase your chance of winning.{' '}
-          </Text>
+          <Text style={styles.text}>{i18n.t('collect_tickets')}.</Text>
           <View style={styles.container_number}>
             <Text style={styles.monthTxt}>July</Text>
             <NumberFormat

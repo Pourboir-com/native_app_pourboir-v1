@@ -53,7 +53,7 @@ const LeaveReviewModal = ({ leaveRevModal, setLeaveRevModal }) => {
           }}
         >
           <View>
-            <Text style={styles.ReviewTxt}>Your Review</Text>
+            <Text style={styles.ReviewTxt}>{i18n.t('your_rev')}</Text>
           </View>
           {/* Section 1 */}
           <View
@@ -66,7 +66,7 @@ const LeaveReviewModal = ({ leaveRevModal, setLeaveRevModal }) => {
               marginTop: 70,
             }}
           >
-            <Text style={styles.tellTxt}>How was your experience today ?</Text>
+            <Text style={styles.tellTxt}>{i18n.t('how_exp')}</Text>
             <View>
               <View style={{ flexDirection: 'row', marginTop: 10 }}>
                 {obj.map((v, i) => {
@@ -106,24 +106,28 @@ const LeaveReviewModal = ({ leaveRevModal, setLeaveRevModal }) => {
               marginTop: 30,
             }}
           >
-            <Text style={styles.tellTxt}>Tell us more</Text>
+            <Text style={styles.tellTxt}>{i18n.t('tell_us')}</Text>
             <View style={styles.textArea}>
               <Textarea
                 style={{ height: 100, fontFamily: 'ProximaNova', fontSize: 15 }}
-                placeholder="Share with us your experience"
+                placeholder={i18n.t('exp_placeholder')}
                 value={exp}
-                onChangeText={(e) => setExp(e)}
+                onChangeText={e => setExp(e)}
               />
             </View>
           </View>
 
           {/* Section 3  */}
           <View style={styles.buttonsModal}>
-            <TouchableOpacity onPress={() => setLeaveRevModal(false)} activeOpacity={0.7} style={{...styles.btn, backgroundColor:'#EAEAEA'}}>
-              <Text style={styles.btnTxt}>Cancel</Text>
+            <TouchableOpacity
+              onPress={() => setLeaveRevModal(false)}
+              activeOpacity={0.7}
+              style={{ ...styles.btn, backgroundColor: '#EAEAEA' }}
+            >
+              <Text style={styles.btnTxt}>{i18n.t('cancel')}</Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.7} style={styles.btn}>
-              <Text style={styles.btnTxt}>Confirm</Text>
+              <Text style={styles.btnTxt}>{i18n.t('confirm')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -167,22 +171,22 @@ const styles = StyleSheet.create({
     marginTop: 10,
     padding: 8,
   },
-  buttonsModal:{
-    flexDirection:'row',
-    justifyContent:'space-around',
-    width:'90%',
-    marginTop:60
+  buttonsModal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '90%',
+    marginTop: 60,
   },
-  btn:{
-    backgroundColor:Colors.yellow,
-    borderRadius:7,
-    width:115,
-    justifyContent:'center',
-    alignItems:'center',
-    paddingVertical:15
+  btn: {
+    backgroundColor: Colors.yellow,
+    borderRadius: 7,
+    width: 115,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 15,
   },
-  btnTxt:{
-    fontFamily:'PrxoimaNova',
-    fontSize:14
-  }
+  btnTxt: {
+    fontFamily: 'PrxoimaNova',
+    fontSize: 14,
+  },
 });

@@ -64,25 +64,25 @@ const PublicProfile = ({ route, navigation }) => {
 
   const BottomSheetElement = [
     {
-      element: 'Modify your profile',
+      element: i18n.t('modify_profile'),
       nav: 'personalDetails',
     },
     {
-      element: 'Your Tickets',
+      element: i18n.t('your_tickets'),
       nav: 'YourTickets',
     },
     {
-      element: 'Your bank account',
+      element: i18n.t('bank_acc'),
     },
     {
-      element: 'Language',
+      element: i18n.t('lang'),
       // func: DeviceSettings.open(),
     },
     {
-      element: 'Rate this application',
+      element: i18n.t('rate_app'),
     },
     {
-      element: 'Contact us',
+      element: i18n.t('contact_us'),
     },
   ];
 
@@ -125,7 +125,7 @@ const PublicProfile = ({ route, navigation }) => {
             </View>
             <View style={{ marginLeft: 20, marginTop: 10 }}>
               <Text style={styles.user_name}>{user.name}</Text>
-              <Text style={styles.clientTxt}>Client</Text>
+              <Text style={styles.clientTxt}>{i18n.t('client')}</Text>
               <View style={{ flexDirection: 'row', marginTop: 7 }}>
                 {obj.map((v, i) => {
                   return (
@@ -141,7 +141,7 @@ const PublicProfile = ({ route, navigation }) => {
                   );
                 })}
               </View>
-              <Text style={styles.few_word_text}>Few words about him/her</Text>
+              <Text style={styles.few_word_text}>{i18n.t('few_words')}</Text>
               <View
                 style={{
                   flexDirection: 'row',
@@ -152,10 +152,10 @@ const PublicProfile = ({ route, navigation }) => {
               >
                 <View>
                   <Text style={styles.subscribeNumber}>888</Text>
-                  <Text style={styles.subscribeTxt}>Subscribers</Text>
+                  <Text style={styles.subscribeTxt}>{i18n.t('subs')}</Text>
                 </View>
                 <TouchableOpacity activeOpacity={0.5} style={styles.btn_follow}>
-                  <Text style={styles.text_follow}>Follow</Text>
+                  <Text style={styles.text_follow}>{i18n.t('follow')}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -165,7 +165,7 @@ const PublicProfile = ({ route, navigation }) => {
             <View>
               <TouchableOpacity style={styles.publications_btn}>
                 <FontAwesome name="send" size={18} color={Colors.yellow} />
-                <Text style={styles.publication_text}>Publications</Text>
+                <Text style={styles.publication_text}>{i18n.t('pub')}</Text>
               </TouchableOpacity>
             </View>
             <View style={{ marginTop: 25, flexDirection: 'row' }}>
@@ -176,10 +176,9 @@ const PublicProfile = ({ route, navigation }) => {
                 />
               </View>
               <View style={{ marginHorizontal: 8 }}>
-                <Text style={styles.publication_text}>No Publications.</Text>
+                <Text style={styles.publication_text}>{i18n.t('no_pub')}</Text>
                 <Text style={styles.publication_text}>
-                  There is no publications yet on this account. Follow to
-                  receive exclusive content soon.
+                {i18n.t('no_pub_yet')}
                 </Text>
               </View>
             </View>
@@ -232,7 +231,7 @@ const PublicProfile = ({ route, navigation }) => {
           style={{ ...styles.signOutBtn, color: '#2F3676' }}
         >
           <Text style={{ ...styles.sheetTxt, textAlign: 'center' }}>
-            Sign Out
+          {i18n.t('sign_out')}
           </Text>
         </TouchableOpacity>
       </RBSheet>

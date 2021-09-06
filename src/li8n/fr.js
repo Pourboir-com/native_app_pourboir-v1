@@ -255,17 +255,43 @@ export default {
   waiter_email: 'L’email de votre serveur',
   cook_email: 'L’email de votre cuisinier',
 
-    // manager modal
+  // manager modal
 
-    fill_info: 'Renseigner ces informations',
-    thanks_filling: "Nous devons vérifier que vous êtes bien le propriétaire de cet établissement. Merci de renseigner les informations suivantes ." ,
-    siret_num:'Numéro de SIRET',
-    cellPhone:'Numéro de téléphone portable',
-    i_accepts:"J'accepte les professionnel",
-    term_cond:`termes et \nconditions.`,
-    claim:'Réclamer',
-    thank_u:'Merci',
-  claim_received:"Nous avons bien reçu votre demande, un membre de notre équipe va prendre contact avec vous rapidement. ",
-  close:'Fermer',
-  save_changes:'Enregistrez vos modifications'
+  fill_info: 'Renseigner ces informations',
+  thanks_filling:
+    'Nous devons vérifier que vous êtes bien le propriétaire de cet établissement. Merci de renseigner les informations suivantes .',
+  siret_num: 'Numéro de SIRET',
+  cellPhone: 'Numéro de téléphone portable',
+  i_accepts: "J'accepte les professionnel",
+  term_cond: `termes et \nconditions.`,
+  claim: 'Réclamer',
+  thank_u: 'Merci',
+  claim_received:
+    'Nous avons bien reçu votre demande, un membre de notre équipe va prendre contact avec vous rapidement. ',
+  close: 'Fermer',
+  save_changes: 'Enregistrez vos modifications',
+  your_rev: 'Your review',
+  how_exp: 'Qualité de votre expérience',
+  tell_us: 'En quelques mots ',
+  exp_placeholder: 'Parlez nous de votre expérience',
+  cancel: 'Annuler',
+  confirm: 'Confirmer',
+
+  client: 'Client',
+  few_words: 'Quelques mots à son propos',
+  subs: 'Abonnés',
+  follow: 'Suivre',
+  pub: 'Publications',
+  no_pub: 'Aucune publication',
+  no_pub_yet:
+    'Il n’y a pas encore de publication sur son compte. Suivez son compte pour recevoir du contenu exclusif très bientôt.',
+  modify_profile: 'Modifier votre profil',
+  your_tickets: 'Vos tickets gagnés',
+  bank_acc: 'Votre compte bancaire',
+  lang: 'Language',
+  rate_app: "Notez l'application",
+  contact_us: 'Contactez nous',
+  sign_out: 'Se déconnecter',
+  collect_tickets:
+    'Collectez des tickets pour augmenter vos chances de gagner des cadeaux',
 };

@@ -26,10 +26,15 @@ import Modal from 'react-native-modal';
 import RatingStar from '../RatingComponent';
 import { Textarea } from 'native-base';
 
-const LeaveReviewModal = ({ leaveRevModal, setLeaveRevModal }) => {
-  const [hospitality, setHospitality] = useState();
-  const [exp, setExp] = useState('');
-  console.log(hospitality);
+const LeaveReviewModal = ({
+  leaveRevModal,
+  setLeaveRevModal,
+  hospitality,
+  setHospitality,
+  comment,
+  setComment,
+  confirmClick,
+}) => {
   const obj = [1, 2, 3, 4, 5];
 
   return (
@@ -111,8 +116,8 @@ const LeaveReviewModal = ({ leaveRevModal, setLeaveRevModal }) => {
               <Textarea
                 style={{ height: 100, fontFamily: 'ProximaNova', fontSize: 15 }}
                 placeholder={i18n.t('exp_placeholder')}
-                value={exp}
-                onChangeText={e => setExp(e)}
+                value={comment}
+                onChangeText={e => setComment(e)}
               />
             </View>
           </View>
@@ -126,7 +131,11 @@ const LeaveReviewModal = ({ leaveRevModal, setLeaveRevModal }) => {
             >
               <Text style={styles.btnTxt}>{i18n.t('cancel')}</Text>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7} style={styles.btn}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              style={styles.btn}
+              onPress={confirmClick}
+            >
               <Text style={styles.btnTxt}>{i18n.t('confirm')}</Text>
             </TouchableOpacity>
           </View>

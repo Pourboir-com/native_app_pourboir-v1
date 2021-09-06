@@ -37,3 +37,14 @@ export const DELETE_MENU = async e => {
   });
   return res;
 };
+export const GET_REVIEWS = async (get, e = {}) => {
+  const res = await axios.get(BASE_URL + `/v1/restaurants/review`, {
+    params: e,
+  });
+  return res.data;
+};
+
+export const CREATE_REVIEW = async e => {
+  const res = await axios.post(BASE_URL + `/v1/restaurants/review`, e);
+  return res;
+};

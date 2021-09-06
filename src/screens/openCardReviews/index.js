@@ -33,6 +33,7 @@ import {
   ADDING_WAITERS,
   GET_RESTAURANT_DETAILS,
   MANAGER_APPROVAL,
+  GET_REVIEWS,
 } from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
@@ -46,6 +47,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import ManagerApprovalModal from '../../components/modals/manager-approval-modal';
 import ReceivedModal from '../../components/modals/received-modal';
 import LeaveReviewModal from '../../components/modals/leave-review-modal';
+import { Review } from '../../components/open-card';
 // import { set } from 'react-native-reanimated';
 
 const ReviewDetails = ({ navigation, route }) => {
@@ -80,7 +82,6 @@ const ReviewDetails = ({ navigation, route }) => {
   const [termsChecked, setTermsChecked] = useState(false);
   const [approvalModal, setApprovalModal] = useState(false);
   const [receivedModal, setReceivedModal] = useState(false);
-  const [leaveRevModal, setLeaveRevModal] = useState(false);
 
   const {
     img,
@@ -94,8 +95,17 @@ const ReviewDetails = ({ navigation, route }) => {
     restaurant_id,
     geometry,
   } = route?.params || {};
-  console.log(restaurant_id);
+  const {
+    data: reviewData,
+    isLoading: reviewDataLoading,
+    refetch: reviewRefetch,
+  } = useQuery(['GET_REVIEWS', { google_place_id: place_id }], GET_REVIEWS, {
+    ...reactQueryConfig,
 
+    onError: e => {
+      alert(e?.response?.data?.message);
+    },
+  });
   const {
     data: waitersData,
     isLoading: waitersLoading,
@@ -156,24 +166,24 @@ const ReviewDetails = ({ navigation, route }) => {
       setUserWaiterModalVisible(true);
     }
   };
-
+  const restaurant = {
+    place_id: place_id,
+    rating: rating,
+    photos: [img],
+    name: name,
+    formatted_address: vicinity,
+    our_rating: String(our_rating),
+    location: geometry,
+    international_phone_number:
+      RestaurantDetails?.data?.international_phone_number,
+  };
   const handleAddWaiter = async (fullName, email) => {
     if (state.userDetails.user_id) {
       setRefferedLoading(true);
       let newWaiter = {
         created_by: state.userDetails.user_id,
         full_name: fullName,
-        restaurant: {
-          place_id: place_id,
-          rating: rating,
-          photos: [img],
-          name: name,
-          formatted_address: vicinity,
-          our_rating: String(our_rating),
-          location: geometry,
-          international_phone_number:
-            RestaurantDetails?.data?.international_phone_number,
-        },
+        restaurant,
         email: email,
       };
       await AddWaiters(newWaiter, {
@@ -199,17 +209,7 @@ const ReviewDetails = ({ navigation, route }) => {
       setUserLoading(true);
       let IWaiter = {
         user_id: state.userDetails.user_id,
-        restaurant: {
-          place_id: place_id,
-          rating: rating,
-          photos: [img],
-          name: name,
-          formatted_address: vicinity,
-          our_rating: String(our_rating),
-          location: geometry,
-          international_phone_number:
-            RestaurantDetails?.data?.international_phone_number,
-        },
+        restaurant,
       };
       await IAMWAITER(IWaiter, {
         onSuccess: async res => {
@@ -249,17 +249,7 @@ const ReviewDetails = ({ navigation, route }) => {
         user_id: state.userDetails.user_id,
         siret_number: siretNumber,
         cell_number: cellPhone,
-        restaurant: {
-          place_id: place_id,
-          rating: rating,
-          photos: [img],
-          name: name,
-          formatted_address: vicinity,
-          our_rating: String(our_rating),
-          location: geometry,
-          international_phone_number:
-            RestaurantDetails?.data?.international_phone_number,
-        },
+        restaurant,
       },
       {
         onSuccess: () => {
@@ -290,6 +280,7 @@ const ReviewDetails = ({ navigation, route }) => {
           waitersIsFetching &&
           !Refferedloading &&
           !Userloading &&
+          !reviewDataLoading &&
           !waitersLoading
         }
       />
@@ -512,37 +503,25 @@ const ReviewDetails = ({ navigation, route }) => {
             </View> */}
           </TouchableOpacity>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            // marginTop: 220,
-            marginHorizontal: 15,
-            marginBottom: 10,
-            alignItems: 'center',
-          }}
-        >
-          <View>
-            <Text
-              style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
-            >
-              Reviews
-            </Text>
-          </View>
-          <TouchableOpacity
-            onPress={() => setLeaveRevModal(true)}
-            activeOpacity={0.5}
+        {!reviewDataLoading && (
+          <View
             style={{
-              marginLeft: 15,
-              backgroundColor: '#FCDF6F',
-              padding: 2,
-              borderRadius: 100,
+              flexDirection: 'row',
+              // marginTop: 220,
+              marginHorizontal: 15,
+              marginBottom: 10,
+              alignItems: 'center',
             }}
           >
-            <View>
-              <Entypo name="plus" size={22} color="white" />
-            </View>
-          </TouchableOpacity>
-        </View>
+            <Review
+              route={route}
+              navigation={navigation}
+              reviewData={reviewData}
+              reviewRefetch={reviewRefetch}
+              restaurant={restaurant}
+            />
+          </View>
+        )}
         <View
           style={{
             flexDirection: 'row',
@@ -771,10 +750,6 @@ const ReviewDetails = ({ navigation, route }) => {
       <ReceivedModal
         receivedModal={receivedModal}
         setReceivedModal={setReceivedModal}
-      />
-      <LeaveReviewModal
-        leaveRevModal={leaveRevModal}
-        setLeaveRevModal={setLeaveRevModal}
       />
     </View>
   );

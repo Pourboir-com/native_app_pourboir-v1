@@ -158,10 +158,11 @@ export default function HomeScreenContent({
               scrollEnabled={false}
               alwaysBounceVertical={false}
               bounces={false}
+              horizontal={true}
               keyExtractor={(item, index) => index.toString()}
               renderItem={() => <HomeCardSkeleton />}
             />
-            <FlatList
+            {/* <FlatList
               data={dummyArray}
               showsVerticalScrollIndicator={false}
               style={{ marginTop: 15 }}
@@ -171,7 +172,7 @@ export default function HomeScreenContent({
               bounces={false}
               keyExtractor={(item, index) => index.toString()}
               renderItem={() => <HomeCardSkeleton />}
-            />
+            /> */}
           </View>
         </View>
       ) : (
@@ -214,24 +215,25 @@ export default function HomeScreenContent({
           >
             <FlatList
               data={restaurantLoading ? dummyArray : sortRestaurant(data)}
-              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
               // onEndReached={handleLoadMore}
               // onEndReachedThreshold={0.5}
               alwaysBounceHorizontal={false}
+              horizontal={true}
               keyboardShouldPersistTaps={'handled'}
               alwaysBounceVertical={true}
-              numColumns={2}
+              // numColumns={2}
               bounces={false}
               keyExtractor={(item, index) => index}
               renderItem={itemData => {
                 if (Object.keys(itemData.item).length) {
                   return (
-                    <View
-                      style={{
-                        marginTop: itemData.index % 2 !== 0 ? 12 : 0,
-                        marginBottom: -12,
-                      }}
-                    >
+                    // <View
+                    //   style={{
+                    //     marginTop: itemData.index % 2 !== 0 ? 12 : 0,
+                    //     marginBottom: -12,
+                    //   }}
+                    // >
                       <HomeCard
                         navigation={navigation}
                         key={itemData?.item?.place_id}
@@ -266,7 +268,7 @@ export default function HomeScreenContent({
                         }
                         geometry={itemData?.item?.geometry?.location}
                       />
-                    </View>
+                    // </View>
                   );
                 }
               }}

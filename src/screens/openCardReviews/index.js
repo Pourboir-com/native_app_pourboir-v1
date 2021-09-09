@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,6 +12,7 @@ import {
   Platform,
   Linking,
   Alert,
+  TouchableHighlight,
 } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import RefferedWaiterModal from '../../components/modals/ConfirmModal';
@@ -48,7 +49,6 @@ import ManagerApprovalModal from '../../components/modals/manager-approval-modal
 import ReceivedModal from '../../components/modals/received-modal';
 import LeaveReviewModal from '../../components/modals/leave-review-modal';
 import { Review } from '../../components/open-card';
-// import { set } from 'react-native-reanimated';
 
 const ReviewDetails = ({ navigation, route }) => {
   const openDialScreen = () => {

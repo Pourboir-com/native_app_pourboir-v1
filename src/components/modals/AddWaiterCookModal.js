@@ -8,6 +8,9 @@ import {
   ImageBackground,
   TextInput,
   Platform,
+  Dimensions,
+  ScrollView,
+  KeyboardAvoidingView
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -44,6 +47,24 @@ const AddWaiterCookModal = ({
       isVisible={addModal}
       onBackdropPress={() => setAddModal(false)}
     >
+      
+      <ScrollView
+        // ref={scrollRef}
+        keyboardShouldPersistTaps={'handled'}
+        bounces={false}
+        scrollEnabled={false}
+        style={{
+          width: '100%',
+        }}
+      >
+        <KeyboardAvoidingView
+          // style={ keyboardVisible && { marginBottom: -190 }}
+          keyboardVerticalOffset={
+            Dimensions.get('window').height <= 645 ? 10 : 25
+          }
+          behavior="position"
+          enabled
+        >
       <ImageBackground
         style={styles.imgBgStyle}
         source={imgBg}
@@ -73,17 +94,7 @@ const AddWaiterCookModal = ({
         </View>
       </ImageBackground>
 
-      <KeyboardAwareScrollView
-        bounces={false}
-        enableOnAndroid={true}
-        extraScrollHeight={10}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-        scrollToOverflowEnabled={true}
-        enableAutomaticScroll={Platform.OS === 'ios' ? true : false}
-        resetScrollToCoords={{ x: 0, y: 0 }}
-        style={{ marginTop: 20 }}
-      >
+    
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
           {modalType === 'waiter'
             ? i18n.t('name_of_waiter')
@@ -151,7 +162,8 @@ const AddWaiterCookModal = ({
             {i18n.t('confirm')}
           </Text>
         </TouchableOpacity>
-      </KeyboardAwareScrollView>
+        </KeyboardAvoidingView>
+        </ScrollView>
     </Overlay>
   );
 };

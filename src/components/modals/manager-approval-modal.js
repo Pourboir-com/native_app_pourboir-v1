@@ -8,7 +8,9 @@ import {
   ImageBackground,
   TextInput,
   Platform,
+  Dimensions,
   ScrollView,
+  KeyboardAvoidingView
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -40,11 +42,30 @@ const ManagerApprovalModal = ({
   };
 
   return (
+   
     <Overlay
       overlayStyle={styles.container}
       isVisible={approvalModal}
       onBackdropPress={() => setApprovalModal(false)}
     >
+      
+      <ScrollView
+        // ref={scrollRef}
+        keyboardShouldPersistTaps={'handled'}
+        bounces={false}
+        scrollEnabled={false}
+        style={{
+          width: '100%',
+        }}
+      >
+        <KeyboardAvoidingView
+          // style={ keyboardVisible && { marginBottom: -190 }}
+          keyboardVerticalOffset={
+            Dimensions.get('window').height <= 645 ? 10 : 25
+          }
+          behavior="position"
+          enabled
+        >
       <ImageBackground
         style={styles.imgBgStyle}
         source={imgBg}
@@ -73,19 +94,8 @@ const ManagerApprovalModal = ({
           />
         </View>
       </ImageBackground>
-
-      <KeyboardAwareScrollView
-        bounces={false}
-        enableOnAndroid={true}
-        extraScrollHeight={10}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-        scrollToOverflowEnabled={true}
-        enableAutomaticScroll={Platform.OS === 'ios' ? true : false}
-        resetScrollToCoords={{ x: 0, y: 0 }}
-        style={{ marginTop: 20, width: '93%' }}
-      >
-        <View>
+    
+        <View style={{marginHorizontal:10}}>
           <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
             {i18n.t('fill_info')}
           </Text>
@@ -182,7 +192,7 @@ const ManagerApprovalModal = ({
                 <Text
                   // onPress={() =>alert('clicked')}
                   style={{
-                    fontSize: 14,
+                    fontSize: 12,
                     color: '#000',
                     fontFamily: 'ProximaNova',
                     flexDirection: 'row',
@@ -195,7 +205,7 @@ const ManagerApprovalModal = ({
                   <Text
                     style={{
                       color: '#0050A0',
-                      fontSize: 14,
+                      fontSize: 12,
                       fontFamily: 'ProximaNova',
                     }}
                   >
@@ -244,8 +254,11 @@ const ManagerApprovalModal = ({
             </Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAwareScrollView>
+        {/* </KeyboardAwareScrollView> */}
+              </KeyboardAvoidingView>
+              </ScrollView>
     </Overlay>
+
   );
 };
 

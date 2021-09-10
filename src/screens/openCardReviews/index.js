@@ -47,6 +47,7 @@ import i18n from '../../li8n';
 import Spinner from 'react-native-loading-spinner-overlay';
 import ManagerApprovalModal from '../../components/modals/manager-approval-modal';
 import ReceivedModal from '../../components/modals/received-modal';
+import TourModal from '../../components/modals/tour-modal';
 import LeaveReviewModal from '../../components/modals/leave-review-modal';
 import { Review } from '../../components/open-card';
 
@@ -82,6 +83,13 @@ const ReviewDetails = ({ navigation, route }) => {
   const [termsChecked, setTermsChecked] = useState(false);
   const [approvalModal, setApprovalModal] = useState(false);
   const [receivedModal, setReceivedModal] = useState(false);
+  const [tourModal, setTourModal] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTourModal(true);
+    }, 2000);
+  }, []);
 
   const {
     img,
@@ -751,6 +759,7 @@ const ReviewDetails = ({ navigation, route }) => {
         receivedModal={receivedModal}
         setReceivedModal={setReceivedModal}
       />
+      <TourModal tourModal={tourModal} setTourModal={setTourModal} />
     </View>
   );
 };

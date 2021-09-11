@@ -72,6 +72,7 @@ const Review = ({ reviewData, reviewRefetch, restaurant }) => {
           showsHorizontalScrollIndicator={false}
           bounces={false}
           keyExtractor={item => item.id}
+          
         />
       </View>
 

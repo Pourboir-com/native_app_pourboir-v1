@@ -12,7 +12,7 @@ import {
   Platform,
   Linking,
   Alert,
-  TouchableHighlight,
+  Share
 } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import RefferedWaiterModal from '../../components/modals/ConfirmModal';
@@ -85,11 +85,11 @@ const ReviewDetails = ({ navigation, route }) => {
   const [receivedModal, setReceivedModal] = useState(false);
   const [tourModal, setTourModal] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setTourModal(true);
-    }, 2000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setTourModal(true);
+  //   }, 2000);
+  // }, []);
 
   const {
     img,
@@ -280,6 +280,24 @@ const ReviewDetails = ({ navigation, route }) => {
       },
     );
   };
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: 'React Native | A framework for building native apps using React',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -365,12 +383,13 @@ const ReviewDetails = ({ navigation, route }) => {
                   );
                 })}
               </View>
-              <View>
+              <View style={{zIndex:9999, backgroundColor:'red'}}>
                 <TouchableOpacity
-                  style={{ marginRight: 15, zIndex: 99999 }}
+                onPress={onShare}
+                  style={{ marginRight: 15, }}
                   activeOpacity={0.6}
                 >
-                  <FontAwesome name="share-square-o" size={24} color="white" />
+                  <FontAwesome onPress={onShare} name="share-square-o" size={24} color="white" />
                 </TouchableOpacity>
               </View>
               <View>
@@ -447,7 +466,8 @@ const ReviewDetails = ({ navigation, route }) => {
             //     name,
             //   })
             // }
-            style={[styles.viewItem]}
+            onPress={onShare}
+            style={[styles.viewItem, {zIndex:9999999}]}
           >
             <View style={styles.viewIcon}>
               <Feather name="check-square" size={26} color={Colors.yellow} />

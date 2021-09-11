@@ -294,4 +294,12 @@ export default {
   sign_out: 'Se déconnecter',
   collect_tickets:
     'Collectez des tickets pour augmenter vos chances de gagner des cadeaux',
+  // Tour Modal Translations 
+  tour_section1: "Gérant de ce restaurant ? C’est par ici",
+  tour_section2: 'Ajoutez le à vos favoris pour y avoir accès rapidement',
+  tour_section3: 'Faites nous savoir que vous y êtes pour gagner des surprises',
+  tour_section4: 'Donnez votre avis pour encore plus de surprises',
+  tour_section5: 'Le menu en ligne digital c’est par ici  ',
+  see_menu: 'Voir le menu',
+  add_fav:'Ajouter au favoris'  
 };

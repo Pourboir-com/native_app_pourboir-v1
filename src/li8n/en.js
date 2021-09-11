@@ -288,4 +288,13 @@ export default {
   contact_us: 'Contact us ',
   sign_out: 'Sign Out',
   collect_tickets: 'Collect tickets to increase your chance of winning.',
+  
+  // Tour Modal Translations 
+  tour_section1: 'Are you owner of this restaurant ? click here',
+  tour_section2: 'Add the restaurant to your favorites to have access to it fast',
+  tour_section3: 'Check-in when you are there to enter the lottery',
+  tour_section4: 'Leave a review for more chance to win',
+  tour_section5: 'Digital menu is right here ',
+  see_menu: 'See the menu',
+  add_fav:'Add to favorites'
 };

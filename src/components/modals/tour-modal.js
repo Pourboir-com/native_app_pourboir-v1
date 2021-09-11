@@ -7,14 +7,17 @@ import {
   StyleSheet,
   Image,
   TouchableHighlight,
+  SafeAreaView,
+  TouchableNativeFeedback,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { Colors } from '../../constants/Theme';
-import { Feather } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import CommonButton from '../common-button';
+import i18n from '../../li8n';
 
 const TourModal = ({ tourModal, setTourModal }) => {
-  const [showCross, setShowCross] = useState(false);
+  const [showCross, setShowCross] = useState(true);
   const [section, setSection] = useState(1);
   //   useEffect(() => {
   //     //  setSection(section == 2 ? setTourModal(false) && clearInterval() : setSection(section+1))
@@ -42,26 +45,27 @@ const TourModal = ({ tourModal, setTourModal }) => {
       backdropOpacity={0}
       animationInTiming={700}
       animationOutTiming={700}
-      onPress={() => setSection(2)}
+      onBackdropPress={nextSection}
       style={{
         width: '100%',
         marginHorizontal: 0,
         marginBottom: 0,
         position: 'relative',
-        marginTop: -70,
+        marginTop: -80,
       }}
     >
-      <TouchableHighlight
+      <TouchableOpacity
+        activeOpacity={0.9}
         onPress={nextSection}
         style={{
-          //   justifyContent: 'center',
-          alignItems: 'center',
           height: '100%',
           backgroundColor: '#000',
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
           opacity: 0.7,
           marginTop: 30,
+          zIndex: 999999,
+          alignItems: 'center',
         }}
       >
         {section == 1 ? (
@@ -74,7 +78,7 @@ const TourModal = ({ tourModal, setTourModal }) => {
                   fontSize: 17,
                 }}
               >
-                Are you owner of this restaurant ? click here
+                {i18n.t('tour_section1')}
               </Text>
             </View>
             <View style={{ width: '30%', marginLeft: 14, marginTop: -10 }}>
@@ -94,7 +98,7 @@ const TourModal = ({ tourModal, setTourModal }) => {
                   fontSize: 17,
                 }}
               >
-                Add the restaurant to your favorites to have access to it fast
+                {i18n.t('tour_section2')}
               </Text>
             </View>
             <View
@@ -107,9 +111,9 @@ const TourModal = ({ tourModal, setTourModal }) => {
               <TouchableOpacity
                 activeOpacity={0.7}
                 style={styles.btn}
-                //   onPress={confirmClick}
+                onPress={() => alert('added to fav alert')}
               >
-                <Text style={styles.btnTxt}>Ajouter au favoris</Text>
+                <Text style={styles.btnTxt}>{i18n.t('add_fav')}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -123,22 +127,22 @@ const TourModal = ({ tourModal, setTourModal }) => {
                   fontSize: 17,
                 }}
               >
-                Check-in when you are there to enter the lottery
+                {i18n.t('tour_section3')}
               </Text>
             </View>
             <View style={{ marginLeft: 14, marginTop: -10 }}>
               <Image
                 source={require('../../assets/images/down-arrow-yellow.png')}
                 style={{
-                  width: 130,
-                  height: 130,
+                  width: 100,
+                  height: 100,
                   resizeMode: 'contain',
                   marginTop: 30,
                   marginRight: 60,
                 }}
               />
             </View>
-            <View>
+            {/* <View>
               <TouchableOpacity activeOpacity={0.5} style={[styles.viewItem]}>
                 <View style={styles.viewIcon}>
                   <Feather
@@ -159,14 +163,13 @@ const TourModal = ({ tourModal, setTourModal }) => {
                     textAlign: 'center',
                   }}
                 >
-                  {/* {vicinity || name} */}
                   Check-in
                 </Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
           </View>
         ) : section === 4 ? (
-          <View style={styles.tour3_container}>
+          <View style={styles.tour4_container}>
             <View style={{ width: '100%', marginTop: 5 }}>
               <Text
                 style={{
@@ -175,23 +178,24 @@ const TourModal = ({ tourModal, setTourModal }) => {
                   fontSize: 17,
                 }}
               >
-                Leave a review for more chance to win
+                {i18n.t('tour_section4')}
               </Text>
             </View>
-            <View style={{ marginTop: -10 }}>
+            <View style={{ marginTop: -10, position: 'relative' }}>
               <Image
                 source={require('../../assets/images/down-arrow-curve.png')}
                 style={{
-                  width: 70,
-                  height: 70,
+                  width: 110,
+                  height: 110,
                   resizeMode: 'contain',
                   marginTop: 30,
-                  marginRight: 60,
+                  position: 'absolute',
+                  left: -100,
                 }}
               />
             </View>
           </View>
-        ) : (
+        ) : section == 5 ? (
           <View style={styles.tour5_container}>
             <View style={{ width: '80%', marginTop: 5 }}>
               <Text
@@ -202,7 +206,7 @@ const TourModal = ({ tourModal, setTourModal }) => {
                   textAlign: 'right',
                 }}
               >
-                Digital menu is right here
+                {i18n.t('tour_section5')}
               </Text>
             </View>
             <View
@@ -225,11 +229,26 @@ const TourModal = ({ tourModal, setTourModal }) => {
               />
             </View>
             <View style={{ width: '90%', zIndex: 1111 }}>
-              <CommonButton title="See the menu" />
+              <CommonButton title={i18n.t('see_menu')} />
             </View>
           </View>
+        ) : null}
+        {showCross && (
+          <TouchableOpacity
+            style={{
+              // alignSelf: 'flex-end',
+              position: 'absolute',
+              left: 10,
+              top: 80,
+            }}
+            onPress={() => {
+              setTourModal(false);
+            }}
+          >
+            <AntDesign name="close" size={34} color="white" />
+          </TouchableOpacity>
         )}
-      </TouchableHighlight>
+      </TouchableOpacity>
     </Modal>
   );
 };
@@ -239,7 +258,7 @@ export default TourModal;
 const styles = StyleSheet.create({
   tour1_container: {
     position: 'absolute',
-    top: 110,
+    top: 130,
     width: '80%',
     flexDirection: 'row',
   },
@@ -258,17 +277,18 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     marginTop: 10,
     marginLeft: 20,
+    zIndex: 111111,
   },
   btnTxt: {
     fontFamily: 'ProximaNova',
     fontSize: 13,
   },
   tour3_container: {
-    alignItems: 'center',
+    // alignItems: 'center',
     flexDirection: 'column',
     position: 'absolute',
-    top: 150,
-    width: '60%',
+    top: 120,
+    width: '70%',
   },
   viewIcon: {
     width: 30,
@@ -297,13 +317,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     position: 'absolute',
     top: 150,
+    left: 20,
     width: '60%',
   },
   tour5_container: {
     alignItems: 'center',
     flexDirection: 'column',
     position: 'absolute',
-    bottom: 40,
+    bottom: 30,
     width: '100%',
+    zIndex: 111111,
   },
 });

@@ -211,6 +211,7 @@ const ReviewDetails = ({ navigation, route }) => {
       navigation.navigate('socialLogin', { confirmWaiter: true });
     }
   };
+  console.log(RestaurantDetails);
 
   const handleIAMWAITER = async () => {
     if (state.userDetails.user_id) {

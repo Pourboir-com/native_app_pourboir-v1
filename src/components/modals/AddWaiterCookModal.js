@@ -8,6 +8,8 @@ import {
   ImageBackground,
   TextInput,
   Platform,
+  ScrollView,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -44,111 +46,119 @@ const AddWaiterCookModal = ({
       isVisible={addModal}
       onBackdropPress={() => setAddModal(false)}
     >
-      <KeyboardAwareScrollView
-        style={{ width: '100%' }}
+      <ScrollView
+        keyboardShouldPersistTaps={'handled'}
         bounces={false}
-        enableOnAndroid={true}
-        extraScrollHeight={10}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
+        scrollEnabled={false}
+        style={{
+          width: '100%',
+        }}
       >
-        <ImageBackground
-          style={styles.imgBgStyle}
-          source={imgBg}
-          resizeMode="stretch"
+        <KeyboardAvoidingView
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 10}
+          behavior="position"
+          enabled
         >
-          <View style={styles.viewImg}>
-            <TouchableOpacity
-              onPress={() => setAddModal(false)}
-              style={{ alignSelf: 'flex-end', margin: 10 }}
-            >
-              <AntDesign name="close" size={29} color="#485460" />
-            </TouchableOpacity>
-            <View
-              style={{
-                width: 140,
-                height: 130,
-                alignSelf: 'center',
-                marginBottom: -70,
-                bottom: -20,
-              }}
-            />
-            <Image
-              source={imgWaiter}
-              style={styles.imgStyle}
-              resizeMode="contain"
-            />
-          </View>
-        </ImageBackground>
-
-        <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-          {modalType === 'waiter'
-            ? i18n.t('name_of_waiter')
-            : i18n.t('name_of_cook')}
-        </Text>
-
-        <View
-          style={{
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            // width: 270,
-            marginVertical: 15,
-            marginTop: 25,
-          }}
-        >
-          <View style={(styles.input_box, { alignItems: 'center' })}>
-            <TextInput
-              style={styles.inputsTopTow}
-              onChangeText={e => setName(e)}
-              value={name}
-              placeholder={
-                modalType === 'waiter'
-                  ? i18n.t('waiter_name_placeholder')
-                  : i18n.t('cook_name_placeholder')
-              }
-              placeholderTextColor={'#707375'}
-            />
-          </View>
-          <View
-            style={(styles.input_box, { alignItems: 'center', marginTop: 16 })}
+          <ImageBackground
+            style={styles.imgBgStyle}
+            source={imgBg}
+            resizeMode="stretch"
           >
-            <TextInput
-              style={styles.inputsTopTow}
-              onChangeText={e => setEmail(e)}
-              value={email}
-              placeholder={
-                modalType === 'waiter'
-                  ? i18n.t('waiter_email')
-                  : i18n.t('cook_email')
-              }
-              placeholderTextColor={'#707375'}
-            />
-          </View>
-        </View>
+            <View style={styles.viewImg}>
+              <TouchableOpacity
+                onPress={() => setAddModal(false)}
+                style={{ alignSelf: 'flex-end', margin: 10 }}
+              >
+                <AntDesign name="close" size={29} color="#485460" />
+              </TouchableOpacity>
+              <View
+                style={{
+                  width: 140,
+                  height: 130,
+                  alignSelf: 'center',
+                  marginBottom: -70,
+                  bottom: -20,
+                }}
+              />
+              <Image
+                source={imgWaiter}
+                style={styles.imgStyle}
+                resizeMode="contain"
+              />
+            </View>
+          </ImageBackground>
 
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={handleAdd}
-          disabled={validation ? false : true}
-          style={[
-            styles.btn_yellow,
-            validation && {
-              backgroundColor: Colors.yellow,
-            },
-          ]}
-        >
-          <Text
+          <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
+            {modalType === 'waiter'
+              ? i18n.t('name_of_waiter')
+              : i18n.t('name_of_cook')}
+          </Text>
+
+          <View
             style={{
-              fontFamily: 'ProximaNova',
-              fontSize: 14,
-              color: Colors.fontDark,
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              // width: 270,
+              marginVertical: 15,
+              marginTop: 25,
             }}
           >
-            {i18n.t('confirm')}
-          </Text>
-        </TouchableOpacity>
-      </KeyboardAwareScrollView>
+            <View style={(styles.input_box, { alignItems: 'center' })}>
+              <TextInput
+                style={styles.inputsTopTow}
+                onChangeText={e => setName(e)}
+                value={name}
+                placeholder={
+                  modalType === 'waiter'
+                    ? i18n.t('waiter_name_placeholder')
+                    : i18n.t('cook_name_placeholder')
+                }
+                placeholderTextColor={'#707375'}
+              />
+            </View>
+            <View
+              style={
+                (styles.input_box, { alignItems: 'center', marginTop: 16 })
+              }
+            >
+              <TextInput
+                style={styles.inputsTopTow}
+                onChangeText={e => setEmail(e)}
+                value={email}
+                placeholder={
+                  modalType === 'waiter'
+                    ? i18n.t('waiter_email')
+                    : i18n.t('cook_email')
+                }
+                placeholderTextColor={'#707375'}
+              />
+            </View>
+          </View>
+
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={handleAdd}
+            disabled={validation ? false : true}
+            style={[
+              styles.btn_yellow,
+              validation && {
+                backgroundColor: Colors.yellow,
+              },
+            ]}
+          >
+            <Text
+              style={{
+                fontFamily: 'ProximaNova',
+                fontSize: 14,
+                color: Colors.fontDark,
+              }}
+            >
+              {i18n.t('confirm')}
+            </Text>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
+      </ScrollView>
     </Overlay>
   );
 };

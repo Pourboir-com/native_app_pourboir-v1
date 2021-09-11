@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Header from './HeaderAnimated';
 import HomeScreenContent from '../../components/HomeContent';
 import { StatusBar } from 'expo-status-bar';
-import { GET_RESTAURANT } from '../../queries';
+import { GET_RESTAURANT, GET_FAVORITE_RESTAURANT } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import { useQuery } from 'react-query';
 import Context from '../../contextApi/context';
@@ -82,6 +82,31 @@ const HomeScreen = props => {
       },
     },
   );
+
+  const {
+    data: favRestaurantData,
+    isLoading: favRestaurantLoading,
+    refetch: refetchFavRestaurant,
+    isFetching: favResIsFetching,
+  } = useQuery(
+    [
+      'GET_FAVORITE_RESTAURANT',
+      {
+        google_place_id: 'ChIJ_027a6Y_sz4R68RBIw0-daQ',
+        // pageToken: nextPageToken,
+      },
+    ],
+    GET_FAVORITE_RESTAURANT,
+    {
+      enabled: saveLocation,
+      ...reactQueryConfig,
+      onSuccess: res => {
+        alert('Get Favorites Restaurants..');
+        console.log(res);
+      },
+    },
+  );
+
   // console.log(restaurantData);
 
   // const handleLoadMore = () => {
@@ -113,6 +138,8 @@ const HomeScreen = props => {
           searchEnter={searchEnter}
           Data={data}
           route={props?.route}
+          favRestaurantData={favRestaurantData}
+          refetchFavRestaurant={refetchFavRestaurant}
         />
       </Header>
       {adModalVisible && (

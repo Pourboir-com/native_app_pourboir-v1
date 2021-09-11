@@ -114,16 +114,16 @@ const PublicProfile = ({ route, navigation }) => {
         </ImageBackground>
       </View>
       <View style={{ flex: 7 }}>
-        <View style={{ marginTop: 25, marginHorizontal: '5%' }}>
+        <View style={{ marginTop: 25 }}>
           {/* Section 1  */}
           <View style={styles.userDetails_container}>
-            <View>
+            <View style={{ width: 'auto' }}>
               <Image
                 source={require('../../assets/images/Avatar.png')}
                 style={{ width: 140, height: 170, resizeMode: 'contain' }}
               />
             </View>
-            <View style={{ marginLeft: 20, marginTop: 10 }}>
+            <View style={{ marginTop: 10, width: '55%' }}>
               <Text style={styles.user_name}>{user.name}</Text>
               <Text style={styles.clientTxt}>{i18n.t('client')}</Text>
               <View style={{ flexDirection: 'row', marginTop: 7 }}>
@@ -145,9 +145,9 @@ const PublicProfile = ({ route, navigation }) => {
               <View
                 style={{
                   flexDirection: 'row',
-                  justifyContent: 'space-between',
+                  // justifyContent: 'space-around',
                   marginTop: 15,
-                  marginHorizontal: -3,
+                  // marginHorizontal: -3,
                 }}
               >
                 <View>
@@ -161,7 +161,7 @@ const PublicProfile = ({ route, navigation }) => {
             </View>
           </View>
           {/* Section 2  */}
-          <View style={{ marginTop: 25 }}>
+          <View style={{ marginTop: 25, marginHorizontal: 16 }}>
             <View>
               <TouchableOpacity style={styles.publications_btn}>
                 <FontAwesome name="send" size={18} color={Colors.yellow} />
@@ -175,10 +175,10 @@ const PublicProfile = ({ route, navigation }) => {
                   source={require('../../assets/images/ads.png')}
                 />
               </View>
-              <View style={{ marginHorizontal: 8 }}>
+              <View style={{ width: '86%', marginLeft: 5 }}>
                 <Text style={styles.publication_text}>{i18n.t('no_pub')}</Text>
                 <Text style={styles.publication_text}>
-                {i18n.t('no_pub_yet')}
+                  {i18n.t('no_pub_yet')}
                 </Text>
               </View>
             </View>
@@ -231,7 +231,7 @@ const PublicProfile = ({ route, navigation }) => {
           style={{ ...styles.signOutBtn, color: '#2F3676' }}
         >
           <Text style={{ ...styles.sheetTxt, textAlign: 'center' }}>
-          {i18n.t('sign_out')}
+            {i18n.t('sign_out')}
           </Text>
         </TouchableOpacity>
       </RBSheet>

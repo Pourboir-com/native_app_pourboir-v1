@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
   },
   userDetails_container: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
+    marginHorizontal:10
   },
   user_name: {
     fontFamily: 'ProximaNovaBold',
@@ -41,6 +42,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
+    marginLeft: 15
   },
   text_follow: {
     fontFamily: 'ProximaNova',

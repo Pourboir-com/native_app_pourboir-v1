@@ -73,7 +73,7 @@ const HomeScreen = props => {
       enabled: saveLocation,
       ...reactQueryConfig,
       onSuccess: res => {
-        console.log(res?.restaurants?.results);
+        // console.log(res?.restaurants?.results);
 
         dispatch({
           type: actionTypes.RESTAURANTS_DETAILS,
@@ -88,24 +88,9 @@ const HomeScreen = props => {
     isLoading: favRestaurantLoading,
     refetch: refetchFavRestaurant,
     isFetching: favResIsFetching,
-  } = useQuery(
-    [
-      'GET_FAVORITE_RESTAURANT',
-      {
-        google_place_id: 'ChIJ_027a6Y_sz4R68RBIw0-daQ',
-        // pageToken: nextPageToken,
-      },
-    ],
-    GET_FAVORITE_RESTAURANT,
-    {
-      enabled: saveLocation,
-      ...reactQueryConfig,
-      onSuccess: res => {
-        alert('Get Favorites Restaurants..');
-        console.log(res);
-      },
-    },
-  );
+  } = useQuery(['GET_FAVORITE_RESTAURANT'], GET_FAVORITE_RESTAURANT, {
+    ...reactQueryConfig,
+  });
 
   // console.log(restaurantData);
 
@@ -113,7 +98,7 @@ const HomeScreen = props => {
   //   setnextPageToken(restaurantData.restaurants.next_page_token);
   //   // console.log('next page load');
   // };
-
+  console.log({ favRestaurantData }, 'fav');
   return (
     <>
       <Header
@@ -138,8 +123,17 @@ const HomeScreen = props => {
           searchEnter={searchEnter}
           Data={data}
           route={props?.route}
-          favRestaurantData={favRestaurantData}
-          refetchFavRestaurant={refetchFavRestaurant}
+        />
+        <HomeScreenContent
+          restaurantLoading={favRestaurantLoading}
+          searchVal={searchVal}
+          refetchRestaurant={refetchRestaurant}
+          resIsFetching={resIsFetching}
+          saveLocation={saveLocation}
+          searchEnter={searchEnter}
+          Data={favRestaurantData.data || []}
+          route={props?.route}
+          title="Fav"
         />
       </Header>
       {adModalVisible && (

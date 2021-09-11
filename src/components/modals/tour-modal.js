@@ -80,7 +80,13 @@ const TourModal = ({ tourModal, setTourModal }) => {
                 {i18n.t('tour_section1')}
               </Text>
             </View>
-            <View style={{ width: '30%', marginLeft: 14, marginTop: -20 }}>
+            <View
+              style={{
+                width: '30%',
+                marginLeft: Platform.OS === 'ios' ? 25 : 14,
+                marginTop: Platform.OS === 'ios' ? 20 : -25,
+              }}
+            >
               <Image
                 source={require('../../assets/images/up-arrow-curve.png')}
                 style={{ width: 80, height: 80, resizeMode: 'contain' }}
@@ -101,7 +107,7 @@ const TourModal = ({ tourModal, setTourModal }) => {
               </Text>
             </View>
             <View
-              style={{ width: '50%', top: 60, left: 150, position: 'absolute' }}
+              style={{top: Platform.OS === 'ios' ? 49 : '80%', left: Platform.OS === 'ios' ? '57%' : '50.2%', position: 'absolute' }}
             >
               <Image
                 source={require('../../assets/images/down-arrow-curve.png')}
@@ -112,7 +118,14 @@ const TourModal = ({ tourModal, setTourModal }) => {
                 style={styles.btn}
                 onPress={() => alert('added to fav alert')}
               >
-                <Text style={styles.btnTxt}>{i18n.t('add_fav')}</Text>
+                <Text
+                  style={[
+                    styles.btnTxt,
+                    { paddingVertical: Platform.OS === 'ios' ? 7 : 7},
+                  ]}
+                >
+                  {i18n.t('add_fav')}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -138,7 +151,7 @@ const TourModal = ({ tourModal, setTourModal }) => {
                   resizeMode: 'contain',
                   marginTop: 10,
                   // marginRight: 40,
-                  marginLeft:40
+                  marginLeft: 40,
                 }}
               />
             </View>
@@ -228,7 +241,7 @@ const TourModal = ({ tourModal, setTourModal }) => {
                 }}
               />
             </View>
-            <View style={{ width: '90%'}}>
+            <View style={{ width: '90%' }}>
               <CommonButton title={i18n.t('see_menu')} />
             </View>
           </View>
@@ -264,19 +277,18 @@ const styles = StyleSheet.create({
   },
   tour2_container: {
     position: 'absolute',
-    top: 150,
+    top: Platform.OS === 'ios' ? 150 : 115,
     width: '90%',
     flexDirection: 'row',
   },
   btn: {
     backgroundColor: Colors.yellow,
     borderRadius: 7,
-    width: 'auto',
+    width: 154,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 15,
     marginTop: 10,
-    marginLeft: 20,
     zIndex: 111111,
   },
   btnTxt: {
@@ -287,7 +299,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     flexDirection: 'column',
     position: 'absolute',
-    top: 120,
+    top: Platform.OS === 'ios' ? '27%' : '22%',
     width: '70%',
   },
   viewIcon: {
@@ -310,10 +322,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 9,
     justifyContent: 'center',
-    alignItems: 'center',
-    position:'absolute',
-    left:50,
-    bottom:10
+    position: 'absolute',
+    left: 50,
+    bottom: 10,
   },
   tour4_container: {
     alignItems: 'center',
@@ -327,7 +338,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     position: 'absolute',
-    bottom: 30,
+    bottom: Platform.OS === 'ios' ? 10 : 26,
     width: '100%',
     zIndex: 111111,
   },

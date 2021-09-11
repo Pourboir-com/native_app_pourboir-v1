@@ -12,7 +12,7 @@ import {
   Platform,
   Linking,
   Alert,
-  Share
+  Share,
 } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import RefferedWaiterModal from '../../components/modals/ConfirmModal';
@@ -284,7 +284,8 @@ const ReviewDetails = ({ navigation, route }) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: 'React Native | A framework for building native apps using React',
+        message:
+          'React Native | A framework for building native apps using React',
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -298,7 +299,7 @@ const ReviewDetails = ({ navigation, route }) => {
     } catch (error) {
       alert(error.message);
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -364,8 +365,20 @@ const ReviewDetails = ({ navigation, route }) => {
               }}
               colors={['black', 'transparent', 'black']}
             ></LinearGradient>
-            <View style={[styles.viewBottom, { position:'relative', height:'100%', justifyContent:'space-between' }]}>
-              <View pointerEvents="none" style={{ flexDirection: 'row', zIndex:99999,}}>
+            <View
+              style={[
+                styles.viewBottom,
+                {
+                  position: 'relative',
+                  height: '100%',
+                  justifyContent: 'space-between',
+                },
+              ]}
+            >
+              <View
+                pointerEvents="none"
+                style={{ flexDirection: 'row', zIndex: 99999 }}
+              >
                 {obj.map((v, i) => {
                   return (
                     <TouchableOpacity style={{ marginRight: 3 }} key={i}>
@@ -386,11 +399,11 @@ const ReviewDetails = ({ navigation, route }) => {
               </View>
               <View>
                 <TouchableOpacity
-                onPress={onShare}
-                  style={{ marginRight: 15, }}
+                  onPress={onShare}
+                  style={{ marginRight: 15 }}
                   activeOpacity={0.5}
                 >
-                  <FontAwesome  name="share-square-o" size={24} color="white" />
+                  <FontAwesome name="share-square-o" size={24} color="white" />
                 </TouchableOpacity>
               </View>
               <View>
@@ -421,8 +434,62 @@ const ReviewDetails = ({ navigation, route }) => {
         bounces={false}
       >
         <View
+          style={{ marginTop: 20, marginHorizontal: 24 }}
+        >
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginBottom: 29,
+            }}
+          >
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={{ marginLeft: '12%' }}
+              // onPress={() => refRBSheet.current.open()}
+            >
+              <Text
+                style={{
+                  fontFamily: 'ProximaNovaBold',
+                  fontWeight: 'bold',
+                  fontSize: 24,
+                  textAlign: 'center',
+                }}
+              >
+                {/* {favoritesData?.data[0]?.user_id?.length || '0'} */}0
+              </Text>
+              <Text tyle={{ fontFamily: 'ProximaNova', fontSize: 18 }}>
+                {/* {i18n.t('fav')} */}
+                Fav
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              // disabled={favoritesLoading || isFavoriteLoading}
+              style={{
+                backgroundColor: Colors.yellow,
+                paddingVertical: Platform.OS === 'ios' ? 20 : 14,
+                width: 156,
+                borderRadius: 12,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              // onPress={handleAddFavorite}
+            >
+              {/* {favLoading ? (
+              <ActivityIndicator size={23} color="#EBC11B" />
+            ) : (
+              <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
+                {checkFavorite() ? i18n.t('added') : i18n.t('add_fav')}
+              </Text>
+            )} */}
+              <Text>Fav</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View
           style={{
-            marginTop: 20,
             marginBottom: 20,
             flexDirection: 'row',
             justifyContent: 'space-evenly',
@@ -466,7 +533,7 @@ const ReviewDetails = ({ navigation, route }) => {
             //     name,
             //   })
             // }
-            style={[styles.viewItem, {zIndex: 9999999}]}
+            style={[styles.viewItem, { zIndex: 9999999 }]}
           >
             <View style={styles.viewIcon}>
               <Feather name="check-square" size={26} color={Colors.yellow} />
@@ -867,7 +934,7 @@ const styles = StyleSheet.create({
     bottom: 10,
     position: 'absolute',
     width: '100%',
-    zIndex:999999
+    zIndex: 999999,
   },
   txtName: {
     textAlign: 'center',

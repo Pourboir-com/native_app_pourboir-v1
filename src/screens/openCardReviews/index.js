@@ -422,11 +422,10 @@ const ReviewDetails = ({ navigation, route }) => {
         <View
           style={{
             marginTop: 220,
-            width: '95%',
-            alignSelf: 'center',
             marginBottom: 20,
             flexDirection: 'row',
             justifyContent: 'space-evenly',
+            marginHorizontal: 8,
           }}
         >
           <TouchableOpacity
@@ -467,7 +466,7 @@ const ReviewDetails = ({ navigation, route }) => {
             //   })
             // }
             onPress={onShare}
-            style={[styles.viewItem, {zIndex:9999999}]}
+            style={[styles.viewItem, {zIndex: 9999999}]}
           >
             <View style={styles.viewIcon}>
               <Feather name="check-square" size={26} color={Colors.yellow} />
@@ -535,8 +534,6 @@ const ReviewDetails = ({ navigation, route }) => {
           <View
             style={{
               flexDirection: 'row',
-              // marginTop: 220,
-              marginHorizontal: 15,
               marginBottom: 10,
               alignItems: 'center',
             }}
@@ -934,8 +931,7 @@ const styles = StyleSheet.create({
     // flexDirection:'row'
   },
   viewItem: {
-    width: 110,
-    marginHorizontal: 10,
+    width: 100,
     height: 55,
     backgroundColor: '#fff',
     marginBottom: 1,
@@ -944,6 +940,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 9,
     justifyContent: 'center',
-    alignItems: 'center',
   },
 });

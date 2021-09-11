@@ -8,9 +8,6 @@ import {
   ImageBackground,
   TextInput,
   Platform,
-  Dimensions,
-  ScrollView,
-  KeyboardAvoidingView
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -47,54 +44,43 @@ const AddWaiterCookModal = ({
       isVisible={addModal}
       onBackdropPress={() => setAddModal(false)}
     >
-      
-      <ScrollView
-        // ref={scrollRef}
-        keyboardShouldPersistTaps={'handled'}
+      <KeyboardAwareScrollView
+        style={{ width: '100%' }}
         bounces={false}
-        scrollEnabled={false}
-        style={{
-          width: '100%',
-        }}
+        enableOnAndroid={true}
+        extraScrollHeight={10}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
-        <KeyboardAvoidingView
-          // style={ keyboardVisible && { marginBottom: -190 }}
-          keyboardVerticalOffset={
-            Dimensions.get('window').height <= 645 ? 10 : 25
-          }
-          behavior="position"
-          enabled
+        <ImageBackground
+          style={styles.imgBgStyle}
+          source={imgBg}
+          resizeMode="stretch"
         >
-      <ImageBackground
-        style={styles.imgBgStyle}
-        source={imgBg}
-        resizeMode="stretch"
-      >
-        <View style={styles.viewImg}>
-          <TouchableOpacity
-            onPress={() => setAddModal(false)}
-            style={{ alignSelf: 'flex-end', margin: 10 }}
-          >
-            <AntDesign name="close" size={29} color="#485460" />
-          </TouchableOpacity>
-          <View
-            style={{
-              width: 140,
-              height: 130,
-              alignSelf: 'center',
-              marginBottom: -70,
-              bottom: -20,
-            }}
-          />
-          <Image
-            source={imgWaiter}
-            style={styles.imgStyle}
-            resizeMode="contain"
-          />
-        </View>
-      </ImageBackground>
+          <View style={styles.viewImg}>
+            <TouchableOpacity
+              onPress={() => setAddModal(false)}
+              style={{ alignSelf: 'flex-end', margin: 10 }}
+            >
+              <AntDesign name="close" size={29} color="#485460" />
+            </TouchableOpacity>
+            <View
+              style={{
+                width: 140,
+                height: 130,
+                alignSelf: 'center',
+                marginBottom: -70,
+                bottom: -20,
+              }}
+            />
+            <Image
+              source={imgWaiter}
+              style={styles.imgStyle}
+              resizeMode="contain"
+            />
+          </View>
+        </ImageBackground>
 
-    
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
           {modalType === 'waiter'
             ? i18n.t('name_of_waiter')
@@ -162,8 +148,7 @@ const AddWaiterCookModal = ({
             {i18n.t('confirm')}
           </Text>
         </TouchableOpacity>
-        </KeyboardAvoidingView>
-        </ScrollView>
+      </KeyboardAwareScrollView>
     </Overlay>
   );
 };
@@ -199,7 +184,7 @@ const styles = StyleSheet.create({
   },
   btn_yellow: {
     backgroundColor: '#EAEAEA',
-    width: '100%',
+    width: 270,
     justifyContent: 'center',
     alignItems: 'center',
     height: 46,

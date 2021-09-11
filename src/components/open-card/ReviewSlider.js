@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native';
 import RatingStar from '../RatingComponent';
-import ReadMore from 'react-native-read-more-text';
 import ReviewModal from '../modals/ReviewModal';
 
 const ReviewSlider = ({ item, rating }) => {
@@ -43,9 +42,9 @@ const ReviewSlider = ({ item, rating }) => {
       </View>
       <View>
         <TouchableOpacity onPress={() => setIsOpen(true)}>
-          <ReadMore numberOfLines={4}>
-            <Text style={styles.description}>{item.comment}</Text>
-          </ReadMore>
+          <Text numberOfLines={5} style={styles.description}>
+            {item.comment}
+          </Text>
         </TouchableOpacity>
       </View>
       {isOpen && (
@@ -74,8 +73,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     elevation: 1,
     width: 260,
-    height:150,
-    marginVertical:5
+    height: 150,
+    marginVertical: 5,
   },
   image: {
     justifyContent: 'flex-end',

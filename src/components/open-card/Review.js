@@ -64,7 +64,7 @@ const Review = ({ reviewData, reviewRefetch, restaurant }) => {
 
       <View style={{ marginHorizontal: 15, marginVertical: 10 }}>
         <FlatList
-          data={reviewData.data || []}
+          data={reviewData?.data || []}
           renderItem={({ item }) => (
             <ReviewSlider rating={+item.rating} item={item} />
           )}
@@ -72,7 +72,6 @@ const Review = ({ reviewData, reviewRefetch, restaurant }) => {
           showsHorizontalScrollIndicator={false}
           bounces={false}
           keyExtractor={item => item.id}
-          
         />
       </View>
 

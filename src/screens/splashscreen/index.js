@@ -74,16 +74,16 @@ export default function SplashScreen(props) {
         });
         notificationListener.current = Notifications.addNotificationReceivedListener(
           notification => {
-            props.navigation.navigate('WaiterProfile', {
-              crossIcon: true,
-            });
+            // props.navigation.navigate('WaiterProfile', {
+            //   crossIcon: true,
+            // });
           },
         );
         responseListener.current = Notifications.addNotificationResponseReceivedListener(
           response => {
-            props.navigation.navigate('WaiterProfile', {
-              crossIcon: true,
-            });
+            // props.navigation.navigate('WaiterProfile', {
+            //   crossIcon: true,
+            // });
           },
         );
       }

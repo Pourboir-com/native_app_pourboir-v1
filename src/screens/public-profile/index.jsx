@@ -161,11 +161,11 @@ const PublicProfile = ({ route, navigation }) => {
             </View>
           </View>
           {/* Section 2  */}
-          <View style={{ marginTop: 25, marginHorizontal: 16 }}>
+          <View style={{ marginTop: 25, marginHorizontal: 16, width: '90%' }}>
             <View>
               <TouchableOpacity style={styles.publications_btn}>
                 <FontAwesome name="send" size={18} color={Colors.yellow} />
-                <Text style={styles.publication_text}>{i18n.t('pub')}</Text>
+                <Text style={[styles.publication_text]}>{i18n.t('pub')}</Text>
               </TouchableOpacity>
             </View>
             <View style={{ marginTop: 25, flexDirection: 'row' }}>
@@ -176,8 +176,8 @@ const PublicProfile = ({ route, navigation }) => {
                 />
               </View>
               <View style={{ width: '86%', marginLeft: 5 }}>
-                <Text style={styles.publication_text}>{i18n.t('no_pub')}</Text>
-                <Text style={styles.publication_text}>
+                <Text style={[styles.publication_text, {fontFamily:"ProximaNovaSemiBold"}]}>{i18n.t('no_pub')}</Text>
+                <Text style={[styles.publication_text,{marginTop: 5}]}>
                   {i18n.t('no_pub_yet')}
                 </Text>
               </View>

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,12 +8,15 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  ActivityIndicator,
   Animated,
   Platform,
   Linking,
   Alert,
-  Share
+  Share,
 } from 'react-native';
+import StarCard from '../../components/star-card';
+import RBSheet from 'react-native-raw-bottom-sheet';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import RefferedWaiterModal from '../../components/modals/ConfirmModal';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
@@ -35,6 +38,8 @@ import {
   GET_RESTAURANT_DETAILS,
   MANAGER_APPROVAL,
   GET_REVIEWS,
+  ADD_FAVORITE,
+  GET_FAVORITES,
 } from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
@@ -84,12 +89,13 @@ const ReviewDetails = ({ navigation, route }) => {
   const [approvalModal, setApprovalModal] = useState(false);
   const [receivedModal, setReceivedModal] = useState(false);
   const [tourModal, setTourModal] = useState(false);
+  const [AddFavorite, { isLoading: favLoading }] = useMutation(ADD_FAVORITE);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setTourModal(true);
-    }, 2000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setTourModal(true);
+  //   }, 2000);
+  // }, []);
 
   const {
     img,
@@ -103,6 +109,9 @@ const ReviewDetails = ({ navigation, route }) => {
     restaurant_id,
     geometry,
   } = route?.params || {};
+
+  const refRBSheet = useRef();
+
   const {
     data: reviewData,
     isLoading: reviewDataLoading,
@@ -140,6 +149,20 @@ const ReviewDetails = ({ navigation, route }) => {
     GET_RESTAURANT_DETAILS,
     {
       ...reactQueryConfig,
+    },
+  );
+
+  const {
+    data: favoritesData,
+    refetch: refetchFavorites,
+    isLoading: favoritesLoading,
+    isFetching: isFavoriteLoading,
+  } = useQuery(
+    ['GET_FAVORITES', { google_place_id: place_id }],
+    GET_FAVORITES,
+    {
+      ...reactQueryConfig,
+      enabled: place_id,
     },
   );
 
@@ -283,7 +306,8 @@ const ReviewDetails = ({ navigation, route }) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: 'React Native | A framework for building native apps using React',
+        message:
+          'React Native | A framework for building native apps using React',
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -297,7 +321,38 @@ const ReviewDetails = ({ navigation, route }) => {
     } catch (error) {
       alert(error.message);
     }
-  }
+  };
+
+  const handleAddFavorite = async () => {
+    if (state.userDetails.user_id) {
+      let newFavorite = {
+        user_id: state.userDetails.user_id,
+        restaurant: {
+          place_id: place_id,
+          rating: rating,
+          photos: [img],
+          name: name,
+          formatted_address: vicinity,
+          our_rating: String(our_rating),
+          location: geometry,
+          international_phone_number:
+            RestaurantDetails?.data?.international_phone_number,
+        },
+      };
+      await AddFavorite(newFavorite, {
+        onSuccess: async () => {
+          await refetchFavorites();
+        },
+      });
+    } else {
+      navigation.navigate('socialLogin', { confirmWaiter: true });
+    }
+  };
+
+  const checkFavorite = () =>
+    (favoritesData?.data[0]?.user_id || []).find(
+      item => item?._id === state?.userDetails?.user_id,
+    );
 
   return (
     <View style={styles.container}>
@@ -363,8 +418,20 @@ const ReviewDetails = ({ navigation, route }) => {
               }}
               colors={['black', 'transparent', 'black']}
             ></LinearGradient>
-            <View style={[styles.viewBottom, { position:'relative', height:'100%', justifyContent:'space-between' }]}>
-              <View pointerEvents="none" style={{ flexDirection: 'row', zIndex:99999,}}>
+            <View
+              style={[
+                styles.viewBottom,
+                {
+                  position: 'relative',
+                  height: '100%',
+                  justifyContent: 'space-between',
+                },
+              ]}
+            >
+              <View
+                pointerEvents="none"
+                style={{ flexDirection: 'row', zIndex: 99999 }}
+              >
                 {obj.map((v, i) => {
                   return (
                     <TouchableOpacity style={{ marginRight: 3 }} key={i}>
@@ -385,11 +452,11 @@ const ReviewDetails = ({ navigation, route }) => {
               </View>
               <View>
                 <TouchableOpacity
-                onPress={onShare}
-                  style={{ marginRight: 15, }}
+                  onPress={onShare}
+                  style={{ marginRight: 15 }}
                   activeOpacity={0.5}
                 >
-                  <FontAwesome  name="share-square-o" size={24} color="white" />
+                  <FontAwesome name="share-square-o" size={24} color="white" />
                 </TouchableOpacity>
               </View>
               <View>
@@ -419,9 +486,110 @@ const ReviewDetails = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
+        <View style={{ marginTop: 20, marginHorizontal: 24 }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginBottom: 29,
+            }}
+          >
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={{ marginLeft: '12%' }}
+              onPress={() => refRBSheet.current.open()}
+            >
+              <Text
+                style={{
+                  fontFamily: 'ProximaNovaBold',
+                  fontWeight: 'bold',
+                  fontSize: 24,
+                  textAlign: 'center',
+                }}
+              >
+                {favoritesData?.data[0]?.user_id?.length || '0'}
+              </Text>
+              <Text tyle={{ fontFamily: 'ProximaNova', fontSize: 18 }}>
+                {i18n.t('fav')}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              disabled={favoritesLoading || isFavoriteLoading}
+              style={{
+                backgroundColor: Colors.yellow,
+                paddingVertical: Platform.OS === 'ios' ? 20 : 14,
+                width: 156,
+                borderRadius: 12,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              onPress={handleAddFavorite}
+            >
+              {favLoading ? (
+                <ActivityIndicator size={23} color="#EBC11B" />
+              ) : (
+                <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
+                  {checkFavorite() ? i18n.t('added') : i18n.t('add_fav')}
+                </Text>
+              )}
+            </TouchableOpacity>
+          </View>
+        </View>
+        <RBSheet
+          ref={refRBSheet}
+          closeOnDragDown={true}
+          closeOnPressMask={true}
+          height={350}
+          customStyles={{
+            wrapper: {
+              backgroundColor: 'rgba(52, 52, 52, 0.8)',
+            },
+            draggableIcon: {
+              backgroundColor: '#000',
+            },
+          }}
+        >
+          <Text
+            style={{
+              textAlign: 'center',
+              fontFamily: 'ProximaNova',
+              fontSize: 16,
+            }}
+          >
+            {i18n.t('fav_list')}
+          </Text>
+
+          <View
+            style={{ alignItems: 'center', marginTop: 15, marginBottom: 30 }}
+          >
+            {favoritesLoading || isFavoriteLoading ? (
+              <View style={{ width: '90%', alignSelf: 'center' }}>
+                <ReviewsSkeleton />
+                <ReviewsSkeleton />
+              </View>
+            ) : (
+              <FlatList
+                data={favoritesLoading ? null : favoritesData?.data[0]?.user_id}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={item => item._id}
+                renderItem={itemData => (
+                  <StarCard
+                    itemData={itemData}
+                    state={state}
+                    navigation={navigation}
+                    place_id={place_id}
+                    restaurant_id={restaurant_id}
+                    navigationDisable={true}
+                  />
+                )}
+              />
+            )}
+          </View>
+        </RBSheet>
+
         <View
           style={{
-            marginTop: 20,
             marginBottom: 20,
             flexDirection: 'row',
             justifyContent: 'space-evenly',
@@ -465,7 +633,7 @@ const ReviewDetails = ({ navigation, route }) => {
             //     name,
             //   })
             // }
-            style={[styles.viewItem, {zIndex: 9999999}]}
+            style={[styles.viewItem, { zIndex: 9999999 }]}
           >
             <View style={styles.viewIcon}>
               <Feather name="check-square" size={26} color={Colors.yellow} />
@@ -866,7 +1034,7 @@ const styles = StyleSheet.create({
     bottom: 10,
     position: 'absolute',
     width: '100%',
-    zIndex:999999
+    zIndex: 999999,
   },
   txtName: {
     textAlign: 'center',

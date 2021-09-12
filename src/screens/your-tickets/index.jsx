@@ -68,7 +68,7 @@ const YourTickets = ({ navigation }) => {
           justifyContent: 'center',
         }}
       >
-        <Text style={styles.text}>{i18n.t('collect_tickets')}.</Text>
+        <Text style={styles.text}>{i18n.t('collect_tickets')}</Text>
       </View>
       <FlatList
         data={ticketData?.data || []}

@@ -10,7 +10,7 @@ import { STAFF, ADD_STAFF } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import Context from '../../contextApi/context';
 
-const Team = () => {
+const Team = ({ restaurant_id }) => {
   const { state } = useContext(Context);
   const [addModal, setAddModal] = useState(false);
   const [modalType, setModalType] = useState();
@@ -19,7 +19,14 @@ const Team = () => {
   const [addStaff, { isLoading: addStaffLoading }] = useMutation(ADD_STAFF);
 
   const { data: waiterData, refetch: refetchWaiterData } = useQuery(
-    ['STAFF', { type: ['waiter'], user_id: state.userDetails.user_id }],
+    [
+      'STAFF',
+      {
+        type: ['waiter'],
+        user_id: state.userDetails.user_id,
+        place_id: restaurant_id,
+      },
+    ],
     STAFF,
     {
       ...reactQueryConfig,
@@ -27,14 +34,19 @@ const Team = () => {
   );
 
   const { data: cookData, refetch: refetchCookData } = useQuery(
-    ['STAFF', { type: ['cook'], user_id: state.userDetails.user_id }],
+    [
+      'STAFF',
+      {
+        type: ['cook'],
+        user_id: state.userDetails.user_id,
+        place_id: restaurant_id,
+      },
+    ],
     STAFF,
     {
       ...reactQueryConfig,
     },
   );
-  console.log(waiterData);
-  console.log(cookData);
 
   const openWaiterModal = () => {
     setAddModal(true);
@@ -52,6 +64,7 @@ const Team = () => {
       type: modalType,
       email: email || '',
       full_name: name || '',
+      place_id: restaurant_id,
     });
     await addStaff(
       {
@@ -69,7 +82,7 @@ const Team = () => {
             refetchCookData();
           }
         },
-        onError: (e) => {
+        onError: e => {
           alert(e.response?.data?.message);
         },
       },
@@ -85,7 +98,9 @@ const Team = () => {
             <Text style={styles.mainHeading}>{i18n.t('waiters')}</Text>
           </View>
           <View style={styles.numberBox}>
-            <Text style={styles.numberTxt}>{waiterData?.data?.length ? waiterData?.data?.length : 0}</Text>
+            <Text style={styles.numberTxt}>
+              {waiterData?.data?.length ? waiterData?.data?.length : 0}
+            </Text>
           </View>
         </View>
         <View style={{ marginTop: 20 }}>
@@ -131,7 +146,9 @@ const Team = () => {
             <Text style={styles.mainHeading}>{i18n.t('cook')}</Text>
           </View>
           <View style={styles.numberBox}>
-            <Text style={styles.numberTxt}>{cookData?.data?.length ? cookData?.data?.length : 0}</Text>
+            <Text style={styles.numberTxt}>
+              {cookData?.data?.length ? cookData?.data?.length : 0}
+            </Text>
           </View>
         </View>
 

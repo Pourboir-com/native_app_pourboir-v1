@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import {
   Dimensions,
   ImageBackground,
@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   Linking,
+  Platform,
 } from 'react-native';
 import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';
@@ -21,11 +22,10 @@ import * as Google from 'expo-google-app-auth';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import DeviceSettings from 'react-native-device-settings';
+import * as IntentLauncher from 'expo-intent-launcher';
+import { config } from '../../constants';
 
-const PublicProfile = ({ route, navigation }) => {
-  const [loading, setLoading] = useState(false);
-  const { user } = route.params;
+const PublicProfile = ({ navigation }) => {
   const obj = [1, 2, 3, 4, 5];
   const refRBSheet = useRef();
   const { state, dispatch } = useContext(Context);
@@ -37,7 +37,16 @@ const PublicProfile = ({ route, navigation }) => {
       payload: {},
     });
     await AsyncStorage.setItem('@userInfo', JSON.stringify({}));
-    setLoading(false);
+  };
+
+  const openSettings = () => {
+    if (Platform.OS === 'ios') {
+      Linking.openURL('app-settings:');
+    } else {
+      IntentLauncher.startActivityAsync(
+        IntentLauncher.ACTION_LOCATION_SOURCE_SETTINGS,
+      );
+    }
   };
 
   //user signout
@@ -46,7 +55,6 @@ const PublicProfile = ({ route, navigation }) => {
     const accessToken = userInfo.accessToken;
     /* Log-Out */
     if (accessToken) {
-      setLoading(true);
       try {
         const auth = await Facebook.getAuthenticationCredentialAsync();
         if (auth) {
@@ -76,10 +84,14 @@ const PublicProfile = ({ route, navigation }) => {
     },
     {
       element: i18n.t('lang'),
-      // func: DeviceSettings.open(),
+      func: openSettings,
     },
     {
       element: i18n.t('rate_app'),
+      func: () =>
+        Linking.openURL(
+          'https://play.google.com/store/apps/details?id=com.developerspourboir.pourboir&hl=en&gl=US',
+        ),
     },
     {
       element: i18n.t('contact_us'),
@@ -101,7 +113,7 @@ const PublicProfile = ({ route, navigation }) => {
         >
           <GlobalHeader
             arrow={true}
-            headingText={`@${user.name}`}
+            headingText={`@${state?.userDetails?.name}`}
             fontSize={17}
             color={'black'}
             navigation={navigation}
@@ -119,12 +131,17 @@ const PublicProfile = ({ route, navigation }) => {
           <View style={styles.userDetails_container}>
             <View style={{ width: 'auto' }}>
               <Image
-                source={require('../../assets/images/Avatar.png')}
-                style={{ width: 140, height: 170, resizeMode: 'contain' }}
+                source={{ uri: state?.userDetails?.image }}
+                style={{
+                  width: 140,
+                  height: 170,
+                  resizeMode: 'contain',
+                  borderRadius: 120,
+                }}
               />
             </View>
             <View style={{ marginTop: 10, width: '55%' }}>
-              <Text style={styles.user_name}>{user.name}</Text>
+              <Text style={styles.user_name}>{state?.userDetails?.name}</Text>
               <Text style={styles.clientTxt}>{i18n.t('client')}</Text>
               <View style={{ flexDirection: 'row', marginTop: 7 }}>
                 {obj.map((v, i) => {
@@ -176,8 +193,15 @@ const PublicProfile = ({ route, navigation }) => {
                 />
               </View>
               <View style={{ width: '86%', marginLeft: 5 }}>
-                <Text style={[styles.publication_text, {fontFamily:"ProximaNovaSemiBold"}]}>{i18n.t('no_pub')}</Text>
-                <Text style={[styles.publication_text,{marginTop: 5}]}>
+                <Text
+                  style={[
+                    styles.publication_text,
+                    { fontFamily: 'ProximaNovaSemiBold' },
+                  ]}
+                >
+                  {i18n.t('no_pub')}
+                </Text>
+                <Text style={[styles.publication_text, { marginTop: 5 }]}>
                   {i18n.t('no_pub_yet')}
                 </Text>
               </View>
@@ -207,14 +231,7 @@ const PublicProfile = ({ route, navigation }) => {
               <TouchableOpacity
                 key={i}
                 onPress={
-                  i === 4
-                    ? () =>
-                        Linking.openURL(
-                          'https://play.google.com/store/apps/details?id=com.developerspourboir.pourboir&hl=en&gl=US',
-                        )
-                    : v.nav
-                    ? () => navigation.navigate(v.nav)
-                    : v.func && v.func
+                  v.nav ? () => navigation.navigate(v.nav) : v.func && v.func
                 }
                 activeOpacity={0.3}
                 style={styles.sheet_elements}

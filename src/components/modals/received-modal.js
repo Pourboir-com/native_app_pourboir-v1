@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -6,9 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
-  TextInput,
   Platform,
-  ScrollView,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -17,8 +15,6 @@ const imgWaiter = require('../../assets/images/Appreciation-bro.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import uuid from 'react-native-uuid';
-import CheckBox from 'react-native-check-box';
 
 const ReceivedModal = ({ receivedModal, setReceivedModal }) => {
   return (

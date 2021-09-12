@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f9f9f9',
   },
   lottery: {
-    width: 200,
+    width: 220,
     backgroundColor: '#fcf4e4',
     borderRadius: 10,
     fontSize: 20,
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'ProximaNova',
     textAlign: 'center',
-    width: '80%',
+    width: '70%',
   },
   monthTxt: {
     paddingBottom: 20,

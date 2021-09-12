@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   userDetails_container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal:10
+    marginHorizontal: 10,
   },
   user_name: {
     fontFamily: 'ProximaNovaBold',
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   clientTxt: {
     fontFamily: 'ProximaNovaSemiBold',
     fontSize: 18,
-    marginTop: 10
+    marginTop: 10,
   },
   few_word_text: {
     fontFamily: 'ProximaNovaSemiBold',

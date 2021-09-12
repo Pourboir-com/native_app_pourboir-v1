@@ -188,7 +188,6 @@ const HomeScreen = props => {
     outputRange: [10, HEADER_BAR_HEIGHT],
     extrapolate: Extrapolate.CLAMP,
   });
-  // console.log(state.userDetails)
 
   useLayoutEffect(() => {
     const renderUserIcon = () => {
@@ -210,7 +209,7 @@ const HomeScreen = props => {
                 //   <ActivityIndicator color="black" size={38} />
                 // ) : (
                 <TouchableOpacity
-                  onPress={() => props.navigation.navigate('PublicProfile', { user: state.userDetails })}
+                  onPress={() => props.navigation.navigate('PublicProfile')}
                 >
                   <Image
                     style={{
@@ -218,7 +217,7 @@ const HomeScreen = props => {
                       width: 40,
                       height: 40,
                     }}
-                    source={!state.userDetails.image ? {uri: state.userDetails.image,} : require('../../assets/images/Avatar.png')}
+                    source={{ uri: state?.userDetails?.image }}
                   />
                 </TouchableOpacity>
               ) : (
@@ -226,9 +225,7 @@ const HomeScreen = props => {
                 //   <ActivityIndicator color="black" size={38} />
                 // ) : (
                 <TouchableOpacity
-                  onPress={() =>
-                    props.navigation.navigate('Setting', { settingsBack: true })
-                  }
+                  onPress={() => props.navigation.navigate('PublicProfile')}
                 >
                   <FontAwesome name="user-circle-o" size={37} color="black" />
                 </TouchableOpacity>

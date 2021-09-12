@@ -283,7 +283,7 @@ export default {
   bank_acc: 'Your bank account',
   lang: 'Language',
   rate_app: 'Rate this applicaiton',
-  collect_tickets: 'Collect tickets to increase your chance of winning.',
+  collect_tickets: 'Collect tickets to increase your chance of winning',
 
   // Tour Modal Translations
   tour_section1: 'Are you owner of this restaurant ? click here',

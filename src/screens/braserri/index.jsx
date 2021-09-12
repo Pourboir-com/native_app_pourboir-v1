@@ -113,7 +113,7 @@ const Braserri = ({ navigation, route }) => {
                 restaurant_id={restaurant_id || ''}
               />
             ) : (
-              <Team />
+              <Team restaurant_id={restaurant_id || ''} />
             )}
           </View>
         </View>

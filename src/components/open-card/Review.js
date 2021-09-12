@@ -66,7 +66,11 @@ const Review = ({ reviewData, reviewRefetch, restaurant }) => {
         <FlatList
           data={reviewData?.data || []}
           renderItem={({ item }) => (
-            <ReviewSlider rating={+item.rating} item={item} />
+            <>
+              {item.comment && (
+                <ReviewSlider rating={+item.rating} item={item} />
+              )}
+            </>
           )}
           horizontal
           showsHorizontalScrollIndicator={false}

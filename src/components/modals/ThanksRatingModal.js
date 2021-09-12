@@ -65,15 +65,9 @@ const ThanksRatingModal = ({ isVisible, handleModalClose, LotteryNumber }) => {
         {i18n.t('will_contact_by_email')}
       </Text>
       {LotteryNumber ? (
-        <NumberFormat
-          value={pad(LotteryNumber, 8, '0')}
-          allowEmptyFormatting
-          displayType={'text'}
-          format="####-####"
-          renderText={formattedValue => (
-            <Text style={styles.lottery}>{formattedValue}</Text>
-          )}
-        />
+        <Text style={styles.lottery}>
+          {pad(LotteryNumber, 8, '0').replace(/(\d{4})(\d{4})/, '$1-$2')}
+        </Text>
       ) : (
         <Text style={styles.lottery}>XXXX-XXXX</Text>
       )}

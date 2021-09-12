@@ -7,12 +7,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#f9f9f9',
   },
   lottery: {
-    width: '80%',
+    width: 200,
     backgroundColor: '#fcf4e4',
     borderRadius: 10,
     fontSize: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingVertical: 10,
     textAlign: 'center',
     marginBottom: 20,
     color: '#e6c33d',
@@ -31,9 +30,8 @@ const styles = StyleSheet.create({
   },
   container_number: {
     width: '100%',
-    alignSelf: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    paddingVertical: 20,
   },
 });
 

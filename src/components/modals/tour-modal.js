@@ -107,7 +107,11 @@ const TourModal = ({ tourModal, setTourModal }) => {
               </Text>
             </View>
             <View
-              style={{top: Platform.OS === 'ios' ? 49 : '80%', left: Platform.OS === 'ios' ? '57%' : '50.2%', position: 'absolute' }}
+              style={{
+                top: Platform.OS === 'ios' ? 49 : '80%',
+                left: Platform.OS === 'ios' ? '57%' : '50.2%',
+                position: 'absolute',
+              }}
             >
               <Image
                 source={require('../../assets/images/down-arrow-curve.png')}
@@ -121,7 +125,7 @@ const TourModal = ({ tourModal, setTourModal }) => {
                 <Text
                   style={[
                     styles.btnTxt,
-                    { paddingVertical: Platform.OS === 'ios' ? 7 : 7},
+                    { paddingVertical: Platform.OS === 'ios' ? 7 : 7 },
                   ]}
                 >
                   {i18n.t('add_fav')}
@@ -208,20 +212,20 @@ const TourModal = ({ tourModal, setTourModal }) => {
               />
             </View>
             <View
-          style={{
-            marginLeft: 15,
-            backgroundColor: '#FCDF6F',
-            padding: 2,
-            borderRadius: 100,
-            position:'absolute',
-            top:163,
-            left:33
-          }}
-        >
-          <View>
-            <Entypo name="plus" size={22} color="white" />
-          </View>
-        </View>
+              style={{
+                marginLeft: 15,
+                backgroundColor: '#FCDF6F',
+                padding: 2,
+                borderRadius: 100,
+                position: 'absolute',
+                top: 163,
+                left: 33,
+              }}
+            >
+              <View>
+                <Entypo name="plus" size={22} color="white" />
+              </View>
+            </View>
           </View>
         ) : section == 5 ? (
           <View style={styles.tour5_container}>
@@ -337,16 +341,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 9,
     justifyContent: 'center',
-<<<<<<< HEAD
-    alignItems: 'center',
-    position:'absolute',
-    left:50,
-    // bottom:10
-=======
     position: 'absolute',
     left: 50,
     bottom: 10,
->>>>>>> 252d5201961e03ba7d7ec5d77054b1f7c7e150d5
   },
   tour4_container: {
     alignItems: 'center',

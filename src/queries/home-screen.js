@@ -11,11 +11,10 @@ export const GET_RESTAURANT = async (get, e = {}) => {
   return await res.json();
 };
 export const GET_FAVORITE_RESTAURANT = async (get, e = {}) => {
-  console.log(BASE_URL + `/v1/favorites`);
-  let res = await fetch(BASE_URL + `/v1/favorites`, {
-    method: 'get',
+  let res = await axios.get(BASE_URL + `/v1/favorites`, {
+    params: e,
   });
-  return await res.json();
+  return res.data;
 };
 
 // export const GET_FAVORITE_RESTAURANT = async (get, e = {}) => {

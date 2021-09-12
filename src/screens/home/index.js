@@ -11,7 +11,7 @@ import { isSearch } from '../../util';
 // import * as FacebookAds from 'expo-ads-facebook';
 import * as Location from 'expo-location';
 import AdModal from '../../components/modals/AdModal';
-
+import { RefreshControl, ScrollView } from 'react-native';
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
   const [searchEnter, setsearchEnter] = useState('');
@@ -84,21 +84,30 @@ const HomeScreen = props => {
   );
 
   const {
+    data: userFavRestaurantData,
+    isLoading: userFavRestaurantLoading,
+    refetch: refetchUserFavRestaurant,
+    isFetching: userFavResIsFetching,
+  } = useQuery(
+    ['GET_FAVORITE_RESTAURANT', { user_id: state.userDetails.user_id }],
+    GET_FAVORITE_RESTAURANT,
+    {
+      ...reactQueryConfig,
+    },
+  );
+  const {
     data: favRestaurantData,
     isLoading: favRestaurantLoading,
     refetch: refetchFavRestaurant,
     isFetching: favResIsFetching,
-  } = useQuery(['GET_FAVORITE_RESTAURANT'], GET_FAVORITE_RESTAURANT, {
-    ...reactQueryConfig,
-  });
+  } = useQuery(
+    ['GET_FAVORITE_RESTAURANT', { popular: true }],
+    GET_FAVORITE_RESTAURANT,
+    {
+      ...reactQueryConfig,
+    },
+  );
 
-  // console.log(restaurantData);
-
-  // const handleLoadMore = () => {
-  //   setnextPageToken(restaurantData.restaurants.next_page_token);
-  //   // console.log('next page load');
-  // };
-  console.log({ favRestaurantData }, 'fav');
   return (
     <>
       <Header
@@ -113,28 +122,62 @@ const HomeScreen = props => {
         // nextPageToken={nextPageToken}
         Data={data}
       >
-        <StatusBar translucent={true} style="dark" />
-        <HomeScreenContent
-          restaurantLoading={restaurantLoading}
-          searchVal={searchVal}
-          refetchRestaurant={refetchRestaurant}
-          resIsFetching={resIsFetching}
-          saveLocation={saveLocation}
-          searchEnter={searchEnter}
-          Data={data}
-          route={props?.route}
-        />
-        <HomeScreenContent
-          restaurantLoading={favRestaurantLoading}
-          searchVal={searchVal}
-          refetchRestaurant={refetchRestaurant}
-          resIsFetching={resIsFetching}
-          saveLocation={saveLocation}
-          searchEnter={searchEnter}
-          Data={favRestaurantData.data || []}
-          route={props?.route}
-          title="Fav"
-        />
+        <ScrollView
+          bounces={false}
+          scrollEnabled={true}
+          alwaysBounceVertical={true}
+          showsVerticalScrollIndicator={false}
+          alwaysBounceHorizontal={false}
+          refreshControl={
+            refetchRestaurant &&
+            resIsFetching && (
+              <RefreshControl
+                //refresh control used for the Pull to Refresh
+                refreshing={resIsFetching}
+                // color="#F9F9F9"
+                // tintColor="#F9F9F9"
+                onRefresh={refetchRestaurant}
+                // onRefresh={() => {}}
+              />
+            )
+          }
+          keyboardShouldPersistTaps={'handled'}
+          style={{ backgroundColor: '#F9F9F9' }}
+        >
+          <StatusBar translucent={true} style="dark" />
+          <HomeScreenContent
+            restaurantLoading={restaurantLoading}
+            searchVal={searchVal}
+            refetchRestaurant={refetchRestaurant}
+            resIsFetching={resIsFetching}
+            saveLocation={saveLocation}
+            searchEnter={searchEnter}
+            Data={data}
+            route={props?.route}
+          />
+          <HomeScreenContent
+            restaurantLoading={userFavRestaurantLoading}
+            searchVal={searchVal}
+            refetchRestaurant={refetchUserFavRestaurant}
+            resIsFetching={userFavResIsFetching}
+            saveLocation={saveLocation}
+            searchEnter={searchEnter}
+            Data={userFavRestaurantData?.data || []}
+            route={props?.route}
+            title="fav_restaurant"
+          />
+          <HomeScreenContent
+            restaurantLoading={favRestaurantLoading}
+            searchVal={searchVal}
+            refetchRestaurant={refetchFavRestaurant}
+            resIsFetching={favResIsFetching}
+            saveLocation={saveLocation}
+            searchEnter={searchEnter}
+            Data={favRestaurantData?.data || []}
+            route={props?.route}
+            title="popular_restaurant"
+          />
+        </ScrollView>
       </Header>
       {adModalVisible && (
         <AdModal

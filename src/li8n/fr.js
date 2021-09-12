@@ -301,4 +301,6 @@ export default {
   //Notification
   notification:
     'Activez les notifications pour recevoir des notifications de la part de vos restaurants favoris.',
+  fav_restaurant: 'Vos restaurants favoris',
+  popular_restaurant: 'Les restaurants populaires',
 };

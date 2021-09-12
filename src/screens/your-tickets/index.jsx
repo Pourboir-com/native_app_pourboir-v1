@@ -17,25 +17,28 @@ import Context from '../../contextApi/context';
 import { useQuery } from 'react-query';
 import { reactQueryConfig } from '../../constants';
 
-
 const YourTickets = ({ navigation }) => {
-  const { state, dispatch } = useContext(Context);
+  const { state } = useContext(Context);
   // console.log(state.userDetails, ' state')
   const {
     data: ticketData,
     isLoading: ticketDataLoading,
     refetch: ticketRefetch,
-  } = useQuery(['GET_TICKETS', { user_id: state.userDetails.user_id }], GET_TICKETS, {
-    ...reactQueryConfig,
-    onSuccess: e => {
-      alert("Successfull")
-      console.log(e)
+  } = useQuery(
+    ['GET_TICKETS', { user_id: state.userDetails.user_id }],
+    GET_TICKETS,
+    {
+      ...reactQueryConfig,
+      onSuccess: e => {
+        alert('Successfull');
+        console.log(e);
+      },
+      onError: e => {
+        alert(e?.response?.data?.message);
+      },
     },
-    onError: e => {
-      alert(e?.response?.data?.message);
-    },
-  });
-  console.log(ticketData, ' tickets')
+  );
+  console.log(ticketData, ' tickets');
 
   function pad(n, width, z) {
     z = z || '0';
@@ -78,24 +81,7 @@ const YourTickets = ({ navigation }) => {
           <Text style={styles.text}>{i18n.t('collect_tickets')}.</Text>
           <View style={styles.container_number}>
             <Text style={styles.monthTxt}>July</Text>
-            <NumberFormat
-              value={pad(3, 8, 2)}
-              allowEmptyFormatting
-              displayType={'text'}
-              format="####-####"
-              renderText={formattedValue => (
-                <Text style={styles.lottery}>{formattedValue}</Text>
-              )}
-            />
-            <NumberFormat
-              value={pad(3, 8, 2)}
-              allowEmptyFormatting
-              displayType={'text'}
-              format="####-####"
-              renderText={formattedValue => (
-                <Text style={styles.lottery}>{formattedValue}</Text>
-              )}
-            />
+            <Text style={styles.lottery}>{pad(3, 8, '0').replace(/(\d{4})(\d{4})/, '$1-$2')}</Text>
           </View>
         </View>
       </View>

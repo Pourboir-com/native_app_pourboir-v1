@@ -44,7 +44,7 @@ const ReviewSlider = ({ item, rating }) => {
       <View>
         <TouchableOpacity onPress={() => setIsOpen(true)}>
           <Text numberOfLines={5}  style={styles.description}>
-            {item.comment}
+            {item?.comment}
           </Text>
         </TouchableOpacity>
       </View>

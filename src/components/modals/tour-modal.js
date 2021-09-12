@@ -337,16 +337,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 9,
     justifyContent: 'center',
-<<<<<<< HEAD
-    alignItems: 'center',
-    position:'absolute',
-    left:50,
-    // bottom:10
-=======
     position: 'absolute',
     left: 50,
     bottom: 10,
->>>>>>> 252d5201961e03ba7d7ec5d77054b1f7c7e150d5
   },
   tour4_container: {
     alignItems: 'center',

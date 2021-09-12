@@ -701,7 +701,7 @@ const ReviewDetails = ({ navigation, route }) => {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         activeOpacity={0.5}
         onPress={handleUserModalOpen}
         style={styles.viewLastBtn}
@@ -715,7 +715,7 @@ const ReviewDetails = ({ navigation, route }) => {
         >
           {i18n.t('are_you_waiter')}
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       {RefferedWaiterModalVisible && (
         <RefferedWaiterModal

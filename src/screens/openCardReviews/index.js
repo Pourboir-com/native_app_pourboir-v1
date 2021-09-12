@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  ActivityIndicator,
   Animated,
   Platform,
   Linking,
@@ -35,6 +36,8 @@ import {
   GET_RESTAURANT_DETAILS,
   MANAGER_APPROVAL,
   GET_REVIEWS,
+  ADD_FAVORITE,
+  GET_FAVORITES,
 } from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
@@ -84,6 +87,7 @@ const ReviewDetails = ({ navigation, route }) => {
   const [approvalModal, setApprovalModal] = useState(false);
   const [receivedModal, setReceivedModal] = useState(false);
   const [tourModal, setTourModal] = useState(false);
+  const [AddFavorite, { isLoading: favLoading }] = useMutation(ADD_FAVORITE);
 
   useEffect(() => {
     setTimeout(() => {
@@ -140,6 +144,20 @@ const ReviewDetails = ({ navigation, route }) => {
     GET_RESTAURANT_DETAILS,
     {
       ...reactQueryConfig,
+    },
+  );
+
+  const {
+    data: favoritesData,
+    refetch: refetchFavorites,
+    isLoading: favoritesLoading,
+    isFetching: isFavoriteLoading,
+  } = useQuery(
+    ['GET_FAVORITES', { google_place_id: place_id }],
+    GET_FAVORITES,
+    {
+      ...reactQueryConfig,
+      enabled: place_id,
     },
   );
 
@@ -211,7 +229,6 @@ const ReviewDetails = ({ navigation, route }) => {
       navigation.navigate('socialLogin', { confirmWaiter: true });
     }
   };
-  console.log(RestaurantDetails);
 
   const handleIAMWAITER = async () => {
     if (state.userDetails.user_id) {
@@ -300,6 +317,37 @@ const ReviewDetails = ({ navigation, route }) => {
       alert(error.message);
     }
   };
+
+  const handleAddFavorite = async () => {
+    if (state.userDetails.user_id) {
+      let newFavorite = {
+        user_id: state.userDetails.user_id,
+        restaurant: {
+          place_id: place_id,
+          rating: rating,
+          photos: [img],
+          name: name,
+          formatted_address: vicinity,
+          our_rating: String(our_rating),
+          location: geometry,
+          international_phone_number:
+            RestaurantDetails?.data?.international_phone_number,
+        },
+      };
+      await AddFavorite(newFavorite, {
+        onSuccess: async () => {
+          await refetchFavorites();
+        },
+      });
+    } else {
+      navigation.navigate('socialLogin', { confirmWaiter: true });
+    }
+  };
+
+  const checkFavorite = () =>
+    (favoritesData?.data[0]?.user_id || []).find(
+      item => item?._id === state?.userDetails?.user_id,
+    );
 
   return (
     <View style={styles.container}>
@@ -433,9 +481,7 @@ const ReviewDetails = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        <View
-          style={{ marginTop: 20, marginHorizontal: 24 }}
-        >
+        <View style={{ marginTop: 20, marginHorizontal: 24 }}>
           <View
             style={{
               flexDirection: 'row',
@@ -456,16 +502,15 @@ const ReviewDetails = ({ navigation, route }) => {
                   textAlign: 'center',
                 }}
               >
-                {/* {favoritesData?.data[0]?.user_id?.length || '0'} */}0
+                {favoritesData?.data[0]?.user_id?.length || '0'}
               </Text>
               <Text tyle={{ fontFamily: 'ProximaNova', fontSize: 18 }}>
-                {/* {i18n.t('fav')} */}
-                Fav
+                {i18n.t('fav')}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.6}
-              // disabled={favoritesLoading || isFavoriteLoading}
+              disabled={favoritesLoading || isFavoriteLoading}
               style={{
                 backgroundColor: Colors.yellow,
                 paddingVertical: Platform.OS === 'ios' ? 20 : 14,
@@ -474,16 +519,15 @@ const ReviewDetails = ({ navigation, route }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              // onPress={handleAddFavorite}
+              onPress={handleAddFavorite}
             >
-              {/* {favLoading ? (
-              <ActivityIndicator size={23} color="#EBC11B" />
-            ) : (
-              <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
-                {checkFavorite() ? i18n.t('added') : i18n.t('add_fav')}
-              </Text>
-            )} */}
-              <Text>Fav</Text>
+              {favLoading ? (
+                <ActivityIndicator size={23} color="#EBC11B" />
+              ) : (
+                <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
+                  {checkFavorite() ? i18n.t('added') : i18n.t('add_fav')}
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
         </View>

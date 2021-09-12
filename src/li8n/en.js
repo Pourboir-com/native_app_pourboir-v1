@@ -264,14 +264,12 @@ export default {
   thank_u: 'Thank you',
   claim_received:
     ' We have received your claim, one person from our team will reach out to you soon.',
-  close: 'Close',
   save_changes: 'Save your changes',
   your_rev: 'Your review',
   how_exp: 'How was your experience today ?',
   tell_us: 'Tell us more',
   exp_placeholder: 'Share with us your experience',
   cancel: 'Cancel',
-  confirm: 'Confirm',
   client: 'Client',
   few_words: 'Few words about him/her',
   subs: 'Subscribers',
@@ -285,16 +283,18 @@ export default {
   bank_acc: 'Your bank account',
   lang: 'Language',
   rate_app: 'Rate this applicaiton',
-  contact_us: 'Contact us ',
-  sign_out: 'Sign Out',
   collect_tickets: 'Collect tickets to increase your chance of winning.',
-  
-  // Tour Modal Translations 
+
+  // Tour Modal Translations
   tour_section1: 'Are you owner of this restaurant ? click here',
-  tour_section2: 'Add the restaurant to your favorites to have access to it fast',
+  tour_section2:
+    'Add the restaurant to your favorites to have access to it fast',
   tour_section3: 'Check-in when you are there to enter the lottery',
   tour_section4: 'Leave a review for more chance to win',
   tour_section5: 'Digital menu is right here ',
   see_menu: 'See the menu',
-  add_fav:'Add to favorites'
+  add_fav: 'Add to favorites',
+  fav: 'Favorites',
+  added: 'Added',
+  notification: 'Activate notifications to receive notifications from your favorite restaurants.',
 };

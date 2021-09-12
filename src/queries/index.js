@@ -11,3 +11,4 @@ export * from './manager-signIn';
 export * from './managers';
 export * from './manager-menu';
 export * from './staff';
+export * from './favorites';

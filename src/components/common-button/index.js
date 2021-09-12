@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 3,
     alignSelf: 'center',
+    zIndex:99999,
     marginBottom: Platform.OS === 'ios' ? 15 : 0,
   },
 });

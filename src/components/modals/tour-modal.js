@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { Colors } from '../../constants/Theme';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Feather } from '@expo/vector-icons';
 import CommonButton from '../common-button';
 import i18n from '../../li8n';
 
@@ -37,14 +37,13 @@ const TourModal = ({ tourModal, setTourModal }) => {
       setSection(section + 1);
     }
   };
-  console.log(section);
 
   return (
     <Modal
       isVisible={tourModal}
       backdropOpacity={0}
-      animationInTiming={700}
-      animationOutTiming={700}
+      animationInTiming={300}
+      animationOutTiming={300}
       onBackdropPress={nextSection}
       style={{
         width: '100%',
@@ -81,7 +80,7 @@ const TourModal = ({ tourModal, setTourModal }) => {
                 {i18n.t('tour_section1')}
               </Text>
             </View>
-            <View style={{ width: '30%', marginLeft: 14, marginTop: -10 }}>
+            <View style={{ width: '30%', marginLeft: 14, marginTop: -20 }}>
               <Image
                 source={require('../../assets/images/up-arrow-curve.png')}
                 style={{ width: 80, height: 80, resizeMode: 'contain' }}
@@ -137,8 +136,9 @@ const TourModal = ({ tourModal, setTourModal }) => {
                   width: 100,
                   height: 100,
                   resizeMode: 'contain',
-                  marginTop: 30,
-                  marginRight: 60,
+                  marginTop: 10,
+                  // marginRight: 40,
+                  marginLeft:40
                 }}
               />
             </View>
@@ -185,8 +185,8 @@ const TourModal = ({ tourModal, setTourModal }) => {
               <Image
                 source={require('../../assets/images/down-arrow-curve.png')}
                 style={{
-                  width: 110,
-                  height: 110,
+                  width: 90,
+                  height: 90,
                   resizeMode: 'contain',
                   marginTop: 30,
                   position: 'absolute',
@@ -228,7 +228,7 @@ const TourModal = ({ tourModal, setTourModal }) => {
                 }}
               />
             </View>
-            <View style={{ width: '90%', zIndex: 1111 }}>
+            <View style={{ width: '90%'}}>
               <CommonButton title={i18n.t('see_menu')} />
             </View>
           </View>
@@ -311,13 +311,16 @@ const styles = StyleSheet.create({
     borderRadius: 9,
     justifyContent: 'center',
     alignItems: 'center',
+    position:'absolute',
+    left:50,
+    bottom:10
   },
   tour4_container: {
     alignItems: 'center',
     flexDirection: 'column',
     position: 'absolute',
-    top: 150,
-    left: 20,
+    top: 170,
+    left: 10,
     width: '60%',
   },
   tour5_container: {

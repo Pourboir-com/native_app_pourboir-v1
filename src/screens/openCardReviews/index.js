@@ -85,11 +85,11 @@ const ReviewDetails = ({ navigation, route }) => {
   const [receivedModal, setReceivedModal] = useState(false);
   const [tourModal, setTourModal] = useState(false);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setTourModal(true);
-  //   }, 2000);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setTourModal(true);
+    }, 2000);
+  }, []);
 
   const {
     img,
@@ -356,15 +356,15 @@ const ReviewDetails = ({ navigation, route }) => {
           >
             <LinearGradient
               style={{
-                zIndex: 101,
+                // zIndex: 101,
                 position: 'absolute',
                 width: '100%',
                 height: '100%',
               }}
               colors={['black', 'transparent', 'black']}
             ></LinearGradient>
-            <View style={[styles.viewBottom, { zIndex: 102 }]}>
-              <View pointerEvents="none" style={{ flexDirection: 'row' }}>
+            <View style={[styles.viewBottom, { position:'relative', height:'100%', justifyContent:'space-between' }]}>
+              <View pointerEvents="none" style={{ flexDirection: 'row', zIndex:99999,}}>
                 {obj.map((v, i) => {
                   return (
                     <TouchableOpacity style={{ marginRight: 3 }} key={i}>
@@ -383,13 +383,13 @@ const ReviewDetails = ({ navigation, route }) => {
                   );
                 })}
               </View>
-              <View style={{zIndex:9999, backgroundColor:'red'}}>
+              <View>
                 <TouchableOpacity
                 onPress={onShare}
                   style={{ marginRight: 15, }}
-                  activeOpacity={0.6}
+                  activeOpacity={0.5}
                 >
-                  <FontAwesome onPress={onShare} name="share-square-o" size={24} color="white" />
+                  <FontAwesome  name="share-square-o" size={24} color="white" />
                 </TouchableOpacity>
               </View>
               <View>
@@ -421,7 +421,7 @@ const ReviewDetails = ({ navigation, route }) => {
       >
         <View
           style={{
-            marginTop: 220,
+            marginTop: 20,
             marginBottom: 20,
             flexDirection: 'row',
             justifyContent: 'space-evenly',
@@ -447,7 +447,7 @@ const ReviewDetails = ({ navigation, route }) => {
               style={{
                 fontFamily: 'ProximaNova',
                 color: Colors.fontDark,
-                fontSize: 14,
+                fontSize: 12,
                 width: '70%',
                 lineHeight: 17,
                 textAlign: 'center',
@@ -465,7 +465,6 @@ const ReviewDetails = ({ navigation, route }) => {
             //     name,
             //   })
             // }
-            onPress={onShare}
             style={[styles.viewItem, {zIndex: 9999999}]}
           >
             <View style={styles.viewIcon}>
@@ -477,7 +476,7 @@ const ReviewDetails = ({ navigation, route }) => {
               style={{
                 fontFamily: 'ProximaNova',
                 color: Colors.fontDark,
-                fontSize: 14,
+                fontSize: 12,
                 width: '70%',
                 lineHeight: 17,
                 textAlign: 'center',
@@ -507,7 +506,7 @@ const ReviewDetails = ({ navigation, route }) => {
               style={{
                 fontFamily: 'ProximaNova',
                 color: Colors.fontDark,
-                fontSize: 14,
+                fontSize: 12,
                 textAlign: 'center',
               }}
             >
@@ -864,9 +863,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     alignItems: 'flex-end',
-    bottom: 0,
+    bottom: 10,
     position: 'absolute',
     width: '100%',
+    zIndex:999999
   },
   txtName: {
     textAlign: 'center',
@@ -880,10 +880,11 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     overflow: 'hidden',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
+    position: 'relative',
+    // backgroundColor:'red'
+    // top: 0,
+    // left: 0,
+    // right: 0,
   },
   viewItemConatier: {
     width: '90%',

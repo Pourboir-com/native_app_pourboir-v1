@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import React, { useState } from 'react';
-import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
 import RatingStar from '../RatingComponent';
 import ReviewModal from '../modals/ReviewModal';
 
@@ -8,8 +8,9 @@ const ReviewSlider = ({ item, rating }) => {
   const obj = [1, 2, 3, 4, 5];
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <View style={styles.container}>
-      <View
+    <View  onPress={() => setIsOpen(true)} style={styles.container}>
+    <View>
+    <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
@@ -28,7 +29,7 @@ const ReviewSlider = ({ item, rating }) => {
                 type={
                   v <= rating ? 'filled' : v === rating + 0.5 ? 'half' : 'empty'
                 }
-                notRatedStarColor="rgba(255,255,255, 0.6)"
+                notRatedStarColor="#ccc"
               />
             );
           })}
@@ -42,7 +43,7 @@ const ReviewSlider = ({ item, rating }) => {
       </View>
       <View>
         <TouchableOpacity onPress={() => setIsOpen(true)}>
-          <Text numberOfLines={5} style={styles.description}>
+          <Text numberOfLines={5}  style={styles.description}>
             {item.comment}
           </Text>
         </TouchableOpacity>
@@ -56,6 +57,7 @@ const ReviewSlider = ({ item, rating }) => {
           obj={obj}
         />
       )}
+    </View>
     </View>
   );
 };

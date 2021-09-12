@@ -228,7 +228,6 @@ export default {
 
   the_team: 'L’équipe',
   the_menu: 'Le menu',
-  waiters: 'La salle',
   no_waiter: 'Désolé, aucun serveur inscrit à ce jour',
   cook: ' La cuisine',
   no_cook: 'Désolé, aucun cuisinier inscrit à ce jour',
@@ -251,8 +250,6 @@ export default {
   name_of_cook: 'Donnez nous le nom de votre cuisinier',
   waiter_name_placeholder: 'Le nom de votre serveur',
   cook_name_placeholder: 'Le nom de votre cuisinier',
-  add: 'Ajouter',
-  waiter_email: 'L’email de votre serveur',
   cook_email: 'L’email de votre cuisinier',
 
   // manager modal
@@ -268,14 +265,12 @@ export default {
   thank_u: 'Merci',
   claim_received:
     'Nous avons bien reçu votre demande, un membre de notre équipe va prendre contact avec vous rapidement. ',
-  close: 'Fermer',
   save_changes: 'Enregistrez vos modifications',
   your_rev: 'Your review',
   how_exp: 'Qualité de votre expérience',
   tell_us: 'En quelques mots ',
   exp_placeholder: 'Parlez nous de votre expérience',
   cancel: 'Annuler',
-  confirm: 'Confirmer',
 
   client: 'Client',
   few_words: 'Quelques mots à son propos',
@@ -290,16 +285,20 @@ export default {
   bank_acc: 'Votre compte bancaire',
   lang: 'Language',
   rate_app: "Notez l'application",
-  contact_us: 'Contactez nous',
-  sign_out: 'Se déconnecter',
   collect_tickets:
     'Collectez des tickets pour augmenter vos chances de gagner des cadeaux',
-  // Tour Modal Translations 
-  tour_section1: "Gérant de ce restaurant ? C’est par ici",
+  // Tour Modal Translations
+  tour_section1: 'Gérant de ce restaurant ? C’est par ici',
   tour_section2: 'Ajoutez le à vos favoris pour y avoir accès rapidement',
   tour_section3: 'Faites nous savoir que vous y êtes pour gagner des surprises',
   tour_section4: 'Donnez votre avis pour encore plus de surprises',
   tour_section5: 'Le menu en ligne digital c’est par ici  ',
   see_menu: 'Voir le menu',
-  add_fav:'Ajouter au favoris'  
+  add_fav: 'Ajouter au favoris',
+  fav_list: 'Liste des favoris',
+  fav: 'Favoris',
+  added: 'Ajouté',
+  //Notification
+  notification:
+    'Activez les notifications pour recevoir des notifications de la part de vos restaurants favoris.',
 };

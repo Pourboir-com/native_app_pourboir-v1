@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { Colors } from '../../constants/Theme';
-import { AntDesign, Feather } from '@expo/vector-icons';
+import { AntDesign, Feather, Entypo } from '@expo/vector-icons';
 import CommonButton from '../common-button';
 import i18n from '../../li8n';
 
@@ -80,7 +80,13 @@ const TourModal = ({ tourModal, setTourModal }) => {
                 {i18n.t('tour_section1')}
               </Text>
             </View>
-            <View style={{ width: '30%', marginLeft: 14, marginTop: -20 }}>
+            <View
+              style={{
+                width: '30%',
+                marginLeft: Platform.OS === 'ios' ? 25 : 14,
+                marginTop: Platform.OS === 'ios' ? 20 : -25,
+              }}
+            >
               <Image
                 source={require('../../assets/images/up-arrow-curve.png')}
                 style={{ width: 80, height: 80, resizeMode: 'contain' }}
@@ -101,7 +107,7 @@ const TourModal = ({ tourModal, setTourModal }) => {
               </Text>
             </View>
             <View
-              style={{ width: '50%', top: 60, left: 150, position: 'absolute' }}
+              style={{top: Platform.OS === 'ios' ? 49 : '80%', left: Platform.OS === 'ios' ? '57%' : '50.2%', position: 'absolute' }}
             >
               <Image
                 source={require('../../assets/images/down-arrow-curve.png')}
@@ -112,7 +118,14 @@ const TourModal = ({ tourModal, setTourModal }) => {
                 style={styles.btn}
                 onPress={() => alert('added to fav alert')}
               >
-                <Text style={styles.btnTxt}>{i18n.t('add_fav')}</Text>
+                <Text
+                  style={[
+                    styles.btnTxt,
+                    { paddingVertical: Platform.OS === 'ios' ? 7 : 7},
+                  ]}
+                >
+                  {i18n.t('add_fav')}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -133,17 +146,17 @@ const TourModal = ({ tourModal, setTourModal }) => {
               <Image
                 source={require('../../assets/images/down-arrow-yellow.png')}
                 style={{
-                  width: 100,
-                  height: 100,
+                  width: 120,
+                  height: 120,
                   resizeMode: 'contain',
                   marginTop: 10,
                   // marginRight: 40,
-                  marginLeft:40
+                  marginLeft: 40,
                 }}
               />
             </View>
-            {/* <View>
-              <TouchableOpacity activeOpacity={0.5} style={[styles.viewItem]}>
+            <View>
+              <View activeOpacity={0} style={[styles.viewItem]}>
                 <View style={styles.viewIcon}>
                   <Feather
                     name="check-square"
@@ -165,8 +178,8 @@ const TourModal = ({ tourModal, setTourModal }) => {
                 >
                   Check-in
                 </Text>
-              </TouchableOpacity>
-            </View> */}
+              </View>
+            </View>
           </View>
         ) : section === 4 ? (
           <View style={styles.tour4_container}>
@@ -183,17 +196,32 @@ const TourModal = ({ tourModal, setTourModal }) => {
             </View>
             <View style={{ marginTop: -10, position: 'relative' }}>
               <Image
-                source={require('../../assets/images/down-arrow-curve.png')}
+                source={require('../../assets/images/arrow.png')}
                 style={{
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   resizeMode: 'contain',
                   marginTop: 30,
                   position: 'absolute',
-                  left: -100,
+                  left: -25,
                 }}
               />
             </View>
+            <View
+          style={{
+            marginLeft: 15,
+            backgroundColor: '#FCDF6F',
+            padding: 2,
+            borderRadius: 100,
+            position:'absolute',
+            top:163,
+            left:33
+          }}
+        >
+          <View>
+            <Entypo name="plus" size={22} color="white" />
+          </View>
+        </View>
           </View>
         ) : section == 5 ? (
           <View style={styles.tour5_container}>
@@ -211,24 +239,24 @@ const TourModal = ({ tourModal, setTourModal }) => {
             </View>
             <View
               style={{
-                marginTop: -20,
+                // marginTop: -20,
                 justifyContent: 'flex-end',
                 alignSelf: 'flex-end',
                 width: '55%',
               }}
             >
               <Image
-                source={require('../../assets/images/arrow-right-curve.png')}
+                source={require('../../assets/images/arrow-down.png')}
                 style={{
-                  width: 100,
-                  height: 100,
+                  width: 120,
+                  height: 120,
                   resizeMode: 'contain',
-                  marginTop: 30,
+                  marginVertical: 20,
                   //   marginRight: 60,
                 }}
               />
             </View>
-            <View style={{ width: '90%'}}>
+            <View style={{ width: '90%' }}>
               <CommonButton title={i18n.t('see_menu')} />
             </View>
           </View>
@@ -264,19 +292,18 @@ const styles = StyleSheet.create({
   },
   tour2_container: {
     position: 'absolute',
-    top: 150,
+    top: Platform.OS === 'ios' ? 150 : 115,
     width: '90%',
     flexDirection: 'row',
   },
   btn: {
     backgroundColor: Colors.yellow,
     borderRadius: 7,
-    width: 'auto',
+    width: 154,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 15,
     marginTop: 10,
-    marginLeft: 20,
     zIndex: 111111,
   },
   btnTxt: {
@@ -287,7 +314,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     flexDirection: 'column',
     position: 'absolute',
-    top: 120,
+    top: Platform.OS === 'ios' ? '27%' : '22%',
     width: '70%',
   },
   viewIcon: {
@@ -310,24 +337,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 9,
     justifyContent: 'center',
+<<<<<<< HEAD
     alignItems: 'center',
     position:'absolute',
     left:50,
-    bottom:10
+    // bottom:10
+=======
+    position: 'absolute',
+    left: 50,
+    bottom: 10,
+>>>>>>> 252d5201961e03ba7d7ec5d77054b1f7c7e150d5
   },
   tour4_container: {
     alignItems: 'center',
     flexDirection: 'column',
     position: 'absolute',
     top: 170,
-    left: 10,
+    // left: 10,
     width: '60%',
   },
   tour5_container: {
     alignItems: 'center',
     flexDirection: 'column',
     position: 'absolute',
-    bottom: 30,
+    bottom: Platform.OS === 'ios' ? 10 : 26,
     width: '100%',
     zIndex: 111111,
   },

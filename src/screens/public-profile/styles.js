@@ -18,10 +18,11 @@ const styles = StyleSheet.create({
   clientTxt: {
     fontFamily: 'ProximaNovaSemiBold',
     fontSize: 18,
+    marginTop: 10
   },
   few_word_text: {
     fontFamily: 'ProximaNovaSemiBold',
-    fontSize: 13,
+    fontSize: 14,
     paddingTop: 10,
   },
   subscribeNumber: {
@@ -31,18 +32,17 @@ const styles = StyleSheet.create({
   },
   subscribeTxt: {
     fontFamily: 'ProximaNova',
-    fontSize: 12,
+    fontSize: 14,
+    marginTop: 5,
   },
   btn_follow: {
     backgroundColor: Colors.yellow,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingVertical: 14,
     borderRadius: 10,
-    marginLeft: 15
+    marginLeft: 20,
   },
   text_follow: {
     fontFamily: 'ProximaNova',
@@ -55,10 +55,10 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     justifyContent: 'space-between',
     flexDirection: 'row',
-    width: '50%',
+    width: 160,
   },
   publication_text: {
-    fontSize: 14,
+    fontSize: 15,
     fontFamily: 'ProximaNova',
   },
   sheet_elements: {

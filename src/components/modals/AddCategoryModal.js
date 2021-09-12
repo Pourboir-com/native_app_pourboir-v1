@@ -8,7 +8,6 @@ import {
   ImageBackground,
   TextInput,
   Platform,
-  ScrollView,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -17,7 +16,6 @@ const imgWaiter = require('../../assets/images/Choose-rafiki.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import uuid from 'react-native-uuid';
 import { useMutation } from 'react-query';
 import Context from '../../contextApi/context';
 import { PUBLISH_MENU } from '../../queries';
@@ -83,46 +81,43 @@ const AddCategoryModal = ({
       isVisible={categModal}
       onBackdropPress={() => setCategModal(false)}
     >
-      <ImageBackground
-        style={styles.imgBgStyle}
-        source={imgBg}
-        resizeMode="stretch"
-      >
-        <View style={styles.viewImg}>
-          <TouchableOpacity
-            onPress={() => setCategModal(false)}
-            style={{ alignSelf: 'flex-end', margin: 10 }}
-          >
-            <AntDesign name="close" size={29} color="#485460" />
-          </TouchableOpacity>
-          <View
-            style={{
-              width: 140,
-              height: 130,
-              alignSelf: 'center',
-              marginBottom: -70,
-              bottom: -20,
-            }}
-          />
-          <Image
-            source={imgWaiter}
-            style={styles.imgStyle}
-            resizeMode="contain"
-          />
-        </View>
-      </ImageBackground>
-
       <KeyboardAwareScrollView
         bounces={false}
         enableOnAndroid={true}
-        extraScrollHeight={10}
+        extraScrollHeight={Platform.OS === 'ios' ? -55 : 10}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
-        scrollToOverflowEnabled={true}
-        enableAutomaticScroll={Platform.OS === 'ios' ? true : false}
-        resetScrollToCoords={{ x: 0, y: 0 }}
-        style={{ marginTop: 50 }}
+        style={{ width: '100%' }}
       >
+        <ImageBackground
+          style={styles.imgBgStyle}
+          source={imgBg}
+          resizeMode="stretch"
+        >
+          <View style={styles.viewImg}>
+            <TouchableOpacity
+              onPress={() => setCategModal(false)}
+              style={{ alignSelf: 'flex-end', margin: 10 }}
+            >
+              <AntDesign name="close" size={29} color="#485460" />
+            </TouchableOpacity>
+            <View
+              style={{
+                width: 140,
+                height: 130,
+                alignSelf: 'center',
+                marginBottom: -70,
+                bottom: -20,
+              }}
+            />
+            <Image
+              source={imgWaiter}
+              style={styles.imgStyle}
+              resizeMode="contain"
+            />
+          </View>
+        </ImageBackground>
+
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
           {i18n.t('new_categ')}
         </Text>
@@ -242,7 +237,7 @@ const styles = StyleSheet.create({
   txtConfrm: {
     fontSize: 15,
     color: Colors.fontDark,
-    marginTop: 18,
+    marginTop: Platform.OS === 'ios' ? 70 : 18,
     textAlign: 'center',
   },
   imgStyle: {

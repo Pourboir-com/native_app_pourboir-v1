@@ -4,14 +4,11 @@ import {
   ImageBackground,
   Text,
   View,
-  Image,
-  TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';
 import styles from './styles';
-import { Colors } from '../../constants/Theme';
-import NumberFormat from 'react-number-format';
 import { GET_TICKETS } from '../../queries/tickets';
 import Context from '../../contextApi/context';
 import { useQuery } from 'react-query';
@@ -19,7 +16,6 @@ import { reactQueryConfig } from '../../constants';
 
 const YourTickets = ({ navigation }) => {
   const { state } = useContext(Context);
-  // console.log(state.userDetails, ' state')
   const {
     data: ticketData,
     isLoading: ticketDataLoading,
@@ -29,16 +25,11 @@ const YourTickets = ({ navigation }) => {
     GET_TICKETS,
     {
       ...reactQueryConfig,
-      onSuccess: e => {
-        alert('Successfull');
-        console.log(e);
-      },
       onError: e => {
         alert(e?.response?.data?.message);
       },
     },
   );
-  console.log(ticketData, ' tickets');
 
   function pad(n, width, z) {
     z = z || '0';
@@ -47,7 +38,7 @@ const YourTickets = ({ navigation }) => {
   }
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1 }}>
+      <View>
         <ImageBackground
           style={{
             width: '100%',
@@ -70,21 +61,32 @@ const YourTickets = ({ navigation }) => {
           />
         </ImageBackground>
       </View>
-      <View style={{ flex: 7 }}>
-        <View
-          style={{
-            marginTop: 40,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Text style={styles.text}>{i18n.t('collect_tickets')}.</Text>
-          <View style={styles.container_number}>
-            <Text style={styles.monthTxt}>July</Text>
-            <Text style={styles.lottery}>{pad(3, 8, '0').replace(/(\d{4})(\d{4})/, '$1-$2')}</Text>
-          </View>
-        </View>
+      <View
+        style={{
+          marginTop: 40,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Text style={styles.text}>{i18n.t('collect_tickets')}.</Text>
       </View>
+      <FlatList
+        data={ticketData?.data || []}
+        showsVerticalScrollIndicator={false}
+        alwaysBounceHorizontal={false}
+        alwaysBounceVertical={false}
+        contentContainerStyle={[styles.container_number]}
+        bounces={false}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={itemData => (
+          <Text style={styles.lottery}>
+            {pad(itemData?.item?.token, 8, '0').replace(
+              /(\d{4})(\d{4})/,
+              '$1-$2',
+            )}
+          </Text>
+        )}
+      />
     </View>
   );
 };

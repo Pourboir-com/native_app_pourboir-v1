@@ -11,7 +11,7 @@ import { isSearch } from '../../util';
 // import * as FacebookAds from 'expo-ads-facebook';
 import * as Location from 'expo-location';
 import AdModal from '../../components/modals/AdModal';
-
+import { RefreshControl, ScrollView } from 'react-native';
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
   const [searchEnter, setsearchEnter] = useState('');
@@ -73,7 +73,7 @@ const HomeScreen = props => {
       enabled: saveLocation,
       ...reactQueryConfig,
       onSuccess: res => {
-        console.log(res?.restaurants?.results);
+        // console.log(res?.restaurants?.results);
 
         dispatch({
           type: actionTypes.RESTAURANTS_DETAILS,
@@ -84,35 +84,29 @@ const HomeScreen = props => {
   );
 
   const {
+    data: userFavRestaurantData,
+    isLoading: userFavRestaurantLoading,
+    refetch: refetchUserFavRestaurant,
+    isFetching: userFavResIsFetching,
+  } = useQuery(
+    ['GET_FAVORITE_RESTAURANT', { user_id: state.userDetails.user_id }],
+    GET_FAVORITE_RESTAURANT,
+    {
+      ...reactQueryConfig,
+    },
+  );
+  const {
     data: favRestaurantData,
     isLoading: favRestaurantLoading,
     refetch: refetchFavRestaurant,
     isFetching: favResIsFetching,
   } = useQuery(
-    [
-      'GET_FAVORITE_RESTAURANT',
-      {
-        google_place_id: 'ChIJ_027a6Y_sz4R68RBIw0-daQ',
-        // pageToken: nextPageToken,
-      },
-    ],
+    ['GET_FAVORITE_RESTAURANT', { popular: true }],
     GET_FAVORITE_RESTAURANT,
     {
-      enabled: saveLocation,
       ...reactQueryConfig,
-      onSuccess: res => {
-        alert('Get Favorites Restaurants..');
-        console.log(res);
-      },
     },
   );
-
-  // console.log(restaurantData);
-
-  // const handleLoadMore = () => {
-  //   setnextPageToken(restaurantData.restaurants.next_page_token);
-  //   // console.log('next page load');
-  // };
 
   return (
     <>
@@ -138,8 +132,28 @@ const HomeScreen = props => {
           searchEnter={searchEnter}
           Data={data}
           route={props?.route}
-          favRestaurantData={favRestaurantData}
-          refetchFavRestaurant={refetchFavRestaurant}
+        />
+        <HomeScreenContent
+          restaurantLoading={userFavRestaurantLoading}
+          searchVal={searchVal}
+          refetchRestaurant={refetchUserFavRestaurant}
+          resIsFetching={userFavResIsFetching}
+          saveLocation={saveLocation}
+          searchEnter={searchEnter}
+          Data={userFavRestaurantData?.data || []}
+          route={props?.route}
+          title="fav_restaurant"
+        />
+        <HomeScreenContent
+          restaurantLoading={favRestaurantLoading}
+          searchVal={searchVal}
+          refetchRestaurant={refetchFavRestaurant}
+          resIsFetching={favResIsFetching}
+          saveLocation={saveLocation}
+          searchEnter={searchEnter}
+          Data={favRestaurantData?.data || []}
+          route={props?.route}
+          title="popular_restaurant"
         />
       </Header>
       {adModalVisible && (

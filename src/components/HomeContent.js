@@ -35,18 +35,16 @@ export default function HomeScreenContent({
   Data,
   saveLocation,
   route,
-  favRestaurantData,
+  title,
 }) {
   const [data, setData] = useState([]);
-  const [favRestaurant, setFavRestaurant] = useState([]);
   const navigation = useNavigation();
   const [deleteLoading, setdeleteLoading] = useState(false);
   const { state, dispatch } = useContext(Context);
   const [deleteRestaurant] = useMutation(DELETE_RES);
   useEffect(() => {
     setData(Data);
-    setFavRestaurant(favRestaurantData);
-  }, [Data, favRestaurant]);
+  }, [Data]);
 
   const updateRestaurants = (state, placeId) => {
     let FilteredRestaurant = filteredMinusRestaurant(state, placeId);
@@ -181,24 +179,24 @@ export default function HomeScreenContent({
         </View>
       ) : (
         <ScrollView
-          bounces={true}
+          bounces={false}
           scrollEnabled={false}
           alwaysBounceVertical={true}
           showsVerticalScrollIndicator={false}
           alwaysBounceHorizontal={false}
-          refreshControl={
-            refetchRestaurant &&
-            resIsFetching && (
-              <RefreshControl
-                //refresh control used for the Pull to Refresh
-                refreshing={!route.params.crossIcon && resIsFetching}
-                // color="#F9F9F9"
-                // tintColor="#F9F9F9"
-                // onRefresh={refetchRestaurant}
-                onRefresh={() => {}}
-              />
-            )
-          }
+          // refreshControl={
+          //   refetchRestaurant &&
+          //   resIsFetching && (
+          //     <RefreshControl
+          //       //refresh control used for the Pull to Refresh
+          //       refreshing={!route.params.crossIcon && resIsFetching}
+          //       // color="#F9F9F9"
+          //       // tintColor="#F9F9F9"
+          //       // onRefresh={refetchRestaurant}
+          //       onRefresh={() => {}}
+          //     />
+          //   )
+          // }
           keyboardShouldPersistTaps={'handled'}
           style={{ backgroundColor: '#F9F9F9' }}
         >
@@ -208,7 +206,11 @@ export default function HomeScreenContent({
             <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
-              {searchEnter ? i18n.t('result_distance') : i18n.t('around_you')}
+              {title
+                ? i18n.t(title)
+                : searchEnter
+                ? i18n.t('result_distance')
+                : i18n.t('around_you')}
             </Text>
           )}
           <View
@@ -219,82 +221,6 @@ export default function HomeScreenContent({
           >
             <FlatList
               data={restaurantLoading ? dummyArray : sortRestaurant(data)}
-              showsHorizontalScrollIndicator={false}
-              // onEndReached={handleLoadMore}
-              // onEndReachedThreshold={0.5}
-              alwaysBounceHorizontal={false}
-              horizontal={true}
-              keyboardShouldPersistTaps={'handled'}
-              alwaysBounceVertical={true}
-              // numColumns={2}
-              bounces={false}
-              keyExtractor={(item, index) => index}
-              renderItem={itemData => {
-                if (Object.keys(itemData.item).length) {
-                  return (
-                    // <View
-                    //   style={{
-                    //     marginTop: itemData.index % 2 !== 0 ? 12 : 0,
-                    //     marginBottom: -12,
-                    //   }}
-                    // >
-                    <HomeCard
-                      navigation={navigation}
-                      key={itemData?.item?.place_id}
-                      img={
-                        itemData?.item?.photos[0]
-                          ? itemData?.item?.photos[0]
-                          : ''
-                      }
-                      rating={
-                        Number(itemData?.item?.our_rating) > 0
-                          ? itemData?.item?.our_rating
-                          : itemData?.item?.rating
-                      }
-                      name={itemData?.item.name}
-                      DeleteRestaurant={
-                        (data,
-                        i =>
-                          DeleteRestaurant(
-                            itemData?.item?.waiter?._id,
-                            itemData?.item?.place_id,
-                          ))
-                      }
-                      distance={restaurantDistance(itemData)}
-                      services={itemData?.item.servers}
-                      loading={restaurantLoading}
-                      crossIcon={route.params.crossIcon}
-                      place_id={itemData?.item?.place_id}
-                      vicinity={itemData?.item?.vicinity}
-                      our_rating={String(itemData?.item?.our_rating) || '0'}
-                      restaurant_id={
-                        itemData?.item._id || itemData?.item?.restaurant_id
-                      }
-                      geometry={itemData?.item?.geometry?.location}
-                    />
-                    // </View>
-                  );
-                }
-              }}
-            />
-          </View>
-          {/* FAVV  */}
-          {!route.params.crossIcon && (
-            <Text
-              style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
-            >
-              {/* {searchEnter ? i18n.t('result_distance') : i18n.t('around_you')} */}
-              Favorites Restaurants
-            </Text>
-          )}
-          <View
-            style={{
-              marginTop: 17,
-              marginLeft: 2,
-            }}
-          >
-            <FlatList
-              data={favRestaurant}
               showsHorizontalScrollIndicator={false}
               // onEndReached={handleLoadMore}
               // onEndReachedThreshold={0.5}

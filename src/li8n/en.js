@@ -297,5 +297,8 @@ export default {
   fav_list: 'Favorites list',
   fav: 'Favorites',
   added: 'Added',
-  notification: 'Activate notifications to receive notifications from your favorite restaurants.',
+  notification:
+    'Activate notifications to receive notifications from your favorite restaurants.',
+  fav_restaurant: 'Your favorite restaurants',
+  popular_restaurant: 'Popular restaurants',
 };

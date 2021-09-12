@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Dimensions,
   ImageBackground,
@@ -12,8 +12,31 @@ import i18n from '../../li8n';
 import styles from './styles';
 import { Colors } from '../../constants/Theme';
 import NumberFormat from 'react-number-format';
+import { GET_TICKETS } from '../../queries/tickets';
+import Context from '../../contextApi/context';
+import { useQuery } from 'react-query';
+import { reactQueryConfig } from '../../constants';
+
 
 const YourTickets = ({ navigation }) => {
+  const { state, dispatch } = useContext(Context);
+  // console.log(state.userDetails, ' state')
+  const {
+    data: ticketData,
+    isLoading: ticketDataLoading,
+    refetch: ticketRefetch,
+  } = useQuery(['GET_TICKETS', { user_id: state.userDetails.user_id }], GET_TICKETS, {
+    ...reactQueryConfig,
+    onSuccess: e => {
+      alert("Successfull")
+      console.log(e)
+    },
+    onError: e => {
+      alert(e?.response?.data?.message);
+    },
+  });
+  console.log(ticketData, ' tickets')
+
   function pad(n, width, z) {
     z = z || '0';
     n = n + '';

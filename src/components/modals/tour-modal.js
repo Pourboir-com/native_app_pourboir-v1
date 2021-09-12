@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { Colors } from '../../constants/Theme';
-import { AntDesign, Feather } from '@expo/vector-icons';
+import { AntDesign, Feather, Entypo } from '@expo/vector-icons';
 import CommonButton from '../common-button';
 import i18n from '../../li8n';
 
@@ -133,8 +133,8 @@ const TourModal = ({ tourModal, setTourModal }) => {
               <Image
                 source={require('../../assets/images/down-arrow-yellow.png')}
                 style={{
-                  width: 100,
-                  height: 100,
+                  width: 120,
+                  height: 120,
                   resizeMode: 'contain',
                   marginTop: 10,
                   // marginRight: 40,
@@ -142,8 +142,8 @@ const TourModal = ({ tourModal, setTourModal }) => {
                 }}
               />
             </View>
-            {/* <View>
-              <TouchableOpacity activeOpacity={0.5} style={[styles.viewItem]}>
+            <View>
+              <View activeOpacity={0} style={[styles.viewItem]}>
                 <View style={styles.viewIcon}>
                   <Feather
                     name="check-square"
@@ -165,8 +165,8 @@ const TourModal = ({ tourModal, setTourModal }) => {
                 >
                   Check-in
                 </Text>
-              </TouchableOpacity>
-            </View> */}
+              </View>
+            </View>
           </View>
         ) : section === 4 ? (
           <View style={styles.tour4_container}>
@@ -183,17 +183,32 @@ const TourModal = ({ tourModal, setTourModal }) => {
             </View>
             <View style={{ marginTop: -10, position: 'relative' }}>
               <Image
-                source={require('../../assets/images/down-arrow-curve.png')}
+                source={require('../../assets/images/arrow.png')}
                 style={{
-                  width: 90,
-                  height: 90,
+                  width: 100,
+                  height: 100,
                   resizeMode: 'contain',
                   marginTop: 30,
                   position: 'absolute',
-                  left: -100,
+                  left: -25,
                 }}
               />
             </View>
+            <View
+          style={{
+            marginLeft: 15,
+            backgroundColor: '#FCDF6F',
+            padding: 2,
+            borderRadius: 100,
+            position:'absolute',
+            top:163,
+            left:33
+          }}
+        >
+          <View>
+            <Entypo name="plus" size={22} color="white" />
+          </View>
+        </View>
           </View>
         ) : section == 5 ? (
           <View style={styles.tour5_container}>
@@ -211,19 +226,19 @@ const TourModal = ({ tourModal, setTourModal }) => {
             </View>
             <View
               style={{
-                marginTop: -20,
+                // marginTop: -20,
                 justifyContent: 'flex-end',
                 alignSelf: 'flex-end',
                 width: '55%',
               }}
             >
               <Image
-                source={require('../../assets/images/arrow-right-curve.png')}
+                source={require('../../assets/images/arrow-down.png')}
                 style={{
-                  width: 100,
-                  height: 100,
+                  width: 120,
+                  height: 120,
                   resizeMode: 'contain',
-                  marginTop: 30,
+                  marginVertical: 20,
                   //   marginRight: 60,
                 }}
               />
@@ -313,14 +328,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position:'absolute',
     left:50,
-    bottom:10
+    // bottom:10
   },
   tour4_container: {
     alignItems: 'center',
     flexDirection: 'column',
     position: 'absolute',
     top: 170,
-    left: 10,
+    // left: 10,
     width: '60%',
   },
   tour5_container: {

@@ -295,6 +295,7 @@ export default {
   tour_section5: 'Le menu en ligne digital c’est par ici  ',
   see_menu: 'Voir le menu',
   add_fav: 'Ajouter au favoris',
+  fav_list: 'Liste des favoris',
   fav: 'Favoris',
   added: 'Ajouté',
   //Notification

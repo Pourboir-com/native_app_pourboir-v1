@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
   StyleSheet,
   Text,
@@ -15,6 +15,8 @@ import {
   Alert,
   Share,
 } from 'react-native';
+import StarCard from '../../components/star-card';
+import RBSheet from 'react-native-raw-bottom-sheet';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import RefferedWaiterModal from '../../components/modals/ConfirmModal';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
@@ -89,11 +91,11 @@ const ReviewDetails = ({ navigation, route }) => {
   const [tourModal, setTourModal] = useState(false);
   const [AddFavorite, { isLoading: favLoading }] = useMutation(ADD_FAVORITE);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setTourModal(true);
-    }, 2000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setTourModal(true);
+  //   }, 2000);
+  // }, []);
 
   const {
     img,
@@ -107,6 +109,9 @@ const ReviewDetails = ({ navigation, route }) => {
     restaurant_id,
     geometry,
   } = route?.params || {};
+
+  const refRBSheet = useRef();
+
   const {
     data: reviewData,
     isLoading: reviewDataLoading,
@@ -492,7 +497,7 @@ const ReviewDetails = ({ navigation, route }) => {
             <TouchableOpacity
               activeOpacity={0.6}
               style={{ marginLeft: '12%' }}
-              // onPress={() => refRBSheet.current.open()}
+              onPress={() => refRBSheet.current.open()}
             >
               <Text
                 style={{
@@ -531,6 +536,57 @@ const ReviewDetails = ({ navigation, route }) => {
             </TouchableOpacity>
           </View>
         </View>
+        <RBSheet
+          ref={refRBSheet}
+          closeOnDragDown={true}
+          closeOnPressMask={true}
+          height={350}
+          customStyles={{
+            wrapper: {
+              backgroundColor: 'rgba(52, 52, 52, 0.8)',
+            },
+            draggableIcon: {
+              backgroundColor: '#000',
+            },
+          }}
+        >
+          <Text
+            style={{
+              textAlign: 'center',
+              fontFamily: 'ProximaNova',
+              fontSize: 16,
+            }}
+          >
+            {i18n.t('fav_list')}
+          </Text>
+
+          <View
+            style={{ alignItems: 'center', marginTop: 15, marginBottom: 30 }}
+          >
+            {favoritesLoading || isFavoriteLoading ? (
+              <View style={{ width: '90%', alignSelf: 'center' }}>
+                <ReviewsSkeleton />
+                <ReviewsSkeleton />
+              </View>
+            ) : (
+              <FlatList
+                data={favoritesLoading ? null : favoritesData?.data[0]?.user_id}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={item => item._id}
+                renderItem={itemData => (
+                  <StarCard
+                    itemData={itemData}
+                    state={state}
+                    navigation={navigation}
+                    place_id={place_id}
+                    restaurant_id={restaurant_id}
+                    navigationDisable={true}
+                  />
+                )}
+              />
+            )}
+          </View>
+        </RBSheet>
 
         <View
           style={{

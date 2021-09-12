@@ -294,6 +294,7 @@ export default {
   tour_section5: 'Digital menu is right here ',
   see_menu: 'See the menu',
   add_fav: 'Add to favorites',
+  fav_list: 'Favorites list',
   fav: 'Favorites',
   added: 'Added',
   notification: 'Activate notifications to receive notifications from your favorite restaurants.',

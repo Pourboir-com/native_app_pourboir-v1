@@ -97,11 +97,11 @@ const ReviewDetails = ({ navigation, route }) => {
   const [tourModal, setTourModal] = useState(false);
   const [AddFavorite, { isLoading: favLoading }] = useMutation(ADD_FAVORITE);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setTourModal(true);
-  //   }, 2000);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setTourModal(true);
+    }, 2000);
+  }, []);
 
   const {
     img,

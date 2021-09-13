@@ -28,16 +28,14 @@ const YourTickets = ({ navigation }) => {
     GET_TICKETS,
     {
       ...reactQueryConfig,
+      onSuccess: () => {
+        // keys();
+      },
       onError: e => {
         alert(e?.response?.data?.message);
       },
     },
   );
-  // const keys = () => {
-  //   let k = Object.keys(ticketData?.data);
-  //   let v = Object.keys(ticketData.data[k]);
-  //   return v.map(v=> ticketData.data[k][v]);
-  // };
 
   function pad(n, width, z) {
     z = z || '0';
@@ -78,45 +76,45 @@ const YourTickets = ({ navigation }) => {
       >
         <Text style={styles.text}>{i18n.t('collect_tickets')}</Text>
       </View>
-      {/* {ticketDataLoading ? (
+      {ticketDataLoading ? (
         <View style={{ marginTop: 50 }}>
           <ActivityIndicator size={50} color="#EBC11B" />
         </View>
       ) : (
-        (Object.keys(ticketData?.data) || []).map(key1 => {
-          (Object.keys(ticketData?.data[key1]) || []).map(key2 => (
-            <>
-            <Text>{key1}{key2}</Text>
-            <FlatList
-              data={ticketData?.data[key1][key2] || []}
-              showsVerticalScrollIndicator={false}
-              alwaysBounceHorizontal={false}
-              alwaysBounceVertical={false}
-              refreshControl={
-                <RefreshControl
-                  refreshing={ticketsIsFetching}
-                  onRefresh={ticketRefetch}
+        (Object.keys(ticketData?.data) || []).map(year => {
+          (ticketData?.data[year] || []).map(monthsData =>
+            (Object.keys(monthsData[0]) || []).map(month => (
+              <>
+                <FlatList
+                  data={monthsData[year][month] || []}
+                  showsVerticalScrollIndicator={false}
+                  alwaysBounceHorizontal={false}
+                  alwaysBounceVertical={false}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={ticketsIsFetching}
+                      onRefresh={ticketRefetch}
+                    />
+                  }
+                  contentContainerStyle={[styles.container_number]}
+                  bounces={false}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={itemData => (
+                    <View>
+                      <Text style={styles.lottery}>
+                        {pad(itemData?.item?.token, 8, '0').replace(
+                          /(\d{4})(\d{4})/,
+                          '$1-$2',
+                        )}
+                      </Text>
+                    </View>
+                  )}
                 />
-              }
-              contentContainerStyle={[styles.container_number]}
-              bounces={false}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={itemData => (
-                <View style={{ backgroundColor: 'red' }}>
-                  <Text>{key2}</Text>
-                  <Text style={styles.lottery}>
-                    {pad(itemData?.item?.token, 8, '0').replace(
-                      /(\d{4})(\d{4})/,
-                      '$1-$2',
-                    )}
-                  </Text>
-                </View>
-              )}
-            />
-            </>
-          ));
+              </>
+            )),
+          );
         })
-      )} */}
+      )}
     </View>
   );
 };

@@ -725,6 +725,7 @@ const ReviewDetails = ({ navigation, route }) => {
               reviewRefetch={reviewRefetch}
               restaurant={restaurant}
               distance={distance}
+              handleOpenModal={() => setnotCheckInModal(true)}
             />
           </View>
         )}

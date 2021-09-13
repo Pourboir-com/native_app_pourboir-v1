@@ -10,7 +10,13 @@ import { CREATE_REVIEW } from '../../queries';
 import Context from '../../contextApi/context';
 import CheckInModal from '../../components/modals/ThanksRatingModal';
 
-const Review = ({ reviewData, reviewRefetch, restaurant, distance }) => {
+const Review = ({
+  reviewData,
+  reviewRefetch,
+  restaurant,
+  distance,
+  handleOpenModal,
+}) => {
   const [leaveRevModal, setLeaveRevModal] = useState(false);
   const { state } = useContext(Context);
   const [hospitality, setHospitality] = useState();
@@ -21,21 +27,25 @@ const Review = ({ reviewData, reviewRefetch, restaurant, distance }) => {
   const [reviewSuccess, setReviewSuccess] = useState(false);
 
   const confirmClick = async () => {
-    await createRestaurantReview(
-      {
-        user_id: state.userDetails.user_id,
-        rating: hospitality,
-        comment,
-        place: restaurant,
-      },
-      {
-        onSuccess: res => {
-          reviewRefetch();
-          setLeaveRevModal(false);
-          setReviewSuccess(true);
+    if (Number(distance) < 300) {
+      await createRestaurantReview(
+        {
+          user_id: state.userDetails.user_id,
+          rating: hospitality,
+          comment,
+          place: restaurant,
         },
-      },
-    );
+        {
+          onSuccess: res => {
+            reviewRefetch();
+            setLeaveRevModal(false);
+            setReviewSuccess(true);
+          },
+        },
+      );
+    } else {
+      handleOpenModal();
+    }
   };
   return (
     <View>
@@ -49,25 +59,23 @@ const Review = ({ reviewData, reviewRefetch, restaurant, distance }) => {
         <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
           Review
         </Text>
-        {(Number(distance) < 300) && (
-          <TouchableOpacity
-            disabled={createLoading}
-            onPress={() => {
-              setLeaveRevModal(true), setHospitality(), setComment();
-            }}
-            activeOpacity={0.5}
-            style={{
-              marginLeft: 15,
-              backgroundColor: '#FCDF6F',
-              padding: 2,
-              borderRadius: 100,
-            }}
-          >
-            <View>
-              <Entypo name="plus" size={22} color="white" />
-            </View>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          disabled={createLoading}
+          onPress={() => {
+            setLeaveRevModal(true), setHospitality(), setComment();
+          }}
+          activeOpacity={0.5}
+          style={{
+            marginLeft: 15,
+            backgroundColor: '#FCDF6F',
+            padding: 2,
+            borderRadius: 100,
+          }}
+        >
+          <View>
+            <Entypo name="plus" size={22} color="white" />
+          </View>
+        </TouchableOpacity>
       </View>
 
       <View style={{ marginHorizontal: 15, marginVertical: 10 }}>

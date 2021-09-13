@@ -5,8 +5,8 @@ import {
   Text,
   View,
   FlatList,
-  ActivityIndicator,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';

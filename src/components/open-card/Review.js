@@ -27,26 +27,33 @@ const Review = ({
   const [reviewSuccess, setReviewSuccess] = useState(false);
 
   const confirmClick = async () => {
+    await createRestaurantReview(
+      {
+        user_id: state.userDetails.user_id,
+        rating: hospitality,
+        comment,
+        place: restaurant,
+      },
+      {
+        onSuccess: res => {
+          reviewRefetch();
+          setLeaveRevModal(false);
+          setReviewSuccess(true);
+        },
+      },
+    );
+  };
+
+  const handleAddClick = () => {
     if (Number(distance) < 300) {
-      await createRestaurantReview(
-        {
-          user_id: state.userDetails.user_id,
-          rating: hospitality,
-          comment,
-          place: restaurant,
-        },
-        {
-          onSuccess: res => {
-            reviewRefetch();
-            setLeaveRevModal(false);
-            setReviewSuccess(true);
-          },
-        },
-      );
+      setLeaveRevModal(true);
+      setHospitality();
+      setComment();
     } else {
       handleOpenModal();
     }
   };
+
   return (
     <View>
       <View
@@ -61,9 +68,7 @@ const Review = ({
         </Text>
         <TouchableOpacity
           disabled={createLoading}
-          onPress={() => {
-            setLeaveRevModal(true), setHospitality(), setComment();
-          }}
+          onPress={handleAddClick}
           activeOpacity={0.5}
           style={{
             marginLeft: 15,

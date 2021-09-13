@@ -16,10 +16,21 @@ import uuid from 'react-native-uuid';
 import CommonButton from '../common-button';
 import { SAVE_CHANGES } from '../../queries';
 import { useMutation } from 'react-query';
+import NumberFormat from 'react-number-format';
+import { getAsyncStorageValues } from '../../constants';
 
 const Categories = props => {
   const [dishes, setDishes] = useState([]);
   const [disable, setDisable] = useState(true);
+  const [currency, setCurrency] = useState();
+
+  useEffect(() => {
+    (async () => {
+      const { Currency } = await getAsyncStorageValues();
+      setCurrency(JSON.parse(Currency));
+    })();
+  }, []);
+
   useEffect(() => {
     if (props?.dishes) {
       setDishes(props?.dishes);
@@ -179,24 +190,36 @@ const Categories = props => {
                         })
                       }
                     >
-                      <TextInput
-                        style={
-                          (styles.inputsTopTow,
-                          {
-                            ...styles.inputsTopTow,
-                            width: 80,
-                            marginRight: 10,
-                            fontWeight: 'bold',
-                            color: 'black',
-                          })
-                        }
-                        onChangeText={name =>
-                          handleInputChange(name, i, 'price')
-                        }
+                      <NumberFormat
                         value={v.price}
-                        placeholder={i18n.t('price')}
-                        keyboardType={'numeric'}
-                        placeholderTextColor={'#707375'}
+                        thousandSeparator={true}
+                        prefix={
+                          currency
+                            ? currency.currency.split(' ').join('') + ' '
+                            : ''
+                        }
+                        renderText={formattedValue => (
+                          <TextInput
+                            style={
+                              (styles.inputsTopTow,
+                              {
+                                ...styles.inputsTopTow,
+                                width: 80,
+                                marginRight: 10,
+                                fontWeight: 'bold',
+                                color: 'black',
+                              })
+                            }
+                            onChangeText={value =>
+                              handleInputChange(value.replace(/[^0-9]/g, ''), i, 'price')
+                            }
+                            value={formattedValue}
+                            placeholder={i18n.t('price')}
+                            keyboardType={'numeric'}
+                            placeholderTextColor={'#707375'}
+                          />
+                        )}
+                        displayType={'text'}
                       />
                       <TouchableOpacity
                         onPress={() =>

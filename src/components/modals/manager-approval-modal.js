@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   ImageBackground,
   TextInput,
   Platform,
-  Dimensions,
+  ActivityIndicator,
   ScrollView,
   KeyboardAvoidingView,
 } from 'react-native';
@@ -18,7 +18,6 @@ import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/Version-control-pana.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CheckBox from 'react-native-check-box';
 
 const ManagerApprovalModal = ({
@@ -32,13 +31,13 @@ const ManagerApprovalModal = ({
   setApprovalModal,
   setReceivedModal,
   submitApproval,
+  loading,
 }) => {
   const validation = termsChecked && cellPhone && siretNumber;
 
   const Claim = () => {
     setApprovalModal(false);
     setReceivedModal(true);
-    console.log(approvalModal);
   };
 
   return (
@@ -52,13 +51,14 @@ const ManagerApprovalModal = ({
         keyboardShouldPersistTaps={'handled'}
         bounces={false}
         scrollEnabled={false}
+        showsVerticalScrollIndicator={false}
         style={{
           width: '100%',
         }}
       >
         <KeyboardAvoidingView
           // style={ keyboardVisible && { marginBottom: -190 }}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 10}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 35}
           behavior="position"
           enabled
         >
@@ -207,22 +207,6 @@ const ManagerApprovalModal = ({
                     </Text>
                   </TouchableOpacity>
                 </View>
-                {/* <View
-            style={{
-              // marginHorizontal: 10,
-              // alignItems: 'center',
-              flexDirection:'row',
-              // justifyContent:'center'
-            }}
-            activeOpacity={0.5}
-          >
-              
-            <TouchableOpacity>
-
-              
-                          </TouchableOpacity>
-
-          </View> */}
               </View>
             </View>
 
@@ -244,7 +228,11 @@ const ManagerApprovalModal = ({
                   color: Colors.fontDark,
                 }}
               >
-                {i18n.t('claim')}
+                {loading ? (
+                  <ActivityIndicator size={25} color="#EBC11B" />
+                ) : (
+                  i18n.t('claim')
+                )}
               </Text>
             </TouchableOpacity>
           </View>

@@ -107,7 +107,6 @@ const HomeScreen = props => {
       ...reactQueryConfig,
     },
   );
-
   return (
     <>
       <Header
@@ -130,6 +129,8 @@ const HomeScreen = props => {
           resIsFetching={resIsFetching}
           saveLocation={saveLocation}
           searchEnter={searchEnter}
+          title='around_you'
+          searchTitle='result_distance'
           Data={data}
           route={props?.route}
         />
@@ -143,6 +144,7 @@ const HomeScreen = props => {
           Data={userFavRestaurantData?.data || []}
           route={props?.route}
           title="fav_restaurant"
+          searchTitle='fav_restaurant'
         />
         <HomeScreenContent
           restaurantLoading={favRestaurantLoading}
@@ -154,6 +156,7 @@ const HomeScreen = props => {
           Data={favRestaurantData?.data || []}
           route={props?.route}
           title="popular_restaurant"
+          searchTitle='popular_restaurant'
         />
       </Header>
       {adModalVisible && (

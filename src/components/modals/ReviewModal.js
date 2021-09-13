@@ -29,7 +29,7 @@ const ReviewModal = ({ isVisible, handleModalClose, item, rating, obj }) => {
                       ? 'half'
                       : 'empty'
                   }
-                  notRatedStarColor="rgba(255,255,255, 0.6)"
+                  notRatedStarColor="#e6e6e6"
                 />
               );
             })}

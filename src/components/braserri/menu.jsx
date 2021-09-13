@@ -61,14 +61,8 @@ const Menu = ({
   const newCategories = categArr.filter(v => {
     return !v._id;
   });
-  console.log({
-    data: newCategories || [],
-    user_id: state.userDetails.user_id || '',
-    place_id: restaurant_id || '',
-  });
 
   const DeleteMenu = async id => {
-    console.log(id);
     if (id.charAt(0) == 'x') {
       setCategArr(
         categArr.filter(v => {

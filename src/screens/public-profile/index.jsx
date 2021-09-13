@@ -129,17 +129,15 @@ const PublicProfile = ({ navigation }) => {
         <View style={{ marginTop: 25 }}>
           {/* Section 1  */}
           <View style={styles.userDetails_container}>
-            <View style={{ width: 'auto' }}>
-              <Image
-                source={{ uri: state?.userDetails?.image }}
-                style={{
-                  width: 140,
-                  height: 170,
-                  resizeMode: 'contain',
-                  borderRadius: 120,
-                }}
-              />
-            </View>
+            <Image
+              source={{ uri: state?.userDetails?.image }}
+              style={{
+                width: 140,
+                height: 170,
+                resizeMode: 'contain',
+                borderRadius: 280,
+              }}
+            />
             <View style={{ marginTop: 10, width: '55%' }}>
               <Text style={styles.user_name}>{state?.userDetails?.name}</Text>
               <Text style={styles.clientTxt}>{i18n.t('client')}</Text>

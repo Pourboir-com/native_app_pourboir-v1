@@ -36,6 +36,7 @@ export default function HomeScreenContent({
   saveLocation,
   route,
   title,
+  searchTitle,
 }) {
   const [data, setData] = useState([]);
   const navigation = useNavigation();
@@ -123,7 +124,7 @@ export default function HomeScreenContent({
             <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
-              {searchEnter ? i18n.t('result_distance') : i18n.t('around_you')}
+              {searchEnter ? i18n.t('result_distance') : i18n.t(title)}
             </Text>
             <Text
               style={[styles.txt2NoRest, { fontFamily: 'ProximaNovaSemiBold' }]}
@@ -206,11 +207,7 @@ export default function HomeScreenContent({
             <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
-              {title
-                ? i18n.t(title)
-                : searchEnter
-                ? i18n.t('result_distance')
-                : i18n.t('around_you')}
+              {searchEnter ? i18n.t(searchTitle) : i18n.t(title)}
             </Text>
           )}
           <View

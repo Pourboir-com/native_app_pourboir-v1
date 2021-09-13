@@ -5,6 +5,8 @@ import {
   Text,
   View,
   FlatList,
+  ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';
@@ -20,6 +22,7 @@ const YourTickets = ({ navigation }) => {
     data: ticketData,
     isLoading: ticketDataLoading,
     refetch: ticketRefetch,
+    isFetching: ticketsIsFetching,
   } = useQuery(
     ['GET_TICKETS', { user_id: state.userDetails.user_id }],
     GET_TICKETS,
@@ -30,6 +33,11 @@ const YourTickets = ({ navigation }) => {
       },
     },
   );
+  // const keys = () => {
+  //   let k = Object.keys(ticketData?.data);
+  //   let v = Object.keys(ticketData.data[k]);
+  //   return v.map(v=> ticketData.data[k][v]);
+  // };
 
   function pad(n, width, z) {
     z = z || '0';
@@ -70,23 +78,45 @@ const YourTickets = ({ navigation }) => {
       >
         <Text style={styles.text}>{i18n.t('collect_tickets')}</Text>
       </View>
-      <FlatList
-        data={ticketData?.data || []}
-        showsVerticalScrollIndicator={false}
-        alwaysBounceHorizontal={false}
-        alwaysBounceVertical={false}
-        contentContainerStyle={[styles.container_number]}
-        bounces={false}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={itemData => (
-          <Text style={styles.lottery}>
-            {pad(itemData?.item?.token, 8, '0').replace(
-              /(\d{4})(\d{4})/,
-              '$1-$2',
-            )}
-          </Text>
-        )}
-      />
+      {/* {ticketDataLoading ? (
+        <View style={{ marginTop: 50 }}>
+          <ActivityIndicator size={50} color="#EBC11B" />
+        </View>
+      ) : (
+        (Object.keys(ticketData?.data) || []).map(key1 => {
+          (Object.keys(ticketData?.data[key1]) || []).map(key2 => (
+            <>
+            <Text>{key1}{key2}</Text>
+            <FlatList
+              data={ticketData?.data[key1][key2] || []}
+              showsVerticalScrollIndicator={false}
+              alwaysBounceHorizontal={false}
+              alwaysBounceVertical={false}
+              refreshControl={
+                <RefreshControl
+                  refreshing={ticketsIsFetching}
+                  onRefresh={ticketRefetch}
+                />
+              }
+              contentContainerStyle={[styles.container_number]}
+              bounces={false}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={itemData => (
+                <View style={{ backgroundColor: 'red' }}>
+                  <Text>{key2}</Text>
+                  <Text style={styles.lottery}>
+                    {pad(itemData?.item?.token, 8, '0').replace(
+                      /(\d{4})(\d{4})/,
+                      '$1-$2',
+                    )}
+                  </Text>
+                </View>
+              )}
+            />
+            </>
+          ));
+        })
+      )} */}
     </View>
   );
 };

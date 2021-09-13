@@ -8,13 +8,18 @@ import { Entypo } from '@expo/vector-icons';
 import { useMutation } from 'react-query';
 import { CREATE_REVIEW } from '../../queries';
 import Context from '../../contextApi/context';
+import CheckInModal from '../../components/modals/ThanksRatingModal';
 
-const Review = ({ reviewData, reviewRefetch, restaurant }) => {
+const Review = ({ reviewData, reviewRefetch, restaurant, distance }) => {
   const [leaveRevModal, setLeaveRevModal] = useState(false);
   const { state } = useContext(Context);
   const [hospitality, setHospitality] = useState();
   const [comment, setComment] = useState('');
-  const [createRestaurantReview] = useMutation(CREATE_REVIEW);
+  const [createRestaurantReview, { isLoading: createLoading }] = useMutation(
+    CREATE_REVIEW,
+  );
+  const [reviewSuccess, setReviewSuccess] = useState(false);
+
   const confirmClick = async () => {
     await createRestaurantReview(
       {
@@ -24,10 +29,10 @@ const Review = ({ reviewData, reviewRefetch, restaurant }) => {
         place: restaurant,
       },
       {
-        onSuccess: () => {
+        onSuccess: res => {
           reviewRefetch();
           setLeaveRevModal(false);
-          alert('Review successfully added!');
+          setReviewSuccess(true);
         },
       },
     );
@@ -44,33 +49,36 @@ const Review = ({ reviewData, reviewRefetch, restaurant }) => {
         <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
           Review
         </Text>
-        <TouchableOpacity
-          onPress={() => {
-            setLeaveRevModal(true), setHospitality(), setComment();
-          }}
-          activeOpacity={0.5}
-          style={{
-            marginLeft: 15,
-            backgroundColor: '#FCDF6F',
-            padding: 2,
-            borderRadius: 100,
-          }}
-        >
-          <View>
-            <Entypo name="plus" size={22} color="white" />
-          </View>
-        </TouchableOpacity>
+        {(Number(distance) < 300) && (
+          <TouchableOpacity
+            disabled={createLoading}
+            onPress={() => {
+              setLeaveRevModal(true), setHospitality(), setComment();
+            }}
+            activeOpacity={0.5}
+            style={{
+              marginLeft: 15,
+              backgroundColor: '#FCDF6F',
+              padding: 2,
+              borderRadius: 100,
+            }}
+          >
+            <View>
+              <Entypo name="plus" size={22} color="white" />
+            </View>
+          </TouchableOpacity>
+        )}
       </View>
 
       <View style={{ marginHorizontal: 15, marginVertical: 10 }}>
         <FlatList
           data={reviewData?.data || []}
           renderItem={({ item }) => (
-            <>
+            <View>
               {item.comment && (
                 <ReviewSlider rating={+item.rating} item={item} />
               )}
-            </>
+            </View>
           )}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -78,6 +86,15 @@ const Review = ({ reviewData, reviewRefetch, restaurant }) => {
           keyExtractor={item => item.id}
         />
       </View>
+      {reviewSuccess && (
+        <CheckInModal
+          isVisible={reviewSuccess}
+          handleModalClose={() => setReviewSuccess(false)}
+          LotteryNumber={2}
+          heading={'thank_review'}
+          subText={'won_ticket'}
+        />
+      )}
 
       <LeaveReviewModal
         leaveRevModal={leaveRevModal}

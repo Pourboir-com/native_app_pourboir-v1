@@ -303,4 +303,10 @@ export default {
     'Activez les notifications pour recevoir des notifications de la part de vos restaurants favoris.',
   fav_restaurant: 'Vos restaurants favoris',
   popular_restaurant: 'Les restaurants populaires',
+  sorry: 'Désolé ',
+  not_near: 'Vous n’êtes pas assez proche de cet établissement, nous ne pouvons valider votre action.',
+  thank_here: 'Vous êtes là!',
+  confirm_here: 'Vous avez indiqué que vous êtes bien ici. Grâce à cela, vous collectez un ticket de lotterie.',
+  thank_review: 'Merci pour votre vote',
+  won_ticket: 'Nous vous contacterons par email pour vous offire un coupon très prochainement.',
 };

@@ -301,4 +301,10 @@ export default {
     'Activate notifications to receive notifications from your favorite restaurants.',
   fav_restaurant: 'Your favorite restaurants',
   popular_restaurant: 'Popular restaurants',
+  sorry: 'Sorry !',
+  not_near: 'You are not near that establishment, we can not confirm your action.',
+  thank_here: 'You are here !',
+  confirm_here: 'You have confirmed that you are at this restaurants. Thanks to that you have earned one loterry ticket.',
+  thank_review: 'Thanks for your review !',
+  won_ticket: 'You have won a ticket for your review and are now part of the monthly lotery.',
 };

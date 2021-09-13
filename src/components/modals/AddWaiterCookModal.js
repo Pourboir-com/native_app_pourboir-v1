@@ -17,7 +17,8 @@ import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/sittingtable.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+const validator = require('validator');
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const AddWaiterCookModal = ({
   addModal,
@@ -31,7 +32,8 @@ const AddWaiterCookModal = ({
 }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const validation = name && email;
+  let emailError = email && !validator?.isEmail(email);
+  const validation = name && !emailError && email;
   const handleAdd = () => {
     handleAddStaff(email, name);
     // setWaiters([...waiters, { waiter_name: name, waiter_email: email }]);
@@ -117,11 +119,8 @@ const AddWaiterCookModal = ({
                 placeholderTextColor={'#707375'}
               />
             </View>
-            <View
-              style={
-                (styles.input_box, { alignItems: 'center', marginTop: 16 })
-              }
-            >
+            <View style={{ flexDirection: 'row', position: 'relative', marginTop: 10 }}>
+
               <TextInput
                 style={styles.inputsTopTow}
                 onChangeText={e => setEmail(e)}
@@ -133,6 +132,15 @@ const AddWaiterCookModal = ({
                 }
                 placeholderTextColor={'#707375'}
               />
+              <Text style={{ position: 'absolute', right: 3.5, top: 4 }}>
+                {emailError && (
+                  <FontAwesome5
+                    name="exclamation-circle"
+                    size={13}
+                    color="red"
+                  />
+                )}
+              </Text>
             </View>
           </View>
 

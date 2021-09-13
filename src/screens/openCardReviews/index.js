@@ -19,6 +19,7 @@ import StarCard from '../../components/star-card';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import RefferedWaiterModal from '../../components/modals/ConfirmModal';
+import CheckInModal from '../../components/modals/ThanksRatingModal';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
@@ -40,13 +41,15 @@ import {
   GET_REVIEWS,
   ADD_FAVORITE,
   GET_FAVORITES,
+  ADD_CHECKIN,
 } from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import Context from '../../contextApi/context';
 const imgSitting = require('../../assets/images/sittingtable.png');
 const waiter = require('../../assets/images/waiter2.png');
-// import * as actionTypes from '../../contextApi/actionTypes';
+// import * as actionTypes from '../../contextApi/actionTypes
+const noCheckIn = require('../../assets/images/no-checkin.png');
 import i18n from '../../li8n';
 // import { filteredRestaurant, yourFilteredRestaurant } from '../../util';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -75,11 +78,14 @@ const ReviewDetails = ({ navigation, route }) => {
     false,
   );
   const [userThanksModalVisible, setUserThanksModalVisible] = useState(false);
+  const [checkInModal, setcheckInModal] = useState(false);
+  const [notCheckInModal, setnotCheckInModal] = useState(false);
   const [refferedThanksModalVisible, setRefferedThanksModalVisible] = useState(
     false,
   );
   const { state, dispatch } = useContext(Context);
   const [IAMWAITER] = useMutation(I_AM_WAITER);
+  const [addCheckIn] = useMutation(ADD_CHECKIN);
   const [AddWaiters] = useMutation(ADDING_WAITERS);
   const [Refferedloading, setRefferedLoading] = useState(false);
   const [Userloading, setUserLoading] = useState(false);
@@ -202,11 +208,11 @@ const ReviewDetails = ({ navigation, route }) => {
     rating: rating,
     photos: [img],
     name: name,
-    formatted_address: vicinity,
+    formatted_address: vicinity || 'city',
     our_rating: String(our_rating),
     location: geometry,
     international_phone_number:
-      RestaurantDetails?.data?.international_phone_number,
+      RestaurantDetails?.data?.international_phone_number || '',
   };
   const handleAddWaiter = async (fullName, email) => {
     if (state.userDetails.user_id) {
@@ -232,6 +238,28 @@ const ReviewDetails = ({ navigation, route }) => {
     } else {
       handleRefferedModalClose();
       navigation.navigate('socialLogin', { confirmWaiter: true });
+    }
+  };
+
+  const handleCheckIn = async () => {
+    if (Number(distance) < 300) {
+      await addCheckIn(
+        {
+          place: restaurant,
+          user_id: state.userDetails.user_id,
+          token: '2123',
+        },
+        {
+          onSuccess: res => {
+            setcheckInModal(true);
+          },
+          onError: e => {
+            alert(e.response?.data?.message);
+          },
+        },
+      );
+    } else {
+      setnotCheckInModal(true);
     }
   };
 
@@ -327,17 +355,7 @@ const ReviewDetails = ({ navigation, route }) => {
     if (state.userDetails.user_id) {
       let newFavorite = {
         user_id: state.userDetails.user_id,
-        restaurant: {
-          place_id: place_id,
-          rating: rating,
-          photos: [img],
-          name: name,
-          formatted_address: vicinity,
-          our_rating: String(our_rating),
-          location: geometry,
-          international_phone_number:
-            RestaurantDetails?.data?.international_phone_number,
-        },
+        restaurant,
       };
       await AddFavorite(newFavorite, {
         onSuccess: async () => {
@@ -517,7 +535,7 @@ const ReviewDetails = ({ navigation, route }) => {
               activeOpacity={0.6}
               disabled={favoritesLoading || isFavoriteLoading}
               style={{
-                backgroundColor: Colors.yellow,
+                backgroundColor: checkFavorite() ? '#E6E6E6' : Colors.yellow,
                 paddingVertical: Platform.OS === 'ios' ? 20 : 14,
                 width: 156,
                 borderRadius: 12,
@@ -627,12 +645,7 @@ const ReviewDetails = ({ navigation, route }) => {
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.5}
-            // onPress={() =>
-            //   navigation.navigate('MapScreen', {
-            //     geometry,
-            //     name,
-            //   })
-            // }
+            onPress={handleCheckIn}
             style={[styles.viewItem, { zIndex: 9999999 }]}
           >
             <View style={styles.viewIcon}>
@@ -711,6 +724,7 @@ const ReviewDetails = ({ navigation, route }) => {
               reviewData={reviewData}
               reviewRefetch={reviewRefetch}
               restaurant={restaurant}
+              distance={distance}
             />
           </View>
         )}
@@ -926,19 +940,40 @@ const ReviewDetails = ({ navigation, route }) => {
           buttonText={i18n.t('Thank_you')}
         />
       )}
-      <ManagerApprovalModal
-        siretNumber={siretNumber}
-        setSiretNumber={setSiretNumber}
-        cellPhone={cellPhone}
-        setCellPhone={setCellPhone}
-        termsChecked={termsChecked}
-        setTermsChecked={setTermsChecked}
-        approvalModal={approvalModal}
-        setApprovalModal={setApprovalModal}
-        receivedModal={receivedModal}
-        setReceivedModal={setReceivedModal}
-        submitApproval={submitApproval}
-      />
+      {notCheckInModal && (
+        <CommonModal
+          isVisible={notCheckInModal}
+          handleModalClose={() => setnotCheckInModal(false)}
+          image={noCheckIn}
+          heading={i18n.t('sorry')}
+          subHeadingText={i18n.t('not_near')}
+        />
+      )}
+      {checkInModal && (
+        <CheckInModal
+          isVisible={checkInModal}
+          handleModalClose={() => setcheckInModal(false)}
+          LotteryNumber={2}
+          heading={'thank_here'}
+          subText={'confirm_here'}
+        />
+      )}
+      {approvalModal && (
+        <ManagerApprovalModal
+          siretNumber={siretNumber}
+          setSiretNumber={setSiretNumber}
+          cellPhone={cellPhone}
+          setCellPhone={setCellPhone}
+          termsChecked={termsChecked}
+          setTermsChecked={setTermsChecked}
+          approvalModal={approvalModal}
+          setApprovalModal={setApprovalModal}
+          receivedModal={receivedModal}
+          setReceivedModal={setReceivedModal}
+          submitApproval={submitApproval}
+          loading={publishMenuLoading}
+        />
+      )}
       <ReceivedModal
         receivedModal={receivedModal}
         setReceivedModal={setReceivedModal}

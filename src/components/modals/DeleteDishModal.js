@@ -31,10 +31,6 @@ const DeleteDishModal = ({
   const handleClose = () => {
     setDeleteDishModal(false);
   };
-  console.log(menuId, 'menuId');
-  console.log(deleteType);
-  console.log(dishId, ' dishId');
-  console.log(menuId, 'menuId');
 
   const DeleteDish = async () => {
     //  if(id.charAt(0) == 'y'){
@@ -56,7 +52,6 @@ const DeleteDishModal = ({
         },
         onError: e => {
           alert('Error ');
-          console.log(e);
         },
       },
     );

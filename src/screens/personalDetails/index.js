@@ -246,7 +246,7 @@ const PersonalDetails = ({ navigation }) => {
               </View>
             </View>
           </View>
-          <View style={{ alignItems: 'center', marginBottom: 40 }}>
+          {/* <View style={{ alignItems: 'center', marginBottom: 40 }}>
             <View>
               <Text style={styles.heading1}>{i18n.t('payment_methods')}</Text>
             </View>
@@ -324,7 +324,7 @@ const PersonalDetails = ({ navigation }) => {
                 </View>
               </TouchableOpacity>
             </View>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </View>

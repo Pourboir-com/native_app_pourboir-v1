@@ -15,7 +15,7 @@ const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import NumberFormat from 'react-number-format';
 
-const ThanksRatingModal = ({ isVisible, handleModalClose, LotteryNumber }) => {
+const ThanksRatingModal = ({ isVisible, handleModalClose, LotteryNumber, heading, subText }) => {
   function pad(n, width, z) {
     z = z || '0';
     n = n + '';
@@ -59,10 +59,10 @@ const ThanksRatingModal = ({ isVisible, handleModalClose, LotteryNumber }) => {
       </ImageBackground>
 
       <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-        {i18n.t('thanks_for_vote')}
+        {heading? i18n.t(heading) : i18n.t('thanks_for_vote')}
       </Text>
       <Text style={[styles.txtName, { fontFamily: 'ProximaNova' }]}>
-        {i18n.t('will_contact_by_email')}
+        {subText ? i18n.t(subText) : i18n.t('will_contact_by_email')}
       </Text>
       {LotteryNumber ? (
         <Text style={styles.lottery}>

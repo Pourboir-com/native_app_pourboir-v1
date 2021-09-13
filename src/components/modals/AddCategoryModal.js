@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
   txtConfrm: {
     fontSize: 15,
     color: Colors.fontDark,
-    marginTop: Platform.OS === 'ios' ? 70 : 18,
+    marginTop: 70,
     textAlign: 'center',
   },
   imgStyle: {

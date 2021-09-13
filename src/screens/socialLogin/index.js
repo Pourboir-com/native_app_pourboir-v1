@@ -188,8 +188,8 @@ const SocialLogin = ({ navigation, route }) => {
           } else if (confirmWaiter || HelpUs) {
             navigation.replace('OpenCardReviews');
           } else {
-            // navigation.navigate('Home', { crossIcon: false });
-            navigation.replace('Setting', { login: true });
+            navigation.navigate('Home', { crossIcon: false });
+            // navigation.replace('Setting', { login: true });
           }
           registerForPushNotifications(res?.user?._id);
           setLoading(false);
@@ -275,8 +275,8 @@ const SocialLogin = ({ navigation, route }) => {
                 } else if (confirmWaiter || HelpUs) {
                   navigation.replace('OpenCardReviews');
                 } else {
-                  // navigation.navigate('Home', { crossIcon: false });
-                  navigation.replace('Setting', { login: true });
+                  navigation.navigate('Home', { crossIcon: false });
+                  // navigation.replace('Setting', { login: true });
                 }
                 registerForPushNotifications(res?.user?._id);
                 setLoading(false);
@@ -434,8 +434,8 @@ const SocialLogin = ({ navigation, route }) => {
                           } else if (confirmWaiter || HelpUs) {
                             navigation.replace('OpenCardReviews');
                           } else {
-                            // navigation.navigate('Home', { crossIcon: false });
-                            navigation.replace('Setting', { login: true });
+                            navigation.navigate('Home', { crossIcon: false });
+                            // navigation.replace('Setting', { login: true });
                           }
                           registerForPushNotifications(res?.user?._id);
                           setLoading(false);

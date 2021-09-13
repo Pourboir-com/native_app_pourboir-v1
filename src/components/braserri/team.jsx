@@ -59,19 +59,13 @@ const Team = ({ restaurant_id }) => {
   };
 
   const handleAddStaff = async (email, name) => {
-    console.log({
-      manager_id: state.userDetails.user_id || '',
-      type: modalType,
-      email: email || '',
-      full_name: name || '',
-      place_id: restaurant_id,
-    });
     await addStaff(
       {
         manager_id: state.userDetails.user_id || '',
         type: modalType,
         email: email || '',
         full_name: name || '',
+        place_id: restaurant_id,
       },
       {
         onSuccess: () => {

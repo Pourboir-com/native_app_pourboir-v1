@@ -504,7 +504,7 @@ const ReviewDetails = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        <View style={{ marginTop: 20, marginHorizontal: 24 }}>
+        <View style={{marginHorizontal: 24, marginTop: 20 }}>
           <View
             style={{
               flexDirection: 'row',

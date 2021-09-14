@@ -82,11 +82,12 @@ const YourTickets = ({ navigation }) => {
         </View>
       ) : (
         (Object.keys(ticketData?.data) || []).map(year => {
-          (ticketData?.data[year] || []).map(monthsData =>
-            (Object.keys(monthsData[0]) || []).map(month => (
+          (Object.keys(ticketData?.data[year]) || [])
+            .map(month => ticketData.data[year][month] || [])
+            .map(item => (
               <>
                 <FlatList
-                  data={monthsData[year][month] || []}
+                  data={item || []}
                   showsVerticalScrollIndicator={false}
                   alwaysBounceHorizontal={false}
                   alwaysBounceVertical={false}
@@ -111,8 +112,7 @@ const YourTickets = ({ navigation }) => {
                   )}
                 />
               </>
-            )),
-          );
+            ));
         })
       )}
     </View>

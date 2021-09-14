@@ -97,11 +97,11 @@ const ReviewDetails = ({ navigation, route }) => {
   const [tourModal, setTourModal] = useState(false);
   const [AddFavorite, { isLoading: favLoading }] = useMutation(ADD_FAVORITE);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setTourModal(true);
-    }, 2000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setTourModal(true);
+  //   }, 2000);
+  // }, []);
 
   const {
     img,
@@ -504,7 +504,7 @@ const ReviewDetails = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        <View style={{ marginTop: 20, marginHorizontal: 24 }}>
+        <View style={{marginHorizontal: 24, marginTop: 20 }}>
           <View
             style={{
               flexDirection: 'row',

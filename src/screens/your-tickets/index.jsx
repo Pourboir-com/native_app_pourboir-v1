@@ -15,6 +15,7 @@ import { GET_TICKETS } from '../../queries/tickets';
 import Context from '../../contextApi/context';
 import { useQuery } from 'react-query';
 import { reactQueryConfig } from '../../constants';
+import get from 'lodash/get';
 
 const YourTickets = ({ navigation }) => {
   const { state } = useContext(Context);
@@ -82,37 +83,21 @@ const YourTickets = ({ navigation }) => {
         </View>
       ) : (
         (Object.keys(ticketData?.data) || []).map(year => {
-          (Object.keys(ticketData?.data[year]) || [])
-            .map(month => ticketData.data[year][month] || [])
-            .map(item => (
-              <>
-                <FlatList
-                  data={item || []}
-                  showsVerticalScrollIndicator={false}
-                  alwaysBounceHorizontal={false}
-                  alwaysBounceVertical={false}
-                  refreshControl={
-                    <RefreshControl
-                      refreshing={ticketsIsFetching}
-                      onRefresh={ticketRefetch}
-                    />
-                  }
-                  contentContainerStyle={[styles.container_number]}
-                  bounces={false}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={itemData => (
-                    <View>
-                      <Text style={styles.lottery}>
-                        {pad(itemData?.item?.token, 8, '0').replace(
-                          /(\d{4})(\d{4})/,
-                          '$1-$2',
-                        )}
-                      </Text>
-                    </View>
-                  )}
-                />
-              </>
-            ));
+          return (
+            <>
+              <Text>{year}</Text>
+              {(Object.keys(ticketData?.data[year]) || []).map(month => (
+                <>
+                  <Text>{month}</Text>
+                  {get(ticketData, `data.${year}.${month}`, []).map(item => (
+                    <>
+                      <Text>{item.token}</Text>
+                    </>
+                  ))}
+                </>
+              ))}
+            </>
+          );
         })
       )}
     </View>

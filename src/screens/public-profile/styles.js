@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { Colors } from '../../constants/Theme';
 
 const styles = StyleSheet.create({
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
   publication_text: {
     fontSize: 15,
     fontFamily: 'ProximaNova',
+    paddingHorizontal: Platform.OS =='android' ?  2 : 0
   },
   sheet_elements: {
     flexDirection: 'row',
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
   sheetTxt: {
     color: '#485460',
     fontFamily: 'ProximaNova',
-    fontSize: 16,
+    fontSize: Platform.OS == 'android' ? 16 : 18,
   },
   signOutBtn: {
     position: 'absolute',

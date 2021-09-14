@@ -4,9 +4,6 @@ import {
   ImageBackground,
   Text,
   View,
-  FlatList,
-  ActivityIndicator,
-  RefreshControl,
 } from 'react-native';
 import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';
@@ -24,15 +21,19 @@ const YourTickets = ({ navigation }) => {
     refetch: ticketRefetch,
     isFetching: ticketsIsFetching,
   } = useQuery(
-    ['GET_TICKETS', { user_id: state.userDetails.user_id }],
+    ['GET_TICKETS', { user_id: '6010e36e5e529e30686e02d9' }],
     GET_TICKETS,
     {
       ...reactQueryConfig,
+      onSuccess: e => {
+        console.log(e);
+      },
       onError: e => {
         alert(e?.response?.data?.message);
       },
     },
   );
+  // console.log(ticketData)
   // const keys = () => {
   //   let k = Object.keys(ticketData?.data);
   //   let v = Object.keys(ticketData.data[k]);

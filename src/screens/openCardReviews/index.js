@@ -417,7 +417,7 @@ const ReviewDetails = ({ navigation, route }) => {
       />
       <Animated.View
         style={{
-          transform: [{ translateY: translateY }],
+          // transform: [{ translateY: translateY }],
           elevation: 0,
           zIndex: 9,
         }}
@@ -425,7 +425,7 @@ const ReviewDetails = ({ navigation, route }) => {
         <View style={styles.viewImg}>
           <ImageBackground
             source={{ uri: img }}
-            style={{ flex: 1, justifyContent: 'space-between', height:'100%' }}
+            style={{ flex: 1, justifyContent: 'space-between', height: '100%' }}
           >
             <LinearGradient
               style={{

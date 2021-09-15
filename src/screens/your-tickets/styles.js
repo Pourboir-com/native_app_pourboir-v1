@@ -23,8 +23,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: '70%',
   },
+  yearText: {
+    fontFamily: 'ProximaNovaBold',
+    fontSize: 24,
+  },
   monthTxt: {
-    paddingBottom: 20,
+    marginTop: 5,
+    marginBottom: 20,
     fontFamily: 'ProximaNovaBold',
     fontSize: 24,
   },

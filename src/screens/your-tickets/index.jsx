@@ -4,8 +4,7 @@ import {
   ImageBackground,
   Text,
   View,
-  FlatList,
-  RefreshControl,
+  ScrollView,
   ActivityIndicator,
 } from 'react-native';
 import GlobalHeader from '../../components/GlobalHeader';
@@ -70,36 +69,45 @@ const YourTickets = ({ navigation }) => {
       </View>
       <View
         style={{
-          marginTop: 40,
+          marginVertical: 40,
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
         <Text style={styles.text}>{i18n.t('collect_tickets')}</Text>
       </View>
-      {ticketDataLoading ? (
-        <View style={{ marginTop: 50 }}>
-          <ActivityIndicator size={50} color="#EBC11B" />
-        </View>
-      ) : (
-        (Object.keys(ticketData?.data) || []).map(year => {
-          return (
-            <>
-              <Text>{year}</Text>
-              {(Object.keys(ticketData?.data[year]) || []).map(month => (
-                <>
-                  <Text>{month}</Text>
-                  {get(ticketData, `data.${year}.${month}`, []).map(item => (
-                    <>
-                      <Text>{item.token}</Text>
-                    </>
-                  ))}
-                </>
-              ))}
-            </>
-          );
-        })
-      )}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        bounces={false}
+        contentContainerStyle={[{ alignItems: 'center' }]}
+      >
+        {ticketDataLoading ? (
+          <View style={{ marginTop: 50 }}>
+            <ActivityIndicator size={50} color="#EBC11B" />
+          </View>
+        ) : (
+          (Object.keys(ticketData?.data) || []).map(year => {
+            return (
+              <>
+                <Text style={styles.yearText}>{year}</Text>
+                {(Object.keys(ticketData?.data[year]) || []).map(month => (
+                  <View style={{ alignItems: 'center' }}>
+                    <Text style={styles.monthTxt}>{month}</Text>
+                    {get(ticketData, `data.${year}.${month}`, []).map(item => (
+                      <Text style={styles.lottery}>
+                        {pad(item?.token, 8, '0').replace(
+                          /(\d{4})(\d{4})/,
+                          '$1-$2',
+                        )}
+                      </Text>
+                    ))}
+                  </View>
+                ))}
+              </>
+            );
+          })
+        )}
+      </ScrollView>
     </View>
   );
 };

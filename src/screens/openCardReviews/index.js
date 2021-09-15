@@ -503,12 +503,12 @@ const ReviewDetails = ({ navigation, route }) => {
         onScroll={e => {
           scrollY.setValue(e.nativeEvent.contentOffset.y);
         }}
-        style={{marginTop: -30}}
+        style={{marginTop: -55}}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        <View style={{marginHorizontal: 24, marginTop: 50 }}>
+        <View style={{marginHorizontal: 24, marginTop: 75 }}>
           <View
             style={{
               flexDirection: 'row',

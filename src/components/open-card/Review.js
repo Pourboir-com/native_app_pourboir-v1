@@ -25,6 +25,7 @@ const Review = ({
     CREATE_REVIEW,
   );
   const [reviewSuccess, setReviewSuccess] = useState(false);
+  const [token, setToken] = useState(0);
 
   const confirmClick = async () => {
     await createRestaurantReview(
@@ -38,6 +39,7 @@ const Review = ({
         onSuccess: res => {
           reviewRefetch();
           setLeaveRevModal(false);
+          setToken(res?.data?.data?.token || 0);
           setReviewSuccess(true);
         },
       },
@@ -103,7 +105,7 @@ const Review = ({
         <CheckInModal
           isVisible={reviewSuccess}
           handleModalClose={() => setReviewSuccess(false)}
-          LotteryNumber={2}
+          LotteryNumber={token}
           heading={'thank_review'}
           subText={'won_ticket'}
         />

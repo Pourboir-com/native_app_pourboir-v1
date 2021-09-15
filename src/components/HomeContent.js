@@ -270,6 +270,7 @@ export default function HomeScreenContent({
                         itemData?.item._id || itemData?.item?.restaurant_id
                       }
                       geometry={itemData?.item?.geometry?.location}
+                      refetchRestaurant={refetchRestaurant}
                     />
                     // </View>
                   );

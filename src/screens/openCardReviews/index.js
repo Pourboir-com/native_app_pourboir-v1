@@ -90,6 +90,7 @@ const ReviewDetails = ({ navigation, route }) => {
   const [Refferedloading, setRefferedLoading] = useState(false);
   const [Userloading, setUserLoading] = useState(false);
   const [cellPhone, setCellPhone] = useState('');
+  const [token, setToken] = useState(0);
   const [siretNumber, setSiretNumber] = useState(parseInt());
   const [termsChecked, setTermsChecked] = useState(false);
   const [approvalModal, setApprovalModal] = useState(false);
@@ -114,6 +115,7 @@ const ReviewDetails = ({ navigation, route }) => {
     our_rating,
     restaurant_id,
     geometry,
+    refetchRestaurant,
   } = route?.params || {};
 
   const refRBSheet = useRef();
@@ -247,11 +249,11 @@ const ReviewDetails = ({ navigation, route }) => {
         {
           place: restaurant,
           user_id: state.userDetails.user_id,
-          token: '2123',
         },
         {
           onSuccess: res => {
             setcheckInModal(true);
+            setToken(res?.data?.token || 0);
           },
           onError: e => {
             alert(e.response?.data?.message);
@@ -360,6 +362,7 @@ const ReviewDetails = ({ navigation, route }) => {
       await AddFavorite(newFavorite, {
         onSuccess: async () => {
           await refetchFavorites();
+          refetchRestaurant();
         },
       });
     } else {
@@ -417,7 +420,7 @@ const ReviewDetails = ({ navigation, route }) => {
       />
       <Animated.View
         style={{
-          // transform: [{ translateY: translateY }],
+          transform: [{ translateY: translateY }],
           elevation: 0,
           zIndex: 9,
         }}
@@ -500,11 +503,12 @@ const ReviewDetails = ({ navigation, route }) => {
         onScroll={e => {
           scrollY.setValue(e.nativeEvent.contentOffset.y);
         }}
-        scrollEventThrottle={1}
+        style={{marginTop: -30}}
+        scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        <View style={{marginHorizontal: 24, marginTop: 20 }}>
+        <View style={{marginHorizontal: 24, marginTop: 50 }}>
           <View
             style={{
               flexDirection: 'row',
@@ -954,7 +958,7 @@ const ReviewDetails = ({ navigation, route }) => {
         <CheckInModal
           isVisible={checkInModal}
           handleModalClose={() => setcheckInModal(false)}
-          LotteryNumber={2}
+          LotteryNumber={token}
           heading={'thank_here'}
           subText={'confirm_here'}
         />
@@ -1085,7 +1089,6 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
     overflow: 'hidden',
     position: 'relative',
-    // backgroundColor:'red'
     // top: 0,
     // left: 0,
     // right: 0,

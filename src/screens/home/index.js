@@ -6,19 +6,18 @@ import { GET_RESTAURANT, GET_FAVORITE_RESTAURANT } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import { useQuery } from 'react-query';
 import Context from '../../contextApi/context';
-import * as actionTypes from '../../contextApi/actionTypes';
+// import * as actionTypes from '../../contextApi/actionTypes';
 import { isSearch } from '../../util';
 // import * as FacebookAds from 'expo-ads-facebook';
 import * as Location from 'expo-location';
 import AdModal from '../../components/modals/AdModal';
-import { RefreshControl, ScrollView } from 'react-native';
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
   const [searchEnter, setsearchEnter] = useState('');
   const [saveLocation, setSaveLocation] = useState('');
   // const [nextPageToken, setnextPageToken] = useState();
-  const { state, dispatch } = useContext(Context);
-  const { restaurantsDetails: data } = state;
+  const { state } = useContext(Context);
+  // const { restaurantsDetails: data } = state;
   const [adModalVisible, setAdModalVisible] = useState(false);
 
   useEffect(() => {
@@ -72,14 +71,13 @@ const HomeScreen = props => {
     {
       enabled: saveLocation,
       ...reactQueryConfig,
-      onSuccess: res => {
-        // console.log(res?.restaurants?.results);
-
-        dispatch({
-          type: actionTypes.RESTAURANTS_DETAILS,
-          payload: res?.restaurants?.results || [],
-        });
-      },
+      // onSuccess: res => {
+      // console.log(res?.restaurants?.results);
+      // dispatch({
+      //   type: actionTypes.RESTAURANTS_DETAILS,
+      //   payload: res?.restaurants?.results || [],
+      // });
+      // },
     },
   );
 
@@ -118,46 +116,55 @@ const HomeScreen = props => {
         saveLocation={saveLocation}
         refetchRestaurant={refetchRestaurant}
         setsearchEnter={setsearchEnter}
+        Data={restaurantData?.restaurants?.results || []}
         // nextPageToken={nextPageToken}
-        Data={data}
       >
         <StatusBar translucent={true} style="dark" />
         <HomeScreenContent
           restaurantLoading={restaurantLoading}
           searchVal={searchVal}
-          refetchRestaurant={refetchRestaurant}
+          refetchRestaurant={() => {
+            refetchUserFavRestaurant();
+            refetchFavRestaurant();
+          }}
           resIsFetching={resIsFetching}
           saveLocation={saveLocation}
           searchEnter={searchEnter}
-          title='around_you'
-          searchTitle='result_distance'
-          Data={data}
+          title="around_you"
+          searchTitle="result_distance"
+          Data={restaurantData?.restaurants?.results || []}
           route={props?.route}
         />
-        {/* <HomeScreenContent
+        <HomeScreenContent
           restaurantLoading={userFavRestaurantLoading}
           searchVal={searchVal}
-          refetchRestaurant={refetchUserFavRestaurant}
+          refetchRestaurant={() => {
+            refetchUserFavRestaurant();
+            refetchFavRestaurant();
+          }}
           resIsFetching={userFavResIsFetching}
           saveLocation={saveLocation}
           searchEnter={searchEnter}
           Data={userFavRestaurantData?.data || []}
           route={props?.route}
           title="fav_restaurant"
-          searchTitle='fav_restaurant'
+          searchTitle="fav_restaurant"
         />
         <HomeScreenContent
           restaurantLoading={favRestaurantLoading}
           searchVal={searchVal}
-          refetchRestaurant={refetchFavRestaurant}
+          refetchRestaurant={() => {
+            refetchUserFavRestaurant();
+            refetchFavRestaurant();
+          }}
           resIsFetching={favResIsFetching}
           saveLocation={saveLocation}
           searchEnter={searchEnter}
           Data={favRestaurantData?.data || []}
           route={props?.route}
           title="popular_restaurant"
-          searchTitle='popular_restaurant'
-        /> */}
+          searchTitle="popular_restaurant"
+        />
       </Header>
       {adModalVisible && (
         <AdModal

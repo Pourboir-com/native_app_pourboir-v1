@@ -95,10 +95,12 @@ const Review = ({
         <FlatList
           data={reviewData?.data || []}
           renderItem={({ item }) => (
-            <View>
+            <View style={{marginRight: 7, marginBottom: 10, marginTop: 5}}>
+              <Text>
               {item.comment && (
                 <ReviewSlider rating={+item.rating} item={item} />
               )}
+              </Text>
             </View>
           )}
           horizontal

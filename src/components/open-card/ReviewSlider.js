@@ -78,11 +78,9 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 12,
     paddingBottom: 16,
-    marginHorizontal: 5,
     elevation: 1,
     width: 260,
     height: 150,
-    marginVertical: 5,
   },
   image: {
     justifyContent: 'flex-end',

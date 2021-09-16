@@ -33,6 +33,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
   //   }, []);
   const nextSection = () => {
     if (section === 5) {
+      setSection(0);
       setTourModal(false);
     } else {
       setSection(section + 1);
@@ -48,8 +49,8 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
     // alignItems: 'center',
     flexDirection: 'column',
     position: 'absolute',
-    top: Platform.OS === 'ios' ? 180 : '18%',
-    left: Platform.OS === 'ios' ? percentWidth(18) : '18%',
+    top: Platform.OS === 'ios' ? 180 : '17.2%',
+    left: Platform.OS === 'ios' ? percentWidth(18) : '15.5%',
     width: '70%',
   };
   return (
@@ -82,36 +83,48 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
         }}
       >
         {section == 1 ? (
-          <View style={styles.tour1_container}>
-            <View
+          <>
+            <Image
+              source={require('../../assets/images/gear.png')}
               style={{
-                width: '70%',
-                marginTop: Platform.OS === 'ios' ? percentHeight(53) : -25,
+                width: 20,
+                height: 20,
+                position: 'absolute',
+                top: 70,
+                right: 30,
               }}
-            >
-              <Text
+            />
+            <View style={styles.tour1_container}>
+              <View
                 style={{
-                  fontFamily: 'ProximaNovaBold',
-                  color: '#fff',
-                  fontSize: 17,
+                  width: '70%',
+                  marginTop: Platform.OS === 'ios' ? percentHeight(53) : -25,
                 }}
               >
-                {i18n.t('tour_section1')}
-              </Text>
+                <Text
+                  style={{
+                    fontFamily: 'ProximaNovaBold',
+                    color: '#fff',
+                    fontSize: 17,
+                  }}
+                >
+                  {i18n.t('tour_section1')}
+                </Text>
+              </View>
+              <View
+                style={{
+                  width: '30%',
+                  marginLeft: Platform.OS === 'ios' ? 25 : 14,
+                  marginTop: Platform.OS === 'ios' ? percentHeight(53) : -25,
+                }}
+              >
+                <Image
+                  source={require('../../assets/images/up-arrow-curve.png')}
+                  style={{ width: 80, height: 80, resizeMode: 'contain' }}
+                />
+              </View>
             </View>
-            <View
-              style={{
-                width: '30%',
-                marginLeft: Platform.OS === 'ios' ? 25 : 14,
-                marginTop: Platform.OS === 'ios' ? percentHeight(53) : -25,
-              }}
-            >
-              <Image
-                source={require('../../assets/images/up-arrow-curve.png')}
-                style={{ width: 80, height: 80, resizeMode: 'contain' }}
-              />
-            </View>
-          </View>
+          </>
         ) : section == 2 ? (
           <View style={styles.tour2_container}>
             <View style={{ width: '70%', marginTop: 5 }}>
@@ -127,7 +140,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
             </View>
             <View
               style={{
-                top: Platform.OS === 'ios' ? 49 : '80%',
+                top: Platform.OS === 'ios' ? 49 : '78%',
                 left: Platform.OS === 'ios' ? percentWidth(50) : '50.2%',
                 position: 'absolute',
               }}
@@ -327,7 +340,7 @@ const styles = StyleSheet.create({
     width: 154,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 15,
+    paddingVertical: 11,
     marginTop: 10,
     zIndex: 111111,
   },
@@ -365,7 +378,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'column',
     position: 'absolute',
-    top: 284,
+    top: Platform.OS === 'ios' ? 284 : '30.6%',
     left: 60,
     width: '60%',
   },

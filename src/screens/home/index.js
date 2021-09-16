@@ -40,13 +40,13 @@ const HomeScreen = props => {
     })();
   }, []);
 
-  // useEffect(() => {
-  //   if (props?.route?.params?.ad) {
-  //     setTimeout(() => {
-  //       setAdModalVisible(true);
-  //     }, 300);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (props?.route?.params?.ad) {
+      setTimeout(() => {
+        setAdModalVisible(true);
+      }, 300);
+    }
+  }, []);
 
   useEffect(() => {
     if (!searchVal) {

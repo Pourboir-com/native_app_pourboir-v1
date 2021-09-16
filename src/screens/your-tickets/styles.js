@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
   },
   lottery: {
     width: 220,
-    backgroundColor: '#fcf4e4',
     borderRadius: 10,
     fontSize: 20,
     paddingVertical: 10,
@@ -23,13 +22,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: '70%',
   },
-  yearText: {
-    fontFamily: 'ProximaNovaBold',
-    fontSize: 24,
-  },
-  monthTxt: {
+  heading: {
     marginTop: 5,
-    marginBottom: 20,
+    marginVertical: 15,
     fontFamily: 'ProximaNovaBold',
     fontSize: 24,
   },

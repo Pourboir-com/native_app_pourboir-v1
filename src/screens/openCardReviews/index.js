@@ -337,8 +337,7 @@ const ReviewDetails = ({ navigation, route }) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message:
-          'React Native | A framework for building native apps using React',
+        message: name,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -398,7 +397,7 @@ const ReviewDetails = ({ navigation, route }) => {
         backgroundColor={'transparent'}
         position="absolute"
         navigation={navigation}
-        settingBtn={true}
+        settingBtn={section != 1 ? true :  false}
         settingBtnFunc={() =>
           RestaurantDetails?.data?.manager?.user_id ===
             state.userDetails.user_id &&
@@ -536,27 +535,29 @@ const ReviewDetails = ({ navigation, route }) => {
                 {i18n.t('fav')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              disabled={favoritesLoading || isFavoriteLoading}
-              style={{
-                backgroundColor: checkFavorite() ? '#E6E6E6' : Colors.yellow,
-                paddingVertical: Platform.OS === 'ios' ? 20 : 14,
-                width: 156,
-                borderRadius: 12,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={handleAddFavorite}
-            >
-              {favLoading ? (
-                <ActivityIndicator size={23} color="#EBC11B" />
-              ) : (
-                <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
-                  {checkFavorite() ? i18n.t('added') : i18n.t('add_fav')}
-                </Text>
-              )}
-            </TouchableOpacity>
+            {section != 2 && (
+              <TouchableOpacity
+                activeOpacity={0.6}
+                disabled={favoritesLoading || isFavoriteLoading}
+                style={{
+                  backgroundColor: checkFavorite() ? '#E6E6E6' : Colors.yellow,
+                  paddingVertical: Platform.OS === 'ios' ? 20 : 14,
+                  width: 156,
+                  borderRadius: 12,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={handleAddFavorite}
+              >
+                {favLoading ? (
+                  <ActivityIndicator size={23} color="#EBC11B" />
+                ) : (
+                  <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
+                    {checkFavorite() ? i18n.t('added') : i18n.t('add_fav')}
+                  </Text>
+                )}
+              </TouchableOpacity>
+            )}
           </View>
         </View>
         <RBSheet
@@ -880,18 +881,22 @@ const ReviewDetails = ({ navigation, route }) => {
         style={[
           styles.viewLastBtn,
           { marginBottom: 10 },
-          !RestaurantDetails?.data?.menu_url && { backgroundColor: '#f0f0f0' },
+          !RestaurantDetails?.data?.menu_url && section != 5
+            ? { backgroundColor: '#f0f0f0' }
+            : { backgroundColor: 'transparent' },
         ]}
       >
-        <Text
-          style={{
-            fontFamily: 'ProximaNova',
-            fontSize: 16,
-            color: Colors.fontDark,
-          }}
-        >
-          {i18n.t('see_the_menu')}
-        </Text>
+        {section != 5 && (
+          <Text
+            style={{
+              fontFamily: 'ProximaNova',
+              fontSize: 16,
+              color: Colors.fontDark,
+            }}
+          >
+            {i18n.t('see_the_menu')}
+          </Text>
+        )}
       </TouchableOpacity>
 
       {/* <TouchableOpacity

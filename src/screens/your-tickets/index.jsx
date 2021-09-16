@@ -15,6 +15,7 @@ import Context from '../../contextApi/context';
 import { useQuery } from 'react-query';
 import { reactQueryConfig } from '../../constants';
 import get from 'lodash/get';
+import moment from 'moment';
 
 const YourTickets = ({ navigation }) => {
   const { state } = useContext(Context);
@@ -36,6 +37,11 @@ const YourTickets = ({ navigation }) => {
       },
     },
   );
+  const checkDate = ticketDate => {
+    let selectedDate = ticketDate;
+    let months = moment().diff(selectedDate, 'months');
+    return months;
+  };
 
   function pad(n, width, z) {
     z = z || '0';
@@ -89,24 +95,34 @@ const YourTickets = ({ navigation }) => {
           <>
             {Object.keys(ticketData?.data).map(type => (
               <React.Fragment>
-                <Text>{type}</Text>
+                <Text style={styles.heading}>{type}</Text>
                 {Object.keys(get(ticketData, `data.${type}`, {})).map(year => {
                   return (
                     <>
-                      <Text style={styles.yearText}>{year}</Text>
+                      <Text style={styles.heading}>{year}</Text>
                       {(
                         Object.keys(
                           get(ticketData, `data.${type}.${year}`, {}),
                         ) || []
                       ).map(month => (
                         <View style={{ alignItems: 'center' }}>
-                          <Text style={styles.monthTxt}>{month}</Text>
+                          <Text style={styles.heading}>{month}</Text>
                           {get(
                             ticketData,
                             `data.${type}.${year}.${month}`,
                             [],
                           ).map(item => (
-                            <Text style={styles.lottery}>
+                            <Text
+                              style={[
+                                styles.lottery,
+                                checkDate(item?.createdAt) > 1
+                                  ? {
+                                      backgroundColor: '#E6E6E6',
+                                      color: 'black',
+                                    }
+                                  : { backgroundColor: '#fcf4e4' },
+                              ]}
+                            >
                               {pad(item?.token, 8, '0').replace(
                                 /(\d{4})(\d{4})/,
                                 '$1-$2',

@@ -93,9 +93,7 @@ const HomeScreen = props => {
       { user_id: state.userDetails.user_id, location: saveLocation },
     ],
     GET_FAVORITE_RESTAURANT,
-    {
-      ...reactQueryConfig,
-    },
+    { enabled: saveLocation, ...reactQueryConfig },
   );
   const {
     data: favRestaurantData,
@@ -105,9 +103,7 @@ const HomeScreen = props => {
   } = useQuery(
     ['GET_FAVORITE_RESTAURANT', { popular: true, location: saveLocation }],
     GET_FAVORITE_RESTAURANT,
-    {
-      ...reactQueryConfig,
-    },
+    { enabled: saveLocation, ...reactQueryConfig },
   );
   return (
     <>

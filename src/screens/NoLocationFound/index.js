@@ -31,7 +31,7 @@ const NoLocation = ({ navigation, route }) => {
     let locationStats = await Location.requestForegroundPermissionsAsync();
     if (locationStats.status !== 'granted') {
       if (Platform.OS === 'ios') {
-        Linking.openURL('app-settings:');
+        validateNavigation();
       }
       return;
     }

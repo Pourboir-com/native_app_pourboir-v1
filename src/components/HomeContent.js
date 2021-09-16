@@ -26,6 +26,7 @@ import { useMutation } from 'react-query';
 import Context from '../contextApi/context';
 import * as actionTypes from '../contextApi/actionTypes';
 import Spinner from 'react-native-loading-spinner-overlay';
+import NoFavRestaurant from './no-fav-card';
 
 export default function HomeScreenContent({
   restaurantLoading,
@@ -277,6 +278,10 @@ export default function HomeScreenContent({
                 }
               }}
             />
+                    <View style={{marginLeft:15}}>
+                    <NoFavRestaurant />
+                    </View>
+
           </View>
         </ScrollView>
       )}

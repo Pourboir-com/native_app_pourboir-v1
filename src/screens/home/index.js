@@ -11,6 +11,7 @@ import { isSearch } from '../../util';
 // import * as FacebookAds from 'expo-ads-facebook';
 import * as Location from 'expo-location';
 import AdModal from '../../components/modals/AdModal';
+import NoFavRestaurant from '../../components/no-fav-card';
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
   const [searchEnter, setsearchEnter] = useState('');
@@ -135,7 +136,7 @@ const HomeScreen = props => {
           Data={restaurantData?.restaurants?.results || []}
           route={props?.route}
         />
-        <HomeScreenContent
+        {/* <HomeScreenContent
           restaurantLoading={userFavRestaurantLoading}
           searchVal={searchVal}
           refetchRestaurant={() => {
@@ -164,7 +165,7 @@ const HomeScreen = props => {
           route={props?.route}
           title="popular_restaurant"
           searchTitle="popular_restaurant"
-        />
+        /> */}
       </Header>
       {adModalVisible && (
         <AdModal

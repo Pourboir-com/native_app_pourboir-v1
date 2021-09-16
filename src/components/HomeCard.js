@@ -27,7 +27,7 @@ const HomeCard = ({
   our_rating,
   restaurant_id,
   geometry,
-  refetchRestaurant
+  refetchRestaurant,
 }) => {
   const [starSelect, setstarSelect] = useState(rating);
   const obj = [1, 2, 3, 4, 5];
@@ -123,8 +123,8 @@ const HomeCard = ({
                         v <= starSelect
                           ? 'filled'
                           : v === starSelect + 0.5
-                            ? 'half'
-                            : 'empty'
+                          ? 'half'
+                          : 'empty'
                       }
                       notRatedStarColor="rgba(255,255,255, 0.6)"
                     />

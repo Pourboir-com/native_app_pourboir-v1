@@ -97,12 +97,13 @@ const ReviewDetails = ({ navigation, route }) => {
   const [receivedModal, setReceivedModal] = useState(false);
   const [tourModal, setTourModal] = useState(false);
   const [AddFavorite, { isLoading: favLoading }] = useMutation(ADD_FAVORITE);
+  const [section, setSection] = useState(1);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setTourModal(true);
-  //   }, 2000);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setTourModal(true);
+    }, 2000);
+  }, []);
 
   const {
     img,
@@ -503,12 +504,12 @@ const ReviewDetails = ({ navigation, route }) => {
         onScroll={e => {
           scrollY.setValue(e.nativeEvent.contentOffset.y);
         }}
-        style={{marginTop: -55}}
+        style={{ marginTop: -55 }}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        <View style={{marginHorizontal: 24, marginTop: 75 }}>
+        <View style={{ marginHorizontal: 24, marginTop: 75 }}>
           <View
             style={{
               flexDirection: 'row',
@@ -614,7 +615,8 @@ const ReviewDetails = ({ navigation, route }) => {
           style={{
             marginBottom: 20,
             flexDirection: 'row',
-            justifyContent: 'space-evenly',
+            justifyContent:
+              tourModal && section == 3 ? 'space-between' : 'space-evenly',
             marginHorizontal: 8,
           }}
         >
@@ -644,33 +646,35 @@ const ReviewDetails = ({ navigation, route }) => {
               }}
             >
               {/* {vicinity || name} */}
-              Address
+              {i18n.t('address')}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            onPress={handleCheckIn}
-            style={[styles.viewItem, { zIndex: 9999999 }]}
-          >
-            <View style={styles.viewIcon}>
-              <Feather name="check-square" size={26} color={Colors.yellow} />
-            </View>
-            <Text
-              ellipsizeMode="tail"
-              numberOfLines={2}
-              style={{
-                fontFamily: 'ProximaNova',
-                color: Colors.fontDark,
-                fontSize: 12,
-                width: '70%',
-                lineHeight: 17,
-                textAlign: 'center',
-              }}
+          {!tourModal || section !== 3 ? (
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={handleCheckIn}
+              style={[styles.viewItem, { zIndex: 9999999 }]}
             >
-              {/* {vicinity || name} */}
-              Check-in
-            </Text>
-          </TouchableOpacity>
+              <View style={styles.viewIcon}>
+                <Feather name="check-square" size={26} color={Colors.yellow} />
+              </View>
+              <Text
+                ellipsizeMode="tail"
+                numberOfLines={2}
+                style={{
+                  fontFamily: 'ProximaNova',
+                  color: Colors.fontDark,
+                  fontSize: 12,
+                  width: '70%',
+                  lineHeight: 17,
+                  textAlign: 'center',
+                }}
+              >
+                {/* {vicinity || name} */}
+                {i18n.t('check_in')}
+              </Text>
+            </TouchableOpacity>
+          ) : null}
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={() =>
@@ -699,7 +703,7 @@ const ReviewDetails = ({ navigation, route }) => {
                 ? i18n.t('please_wait')
                 : RestaurantDetails?.data?.international_phone_number ||
                   i18n.t('none')} */}
-              Telephone
+              {i18n.t('telephone')}
             </Text>
 
             {/* <View
@@ -729,6 +733,8 @@ const ReviewDetails = ({ navigation, route }) => {
               reviewRefetch={reviewRefetch}
               restaurant={restaurant}
               distance={distance}
+              tourModal={tourModal}
+              section={section}
               handleOpenModal={() => setnotCheckInModal(true)}
             />
           </View>
@@ -983,7 +989,12 @@ const ReviewDetails = ({ navigation, route }) => {
         receivedModal={receivedModal}
         setReceivedModal={setReceivedModal}
       />
-      <TourModal tourModal={tourModal} setTourModal={setTourModal} />
+      <TourModal
+        tourModal={tourModal}
+        setTourModal={setTourModal}
+        section={section}
+        setSection={setSection}
+      />
     </View>
   );
 };

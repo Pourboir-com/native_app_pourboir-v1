@@ -308,6 +308,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
               top: 80,
             }}
             onPress={() => {
+              setSection(0);
               setTourModal(false);
             }}
           >

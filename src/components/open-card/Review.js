@@ -8,7 +8,7 @@ import { Entypo } from '@expo/vector-icons';
 import { useMutation } from 'react-query';
 import { CREATE_REVIEW } from '../../queries';
 import Context from '../../contextApi/context';
-import CheckInModal from '../../components/modals/ThanksRatingModal';
+import CheckInModal from '../modals/ThanksRatingModal';
 
 const Review = ({
   reviewData,
@@ -17,7 +17,7 @@ const Review = ({
   distance,
   handleOpenModal,
   tourModal,
-  section
+  section,
 }) => {
   const [leaveRevModal, setLeaveRevModal] = useState(false);
   const { state } = useContext(Context);
@@ -70,36 +70,34 @@ const Review = ({
         <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
           Review
         </Text>
-        {
-          !tourModal || section !== 4 ? (
-            <TouchableOpacity
-          disabled={createLoading}
-          onPress={handleAddClick}
-          activeOpacity={0.5}
-          style={{
-            marginLeft: 15,
-            backgroundColor: '#FCDF6F',
-            padding: 2,
-            borderRadius: 100,
-          }}
-        >
-          <View>
-            <Entypo name="plus" size={22} color="white" />
-          </View>
-        </TouchableOpacity>
-          ) : null
-        }
+        {!tourModal || section !== 4 ? (
+          <TouchableOpacity
+            disabled={createLoading}
+            onPress={handleAddClick}
+            activeOpacity={0.5}
+            style={{
+              marginLeft: 15,
+              backgroundColor: '#FCDF6F',
+              padding: 2,
+              borderRadius: 100,
+            }}
+          >
+            <View>
+              <Entypo name="plus" size={22} color="white" />
+            </View>
+          </TouchableOpacity>
+        ) : null}
       </View>
 
       <View style={{ marginHorizontal: 15, marginVertical: 10 }}>
         <FlatList
           data={reviewData?.data || []}
           renderItem={({ item }) => (
-            <View style={{marginRight: 7, marginBottom: 10, marginTop: 5}}>
+            <View style={{ marginRight: 7, marginBottom: 10, marginTop: 5 }}>
               <Text>
-              {item.comment && (
-                <ReviewSlider rating={+item.rating} item={item} />
-              )}
+                {item.comment && (
+                  <ReviewSlider rating={+item.rating} item={item} />
+                )}
               </Text>
             </View>
           )}

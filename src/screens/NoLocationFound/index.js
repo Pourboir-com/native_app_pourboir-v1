@@ -31,11 +31,11 @@ const NoLocation = ({ navigation, route }) => {
     let locationStats = await Location.requestForegroundPermissionsAsync();
     if (locationStats.status !== 'granted') {
       if (Platform.OS === 'ios') {
-        validateNavigation();
+        await validateNavigation();
       }
       return;
     }
-    const location = Location.getCurrentPositionAsync({
+    Location.getCurrentPositionAsync({
       accuracy: Location.Accuracy.Lowest,
     })
       .then(pos => {
@@ -51,11 +51,11 @@ const NoLocation = ({ navigation, route }) => {
               currency: formattedCurrency || '',
             }),
           );
-          validateNavigation();
+          await validateNavigation();
         });
       })
-      .catch(() => {
-        validateNavigation();
+      .catch(async () => {
+        await validateNavigation();
       });
   };
 

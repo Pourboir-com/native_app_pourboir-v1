@@ -199,7 +199,7 @@ const PublicProfile = ({ navigation }) => {
                 >
                   {i18n.t('no_pub')}
                 </Text>
-                <Text style={[styles.publication_text, { marginTop: 5, }]}>
+                <Text style={[styles.publication_text, { marginTop: 5 }]}>
                   {i18n.t('no_pub_yet')}
                 </Text>
               </View>
@@ -228,14 +228,19 @@ const PublicProfile = ({ navigation }) => {
             return (
               <TouchableOpacity
                 key={i}
-                onPress={
-                  v.nav ? () => navigation.navigate(v.nav) : v.func && v.func
-                }
+                onPress={() => {
+                  v.nav ? navigation.navigate(v.nav) : v.func() && v.func();
+                  refRBSheet.current.close();
+                }}
                 activeOpacity={0.3}
                 style={styles.sheet_elements}
               >
                 <Text style={styles.sheetTxt}>{v.element}</Text>
-                <AntDesign name="right" size={Platform.OS == 'ios' ? 20 : 18} color="#485460" />
+                <AntDesign
+                  name="right"
+                  size={Platform.OS == 'ios' ? 20 : 18}
+                  color="#485460"
+                />
               </TouchableOpacity>
             );
           })}

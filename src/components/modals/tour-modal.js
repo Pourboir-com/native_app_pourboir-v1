@@ -9,15 +9,17 @@ import {
   TouchableHighlight,
   SafeAreaView,
   TouchableNativeFeedback,
+  Dimensions,
 } from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Modal from 'react-native-modal';
 import { Colors } from '../../constants/Theme';
 import { AntDesign, Feather, Entypo } from '@expo/vector-icons';
 import CommonButton from '../common-button';
 import i18n from '../../li8n';
-
 const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
   const [showCross, setShowCross] = useState(true);
+  const statusBarHeight = getStatusBarHeight();
   //   useEffect(() => {
   //     //  setSection(section == 2 ? setTourModal(false) && clearInterval() : setSection(section+1))
   //     if (section === 4) {
@@ -37,6 +39,19 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
     }
   };
 
+  const percentMobHeight = percent =>
+    ((Dimensions.get('window').height + statusBarHeight) * percent) / 100;
+  const percentHeight = percent => (statusBarHeight * percent) / 100;
+  const percentWidth = percent =>
+    (Dimensions.get('window').width * percent) / 100;
+  const tour3_container = {
+    // alignItems: 'center',
+    flexDirection: 'column',
+    position: 'absolute',
+    top: Platform.OS === 'ios' ? 180 : '18%',
+    left: Platform.OS === 'ios' ? percentWidth(18) : '18%',
+    width: '70%',
+  };
   return (
     <Modal
       isVisible={tourModal}
@@ -68,7 +83,12 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
       >
         {section == 1 ? (
           <View style={styles.tour1_container}>
-            <View style={{ width: '70%', marginTop: 5 }}>
+            <View
+              style={{
+                width: '70%',
+                marginTop: Platform.OS === 'ios' ? percentHeight(53) : -25,
+              }}
+            >
               <Text
                 style={{
                   fontFamily: 'ProximaNovaBold',
@@ -83,7 +103,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
               style={{
                 width: '30%',
                 marginLeft: Platform.OS === 'ios' ? 25 : 14,
-                marginTop: Platform.OS === 'ios' ? 20 : -25,
+                marginTop: Platform.OS === 'ios' ? percentHeight(53) : -25,
               }}
             >
               <Image
@@ -108,7 +128,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
             <View
               style={{
                 top: Platform.OS === 'ios' ? 49 : '80%',
-                left: Platform.OS === 'ios' ? '57%' : '50.2%',
+                left: Platform.OS === 'ios' ? percentWidth(50) : '50.2%',
                 position: 'absolute',
               }}
             >
@@ -133,8 +153,8 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
             </View>
           </View>
         ) : section == 3 ? (
-          <View style={styles.tour3_container}>
-            <View style={{ width: '100%'}}>
+          <View style={tour3_container}>
+            <View style={{ width: '100%' }}>
               <Text
                 style={{
                   fontFamily: 'ProximaNovaBold',
@@ -158,7 +178,9 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
                 }}
               />
             </View>
-            <View style={{marginTop:80, alignItems:'center', marginLeft:10}}>
+            <View
+              style={{ marginTop: 80, alignItems: 'center', marginLeft: 10 }}
+            >
               <View activeOpacity={0} style={[styles.viewItem]}>
                 <View style={styles.viewIcon}>
                   <Feather
@@ -186,27 +208,27 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
           </View>
         ) : section === 4 ? (
           <View style={styles.tour4_container}>
-            <View style={{ width: '100%', marginTop: 5 }}>
-              <Text
-                style={{
-                  fontFamily: 'ProximaNovaBold',
-                  color: '#fff',
-                  fontSize: 17,
-                }}
-              >
-                {i18n.t('tour_section4')}
-              </Text>
-            </View>
             <View style={{ marginTop: -10, position: 'relative' }}>
+              <View style={{ width: '100%', marginTop: 5 }}>
+                <Text
+                  style={{
+                    fontFamily: 'ProximaNovaBold',
+                    color: '#fff',
+                    fontSize: 17,
+                  }}
+                >
+                  {i18n.t('tour_section4')}
+                </Text>
+              </View>
               <Image
                 source={require('../../assets/images/arrow.png')}
                 style={{
                   width: 100,
                   height: 100,
                   resizeMode: 'contain',
-                  marginTop: 30,
+                  marginTop: 70,
                   position: 'absolute',
-                  left: -25,
+                  left: 90,
                 }}
               />
             </View>
@@ -313,13 +335,7 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNova',
     fontSize: 13,
   },
-  tour3_container: {
-    // alignItems: 'center',
-    flexDirection: 'column',
-    position: 'absolute',
-    top: Platform.OS === 'ios' ? '26%' : '18%',
-    width: '70%',
-  },
+
   viewIcon: {
     width: 30,
     height: 30,
@@ -346,10 +362,11 @@ const styles = StyleSheet.create({
   },
   tour4_container: {
     alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'column',
     position: 'absolute',
-    top: 257,
-    // left: 10,
+    top: 284,
+    left: 60,
     width: '60%',
   },
   tour5_container: {

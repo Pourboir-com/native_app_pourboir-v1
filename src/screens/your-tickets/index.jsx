@@ -86,26 +86,41 @@ const YourTickets = ({ navigation }) => {
             <ActivityIndicator size={50} color="#EBC11B" />
           </View>
         ) : (
-          (Object.keys(ticketData?.data) || []).map(year => {
-            return (
-              <>
-                <Text style={styles.yearText}>{year}</Text>
-                {(Object.keys(ticketData?.data[year]) || []).map(month => (
-                  <View style={{ alignItems: 'center' }}>
-                    <Text style={styles.monthTxt}>{month}</Text>
-                    {get(ticketData, `data.${year}.${month}`, []).map(item => (
-                      <Text style={styles.lottery}>
-                        {pad(item?.token, 8, '0').replace(
-                          /(\d{4})(\d{4})/,
-                          '$1-$2',
-                        )}
-                      </Text>
-                    ))}
-                  </View>
-                ))}
-              </>
-            );
-          })
+          <>
+            {Object.keys(ticketData?.data).map(type => (
+              <React.Fragment>
+                <Text>{type}</Text>
+                {Object.keys(get(ticketData, `data.${type}`, {})).map(year => {
+                  return (
+                    <>
+                      <Text style={styles.yearText}>{year}</Text>
+                      {(
+                        Object.keys(
+                          get(ticketData, `data.${type}.${year}`, {}),
+                        ) || []
+                      ).map(month => (
+                        <View style={{ alignItems: 'center' }}>
+                          <Text style={styles.monthTxt}>{month}</Text>
+                          {get(
+                            ticketData,
+                            `data.${type}.${year}.${month}`,
+                            [],
+                          ).map(item => (
+                            <Text style={styles.lottery}>
+                              {pad(item?.token, 8, '0').replace(
+                                /(\d{4})(\d{4})/,
+                                '$1-$2',
+                              )}
+                            </Text>
+                          ))}
+                        </View>
+                      ))}
+                    </>
+                  );
+                })}
+              </React.Fragment>
+            ))}
+          </>
         )}
       </ScrollView>
     </View>

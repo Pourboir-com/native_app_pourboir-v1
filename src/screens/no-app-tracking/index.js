@@ -37,7 +37,7 @@ const NoAppTracking = ({ navigation, route }) => {
       if (status === 'granted') {
         validateNavigation();
       } else {
-        return Linking.openURL('app-settings:');
+        validateNavigation();
       }
     } else {
       validateNavigation();

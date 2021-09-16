@@ -144,7 +144,11 @@ const HomeCard = ({
             </Text>
             <View style={styles.view2Card}>
               <Text style={[styles.txt2Card, { fontFamily: 'ProximaNova' }]}>
-                {distance ? distance + 'm' : ''}
+                {Number(distance) > 2000
+                  ? Number(distance) / 1000 + 'km'
+                  : distance
+                  ? distance + 'm'
+                  : ''}
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text

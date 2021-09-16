@@ -1,26 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ImageBackground } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Dimensions } from 'react-native';
 import { StyleSheet, View, Platform } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import GlobalHeader from '../../components/GlobalHeader';
-// import { getAsyncStorageValues } from '../../constants';
-// import * as Location from 'expo-location';
 
 const MapScreen = ({ navigation, route }) => {
   const { geometry, name } = route?.params || {};
   const [isMapReady, setIsMapReady] = useState(false);
-  // const [saveLocation, setSaveLocation] = useState({});
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const location = await Location.getCurrentPositionAsync({
-  //       accuracy: Location.Accuracy.Highest,
-  //     });
-  //     setSaveLocation(location.coords);
-  //   })();
-  // }, []);
 
   return (
     <View style={styles.container}>

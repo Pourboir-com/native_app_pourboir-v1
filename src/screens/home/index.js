@@ -88,7 +88,10 @@ const HomeScreen = props => {
     refetch: refetchUserFavRestaurant,
     isFetching: userFavResIsFetching,
   } = useQuery(
-    ['GET_FAVORITE_RESTAURANT', { user_id: state.userDetails.user_id }],
+    [
+      'GET_FAVORITE_RESTAURANT',
+      { user_id: state.userDetails.user_id, location: saveLocation },
+    ],
     GET_FAVORITE_RESTAURANT,
     {
       ...reactQueryConfig,
@@ -100,7 +103,7 @@ const HomeScreen = props => {
     refetch: refetchFavRestaurant,
     isFetching: favResIsFetching,
   } = useQuery(
-    ['GET_FAVORITE_RESTAURANT', { popular: true }],
+    ['GET_FAVORITE_RESTAURANT', { popular: true, location: saveLocation }],
     GET_FAVORITE_RESTAURANT,
     {
       ...reactQueryConfig,

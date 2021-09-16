@@ -186,7 +186,7 @@ const ManagerApprovalModal = ({
                   <Text
                     // onPress={() =>alert('clicked')}
                     style={{
-                      fontSize: Platform.OS === 'ios' ? 15 : 14,
+                      fontSize: Platform.OS === 'ios' ? 15 : 16,
                       color: '#000',
                       fontFamily: 'ProximaNova',
                       flexDirection: 'row',
@@ -195,19 +195,35 @@ const ManagerApprovalModal = ({
                     {' '}
                     {i18n.t('i_accepts')}{' '}
                   </Text>
-                  <TouchableOpacity>
-                    <Text
-                      style={{
-                        color: '#0050A0',
-                        fontSize: Platform.OS === 'ios' ? 15 : 14,
-                        fontFamily: 'ProximaNova',
-                      }}
-                    >
-                      {i18n.t('term_cond')}
-                    </Text>
-                  </TouchableOpacity>
+
+                  {Platform.OS == 'ios' ? (
+                    <TouchableOpacity>
+                      <Text
+                        style={{
+                          color: '#0050A0',
+                          fontSize: Platform.OS === 'ios' ? 15 : 14,
+                          fontFamily: 'ProximaNova',
+                        }}
+                      >
+                        {i18n.t('term_cond')}
+                      </Text>
+                    </TouchableOpacity>
+                  ) : null}
                 </View>
               </View>
+              {Platform.OS == 'android' ? (
+                <TouchableOpacity style={{ marginLeft: 44, marginTop: -5 }}>
+                  <Text
+                    style={{
+                      color: '#0050A0',
+                      fontSize: Platform.OS === 'ios' ? 15 : 16,
+                      fontFamily: 'ProximaNova',
+                    }}
+                  >
+                    {i18n.t('term_cond')}
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
             </View>
 
             <TouchableOpacity

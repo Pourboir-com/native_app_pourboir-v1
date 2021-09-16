@@ -16,9 +16,8 @@ import { AntDesign, Feather, Entypo } from '@expo/vector-icons';
 import CommonButton from '../common-button';
 import i18n from '../../li8n';
 
-const TourModal = ({ tourModal, setTourModal }) => {
+const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
   const [showCross, setShowCross] = useState(true);
-  const [section, setSection] = useState(1);
   //   useEffect(() => {
   //     //  setSection(section == 2 ? setTourModal(false) && clearInterval() : setSection(section+1))
   //     if (section === 4) {
@@ -135,7 +134,7 @@ const TourModal = ({ tourModal, setTourModal }) => {
           </View>
         ) : section == 3 ? (
           <View style={styles.tour3_container}>
-            <View style={{ width: '100%', marginTop: 5 }}>
+            <View style={{ width: '100%'}}>
               <Text
                 style={{
                   fontFamily: 'ProximaNovaBold',
@@ -146,7 +145,7 @@ const TourModal = ({ tourModal, setTourModal }) => {
                 {i18n.t('tour_section3')}
               </Text>
             </View>
-            <View style={{ marginLeft: 14, marginTop: -10 }}>
+            <View style={{ marginLeft: 14, marginTop: 10 }}>
               <Image
                 source={require('../../assets/images/down-arrow-yellow.png')}
                 style={{
@@ -159,7 +158,7 @@ const TourModal = ({ tourModal, setTourModal }) => {
                 }}
               />
             </View>
-            <View>
+            <View style={{marginTop:80, alignItems:'center', marginLeft:10}}>
               <View activeOpacity={0} style={[styles.viewItem]}>
                 <View style={styles.viewIcon}>
                   <Feather
@@ -318,7 +317,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     flexDirection: 'column',
     position: 'absolute',
-    top: Platform.OS === 'ios' ? '27%' : '22%',
+    top: Platform.OS === 'ios' ? '26%' : '18%',
     width: '70%',
   },
   viewIcon: {
@@ -330,7 +329,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   viewItem: {
-    marginTop: 20,
+    marginTop: 50,
     width: 110,
     marginHorizontal: 10,
     height: 55,
@@ -349,7 +348,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     position: 'absolute',
-    top: 170,
+    top: 257,
     // left: 10,
     width: '60%',
   },

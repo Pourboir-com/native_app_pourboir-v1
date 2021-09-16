@@ -16,6 +16,8 @@ const Review = ({
   restaurant,
   distance,
   handleOpenModal,
+  tourModal,
+  section
 }) => {
   const [leaveRevModal, setLeaveRevModal] = useState(false);
   const { state } = useContext(Context);
@@ -68,7 +70,9 @@ const Review = ({
         <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
           Review
         </Text>
-        <TouchableOpacity
+        {
+          !tourModal || section !== 4 ? (
+            <TouchableOpacity
           disabled={createLoading}
           onPress={handleAddClick}
           activeOpacity={0.5}
@@ -83,6 +87,8 @@ const Review = ({
             <Entypo name="plus" size={22} color="white" />
           </View>
         </TouchableOpacity>
+          ) : null
+        }
       </View>
 
       <View style={{ marginHorizontal: 15, marginVertical: 10 }}>

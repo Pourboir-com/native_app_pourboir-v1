@@ -307,4 +307,8 @@ export default {
   confirm_here: 'You have confirmed that you are at this restaurants. Thanks to that you have earned one loterry ticket.',
   thank_review: 'Thanks for your review !',
   won_ticket: 'You have won a ticket for your review and are now part of the monthly lotery.',
+  no_fav_1:"You don't have favorite restaurants yet",
+  no_fav_2:'Add restaurants to your favorites to see them display here',
+  check_in: 'Check-in',
+  telephone: 'Telephone'
 };

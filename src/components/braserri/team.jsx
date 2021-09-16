@@ -69,7 +69,6 @@ const Team = ({ restaurant_id }) => {
       },
       {
         onSuccess: () => {
-          console.log('success');
           if (modalType === 'waiter') {
             refetchWaiterData();
           } else if (modalType === 'cook') {

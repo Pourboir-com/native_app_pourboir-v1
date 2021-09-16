@@ -142,7 +142,6 @@ export default function SplashScreen(props) {
           }
           let location = await locationFunction();
           const token = await checkNotificationPermission();
-          console.log({ location, token, tracking });
           const { locale } = await Localization.getLocalizationAsync();
           if (userInfo?.user_id) {
             await sendNotificationToken({

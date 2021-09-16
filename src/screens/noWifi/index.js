@@ -22,7 +22,7 @@ const NoWiFi = () => {
           onFinish={() => {
             setFontLoaded(true);
           }}
-          onError={() => console.log('ERROR')}
+          onError={() => {}}
         />
       ) : (
         <View style={styles.container}>

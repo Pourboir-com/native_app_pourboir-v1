@@ -30,7 +30,7 @@ export default function App() {
           ProximaNovaSemiBold: require('./src/assets/fonts/ProximaNova/ProximaNova-Semibold.otf'),
         });
       } catch {
-        console.log('App.js Error');
+        // console.log('App.js Error');
       }
     })();
   }, []);

@@ -136,7 +136,7 @@ const HomeScreen = props => {
           Data={restaurantData?.restaurants?.results || []}
           route={props?.route}
         />
-        {/* <HomeScreenContent
+        <HomeScreenContent
           restaurantLoading={userFavRestaurantLoading}
           searchVal={searchVal}
           refetchRestaurant={() => {
@@ -150,6 +150,7 @@ const HomeScreen = props => {
           route={props?.route}
           title="fav_restaurant"
           searchTitle="fav_restaurant"
+          favoriteRes
         />
         <HomeScreenContent
           restaurantLoading={favRestaurantLoading}
@@ -165,7 +166,7 @@ const HomeScreen = props => {
           route={props?.route}
           title="popular_restaurant"
           searchTitle="popular_restaurant"
-        /> */}
+        />
       </Header>
       {adModalVisible && (
         <AdModal

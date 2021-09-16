@@ -38,6 +38,7 @@ export default function HomeScreenContent({
   route,
   title,
   searchTitle,
+  favoriteRes,
 }) {
   const [data, setData] = useState([]);
   const navigation = useNavigation();
@@ -125,13 +126,24 @@ export default function HomeScreenContent({
             <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
-              {searchEnter ? i18n.t('result_distance') : i18n.t(title)}
+              {searchEnter && !favoriteRes
+                ? i18n.t('result_distance')
+                : i18n.t(title)}
             </Text>
-            <Text
-              style={[styles.txt2NoRest, { fontFamily: 'ProximaNovaSemiBold' }]}
-            >
-              {i18n.t('no_restaurant_found')}
-            </Text>
+            {!favoriteRes ? (
+              <Text
+                style={[
+                  styles.txt2NoRest,
+                  { fontFamily: 'ProximaNovaSemiBold' },
+                ]}
+              >
+                {i18n.t('no_restaurant_found')}
+              </Text>
+            ) : (
+              <View style={{ marginTop: 20, marginLeft: 5 }}>
+                <NoFavRestaurant />
+              </View>
+            )}
           </View>
         )}
       </>
@@ -278,10 +290,6 @@ export default function HomeScreenContent({
                 }
               }}
             />
-                    <View style={{marginLeft:15}}>
-                    <NoFavRestaurant />
-                    </View>
-
           </View>
         </ScrollView>
       )}

@@ -126,7 +126,6 @@ const styles = StyleSheet.create({
     padding: 3,
   },
   btnStyle: {
-    backgroundColor: Colors.yellow,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',

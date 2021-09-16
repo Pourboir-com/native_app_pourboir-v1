@@ -47,7 +47,12 @@ const NotificationPermission = ({ navigation }) => {
         token = (await Notifications.getExpoPushTokenAsync()).data;
       }
     } else {
-      alert('Must use physical device for Push Notifications');
+      const { userInfo = {} } = await getAsyncStorageValues();
+      if (userInfo?.user_id) {
+        navigation.replace('Home', { crossIcon: false, ad: true });
+      } else {
+        navigation.replace('socialLogin');
+      }
     }
     return token;
   }

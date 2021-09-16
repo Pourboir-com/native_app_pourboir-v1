@@ -34,9 +34,9 @@ export default function SplashScreen(props) {
   const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
   const notificationListener = useRef();
   const responseListener = useRef();
-  const [notification, setNotification] = useState(false);
-  const [checkLocation, setCheckLocation] = useState(false);
-  const [tracking, setTracking] = useState(false);
+  // const [notification, setNotification] = useState(false);
+  // const [checkLocation, setCheckLocation] = useState(false);
+  // const [tracking, setTracking] = useState(false);
 
   const checkNotificationPermission = async () => {
     let token;
@@ -44,11 +44,7 @@ export default function SplashScreen(props) {
       const {
         status: existingStatus,
       } = await Notifications.getPermissionsAsync();
-      if (existingStatus !== 'granted') {
-        setNotification(false);
-        return;
-      } else {
-        setNotification(true);
+      if (existingStatus === 'granted') {
         if (Platform.OS === 'android') {
           Notifications.setNotificationChannelAsync('default', {
             name: 'default',
@@ -115,9 +111,9 @@ export default function SplashScreen(props) {
     if (Platform.OS === 'ios') {
       const { granted } = await getTrackingPermissionsAsync();
       if (!granted) {
-        setTracking(false);
+        return false;
       } else {
-        setTracking(true);
+        return true;
       }
     }
   };
@@ -125,10 +121,10 @@ export default function SplashScreen(props) {
   const locationFunction = async () => {
     const isLocation = await Location.hasServicesEnabledAsync();
     if (isLocation) {
-      setCheckLocation(true);
       setCurrency();
+      return true;
     } else {
-      setCheckLocation(false);
+      return false;
     }
   };
 
@@ -140,50 +136,47 @@ export default function SplashScreen(props) {
         if (state.isConnected) {
           const { userInfo = {} } = await getAsyncStorageValues();
           InitializeStates();
+          let tracking = '';
           if (Platform.OS === 'ios') {
-            checkTrackingPermission();
+            tracking = await checkTrackingPermission();
           }
-          locationFunction();
-          checkNotificationPermission().then(async token => {
-            const { locale } = await Localization.getLocalizationAsync();
-            if (userInfo?.user_id) {
-              await sendNotificationToken({
-                id: userInfo?.user_id || '',
-                expo_notification_token: token || '',
-                lang: locale || '',
-              });
-              notificationListener.current = Notifications.addNotificationReceivedListener(
-                notification => {
-                  // props.navigation.navigate('WaiterProfile', {
-                  //   crossIcon: true,
-                  // });
-                },
-              );
-              responseListener.current = Notifications.addNotificationResponseReceivedListener(
-                response => {
-                  // props.navigation.navigate('WaiterProfile', {
-                  //   crossIcon: true,
-                  // });
-                },
-              );
-            }
-          });
+          let location = await locationFunction();
+          const token = await checkNotificationPermission();
+          console.log({ location, token, tracking });
+          const { locale } = await Localization.getLocalizationAsync();
+          if (userInfo?.user_id) {
+            await sendNotificationToken({
+              id: userInfo?.user_id || '',
+              expo_notification_token: token || '',
+              lang: locale || '',
+            });
+            notificationListener.current = Notifications.addNotificationReceivedListener(
+              notification => {
+                // props.navigation.navigate('WaiterProfile', {
+                //   crossIcon: true,
+                // });
+              },
+            );
+            responseListener.current = Notifications.addNotificationResponseReceivedListener(
+              response => {
+                // props.navigation.navigate('WaiterProfile', {
+                //   crossIcon: true,
+                // });
+              },
+            );
+          }
 
           if (Platform.OS === 'ios') {
             validateNavigationIOS(
               props.navigation,
               tracking,
-              checkLocation,
-              notification,
+              location,
+              token,
               userInfo,
             );
           } else {
-            validateNavigationAndroid(
-              props.navigation,
-              checkLocation,
-              userInfo,
-            );
-          };
+            validateNavigationAndroid(props.navigation, location, userInfo);
+          }
 
           Animated.spring(springValue, {
             toValue: 1,

@@ -304,13 +304,20 @@ export default {
   fav_restaurant: 'Vos restaurants favoris',
   popular_restaurant: 'Les restaurants populaires',
   sorry: 'Désolé ',
-  not_near: 'Vous n’êtes pas assez proche de cet établissement, nous ne pouvons valider votre action.',
+  not_near:
+    'Vous n’êtes pas assez proche de cet établissement, nous ne pouvons valider votre action.',
   thank_here: 'Vous êtes là!',
-  confirm_here: 'Vous avez indiqué que vous êtes bien ici. Grâce à cela, vous collectez un ticket de lotterie.',
+  confirm_here:
+    'Vous avez indiqué que vous êtes bien ici. Grâce à cela, vous collectez un ticket de lotterie.',
   thank_review: 'Merci pour votre vote',
-  won_ticket: 'Nous vous contacterons par email pour vous offire un coupon très prochainement.',
-  no_fav_1:"Vous n'avez pas encore de restaurants préférés",
-  no_fav_2:"Ajoutez des restaurants à vos favoris pour les voir s'afficher ici",
+  won_ticket:
+    'Nous vous contacterons par email pour vous offire un coupon très prochainement.',
+  no_fav_1: "Vous n'avez pas encore de restaurants préférés",
+  no_fav_2:
+    "Ajoutez des restaurants à vos favoris pour les voir s'afficher ici",
   check_in: 'Enregistrement',
-  telephone: 'Téléphone'
+  telephone: 'Téléphone',
+  username: 'Nom d’utilisateur',
+  about_me: 'A propos de moi',
+  describe: 'Décrivez vous en 150 charactères',
 };

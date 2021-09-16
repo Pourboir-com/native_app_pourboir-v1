@@ -167,22 +167,23 @@ export default function SplashScreen(props) {
                 },
               );
             }
-            if (Platform.OS === 'ios') {
-              validateNavigationIOS(
-                props.navigation,
-                tracking,
-                checkLocation,
-                notification,
-                userInfo,
-              );
-            } else {
-              validateNavigationAndroid(
-                props.navigation,
-                checkLocation,
-                userInfo,
-              );
-            }
           });
+
+          if (Platform.OS === 'ios') {
+            validateNavigationIOS(
+              props.navigation,
+              tracking,
+              checkLocation,
+              notification,
+              userInfo,
+            );
+          } else {
+            validateNavigationAndroid(
+              props.navigation,
+              checkLocation,
+              userInfo,
+            );
+          };
 
           Animated.spring(springValue, {
             toValue: 1,

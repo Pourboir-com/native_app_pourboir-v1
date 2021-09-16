@@ -1,17 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   ActivityIndicator,
   Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
 } from 'react-native';
 import { Colors } from '../../constants/Theme';
 
 const CommonButton = props => {
-  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   return (
     <TouchableOpacity
@@ -60,7 +58,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 3,
     alignSelf: 'center',
-    zIndex:99999,
+    zIndex: 99999,
     marginBottom: Platform.OS === 'ios' ? 15 : 0,
   },
 });

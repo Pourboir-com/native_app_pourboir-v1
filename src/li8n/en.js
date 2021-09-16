@@ -224,7 +224,6 @@ export default {
 
   the_team: 'The Team',
   the_menu: 'The Menu',
-  waiters: 'Waiters',
   no_waiter: 'Sorry, there is no waiters at the moment.',
   cook: ' Cooks',
   no_cook: 'Sorry, there is no waiters at the moment.',
@@ -247,8 +246,6 @@ export default {
   name_of_cook: 'Give us name of your cook',
   waiter_name_placeholder: 'The name of your waiter',
   cook_name_placeholder: 'The name of your cook',
-  add: 'Add',
-  waiter_email: 'Your waiter email',
   cook_email: 'Your cook email',
 
   // manager modal
@@ -302,13 +299,19 @@ export default {
   fav_restaurant: 'Your favorite restaurants',
   popular_restaurant: 'Popular restaurants',
   sorry: 'Sorry !',
-  not_near: 'You are not near that establishment, we can not confirm your action.',
+  not_near:
+    'You are not near that establishment, we can not confirm your action.',
   thank_here: 'You are here !',
-  confirm_here: 'You have confirmed that you are at this restaurants. Thanks to that you have earned one loterry ticket.',
+  confirm_here:
+    'You have confirmed that you are at this restaurants. Thanks to that you have earned one loterry ticket.',
   thank_review: 'Thanks for your review !',
-  won_ticket: 'You have won a ticket for your review and are now part of the monthly lotery.',
-  no_fav_1:"You don't have favorite restaurants yet",
-  no_fav_2:'Add restaurants to your favorites to see them display here',
+  won_ticket:
+    'You have won a ticket for your review and are now part of the monthly lotery.',
+  no_fav_1: "You don't have favorite restaurants yet",
+  no_fav_2: 'Add restaurants to your favorites to see them display here',
   check_in: 'Check-in',
-  telephone: 'Telephone'
+  telephone: 'Telephone',
+  username: 'Username',
+  about_me: 'About me',
+  describe: 'Describe yourself in 150 characters',
 };

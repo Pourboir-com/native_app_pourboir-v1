@@ -84,17 +84,17 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
       >
         {section == 1 ? (
           <>
-            <Image
-              source={require('../../assets/images/gear.png')}
-              style={{
-                width: 20,
-                height: 20,
-                position: 'absolute',
-                top: 70,
-                right: 30,
-              }}
-            />
             <View style={styles.tour1_container}>
+              <Image
+                source={require('../../assets/images/gear.png')}
+                style={{
+                  width: 20,
+                  height: 20,
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                }}
+              />
               <View
                 style={{
                   width: '70%',

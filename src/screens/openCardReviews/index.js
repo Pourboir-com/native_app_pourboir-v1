@@ -397,7 +397,7 @@ const ReviewDetails = ({ navigation, route }) => {
         backgroundColor={'transparent'}
         position="absolute"
         navigation={navigation}
-        settingBtn={section != 1 ? true :  false}
+        settingBtn={section === 1 && tourModal ? false : true}
         settingBtnFunc={() =>
           RestaurantDetails?.data?.manager?.user_id ===
             state.userDetails.user_id &&

@@ -95,7 +95,7 @@ const YourTickets = ({ navigation }) => {
           <>
             {Object.keys(ticketData?.data).map(type => (
               <React.Fragment>
-                <Text style={styles.heading}>{type}</Text>
+                {/* <Text style={styles.heading}>{type}</Text> */}
                 {Object.keys(get(ticketData, `data.${type}`, {})).map(year => {
                   return (
                     <>

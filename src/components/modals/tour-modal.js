@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -6,9 +6,6 @@ import {
   Platform,
   StyleSheet,
   Image,
-  TouchableHighlight,
-  SafeAreaView,
-  TouchableNativeFeedback,
   Dimensions,
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
@@ -20,17 +17,7 @@ import i18n from '../../li8n';
 const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
   const [showCross, setShowCross] = useState(true);
   const statusBarHeight = getStatusBarHeight();
-  //   useEffect(() => {
-  //     //  setSection(section == 2 ? setTourModal(false) && clearInterval() : setSection(section+1))
-  //     if (section === 4) {
-  //       clearInterval(section);
-  //       setTourModal(false)
-  //     } else {
-  //       setInterval(() => {
-  //         setSection(section + 1);
-  //       }, 8000);
-  //     }
-  //   }, []);
+
   const nextSection = () => {
     if (section === 5) {
       setSection(0);
@@ -56,7 +43,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
   return (
     <Modal
       isVisible={tourModal}
-      backdropOpacity={0}
+      backdropOpacity={0.7}
       animationInTiming={300}
       animationOutTiming={300}
       onBackdropPress={nextSection}
@@ -69,16 +56,14 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
       }}
     >
       <TouchableOpacity
-        activeOpacity={0.9}
+        activeOpacity={0}
         onPress={nextSection}
         style={{
           height: '100%',
-          backgroundColor: '#000',
+          backgroundColor: 'transparent',
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
-          opacity: 0.7,
           marginTop: 30,
-          zIndex: 999999,
           alignItems: 'center',
         }}
       >

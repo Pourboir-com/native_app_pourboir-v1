@@ -56,7 +56,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import ManagerApprovalModal from '../../components/modals/manager-approval-modal';
 import ReceivedModal from '../../components/modals/received-modal';
 import TourModal from '../../components/modals/tour-modal';
-import LeaveReviewModal from '../../components/modals/leave-review-modal';
+// import LeaveReviewModal from '../../components/modals/leave-review-modal';
 import { Review } from '../../components/open-card';
 
 const ReviewDetails = ({ navigation, route }) => {
@@ -471,7 +471,7 @@ const ReviewDetails = ({ navigation, route }) => {
                   );
                 })}
               </View>
-              <View>
+              {/* <View>
                 <TouchableOpacity
                   onPress={onShare}
                   style={{ marginRight: 15 }}
@@ -479,7 +479,7 @@ const ReviewDetails = ({ navigation, route }) => {
                 >
                   <FontAwesome name="share-square-o" size={24} color="white" />
                 </TouchableOpacity>
-              </View>
+              </View> */}
               <View>
                 <Text
                   style={{

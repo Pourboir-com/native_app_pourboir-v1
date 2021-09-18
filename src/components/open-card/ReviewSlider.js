@@ -6,7 +6,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TouchableHighlight,
 } from 'react-native';
 import RatingStar from '../RatingComponent';
 import ReviewModal from '../modals/ReviewModal';

@@ -2,7 +2,7 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import { ReviewSlider } from './index';
+import { ReviewSlider } from './ReviewSlider';
 import LeaveReviewModal from '../modals/leave-review-modal';
 import { Entypo } from '@expo/vector-icons';
 import { useMutation } from 'react-query';

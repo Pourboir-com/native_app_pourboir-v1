@@ -229,7 +229,7 @@ const PublicProfile = ({ navigation }) => {
               <TouchableOpacity
                 key={i}
                 onPress={() => {
-                  v.nav ? navigation.navigate(v.nav) : v.func() && v.func();
+                  v.nav ? navigation.navigate(v.nav) : v.func && v.func();
                   refRBSheet.current.close();
                 }}
                 activeOpacity={0.3}

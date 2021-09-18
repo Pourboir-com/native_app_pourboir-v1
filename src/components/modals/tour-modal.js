@@ -91,7 +91,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
                   width: 20,
                   height: 20,
                   position: 'absolute',
-                  top: 0,
+                  top: Platform.OS != 'ios' ? -60 : 0,
                   right: 0,
                 }}
               />

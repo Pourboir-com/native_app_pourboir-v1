@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     fontFamily: 'ProximaNovaBold',
     fontSize: 24,
+    textAlign: 'center',
   },
   container_number: {
     width: '100%',

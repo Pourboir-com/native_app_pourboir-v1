@@ -92,51 +92,36 @@ const YourTickets = ({ navigation }) => {
             <ActivityIndicator size={50} color="#EBC11B" />
           </View>
         ) : (
-          <>
-            {Object.keys(ticketData?.data).map(type => (
-              <React.Fragment>
-                {/* <Text style={styles.heading}>{type}</Text> */}
-                {Object.keys(get(ticketData, `data.${type}`, {})).map(year => {
-                  return (
-                    <>
-                      <Text style={styles.heading}>{year}</Text>
-                      {(
-                        Object.keys(
-                          get(ticketData, `data.${type}.${year}`, {}),
-                        ) || []
-                      ).map(month => (
-                        <View style={{ alignItems: 'center' }}>
-                          <Text style={styles.heading}>{month}</Text>
-                          {get(
-                            ticketData,
-                            `data.${type}.${year}.${month}`,
-                            [],
-                          ).map(item => (
-                            <Text
-                              style={[
-                                styles.lottery,
-                                checkDate(item?.createdAt) > 1
-                                  ? {
-                                      backgroundColor: '#E6E6E6',
-                                      color: 'black',
-                                    }
-                                  : { backgroundColor: '#fcf4e4' },
-                              ]}
-                            >
-                              {pad(item?.token, 8, '0').replace(
-                                /(\d{4})(\d{4})/,
-                                '$1-$2',
-                              )}
-                            </Text>
-                          ))}
-                        </View>
-                      ))}
-                    </>
-                  );
-                })}
-              </React.Fragment>
-            ))}
-          </>
+          (Object.keys(ticketData?.data) || []).map(year => {
+            return (
+              <View key={year}>
+                <Text style={styles.heading}>{year}</Text>
+                {(Object.keys(ticketData?.data[year]) || []).map(month => (
+                  <View style={{ alignItems: 'center' }}>
+                    <Text style={styles.heading}>{month}</Text>
+                    {get(ticketData, `data.${year}.${month}`, []).map(item => (
+                      <Text
+                        style={[
+                          styles.lottery,
+                          checkDate(item?.createdAt) > 1
+                            ? {
+                                backgroundColor: '#E6E6E6',
+                                color: 'black',
+                              }
+                            : { backgroundColor: '#fcf4e4' },
+                        ]}
+                      >
+                        {pad(item?.token, 8, '0').replace(
+                          /(\d{4})(\d{4})/,
+                          '$1-$2',
+                        )}
+                      </Text>
+                    ))}
+                  </View>
+                ))}
+              </View>
+            );
+          })
         )}
       </ScrollView>
     </View>

@@ -77,7 +77,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
                   height: 20,
                   position: 'absolute',
                   top: Platform.OS != 'ios' ? -60 : 0,
-                  right: 0,
+                  right: Platform.OS != 'ios' ? -5 : 0,
                 }}
               />
               <View
@@ -102,8 +102,8 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
                 </Text>
                 <View
                   style={{
-                    marginLeft: Platform.OS === 'ios' ? 0 : 14,
-                    marginTop: Platform.OS === 'ios' ? 0 : -25,
+                    marginLeft: 0,
+                    marginTop: Platform.OS === 'ios' ? 0 : -10,
                   }}
                 >
                   <Image
@@ -293,8 +293,8 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
             style={{
               // alignSelf: 'flex-end',
               position: 'absolute',
-              left: 10,
-              top: Platform.OS === 'ios' ? '12%' : 80,
+              left: Platform.OS === 'ios' ? 10 : 13,
+              top: Platform.OS === 'ios' ? '12%' : 63,
             }}
             onPress={() => {
               setSection(0);

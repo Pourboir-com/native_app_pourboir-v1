@@ -84,6 +84,11 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
                 style={{
                   width: '70%',
                   marginTop: Platform.OS === 'ios' ? percentHeight(53) : -25,
+                  marginLeft: Platform.OS === 'ios' ? 'auto' : 14,
+                  flexDirection: 'row',
+                  alignItems: 'flex-start',
+                  justifyContent: 'flex-start',
+                  marginRight: 8,
                 }}
               >
                 <Text
@@ -95,18 +100,17 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
                 >
                   {i18n.t('tour_section1')}
                 </Text>
-              </View>
-              <View
-                style={{
-                  width: '30%',
-                  marginLeft: Platform.OS === 'ios' ? 25 : 14,
-                  marginTop: Platform.OS === 'ios' ? percentHeight(53) : -25,
-                }}
-              >
-                <Image
-                  source={require('../../assets/images/up-arrow-curve.png')}
-                  style={{ width: 80, height: 80, resizeMode: 'contain' }}
-                />
+                <View
+                  style={{
+                    marginLeft: Platform.OS === 'ios' ? 0 : 14,
+                    marginTop: Platform.OS === 'ios' ? 0 : -25,
+                  }}
+                >
+                  <Image
+                    source={require('../../assets/images/up-arrow-curve.png')}
+                    style={{ width: 80, height: 80, resizeMode: 'contain' }}
+                  />
+                </View>
               </View>
             </View>
           </>
@@ -290,7 +294,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
               // alignSelf: 'flex-end',
               position: 'absolute',
               left: 10,
-              top: 80,
+              top: Platform.OS === 'ios' ? '12%' : 80,
             }}
             onPress={() => {
               setSection(0);

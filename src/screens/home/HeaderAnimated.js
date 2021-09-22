@@ -72,7 +72,7 @@ const HomeScreen = props => {
     props.saveLocation,
     state.userDetails,
     state.refreshAnimation,
-    state.restaurantsDetails,
+    props.Data,
   ]);
 
   const reBounce = 25;

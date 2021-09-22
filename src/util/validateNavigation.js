@@ -5,9 +5,9 @@ export const validateNavigationIOS = (
   notification,
   userInfo,
 ) => {
-  if (tracking && checkLocation && notification && userInfo.user_id) {
+  if (tracking && checkLocation && notification && userInfo?.user_id) {
     navigation.replace('Home', { crossIcon: false, ad: true });
-  } else if (tracking && checkLocation && notification && !userInfo.user_id) {
+  } else if (tracking && checkLocation && notification && !userInfo?.user_id) {
     navigation.replace('socialLogin');
   } else if (!tracking && !checkLocation && !notification) {
     navigation.replace('NoTracking', {
@@ -36,9 +36,9 @@ export const validateNavigationIOS = (
 export const validateNavigationAndroid = (navigation, checkLocation, userInfo) => {
   if (!checkLocation) {
     navigation.replace('NoLocation');
-  } else if (checkLocation && userInfo.user_id) {
+  } else if (checkLocation && userInfo?.user_id) {
     navigation.replace('Home', { crossIcon: false, ad: true });
-  } else if (checkLocation && !userInfo.user_id) {
+  } else if (checkLocation && !userInfo?.user_id) {
     navigation.replace('socialLogin');
   }
 };

@@ -29,9 +29,6 @@ const YourTickets = ({ navigation }) => {
     GET_TICKETS,
     {
       ...reactQueryConfig,
-      onSuccess: () => {
-        // keys();
-      },
       onError: e => {
         alert(e?.response?.data?.message);
       },

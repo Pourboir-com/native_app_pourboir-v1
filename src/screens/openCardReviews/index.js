@@ -58,6 +58,8 @@ import ReceivedModal from '../../components/modals/received-modal';
 import TourModal from '../../components/modals/tour-modal';
 // import LeaveReviewModal from '../../components/modals/leave-review-modal';
 import { Review } from '../../components/open-card';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getAsyncStorageValues } from '../../constants';
 
 const ReviewDetails = ({ navigation, route }) => {
   const openDialScreen = () => {
@@ -79,6 +81,8 @@ const ReviewDetails = ({ navigation, route }) => {
   );
   const [userThanksModalVisible, setUserThanksModalVisible] = useState(false);
   const [checkInModal, setcheckInModal] = useState(false);
+  const [checkInModalText, setcheckInModalText] = useState(i18n.t('not_near'));
+
   const [notCheckInModal, setnotCheckInModal] = useState(false);
   const [refferedThanksModalVisible, setRefferedThanksModalVisible] = useState(
     false,
@@ -100,9 +104,20 @@ const ReviewDetails = ({ navigation, route }) => {
   const [section, setSection] = useState(1);
 
   useEffect(() => {
+    // (async () => {
+    //   const { ExplanatoryScreen } = await getAsyncStorageValues();
+    //   if (!ExplanatoryScreen?.explanatory_screen) {
     setTimeout(() => {
       setTourModal(true);
     }, 2000);
+    //     await AsyncStorage.setItem(
+    //       '@ExplanatoryScreen',
+    //       JSON.stringify({
+    //         explanatory_screen: true,
+    //       }),
+    //     );
+    //   }
+    // })();
   }, []);
 
   const {
@@ -257,7 +272,8 @@ const ReviewDetails = ({ navigation, route }) => {
             setToken(res?.data?.token || 0);
           },
           onError: e => {
-            alert(e.response?.data?.message);
+            setcheckInModalText(i18n.t('check_in_limit'));
+            setnotCheckInModal(true);
           },
         },
       );
@@ -962,7 +978,7 @@ const ReviewDetails = ({ navigation, route }) => {
           handleModalClose={() => setnotCheckInModal(false)}
           image={noCheckIn}
           heading={i18n.t('sorry')}
-          subHeadingText={i18n.t('not_near')}
+          subHeadingText={checkInModalText}
         />
       )}
       {checkInModal && (

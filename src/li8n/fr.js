@@ -274,7 +274,7 @@ export default {
 
   client: 'Client',
   few_words: 'Quelques mots à son propos',
-  subs: 'Abonnés',
+  subs: 'Abonné',
   follow: 'Suivre',
   pub: 'Publications',
   no_pub: 'Aucune publication',
@@ -315,9 +315,11 @@ export default {
   no_fav_1: "Vous n'avez pas encore de restaurants préférés",
   no_fav_2:
     "Ajoutez des restaurants à vos favoris pour les voir s'afficher ici",
-  check_in: 'Enregistrement',
+  check_in: 'Check-in',
   telephone: 'Téléphone',
   username: 'Nom d’utilisateur',
   about_me: 'A propos de moi',
   describe: 'Décrivez vous en 150 charactères',
+  review: 'Les avis',
+  check_in_limit: `Nous limitons le nombres de check-in par personne par jour pour une meilleur expérience utilisateur. Merci de réessayer plus tard`,
 };

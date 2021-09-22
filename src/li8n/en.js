@@ -269,7 +269,7 @@ export default {
   cancel: 'Cancel',
   client: 'Client',
   few_words: 'Few words about him/her',
-  subs: 'Subscribers',
+  subs: 'Subscriber',
   follow: 'Follow',
   pub: 'Publications',
   no_pub: 'No publications',
@@ -314,4 +314,7 @@ export default {
   username: 'Username',
   about_me: 'About me',
   describe: 'Describe yourself in 150 characters',
+  review: 'Reviews',
+  check_in_limit:
+    'We limit the number of check-in per user and per day to improve user experience. Please try again later.',
 };

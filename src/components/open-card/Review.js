@@ -9,6 +9,7 @@ import { useMutation } from 'react-query';
 import { CREATE_REVIEW } from '../../queries';
 import Context from '../../contextApi/context';
 import CheckInModal from '../modals/ThanksRatingModal';
+import i18n from '../../li8n';
 
 const Review = ({
   reviewData,
@@ -68,7 +69,7 @@ const Review = ({
         }}
       >
         <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
-          Review
+          {i18n.t('review')}
         </Text>
         {!tourModal || section !== 4 ? (
           <TouchableOpacity

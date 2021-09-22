@@ -166,7 +166,7 @@ const PublicProfile = ({ navigation }) => {
                 }}
               >
                 <View>
-                  <Text style={styles.subscribeNumber}>888</Text>
+                  <Text style={styles.subscribeNumber}>1</Text>
                   <Text style={styles.subscribeTxt}>{i18n.t('subs')}</Text>
                 </View>
                 <TouchableOpacity activeOpacity={0.5} style={styles.btn_follow}>

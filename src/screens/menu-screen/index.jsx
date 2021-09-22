@@ -108,13 +108,14 @@ const MenuScreen = ({ navigation, route }) => {
                             {dish.description}
                           </Text>
                         </View>
-                        <View style={{ flexDirection: 'row' }}>
-                          <FontAwesome
-                            name="euro"
-                            style={{ paddingTop: 3 }}
-                            size={20}
-                            color="black"
-                          />
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <FontAwesome name="euro" size={20} color="black" />
                           <Text style={styles.price}>{dish.price}</Text>
                         </View>
                       </View>
@@ -148,8 +149,7 @@ const styles = StyleSheet.create({
   },
   dish_txt: {
     fontSize: 15,
-    fontFamily: 'ProximaNova',
-    fontWeight: '700',
+    fontFamily: 'ProximaNovaBold',
   },
   price: {
     fontSize: 16,

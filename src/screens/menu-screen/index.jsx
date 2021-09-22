@@ -111,7 +111,6 @@ const MenuScreen = ({ navigation, route }) => {
                         <View
                           style={{
                             flexDirection: 'row',
-                            justifyContent: 'center',
                             alignItems: 'center',
                           }}
                         >

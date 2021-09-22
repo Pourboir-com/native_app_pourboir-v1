@@ -24,7 +24,9 @@ const HomeScreen = props => {
   useEffect(() => {
     (async () => {
       const isLocation = await Location.hasServicesEnabledAsync();
-      if (isLocation) {
+      const isLocationOn = await Location.getForegroundPermissionsAsync();
+      console.log({ isLocation, isLocationOn });
+      if (isLocation && isLocationOn.granted) {
         const location = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Lowest,
         });

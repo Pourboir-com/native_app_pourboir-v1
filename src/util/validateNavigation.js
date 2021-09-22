@@ -33,7 +33,11 @@ export const validateNavigationIOS = (
   }
 };
 
-export const validateNavigationAndroid = (navigation, checkLocation, userInfo) => {
+export const validateNavigationAndroid = (
+  navigation,
+  checkLocation,
+  userInfo,
+) => {
   if (!checkLocation) {
     navigation.replace('NoLocation');
   } else if (checkLocation && userInfo?.user_id) {

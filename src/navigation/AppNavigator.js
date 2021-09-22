@@ -30,6 +30,7 @@ import Braserri from '../screens/braserri';
 import PublicProfile from '../screens/public-profile';
 import YourTickets from '../screens/your-tickets';
 import NotificationPermission from '../screens/notification-permission';
+import MenuScreen from '../screens/menu-screen';
 
 const Stack = createStackNavigator();
 
@@ -367,6 +368,19 @@ function AppNavigator() {
       <Stack.Screen
         name="YourTickets"
         component={YourTickets}
+        options={() => ({
+          headerShown: false,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
+        })}
+      />
+      <Stack.Screen
+        name="MenuScreen"
+        component={MenuScreen}
         options={() => ({
           headerShown: false,
           title: '',

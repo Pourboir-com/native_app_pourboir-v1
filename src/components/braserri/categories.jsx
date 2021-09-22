@@ -211,7 +211,11 @@ const Categories = props => {
                               })
                             }
                             onChangeText={value =>
-                              handleInputChange(value.replace(/[^0-9]/g, ''), i, 'price')
+                              handleInputChange(
+                                value.replace(/[^0-9]/g, ''),
+                                i,
+                                'price',
+                              )
                             }
                             value={formattedValue}
                             placeholder={i18n.t('price')}
@@ -227,7 +231,10 @@ const Categories = props => {
                             ? openDeleteDish(v._id)
                             : deleteDish(v.idDish)
                         } //openDeleteDish(v._id ? v.id : v.idDish)
-                        style={{ justifyContent: 'center' }}
+                        style={{
+                          justifyContent: 'center',
+                          alignSelf: 'center',
+                        }}
                         activeOpacity={0.3}
                       >
                         <Image

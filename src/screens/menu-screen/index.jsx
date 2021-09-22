@@ -21,8 +21,6 @@ const MenuScreen = ({ navigation, route }) => {
       },
     },
   );
-  console.log('sssss');
-  console.log(menus);
 
   return (
     <View style={styles.container}>

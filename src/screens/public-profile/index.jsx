@@ -133,8 +133,7 @@ const PublicProfile = ({ navigation }) => {
               source={{ uri: state?.userDetails?.image }}
               style={{
                 width: 140,
-                height: 170,
-                resizeMode: 'contain',
+                height: 140,
                 borderRadius: 280,
               }}
             />

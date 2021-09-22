@@ -21,6 +21,8 @@ const MenuScreen = ({ navigation, route }) => {
       },
     },
   );
+  console.log('sssss');
+  console.log(menus);
 
   return (
     <View style={styles.container}>
@@ -76,8 +78,7 @@ const MenuScreen = ({ navigation, route }) => {
                               alignItems: 'center',
                             }}
                           >
-                            <FontAwesome name="euro" size={20} color="black" />
-                            <Text style={styles.price}>{dish.price}</Text>
+                            <Text style={styles.price}>{item.currency + ' ' + dish.price}</Text>
                           </View>
                         </View>
                       );

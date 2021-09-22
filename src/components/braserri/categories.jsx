@@ -101,6 +101,8 @@ const Categories = props => {
   };
 
   const saveMenu = async () => {
+    const { Currency } = await getAsyncStorageValues();
+    let currencySign = JSON.parse(Currency);
     await saveChanges(
       {
         category: props?.category || '',
@@ -108,6 +110,7 @@ const Categories = props => {
         user_id: props?.user_id || '',
         place_id: props?.place_id || '',
         dishes: resolvedDishes(props?.dishes) || [],
+        currency: currencySign.currency.split(' ').join('') || '',
       },
       {
         onSuccess: async res => {

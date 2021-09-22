@@ -10,7 +10,7 @@ import { ADDING_WAITERS, GET_WAITERS } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import Context from '../../contextApi/context';
 
-const Team = ({ restaurant_id, place_id }) => {
+const Team = ({ restaurant_id, place_id, refetchWaiters }) => {
   const { state } = useContext(Context);
   const [addModal, setAddModal] = useState(false);
   const [modalType, setModalType] = useState();
@@ -72,8 +72,10 @@ const Team = ({ restaurant_id, place_id }) => {
         onSuccess: () => {
           if (modalType === 'waiter') {
             refetchWaiterData();
+            refetchWaiters();
           } else if (modalType === 'cook') {
             refetchCookData();
+            refetchWaiters();
           }
         },
         onError: e => {

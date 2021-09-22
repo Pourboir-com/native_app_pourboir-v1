@@ -190,7 +190,6 @@ const ReviewDetails = ({ navigation, route }) => {
       ...reactQueryConfig,
     },
   );
-  console.log(RestaurantDetails);
 
   const {
     data: favoritesData,
@@ -349,19 +348,9 @@ const ReviewDetails = ({ navigation, route }) => {
         onSuccess: () => {
           setApprovalModal(false);
           setReceivedModal(true);
-          // navigation.navigate('Braserri', {
-          //   restaurant_id: restaurant_id || '',
-          //   img,
-          //   name,
-          // });
         },
         onError: e => {
           alert(e.response?.data?.message);
-          // navigation.navigate('Braserri', {
-          //   restaurant_id: restaurant_id || '',
-          //   img,
-          //   name,
-          // });
         },
       },
     );
@@ -447,6 +436,7 @@ const ReviewDetails = ({ navigation, route }) => {
                 img,
                 name,
                 place_id,
+                refetchWaiters,
               })
             : setApprovalModal(true)
         }
@@ -905,7 +895,9 @@ const ReviewDetails = ({ navigation, route }) => {
       </ScrollView>
       <TouchableOpacity
         activeOpacity={0.5}
-        disabled={RestaurantDetails?.data?.menu_url ? false : false}
+        disabled={
+          RestaurantDetails?.data?.manager?.status === 'active' ? false : true
+        }
         // onPress={() => {
         //   if (RestaurantDetails?.data?.menu_url) {
         //     WebBrowser.openBrowserAsync(RestaurantDetails?.data?.menu_url);
@@ -920,9 +912,11 @@ const ReviewDetails = ({ navigation, route }) => {
         style={[
           styles.viewLastBtn,
           { marginBottom: 10 },
-          !RestaurantDetails?.data?.menu_url && section != 5
-            ? { backgroundColor: '#f0f0f0' }
-            : { backgroundColor: 'transparent' },
+          RestaurantDetails?.data?.manager?.status == 'active' && section != 5
+            ? { backgroundColor: Colors.yellow }
+            : section == 5
+            ? { backgroundColor: 'transparent' }
+            : { backgroundColor: '#f0f0f0' },
         ]}
       >
         {section != 5 && (

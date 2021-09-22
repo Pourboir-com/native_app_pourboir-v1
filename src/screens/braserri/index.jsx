@@ -17,7 +17,7 @@ import i18n from '../../li8n';
 import styles from './styles';
 
 const Braserri = ({ navigation, route }) => {
-  const { restaurant_id, img, name, place_id } = route?.params || {};
+  const { restaurant_id, img, name, place_id, refetchWaiters } = route?.params || {};
   const [currentTab, setCurrentTab] = useState('team');
   const [dishName, setDishName] = useState('');
   const [price, setPrice] = useState('');
@@ -118,6 +118,7 @@ const Braserri = ({ navigation, route }) => {
                 restaurant_id={restaurant_id || ''}
                 place_id={place_id}
                 navigation={navigation}
+                refetchWaiters={refetchWaiters}
               />
             )}
           </View>

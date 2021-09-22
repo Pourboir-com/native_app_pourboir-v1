@@ -6,28 +6,29 @@ import AddBtn from '../add-common-btn';
 import CommonCard from '../comman-card';
 import AddWaiterCookModal from '../modals/AddWaiterCookModal';
 import { useQuery, useMutation } from 'react-query';
-import { STAFF, ADD_STAFF } from '../../queries';
+import { ADDING_WAITERS, GET_WAITERS } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import Context from '../../contextApi/context';
 
-const Team = ({ restaurant_id }) => {
+const Team = ({ restaurant_id, place_id }) => {
   const { state } = useContext(Context);
   const [addModal, setAddModal] = useState(false);
   const [modalType, setModalType] = useState();
   const [waiters, setWaiters] = useState([]);
   const [cooks, setCooks] = useState([]);
-  const [addStaff, { isLoading: addStaffLoading }] = useMutation(ADD_STAFF);
+  const [addStaff, { isLoading: addStaffLoading }] = useMutation(
+    ADDING_WAITERS,
+  );
 
   const { data: waiterData, refetch: refetchWaiterData } = useQuery(
     [
-      'STAFF',
+      'GET_WAITERS',
       {
-        type: ['waiter'],
-        user_id: state.userDetails.user_id,
-        place_id: restaurant_id,
+        type: 'waiter',
+        restaurant_id: place_id,
       },
     ],
-    STAFF,
+    GET_WAITERS,
     {
       ...reactQueryConfig,
     },
@@ -35,14 +36,13 @@ const Team = ({ restaurant_id }) => {
 
   const { data: cookData, refetch: refetchCookData } = useQuery(
     [
-      'STAFF',
+      'GET_WAITERS',
       {
-        type: ['cook'],
-        user_id: state.userDetails.user_id,
-        place_id: restaurant_id,
+        type: 'cook',
+        restaurant_id: place_id,
       },
     ],
-    STAFF,
+    GET_WAITERS,
     {
       ...reactQueryConfig,
     },
@@ -61,11 +61,12 @@ const Team = ({ restaurant_id }) => {
   const handleAddStaff = async (email, name) => {
     await addStaff(
       {
-        manager_id: state.userDetails.user_id || '',
+        created_by: state.userDetails.user_id || '',
         type: modalType,
         email: email || '',
         full_name: name || '',
-        place_id: restaurant_id,
+        restaurant: { place_id },
+        status: 'active',
       },
       {
         onSuccess: () => {
@@ -102,8 +103,9 @@ const Team = ({ restaurant_id }) => {
               return (
                 <CommonCard
                   key={i}
-                  waiter_name={v.full_name}
+                  waiter_name={v?.user_id?.full_name || v.full_name}
                   waiter_email={v.email}
+                  picture={v?.user_id?.picture}
                 />
               );
             })
@@ -151,8 +153,9 @@ const Team = ({ restaurant_id }) => {
               return (
                 <CommonCard
                   key={i}
-                  cook_name={v.full_name}
+                  cook_name={v?.user_id?.full_name || v.full_name}
                   cook_email={v.email}
+                  picture={v?.user_id?.picture}
                 />
               );
             })

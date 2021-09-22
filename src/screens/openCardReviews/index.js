@@ -414,6 +414,7 @@ const ReviewDetails = ({ navigation, route }) => {
                 restaurant_id: RestaurantDetails?.data?._id || '',
                 img,
                 name,
+                place_id,
               })
             : setApprovalModal(true)
         }

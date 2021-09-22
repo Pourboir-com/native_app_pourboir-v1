@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9F9F9',
   },
   category_name: {
-    fontSize: 22,
+    fontSize: 24,
     fontFamily: 'ProximaNovaBold',
   },
   dish_container: {
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   dish_txt: {
-    fontSize: 15,
+    fontSize: 16,
     fontFamily: 'ProximaNovaBold',
   },
   price: {

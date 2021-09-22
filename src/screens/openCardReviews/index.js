@@ -320,7 +320,7 @@ const ReviewDetails = ({ navigation, route }) => {
   const [managerApproval, { isLoading: publishMenuLoading }] = useMutation(
     MANAGER_APPROVAL,
   );
-
+  // console.log('rest ', RestaurantDetails.data._id)
   const submitApproval = async () => {
     await managerApproval(
       {
@@ -888,12 +888,18 @@ const ReviewDetails = ({ navigation, route }) => {
       </ScrollView>
       <TouchableOpacity
         activeOpacity={0.5}
-        disabled={RestaurantDetails?.data?.menu_url ? false : true}
-        onPress={() => {
-          if (RestaurantDetails?.data?.menu_url) {
-            WebBrowser.openBrowserAsync(RestaurantDetails?.data?.menu_url);
-          }
-        }}
+        disabled={RestaurantDetails?.data?.menu_url ? false : false}
+        // onPress={() => {
+        //   if (RestaurantDetails?.data?.menu_url) {
+        //     WebBrowser.openBrowserAsync(RestaurantDetails?.data?.menu_url);
+        //   }
+        // }}
+        onPress={() =>
+          navigation.navigate('MenuScreen', {
+            restaurant_id: RestaurantDetails?.data?._id || '',
+            name,
+          })
+        }
         style={[
           styles.viewLastBtn,
           { marginBottom: 10 },

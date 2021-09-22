@@ -9,7 +9,21 @@ import { FontAwesome } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const MenuScreen = ({ navigation, route }) => {
-  const [menu, setMenu] = useState([]);
+  const { restaurant_id } = route?.params || {};
+  const {
+    data: menus,
+    isLoading: menusLoading,
+    isFetching: menusIsFetching,
+    refetch: refetchMenus,
+  } = useQuery(['GET_MENU', { place_id: restaurant_id }], GET_MENU, {
+    ...reactQueryConfig,
+    enabled: restaurant_id,
+    onError: e => {
+      alert(e?.response?.data?.message);
+    },
+  });
+  console.log(menus);
+
   const dummy = [
     {
       cat: 'Entree',
@@ -47,24 +61,7 @@ const MenuScreen = ({ navigation, route }) => {
       ],
     },
   ];
-  const {
-    data: menus,
-    isLoading: menusLoading,
-    isFetching: menusIsFetching,
-    refetch: refetchMenus,
-  } = useQuery(
-    ['GET_MENU', { place_id: route.params.restaurant_id }],
-    GET_MENU,
-    {
-      ...reactQueryConfig,
-      onSuccess: async res => {
-        setMenu(res.data);
-      },
-      onError: e => {
-        alert(e?.response?.data?.message);
-      },
-    },
-  );
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>

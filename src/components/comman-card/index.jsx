@@ -5,7 +5,13 @@ import styles from '../../screens/braserri/styles';
 import RatingStar from '../RatingComponent';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 
-const CommonCard = ({ waiter_name, waiter_email, cook_name, cook_email }) => {
+const CommonCard = ({
+  waiter_name,
+  waiter_email,
+  cook_name,
+  cook_email,
+  picture,
+}) => {
   const obj = [1, 2, 3, 4, 5];
   return (
     <TouchableOpacity
@@ -17,7 +23,14 @@ const CommonCard = ({ waiter_name, waiter_email, cook_name, cook_email }) => {
       <>
         <View style={styles.section1}>
           <View>
-            <SvgHeaderUserIcon height={50} width={5} />
+            {picture ? (
+              <Image
+                style={{ width: 55, height: 55, borderRadius: 30 }}
+                source={{ uri: picture }}
+              />
+            ) : (
+              <SvgHeaderUserIcon height={45} width={45} />
+            )}
           </View>
           <View style={{ paddingLeft: 10, alignSelf: 'center' }}>
             <Text

@@ -431,21 +431,22 @@ const ReviewDetails = ({ navigation, route }) => {
         navigation={navigation}
         settingBtn={section === 1 && tourModal ? false : true}
         settingBtnFunc={() =>
-          RestaurantDetails?.data?.manager?.user_id ===
+          RestaurantDetails?.data?.manager?.user_id?._id ===
             state.userDetails.user_id &&
           RestaurantDetails?.data?.manager?.status === 'pending'
             ? alert('We are reviewing your application for manager position.')
-            : RestaurantDetails?.data?.manager?.user_id !=
+            : RestaurantDetails?.data?.manager?.user_id?._id !=
                 state.userDetails.user_id &&
               RestaurantDetails?.data?.manager?.status === 'active'
             ? alert('This restaurant already has a manager.')
-            : RestaurantDetails?.data?.manager?.user_id ===
+            : RestaurantDetails?.data?.manager?.user_id?._id ===
                 state.userDetails.user_id &&
               RestaurantDetails?.data?.manager?.status === 'active'
             ? navigation.navigate('Braserri', {
                 restaurant_id: RestaurantDetails?.data?._id || '',
                 img,
                 name,
+                place_id,
               })
             : setApprovalModal(true)
         }

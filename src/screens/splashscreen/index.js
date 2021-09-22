@@ -31,6 +31,7 @@ Notifications.setNotificationHandler({
 
 export default function SplashScreen(props) {
   const { dispatch } = useContext(Context);
+  const [userCurrency, setUserCurrency] = useState();
   const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -91,6 +92,7 @@ export default function SplashScreen(props) {
       }).then(async res => {
         let currency = getCountry(res[0]?.country);
         let formattedCurrency = formatCurrency('', currency?.currency);
+        setUserCurrency(formatCurrency);
         await AsyncStorage.setItem(
           '@Currency',
           JSON.stringify({
@@ -123,7 +125,7 @@ export default function SplashScreen(props) {
     const isLocationOn = await Location.getForegroundPermissionsAsync();
 
     if (isLocation && isLocationOn.granted) {
-      setCurrency();
+      await setCurrency();
       return true;
     } else {
       return false;
@@ -150,6 +152,7 @@ export default function SplashScreen(props) {
               id: userInfo?.user_id || '',
               expo_notification_token: token || '',
               lang: locale || '',
+              currency: userCurrency || '€',
             });
             notificationListener.current = Notifications.addNotificationReceivedListener(
               notification => {

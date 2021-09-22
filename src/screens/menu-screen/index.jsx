@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ImageBackground } from 'react-native';
+import React from 'react';
+import { ImageBackground, ActivityIndicator } from 'react-native';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { useQuery } from 'react-query';
 import GlobalHeader from '../../components/GlobalHeader';
@@ -9,58 +9,18 @@ import { FontAwesome } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const MenuScreen = ({ navigation, route }) => {
-  const { restaurant_id } = route?.params || {};
-  const {
-    data: menus,
-    isLoading: menusLoading,
-    isFetching: menusIsFetching,
-    refetch: refetchMenus,
-  } = useQuery(['GET_MENU', { place_id: restaurant_id }], GET_MENU, {
-    ...reactQueryConfig,
-    enabled: restaurant_id,
-    onError: e => {
-      alert(e?.response?.data?.message);
-    },
-  });
-  console.log(menus);
-
-  const dummy = [
+  const { restaurant_id, name } = route?.params || {};
+  const { data: menus, isLoading: menusLoading } = useQuery(
+    ['GET_MENU', { place_id: restaurant_id }],
+    GET_MENU,
     {
-      cat: 'Entree',
-      dishes: [
-        {
-          name: 'First dish',
-          description: 'Description of first dish',
-          price: '12,00',
-        },
-        {
-          name: 'First dish',
-          description: 'Description of first dish',
-          price: '12,00',
-        },
-      ],
+      ...reactQueryConfig,
+      enabled: restaurant_id,
+      onError: e => {
+        alert(e?.response?.data?.message);
+      },
     },
-    {
-      cat: 'Entree',
-      dishes: [
-        {
-          name: 'First dish',
-          description: 'Description of first dish',
-          price: '12,00',
-        },
-        {
-          name: 'First dish',
-          description: 'Description of first dish',
-          price: '12,00',
-        },
-        {
-          name: 'First dish',
-          description: 'Description of first dish',
-          price: '12,00',
-        },
-      ],
-    },
-  ];
+  );
 
   return (
     <View style={styles.container}>
@@ -77,7 +37,7 @@ const MenuScreen = ({ navigation, route }) => {
         >
           <GlobalHeader
             arrow={true}
-            headingText={'MENU'}
+            headingText={name}
             fontSize={17}
             color={'black'}
             navigation={navigation}
@@ -88,40 +48,46 @@ const MenuScreen = ({ navigation, route }) => {
         </ImageBackground>
       </View>
       <View style={{ flex: 5 }}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ marginHorizontal: 25 }}>
-            {dummy.map((v, i) => {
-              return (
-                <View key={i} style={{ marginBottom: 20 }}>
-                  <View>
-                    <Text style={styles.category_name}>{v.cat}</Text>
-                  </View>
-                  {v.dishes.map((dish, key) => {
-                    return (
-                      <View key={key} style={styles.dish_container}>
-                        <View>
-                          <Text style={styles.dish_txt}>{dish.name}</Text>
-                          <Text style={styles.dish_txt}>
-                            {dish.description}
-                          </Text>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <FontAwesome name="euro" size={20} color="black" />
-                          <Text style={styles.price}>{dish.price}</Text>
-                        </View>
-                      </View>
-                    );
-                  })}
-                </View>
-              );
-            })}
+        {menusLoading ? (
+          <View style={{ marginTop: 50 }}>
+            <ActivityIndicator size={50} color="#EBC11B" />
           </View>
-        </ScrollView>
+        ) : (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={{ marginHorizontal: 25 }}>
+              {(menus?.data || []).map((item, i) => {
+                return (
+                  <View key={i} style={{ marginBottom: 20 }}>
+                    <View>
+                      <Text style={styles.category_name}>{item?.category}</Text>
+                    </View>
+                    {(item?.dishes || []).map((dish, key) => {
+                      return (
+                        <View key={key} style={styles.dish_container}>
+                          <View>
+                            <Text style={styles.dish_txt}>{dish.name}</Text>
+                            <Text style={styles.dish_desc}>
+                              {dish.description}
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                            }}
+                          >
+                            <FontAwesome name="euro" size={20} color="black" />
+                            <Text style={styles.price}>{dish.price}</Text>
+                          </View>
+                        </View>
+                      );
+                    })}
+                  </View>
+                );
+              })}
+            </View>
+          </ScrollView>
+        )}
       </View>
     </View>
   );
@@ -146,6 +112,10 @@ const styles = StyleSheet.create({
   dish_txt: {
     fontSize: 16,
     fontFamily: 'ProximaNovaBold',
+  },
+  dish_desc: {
+    fontSize: 16,
+    fontFamily: 'ProximaNova',
   },
   price: {
     fontSize: 16,

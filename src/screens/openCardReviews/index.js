@@ -60,6 +60,7 @@ import TourModal from '../../components/modals/tour-modal';
 import { Review } from '../../components/open-card';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAsyncStorageValues } from '../../constants';
+import * as Localization from 'expo-localization';
 
 const ReviewDetails = ({ navigation, route }) => {
   const openDialScreen = () => {
@@ -102,22 +103,25 @@ const ReviewDetails = ({ navigation, route }) => {
   const [tourModal, setTourModal] = useState(false);
   const [AddFavorite, { isLoading: favLoading }] = useMutation(ADD_FAVORITE);
   const [section, setSection] = useState(1);
+  const [locale, setLocale] = useState(1);
 
   useEffect(() => {
-    // (async () => {
-    //   const { ExplanatoryScreen } = await getAsyncStorageValues();
-    //   if (!ExplanatoryScreen?.explanatory_screen) {
-    setTimeout(() => {
-      setTourModal(true);
-    }, 2000);
-    //     await AsyncStorage.setItem(
-    //       '@ExplanatoryScreen',
-    //       JSON.stringify({
-    //         explanatory_screen: true,
-    //       }),
-    //     );
-    //   }
-    // })();
+    (async () => {
+      // const { ExplanatoryScreen } = await getAsyncStorageValues();
+      // if (!ExplanatoryScreen?.explanatory_screen) {
+      const { locale } = await Localization.getLocalizationAsync();
+      setLocale(locale);
+      setTimeout(() => {
+        setTourModal(true);
+      }, 2000);
+      //   await AsyncStorage.setItem(
+      //     '@ExplanatoryScreen',
+      //     JSON.stringify({
+      //       explanatory_screen: true,
+      //     }),
+      //   );
+      // }
+    })();
   }, []);
 
   const {
@@ -140,13 +144,24 @@ const ReviewDetails = ({ navigation, route }) => {
     data: reviewData,
     isLoading: reviewDataLoading,
     refetch: reviewRefetch,
-  } = useQuery(['GET_REVIEWS', { google_place_id: place_id }], GET_REVIEWS, {
-    ...reactQueryConfig,
-
-    onError: e => {
-      alert(e?.response?.data?.message);
+  } = useQuery(
+    [
+      'GET_REVIEWS',
+      {
+        google_place_id: place_id,
+        user_id: state.userDetails.user_id,
+        language: locale,
+      },
+    ],
+    GET_REVIEWS,
+    {
+      ...reactQueryConfig,
+      enabled: locale && place_id,
+      onError: e => {
+        alert(e?.response?.data?.message);
+      },
     },
-  });
+  );
   const {
     data: waitersData,
     isLoading: waitersLoading,
@@ -175,6 +190,7 @@ const ReviewDetails = ({ navigation, route }) => {
       ...reactQueryConfig,
     },
   );
+  console.log(RestaurantDetails);
 
   const {
     data: favoritesData,

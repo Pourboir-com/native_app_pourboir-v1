@@ -28,8 +28,8 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
   };
 
   const percentMobHeight = percent =>
-    ((Dimensions.get('window').height + statusBarHeight) * percent) / 100;
-  const percentHeight = percent => (statusBarHeight * percent) / 100;
+    `${((Dimensions.get('window').height + statusBarHeight) * percent) / 100}%`;
+  const percentHeight = percent => `${(statusBarHeight * percent) / 100}%`;
   const percentWidth = percent =>
     (Dimensions.get('window').width * percent) / 100;
   const tour3_container = {
@@ -76,19 +76,18 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
                   width: 20,
                   height: 20,
                   position: 'absolute',
-                  top: Platform.OS != 'ios' ? -60 : 0,
+                  top: Platform.OS != 'ios' ? -32 : 0,
                   right: Platform.OS != 'ios' ? -5 : 0,
                 }}
               />
               <View
                 style={{
-                  width: '70%',
-                  marginTop: Platform.OS === 'ios' ? percentHeight(53) : -25,
+                  marginTop: Platform.OS === 'ios' ? '8%' : '2%',
                   marginLeft: Platform.OS === 'ios' ? 'auto' : 14,
                   flexDirection: 'row',
                   alignItems: 'flex-start',
-                  justifyContent: 'flex-start',
-                  marginRight: 8,
+                  justifyContent: 'flex-end',
+                  marginRight: Platform.OS === 'ios' ? -3 : -12,
                 }}
               >
                 <Text
@@ -96,6 +95,8 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
                     fontFamily: 'ProximaNovaBold',
                     color: '#fff',
                     fontSize: 17,
+                    width: '70%',
+                    textAlign: 'right',
                   }}
                 >
                   {i18n.t('tour_section1')}
@@ -294,7 +295,8 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
               // alignSelf: 'flex-end',
               position: 'absolute',
               left: Platform.OS === 'ios' ? 10 : 13,
-              top: Platform.OS === 'ios' ? '12%' : 63,
+              // ...(Platform.OS === 'android' ? { top: 63 } : {}),
+              marginTop: Platform.OS === 'android' ? '18%' : '28.5%',
             }}
             onPress={() => {
               setSection(0);
@@ -314,7 +316,7 @@ export default TourModal;
 const styles = StyleSheet.create({
   tour1_container: {
     position: 'absolute',
-    top: 130,
+    marginTop: Platform.OS === 'android' ? '29%' : '31%',
     width: '80%',
     flexDirection: 'row',
   },

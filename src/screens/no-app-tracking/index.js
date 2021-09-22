@@ -15,12 +15,13 @@ import Track from '../../assets/images/track.png';
 import { getAsyncStorageValues } from '../../constants';
 
 const NoAppTracking = ({ navigation, route }) => {
-  const { checkLocation, notification } = route || {};
+  const { checkLocation, notification } = route.params || {};
   const validateNavigation = async () => {
     const { userInfo = {} } = await getAsyncStorageValues();
-    if (checkLocation === false) {
-      navigation.replace('NoLocation');
-    } else if (notification === false) {
+
+    if (checkLocation == false) {
+      navigation.replace('NoLocation', { notification });
+    } else if (notification == false) {
       navigation.replace('Notification');
     } else {
       if (userInfo?.user_id) {
@@ -34,6 +35,7 @@ const NoAppTracking = ({ navigation, route }) => {
   const excessAppTracking = async () => {
     if (Platform.OS === 'ios') {
       const { status } = await requestTrackingPermissionsAsync();
+
       if (status === 'granted') {
         validateNavigation();
       } else {

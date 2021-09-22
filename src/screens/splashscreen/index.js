@@ -39,7 +39,7 @@ export default function SplashScreen(props) {
   // const [tracking, setTracking] = useState(false);
 
   const checkNotificationPermission = async () => {
-    let token;
+    let token = false;
     if (Constants.isDevice) {
       const {
         status: existingStatus,
@@ -120,7 +120,9 @@ export default function SplashScreen(props) {
 
   const locationFunction = async () => {
     const isLocation = await Location.hasServicesEnabledAsync();
-    if (isLocation) {
+    const isLocationOn = await Location.getForegroundPermissionsAsync();
+
+    if (isLocation && isLocationOn.granted) {
       setCurrency();
       return true;
     } else {

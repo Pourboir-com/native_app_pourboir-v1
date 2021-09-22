@@ -13,9 +13,10 @@ import { Linking } from 'react-native';
 import { getAsyncStorageValues } from '../../constants';
 
 const NoLocation = ({ navigation, route }) => {
-  const { notification } = route || {};
+  const { notification } = route.params || {};
   const validateNavigation = async () => {
     const { userInfo = {} } = await getAsyncStorageValues();
+
     if (notification === false) {
       navigation.replace('Notification');
     } else {

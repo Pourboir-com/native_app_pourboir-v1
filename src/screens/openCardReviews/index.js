@@ -426,7 +426,7 @@ const ReviewDetails = ({ navigation, route }) => {
             ? alert('We are reviewing your application for manager position.')
             : RestaurantDetails?.data?.manager?.user_id?._id !=
                 state.userDetails.user_id &&
-              RestaurantDetails?.data?.manager?.status === 'active'
+              RestaurantDetails?.data?.manager?.status == 'active'
             ? alert('This restaurant already has a manager.')
             : RestaurantDetails?.data?.manager?.user_id?._id ===
                 state.userDetails.user_id &&

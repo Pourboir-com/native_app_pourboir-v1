@@ -102,48 +102,44 @@ const Menu = ({
         }}
       >
         <View>
-          {categArr.length
-            ? categArr.map((v, i) => {
-                return (
-                  <Categories
-                    key={i}
-                    category={v.category}
-                    id={v._id}
-                    place_id={restaurant_id}
-                    user_id={state.userDetails.user_id}
-                    refetchMenus={refetchMenus}
-                    categArr={categArr}
-                    setCategArr={setCategArr}
-                    description={description}
-                    setDescription={setDescription}
-                    dishName={dishName}
-                    setDishName={setDishName}
-                    setPrice={setPrice}
-                    price={price}
-                    dishes={v.dishes}
-                    menu_id={v.menu_id}
-                    deleteDishModal={deleteDishModal}
-                    setDeleteDishModal={setDeleteDishModal}
-                    dishState={dishState}
-                    setDishState={setDishState}
-                    menuId={menuId}
-                    setMenuId={setMenuId}
-                    dishId={dishId}
-                    setDishId={setDishId}
-                    dishess={dishes}
-                    setDishess={setDishes}
-                    deleteDish={deleteDish}
-                    deleteMenu={DeleteMenu}
-                    deleteType={deleteType}
-                    setDeleteType={setDeleteType}
-                  />
-                );
-              })
-            : null}
+          {(categArr || []).map((v, i) => (
+            <Categories
+              key={i}
+              category={v.category}
+              id={v._id}
+              place_id={restaurant_id}
+              user_id={state.userDetails.user_id}
+              refetchMenus={refetchMenus}
+              categArr={categArr}
+              setCategArr={setCategArr}
+              description={description}
+              setDescription={setDescription}
+              dishName={dishName}
+              setDishName={setDishName}
+              setPrice={setPrice}
+              price={price}
+              dishes={v.dishes}
+              menu_id={v.menu_id}
+              deleteDishModal={deleteDishModal}
+              setDeleteDishModal={setDeleteDishModal}
+              dishState={dishState}
+              setDishState={setDishState}
+              menuId={menuId}
+              setMenuId={setMenuId}
+              dishId={dishId}
+              setDishId={setDishId}
+              dishess={dishes}
+              setDishess={setDishes}
+              deleteDish={deleteDish}
+              deleteMenu={DeleteMenu}
+              deleteType={deleteType}
+              setDeleteType={setDeleteType}
+            />
+          ))}
         </View>
         <View
           style={{
-            marginTop: 24,
+            marginTop: 5,
             justifyContent: 'center',
             alignItems: 'center',
             marginHorizontal: 18,

@@ -128,7 +128,7 @@ const Categories = props => {
     <KeyboardAwareScrollView
       bounces={false}
       enableOnAndroid={true}
-      extraScrollHeight={10}
+      extraScrollHeight={Platform.OS === 'ios' ? -75 : 10}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
       scrollToOverflowEnabled={true}
@@ -169,7 +169,7 @@ const Categories = props => {
                       marginTop: 20,
                     }}
                   >
-                    <View style={(styles.input_box, { width: '60%' })}>
+                    <View style={(styles.input_box, { width: '65%' })}>
                       <TextInput
                         style={[
                           styles.inputsTopTow,
@@ -188,9 +188,9 @@ const Categories = props => {
                         (styles.input_box,
                         {
                           ...styles.input_box,
-                          width: '40%',
+                          width: '35%',
                           flexDirection: 'row',
-                          justifyContent:'space-between'
+                          justifyContent: 'space-between',
                         })
                       }
                     >

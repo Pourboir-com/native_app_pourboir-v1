@@ -29,11 +29,13 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   upper_txt: {
+    width: 150,
     fontSize: 15,
     fontFamily: 'ProximaNova',
     textAlign: 'center',
   },
   lower_txt: {
+    width: 130,
     fontSize: 15,
     fontFamily: 'ProximaNovaBold',
     textAlign: 'center',

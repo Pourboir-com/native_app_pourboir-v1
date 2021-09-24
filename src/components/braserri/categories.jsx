@@ -23,7 +23,7 @@ const Categories = props => {
   const [dishes, setDishes] = useState([]);
   const [disable, setDisable] = useState(true);
   const [currency, setCurrency] = useState();
-  console.log(dishes, ' dishes');
+
   useEffect(() => {
     (async () => {
       const { Currency } = await getAsyncStorageValues();
@@ -110,7 +110,7 @@ const Categories = props => {
         user_id: props?.user_id || '',
         place_id: props?.place_id || '',
         dishes: resolvedDishes(props?.dishes) || [],
-        // currency: currencySign.currency.split(' ').join('') || '',
+        currency: currencySign?.currency.split(' ').join('') || '',
       },
       {
         onSuccess: async res => {

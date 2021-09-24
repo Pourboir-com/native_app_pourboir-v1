@@ -234,12 +234,12 @@ export default function HomeScreenContent({
               showsHorizontalScrollIndicator={false}
               // onEndReached={handleLoadMore}
               // onEndReachedThreshold={0.5}
-              alwaysBounceHorizontal={false}
+              alwaysBounceHorizontal={true}
               horizontal={true}
               keyboardShouldPersistTaps={'handled'}
-              alwaysBounceVertical={true}
+              alwaysBounceVertical={false}
               // numColumns={2}
-              bounces={false}
+              // bounces={false}
               keyExtractor={(item, index) => index}
               renderItem={itemData => {
                 if (Object.keys(itemData.item).length) {

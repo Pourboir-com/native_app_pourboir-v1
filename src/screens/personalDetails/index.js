@@ -26,6 +26,9 @@ import { UPDATE_PICTURE, EDIT_USER } from '../../queries';
 import { useMutation } from 'react-query';
 import i18n from '../../li8n';
 import { Colors } from '../../constants/Theme';
+import RPCountryPickerInfo from 'react-native-country-picker-info';
+const validator = require('validator');
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const PersonalDetails = ({ navigation, route }) => {
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : -450;
@@ -40,10 +43,13 @@ const PersonalDetails = ({ navigation, route }) => {
   const [username, setUsername] = useState(state?.userDetails?.username);
   const [about, setAbout] = useState(state?.userDetails?.description);
   const [loading, setLoading] = useState();
+  const [isOpenCountryPicker, setIsOpenCountryPicker] = useState(false);
+  const [countryCode, setCountryCode] = useState('+91');
   //Mutation
   const [updatePicture] = useMutation(UPDATE_PICTURE);
   const [editUser] = useMutation(EDIT_USER);
-  const validate = FirstName && LastName && email && username && phone;
+  let emailError = email && !validator?.isEmail(email);
+  const validate = FirstName && LastName && email && username && phone && image && !emailError;
 
   const handleChangePicture = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -113,8 +119,17 @@ const PersonalDetails = ({ navigation, route }) => {
       );
       setLoading(false);
       alert('Your profile has been updated.');
-      navigation.navigate('PublicProfile');
+      navigation.replace('PublicProfile', { login });
     }
+  };
+
+  const onPressOpenPicker = () => {
+    setIsOpenCountryPicker(!isOpenCountryPicker);
+  };
+
+  const onPressCountryItem = countryInfo => {
+    setCountryCode(countryInfo.dial_code);
+    setIsOpenCountryPicker(false);
   };
 
   return (
@@ -226,14 +241,25 @@ const PersonalDetails = ({ navigation, route }) => {
               <View style={styles.input_box}>
                 <Text style={styles.inputLabel}>{i18n.t('phone_num')}</Text>
                 <View style={styles.inputsTopTow}>
-                  <TextInput
-                    onChangeText={setPhone}
-                    value={phone}
-                    placeholder="+33 6 88 88 88"
-                    keyboardType="number-pad"
-                    style={{ width: '100%' }}
-                    placeholderTextColor={'#485460'}
+                  <RPCountryPickerInfo
+                    isVisible={isOpenCountryPicker}
+                    isVisibleCancelButton={false}
+                    onPressClosePicker={onPressOpenPicker}
+                    onPressSelect={onPressCountryItem}
                   />
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <TouchableOpacity onPress={onPressOpenPicker}>
+                      <Text style={{ marginRight: 3 }}>{countryCode}</Text>
+                    </TouchableOpacity>
+                    <TextInput
+                      onChangeText={setPhone}
+                      value={phone}
+                      placeholder="6 88 88 88"
+                      keyboardType="number-pad"
+                      style={{ width: '100%' }}
+                      placeholderTextColor={'#485460'}
+                    />
+                  </View>
                   {/* <Text
                   style={{
                     color: '#E02020',
@@ -256,9 +282,18 @@ const PersonalDetails = ({ navigation, route }) => {
                     value={email}
                     placeholder="christine@zhou.com"
                     keyboardType="email-address"
-                    style={{ width: '70%' }}
+                    style={{ width: '100%' }}
                     placeholderTextColor={'#485460'}
                   />
+                  <Text style={{ position: 'absolute', right: 3.5, top: 2 }}>
+                    {emailError && (
+                      <FontAwesome5
+                        name="exclamation-circle"
+                        size={13}
+                        color="red"
+                      />
+                    )}
+                  </Text>
                   {/* <Text
                   style={{
                     color: '#6DD400',
@@ -274,13 +309,21 @@ const PersonalDetails = ({ navigation, route }) => {
               </View>
               <View style={styles.input_box}>
                 <Text style={styles.inputLabel}>{i18n.t('username')}</Text>
-                <TextInput
-                  style={styles.inputsTopTow}
-                  onChangeText={e => setUsername(e)}
-                  value={username}
-                  placeholder="@christine_zhou"
-                  placeholderTextColor={'#485460'}
-                />
+                <View
+                  style={[
+                    styles.inputsTopTow,
+                    { flexDirection: 'row', alignItems: 'center' },
+                  ]}
+                >
+                  <Text style={{ marginRight: 2, marginTop: -2 }}>@</Text>
+                  <TextInput
+                    onChangeText={e => setUsername(e)}
+                    value={username}
+                    placeholder="christine_zhou"
+                    placeholderTextColor={'#485460'}
+                    style={{ width: '100%' }}
+                  />
+                </View>
               </View>
               <View style={styles.input_box}>
                 <Text style={styles.inputLabel}>{i18n.t('about_me')}</Text>

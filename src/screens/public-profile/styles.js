@@ -54,13 +54,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     justifyContent: 'space-between',
+    alignItems: 'center',
     flexDirection: 'row',
     width: 160,
   },
   publication_text: {
     fontSize: 15,
     fontFamily: 'ProximaNova',
-    paddingHorizontal: Platform.OS =='android' ?  2 : 0
+    paddingHorizontal: Platform.OS == 'android' ? 2 : 0,
   },
   sheet_elements: {
     flexDirection: 'row',

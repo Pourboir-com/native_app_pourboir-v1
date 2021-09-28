@@ -107,20 +107,20 @@ const ReviewDetails = ({ navigation, route }) => {
 
   useEffect(() => {
     (async () => {
-      // const { ExplanatoryScreen } = await getAsyncStorageValues();
-      // if (!ExplanatoryScreen?.explanatory_screen) {
-      const { locale } = await Localization.getLocalizationAsync();
-      setLocale(locale);
-      setTimeout(() => {
-        setTourModal(true);
-      }, 2000);
-      //   await AsyncStorage.setItem(
-      //     '@ExplanatoryScreen',
-      //     JSON.stringify({
-      //       explanatory_screen: true,
-      //     }),
-      //   );
-      // }
+      const { ExplanatoryScreen } = await getAsyncStorageValues();
+      if (!ExplanatoryScreen?.explanatory_screen) {
+        const { locale } = await Localization.getLocalizationAsync();
+        setLocale(locale);
+        setTimeout(() => {
+          setTourModal(true);
+        }, 2000);
+        await AsyncStorage.setItem(
+          '@ExplanatoryScreen',
+          JSON.stringify({
+            explanatory_screen: true,
+          }),
+        );
+      }
     })();
   }, []);
 
@@ -895,9 +895,7 @@ const ReviewDetails = ({ navigation, route }) => {
       </ScrollView>
       <TouchableOpacity
         activeOpacity={0.5}
-        disabled={
-          RestaurantDetails?.data?.manager?.status === 'active' ? false : true
-        }
+        disabled={Number(RestaurantDetails?.data?.menuCount) > 0 ? false : true}
         // onPress={() => {
         //   if (RestaurantDetails?.data?.menu_url) {
         //     WebBrowser.openBrowserAsync(RestaurantDetails?.data?.menu_url);
@@ -912,7 +910,7 @@ const ReviewDetails = ({ navigation, route }) => {
         style={[
           styles.viewLastBtn,
           { marginBottom: 10 },
-          RestaurantDetails?.data?.manager?.status == 'active' && section != 5
+          Number(RestaurantDetails?.data?.menuCount) > 0 && section != 5
             ? { backgroundColor: Colors.yellow }
             : section == 5
             ? { backgroundColor: 'transparent' }

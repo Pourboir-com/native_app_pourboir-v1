@@ -170,6 +170,9 @@ const SocialLogin = ({ navigation, route }) => {
             email: res?.user?.email || '',
             accessToken: accessToken || '',
             user_id: res?.user?._id || '',
+            username: res?.user?.username || '',
+            description: res?.user?.description || '',
+            last_name: res?.user?.last_name || '',
             os,
           };
           dispatch({
@@ -182,7 +185,12 @@ const SocialLogin = ({ navigation, route }) => {
               ...userDetails,
             }),
           );
-          if (vote) {
+
+          if (!res?.user?.username) {
+            navigation.replace('personalDetails', {
+              login: true,
+            });
+          } else if (vote) {
             navigation.replace('RateYourService');
             setVote(false);
           } else if (confirmWaiter || HelpUs) {
@@ -255,6 +263,10 @@ const SocialLogin = ({ navigation, route }) => {
                   email: res?.user?.email || '',
                   accessToken: token || '',
                   user_id: res?.user?._id || '',
+                  username: res?.user?.username || '',
+                  description: res?.user?.description || '',
+                  last_name: res?.user?.last_name || '',
+                  os,
                 };
 
                 dispatch({
@@ -269,7 +281,11 @@ const SocialLogin = ({ navigation, route }) => {
                   }),
                 );
 
-                if (vote) {
+                if (!res?.user?.username) {
+                  navigation.replace('personalDetails', {
+                    login: true,
+                  });
+                } else if (vote) {
                   navigation.replace('RateYourService');
                   setVote(false);
                 } else if (confirmWaiter || HelpUs) {
@@ -415,6 +431,10 @@ const SocialLogin = ({ navigation, route }) => {
                             email: res?.user?.email || '',
                             accessToken: credential.authorizationCode || '',
                             user_id: res?.user?._id || '',
+                            username: res?.user?.username || '',
+                            description: res?.user?.description || '',
+                            last_name: res?.user?.last_name || '',
+                            os,
                           };
 
                           dispatch({
@@ -428,7 +448,12 @@ const SocialLogin = ({ navigation, route }) => {
                               ...userDetails,
                             }),
                           );
-                          if (vote) {
+
+                          if (!res?.user?.username) {
+                            navigation.replace('personalDetails', {
+                              login: true,
+                            });
+                          } else if (vote) {
                             navigation.replace('RateYourService');
                             setVote(false);
                           } else if (confirmWaiter || HelpUs) {

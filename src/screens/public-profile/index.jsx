@@ -9,6 +9,7 @@ import {
   Linking,
   Platform,
 } from 'react-native';
+import Constants from 'expo-constants';
 import GlobalHeader from '../../components/GlobalHeader';
 import i18n from '../../li8n';
 import styles from './styles';
@@ -25,10 +26,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as IntentLauncher from 'expo-intent-launcher';
 import { config } from '../../constants';
 
-const PublicProfile = ({ navigation }) => {
+const PublicProfile = ({ navigation, route }) => {
   const obj = [1, 2, 3, 4, 5];
   const refRBSheet = useRef();
+  const { login } = route?.params || {};
   const { state, dispatch } = useContext(Context);
+
+  const pkg = Constants.manifest.releaseChannel
+    ? Constants.manifest.android.package
+    : 'host.exp.exponent';
 
   const resetState = async () => {
     navigation.replace('socialLogin');
@@ -44,7 +50,8 @@ const PublicProfile = ({ navigation }) => {
       Linking.openURL('app-settings:');
     } else {
       IntentLauncher.startActivityAsync(
-        IntentLauncher.ACTION_LOCATION_SOURCE_SETTINGS,
+        IntentLauncher.ACTION_APPLICATION_DETAILS_SETTINGS,
+        { data: 'package:' + pkg },
       );
     }
   };
@@ -113,11 +120,11 @@ const PublicProfile = ({ navigation }) => {
         >
           <GlobalHeader
             arrow={true}
-            headingText={`@${state?.userDetails?.name}`}
+            headingText={`@${state?.userDetails?.username}`}
             fontSize={17}
             color={'black'}
             navigation={navigation}
-            setting={false}
+            Home={login ? 'true' : 'false'}
             backgroundColor={'transparent'}
             borderRadius={true}
             menu={true}
@@ -138,7 +145,9 @@ const PublicProfile = ({ navigation }) => {
               }}
             />
             <View style={{ marginTop: 10, width: '55%' }}>
-              <Text style={styles.user_name}>{state?.userDetails?.name}</Text>
+              <Text style={styles.user_name}>
+                {state?.userDetails?.name} {state?.userDetails?.last_name}
+              </Text>
               <Text style={styles.clientTxt}>{i18n.t('client')}</Text>
               <View style={{ flexDirection: 'row', marginTop: 7 }}>
                 {obj.map((v, i) => {
@@ -155,7 +164,9 @@ const PublicProfile = ({ navigation }) => {
                   );
                 })}
               </View>
-              <Text style={styles.few_word_text}>{i18n.t('few_words')}</Text>
+              <Text style={styles.few_word_text}>
+                {state?.userDetails?.description}
+              </Text>
               <View
                 style={{
                   flexDirection: 'row',

@@ -21,9 +21,11 @@ const GlobalHeader = props => {
   const { state, dispatch } = useContext(Context);
 
   const goBackHandler = props => {
-    if (props.setting) {
+    if (props.login) {
+      props.navigation.navigate('personalDetails', { login: props?.login });
+    } else if (props?.setting) {
       props.navigation.navigate('Setting');
-    } else if (props.Home == 'true' && !state?.restaurantsDetails?.length) {
+    } else if (props?.Home == 'true' && !state?.restaurantsDetails?.length) {
       props.navigation.replace('Home', { crossIcon: false });
     } else {
       props.navigation.goBack(null);
@@ -44,7 +46,10 @@ const GlobalHeader = props => {
 
   React.useEffect(() => {
     const handleBackButtonClick = () => {
-      if (props.setting) {
+      if (props.login) {
+        props.navigation.navigate('personalDetails', { login: props?.login });
+        return true;
+      } else if (props.setting) {
         props.navigation.navigate('Setting');
         return true;
       } else if (props.Home == 'true' && !state?.restaurantsDetails?.length) {

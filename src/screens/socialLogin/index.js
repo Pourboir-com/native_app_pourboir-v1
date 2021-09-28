@@ -173,6 +173,7 @@ const SocialLogin = ({ navigation, route }) => {
             username: res?.user?.username || '',
             description: res?.user?.description || '',
             last_name: res?.user?.last_name || '',
+            calling_code: res?.user?.calling_code || '',
             os,
           };
           dispatch({
@@ -266,6 +267,7 @@ const SocialLogin = ({ navigation, route }) => {
                   username: res?.user?.username || '',
                   description: res?.user?.description || '',
                   last_name: res?.user?.last_name || '',
+                  calling_code: res?.user?.calling_code || '',
                   os,
                 };
 
@@ -434,6 +436,7 @@ const SocialLogin = ({ navigation, route }) => {
                             username: res?.user?.username || '',
                             description: res?.user?.description || '',
                             last_name: res?.user?.last_name || '',
+                            calling_code: res?.user?.calling_code || '',
                             os,
                           };
 

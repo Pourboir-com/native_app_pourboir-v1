@@ -74,6 +74,7 @@ export default function SplashScreen(props) {
         username: userInfo?.username || '',
         description: userInfo?.description || '',
         last_name: userInfo?.last_name || '',
+        calling_code: userInfo?.calling_code || '',
       };
       dispatch({
         type: actionTypes.USER_DETAILS,

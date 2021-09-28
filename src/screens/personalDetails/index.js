@@ -44,7 +44,7 @@ const PersonalDetails = ({ navigation, route }) => {
   const [about, setAbout] = useState(state?.userDetails?.description);
   const [loading, setLoading] = useState();
   const [isOpenCountryPicker, setIsOpenCountryPicker] = useState(false);
-  const [countryCode, setCountryCode] = useState('+91');
+  const [countryCode, setCountryCode] = useState(state?.userDetails?.calling_code || '+91');
   //Mutation
   const [updatePicture] = useMutation(UPDATE_PICTURE);
   const [editUser] = useMutation(EDIT_USER);
@@ -74,6 +74,7 @@ const PersonalDetails = ({ navigation, route }) => {
         phone_number: phone || '',
         username: username || '',
         description: about || '',
+        calling_code: countryCode || '',
         image: image || '',
       };
       let editProfile = {
@@ -84,6 +85,7 @@ const PersonalDetails = ({ navigation, route }) => {
         email: email || '',
         username: username || '',
         description: about || '',
+        calling_code: countryCode || '',
       };
       let formData = new FormData();
       formData.append('image', {

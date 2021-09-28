@@ -90,7 +90,7 @@ const Review = ({
         ) : null}
       </View>
 
-      <View style={{ marginHorizontal: 15, marginVertical: 10 }}>
+      <View style={{ marginLeft: 20, marginVertical: 10 }}>
         <FlatList
           data={reviewData?.data || []}
           renderItem={({ item }) => (

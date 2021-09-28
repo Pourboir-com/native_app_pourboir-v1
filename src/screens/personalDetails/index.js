@@ -44,12 +44,15 @@ const PersonalDetails = ({ navigation, route }) => {
   const [about, setAbout] = useState(state?.userDetails?.description);
   const [loading, setLoading] = useState();
   const [isOpenCountryPicker, setIsOpenCountryPicker] = useState(false);
-  const [countryCode, setCountryCode] = useState(state?.userDetails?.calling_code || '+91');
+  const [countryCode, setCountryCode] = useState(
+    state?.userDetails?.calling_code || '+33',
+  );
   //Mutation
   const [updatePicture] = useMutation(UPDATE_PICTURE);
   const [editUser] = useMutation(EDIT_USER);
   let emailError = email && !validator?.isEmail(email);
-  const validate = FirstName && LastName && email && username && phone && image && !emailError;
+  const validate =
+    FirstName && LastName && email && username && phone && !emailError;
 
   const handleChangePicture = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -99,7 +102,11 @@ const PersonalDetails = ({ navigation, route }) => {
       };
 
       await updatePicture(UploadData, {});
-      await editUser(editProfile, {});
+      await editUser(editProfile, {
+        onError: e => {
+          alert(e.response?.data?.message);
+        },
+      });
 
       dispatch({
         type: actionTypes.USER_DETAILS,
@@ -424,7 +431,7 @@ const PersonalDetails = ({ navigation, route }) => {
       </ScrollView>
       <View
         style={{
-          marginHorizontal: '4%',
+          marginHorizontal: '5%',
           marginBottom: Platform.OS === 'ios' ? 25 : 15,
           backgroundColor: 'transparent',
         }}

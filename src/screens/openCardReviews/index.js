@@ -265,7 +265,7 @@ const ReviewDetails = ({ navigation, route }) => {
         onError: e => {
           handleRefferedModalClose();
           setRefferedLoading(false);
-          alert(e);
+          alert(e.response?.data?.message);
         },
       });
     } else {
@@ -747,7 +747,6 @@ const ReviewDetails = ({ navigation, route }) => {
             style={{
               flexDirection: 'row',
               marginBottom: 10,
-              alignItems: 'center',
             }}
           >
             <Review

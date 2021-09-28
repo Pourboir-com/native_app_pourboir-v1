@@ -76,7 +76,12 @@ const MenuScreen = ({ navigation, route }) => {
                               alignItems: 'center',
                             }}
                           >
-                            <Text style={styles.price}>{item.currency || '€' + ' ' + dish.price || '0'}</Text>
+                            <Text style={styles.price}>
+                              {item?.currency || '€'}
+                            </Text>
+                            <Text style={styles.price}>
+                              {dish.price || '0'}
+                            </Text>
                           </View>
                         </View>
                       );

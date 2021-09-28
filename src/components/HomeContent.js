@@ -234,7 +234,7 @@ export default function HomeScreenContent({
               showsHorizontalScrollIndicator={false}
               // onEndReached={handleLoadMore}
               // onEndReachedThreshold={0.5}
-              alwaysBounceHorizontal={true}
+              alwaysBounceHorizontal={false}
               horizontal={true}
               keyboardShouldPersistTaps={'handled'}
               alwaysBounceVertical={false}

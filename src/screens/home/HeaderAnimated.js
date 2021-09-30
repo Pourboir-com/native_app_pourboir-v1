@@ -227,7 +227,17 @@ const HomeScreen = props => {
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate('PublicProfile')}
                 >
-                  <FontAwesome name="user-circle-o" size={37} color="black" />
+                  <Image
+                    style={{
+                      borderRadius: 90,
+                      width: 40,
+                      height: 40,
+                    }}
+                    source={{
+                      uri:
+                        'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png',
+                    }}
+                  />
                 </TouchableOpacity>
               )}
             </>

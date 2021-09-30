@@ -136,14 +136,28 @@ const PublicProfile = ({ navigation, route }) => {
         <View style={{ marginTop: 25 }}>
           {/* Section 1  */}
           <View style={styles.userDetails_container}>
-            <Image
-              source={{ uri: state?.userDetails?.image }}
-              style={{
-                width: 140,
-                height: 140,
-                borderRadius: 280,
-              }}
-            />
+            {state.userDetails.image ? (
+              <Image
+                source={{ uri: state?.userDetails?.image }}
+                style={{
+                  width: 140,
+                  height: 140,
+                  borderRadius: 280,
+                }}
+              />
+            ) : (
+              <Image
+                source={{
+                  uri:
+                    'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png',
+                }}
+                style={{
+                  width: 140,
+                  height: 140,
+                  borderRadius: 280,
+                }}
+              />
+            )}
             <View style={{ marginTop: 10, width: '55%' }}>
               <Text style={styles.user_name}>
                 {state?.userDetails?.name} {state?.userDetails?.last_name}

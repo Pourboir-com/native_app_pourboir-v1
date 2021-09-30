@@ -67,68 +67,76 @@ const PersonalDetails = ({ navigation, route }) => {
   };
 
   const handleEditProfile = async () => {
-    if (state?.userDetails?.user_id) {
-      setLoading(true);
-      let userDetails = {
-        ...state.userDetails,
-        name: FirstName || '',
-        last_name: LastName || '',
-        email: email || '',
-        phone_number: phone || '',
-        username: username || '',
-        description: about || '',
-        calling_code: countryCode || '',
-        image: image || '',
-      };
-      let editProfile = {
-        id: state.userDetails.user_id,
-        first_name: FirstName || '',
-        last_name: LastName || '',
-        phone_number: phone || '',
-        email: email || '',
-        username: username || '',
-        description: about || '',
-        calling_code: countryCode || '',
-      };
-      let formData = new FormData();
-      formData.append('image', {
-        uri: image,
-        type: `image/${image.split('.')[1]}`,
-        name: image.substr(image.lastIndexOf('/') + 1),
-      });
-      let UploadData = {
-        user_id: state.userDetails.user_id,
-        image: formData,
-      };
+    try {
+      if (state?.userDetails?.user_id) {
+        setLoading(true);
+        let userDetails = {
+          ...state.userDetails,
+          name: FirstName || '',
+          last_name: LastName || '',
+          email: email || '',
+          phone_number: phone || '',
+          username: username || '',
+          description: about || '',
+          calling_code: countryCode || '',
+          image: image || '',
+        };
+        let editProfile = {
+          id: state.userDetails.user_id,
+          first_name: FirstName || '',
+          last_name: LastName || '',
+          phone_number: phone || '',
+          email: email || '',
+          username: username || '',
+          description: about || '',
+          calling_code: countryCode || '',
+        };
+        let formData = new FormData();
+        formData.append('image', {
+          uri: image,
+          type: `image/${image.split('.')[1]}`,
+          name: image.substr(image.lastIndexOf('/') + 1),
+        });
+        let UploadData = {
+          user_id: state.userDetails.user_id,
+          image: formData,
+        };
+        if (image) {
+          await updatePicture(UploadData, {});
+        }
+        await editUser(editProfile, {
+          onSuccess: () => {
+            setLoading(false);
+            navigation.replace('PublicProfile', { login });
+            alert('Your profile has been updated.');
+          },
+          onError: e => {
+            setLoading(false);
+            alert(e.response?.data?.message);
+          },
+        });
 
-      await updatePicture(UploadData, {});
-      await editUser(editProfile, {
-        onError: e => {
-          alert(e.response?.data?.message);
-        },
-      });
-
-      dispatch({
-        type: actionTypes.USER_DETAILS,
-        payload: { ...state.userDetails, ...userDetails },
-      });
-      const { userInfo } = await getAsyncStorageValues();
-      await AsyncStorage.setItem(
-        '@userInfo',
-        JSON.stringify({
-          ...userInfo,
-          ...userDetails,
-        }),
-      );
-      await AsyncStorage.setItem(
-        '@profileInfo',
-        JSON.stringify({
-          info: true,
-        }),
-      );
+        dispatch({
+          type: actionTypes.USER_DETAILS,
+          payload: { ...state.userDetails, ...userDetails },
+        });
+        const { userInfo } = await getAsyncStorageValues();
+        await AsyncStorage.setItem(
+          '@userInfo',
+          JSON.stringify({
+            ...userInfo,
+            ...userDetails,
+          }),
+        );
+        await AsyncStorage.setItem(
+          '@profileInfo',
+          JSON.stringify({
+            info: true,
+          }),
+        );
+      }
+    } catch {
       setLoading(false);
-      alert('Your profile has been updated.');
-      navigation.replace('PublicProfile', { login });
     }
   };
 

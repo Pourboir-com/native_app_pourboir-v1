@@ -155,6 +155,8 @@ const PublicProfile = ({ navigation, route }) => {
                   width: 140,
                   height: 140,
                   borderRadius: 280,
+                  borderColor: '#FFE685',
+                  borderWidth: 2,
                 }}
               />
             )}

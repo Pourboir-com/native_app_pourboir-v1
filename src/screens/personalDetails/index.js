@@ -86,8 +86,10 @@ const PersonalDetails = ({ navigation, route }) => {
           first_name: FirstName || '',
           last_name: LastName || '',
           phone_number: phone || '',
-          email: email || '',
-          username: username || '',
+          ...(state?.userDetails?.username != username && {
+            username: username || '',
+          }),
+          ...(state?.userDetails?.email != email && { email: email || '' }),
           description: about || '',
           calling_code: countryCode || '',
         };
@@ -105,7 +107,25 @@ const PersonalDetails = ({ navigation, route }) => {
           await updatePicture(UploadData, {});
         }
         await editUser(editProfile, {
-          onSuccess: () => {
+          onSuccess: async () => {
+            dispatch({
+              type: actionTypes.USER_DETAILS,
+              payload: { ...state.userDetails, ...userDetails },
+            });
+            const { userInfo } = await getAsyncStorageValues();
+            await AsyncStorage.setItem(
+              '@userInfo',
+              JSON.stringify({
+                ...userInfo,
+                ...userDetails,
+              }),
+            );
+            await AsyncStorage.setItem(
+              '@profileInfo',
+              JSON.stringify({
+                info: true,
+              }),
+            );
             setLoading(false);
             navigation.replace('PublicProfile', { login });
             alert('Your profile has been updated.');
@@ -115,25 +135,6 @@ const PersonalDetails = ({ navigation, route }) => {
             alert(e.response?.data?.message);
           },
         });
-
-        dispatch({
-          type: actionTypes.USER_DETAILS,
-          payload: { ...state.userDetails, ...userDetails },
-        });
-        const { userInfo } = await getAsyncStorageValues();
-        await AsyncStorage.setItem(
-          '@userInfo',
-          JSON.stringify({
-            ...userInfo,
-            ...userDetails,
-          }),
-        );
-        await AsyncStorage.setItem(
-          '@profileInfo',
-          JSON.stringify({
-            info: true,
-          }),
-        );
       }
     } catch {
       setLoading(false);

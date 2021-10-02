@@ -15,6 +15,7 @@ import {
   Alert,
   Share,
 } from 'react-native';
+import * as actionTypes from '../../contextApi/actionTypes';
 import StarCard from '../../components/star-card';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
@@ -384,6 +385,10 @@ const ReviewDetails = ({ navigation, route }) => {
         onSuccess: async () => {
           await refetchFavorites();
           refetchRestaurant();
+          dispatch({
+            type: actionTypes.REFRESH_ANIMATION,
+            payload: !state.refreshAnimation,
+          });
         },
       });
     } else {

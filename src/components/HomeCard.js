@@ -145,7 +145,7 @@ const HomeCard = ({
             <View style={styles.view2Card}>
               <Text style={[styles.txt2Card, { fontFamily: 'ProximaNova' }]}>
                 {Number(distance) > 2000
-                  ? Number(distance) / 1000 + 'km'
+                  ? Math.round(Number(distance) / 1000) + 'km'
                   : distance
                   ? distance + 'm'
                   : ''}

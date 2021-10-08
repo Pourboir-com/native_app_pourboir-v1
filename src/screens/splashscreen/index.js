@@ -146,6 +146,19 @@ export default function SplashScreen(props) {
           let location = await locationFunction();
           const token = await checkNotificationPermission();
           const { locale } = await Localization.getLocalizationAsync();
+
+          if (Platform.OS === 'ios') {
+            validateNavigationIOS(
+              props.navigation,
+              tracking,
+              location,
+              token,
+              userInfo,
+            );
+          } else {
+            validateNavigationAndroid(props.navigation, location, userInfo);
+          }
+
           if (userInfo?.user_id) {
             await sendNotificationToken({
               id: userInfo?.user_id || '',
@@ -166,18 +179,6 @@ export default function SplashScreen(props) {
                 // });
               },
             );
-          }
-
-          if (Platform.OS === 'ios') {
-            validateNavigationIOS(
-              props.navigation,
-              tracking,
-              location,
-              token,
-              userInfo,
-            );
-          } else {
-            validateNavigationAndroid(props.navigation, location, userInfo);
           }
 
           Animated.spring(springValue, {

@@ -384,7 +384,7 @@ const ReviewDetails = ({ navigation, route }) => {
       await AddFavorite(newFavorite, {
         onSuccess: async () => {
           await refetchFavorites();
-          refetchRestaurant();
+          await refetchRestaurant();
           dispatch({
             type: actionTypes.REFRESH_ANIMATION,
             payload: !state.refreshAnimation,

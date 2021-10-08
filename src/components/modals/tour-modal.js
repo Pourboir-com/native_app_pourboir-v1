@@ -142,7 +142,6 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
               <TouchableOpacity
                 activeOpacity={0.7}
                 style={styles.btn}
-                onPress={() => alert('added to fav alert')}
               >
                 <Text
                   style={[

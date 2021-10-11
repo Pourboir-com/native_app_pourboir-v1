@@ -25,6 +25,7 @@ import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as IntentLauncher from 'expo-intent-launcher';
 import { config } from '../../constants';
+import { email_to } from '../../constants/env';
 
 const PublicProfile = ({ navigation, route }) => {
   const obj = [1, 2, 3, 4, 5];
@@ -95,13 +96,24 @@ const PublicProfile = ({ navigation, route }) => {
     },
     {
       element: i18n.t('rate_app'),
-      func: () =>
-        Linking.openURL(
-          'https://play.google.com/store/apps/details?id=com.developerspourboir.pourboir&hl=en&gl=US',
-        ),
+      func: () => {
+        if (Platform.OS === 'ios') {
+          Linking.openURL(
+            `itms-apps://itunes.apple.com/app/viewContentsUserReviews/id${1552612137}?action=write-review`,
+          );
+        }
+        if (Platform.OS === 'android') {
+          Linking.openURL(
+            `https://play.google.com/store/apps/details?id=com.developerspourboir.pourboir&showAllReviews=true`,
+          );
+        }
+      },
     },
     {
       element: i18n.t('contact_us'),
+      func: () => {
+        Linking.openURL(`mailto:${email_to}`);
+      },
     },
   ];
 

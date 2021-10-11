@@ -333,7 +333,7 @@ const ReviewDetails = ({ navigation, route }) => {
       navigation.navigate('socialLogin', { confirmWaiter: true });
     }
   };
-  const [managerApproval, { isLoading: publishMenuLoading }] = useMutation(
+  const [managerApproval, { isLoading: managerApprovalLoading }] = useMutation(
     MANAGER_APPROVAL,
   );
   // console.log('rest ', RestaurantDetails.data._id)
@@ -346,7 +346,7 @@ const ReviewDetails = ({ navigation, route }) => {
         restaurant,
       },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
           setApprovalModal(false);
           setReceivedModal(true);
         },
@@ -405,11 +405,13 @@ const ReviewDetails = ({ navigation, route }) => {
     <View style={styles.container}>
       <Spinner
         visible={
-          waitersIsFetching &&
-          !Refferedloading &&
-          !Userloading &&
-          !reviewDataLoading &&
-          !waitersLoading
+          (waitersIsFetching &&
+            !Refferedloading &&
+            !Userloading &&
+            !reviewDataLoading &&
+            !waitersLoading) ||
+          RestaurantDetailsIsFetching ||
+          RestaurantDetailsLoading
         }
       />
       <StatusBar translucent={true} style="light" />
@@ -1022,19 +1024,24 @@ const ReviewDetails = ({ navigation, route }) => {
           receivedModal={receivedModal}
           setReceivedModal={setReceivedModal}
           submitApproval={submitApproval}
-          loading={publishMenuLoading}
+          loading={managerApprovalLoading}
         />
       )}
-      <ReceivedModal
-        receivedModal={receivedModal}
-        setReceivedModal={setReceivedModal}
-      />
-      <TourModal
-        tourModal={tourModal}
-        setTourModal={setTourModal}
-        section={section}
-        setSection={setSection}
-      />
+      {receivedModal && (
+        <ReceivedModal
+          receivedModal={receivedModal}
+          setReceivedModal={setReceivedModal}
+          refetchRestaurantDetails={refetchRestaurantDetails}
+        />
+      )}
+      {tourModal && (
+        <TourModal
+          tourModal={tourModal}
+          setTourModal={setTourModal}
+          section={section}
+          setSection={setSection}
+        />
+      )}
     </View>
   );
 };

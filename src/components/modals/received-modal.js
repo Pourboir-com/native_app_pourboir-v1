@@ -16,12 +16,19 @@ const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-const ReceivedModal = ({ receivedModal, setReceivedModal }) => {
+const ReceivedModal = ({
+  receivedModal,
+  setReceivedModal,
+  refetchRestaurantDetails,
+}) => {
   return (
     <Overlay
       overlayStyle={styles.container}
       isVisible={receivedModal}
-      onBackdropPress={() => setReceivedModal(false)}
+      onBackdropPress={() => {
+        setReceivedModal(false);
+        refetchRestaurantDetails();
+      }}
     >
       <ImageBackground
         style={styles.imgBgStyle}
@@ -81,7 +88,10 @@ const ReceivedModal = ({ receivedModal, setReceivedModal }) => {
 
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={() => setReceivedModal(false)}
+          onPress={() => {
+            setReceivedModal(false);
+            refetchRestaurantDetails();
+          }}
           style={[styles.btn_yellow]}
         >
           <Text

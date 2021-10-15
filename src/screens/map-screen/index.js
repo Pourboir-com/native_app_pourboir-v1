@@ -9,7 +9,7 @@ import GlobalHeader from '../../components/GlobalHeader';
 const MapScreen = ({ navigation, route }) => {
   const { geometry, name } = route?.params || {};
   const [isMapReady, setIsMapReady] = useState(false);
-
+  console.log(geometry);
   return (
     <View style={styles.container}>
       <StatusBar translucent={true} style="dark" />

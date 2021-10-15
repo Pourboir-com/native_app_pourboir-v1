@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -19,6 +19,7 @@ const imgWaiter = require('../../assets/images/Version-control-pana.png');
 const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import CheckBox from 'react-native-check-box';
+import RPCountryPickerInfo from 'react-native-country-picker-info';
 
 const ManagerApprovalModal = ({
   termsChecked,
@@ -32,8 +33,20 @@ const ManagerApprovalModal = ({
   setReceivedModal,
   submitApproval,
   loading,
+  countryCode,
+  setCountryCode,
 }) => {
   const validation = termsChecked && cellPhone && siretNumber;
+  const [isOpenCountryPicker, setIsOpenCountryPicker] = useState(false);
+
+  const onPressOpenPicker = () => {
+    setIsOpenCountryPicker(!isOpenCountryPicker);
+  };
+
+  const onPressCountryItem = countryInfo => {
+    setCountryCode(countryInfo.dial_code);
+    setIsOpenCountryPicker(false);
+  };
 
   const Claim = () => {
     setApprovalModal(false);
@@ -129,18 +142,37 @@ const ManagerApprovalModal = ({
                 />
               </View>
               <View
-                style={
-                  (styles.input_box, { alignItems: 'center', marginTop: 15 })
-                }
+                style={[
+                  styles.inputsTopTow,
+                  {
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: 15,
+                    overflow: 'hidden',
+                  },
+                ]}
               >
-                <TextInput
-                  style={styles.inputsTopTow}
-                  onChangeText={e => setCellPhone(e)}
-                  keyboardType={'numeric'}
-                  value={cellPhone}
-                  placeholder={i18n.t('cellPhone')}
-                  placeholderTextColor={'#707375'}
+                <RPCountryPickerInfo
+                  isVisible={isOpenCountryPicker}
+                  isVisibleCancelButton={false}
+                  onPressClosePicker={onPressOpenPicker}
+                  onPressSelect={onPressCountryItem}
                 />
+                <View style={{ flexDirection: 'row', alignItems: 'center', width:'auto' }}>
+                  <TouchableOpacity onPress={onPressOpenPicker}>
+                    <Text style={{ marginRight: 3, fontSize: 15 }}>
+                      {countryCode}
+                    </Text>
+                  </TouchableOpacity>
+                  <TextInput
+                    style={{ fontSize: 16 }}
+                    onChangeText={e => setCellPhone(e)}
+                    keyboardType={'numeric'}
+                    value={cellPhone}
+                    placeholder={i18n.t('cellPhone')}
+                    placeholderTextColor={'#707375'}
+                  />
+                </View>
               </View>
               <View
                 style={{
@@ -175,7 +207,7 @@ const ManagerApprovalModal = ({
                   />
                 </View>
 
-                <View
+                <Text
                   style={{
                     flexDirection: 'row',
                     paddingLeft: 2,
@@ -209,7 +241,7 @@ const ManagerApprovalModal = ({
                       </Text>
                     </TouchableOpacity>
                   ) : null}
-                </View>
+                </Text>
               </View>
               {Platform.OS == 'android' ? (
                 <TouchableOpacity style={{ marginLeft: 44, marginTop: -5 }}>

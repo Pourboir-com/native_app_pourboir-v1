@@ -105,6 +105,7 @@ const ReviewDetails = ({ navigation, route }) => {
   const [AddFavorite, { isLoading: favLoading }] = useMutation(ADD_FAVORITE);
   const [section, setSection] = useState(1);
   const [locale, setLocale] = useState(1);
+  const [countryCode, setCountryCode] = useState('+33');
 
   useEffect(() => {
     (async () => {
@@ -248,6 +249,7 @@ const ReviewDetails = ({ navigation, route }) => {
     international_phone_number:
       RestaurantDetails?.data?.international_phone_number || '',
   };
+
   const handleAddWaiter = async (fullName, email) => {
     if (state.userDetails.user_id) {
       setRefferedLoading(true);
@@ -342,7 +344,7 @@ const ReviewDetails = ({ navigation, route }) => {
       {
         user_id: state.userDetails.user_id,
         siret_number: siretNumber,
-        cell_number: cellPhone,
+        cell_number: `${countryCode}${cellPhone}`,
         restaurant,
       },
       {
@@ -356,6 +358,7 @@ const ReviewDetails = ({ navigation, route }) => {
       },
     );
   };
+
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -1025,6 +1028,8 @@ const ReviewDetails = ({ navigation, route }) => {
           setReceivedModal={setReceivedModal}
           submitApproval={submitApproval}
           loading={managerApprovalLoading}
+          countryCode={countryCode}
+          setCountryCode={setCountryCode}
         />
       )}
       {receivedModal && (

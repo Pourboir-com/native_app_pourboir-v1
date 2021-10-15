@@ -198,19 +198,19 @@ export default function HomeScreenContent({
           alwaysBounceVertical={true}
           showsVerticalScrollIndicator={false}
           alwaysBounceHorizontal={false}
-          // refreshControl={
-          //   refetchRestaurant &&
-          //   resIsFetching && (
-          //     <RefreshControl
-          //       //refresh control used for the Pull to Refresh
-          //       refreshing={!route.params.crossIcon && resIsFetching}
-          //       // color="#F9F9F9"
-          //       // tintColor="#F9F9F9"
-          //       // onRefresh={refetchRestaurant}
-          //       onRefresh={() => {}}
-          //     />
-          //   )
-          // }
+          refreshControl={
+            refetchRestaurant &&
+            resIsFetching && (
+              <RefreshControl
+                //refresh control used for the Pull to Refresh
+                refreshing={!route.params.crossIcon && resIsFetching}
+                // color="#F9F9F9"
+                // tintColor="#F9F9F9"
+                // onRefresh={refetchRestaurant}
+                onRefresh={() => {}}
+              />
+            )
+          }
           keyboardShouldPersistTaps={'handled'}
           style={{ backgroundColor: '#F9F9F9' }}
         >

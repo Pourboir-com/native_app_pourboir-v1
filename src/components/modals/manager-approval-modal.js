@@ -20,6 +20,7 @@ const imgBg = require('../../assets/images/Group7.png');
 import i18n from '../../li8n';
 import CheckBox from 'react-native-check-box';
 import RPCountryPickerInfo from 'react-native-country-picker-info';
+import * as WebBrowser from 'expo-web-browser';
 
 const ManagerApprovalModal = ({
   termsChecked,
@@ -158,7 +159,7 @@ const ManagerApprovalModal = ({
                   onPressClosePicker={onPressOpenPicker}
                   onPressSelect={onPressCountryItem}
                 />
-                <View style={{ flexDirection: 'row', alignItems: 'center', width:'auto' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <TouchableOpacity onPress={onPressOpenPicker}>
                     <Text style={{ marginRight: 3, fontSize: 15 }}>
                       {countryCode}
@@ -174,88 +175,81 @@ const ManagerApprovalModal = ({
                   />
                 </View>
               </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: 30,
-                  marginBottom: 10,
-                  marginHorizontal: 20,
-                }}
-              >
-                <View>
-                  <CheckBox
-                    style={{
-                      zIndex: 9999,
-                      marginTop: Platform.OS === 'ios' ? -14 : -13,
-                    }}
-                    onClick={() => setTermsChecked(!termsChecked)}
-                    isChecked={termsChecked}
-                    checkedImage={
-                      <Image
-                        style={{ width: 18, height: 18, marginTop: -4 }}
-                        resizeMode={'contain'}
-                        source={require('../../assets/images/checked.png')}
-                      />
-                    }
-                    unCheckedImage={
-                      <Image
-                        style={{ width: 15, height: 15 }}
-                        resizeMode={'contain'}
-                        source={require('../../assets/images/unchecked.png')}
-                      />
-                    }
-                  />
-                </View>
+            </View>
 
-                <Text
-                  style={{
-                    flexDirection: 'row',
-                    paddingLeft: 2,
-                    marginTop: -14,
-                    justifyContent: 'center',
-                  }}
-                >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: 12,
+                height: 30,
+                textAlign: 'center',
+              }}
+            >
+              <CheckBox
+                style={{
+                  zIndex: 9999,
+                  marginTop: Platform.OS === 'ios' ? -10 : -2,
+                }}
+                onClick={() => setTermsChecked(!termsChecked)}
+                isChecked={termsChecked}
+                checkedImage={
+                  <Image
+                    style={{ width: 18, marginTop: -4 }}
+                    resizeMode={'contain'}
+                    source={require('../../assets/images/checked.png')}
+                  />
+                }
+                unCheckedImage={
+                  <Image
+                    style={{ width: 16 }}
+                    resizeMode={'contain'}
+                    source={require('../../assets/images/unchecked.png')}
+                  />
+                }
+              />
+              <Text
+                style={[
+                  {
+                    textAlign: 'center',
+                  },
+                ]}
+              >
+                <View style={{ flexDirection: 'row' }}>
                   <Text
-                    // onPress={() =>alert('clicked')}
                     style={{
-                      fontSize: Platform.OS === 'ios' ? 15 : 16,
-                      color: '#000',
-                      fontFamily: 'ProximaNova',
-                      flexDirection: 'row',
+                      color: Colors.fontLight,
+                      textAlign: 'center',
+                      fontSize: 14,
+                      marginLeft: 5,
                     }}
+                    onPress={() => setTermsChecked(!termsChecked)}
                   >
-                    {' '}
                     {i18n.t('i_accepts')}{' '}
                   </Text>
-
-                  {Platform.OS == 'ios' ? (
-                    <TouchableOpacity>
-                      <Text
-                        style={{
-                          color: '#0050A0',
-                          fontSize: Platform.OS === 'ios' ? 15 : 14,
-                          fontFamily: 'ProximaNova',
-                        }}
-                      >
-                        {i18n.t('term_cond')}
-                      </Text>
-                    </TouchableOpacity>
-                  ) : null}
-                </Text>
-              </View>
-              {Platform.OS == 'android' ? (
-                <TouchableOpacity style={{ marginLeft: 44, marginTop: -5 }}>
-                  <Text
-                    style={{
-                      color: '#0050A0',
-                      fontSize: Platform.OS === 'ios' ? 15 : 16,
-                      fontFamily: 'ProximaNova',
-                    }}
+                  <TouchableOpacity
+                    onPress={() =>
+                      WebBrowser.openBrowserAsync(
+                        'https://pourboir.com/fr/need-help/privacy-policy/',
+                      )
+                    }
                   >
-                    {i18n.t('term_cond')}
-                  </Text>
-                </TouchableOpacity>
-              ) : null}
+                    <Text
+                      style={{
+                        color: '#0050A0',
+                        fontSize: 14,
+                        fontFamily: 'ProximaNova',
+                        lineHeight: 24,
+                        textAlign: 'center',
+                        marginTop: Platform.OS === 'android' ? -1 : -2.5,
+                      }}
+                    >
+                      {i18n.t('term_cond')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </Text>
             </View>
 
             <TouchableOpacity
@@ -298,8 +292,6 @@ const styles = StyleSheet.create({
     borderColor: '#E3E3E3',
     borderWidth: 1,
     width: '88%',
-    // paddingLeft: 10,
-    // paddingRight: 10,
     alignSelf: 'center',
     height: 48,
     borderRadius: 10,
@@ -366,9 +358,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 270,
     height: 48,
-    // paddingVertical: 13,
-    // paddingHorizontal: 10,
     alignItems: 'center',
-    //  marginTop:40
   },
 });

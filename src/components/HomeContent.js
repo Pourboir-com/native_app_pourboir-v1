@@ -39,6 +39,7 @@ export default function HomeScreenContent({
   title,
   searchTitle,
   favoriteRes,
+  noRefresh
 }) {
   const [data, setData] = useState([]);
   const navigation = useNavigation();
@@ -200,7 +201,7 @@ export default function HomeScreenContent({
           alwaysBounceHorizontal={false}
           refreshControl={
             refetchRestaurant &&
-            resIsFetching && (
+            resIsFetching && !noRefresh && (
               <RefreshControl
                 //refresh control used for the Pull to Refresh
                 refreshing={!route.params.crossIcon && resIsFetching}

@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useContext } from 'react';
 import { Image, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import styles from './styles';
 import Modal from 'react-native-modal';
 import { ScrollView } from 'react-native-gesture-handler';
-import i18n from '../../li8n';
 import RangeSlider from 'rn-range-slider';
 import RatingStar from '../../components/RatingComponent';
+import Context from '../../contextApi/context';
 
 const FilterModal = ({
   filterModal,
@@ -14,6 +14,8 @@ const FilterModal = ({
   FilterStates,
   filterOnPress,
 }) => {
+  const { localizationContext } = useContext(Context);
+
   const { avail, low, high, rating, position } = FilterStates;
   const [availability, setAvailability] = useState(avail || '');
   const [expLow, setExpLow] = useState(low || 0);
@@ -64,13 +66,17 @@ const FilterModal = ({
       >
         <ScrollView bounces={false} keyboardShouldPersistTaps={'handled'}>
           <View style={{ alignItems: 'center', marginTop: 20 }}>
-            <Text style={styles.filterTxt}>{i18n.t('filter')}s</Text>
+            <Text style={styles.filterTxt}>
+              {localizationContext.t('filter')}s
+            </Text>
           </View>
           <View style={{ marginTop: 20, marginHorizontal: 25 }}>
             <View>
-              <Text style={styles.postsLabel}>{i18n.t('position')}</Text>
+              <Text style={styles.postsLabel}>
+                {localizationContext.t('position')}
+              </Text>
               <TextInput
-                placeholder={i18n.t('position_list')}
+                placeholder={localizationContext.t('position_list')}
                 placeholderTextColor="#707070"
                 style={styles.postsInput}
                 onChangeText={e => setSeacrhPosition(e)}
@@ -78,7 +84,9 @@ const FilterModal = ({
               />
             </View>
             <View style={{ marginVertical: 22 }}>
-              <Text style={styles.postsLabel}>{i18n.t('availability')}</Text>
+              <Text style={styles.postsLabel}>
+                {localizationContext.t('availability')}
+              </Text>
               <View style={{ marginLeft: 0 }}>
                 <View style={{ flexDirection: 'row' }}>
                   <View style={{ marginBottom: 8, flexDirection: 'row' }}>
@@ -126,7 +134,7 @@ const FilterModal = ({
                             availability === 'full' ? 'bold' : 'normal',
                         }}
                       >
-                        {i18n.t('full')}
+                        {localizationContext.t('full')}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -173,14 +181,16 @@ const FilterModal = ({
                         fontWeight: availability === 'half' ? 'bold' : 'normal',
                       }}
                     >
-                      {i18n.t('part_time')}
+                      {localizationContext.t('part_time')}
                     </Text>
                   </TouchableOpacity>
                 </View>
               </View>
             </View>
             <View>
-              <Text style={styles.postsLabel}>{i18n.t('experience')}</Text>
+              <Text style={styles.postsLabel}>
+                {localizationContext.t('experience')}
+              </Text>
               <View style={{ marginHorizontal: 4, marginTop: 12 }}>
                 <RangeSlider
                   min={0}
@@ -205,18 +215,24 @@ const FilterModal = ({
               >
                 <Text style={styles.fontYears}>
                   {expLow}{' '}
-                  <Text style={styles.ansFont}>{i18n.t('years')} </Text>
+                  <Text style={styles.ansFont}>
+                    {localizationContext.t('years')}{' '}
+                  </Text>
                 </Text>
                 <Text style={styles.fontYears}>
                   {expHigh}{' '}
                   <Text style={styles.ansFont}>
-                    {expHigh > 1 ? i18n.t('years') + 's' : i18n.t('years')}{' '}
+                    {expHigh > 1
+                      ? localizationContext.t('years') + 's'
+                      : localizationContext.t('years')}{' '}
                   </Text>
                 </Text>
               </View>
             </View>
             <View style={{ marginTop: 20 }}>
-              <Text style={styles.postsLabel}>{i18n.t('eval')}</Text>
+              <Text style={styles.postsLabel}>
+                {localizationContext.t('eval')}
+              </Text>
               <View
                 style={{
                   flexDirection: 'row',
@@ -277,7 +293,7 @@ const FilterModal = ({
                       borderBottomColor: '#FCDF6F',
                     }}
                   >
-                    {i18n.t('clear_all')}
+                    {localizationContext.t('clear_all')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -344,7 +360,9 @@ const FilterModal = ({
                 activeOpacity={0.6}
                 style={styles.btnGray}
               >
-                <Text style={styles.btnTxt}>{i18n.t('return')}</Text>
+                <Text style={styles.btnTxt}>
+                  {localizationContext.t('return')}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
@@ -360,7 +378,9 @@ const FilterModal = ({
                 activeOpacity={0.6}
                 style={styles.btnYellow}
               >
-                <Text style={styles.btnTxt}>{i18n.t('filter')}</Text>
+                <Text style={styles.btnTxt}>
+                  {localizationContext.t('filter')}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>

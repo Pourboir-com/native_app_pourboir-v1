@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -17,10 +17,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/Version-control-pana.png');
 const imgBg = require('../../assets/images/Group7.png');
-import i18n from '../../li8n';
 import CheckBox from 'react-native-check-box';
 import RPCountryPickerInfo from 'react-native-country-picker-info';
 import * as WebBrowser from 'expo-web-browser';
+import Context from '../../contextApi/context';
 
 const ManagerApprovalModal = ({
   termsChecked,
@@ -39,6 +39,7 @@ const ManagerApprovalModal = ({
 }) => {
   const validation = termsChecked && cellPhone && siretNumber;
   const [isOpenCountryPicker, setIsOpenCountryPicker] = useState(false);
+  const { localizationContext } = useContext(Context);
 
   const onPressOpenPicker = () => {
     setIsOpenCountryPicker(!isOpenCountryPicker);
@@ -107,7 +108,7 @@ const ManagerApprovalModal = ({
 
           <View style={{ marginHorizontal: 10 }}>
             <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-              {i18n.t('fill_info')}
+              {localizationContext.t('fill_info')}
             </Text>
             <Text
               style={{
@@ -119,7 +120,7 @@ const ManagerApprovalModal = ({
                 paddingHorizontal: 15,
               }}
             >
-              {i18n.t('thanks_filling')}
+              {localizationContext.t('thanks_filling')}
             </Text>
 
             <View
@@ -137,7 +138,7 @@ const ManagerApprovalModal = ({
                   style={styles.inputsTopTow}
                   onChangeText={e => setSiretNumber(e)}
                   value={siretNumber}
-                  placeholder={i18n.t('siret_num')}
+                  placeholder={localizationContext.t('siret_num')}
                   keyboardType={'numeric'}
                   placeholderTextColor={'#707375'}
                 />
@@ -170,7 +171,7 @@ const ManagerApprovalModal = ({
                     onChangeText={e => setCellPhone(e)}
                     keyboardType={'numeric'}
                     value={cellPhone}
-                    placeholder={i18n.t('cellPhone')}
+                    placeholder={localizationContext.t('cellPhone')}
                     placeholderTextColor={'#707375'}
                   />
                 </View>
@@ -226,7 +227,7 @@ const ManagerApprovalModal = ({
                     }}
                     onPress={() => setTermsChecked(!termsChecked)}
                   >
-                    {i18n.t('i_accepts')}{' '}
+                    {localizationContext.t('i_accepts')}{' '}
                   </Text>
                   <TouchableOpacity
                     onPress={() =>
@@ -245,7 +246,7 @@ const ManagerApprovalModal = ({
                         marginTop: Platform.OS === 'android' ? -1 : -2.5,
                       }}
                     >
-                      {i18n.t('term_cond')}
+                      {localizationContext.t('term_cond')}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -273,7 +274,7 @@ const ManagerApprovalModal = ({
                 {loading ? (
                   <ActivityIndicator size={25} color="#EBC11B" />
                 ) : (
-                  i18n.t('claim')
+                  localizationContext.t('claim')
                 )}
               </Text>
             </TouchableOpacity>

@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import i18n from '../li8n';
+import Context from '../contextApi/context';
 
 const NoFavRestaurant = () => {
+  const { localizationContext } = useContext(Context);
+
   return (
     <View style={styles.container_box}>
-      <Text style={styles.upper_txt}>{i18n.t('no_fav_1')}</Text>
-      <Text style={styles.lower_txt}>{i18n.t('no_fav_2')}</Text>
+      <Text style={styles.upper_txt}>{localizationContext.t('no_fav_1')}</Text>
+      <Text style={styles.lower_txt}>{localizationContext.t('no_fav_2')}</Text>
     </View>
   );
 };

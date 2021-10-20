@@ -4,16 +4,12 @@ import {
   ImageBackground,
   Text,
   View,
-  Image,
-  TouchableOpacity,
   Platform,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import CommonButton from '../../components/common-button';
 import GlobalHeader from '../../components/GlobalHeader';
 import styles from './styles';
-import { AntDesign } from '@expo/vector-icons';
-import i18n from '../../li8n';
 import { useQuery, useMutation } from 'react-query';
 import {
   RECRUITMENT_FORM,
@@ -34,7 +30,7 @@ import StaffCard from '../../components/manager/staff-card';
 const ServerProfile = ({ navigation, route }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [formId, setFormId] = useState('');
-  const { state, dispatch } = useContext(Context);
+  const { state, dispatch,  localizationContext } = useContext(Context);
   // const [saveLocation, setSaveLocation] = useState('');
   const [userInfo, setuserInfo] = useState();
   const [loading, setLoading] = useState(false);
@@ -131,7 +127,7 @@ const ServerProfile = ({ navigation, route }) => {
           >
             <GlobalHeader
               arrow={true}
-              headingText={i18n.t('profile_server')}
+              headingText={localizationContext.t('profile_server')}
               fontSize={17}
               color={'black'}
               navigation={navigation}
@@ -163,7 +159,7 @@ const ServerProfile = ({ navigation, route }) => {
               >
                 <View style={{ marginBottom: 35 }}>
                   <CommonButton
-                    title={i18n.t('ind_rest')}
+                    title={localizationContext.t('ind_rest')}
                     navigation={'Home'}
                     navigationData={{ crossIcon: false }}
                     dispatch={() => {
@@ -189,10 +185,10 @@ const ServerProfile = ({ navigation, route }) => {
                       <View>
                         <View>
                           <Text style={[styles.textBold, { width: 240 }]}>
-                            {i18n.t('are_you_job')}
+                            {localizationContext.t('are_you_job')}
                           </Text>
                           <Text style={[styles.textLight, { width: 270 }]}>
-                            {i18n.t('comp_job')}
+                            {localizationContext.t('comp_job')}
                           </Text>
                         </View>
                         <View
@@ -203,7 +199,7 @@ const ServerProfile = ({ navigation, route }) => {
                           }}
                         >
                           {/* <CommonButton
-                          title={i18n.t('look_job')}
+                          title={localizationContext.t('look_job')}
                           navigation="FindJob"
                           navigationData={{
                             form: [],
@@ -222,10 +218,10 @@ const ServerProfile = ({ navigation, route }) => {
                       >
                         <View>
                           <Text style={styles.boldTxt2}>
-                            {i18n.t('your_cand_prof')}
+                            {localizationContext.t('your_cand_prof')}
                           </Text>
                           <Text style={styles.lighTxt2}>
-                            {i18n.t('prev_rec')}
+                            {localizationContext.t('prev_rec')}
                           </Text>
                         </View>
                         <View style={{ marginTop: 15 }}>
@@ -260,8 +256,8 @@ const ServerProfile = ({ navigation, route }) => {
                   }}
                   title={
                     waiterFormData?.data[0]?.position
-                      ? i18n.t('modif_prof')
-                      : i18n.t('look_job')
+                      ? localizationContext.t('modif_prof')
+                      : localizationContext.t('look_job')
                   }
                 />
               </View>

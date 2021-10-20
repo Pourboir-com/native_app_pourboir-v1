@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -13,10 +13,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/work-time.png');
 const imgBg = require('../../assets/images/Group7.png');
-import i18n from '../../li8n';
 import CheckBox from 'react-native-check-box';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Picker } from 'native-base';
+import Context from '../../contextApi/context';
 
 const AddNicheModal = ({
   setNicheModalVisible,
@@ -24,7 +24,7 @@ const AddNicheModal = ({
   setNicheModalData,
   nicheModalData,
 }) => {
-  const [dayOfWeek, setDayOfWeek] = useState(i18n.t('monday'));
+  const [dayOfWeek, setDayOfWeek] = useState(localizationContext.t('monday'));
   const [morning, setMorning] = useState();
   const [noon, setNoon] = useState();
   const [evening, setEvening] = useState();
@@ -32,6 +32,7 @@ const AddNicheModal = ({
   const [noonChecked, setNoonChecked] = useState(false);
   const [eveningChecked, setEveningChecked] = useState(false);
   const [times, setTimes] = useState([]);
+  const { localizationContext } = useContext(Context);
 
   const Add = () => {
     setNicheModalData([...nicheModalData, { day: dayOfWeek, slot: times }]);
@@ -93,7 +94,7 @@ const AddNicheModal = ({
             { fontFamily: 'ProximaNovaBold', fontSize: 18 },
           ]}
         >
-          {i18n.t('add_niche')}
+          {localizationContext.t('add_niche')}
         </Text>
         <View
           style={{
@@ -113,13 +114,13 @@ const AddNicheModal = ({
             onValueChange={e => setDayOfWeek(e)}
             textStyle={{ width: '100%' }}
           >
-            <Picker.Item label={i18n.t('monday')} value={'Monday'} />
-            <Picker.Item label={i18n.t('tuesday')} value={'Tuesday'} />
-            <Picker.Item label={i18n.t('wednesday')} value={'Wednesday'} />
-            <Picker.Item label={i18n.t('thursday')} value={'Thursday'} />
-            <Picker.Item label={i18n.t('friday')} value={'Friday'} />
-            <Picker.Item label={i18n.t('saturday')} value={'Saturday'} />
-            <Picker.Item label={i18n.t('sunday')} value={'Sunday'} />
+            <Picker.Item label={localizationContext.t('monday')} value={'Monday'} />
+            <Picker.Item label={localizationContext.t('tuesday')} value={'Tuesday'} />
+            <Picker.Item label={localizationContext.t('wednesday')} value={'Wednesday'} />
+            <Picker.Item label={localizationContext.t('thursday')} value={'Thursday'} />
+            <Picker.Item label={localizationContext.t('friday')} value={'Friday'} />
+            <Picker.Item label={localizationContext.t('saturday')} value={'Saturday'} />
+            <Picker.Item label={localizationContext.t('sunday')} value={'Sunday'} />
           </Picker>
         </View>
 
@@ -183,7 +184,7 @@ const AddNicheModal = ({
                 paddingTop: -1,
               }}
             >
-              {i18n.t('morning')} 6:00 - 12:00
+              {localizationContext.t('morning')} 6:00 - 12:00
             </Text>
           </TouchableOpacity>
         </View>
@@ -243,7 +244,7 @@ const AddNicheModal = ({
                 fontSize: 16,
               }}
             >
-              {i18n.t('noon')} 12:00 - 18:00
+              {localizationContext.t('noon')} 12:00 - 18:00
             </Text>
           </TouchableOpacity>
         </View>
@@ -303,8 +304,8 @@ const AddNicheModal = ({
                 fontSize: 16,
               }}
             >
-              {/* {i18n.t('still_work')} */}
-              {i18n.t('evening')} 18:00 - 00:00
+              {/* {localizationContext.t('still_work')} */}
+              {localizationContext.t('evening')} 18:00 - 00:00
             </Text>
           </TouchableOpacity>
         </View>
@@ -326,7 +327,7 @@ const AddNicheModal = ({
               color: Colors.fontDark,
             }}
           >
-            {i18n.t('add')}
+            {localizationContext.t('add')}
           </Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>

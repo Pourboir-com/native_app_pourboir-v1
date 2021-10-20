@@ -1,4 +1,6 @@
 export default {
+  english: 'Anglais',
+  french: 'Français',
   //home card
   serveur: 'serveur',
   serveurs: 'serveurs',

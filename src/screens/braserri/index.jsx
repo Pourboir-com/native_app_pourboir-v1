@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Dimensions,
   ImageBackground,
@@ -6,15 +6,14 @@ import {
   TouchableOpacity,
   View,
   Image,
-  Platform,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import Menu from '../../components/braserri/menu';
 import Team from '../../components/braserri/team';
 import GlobalHeader from '../../components/GlobalHeader';
-import i18n from '../../li8n';
 import styles from './styles';
+import Context from '../../contextApi/context';
 
 const Braserri = ({ navigation, route }) => {
   const { restaurant_id, img, name, place_id, refetchWaiters } = route?.params || {};
@@ -22,6 +21,8 @@ const Braserri = ({ navigation, route }) => {
   const [dishName, setDishName] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
+  const { localizationContext } = useContext(Context);
+
   return (
     <View style={{ flex: 1, backgroundColor: '#f9f9f9', alignItems: 'center' }}>
       <ImageBackground
@@ -81,7 +82,7 @@ const Braserri = ({ navigation, route }) => {
                 source={require('../../assets/images/team.png')}
                 style={{ width: 24, height: 24, resizeMode: 'contain' }}
               />
-              <Text style={styles.tabTxt}>{i18n.t('the_team')}</Text>
+              <Text style={styles.tabTxt}>{localizationContext.t('the_team')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => setCurrentTab('menu')}
@@ -97,7 +98,7 @@ const Braserri = ({ navigation, route }) => {
                 source={require('../../assets/images/menu.png')}
                 style={{ width: 22, height: 22, resizeMode: 'contain' }}
               />
-              <Text style={styles.tabTxt}>{i18n.t('the_menu')}</Text>
+              <Text style={styles.tabTxt}>{localizationContext.t('the_menu')}</Text>
             </TouchableOpacity>
           </View>
           <View style={{ marginBottom: 20 }}>

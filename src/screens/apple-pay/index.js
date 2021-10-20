@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ImageBackground } from 'react-native';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import GlobalHeader from '../../components/GlobalHeader';
-import i18n from '../../li8n';
+import Context from '../../contextApi/context';
 
 const ApplePay = ({ navigation }) => {
+  const { localizationContext } = useContext(Context);
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
@@ -32,11 +34,23 @@ const ApplePay = ({ navigation }) => {
       </View>
       <View style={{ flex: 7 }}>
         <View style={{ marginTop: 50, marginHorizontal: 30 }}>
-          <Text style={{ fontSize: 22, paddingBottom: 4,     fontFamily: 'ProximaNovaBold' }}>
-            {i18n.t('pay_with_apple')}
+          <Text
+            style={{
+              fontSize: 22,
+              paddingBottom: 4,
+              fontFamily: 'ProximaNovaBold',
+            }}
+          >
+            {localizationContext.t('pay_with_apple')}
           </Text>
-          <Text style={{ fontSize: 16, color: '#1E272E', fontFamily: 'ProximaNova' }}>
-            {i18n.t('app_acc')}
+          <Text
+            style={{
+              fontSize: 16,
+              color: '#1E272E',
+              fontFamily: 'ProximaNova',
+            }}
+          >
+            {localizationContext.t('app_acc')}
           </Text>
         </View>
       </View>

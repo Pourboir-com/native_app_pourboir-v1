@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -12,15 +12,22 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/ThanksGiving.png');
 const imgBg = require('../../assets/images/Group7.png');
-import i18n from '../../li8n';
-import NumberFormat from 'react-number-format';
+import Context from '../../contextApi/context';
 
-const ThanksRatingModal = ({ isVisible, handleModalClose, LotteryNumber, heading, subText }) => {
+const ThanksRatingModal = ({
+  isVisible,
+  handleModalClose,
+  LotteryNumber,
+  heading,
+  subText,
+}) => {
   function pad(n, width, z) {
     z = z || '0';
     n = n + '';
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
   }
+  const { localizationContext } = useContext(Context);
+
   return (
     <Overlay
       overlayStyle={styles.container}
@@ -59,10 +66,14 @@ const ThanksRatingModal = ({ isVisible, handleModalClose, LotteryNumber, heading
       </ImageBackground>
 
       <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-        {heading? i18n.t(heading) : i18n.t('thanks_for_vote')}
+        {heading
+          ? localizationContext.t(heading)
+          : localizationContext.t('thanks_for_vote')}
       </Text>
       <Text style={[styles.txtName, { fontFamily: 'ProximaNova' }]}>
-        {subText ? i18n.t(subText) : i18n.t('will_contact_by_email')}
+        {subText
+          ? localizationContext.t(subText)
+          : localizationContext.t('will_contact_by_email')}
       </Text>
       {LotteryNumber ? (
         <Text style={styles.lottery}>

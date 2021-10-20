@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -13,14 +13,16 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/Appreciation-bro.png');
 const imgBg = require('../../assets/images/Group7.png');
-import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Context from '../../contextApi/context';
 
 const ReceivedModal = ({
   receivedModal,
   setReceivedModal,
   refetchRestaurantDetails,
 }) => {
+  const { localizationContext } = useContext(Context);
+
   return (
     <Overlay
       overlayStyle={styles.container}
@@ -71,7 +73,7 @@ const ReceivedModal = ({
         style={{ marginTop: 80 }}
       >
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-          {i18n.t('thank_u')} !
+          {localizationContext.t('thank_u')} !
         </Text>
         <Text
           style={{
@@ -83,7 +85,7 @@ const ReceivedModal = ({
             paddingHorizontal: 25,
           }}
         >
-          {i18n.t('claim_received')}
+          {localizationContext.t('claim_received')}
         </Text>
 
         <TouchableOpacity
@@ -101,7 +103,7 @@ const ReceivedModal = ({
               color: Colors.fontDark,
             }}
           >
-            {i18n.t('close')}
+            {localizationContext.t('close')}
           </Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>

@@ -12,7 +12,6 @@ var formatCurrency = require('country-currency-map').formatCurrency;
 import * as Notifications from 'expo-notifications';
 import { useMutation } from 'react-query';
 import { SEND_PUSH_TOKEN } from '../../queries';
-import * as Localization from 'expo-localization';
 import { getTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import { upperTitleCase } from '../../util';
 import Constants from 'expo-constants';
@@ -137,7 +136,7 @@ export default function SplashScreen(props) {
     try {
       NetInfo.fetch().then(async state => {
         if (state.isConnected) {
-          const { userInfo = {} } = await getAsyncStorageValues();
+          const { userInfo = {}, language } = await getAsyncStorageValues();
           InitializeStates();
           let tracking = '';
           if (Platform.OS === 'ios') {
@@ -145,7 +144,6 @@ export default function SplashScreen(props) {
           }
           let location = await locationFunction();
           const token = await checkNotificationPermission();
-          const { locale } = await Localization.getLocalizationAsync();
 
           if (Platform.OS === 'ios') {
             validateNavigationIOS(
@@ -163,7 +161,7 @@ export default function SplashScreen(props) {
             await sendNotificationToken({
               id: userInfo?.user_id || '',
               expo_notification_token: token || '',
-              lang: locale || '',
+              lang: language || '',
             });
             notificationListener.current = Notifications.addNotificationReceivedListener(
               notification => {

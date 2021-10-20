@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,7 +11,7 @@ import { Entypo } from '@expo/vector-icons';
 import { Colors } from '../constants/Theme';
 import RatingStar from './RatingComponent';
 import { LinearGradient } from 'expo-linear-gradient';
-import i18n from '../li8n';
+import Context from '../contextApi/context';
 
 const HomeCard = ({
   navigation,
@@ -34,6 +34,7 @@ const HomeCard = ({
   const onPressStar = v => {
     setstarSelect(v);
   };
+  const { localizationContext } = useContext(Context);
 
   return (
     <>
@@ -161,7 +162,9 @@ const HomeCard = ({
                   {services + ' '}
                 </Text>
                 <Text style={[styles.txt2Card, { fontFamily: 'ProximaNova' }]}>
-                  {services > 1 ? i18n.t('serveurs') : i18n.t('serveur')}
+                  {services > 1
+                    ? localizationContext.t('serveurs')
+                    : localizationContext.t('serveur')}
                 </Text>
               </View>
             </View>

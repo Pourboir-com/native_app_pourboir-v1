@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import RatingStar from '../../components/RatingComponent';
-import i18n from '../../li8n';
+import Context from '../../contextApi/context';
 
 const StarCard = ({
   itemData,
@@ -14,6 +14,7 @@ const StarCard = ({
   navigationDisable,
 }) => {
   const obj = [1, 2, 3, 4, 5];
+  const { localizationContext } = useContext(Context);
 
   return (
     <TouchableOpacity
@@ -34,7 +35,7 @@ const StarCard = ({
               place_id: restaurant_id,
             });
           } else {
-            alert(i18n.t('cannot_vote'));
+            alert(localizationContext.t('cannot_vote'));
           }
         }
       }}

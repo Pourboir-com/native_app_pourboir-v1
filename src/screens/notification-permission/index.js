@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,19 +8,19 @@ import {
   Platform,
 } from 'react-native';
 import { Colors } from '../../constants/Theme';
-import i18n from '../../li8n';
 import notification from '../../assets/images/notification.png';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import { useMutation } from 'react-query';
 import { SEND_PUSH_TOKEN } from '../../queries';
 import { getAsyncStorageValues } from '../../constants';
-import * as Localization from 'expo-localization';
+import Context from '../../contextApi/context';
 
 const NotificationPermission = ({ navigation }) => {
   const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
   const notificationListener = useRef();
   const responseListener = useRef();
+  const { localizationContext } = useContext(Context);
 
   async function registerForPushNotificationsAsync() {
     let token;
@@ -57,15 +57,14 @@ const NotificationPermission = ({ navigation }) => {
     return token;
   }
   const handleNotificationPermission = async () => {
-    const { userInfo = {} } = await getAsyncStorageValues();
+    const { userInfo = {}, language } = await getAsyncStorageValues();
     registerForPushNotificationsAsync()
       .then(async token => {
-        const { locale } = await Localization.getLocalizationAsync();
         if (userInfo?.user_id) {
           await sendNotificationToken({
             id: userInfo?.user_id || '',
             expo_notification_token: token || '',
-            lang: locale || '',
+            lang: language || '',
           });
           notificationListener.current = Notifications.addNotificationReceivedListener(
             notification => {
@@ -108,13 +107,13 @@ const NotificationPermission = ({ navigation }) => {
           fontFamily: 'ProximaNovaSemiBold',
         }}
       >
-        {i18n.t('notification')}
+        {localizationContext.t('notification')}
       </Text>
       <TouchableOpacity
         style={styles.btnStyle}
         onPress={handleNotificationPermission}
       >
-        <Text style={styles.txtColor}>{i18n.t('carry_on')}</Text>
+        <Text style={styles.txtColor}>{localizationContext.t('carry_on')}</Text>
       </TouchableOpacity>
     </View>
   );

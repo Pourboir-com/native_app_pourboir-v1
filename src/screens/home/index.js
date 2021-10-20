@@ -31,7 +31,7 @@ const HomeScreen = props => {
     const isLocationOn = await Location.getForegroundPermissionsAsync();
     if (isLocation && isLocationOn.granted) {
       const location = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Lowest,
+        accuracy: Location.Accuracy.Balanced,
       });
       setSaveLocation(
         JSON.stringify({
@@ -49,11 +49,10 @@ const HomeScreen = props => {
       appState.current.match(/inactive|background/) &&
       nextAppState === 'active'
     ) {
-      setAdModalVisible(true);
-      refetchUserFavRestaurant();
-      refetchFavRestaurant();
-      refetchRestaurant();
-      // currentLocation();
+      if (props?.route?.name == 'Home') {
+        setAdModalVisible(true);
+      }
+      currentLocation();
     }
     appState.current = nextAppState;
     setAppStateVisible(appState.current);
@@ -129,6 +128,7 @@ const HomeScreen = props => {
     GET_FAVORITE_RESTAURANT,
     { enabled: saveLocation, ...reactQueryConfig },
   );
+
   const {
     data: favRestaurantData,
     isLoading: favRestaurantLoading,

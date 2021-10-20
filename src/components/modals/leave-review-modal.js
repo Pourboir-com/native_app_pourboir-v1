@@ -1,30 +1,11 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  ImageBackground,
-  ActivityIndicator,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  // Keyboard,
-  TextInput,
-  Dimensions,
-} from 'react-native';
-import { Overlay } from 'react-native-elements';
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
-import i18n from '../../li8n';
-const imgWaiter = require('../../assets/images/sittingtable.png');
-const imgBg = require('../../assets/images/Group7.png');
-const validator = require('validator');
-import { FontAwesome5 } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
 import RatingStar from '../RatingComponent';
 import { Textarea } from 'native-base';
+import Context from '../../contextApi/context';
 
 const LeaveReviewModal = ({
   leaveRevModal,
@@ -36,6 +17,7 @@ const LeaveReviewModal = ({
   confirmClick,
 }) => {
   const obj = [1, 2, 3, 4, 5];
+  const { localizationContext } = useContext(Context);
 
   return (
     <Modal
@@ -58,7 +40,9 @@ const LeaveReviewModal = ({
         }}
       >
         <View>
-          <Text style={styles.ReviewTxt}>{i18n.t('your_rev')}</Text>
+          <Text style={styles.ReviewTxt}>
+            {localizationContext.t('your_rev')}
+          </Text>
         </View>
         {/* Section 1 */}
         <View
@@ -71,7 +55,7 @@ const LeaveReviewModal = ({
             marginTop: 70,
           }}
         >
-          <Text style={styles.tellTxt}>{i18n.t('how_exp')}</Text>
+          <Text style={styles.tellTxt}>{localizationContext.t('how_exp')}</Text>
           <View>
             <View style={{ flexDirection: 'row', marginTop: 10 }}>
               {obj.map((v, i) => {
@@ -111,11 +95,11 @@ const LeaveReviewModal = ({
             marginTop: 30,
           }}
         >
-          <Text style={styles.tellTxt}>{i18n.t('tell_us')}</Text>
+          <Text style={styles.tellTxt}>{localizationContext.t('tell_us')}</Text>
           <View style={styles.textArea}>
             <Textarea
               style={{ height: 100, fontFamily: 'ProximaNova', fontSize: 15 }}
-              placeholder={i18n.t('exp_placeholder')}
+              placeholder={localizationContext.t('exp_placeholder')}
               value={comment}
               onChangeText={e => setComment(e)}
             />
@@ -129,14 +113,16 @@ const LeaveReviewModal = ({
             activeOpacity={0.7}
             style={{ ...styles.btn, backgroundColor: '#EAEAEA' }}
           >
-            <Text style={styles.btnTxt}>{i18n.t('cancel')}</Text>
+            <Text style={styles.btnTxt}>{localizationContext.t('cancel')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.7}
             style={styles.btn}
             onPress={confirmClick}
           >
-            <Text style={styles.btnTxt}>{i18n.t('confirm')}</Text>
+            <Text style={styles.btnTxt}>
+              {localizationContext.t('confirm')}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -17,7 +17,6 @@ import * as ImagePicker from 'expo-image-picker';
 import { getAsyncStorageValues } from '../../constants';
 import * as Google from 'expo-google-app-auth';
 import { config } from '../../constants';
-import i18n from '../../li8n';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -36,7 +35,7 @@ import { StatusBar } from 'expo-status-bar';
 
 const Setting = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
-  const { state, dispatch } = useContext(Context);
+  const { state, dispatch, localizationContext } = useContext(Context);
   const [image, setImage] = useState();
   const [updatePicture] = useMutation(UPDATE_PICTURE);
 
@@ -132,7 +131,7 @@ const Setting = ({ navigation, route }) => {
         >
           <GlobalHeader
             arrow={true}
-            headingText={i18n.t('setting')}
+            headingText={localizationContext.t('setting')}
             fontSize={17}
             color={'black'}
             Home={route?.params?.login ? 'true' : 'false'}
@@ -209,7 +208,7 @@ const Setting = ({ navigation, route }) => {
                 fontSize: 16,
               }}
             >
-              {i18n.t('personal_data')}
+              {localizationContext.t('personal_data')}
             </Text>
 
             <View
@@ -243,7 +242,7 @@ const Setting = ({ navigation, route }) => {
                 fontSize: 16,
               }}
             >
-              {i18n.t('are_you_waiter')}
+              {localizationContext.t('are_you_waiter')}
             </Text>
 
             <View
@@ -268,7 +267,7 @@ const Setting = ({ navigation, route }) => {
           <ActivityIndicator size={29} color="#EBC11B" />
         ) : (
           <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
-            {i18n.t('sign_out')}
+            {localizationContext.t('sign_out')}
           </Text>
         )}
       </TouchableOpacity> */}
@@ -291,7 +290,7 @@ const Setting = ({ navigation, route }) => {
           style={{ ...styles.btnValider, marginBottom: 6 }}
         >
           <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
-            {i18n.t('i_waiter')}
+            {localizationContext.t('i_waiter')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -308,7 +307,7 @@ const Setting = ({ navigation, route }) => {
           style={styles.btnValider}
         >
           <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
-            {i18n.t('i_manage')}
+            {localizationContext.t('i_manage')}
           </Text>
         </TouchableOpacity>
       </View>
@@ -349,7 +348,7 @@ const Setting = ({ navigation, route }) => {
               fontSize: 16,
             }}
           >
-            {i18n.t('rate_application')}
+            {localizationContext.t('rate_application')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -373,7 +372,7 @@ const Setting = ({ navigation, route }) => {
               fontSize: 16,
             }}
           >
-            {i18n.t('contact_us')}
+            {localizationContext.t('contact_us')}
           </Text>
         </TouchableOpacity>
       </View>

@@ -24,7 +24,6 @@ import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import { COLORS } from '../../constants/colors';
 import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
-import i18n from '../../li8n';
 import Context from '../../contextApi/context';
 // import { ActivityIndicator } from 'react-native';
 // import { useFocusEffect } from '@react-navigation/native';
@@ -33,7 +32,7 @@ import { userGivenName } from '../../util';
 const HomeScreen = props => {
   const scrollRef = useRef(null);
   const TextInputRef = React.useRef(null);
-  const { state } = useContext(Context);
+  const { state, localizationContext } = useContext(Context);
   const [loading, setLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   // const [loader, setLoader] = useState();
@@ -286,8 +285,8 @@ const HomeScreen = props => {
                 numberOfLines={1}
               >
                 {!state.userDetails.name
-                  ? i18n.t('hello')
-                  : i18n.t('hello') +
+                  ? localizationContext.t('hello')
+                  : localizationContext.t('hello') +
                     ' ' +
                     userGivenName(state.userDetails.name)}
               </Text>
@@ -464,7 +463,7 @@ const HomeScreen = props => {
                     onChangeText={e => {
                       props.setSearchVal(e);
                     }}
-                    placeholder={i18n.t('find_your_restaurant')}
+                    placeholder={localizationContext.t('find_your_restaurant')}
                     placeholderTextColor={'#485460'}
                     style={{ flex: 1, paddingHorizontal: 10 }}
                   />
@@ -636,7 +635,7 @@ const HomeScreen = props => {
                     onChangeText={e => {
                       props.setSearchVal(e);
                     }}
-                    placeholder={i18n.t('find_your_restaurant')}
+                    placeholder={localizationContext.t('find_your_restaurant')}
                     style={{ flex: 1, paddingHorizontal: 10 }}
                   />
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import { ImageBackground } from 'react-native';
 import { Text, View, Dimensions, Platform } from 'react-native';
 import {
@@ -7,14 +7,16 @@ import {
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import GlobalHeader from '../../components/GlobalHeader';
-import i18n from '../../li8n';
 import { styles } from './style';
+import Context from '../../contextApi/context';
 
 const AddCard = ({ navigation }) => {
   const [text, onChangeText] = React.useState();
   const [text2, onChangeText2] = React.useState();
   const [text3, onChangeText3] = React.useState();
   const [text4, onChangeText4] = React.useState();
+  const { localizationContext } = useContext(Context);
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
@@ -31,7 +33,7 @@ const AddCard = ({ navigation }) => {
         >
           <GlobalHeader
             arrow={true}
-            headingText={i18n.t('add_a_card')}
+            headingText={localizationContext.t('add_a_card')}
             fontSize={17}
             color={'black'}
             navigation={navigation}
@@ -52,7 +54,7 @@ const AddCard = ({ navigation }) => {
             }}
           >
             <View style={styles.input_box}>
-              <Text style={styles.input_label}>{i18n.t('card_number')}</Text>
+              <Text style={styles.input_label}>{localizationContext.t('card_number')}</Text>
               <TextInput
                 style={styles.inputsTopTow}
                 onChangeText={onChangeText}
@@ -63,7 +65,7 @@ const AddCard = ({ navigation }) => {
               />
             </View>
             <View style={styles.input_box}>
-              <Text style={styles.input_label}>{i18n.t('date_of_exp')}</Text>
+              <Text style={styles.input_label}>{localizationContext.t('date_of_exp')}</Text>
               <TextInput
                 style={styles.inputsTopTow}
                 onChangeText={onChangeText2}
@@ -85,7 +87,7 @@ const AddCard = ({ navigation }) => {
               />
             </View>
             <View style={styles.input_box}>
-              <Text style={styles.input_label}>{i18n.t('pays')}</Text>
+              <Text style={styles.input_label}>{localizationContext.t('pays')}</Text>
               <TextInput
                 style={styles.inputsTopTow}
                 onChangeText={onChangeText4}
@@ -106,7 +108,7 @@ const AddCard = ({ navigation }) => {
           ]}
         >
           <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
-            {i18n.t('save')}
+            {localizationContext.t('save')}
           </Text>
         </TouchableOpacity>
       </View>

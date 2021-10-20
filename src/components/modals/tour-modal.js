@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -13,10 +13,12 @@ import Modal from 'react-native-modal';
 import { Colors } from '../../constants/Theme';
 import { AntDesign, Feather, Entypo } from '@expo/vector-icons';
 import CommonButton from '../common-button';
-import i18n from '../../li8n';
+import Context from '../../contextApi/context';
+
 const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
   const [showCross, setShowCross] = useState(true);
   const statusBarHeight = getStatusBarHeight();
+  const { localizationContext } = useContext(Context);
 
   const nextSection = () => {
     if (section === 5) {
@@ -99,7 +101,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
                     textAlign: 'right',
                   }}
                 >
-                  {i18n.t('tour_section1')}
+                  {localizationContext.t('tour_section1')}
                 </Text>
                 <View
                   style={{
@@ -125,7 +127,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
                   fontSize: 17,
                 }}
               >
-                {i18n.t('tour_section2')}
+                {localizationContext.t('tour_section2')}
               </Text>
             </View>
             <View
@@ -149,7 +151,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
                     { paddingVertical: Platform.OS === 'ios' ? 7 : 7 },
                   ]}
                 >
-                  {i18n.t('add_fav')}
+                  {localizationContext.t('add_fav')}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -164,7 +166,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
                   fontSize: 17,
                 }}
               >
-                {i18n.t('tour_section3')}
+                {localizationContext.t('tour_section3')}
               </Text>
             </View>
             <View style={{ marginLeft: 14, marginTop: 10 }}>
@@ -219,7 +221,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
                     fontSize: 17,
                   }}
                 >
-                  {i18n.t('tour_section4')}
+                  {localizationContext.t('tour_section4')}
                 </Text>
               </View>
               <Image
@@ -261,7 +263,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
                   textAlign: 'right',
                 }}
               >
-                {i18n.t('tour_section5')}
+                {localizationContext.t('tour_section5')}
               </Text>
             </View>
             <View
@@ -284,7 +286,7 @@ const TourModal = ({ tourModal, setTourModal, section, setSection }) => {
               />
             </View>
             <View style={{ width: '90%' }}>
-              <CommonButton title={i18n.t('see_menu')} />
+              <CommonButton title={localizationContext.t('see_menu')} />
             </View>
           </View>
         ) : null}

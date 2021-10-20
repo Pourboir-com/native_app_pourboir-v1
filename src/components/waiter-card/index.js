@@ -6,7 +6,6 @@ import RatingStar from '../RatingComponent';
 import { SvgHeaderUserIcon } from '../svg/header_user_icon';
 import { MaterialIcons } from '@expo/vector-icons';
 import Context from '../../contextApi/context';
-import i18n from '../../li8n';
 import { StyleSheet } from 'react-native';
 
 const WaiterCard = ({
@@ -16,7 +15,7 @@ const WaiterCard = ({
   place_id,
   restaurant_id,
 }) => {
-  const { state } = useContext(Context);
+  const { state, localizationContext } = useContext(Context);
   const obj = [1, 2, 3, 4, 5];
 
   return (
@@ -42,7 +41,7 @@ const WaiterCard = ({
                 place_id: restaurant_id,
               });
             } else {
-              alert(i18n.t('cannot_vote'));
+              alert(localizationContext.t('cannot_vote'));
             }
           }}
           style={styles.viewItemConatier}

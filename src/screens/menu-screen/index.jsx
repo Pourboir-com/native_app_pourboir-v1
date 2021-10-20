@@ -80,7 +80,7 @@ const MenuScreen = ({ navigation, route }) => {
                               {item?.currency || '€'}
                             </Text>
                             <Text style={styles.price}>
-                              {dish.price || '0'}
+                              {dish.price.toLocaleString() || '0'}
                             </Text>
                           </View>
                         </View>

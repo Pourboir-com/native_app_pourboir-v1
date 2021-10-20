@@ -21,10 +21,7 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import RefferedWaiterModal from '../../components/modals/ConfirmModal';
 import CheckInModal from '../../components/modals/ThanksRatingModal';
-import { FontAwesome, Entypo } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
-import * as WebBrowser from 'expo-web-browser';
 import CommonModal from '../../components/modals/HelpUsImproveModal';
 import { Colors } from '../../constants/Theme';
 import RatingStar from '../../components/RatingComponent';
@@ -51,7 +48,6 @@ const imgSitting = require('../../assets/images/sittingtable.png');
 const waiter = require('../../assets/images/waiter2.png');
 // import * as actionTypes from '../../contextApi/actionTypes
 const noCheckIn = require('../../assets/images/no-checkin.png');
-import i18n from '../../li8n';
 // import { filteredRestaurant, yourFilteredRestaurant } from '../../util';
 import Spinner from 'react-native-loading-spinner-overlay';
 import ManagerApprovalModal from '../../components/modals/manager-approval-modal';
@@ -64,6 +60,8 @@ import { getAsyncStorageValues } from '../../constants';
 import * as Localization from 'expo-localization';
 
 const ReviewDetails = ({ navigation, route }) => {
+  const { state, dispatch, localizationContext } = useContext(Context);
+
   const openDialScreen = () => {
     let number = '';
     if (Platform.OS === 'ios') {
@@ -83,13 +81,14 @@ const ReviewDetails = ({ navigation, route }) => {
   );
   const [userThanksModalVisible, setUserThanksModalVisible] = useState(false);
   const [checkInModal, setcheckInModal] = useState(false);
-  const [checkInModalText, setcheckInModalText] = useState(i18n.t('not_near'));
+  const [checkInModalText, setcheckInModalText] = useState(
+    localizationContext.t('not_near'),
+  );
 
   const [notCheckInModal, setnotCheckInModal] = useState(false);
   const [refferedThanksModalVisible, setRefferedThanksModalVisible] = useState(
     false,
   );
-  const { state, dispatch } = useContext(Context);
   const [IAMWAITER] = useMutation(I_AM_WAITER);
   const [addCheckIn] = useMutation(ADD_CHECKIN);
   const [AddWaiters] = useMutation(ADDING_WAITERS);
@@ -109,10 +108,9 @@ const ReviewDetails = ({ navigation, route }) => {
 
   useEffect(() => {
     (async () => {
-      const { ExplanatoryScreen } = await getAsyncStorageValues();
+      const { ExplanatoryScreen, language } = await getAsyncStorageValues();
+      setLocale(language);
       if (!ExplanatoryScreen?.explanatory_screen) {
-        const { locale } = await Localization.getLocalizationAsync();
-        setLocale(locale);
         setTimeout(() => {
           setTourModal(true);
         }, 2000);
@@ -233,7 +231,7 @@ const ReviewDetails = ({ navigation, route }) => {
       item => item?.user_id?._id === state.userDetails.user_id,
     );
     if (isUserAlreadyWaiter) {
-      alert(i18n.t('already_waiter'));
+      alert(localizationContext.t('already_waiter'));
     } else {
       setUserWaiterModalVisible(true);
     }
@@ -290,7 +288,7 @@ const ReviewDetails = ({ navigation, route }) => {
             setToken(res?.data?.token || 0);
           },
           onError: e => {
-            setcheckInModalText(i18n.t('check_in_limit'));
+            setcheckInModalText(localizationContext.t('check_in_limit'));
             setnotCheckInModal(true);
           },
         },
@@ -565,7 +563,7 @@ const ReviewDetails = ({ navigation, route }) => {
                 {favoritesData?.data[0]?.user_id?.length || '0'}
               </Text>
               <Text tyle={{ fontFamily: 'ProximaNova', fontSize: 18 }}>
-                {i18n.t('fav')}
+                {localizationContext.t('fav')}
               </Text>
             </TouchableOpacity>
             {section != 2 && (
@@ -586,7 +584,9 @@ const ReviewDetails = ({ navigation, route }) => {
                   <ActivityIndicator size={23} color="#EBC11B" />
                 ) : (
                   <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
-                    {checkFavorite() ? i18n.t('added') : i18n.t('add_fav')}
+                    {checkFavorite()
+                      ? localizationContext.t('added')
+                      : localizationContext.t('add_fav')}
                   </Text>
                 )}
               </TouchableOpacity>
@@ -614,7 +614,7 @@ const ReviewDetails = ({ navigation, route }) => {
               fontSize: 16,
             }}
           >
-            {i18n.t('fav_list')}
+            {localizationContext.t('fav_list')}
           </Text>
 
           <View
@@ -680,7 +680,7 @@ const ReviewDetails = ({ navigation, route }) => {
               }}
             >
               {/* {vicinity || name} */}
-              {i18n.t('address')}
+              {localizationContext.t('address')}
             </Text>
           </TouchableOpacity>
           {!tourModal || section !== 3 ? (
@@ -705,7 +705,7 @@ const ReviewDetails = ({ navigation, route }) => {
                 }}
               >
                 {/* {vicinity || name} */}
-                {i18n.t('check_in')}
+                {localizationContext.t('check_in')}
               </Text>
             </TouchableOpacity>
           ) : null}
@@ -734,10 +734,10 @@ const ReviewDetails = ({ navigation, route }) => {
               }}
             >
               {/* {RestaurantDetailsLoading
-                ? i18n.t('please_wait')
+                ? localizationContext.t('please_wait')
                 : RestaurantDetails?.data?.international_phone_number ||
-                  i18n.t('none')} */}
-              {i18n.t('telephone')}
+                  localizationContext.t('none')} */}
+              {localizationContext.t('telephone')}
             </Text>
 
             {/* <View
@@ -782,7 +782,7 @@ const ReviewDetails = ({ navigation, route }) => {
           }}
         >
           <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
-            {i18n.t('waiters')}
+            {localizationContext.t('waiters')}
           </Text>
           <View style={styles.viewNumRaters}>
             <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>
@@ -797,7 +797,7 @@ const ReviewDetails = ({ navigation, route }) => {
               { fontFamily: 'ProximaNovaSemiBold' },
             ]}
           >
-            {i18n.t('no_waiter_found')}
+            {localizationContext.t('no_waiter_found')}
           </Text>
         )}
         {waitersLoading ? (
@@ -831,7 +831,7 @@ const ReviewDetails = ({ navigation, route }) => {
                       place_id: restaurant_id,
                     });
                   } else {
-                    alert(i18n.t('cannot_vote'));
+                    alert(localizationContext.t('cannot_vote'));
                   }
                 }}
                 style={styles.viewItemConatier}
@@ -890,7 +890,7 @@ const ReviewDetails = ({ navigation, route }) => {
             <Text
               style={[styles.txtAddReview, { fontFamily: 'ProximaNovaBold' }]}
             >
-              {i18n.t('add_your_server')}
+              {localizationContext.t('add_your_server')}
             </Text>
             <TouchableOpacity
               activeOpacity={0.5}
@@ -934,7 +934,7 @@ const ReviewDetails = ({ navigation, route }) => {
               color: Colors.fontDark,
             }}
           >
-            {i18n.t('see_the_menu')}
+            {localizationContext.t('see_the_menu')}
           </Text>
         )}
       </TouchableOpacity>
@@ -951,7 +951,7 @@ const ReviewDetails = ({ navigation, route }) => {
             color: Colors.fontDark,
           }}
         >
-          {i18n.t('are_you_waiter')}
+          {localizationContext.t('are_you_waiter')}
         </Text>
       </TouchableOpacity> */}
 
@@ -969,9 +969,9 @@ const ReviewDetails = ({ navigation, route }) => {
           handleModalClose={() => setRefferedThanksModalVisible(false)}
           image={imgSitting}
           onPress={() => setRefferedThanksModalVisible(false)}
-          heading={i18n.t('thank_collaboration')}
-          subHeadingText={i18n.t('waiter_our_database')}
-          buttonText={i18n.t('close')}
+          heading={localizationContext.t('thank_collaboration')}
+          subHeadingText={localizationContext.t('waiter_our_database')}
+          buttonText={localizationContext.t('close')}
         />
       )}
       {userWaiterModalVisible && (
@@ -981,8 +981,8 @@ const ReviewDetails = ({ navigation, route }) => {
           loading={Userloading}
           onPress={handleIAMWAITER}
           image={waiter}
-          buttonText={i18n.t('i_confirm')}
-          subHeadingText={i18n.t('confrm_you_are_server')}
+          buttonText={localizationContext.t('i_confirm')}
+          subHeadingText={localizationContext.t('confrm_you_are_server')}
           restaurant={name}
         />
       )}
@@ -992,8 +992,8 @@ const ReviewDetails = ({ navigation, route }) => {
           handleModalClose={() => setUserThanksModalVisible(false)}
           image={waiter}
           onPress={() => setUserThanksModalVisible(false)}
-          subHeadingText={i18n.t('check_profile')}
-          buttonText={i18n.t('Thank_you')}
+          subHeadingText={localizationContext.t('check_profile')}
+          buttonText={localizationContext.t('Thank_you')}
         />
       )}
       {notCheckInModal && (
@@ -1001,7 +1001,7 @@ const ReviewDetails = ({ navigation, route }) => {
           isVisible={notCheckInModal}
           handleModalClose={() => setnotCheckInModal(false)}
           image={noCheckIn}
-          heading={i18n.t('sorry')}
+          heading={localizationContext.t('sorry')}
           subHeadingText={checkInModalText}
         />
       )}

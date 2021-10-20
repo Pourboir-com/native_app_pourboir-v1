@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import { Colors } from '../constants/Theme';
 import HomeCard from './HomeCard';
-import i18n from '../li8n';
 import {
   distributeInArray,
   restaurantDistance,
@@ -39,12 +38,12 @@ export default function HomeScreenContent({
   title,
   searchTitle,
   favoriteRes,
-  noRefresh
+  noRefresh,
 }) {
   const [data, setData] = useState([]);
   const navigation = useNavigation();
   const [deleteLoading, setdeleteLoading] = useState(false);
-  const { state, dispatch } = useContext(Context);
+  const { state, dispatch, localizationContext } = useContext(Context);
   const [deleteRestaurant] = useMutation(DELETE_RES);
   useEffect(() => {
     setData(Data);
@@ -107,11 +106,11 @@ export default function HomeScreenContent({
               />
             </View>
             <View>
-              <Text style={styles.textBold}>{i18n.t('no_restaurant')}</Text>
+              <Text style={styles.textBold}>{localizationContext.t('no_restaurant')}</Text>
               <Text style={[styles.textLight, { width: 320 }]}>
-                {i18n.t('search_rest')}:{' '}
+                {localizationContext.t('search_rest')}:{' '}
                 <Text style={{ fontFamily: 'ProximaNovaBold' }}>
-                  {i18n.t('you_waiter')}
+                  {localizationContext.t('you_waiter')}
                 </Text>
               </Text>
             </View>
@@ -128,8 +127,8 @@ export default function HomeScreenContent({
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
               {searchEnter && !favoriteRes
-                ? i18n.t('result_distance')
-                : i18n.t(title)}
+                ? localizationContext.t('result_distance')
+                : localizationContext.t(title)}
             </Text>
             {!favoriteRes ? (
               <Text
@@ -138,7 +137,7 @@ export default function HomeScreenContent({
                   { fontFamily: 'ProximaNovaSemiBold' },
                 ]}
               >
-                {i18n.t('no_restaurant_found')}
+                {localizationContext.t('no_restaurant_found')}
               </Text>
             ) : (
               <View style={{ marginTop: 20, marginLeft: 5 }}>
@@ -201,7 +200,8 @@ export default function HomeScreenContent({
           alwaysBounceHorizontal={false}
           refreshControl={
             refetchRestaurant &&
-            resIsFetching && !noRefresh && (
+            resIsFetching &&
+            !noRefresh && (
               <RefreshControl
                 //refresh control used for the Pull to Refresh
                 refreshing={!route.params.crossIcon && resIsFetching}
@@ -221,7 +221,7 @@ export default function HomeScreenContent({
             <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
-              {searchEnter ? i18n.t(searchTitle) : i18n.t(title)}
+              {searchEnter ? localizationContext.t(searchTitle) : localizationContext.t(title)}
             </Text>
           )}
           <View
@@ -283,7 +283,10 @@ export default function HomeScreenContent({
                       restaurant_id={
                         itemData?.item._id || itemData?.item?.restaurant_id
                       }
-                      geometry={itemData?.item?.geometry?.location}
+                      geometry={
+                        itemData?.item?.geometry?.location ||
+                        itemData?.item?.location
+                      }
                       refetchRestaurant={refetchRestaurant}
                     />
                     // </View>

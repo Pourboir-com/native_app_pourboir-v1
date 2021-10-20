@@ -24,7 +24,6 @@ import * as ImagePicker from 'expo-image-picker';
 import { getAsyncStorageValues } from '../../constants';
 import { UPDATE_PICTURE, EDIT_USER } from '../../queries';
 import { useMutation } from 'react-query';
-import i18n from '../../li8n';
 import { Colors } from '../../constants/Theme';
 import RPCountryPickerInfo from 'react-native-country-picker-info';
 const validator = require('validator');
@@ -32,7 +31,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 const PersonalDetails = ({ navigation, route }) => {
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : -450;
-  const { state, dispatch } = useContext(Context);
+  const { state, dispatch, localizationContext } = useContext(Context);
   const { login } = route?.params || {};
   //States
   const [FirstName, setFirstName] = useState(state?.userDetails?.name || '');
@@ -165,7 +164,7 @@ const PersonalDetails = ({ navigation, route }) => {
         >
           <GlobalHeader
             arrow={true}
-            headingText={i18n.t('your_personal_details')}
+            headingText={localizationContext.t('your_personal_details')}
             fontSize={17}
             color={'black'}
             login={login}
@@ -235,9 +234,14 @@ const PersonalDetails = ({ navigation, route }) => {
             </View>
 
             <View style={{ marginHorizontal: 30, alignItems: 'center' }}>
-              <Text style={styles.heading1}> {i18n.t('personal_info')}</Text>
+              <Text style={styles.heading1}>
+                {' '}
+                {localizationContext.t('personal_info')}
+              </Text>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('first_name')}</Text>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('first_name')}
+                </Text>
                 <TextInput
                   style={styles.inputsTopTow}
                   onChangeText={setFirstName}
@@ -247,7 +251,9 @@ const PersonalDetails = ({ navigation, route }) => {
                 />
               </View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('last_name')}</Text>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('last_name')}
+                </Text>
                 <TextInput
                   style={styles.inputsTopTow}
                   onChangeText={setLastName}
@@ -257,7 +263,9 @@ const PersonalDetails = ({ navigation, route }) => {
                 />
               </View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('phone_num')}</Text>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('phone_num')}
+                </Text>
                 <View style={styles.inputsTopTow}>
                   <RPCountryPickerInfo
                     isVisible={isOpenCountryPicker}
@@ -287,7 +295,7 @@ const PersonalDetails = ({ navigation, route }) => {
                     fontFamily: 'ProximaNova',
                   }}
                 >
-                  {i18n.t('not_verified')}
+                  {localizationContext.t('not_verified')}
                 </Text> */}
                 </View>
               </View>
@@ -321,12 +329,14 @@ const PersonalDetails = ({ navigation, route }) => {
                     fontFamily: 'ProximaNova',
                   }}
                 >
-                  {i18n.t('checked')}
+                  {localizationContext.t('checked')}
                 </Text> */}
                 </View>
               </View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('username')}</Text>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('username')}
+                </Text>
                 <View
                   style={[
                     styles.inputsTopTow,
@@ -344,13 +354,15 @@ const PersonalDetails = ({ navigation, route }) => {
                 </View>
               </View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('about_me')}</Text>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('about_me')}
+                </Text>
                 <TextInput
                   style={{ ...styles.inputsTopTow, paddingBottom: 50 }}
                   onChangeText={e => setAbout(e)}
                   multiline={true}
                   value={about}
-                  placeholder={i18n.t('describe')}
+                  placeholder={localizationContext.t('describe')}
                   placeholderTextColor={'#485460'}
                 />
               </View>
@@ -358,7 +370,7 @@ const PersonalDetails = ({ navigation, route }) => {
 
             {/* <View style={{ alignItems: 'center', marginBottom: 40 }}> */}
             {/* <View>
-              <Text style={styles.heading1}>{i18n.t('payment_methods')}</Text>
+              <Text style={styles.heading1}>{localizationContext.t('payment_methods')}</Text>
             </View> */}
 
             {/* <View style={styles.payment_container}>
@@ -426,7 +438,7 @@ const PersonalDetails = ({ navigation, route }) => {
                     <AntDesign name="plus" size={21} color="black" />
                   </View>
                   <Text style={styles.paymentMethodLabel}>
-                    {i18n.t('add_pay_method')}
+                    {localizationContext.t('add_pay_method')}
                   </Text>
                 </View>
                 <View>
@@ -457,7 +469,7 @@ const PersonalDetails = ({ navigation, route }) => {
             <ActivityIndicator size={29} color="#EBC11B" />
           ) : (
             <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
-              {i18n.t('confirm')}
+              {localizationContext.t('confirm')}
             </Text>
           )}
         </TouchableOpacity>

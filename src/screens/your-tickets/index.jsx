@@ -8,7 +8,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import GlobalHeader from '../../components/GlobalHeader';
-import i18n from '../../li8n';
 import styles from './styles';
 import { GET_TICKETS } from '../../queries/tickets';
 import Context from '../../contextApi/context';
@@ -18,7 +17,7 @@ import get from 'lodash/get';
 import moment from 'moment';
 
 const YourTickets = ({ navigation }) => {
-  const { state } = useContext(Context);
+  const { state, localizationContext } = useContext(Context);
   const {
     data: ticketData,
     isLoading: ticketDataLoading,
@@ -60,7 +59,7 @@ const YourTickets = ({ navigation }) => {
         >
           <GlobalHeader
             arrow={true}
-            headingText={i18n.t('your_tickets')}
+            headingText={localizationContext.t('your_tickets')}
             fontSize={17}
             color={'black'}
             navigation={navigation}
@@ -77,7 +76,9 @@ const YourTickets = ({ navigation }) => {
           justifyContent: 'center',
         }}
       >
-        <Text style={styles.text}>{i18n.t('collect_tickets')}</Text>
+        <Text style={styles.text}>
+          {localizationContext.t('collect_tickets')}
+        </Text>
       </View>
       <ScrollView
         showsVerticalScrollIndicator={false}

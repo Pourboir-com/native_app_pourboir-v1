@@ -5,7 +5,6 @@ import { useQuery } from 'react-query';
 import GlobalHeader from '../../components/GlobalHeader';
 import { reactQueryConfig } from '../../constants';
 import { GET_MENU } from '../../queries';
-import { FontAwesome } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const MenuScreen = ({ navigation, route }) => {
@@ -80,7 +79,7 @@ const MenuScreen = ({ navigation, route }) => {
                               {item?.currency || '€'}
                             </Text>
                             <Text style={styles.price}>
-                              {dish.price.toLocaleString() || '0'}
+                              {dish.price || '0'}
                             </Text>
                           </View>
                         </View>

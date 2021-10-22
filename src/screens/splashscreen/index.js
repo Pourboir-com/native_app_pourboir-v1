@@ -61,7 +61,7 @@ export default function SplashScreen(props) {
   };
 
   const InitializeStates = async () => {
-    const { userInfo = {} } = await getAsyncStorageValues();
+    const { userInfo = {}, language } = await getAsyncStorageValues();
     if (userInfo?.user_id) {
       let userDetails = {
         name: upperTitleCase(userInfo?.name),
@@ -75,6 +75,10 @@ export default function SplashScreen(props) {
         last_name: userInfo?.last_name || '',
         calling_code: userInfo?.calling_code || '',
       };
+      dispatch({
+        type: actionTypes.CHANGE_LANGUAGE,
+        payload: language,
+      });
       dispatch({
         type: actionTypes.USER_DETAILS,
         payload: userDetails,

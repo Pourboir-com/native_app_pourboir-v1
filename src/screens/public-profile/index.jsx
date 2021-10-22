@@ -9,7 +9,7 @@ import {
   Linking,
   Platform,
 } from 'react-native';
-import Constants from 'expo-constants';
+// import Constants from 'expo-constants';
 import GlobalHeader from '../../components/GlobalHeader';
 import styles from './styles';
 import RatingStar from '../../components/RatingComponent';
@@ -22,7 +22,7 @@ import * as Google from 'expo-google-app-auth';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as IntentLauncher from 'expo-intent-launcher';
+// import * as IntentLauncher from 'expo-intent-launcher';
 import { config } from '../../constants';
 import { email_to } from '../../constants/env';
 
@@ -33,9 +33,9 @@ const PublicProfile = ({ navigation, route }) => {
   const { login } = route?.params || {};
   const { state, dispatch, localizationContext } = useContext(Context);
 
-  const pkg = Constants.manifest.releaseChannel
-    ? Constants.manifest.android.package
-    : 'host.exp.exponent';
+  // const pkg = Constants.manifest.releaseChannel
+  //   ? Constants.manifest.android.package
+  //   : 'host.exp.exponent';
 
   const resetState = async () => {
     navigation.replace('socialLogin');
@@ -46,16 +46,16 @@ const PublicProfile = ({ navigation, route }) => {
     await AsyncStorage.setItem('@userInfo', JSON.stringify({}));
   };
 
-  const openSettings = () => {
-    if (Platform.OS === 'ios') {
-      Linking.openURL('app-settings:');
-    } else {
-      IntentLauncher.startActivityAsync(
-        IntentLauncher.ACTION_APPLICATION_DETAILS_SETTINGS,
-        { data: 'package:' + pkg },
-      );
-    }
-  };
+  // const openSettings = () => {
+  //   if (Platform.OS === 'ios') {
+  //     Linking.openURL('app-settings:');
+  //   } else {
+  //     IntentLauncher.startActivityAsync(
+  //       IntentLauncher.ACTION_APPLICATION_DETAILS_SETTINGS,
+  //       { data: 'package:' + pkg },
+  //     );
+  //   }
+  // };
 
   //user signout
   const handleSignOut = async () => {
@@ -77,12 +77,17 @@ const PublicProfile = ({ navigation, route }) => {
       }
     }
   };
+
   const LangBottomSheetElement = [
     {
       element: localizationContext.t('english'),
       func: () => {
         localizationContext.setLocale('en');
         AsyncStorage.setItem('@lang', 'en-US');
+        dispatch({
+          type: actionTypes.CHANGE_LANGUAGE,
+          payload: 'en-US',
+        });
         dispatch({
           type: actionTypes.REFRESH_ANIMATION,
           payload: !state.refreshAnimation,
@@ -94,6 +99,10 @@ const PublicProfile = ({ navigation, route }) => {
       func: () => {
         localizationContext.setLocale('fr');
         AsyncStorage.setItem('@lang', 'fr-FR');
+        dispatch({
+          type: actionTypes.CHANGE_LANGUAGE,
+          payload: 'fr-FR',
+        });
         dispatch({
           type: actionTypes.REFRESH_ANIMATION,
           payload: !state.refreshAnimation,

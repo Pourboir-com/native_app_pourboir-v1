@@ -8,8 +8,8 @@ function getEnvVars(env = '') {
 }
 export const releaseEnvironment = getEnvVars(Constants.manifest.releaseChannel);
 const apiUrl = () => {
-  // let api_url = `http://192.168.10.11:8081/api`;
-  let api_url = `http://localhost:8081/api`;
+  let api_url = `http://192.168.10.9:8081/api`;
+  // let api_url = `http://localhost:8081/api`;
 
   if (releaseEnvironment == 'production') {
     // expo build:ios --clear-provisioning-profile --revoke-credentials --release-channel production-1.0.0

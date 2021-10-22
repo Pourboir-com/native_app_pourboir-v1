@@ -57,7 +57,6 @@ import TourModal from '../../components/modals/tour-modal';
 import { Review } from '../../components/open-card';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAsyncStorageValues } from '../../constants';
-import * as Localization from 'expo-localization';
 
 const ReviewDetails = ({ navigation, route }) => {
   const { state, dispatch, localizationContext } = useContext(Context);
@@ -103,13 +102,11 @@ const ReviewDetails = ({ navigation, route }) => {
   const [tourModal, setTourModal] = useState(false);
   const [AddFavorite, { isLoading: favLoading }] = useMutation(ADD_FAVORITE);
   const [section, setSection] = useState(1);
-  const [locale, setLocale] = useState(1);
   const [countryCode, setCountryCode] = useState('+33');
 
   useEffect(() => {
     (async () => {
-      const { ExplanatoryScreen, language } = await getAsyncStorageValues();
-      setLocale(language);
+      const { ExplanatoryScreen } = await getAsyncStorageValues();
       if (!ExplanatoryScreen?.explanatory_screen) {
         setTimeout(() => {
           setTourModal(true);
@@ -150,18 +147,19 @@ const ReviewDetails = ({ navigation, route }) => {
       {
         google_place_id: place_id,
         user_id: state.userDetails.user_id,
-        language: locale,
+        language: state.language,
       },
     ],
     GET_REVIEWS,
     {
       ...reactQueryConfig,
-      enabled: locale && place_id,
+      enabled: state.language && place_id,
       onError: e => {
         alert(e?.response?.data?.message);
       },
     },
   );
+
   const {
     data: waitersData,
     isLoading: waitersLoading,
@@ -178,6 +176,7 @@ const ReviewDetails = ({ navigation, route }) => {
       },
     },
   );
+
   const {
     data: RestaurantDetails,
     isLoading: RestaurantDetailsLoading,
@@ -333,10 +332,11 @@ const ReviewDetails = ({ navigation, route }) => {
       navigation.navigate('socialLogin', { confirmWaiter: true });
     }
   };
+
   const [managerApproval, { isLoading: managerApprovalLoading }] = useMutation(
     MANAGER_APPROVAL,
   );
-  // console.log('rest ', RestaurantDetails.data._id)
+
   const submitApproval = async () => {
     await managerApproval(
       {
@@ -357,24 +357,24 @@ const ReviewDetails = ({ navigation, route }) => {
     );
   };
 
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        message: name,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+  // const onShare = async () => {
+  //   try {
+  //     const result = await Share.share({
+  //       message: name,
+  //     });
+  //     if (result.action === Share.sharedAction) {
+  //       if (result.activityType) {
+  //         // shared with activity type of result.activityType
+  //       } else {
+  //         // shared
+  //       }
+  //     } else if (result.action === Share.dismissedAction) {
+  //       // dismissed
+  //     }
+  //   } catch (error) {
+  //     alert(error.message);
+  //   }
+  // };
 
   const handleAddFavorite = async () => {
     if (state.userDetails.user_id) {

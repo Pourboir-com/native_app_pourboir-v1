@@ -116,7 +116,11 @@ const PublicProfile = ({ navigation, route }) => {
     },
     {
       element: localizationContext.t('lang'),
-      func: () => refLangBSheet.current.open(),
+      func: () => {
+        setTimeout(() => {
+          refLangBSheet.current.open();
+        }, 500);
+      },
     },
     {
       element: localizationContext.t('rate_app'),
@@ -300,9 +304,9 @@ const PublicProfile = ({ navigation, route }) => {
                 key={i}
                 onPress={() => {
                   v.nav ? navigation.navigate(v.nav) : v.func && v.func();
-                  setTimeout(() => {
-                    refRBSheet.current.close();
-                  }, 1000);
+                  // setTimeout(() => {
+                  refRBSheet.current.close();
+                  // }, 1000);
                 }}
                 activeOpacity={0.3}
                 style={styles.sheet_elements}

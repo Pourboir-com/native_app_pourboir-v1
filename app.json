@@ -5,7 +5,7 @@
     "facebookAppId": "771555200360518",
     "facebookScheme": "fb771555200360518",
     "facebookDisplayName": "Pourboir'",
-    "version": "1.0.2",
+    "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./assets/Serveur-IOS.png",
     "splash": {
@@ -35,7 +35,10 @@
         "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses location for nearby restaurants",
         "NSLocationAlwaysUsageDescription": "This app uses location for nearby restaurants",
         "CFBundleAllowMixedLocalizations": true,
-        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
+        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
+        "NSUserActivityTypes": [
+          "INSendMessageIntent"
+        ]
       },
       "config": {
         "googleSignIn": {

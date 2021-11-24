@@ -60,7 +60,7 @@ const HomeCard = ({
         <ImageBackground
           style={styles.imgCard}
           resizeMode="cover"
-          source={{ uri: img }}
+          source={{ uri: img || null }}
         >
           <LinearGradient
             style={{

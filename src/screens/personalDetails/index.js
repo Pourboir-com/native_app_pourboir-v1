@@ -214,7 +214,7 @@ const PersonalDetails = ({ navigation, route }) => {
                       height: '100%',
                       borderRadius: 60,
                     }}
-                    source={{ uri: image }}
+                    source={{ uri: image || null }}
                     resizeMode="cover"
                   />
                 )}

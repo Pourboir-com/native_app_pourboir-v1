@@ -458,7 +458,7 @@ const ReviewDetails = ({ navigation, route }) => {
       >
         <View style={styles.viewImg}>
           <ImageBackground
-            source={{ uri: img }}
+            source={{ uri: img || null }}
             style={{ flex: 1, justifyContent: 'space-between', height: '100%' }}
           >
             <LinearGradient

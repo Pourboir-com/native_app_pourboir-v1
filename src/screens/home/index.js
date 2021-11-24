@@ -10,22 +10,25 @@ import Context from '../../contextApi/context';
 import { isSearch } from '../../util';
 // import * as FacebookAds from 'expo-ads-facebook';
 import * as Location from 'expo-location';
-import AdModal from '../../components/modals/AdModal';
-import NoFavRestaurant from '../../components/no-fav-card';
+// import AdModal from '../../components/modals/AdModal';
+// import NoFavRestaurant from '../../components/no-fav-card';
 import { AppState } from 'react-native';
+import * as actionTypes from '../../contextApi/actionTypes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { differenceInSeconds } from 'date-fns';
 
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
   const [searchEnter, setsearchEnter] = useState('');
+  const [refreshAnimation, setRefreshAnimation] = useState(false);
+
   const [saveLocation, setSaveLocation] = useState('');
   // const [nextPageToken, setnextPageToken] = useState();
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   // const { restaurantsDetails: data } = state;
-  const [adModalVisible, setAdModalVisible] = useState(false);
-
+  // const [adModalVisible, setAdModalVisible] = useState(false);
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
-
   const currentLocation = async () => {
     const isLocation = await Location.hasServicesEnabledAsync();
     const isLocationOn = await Location.getForegroundPermissionsAsync();
@@ -44,15 +47,40 @@ const HomeScreen = props => {
     }
   };
 
-  const _handleAppStateChange = nextAppState => {
+  const recordStartTime = async () => {
+    try {
+      const now = new Date();
+      await AsyncStorage.setItem('@start_time', now.toISOString());
+    } catch (err) {
+      // TODO: handle errors from setItem properly
+    }
+  };
+  const getElapsedTime = async () => {
+    try {
+      const startTime = await AsyncStorage.getItem('@start_time');
+      const now = new Date();
+      return differenceInSeconds(now, Date.parse(startTime));
+    } catch (err) {
+      // TODO: handle errors from setItem properly
+    }
+  };
+
+  const _handleAppStateChange = async nextAppState => {
     if (
       appState.current.match(/inactive|background/) &&
       nextAppState === 'active'
     ) {
-      if (props?.route?.name == 'Home') {
-        setAdModalVisible(true);
+      // if (props?.route?.name == 'Home') {
+      //   setAdModalVisible(true);
+      // }
+      const elapsed = await getElapsedTime();
+      if (elapsed > 300) {
+        currentLocation();
       }
-      currentLocation();
+      setRefreshAnimation(prev => !prev);
+    }
+    if (nextAppState === 'background') {
+      recordStartTime();
     }
     appState.current = nextAppState;
     setAppStateVisible(appState.current);
@@ -70,12 +98,21 @@ const HomeScreen = props => {
   }, []);
 
   useEffect(() => {
-    if (props?.route?.params?.ad) {
-      setTimeout(() => {
-        setAdModalVisible(true);
-      }, 500);
-    }
-  }, []);
+    setTimeout(() => {
+      dispatch({
+        type: actionTypes.REFRESH_ANIMATION,
+        payload: !state.refreshAnimation,
+      });
+    }, 10);
+  }, [refreshAnimation]);
+
+  // useEffect(() => {
+  //   if (props?.route?.params?.ad) {
+  //     setTimeout(() => {
+  //       setAdModalVisible(true);
+  //     }, 500);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (!searchVal) {
@@ -206,12 +243,12 @@ const HomeScreen = props => {
           noRefresh
         />
       </Header>
-      {adModalVisible && (
+      {/* {adModalVisible && (
         <AdModal
           adModalVisible={adModalVisible}
           setAdModalVisible={setAdModalVisible}
         />
-      )}
+      )} */}
     </>
   );
 };

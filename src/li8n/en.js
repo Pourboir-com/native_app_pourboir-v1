@@ -317,4 +317,22 @@ export default {
   review: 'Reviews',
   check_in_limit:
     'We limit the number of check-in per user and per day to improve user experience. Please try again later.',
-};
+
+    //media component
+    bg_img_heading: 'Background Image',
+    bg_img_text: 'Change the background of your page, by adding a picture here.',
+    img_placeholder: 'Paste the link of your image here',
+    basic_settings: 'Basic Settings',
+    discoverImg_text: 'Change the discover images of your page, by adding upto five pictures here.',
+    advance_settings: 'Advanced Settings',
+    link_ig_acc: 'Linked your instagram account and make sure to display all the latest post on your page automatically.',
+    user_id: "User ID",
+    acc_token: 'Access Token',
+    client_id: "Client ID",
+    confirm: 'Confirm',
+    discover: 'Discover',
+    discover_msg:"This restaurant hasn't yet added any content.",
+    the_media: 'Media',
+    discv_setting: 'Discover Settings.'
+
+  };

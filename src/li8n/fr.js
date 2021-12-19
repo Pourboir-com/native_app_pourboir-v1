@@ -322,4 +322,21 @@ export default {
   describe: 'Décrivez vous en 150 charactères',
   review: 'Les avis',
   check_in_limit: `Nous limitons le nombres de check-in par personne par jour pour une meilleur expérience utilisateur. Merci de réessayer plus tard`,
+  
+   //media component
+   bg_img_heading: "Fond d’écran",
+   bg_img_text: "Changer le fond d’écran de votre page  en publiant le lien ici",
+   img_placeholder: 'Copier le lien de votre image ici',
+   basic_settings: 'Paramètres simples',
+   discoverImg_text: "Changes les images d’avant-goût de votre page, en ajoutant jusqu’à 5 photos ici. ",
+   advance_settings: 'Paramètres avancés',
+   link_ig_acc: 'Lier votre compte instagram et soyez sur de publier automatiquement vos derniers postes sur votre page. ',
+   user_id: "User ID",
+   acc_token: 'Access Token',
+   client_id: "Client ID",
+   confirm: 'Confirmer',
+  discover: 'Discover',
+  discover_msg: 'Ce restaurant n’a pas encore ajouté de contenu',
+  the_media: 'Media',
+  discv_setting: 'Images d’avant-goût'
 };

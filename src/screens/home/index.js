@@ -12,6 +12,8 @@ import { isSearch } from '../../util';
 import * as Location from 'expo-location';
 import AdModal from '../../components/modals/AdModal';
 import NoFavRestaurant from '../../components/no-fav-card';
+import Discover from '../../components/open-card/discover';
+
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
   const [searchEnter, setsearchEnter] = useState('');
@@ -128,7 +130,9 @@ const HomeScreen = props => {
         // nextPageToken={nextPageToken}
       >
         <StatusBar translucent={true} style="dark" />
-        <HomeScreenContent
+        {/* <Media /> */}
+        <Discover />
+        {/* <HomeScreenContent
           restaurantLoading={restaurantLoading}
           searchVal={searchVal}
           refetchRestaurant={() => {
@@ -173,14 +177,14 @@ const HomeScreen = props => {
           route={props?.route}
           title="popular_restaurant"
           searchTitle="popular_restaurant"
-        />
+        /> */}
       </Header>
-      {adModalVisible && (
+      {/* {adModalVisible && (
         <AdModal
           adModalVisible={adModalVisible}
           setAdModalVisible={setAdModalVisible}
         />
-      )}
+      )} */}
     </>
   );
 };

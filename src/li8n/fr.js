@@ -1,4 +1,6 @@
 export default {
+  english: 'Anglais',
+  french: 'Français',
   //home card
   serveur: 'serveur',
   serveurs: 'serveurs',
@@ -258,7 +260,7 @@ export default {
   thanks_filling:
     'Nous devons vérifier que vous êtes bien le propriétaire de cet établissement. Merci de renseigner les informations suivantes .',
   siret_num: 'Numéro de SIRET',
-  cellPhone: 'Numéro de téléphone portable',
+  cellPhone: 'téléphone',
   i_accepts: "J'accepte les professionnel",
   term_cond: `termes et \nconditions.`,
   claim: 'Réclamer',

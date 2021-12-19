@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import WiFi from '../../assets/images/WiFi.png';
-import i18n from '../../li8n';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import Context from '../../contextApi/context';
 
 const fetchFont = () => {
   return Font.loadAsync({
@@ -13,6 +13,7 @@ const fetchFont = () => {
 
 const NoWiFi = () => {
   const [fontLoaded, setFontLoaded] = useState(false);
+  const { localizationContext } = useContext(Context);
 
   return (
     <>
@@ -36,7 +37,7 @@ const NoWiFi = () => {
               textAlign: 'center',
             }}
           >
-            {i18n.t('must_loggedIn')}
+            {localizationContext.t('must_loggedIn')}
           </Text>
         </View>
       )}

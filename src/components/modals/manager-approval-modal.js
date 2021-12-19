@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -17,8 +17,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/Version-control-pana.png');
 const imgBg = require('../../assets/images/Group7.png');
-import i18n from '../../li8n';
 import CheckBox from 'react-native-check-box';
+import RPCountryPickerInfo from 'react-native-country-picker-info';
+import * as WebBrowser from 'expo-web-browser';
+import Context from '../../contextApi/context';
 
 const ManagerApprovalModal = ({
   termsChecked,
@@ -32,8 +34,21 @@ const ManagerApprovalModal = ({
   setReceivedModal,
   submitApproval,
   loading,
+  countryCode,
+  setCountryCode,
 }) => {
   const validation = termsChecked && cellPhone && siretNumber;
+  const [isOpenCountryPicker, setIsOpenCountryPicker] = useState(false);
+  const { localizationContext } = useContext(Context);
+
+  const onPressOpenPicker = () => {
+    setIsOpenCountryPicker(!isOpenCountryPicker);
+  };
+
+  const onPressCountryItem = countryInfo => {
+    setCountryCode(countryInfo.dial_code);
+    setIsOpenCountryPicker(false);
+  };
 
   const Claim = () => {
     setApprovalModal(false);
@@ -93,7 +108,7 @@ const ManagerApprovalModal = ({
 
           <View style={{ marginHorizontal: 10 }}>
             <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-              {i18n.t('fill_info')}
+              {localizationContext.t('fill_info')}
             </Text>
             <Text
               style={{
@@ -105,7 +120,7 @@ const ManagerApprovalModal = ({
                 paddingHorizontal: 15,
               }}
             >
-              {i18n.t('thanks_filling')}
+              {localizationContext.t('thanks_filling')}
             </Text>
 
             <View
@@ -123,107 +138,119 @@ const ManagerApprovalModal = ({
                   style={styles.inputsTopTow}
                   onChangeText={e => setSiretNumber(e)}
                   value={siretNumber}
-                  placeholder={i18n.t('siret_num')}
+                  placeholder={localizationContext.t('siret_num')}
                   keyboardType={'numeric'}
                   placeholderTextColor={'#707375'}
                 />
               </View>
               <View
-                style={
-                  (styles.input_box, { alignItems: 'center', marginTop: 15 })
-                }
+                style={[
+                  styles.inputsTopTow,
+                  {
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: 15,
+                    overflow: 'hidden',
+                  },
+                ]}
               >
-                <TextInput
-                  style={styles.inputsTopTow}
-                  onChangeText={e => setCellPhone(e)}
-                  keyboardType={'numeric'}
-                  value={cellPhone}
-                  placeholder={i18n.t('cellPhone')}
-                  placeholderTextColor={'#707375'}
+                <RPCountryPickerInfo
+                  isVisible={isOpenCountryPicker}
+                  isVisibleCancelButton={false}
+                  onPressClosePicker={onPressOpenPicker}
+                  onPressSelect={onPressCountryItem}
                 />
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: 30,
-                  marginBottom: 10,
-                  marginHorizontal: 20,
-                }}
-              >
-                <View>
-                  <CheckBox
-                    style={{
-                      zIndex: 9999,
-                      marginTop: Platform.OS === 'ios' ? -14 : -13,
-                    }}
-                    onClick={() => setTermsChecked(!termsChecked)}
-                    isChecked={termsChecked}
-                    checkedImage={
-                      <Image
-                        style={{ width: 18, height: 18, marginTop: -4 }}
-                        resizeMode={'contain'}
-                        source={require('../../assets/images/checked.png')}
-                      />
-                    }
-                    unCheckedImage={
-                      <Image
-                        style={{ width: 15, height: 15 }}
-                        resizeMode={'contain'}
-                        source={require('../../assets/images/unchecked.png')}
-                      />
-                    }
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <TouchableOpacity onPress={onPressOpenPicker}>
+                    <Text style={{ marginRight: 3, fontSize: 15 }}>
+                      {countryCode}
+                    </Text>
+                  </TouchableOpacity>
+                  <TextInput
+                    style={{ fontSize: 16 }}
+                    onChangeText={e => setCellPhone(e)}
+                    keyboardType={'numeric'}
+                    value={cellPhone}
+                    placeholder={localizationContext.t('cellPhone')}
+                    placeholderTextColor={'#707375'}
                   />
                 </View>
-
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    paddingLeft: 2,
-                    marginTop: -14,
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Text
-                    // onPress={() =>alert('clicked')}
-                    style={{
-                      fontSize: Platform.OS === 'ios' ? 15 : 16,
-                      color: '#000',
-                      fontFamily: 'ProximaNova',
-                      flexDirection: 'row',
-                    }}
-                  >
-                    {' '}
-                    {i18n.t('i_accepts')}{' '}
-                  </Text>
-
-                  {Platform.OS == 'ios' ? (
-                    <TouchableOpacity>
-                      <Text
-                        style={{
-                          color: '#0050A0',
-                          fontSize: Platform.OS === 'ios' ? 15 : 14,
-                          fontFamily: 'ProximaNova',
-                        }}
-                      >
-                        {i18n.t('term_cond')}
-                      </Text>
-                    </TouchableOpacity>
-                  ) : null}
-                </View>
               </View>
-              {Platform.OS == 'android' ? (
-                <TouchableOpacity style={{ marginLeft: 44, marginTop: -5 }}>
+            </View>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: 12,
+                height: 30,
+                textAlign: 'center',
+              }}
+            >
+              <CheckBox
+                style={{
+                  zIndex: 9999,
+                  marginTop: Platform.OS === 'ios' ? -10 : -2,
+                }}
+                onClick={() => setTermsChecked(!termsChecked)}
+                isChecked={termsChecked}
+                checkedImage={
+                  <Image
+                    style={{ width: 18, marginTop: -4 }}
+                    resizeMode={'contain'}
+                    source={require('../../assets/images/checked.png')}
+                  />
+                }
+                unCheckedImage={
+                  <Image
+                    style={{ width: 16 }}
+                    resizeMode={'contain'}
+                    source={require('../../assets/images/unchecked.png')}
+                  />
+                }
+              />
+              <Text
+                style={[
+                  {
+                    textAlign: 'center',
+                  },
+                ]}
+              >
+                <View style={{ flexDirection: 'row' }}>
                   <Text
                     style={{
-                      color: '#0050A0',
-                      fontSize: Platform.OS === 'ios' ? 15 : 16,
-                      fontFamily: 'ProximaNova',
+                      color: Colors.fontLight,
+                      textAlign: 'center',
+                      fontSize: 14,
+                      marginLeft: 5,
                     }}
+                    onPress={() => setTermsChecked(!termsChecked)}
                   >
-                    {i18n.t('term_cond')}
+                    {localizationContext.t('i_accepts')}{' '}
                   </Text>
-                </TouchableOpacity>
-              ) : null}
+                  <TouchableOpacity
+                    onPress={() =>
+                      WebBrowser.openBrowserAsync(
+                        'https://pourboir.com/fr/need-help/privacy-policy/',
+                      )
+                    }
+                  >
+                    <Text
+                      style={{
+                        color: '#0050A0',
+                        fontSize: 14,
+                        fontFamily: 'ProximaNova',
+                        lineHeight: 24,
+                        textAlign: 'center',
+                        marginTop: Platform.OS === 'android' ? -1 : -2.5,
+                      }}
+                    >
+                      {localizationContext.t('term_cond')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </Text>
             </View>
 
             <TouchableOpacity
@@ -247,7 +274,7 @@ const ManagerApprovalModal = ({
                 {loading ? (
                   <ActivityIndicator size={25} color="#EBC11B" />
                 ) : (
-                  i18n.t('claim')
+                  localizationContext.t('claim')
                 )}
               </Text>
             </TouchableOpacity>
@@ -266,8 +293,6 @@ const styles = StyleSheet.create({
     borderColor: '#E3E3E3',
     borderWidth: 1,
     width: '88%',
-    // paddingLeft: 10,
-    // paddingRight: 10,
     alignSelf: 'center',
     height: 48,
     borderRadius: 10,
@@ -334,9 +359,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 270,
     height: 48,
-    // paddingVertical: 13,
-    // paddingHorizontal: 10,
     alignItems: 'center',
-    //  marginTop:40
   },
 });

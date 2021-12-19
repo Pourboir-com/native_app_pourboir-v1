@@ -14,7 +14,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/Choose-rafiki.png');
 const imgBg = require('../../assets/images/Group7.png');
-import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useMutation } from 'react-query';
 import Context from '../../contextApi/context';
@@ -30,7 +29,7 @@ const AddCategoryModal = ({
   refetchMenus,
   restaurant_id,
 }) => {
-  const { state } = useContext(Context);
+  const { state, localizationContext } = useContext(Context);
 
   const [category, setCategory] = useState('');
   const [menu_id, setMenuId] = useState(new Date().valueOf());
@@ -119,7 +118,7 @@ const AddCategoryModal = ({
         </ImageBackground>
 
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-          {i18n.t('new_categ')}
+          {localizationContext.t('new_categ')}
         </Text>
         <Text
           style={{
@@ -130,7 +129,7 @@ const AddCategoryModal = ({
             paddingTop: 10,
           }}
         >
-          {i18n.t('choose_categ')}
+          {localizationContext.t('choose_categ')}
         </Text>
 
         <View
@@ -148,7 +147,7 @@ const AddCategoryModal = ({
               style={styles.inputsTopTow}
               onChangeText={e => setCategory(e)}
               value={category}
-              placeholder={i18n.t('category')}
+              placeholder={localizationContext.t('category')}
               placeholderTextColor={'#707375'}
             />
           </View>
@@ -172,7 +171,7 @@ const AddCategoryModal = ({
               color: Colors.fontDark,
             }}
           >
-            {i18n.t('confirm')}
+            {localizationContext.t('confirm')}
             {/* Confirm */}
           </Text>
         </TouchableOpacity>

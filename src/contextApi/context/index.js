@@ -8,6 +8,7 @@ const Context = createContext({
     accessToken: '',
     user_id: '',
   },
+  language: 'en-US',
   refreshAnimation: false,
   restaurantsDetails: [],
   yourRestaurants: [],

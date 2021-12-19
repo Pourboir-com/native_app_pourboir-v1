@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/payment.png');
 const imgBg = require('../../assets/images/Group7.png');
-import i18n from '../../li8n';
+import Context from '../../contextApi/context';
 
 const TipModal = ({
   isVisible,
@@ -22,6 +22,8 @@ const TipModal = ({
   handlePayDigital,
   loading,
 }) => {
+  const { localizationContext } = useContext(Context);
+
   return (
     <Overlay
       overlayStyle={styles.container}
@@ -58,7 +60,7 @@ const TipModal = ({
       </ImageBackground>
 
       <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-        {i18n.t('pay_your_tip')}
+        {localizationContext.t('pay_your_tip')}
       </Text>
       <View
         style={{
@@ -77,7 +79,9 @@ const TipModal = ({
           {loading ? (
             <ActivityIndicator size={25} color="#EBC11B" />
           ) : (
-            <Text style={styles.txtTipModal}>{i18n.t('cash')}</Text>
+            <Text style={styles.txtTipModal}>
+              {localizationContext.t('cash')}
+            </Text>
           )}
         </TouchableOpacity>
         {/* <TouchableOpacity
@@ -85,7 +89,7 @@ const TipModal = ({
           style={styles.btnTipModal}
           activeOpacity={0.5}
         >
-          <Text style={styles.txtTipModal}>{i18n.t('digital')}</Text>
+          <Text style={styles.txtTipModal}>{localizationContext.t('digital')}</Text>
         </TouchableOpacity> */}
       </View>
     </Overlay>

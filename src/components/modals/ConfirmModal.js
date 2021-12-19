@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -17,11 +17,11 @@ import {
 import { Overlay } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
-import i18n from '../../li8n';
 const imgWaiter = require('../../assets/images/sittingtable.png');
 const imgBg = require('../../assets/images/Group7.png');
 const validator = require('validator');
 import { FontAwesome5 } from '@expo/vector-icons';
+import Context from '../../contextApi/context';
 
 const ConfirmationModal = ({
   handleModalClose,
@@ -29,13 +29,13 @@ const ConfirmationModal = ({
   loading,
   isVisible,
 }) => {
+  const { localizationContext } = useContext(Context);
   const [placeholderWaiterName, setPlaceholderWaiterName] = React.useState(
-    i18n.t('name_of_your_server'),
+    localizationContext.t('name_of_your_server'),
   );
   const [placeholderEmail, setPlaceholderEmail] = React.useState(
-    i18n.t('waiter_email'),
+    localizationContext.t('waiter_email'),
   );
-
   const [waiterName, setwaiterName] = useState('');
   const [email, setEmail] = useState('');
 
@@ -128,10 +128,10 @@ const ConfirmationModal = ({
               </View>
             </ImageBackground>
             <Text style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}>
-              {i18n.t('help_us_improve')}
+              {localizationContext.t('help_us_improve')}
             </Text>
             <Text style={[styles.txtName, { fontFamily: 'ProximaNova' }]}>
-              {i18n.t('will_contact_shortly')}
+              {localizationContext.t('will_contact_shortly')}
             </Text>
             <TextInput
               selectionColor={Colors.yellow}
@@ -149,7 +149,9 @@ const ConfirmationModal = ({
               }}
               onBlur={() => {
                 if (!email && Platform.OS != 'ios') {
-                  setPlaceholderWaiterName(i18n.t('name_of_your_server'));
+                  setPlaceholderWaiterName(
+                    localizationContext.t('name_of_your_server'),
+                  );
                 }
               }}
               style={[
@@ -175,7 +177,7 @@ const ConfirmationModal = ({
                 }}
                 onBlur={() => {
                   if (!email && Platform.OS != 'ios') {
-                    setPlaceholderEmail(i18n.t('waiter_email'));
+                    setPlaceholderEmail(localizationContext.t('waiter_email'));
                   }
                 }}
                 style={[
@@ -205,7 +207,7 @@ const ConfirmationModal = ({
                 <Text
                   style={[styles.txtBtnConfrm, { fontFamily: 'ProximaNova' }]}
                 >
-                  {i18n.t('add')}
+                  {localizationContext.t('add')}
                 </Text>
               )}
             </TouchableOpacity>

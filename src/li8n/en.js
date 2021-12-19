@@ -1,4 +1,6 @@
 export default {
+  english: 'English',
+  french: 'French',
   //home card
   serveur: 'waiter',
   serveurs: 'waiters',
@@ -254,7 +256,7 @@ export default {
   thanks_filling:
     'We must verify that you are the owner of the establishment. Thanks for filling in the information. ',
   siret_num: 'SIRET Number',
-  cellPhone: 'Cellphone number',
+  cellPhone: 'Cellphone',
   i_accepts: 'I accept the profesional',
   term_cond: `terms and conditions`,
   claim: 'Claim Business',

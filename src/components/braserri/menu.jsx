@@ -1,15 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Dimensions, Text, View } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { Dimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import i18n from '../../li8n';
 import AddBtn from '../add-common-btn';
-import CommonButton from '../common-button';
 import AddCategoryModal from '../modals/AddCategoryModal';
 import DeleteDishModal from '../modals/DeleteDishModal';
 import Categories from './categories';
 import { useQuery, useMutation } from 'react-query';
 import {
-  PUBLISH_MENU,
   DELETE_DISH,
   GET_MENU,
   DELETE_MENU,
@@ -27,7 +24,7 @@ const Menu = ({
   setDescription,
   restaurant_id,
 }) => {
-  const { state } = useContext(Context);
+  const { state, localizationContext } = useContext(Context);
   let ScreenHeight = Dimensions.get('window').height;
   const [categModal, setCategModal] = useState(false);
   const [deleteDishModal, setDeleteDishModal] = useState(false);
@@ -102,55 +99,51 @@ const Menu = ({
         }}
       >
         <View>
-          {categArr.length
-            ? categArr.map((v, i) => {
-                return (
-                  <Categories
-                    key={i}
-                    category={v.category}
-                    id={v._id}
-                    place_id={restaurant_id}
-                    user_id={state.userDetails.user_id}
-                    refetchMenus={refetchMenus}
-                    categArr={categArr}
-                    setCategArr={setCategArr}
-                    description={description}
-                    setDescription={setDescription}
-                    dishName={dishName}
-                    setDishName={setDishName}
-                    setPrice={setPrice}
-                    price={price}
-                    dishes={v.dishes}
-                    menu_id={v.menu_id}
-                    deleteDishModal={deleteDishModal}
-                    setDeleteDishModal={setDeleteDishModal}
-                    dishState={dishState}
-                    setDishState={setDishState}
-                    menuId={menuId}
-                    setMenuId={setMenuId}
-                    dishId={dishId}
-                    setDishId={setDishId}
-                    dishess={dishes}
-                    setDishess={setDishes}
-                    deleteDish={deleteDish}
-                    deleteMenu={DeleteMenu}
-                    deleteType={deleteType}
-                    setDeleteType={setDeleteType}
-                  />
-                );
-              })
-            : null}
+          {(categArr || []).map((v, i) => (
+            <Categories
+              key={i}
+              category={v.category}
+              id={v._id}
+              place_id={restaurant_id}
+              user_id={state.userDetails.user_id}
+              refetchMenus={refetchMenus}
+              categArr={categArr}
+              setCategArr={setCategArr}
+              description={description}
+              setDescription={setDescription}
+              dishName={dishName}
+              setDishName={setDishName}
+              setPrice={setPrice}
+              price={price}
+              dishes={v.dishes}
+              menu_id={v.menu_id}
+              deleteDishModal={deleteDishModal}
+              setDeleteDishModal={setDeleteDishModal}
+              dishState={dishState}
+              setDishState={setDishState}
+              menuId={menuId}
+              setMenuId={setMenuId}
+              dishId={dishId}
+              setDishId={setDishId}
+              dishess={dishes}
+              setDishess={setDishes}
+              deleteDish={deleteDish}
+              deleteMenu={DeleteMenu}
+              deleteType={deleteType}
+              setDeleteType={setDeleteType}
+            />
+          ))}
         </View>
         <View
           style={{
-            marginTop: 24,
+            marginTop: 5,
             justifyContent: 'center',
             alignItems: 'center',
             marginHorizontal: 18,
           }}
         >
           <AddBtn
-            title={i18n.t('add_categ')}
+            title={localizationContext.t('add_categ')}
             onPress={() => setCategModal(true)}
           />
         </View>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -16,9 +16,9 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/sittingtable.png');
 const imgBg = require('../../assets/images/Group7.png');
-import i18n from '../../li8n';
 const validator = require('validator');
 import { FontAwesome5 } from '@expo/vector-icons';
+import Context from '../../contextApi/context';
 
 const AddWaiterCookModal = ({
   addModal,
@@ -32,6 +32,8 @@ const AddWaiterCookModal = ({
 }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const { localizationContext } = useContext(Context);
+
   let emailError = email && !validator?.isEmail(email);
   const validation = name && !emailError && email;
   const handleAdd = () => {
@@ -92,8 +94,8 @@ const AddWaiterCookModal = ({
 
           <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
             {modalType === 'waiter'
-              ? i18n.t('name_of_waiter')
-              : i18n.t('name_of_cook')}
+              ? localizationContext.t('name_of_waiter')
+              : localizationContext.t('name_of_cook')}
           </Text>
 
           <View
@@ -113,8 +115,8 @@ const AddWaiterCookModal = ({
                 value={name}
                 placeholder={
                   modalType === 'waiter'
-                    ? i18n.t('waiter_name_placeholder')
-                    : i18n.t('cook_name_placeholder')
+                    ? localizationContext.t('waiter_name_placeholder')
+                    : localizationContext.t('cook_name_placeholder')
                 }
                 placeholderTextColor={'#707375'}
               />
@@ -127,8 +129,8 @@ const AddWaiterCookModal = ({
                 value={email}
                 placeholder={
                   modalType === 'waiter'
-                    ? i18n.t('waiter_email')
-                    : i18n.t('cook_email')
+                    ? localizationContext.t('waiter_email')
+                    : localizationContext.t('cook_email')
                 }
                 placeholderTextColor={'#707375'}
               />
@@ -162,7 +164,7 @@ const AddWaiterCookModal = ({
                 color: Colors.fontDark,
               }}
             >
-              {i18n.t('confirm')}
+              {localizationContext.t('confirm')}
             </Text>
           </TouchableOpacity>
         </KeyboardAvoidingView>

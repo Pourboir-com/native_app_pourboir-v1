@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import Header from './HeaderAnimated';
 import HomeScreenContent from '../../components/HomeContent';
 import { StatusBar } from 'expo-status-bar';
@@ -10,46 +10,115 @@ import Context from '../../contextApi/context';
 import { isSearch } from '../../util';
 // import * as FacebookAds from 'expo-ads-facebook';
 import * as Location from 'expo-location';
+<<<<<<< HEAD
 import AdModal from '../../components/modals/AdModal';
 import NoFavRestaurant from '../../components/no-fav-card';
 import Discover from '../../components/open-card/discover';
+=======
+// import AdModal from '../../components/modals/AdModal';
+// import NoFavRestaurant from '../../components/no-fav-card';
+import { AppState } from 'react-native';
+import * as actionTypes from '../../contextApi/actionTypes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { differenceInSeconds } from 'date-fns';
+>>>>>>> c6e9cfc1dfcf56b73178bd42736c9909c8490689
 
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
   const [searchEnter, setsearchEnter] = useState('');
+  const [refreshAnimation, setRefreshAnimation] = useState(false);
+
   const [saveLocation, setSaveLocation] = useState('');
   // const [nextPageToken, setnextPageToken] = useState();
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   // const { restaurantsDetails: data } = state;
-  const [adModalVisible, setAdModalVisible] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      const isLocation = await Location.hasServicesEnabledAsync();
-      const isLocationOn = await Location.getForegroundPermissionsAsync();
-      if (isLocation && isLocationOn.granted) {
-        const location = await Location.getCurrentPositionAsync({
-          accuracy: Location.Accuracy.Lowest,
-        });
-        setSaveLocation(
-          JSON.stringify({
-            lat: location?.coords.latitude,
-            log: location?.coords.longitude,
-          }),
-        );
-      } else {
-        setSaveLocation(JSON.stringify({ lat: 48.864716, log: 2.349014 }));
-      }
-    })();
-  }, []);
-
-  useEffect(() => {
-    if (props?.route?.params?.ad) {
-      setTimeout(() => {
-        setAdModalVisible(true);
-      }, 500);
+  // const [adModalVisible, setAdModalVisible] = useState(false);
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  const currentLocation = async () => {
+    const isLocation = await Location.hasServicesEnabledAsync();
+    const isLocationOn = await Location.getForegroundPermissionsAsync();
+    if (isLocation && isLocationOn.granted) {
+      const location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Balanced,
+      });
+      setSaveLocation(
+        JSON.stringify({
+          lat: location?.coords.latitude,
+          log: location?.coords.longitude,
+        }),
+      );
+    } else {
+      setSaveLocation(JSON.stringify({ lat: 48.864716, log: 2.349014 }));
     }
+  };
+
+  const recordStartTime = async () => {
+    try {
+      const now = new Date();
+      await AsyncStorage.setItem('@start_time', now.toISOString());
+    } catch (err) {
+      // TODO: handle errors from setItem properly
+    }
+  };
+  const getElapsedTime = async () => {
+    try {
+      const startTime = await AsyncStorage.getItem('@start_time');
+      const now = new Date();
+      return differenceInSeconds(now, Date.parse(startTime));
+    } catch (err) {
+      // TODO: handle errors from setItem properly
+    }
+  };
+
+  const _handleAppStateChange = async nextAppState => {
+    if (
+      appState.current.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      // if (props?.route?.name == 'Home') {
+      //   setAdModalVisible(true);
+      // }
+      const elapsed = await getElapsedTime();
+      if (elapsed > 300) {
+        currentLocation();
+      }
+      setRefreshAnimation(prev => !prev);
+    }
+    if (nextAppState === 'background') {
+      recordStartTime();
+    }
+    appState.current = nextAppState;
+    setAppStateVisible(appState.current);
+  };
+
+  useEffect(() => {
+    AppState.addEventListener('change', _handleAppStateChange);
+    return () => {
+      AppState.removeEventListener('change', _handleAppStateChange);
+    };
   }, []);
+
+  useEffect(() => {
+    currentLocation();
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch({
+        type: actionTypes.REFRESH_ANIMATION,
+        payload: !state.refreshAnimation,
+      });
+    }, 10);
+  }, [refreshAnimation]);
+
+  // useEffect(() => {
+  //   if (props?.route?.params?.ad) {
+  //     setTimeout(() => {
+  //       setAdModalVisible(true);
+  //     }, 500);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (!searchVal) {
@@ -102,6 +171,7 @@ const HomeScreen = props => {
     GET_FAVORITE_RESTAURANT,
     { enabled: saveLocation, ...reactQueryConfig },
   );
+
   const {
     data: favRestaurantData,
     isLoading: favRestaurantLoading,
@@ -162,6 +232,7 @@ const HomeScreen = props => {
           title="fav_restaurant"
           searchTitle="fav_restaurant"
           favoriteRes
+          noRefresh
         />
         <HomeScreenContent
           restaurantLoading={favRestaurantLoading}
@@ -177,7 +248,12 @@ const HomeScreen = props => {
           route={props?.route}
           title="popular_restaurant"
           searchTitle="popular_restaurant"
+<<<<<<< HEAD
         /> */}
+=======
+          noRefresh
+        />
+>>>>>>> c6e9cfc1dfcf56b73178bd42736c9909c8490689
       </Header>
       {/* {adModalVisible && (
         <AdModal

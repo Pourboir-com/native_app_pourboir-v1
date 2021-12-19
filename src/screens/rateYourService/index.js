@@ -21,14 +21,13 @@ import { ADD_RATINGS } from '../../queries';
 import { useMutation } from 'react-query';
 import { StatusBar } from 'expo-status-bar';
 import NumberFormat from 'react-number-format';
-import i18n from '../../li8n';
 const imgBg = require('../../assets/images/Group5.png');
 import { getAsyncStorageValues } from '../../constants';
 import * as actionTypes from '../../contextApi/actionTypes';
 import TipModal from '../../components/modals/TipModal';
 
 const RateService = ({ navigation, route }) => {
-  const { state, dispatch } = useContext(Context);
+  const { state, dispatch, localizationContext } = useContext(Context);
   const [hospitality, setHospitality] = useState();
   const [currency, setCurrency] = useState();
   const [speed, setSpeed] = useState();
@@ -156,7 +155,7 @@ const RateService = ({ navigation, route }) => {
         >
           <GlobalHeader
             arrow={true}
-            headingText={i18n.t('rate_your_server')}
+            headingText={localizationContext.t('rate_your_server')}
             fontSize={17}
             color={Colors.fontDark}
             backgroundColor={'transparent'}
@@ -193,7 +192,7 @@ const RateService = ({ navigation, route }) => {
       >
         <View style={styles.viewListCard}>
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
-            {i18n.t('hospitality')}
+            {localizationContext.t('hospitality')}
           </Text>
           <View style={{ flexDirection: 'row', marginTop: 10 }}>
             {obj.map((v, i) => {
@@ -223,7 +222,7 @@ const RateService = ({ navigation, route }) => {
         </View>
         <View style={styles.viewListCard}>
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
-            {i18n.t('speed')}
+            {localizationContext.t('speed')}
           </Text>
           <View style={{ flexDirection: 'row', marginTop: 10 }}>
             {obj.map((v, i) => {
@@ -253,7 +252,7 @@ const RateService = ({ navigation, route }) => {
         </View>
         <View style={styles.viewListCard}>
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
-            {i18n.t('service')}
+            {localizationContext.t('service')}
           </Text>
           <View style={{ flexDirection: 'row', marginTop: 10 }}>
             {obj.map((v, i) => {
@@ -283,7 +282,7 @@ const RateService = ({ navigation, route }) => {
         </View>
         <View style={styles.viewListCard}>
           <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
-            {i18n.t('professionalism')}
+            {localizationContext.t('professionalism')}
           </Text>
           <View style={{ flexDirection: 'row', marginTop: 10 }}>
             {obj.map((v, i) => {
@@ -314,7 +313,7 @@ const RateService = ({ navigation, route }) => {
         <View style={{ alignItems: 'center' }}>
           <View style={styles.viewTip}>
             <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
-              {i18n.t('your_tip_to_waiter')}
+              {localizationContext.t('your_tip_to_waiter')}
             </Text>
             <NumberFormat
               value={remarks}
@@ -391,7 +390,7 @@ const RateService = ({ navigation, route }) => {
               color: Colors.fontLight,
             }}
           >
-            {i18n.t('validate')}
+            {localizationContext.t('validate')}
           </Text>
         </TouchableOpacity>
       </ScrollView>

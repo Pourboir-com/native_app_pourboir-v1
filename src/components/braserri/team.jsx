@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { Text, View } from 'react-native';
-import i18n from '../../li8n';
 import styles from '../../screens/braserri/styles';
 import AddBtn from '../add-common-btn';
 import CommonCard from '../comman-card';
@@ -11,7 +10,7 @@ import { reactQueryConfig } from '../../constants';
 import Context from '../../contextApi/context';
 
 const Team = ({ restaurant_id, place_id, refetchWaiters }) => {
-  const { state } = useContext(Context);
+  const { state, localizationContext } = useContext(Context);
   const [addModal, setAddModal] = useState(false);
   const [modalType, setModalType] = useState();
   const [waiters, setWaiters] = useState([]);
@@ -91,7 +90,7 @@ const Team = ({ restaurant_id, place_id, refetchWaiters }) => {
       <View style={{ marginTop: 30 }}>
         <View style={styles.team_common_sec}>
           <View>
-            <Text style={styles.mainHeading}>{i18n.t('waiters')}</Text>
+            <Text style={styles.mainHeading}>{localizationContext.t('waiters')}</Text>
           </View>
           <View style={styles.numberBox}>
             <Text style={styles.numberTxt}>
@@ -119,7 +118,7 @@ const Team = ({ restaurant_id, place_id, refetchWaiters }) => {
                   { ...styles.numberTxt, fontSize: 15, marginTop: 10 })
                 }
               >
-                {i18n.t('no_waiter')}{' '}
+                {localizationContext.t('no_waiter')}{' '}
               </Text>
             </View>
           )}
@@ -133,14 +132,14 @@ const Team = ({ restaurant_id, place_id, refetchWaiters }) => {
           alignItems: 'center',
         }}
       >
-        <AddBtn title={i18n.t('add_your_server')} onPress={openWaiterModal} />
+        <AddBtn title={localizationContext.t('add_your_server')} onPress={openWaiterModal} />
       </View>
 
       {/* // Cooks */}
       <View style={{ marginTop: 30 }}>
         <View style={styles.team_common_sec}>
           <View>
-            <Text style={styles.mainHeading}>{i18n.t('cook')}</Text>
+            <Text style={styles.mainHeading}>{localizationContext.t('cook')}</Text>
           </View>
           <View style={styles.numberBox}>
             <Text style={styles.numberTxt}>
@@ -169,7 +168,7 @@ const Team = ({ restaurant_id, place_id, refetchWaiters }) => {
                   { ...styles.numberTxt, fontSize: 15, marginTop: 10 })
                 }
               >
-                {i18n.t('no_cook')}{' '}
+                {localizationContext.t('no_cook')}{' '}
               </Text>
             </View>
           )}
@@ -182,7 +181,7 @@ const Team = ({ restaurant_id, place_id, refetchWaiters }) => {
             alignItems: 'center',
           }}
         >
-          <AddBtn title={i18n.t('add_cooks')} onPress={openCookModal} />
+          <AddBtn title={localizationContext.t('add_cooks')} onPress={openCookModal} />
         </View>
         <AddWaiterCookModal
           setAddModal={setAddModal}

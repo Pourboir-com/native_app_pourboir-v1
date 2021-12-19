@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Text,
   View,
@@ -13,7 +13,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import StaffCard from '../../components/manager/staff-card';
 import StaffModal from '../../components/manager/staff-modal';
 import FilterModal from '../../components/manager/filter-modal';
-import i18n from '../../li8n';
 import { useQuery } from 'react-query';
 import { RECRUITMENT_FORM, DELETE_WAITER_FORMS } from '../../queries';
 import { reactQueryConfig, getAsyncStorageValues } from '../../constants';
@@ -23,6 +22,7 @@ import { useMutation } from 'react-query';
 import Spinner from 'react-native-loading-spinner-overlay';
 import GlobalHeader from '../../components/GlobalHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Context from '../../contextApi/context';
 
 const ManagerStaff = ({ navigation }) => {
   const [deleteWaiterForm] = useMutation(DELETE_WAITER_FORMS);
@@ -41,6 +41,7 @@ const ManagerStaff = ({ navigation }) => {
   const [showCross, setShowCross] = useState(false);
   const [managerId, setManagerId] = useState();
   const [loading, setLoading] = useState(false);
+  const { localizationContext } = useContext(Context);
 
   useEffect(() => {
     (async () => {
@@ -163,7 +164,7 @@ const ManagerStaff = ({ navigation }) => {
         <View style={styles.first_section}>
           <View style={styles.child_one}>
             <Text style={styles.first_section_bold}>
-              {i18n.t('recruit_estab')}
+              {localizationContext.t('recruit_estab')}
             </Text>
           </View>
           <View style={styles.child_two}>
@@ -182,7 +183,7 @@ const ManagerStaff = ({ navigation }) => {
               </View>
               <View style={{ width: '78%', flexDirection: 'row' }}>
                 <TextInput
-                  placeholder={i18n.t('search')}
+                  placeholder={localizationContext.t('search')}
                   value={value}
                   placeholderTextColor="#707070"
                   onFocus={() => setShowCross(true)}
@@ -287,7 +288,7 @@ const ManagerStaff = ({ navigation }) => {
                 marginTop: 25,
               }}
             >
-              {i18n.t('no_job_found')}
+              {localizationContext.t('no_job_found')}
             </Text>
           )}
         </>

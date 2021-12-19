@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   Image,
   Text,
@@ -10,15 +10,17 @@ import {
 } from 'react-native';
 import styles from './styles';
 import Modal from 'react-native-modal';
-import i18n from '../../li8n';
 import { useQuery } from 'react-query';
 import { RECRUITMENT_FORM } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import Dash from 'react-native-dash';
 import { formatDate } from '../../util/format-date';
 import { upperTitleCase } from '../../util';
+import Context from '../../contextApi/context';
 
 const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
+  const { localizationContext } = useContext(Context);
+
   const { data: waiterFormData, isLoading: waiterFormLoading } = useQuery(
     ['RECRUITMENT_FORM', { form_id: formId, rating_needed: true }],
     RECRUITMENT_FORM,
@@ -86,8 +88,8 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                     {waiterFormLoading
                       ? 'loading..'
                       : waiterFormData?.data[0]?.time === 'half'
-                      ? i18n.t('part_time')
-                      : i18n.t('full')}
+                      ? localizationContext.t('part_time')
+                      : localizationContext.t('full')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -98,7 +100,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
             <View style={{ marginVertical: 15, marginBottom: 19 }}>
               <View>
                 <View>
-                  <Text style={styles.expsTxt}>{i18n.t('exp')} </Text>
+                  <Text style={styles.expsTxt}>{localizationContext.t('exp')} </Text>
                 </View>
                 <View
                   style={{
@@ -118,8 +120,8 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                     {waiterFormLoading
                       ? 'loading..'
                       : Number(waiterFormData?.data[0]?.experience_count) > 1
-                      ? `${i18n.t('years')}s`
-                      : i18n.t('years')}
+                      ? `${localizationContext.t('years')}s`
+                      : localizationContext.t('years')}
                   </Text>
                 </View>
               </View>
@@ -142,7 +144,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                       { marginBottom: Platform.OS === 'ios' ? 0 : -15 },
                     ]}
                   >
-                    {i18n.t('estb')}
+                    {localizationContext.t('estb')}
                   </Text>
                 </View>
                 <Text style={styles.petitTxt}>
@@ -169,12 +171,12 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
                               fontFamily: 'ProximaNova',
                               fontSize: 16,
                             }}
-                          >{`${i18n.t('of')} ${formatDate(
+                          >{`${localizationContext.t('of')} ${formatDate(
                             item?.start_date,
-                          )} ${i18n.t('at')} ${
+                          )} ${localizationContext.t('at')} ${
                             item?.end_date
                               ? formatDate(item?.end_date)
-                              : i18n.t('still_working')
+                              : localizationContext.t('still_working')
                           }`}</Text>
                         </View>
                       ))}
@@ -207,7 +209,7 @@ const StaffModal = ({ isModalVisible, setModalVisible, formId, profile }) => {
           <View style={{ marginVertical: 20 }}>
             <View style={{ alignItems: 'center' }}>
               <View>
-                <Text style={styles.expsTxt}>{i18n.t('contact')}</Text>
+                <Text style={styles.expsTxt}>{localizationContext.t('contact')}</Text>
               </View>
               <View style={[styles.recruterBtns, { marginBottom: 40 }]}>
                 <TouchableOpacity

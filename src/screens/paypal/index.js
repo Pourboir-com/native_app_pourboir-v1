@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-// import { KeyboardAvoidingView, StatusBar } from 'react-native';
+import React, { useState, useContext } from 'react';
 import { ImageBackground } from 'react-native';
 import { StyleSheet, Text, View, Dimensions, Platform } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import GlobalHeader from '../../components/GlobalHeader';
-import i18n from '../../li8n';
+import Context from '../../contextApi/context';
 
 const PaypalPayment = ({ navigation }) => {
   const [text, onChangeText] = useState();
+  const { localizationContext } = useContext(Context);
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
@@ -53,7 +54,7 @@ const PaypalPayment = ({ navigation }) => {
       <View style={{ alignItems: 'center' }}>
         <TouchableOpacity activeOpacity={0.5} style={styles.btn_yellow}>
           <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
-            {i18n.t('delete_paypal')}
+            {localizationContext.t('delete_paypal')}
           </Text>
         </TouchableOpacity>
       </View>

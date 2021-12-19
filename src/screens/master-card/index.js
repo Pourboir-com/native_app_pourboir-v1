@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ImageBackground } from 'react-native';
 import { StyleSheet, Text, View, Dimensions, Platform } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import GlobalHeader from '../../components/GlobalHeader';
-import i18n from '../../li8n';
-// import NumberFormat from 'react-number-format';
+import Context from '../../contextApi/context';
 
 const MasterCard = ({ navigation }) => {
+  const { localizationContext } = useContext(Context);
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
@@ -22,7 +23,7 @@ const MasterCard = ({ navigation }) => {
         >
           <GlobalHeader
             arrow={true}
-            headingText={i18n.t('master_card')}
+            headingText={localizationContext.t('master_card')}
             fontSize={17}
             color={'black'}
             navigation={navigation}
@@ -44,7 +45,7 @@ const MasterCard = ({ navigation }) => {
           </View>
           <View style={{ paddingTop: 20 }}>
             <Text style={{ fontSize: 14, fontFamily: 'ProximaNova' }}>
-              {i18n.t('date_of_exp')}
+              {localizationContext.t('date_of_exp')}
             </Text>
             <Text style={{ fontSize: 14, fontFamily: 'ProximaNovaBold' }}>
               08/2028
@@ -55,7 +56,7 @@ const MasterCard = ({ navigation }) => {
       <View style={{ alignItems: 'center' }}>
         <TouchableOpacity activeOpacity={0.5} style={styles.btn_yellow}>
           <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
-            {i18n.t('delete_card')}
+            {localizationContext.t('delete_card')}
           </Text>
         </TouchableOpacity>
       </View>

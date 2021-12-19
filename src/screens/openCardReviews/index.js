@@ -15,15 +15,13 @@ import {
   Alert,
   Share,
 } from 'react-native';
+import * as actionTypes from '../../contextApi/actionTypes';
 import StarCard from '../../components/star-card';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import RefferedWaiterModal from '../../components/modals/ConfirmModal';
 import CheckInModal from '../../components/modals/ThanksRatingModal';
-import { FontAwesome, Entypo } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
-import * as WebBrowser from 'expo-web-browser';
 import CommonModal from '../../components/modals/HelpUsImproveModal';
 import { Colors } from '../../constants/Theme';
 import RatingStar from '../../components/RatingComponent';
@@ -50,7 +48,6 @@ const imgSitting = require('../../assets/images/sittingtable.png');
 const waiter = require('../../assets/images/waiter2.png');
 // import * as actionTypes from '../../contextApi/actionTypes
 const noCheckIn = require('../../assets/images/no-checkin.png');
-import i18n from '../../li8n';
 // import { filteredRestaurant, yourFilteredRestaurant } from '../../util';
 import Spinner from 'react-native-loading-spinner-overlay';
 import ManagerApprovalModal from '../../components/modals/manager-approval-modal';
@@ -60,9 +57,10 @@ import TourModal from '../../components/modals/tour-modal';
 import { Review } from '../../components/open-card';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAsyncStorageValues } from '../../constants';
-import * as Localization from 'expo-localization';
 
 const ReviewDetails = ({ navigation, route }) => {
+  const { state, dispatch, localizationContext } = useContext(Context);
+
   const openDialScreen = () => {
     let number = '';
     if (Platform.OS === 'ios') {
@@ -82,13 +80,14 @@ const ReviewDetails = ({ navigation, route }) => {
   );
   const [userThanksModalVisible, setUserThanksModalVisible] = useState(false);
   const [checkInModal, setcheckInModal] = useState(false);
-  const [checkInModalText, setcheckInModalText] = useState(i18n.t('not_near'));
+  const [checkInModalText, setcheckInModalText] = useState(
+    localizationContext.t('not_near'),
+  );
 
   const [notCheckInModal, setnotCheckInModal] = useState(false);
   const [refferedThanksModalVisible, setRefferedThanksModalVisible] = useState(
     false,
   );
-  const { state, dispatch } = useContext(Context);
   const [IAMWAITER] = useMutation(I_AM_WAITER);
   const [addCheckIn] = useMutation(ADD_CHECKIN);
   const [AddWaiters] = useMutation(ADDING_WAITERS);
@@ -103,24 +102,22 @@ const ReviewDetails = ({ navigation, route }) => {
   const [tourModal, setTourModal] = useState(false);
   const [AddFavorite, { isLoading: favLoading }] = useMutation(ADD_FAVORITE);
   const [section, setSection] = useState(1);
-  const [locale, setLocale] = useState(1);
+  const [countryCode, setCountryCode] = useState('+33');
 
   useEffect(() => {
     (async () => {
-      // const { ExplanatoryScreen } = await getAsyncStorageValues();
-      // if (!ExplanatoryScreen?.explanatory_screen) {
-      const { locale } = await Localization.getLocalizationAsync();
-      setLocale(locale);
-      setTimeout(() => {
-        setTourModal(true);
-      }, 2000);
-      //   await AsyncStorage.setItem(
-      //     '@ExplanatoryScreen',
-      //     JSON.stringify({
-      //       explanatory_screen: true,
-      //     }),
-      //   );
-      // }
+      const { ExplanatoryScreen } = await getAsyncStorageValues();
+      if (!ExplanatoryScreen?.explanatory_screen) {
+        setTimeout(() => {
+          setTourModal(true);
+        }, 2000);
+        await AsyncStorage.setItem(
+          '@ExplanatoryScreen',
+          JSON.stringify({
+            explanatory_screen: true,
+          }),
+        );
+      }
     })();
   }, []);
 
@@ -150,18 +147,19 @@ const ReviewDetails = ({ navigation, route }) => {
       {
         google_place_id: place_id,
         user_id: state.userDetails.user_id,
-        language: locale,
+        language: state.language,
       },
     ],
     GET_REVIEWS,
     {
       ...reactQueryConfig,
-      enabled: locale && place_id,
+      enabled: state.language && place_id,
       onError: e => {
         alert(e?.response?.data?.message);
       },
     },
   );
+
   const {
     data: waitersData,
     isLoading: waitersLoading,
@@ -178,6 +176,7 @@ const ReviewDetails = ({ navigation, route }) => {
       },
     },
   );
+
   const {
     data: RestaurantDetails,
     isLoading: RestaurantDetailsLoading,
@@ -231,7 +230,7 @@ const ReviewDetails = ({ navigation, route }) => {
       item => item?.user_id?._id === state.userDetails.user_id,
     );
     if (isUserAlreadyWaiter) {
-      alert(i18n.t('already_waiter'));
+      alert(localizationContext.t('already_waiter'));
     } else {
       setUserWaiterModalVisible(true);
     }
@@ -247,6 +246,7 @@ const ReviewDetails = ({ navigation, route }) => {
     international_phone_number:
       RestaurantDetails?.data?.international_phone_number || '',
   };
+
   const handleAddWaiter = async (fullName, email) => {
     if (state.userDetails.user_id) {
       setRefferedLoading(true);
@@ -265,7 +265,7 @@ const ReviewDetails = ({ navigation, route }) => {
         onError: e => {
           handleRefferedModalClose();
           setRefferedLoading(false);
-          alert(e);
+          alert(e.response?.data?.message);
         },
       });
     } else {
@@ -287,7 +287,7 @@ const ReviewDetails = ({ navigation, route }) => {
             setToken(res?.data?.token || 0);
           },
           onError: e => {
-            setcheckInModalText(i18n.t('check_in_limit'));
+            setcheckInModalText(localizationContext.t('check_in_limit'));
             setnotCheckInModal(true);
           },
         },
@@ -332,20 +332,21 @@ const ReviewDetails = ({ navigation, route }) => {
       navigation.navigate('socialLogin', { confirmWaiter: true });
     }
   };
-  const [managerApproval, { isLoading: publishMenuLoading }] = useMutation(
+
+  const [managerApproval, { isLoading: managerApprovalLoading }] = useMutation(
     MANAGER_APPROVAL,
   );
-  // console.log('rest ', RestaurantDetails.data._id)
+
   const submitApproval = async () => {
     await managerApproval(
       {
         user_id: state.userDetails.user_id,
         siret_number: siretNumber,
-        cell_number: cellPhone,
+        cell_number: `${countryCode}${cellPhone}`,
         restaurant,
       },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
           setApprovalModal(false);
           setReceivedModal(true);
         },
@@ -355,24 +356,25 @@ const ReviewDetails = ({ navigation, route }) => {
       },
     );
   };
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        message: name,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+
+  // const onShare = async () => {
+  //   try {
+  //     const result = await Share.share({
+  //       message: name,
+  //     });
+  //     if (result.action === Share.sharedAction) {
+  //       if (result.activityType) {
+  //         // shared with activity type of result.activityType
+  //       } else {
+  //         // shared
+  //       }
+  //     } else if (result.action === Share.dismissedAction) {
+  //       // dismissed
+  //     }
+  //   } catch (error) {
+  //     alert(error.message);
+  //   }
+  // };
 
   const handleAddFavorite = async () => {
     if (state.userDetails.user_id) {
@@ -383,7 +385,11 @@ const ReviewDetails = ({ navigation, route }) => {
       await AddFavorite(newFavorite, {
         onSuccess: async () => {
           await refetchFavorites();
-          refetchRestaurant();
+          await refetchRestaurant();
+          dispatch({
+            type: actionTypes.REFRESH_ANIMATION,
+            payload: !state.refreshAnimation,
+          });
         },
       });
     } else {
@@ -400,11 +406,13 @@ const ReviewDetails = ({ navigation, route }) => {
     <View style={styles.container}>
       <Spinner
         visible={
-          waitersIsFetching &&
-          !Refferedloading &&
-          !Userloading &&
-          !reviewDataLoading &&
-          !waitersLoading
+          (waitersIsFetching &&
+            !Refferedloading &&
+            !Userloading &&
+            !reviewDataLoading &&
+            !waitersLoading) ||
+          RestaurantDetailsIsFetching ||
+          RestaurantDetailsLoading
         }
       />
       <StatusBar translucent={true} style="light" />
@@ -450,7 +458,7 @@ const ReviewDetails = ({ navigation, route }) => {
       >
         <View style={styles.viewImg}>
           <ImageBackground
-            source={{ uri: img }}
+            source={{ uri: img || null }}
             style={{ flex: 1, justifyContent: 'space-between', height: '100%' }}
           >
             <LinearGradient
@@ -555,7 +563,7 @@ const ReviewDetails = ({ navigation, route }) => {
                 {favoritesData?.data[0]?.user_id?.length || '0'}
               </Text>
               <Text tyle={{ fontFamily: 'ProximaNova', fontSize: 18 }}>
-                {i18n.t('fav')}
+                {localizationContext.t('fav')}
               </Text>
             </TouchableOpacity>
             {section != 2 && (
@@ -576,7 +584,9 @@ const ReviewDetails = ({ navigation, route }) => {
                   <ActivityIndicator size={23} color="#EBC11B" />
                 ) : (
                   <Text style={{ fontSize: 15, fontFamily: 'ProximaNova' }}>
-                    {checkFavorite() ? i18n.t('added') : i18n.t('add_fav')}
+                    {checkFavorite()
+                      ? localizationContext.t('added')
+                      : localizationContext.t('add_fav')}
                   </Text>
                 )}
               </TouchableOpacity>
@@ -604,7 +614,7 @@ const ReviewDetails = ({ navigation, route }) => {
               fontSize: 16,
             }}
           >
-            {i18n.t('fav_list')}
+            {localizationContext.t('fav_list')}
           </Text>
 
           <View
@@ -670,7 +680,7 @@ const ReviewDetails = ({ navigation, route }) => {
               }}
             >
               {/* {vicinity || name} */}
-              {i18n.t('address')}
+              {localizationContext.t('address')}
             </Text>
           </TouchableOpacity>
           {!tourModal || section !== 3 ? (
@@ -695,7 +705,7 @@ const ReviewDetails = ({ navigation, route }) => {
                 }}
               >
                 {/* {vicinity || name} */}
-                {i18n.t('check_in')}
+                {localizationContext.t('check_in')}
               </Text>
             </TouchableOpacity>
           ) : null}
@@ -724,10 +734,10 @@ const ReviewDetails = ({ navigation, route }) => {
               }}
             >
               {/* {RestaurantDetailsLoading
-                ? i18n.t('please_wait')
+                ? localizationContext.t('please_wait')
                 : RestaurantDetails?.data?.international_phone_number ||
-                  i18n.t('none')} */}
-              {i18n.t('telephone')}
+                  localizationContext.t('none')} */}
+              {localizationContext.t('telephone')}
             </Text>
 
             {/* <View
@@ -747,7 +757,6 @@ const ReviewDetails = ({ navigation, route }) => {
             style={{
               flexDirection: 'row',
               marginBottom: 10,
-              alignItems: 'center',
             }}
           >
             <Review
@@ -773,7 +782,7 @@ const ReviewDetails = ({ navigation, route }) => {
           }}
         >
           <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
-            {i18n.t('waiters')}
+            {localizationContext.t('waiters')}
           </Text>
           <View style={styles.viewNumRaters}>
             <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>
@@ -788,7 +797,7 @@ const ReviewDetails = ({ navigation, route }) => {
               { fontFamily: 'ProximaNovaSemiBold' },
             ]}
           >
-            {i18n.t('no_waiter_found')}
+            {localizationContext.t('no_waiter_found')}
           </Text>
         )}
         {waitersLoading ? (
@@ -822,7 +831,7 @@ const ReviewDetails = ({ navigation, route }) => {
                       place_id: restaurant_id,
                     });
                   } else {
-                    alert(i18n.t('cannot_vote'));
+                    alert(localizationContext.t('cannot_vote'));
                   }
                 }}
                 style={styles.viewItemConatier}
@@ -881,7 +890,7 @@ const ReviewDetails = ({ navigation, route }) => {
             <Text
               style={[styles.txtAddReview, { fontFamily: 'ProximaNovaBold' }]}
             >
-              {i18n.t('add_your_server')}
+              {localizationContext.t('add_your_server')}
             </Text>
             <TouchableOpacity
               activeOpacity={0.5}
@@ -895,9 +904,7 @@ const ReviewDetails = ({ navigation, route }) => {
       </ScrollView>
       <TouchableOpacity
         activeOpacity={0.5}
-        disabled={
-          RestaurantDetails?.data?.manager?.status === 'active' ? false : true
-        }
+        disabled={Number(RestaurantDetails?.data?.menuCount) > 0 ? false : true}
         // onPress={() => {
         //   if (RestaurantDetails?.data?.menu_url) {
         //     WebBrowser.openBrowserAsync(RestaurantDetails?.data?.menu_url);
@@ -912,7 +919,7 @@ const ReviewDetails = ({ navigation, route }) => {
         style={[
           styles.viewLastBtn,
           { marginBottom: 10 },
-          RestaurantDetails?.data?.manager?.status == 'active' && section != 5
+          Number(RestaurantDetails?.data?.menuCount) > 0 && section != 5
             ? { backgroundColor: Colors.yellow }
             : section == 5
             ? { backgroundColor: 'transparent' }
@@ -927,7 +934,7 @@ const ReviewDetails = ({ navigation, route }) => {
               color: Colors.fontDark,
             }}
           >
-            {i18n.t('see_the_menu')}
+            {localizationContext.t('see_the_menu')}
           </Text>
         )}
       </TouchableOpacity>
@@ -944,7 +951,7 @@ const ReviewDetails = ({ navigation, route }) => {
             color: Colors.fontDark,
           }}
         >
-          {i18n.t('are_you_waiter')}
+          {localizationContext.t('are_you_waiter')}
         </Text>
       </TouchableOpacity> */}
 
@@ -962,9 +969,9 @@ const ReviewDetails = ({ navigation, route }) => {
           handleModalClose={() => setRefferedThanksModalVisible(false)}
           image={imgSitting}
           onPress={() => setRefferedThanksModalVisible(false)}
-          heading={i18n.t('thank_collaboration')}
-          subHeadingText={i18n.t('waiter_our_database')}
-          buttonText={i18n.t('close')}
+          heading={localizationContext.t('thank_collaboration')}
+          subHeadingText={localizationContext.t('waiter_our_database')}
+          buttonText={localizationContext.t('close')}
         />
       )}
       {userWaiterModalVisible && (
@@ -974,8 +981,8 @@ const ReviewDetails = ({ navigation, route }) => {
           loading={Userloading}
           onPress={handleIAMWAITER}
           image={waiter}
-          buttonText={i18n.t('i_confirm')}
-          subHeadingText={i18n.t('confrm_you_are_server')}
+          buttonText={localizationContext.t('i_confirm')}
+          subHeadingText={localizationContext.t('confrm_you_are_server')}
           restaurant={name}
         />
       )}
@@ -985,8 +992,8 @@ const ReviewDetails = ({ navigation, route }) => {
           handleModalClose={() => setUserThanksModalVisible(false)}
           image={waiter}
           onPress={() => setUserThanksModalVisible(false)}
-          subHeadingText={i18n.t('check_profile')}
-          buttonText={i18n.t('Thank_you')}
+          subHeadingText={localizationContext.t('check_profile')}
+          buttonText={localizationContext.t('Thank_you')}
         />
       )}
       {notCheckInModal && (
@@ -994,7 +1001,7 @@ const ReviewDetails = ({ navigation, route }) => {
           isVisible={notCheckInModal}
           handleModalClose={() => setnotCheckInModal(false)}
           image={noCheckIn}
-          heading={i18n.t('sorry')}
+          heading={localizationContext.t('sorry')}
           subHeadingText={checkInModalText}
         />
       )}
@@ -1020,19 +1027,26 @@ const ReviewDetails = ({ navigation, route }) => {
           receivedModal={receivedModal}
           setReceivedModal={setReceivedModal}
           submitApproval={submitApproval}
-          loading={publishMenuLoading}
+          loading={managerApprovalLoading}
+          countryCode={countryCode}
+          setCountryCode={setCountryCode}
         />
       )}
-      <ReceivedModal
-        receivedModal={receivedModal}
-        setReceivedModal={setReceivedModal}
-      />
-      <TourModal
-        tourModal={tourModal}
-        setTourModal={setTourModal}
-        section={section}
-        setSection={setSection}
-      />
+      {receivedModal && (
+        <ReceivedModal
+          receivedModal={receivedModal}
+          setReceivedModal={setReceivedModal}
+          refetchRestaurantDetails={refetchRestaurantDetails}
+        />
+      )}
+      {tourModal && (
+        <TourModal
+          tourModal={tourModal}
+          setTourModal={setTourModal}
+          section={section}
+          setSection={setSection}
+        />
+      )}
     </View>
   );
 };

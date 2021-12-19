@@ -10,7 +10,6 @@ import {
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import GlobalHeader from '../../components/GlobalHeader';
-import i18n from '../../li8n';
 import styles from './styles';
 import { Colors } from '../../constants/Theme';
 import Context from '../../contextApi/context';
@@ -25,7 +24,7 @@ import { removeId, nicheModalDataUpdated, checkExeperience } from './util';
 import moment from 'moment';
 const Find_Job = ({ navigation, route }) => {
   const { form, refetch } = route.params;
-  const { state } = useContext(Context);
+  const { state, localizationContext } = useContext(Context);
   // getting first and last name saved in state
   let name = form?.user_id?.full_name || state?.userDetails?.name;
   let fullName = name?.split(' ');
@@ -134,7 +133,7 @@ const Find_Job = ({ navigation, route }) => {
         >
           <GlobalHeader
             arrow={true}
-            headingText={i18n.t('candidate_profile')}
+            headingText={localizationContext.t('candidate_profile')}
             fontSize={17}
             color={'black'}
             navigation={navigation}
@@ -158,11 +157,16 @@ const Find_Job = ({ navigation, route }) => {
         >
           <View style={styles.main_container}>
             <View>
-              <Text style={styles.heading1}> {i18n.t('personal_info')}</Text>
+              <Text style={styles.heading1}>
+                {' '}
+                {localizationContext.t('personal_info')}
+              </Text>
             </View>
             <View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('first_name')}</Text>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('first_name')}
+                </Text>
                 <TextInput
                   style={styles.inputsTopTow}
                   onChangeText={e => setFirstName(e)}
@@ -172,7 +176,9 @@ const Find_Job = ({ navigation, route }) => {
                 />
               </View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('last_name')}</Text>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('last_name')}
+                </Text>
                 <TextInput
                   style={styles.inputsTopTow}
                   onChangeText={e => setLastName(e)}
@@ -182,7 +188,9 @@ const Find_Job = ({ navigation, route }) => {
                 />
               </View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('position')}</Text>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('position')}
+                </Text>
                 <TextInput
                   style={styles.inputsTopTow}
                   onChangeText={e => setPosition(e)}
@@ -192,7 +200,9 @@ const Find_Job = ({ navigation, route }) => {
                 />
               </View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('phone')}</Text>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('phone')}
+                </Text>
                 <TextInput
                   style={styles.inputsTopTow}
                   onChangeText={e => setPhone(e)}
@@ -203,7 +213,9 @@ const Find_Job = ({ navigation, route }) => {
                 />
               </View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('diploma')}</Text>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('diploma')}
+                </Text>
                 <TextInput
                   style={styles.inputsTopTow}
                   onChangeText={e => setEducation(e)}
@@ -220,7 +232,7 @@ const Find_Job = ({ navigation, route }) => {
                     fontSize: 18,
                   }}
                 >
-                  {i18n.t('prof_exp')}
+                  {localizationContext.t('prof_exp')}
                 </Text>
                 {data.map((v, i) => {
                   return (
@@ -233,12 +245,14 @@ const Find_Job = ({ navigation, route }) => {
                             </Text>
                             <Text style={styles.expTxt2}>{v?.position}</Text>
                             <Text style={styles.expTxt3}>
-                              {`${i18n.t('of')} ${moment(v?.start_date).format(
-                                'MM/DD/YYYY',
-                              )} ${i18n.t('at')} ${
+                              {`${localizationContext.t('of')} ${moment(
+                                v?.start_date,
+                              ).format('MM/DD/YYYY')} ${localizationContext.t(
+                                'at',
+                              )} ${
                                 v?.end_date
                                   ? moment(v?.end_date).format('MM/DD/YYYY')
-                                  : i18n.t('still_working')
+                                  : localizationContext.t('still_working')
                               }`}
                             </Text>
                           </View>
@@ -249,7 +263,7 @@ const Find_Job = ({ navigation, route }) => {
                 })}
                 <View style={styles.viewAddReview}>
                   {/* <Text style={[styles.txtCantFind, { fontFamily: 'ProximaNova' }]}>
-                      {i18n.t('cant_find_your_server')}
+                      {localizationContext.t('cant_find_your_server')}
                       </Text> */}
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text
@@ -258,8 +272,8 @@ const Find_Job = ({ navigation, route }) => {
                         { fontFamily: 'ProximaNovaBold' },
                       ]}
                     >
-                      {/* {i18n.t('add_your_server')} */}
-                      {i18n.t('add_exp')}
+                      {/* {localizationContext.t('add_your_server')} */}
+                      {localizationContext.t('add_exp')}
                     </Text>
                     <TouchableOpacity
                       activeOpacity={0.5}
@@ -284,9 +298,11 @@ const Find_Job = ({ navigation, route }) => {
                     marginBottom: 14,
                   }}
                 >
-                  {i18n.t('availability')}
+                  {localizationContext.t('availability')}
                 </Text>
-                <Text style={styles.inputLabel}>{i18n.t('Time')}</Text>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('Time')}
+                </Text>
                 <View style={styles.chooseButtons_container}>
                   <TouchableOpacity
                     activeOpacity={0.7}
@@ -301,7 +317,9 @@ const Find_Job = ({ navigation, route }) => {
                     onPress={() => setTemp('full')}
                     value={temp}
                   >
-                    <Text style={styles.timeTxt}>{i18n.t('full')}</Text>
+                    <Text style={styles.timeTxt}>
+                      {localizationContext.t('full')}
+                    </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     activeOpacity={0.7}
@@ -317,7 +335,9 @@ const Find_Job = ({ navigation, route }) => {
                     onPress={() => setTemp('half')}
                     value={temp}
                   >
-                    <Text style={styles.timeTxt}>{i18n.t('partial')}</Text>
+                    <Text style={styles.timeTxt}>
+                      {localizationContext.t('partial')}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -347,7 +367,7 @@ const Find_Job = ({ navigation, route }) => {
                           { fontFamily: 'ProximaNovaBold' },
                         ]}
                       >
-                        {i18n.t('add_niche')}
+                        {localizationContext.t('add_niche')}
                       </Text>
                       <TouchableOpacity
                         activeOpacity={0.5}
@@ -389,7 +409,7 @@ const Find_Job = ({ navigation, route }) => {
                 color: Colors.fontDark,
               }}
             >
-              {i18n.t('candidate_btn')}
+              {localizationContext.t('candidate_btn')}
             </Text>
           )}
         </TouchableOpacity>
@@ -407,8 +427,8 @@ const Find_Job = ({ navigation, route }) => {
             setModalVisible(false);
             navigation.navigate('WaiterProfile', { crossIcon: true });
           }}
-          heading={i18n.t('thank_info')}
-          subHeadingText={i18n.t('broadcast')}
+          heading={localizationContext.t('thank_info')}
+          subHeadingText={localizationContext.t('broadcast')}
           buttonText={'OK'}
           customHeadingSize={Platform.OS === 'ios' ? 26 : 24}
           customButtonWidth={130}
@@ -440,7 +460,7 @@ style={{
 > */
 }
 // <View style={styles.input_box}>
-//             <Text style={styles.inputLabel}>{i18n.t('experience')}</Text>
+//             <Text style={styles.inputLabel}>{localizationContext.t('experience')}</Text>
 //             <View style={{ flexDirection: 'row' }}>
 //               <TextInput
 //                 style={styles.smallInput}
@@ -452,12 +472,12 @@ style={{
 //                 placeholderTextColor={'#707375'}
 //               />
 //               <Text style={styles.experience}>
-//                 {Number(experience) > 1 ? `${i18n.t('year')}s` : i18n.t('year')}
+//                 {Number(experience) > 1 ? `${localizationContext.t('year')}s` : localizationContext.t('year')}
 //               </Text>
 //             </View>
 //           </View>
 //           <View style={styles.input_box}>
-//             <Text style={styles.inputLabel}>{i18n.t('position')}</Text>
+//             <Text style={styles.inputLabel}>{localizationContext.t('position')}</Text>
 //             <TextInput
 //               style={styles.waiterInput}
 //               onChangeText={e => setPosition(e)}

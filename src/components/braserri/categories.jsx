@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
-  ActivityIndicator,
   Platform,
   Text,
   TouchableOpacity,
@@ -10,7 +9,6 @@ import { Image } from 'react-native';
 import { TextInput } from 'react-native';
 import styles from '../../screens/braserri/styles';
 import AddBtn from '../add-common-btn';
-import i18n from '../../li8n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import uuid from 'react-native-uuid';
 import CommonButton from '../common-button';
@@ -18,12 +16,14 @@ import { SAVE_CHANGES } from '../../queries';
 import { useMutation } from 'react-query';
 import NumberFormat from 'react-number-format';
 import { getAsyncStorageValues } from '../../constants';
+import Context from '../../contextApi/context';
 
 const Categories = props => {
   const [dishes, setDishes] = useState([]);
   const [disable, setDisable] = useState(true);
   const [currency, setCurrency] = useState();
-  console.log(dishes, ' dishes');
+  const { localizationContext } = useContext(Context);
+
   useEffect(() => {
     (async () => {
       const { Currency } = await getAsyncStorageValues();
@@ -110,7 +110,7 @@ const Categories = props => {
         user_id: props?.user_id || '',
         place_id: props?.place_id || '',
         dishes: resolvedDishes(props?.dishes) || [],
-        // currency: currencySign.currency.split(' ').join('') || '',
+        currency: currencySign?.currency.split(' ').join('') || '',
       },
       {
         onSuccess: async res => {
@@ -128,7 +128,7 @@ const Categories = props => {
     <KeyboardAwareScrollView
       bounces={false}
       enableOnAndroid={true}
-      extraScrollHeight={10}
+      extraScrollHeight={Platform.OS === 'ios' ? -75 : 10}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
       scrollToOverflowEnabled={true}
@@ -169,7 +169,7 @@ const Categories = props => {
                       marginTop: 20,
                     }}
                   >
-                    <View style={(styles.input_box, { width: '60%' })}>
+                    <View style={(styles.input_box, { width: '65%' })}>
                       <TextInput
                         style={[
                           styles.inputsTopTow,
@@ -179,7 +179,7 @@ const Categories = props => {
                           handleInputChange(name, i, 'name')
                         }
                         value={v.name}
-                        placeholder={i18n.t('dish_name')}
+                        placeholder={localizationContext.t('dish_name')}
                         placeholderTextColor={'#707375'}
                       />
                     </View>
@@ -188,9 +188,9 @@ const Categories = props => {
                         (styles.input_box,
                         {
                           ...styles.input_box,
-                          width: '40%',
+                          width: '35%',
                           flexDirection: 'row',
-                          justifyContent:'space-between'
+                          justifyContent: 'space-between',
                         })
                       }
                     >
@@ -222,7 +222,7 @@ const Categories = props => {
                               )
                             }
                             value={formattedValue}
-                            placeholder={i18n.t('price')}
+                            placeholder={localizationContext.t('price')}
                             keyboardType={'numeric'}
                             placeholderTextColor={'#707375'}
                           />
@@ -279,14 +279,14 @@ const Categories = props => {
           alignItems: 'center',
         }}
       >
-        <AddBtn title={i18n.t('add_dish')} onPress={() => addDish()} />
+        <AddBtn title={localizationContext.t('add_dish')} onPress={() => addDish()} />
       </View>
       {props?.dishes && props?.dishes.length ? (
         <View style={{ marginVertical: 14 }}>
           <CommonButton
             loading={publishMenuLoading}
             onPress={saveMenu}
-            title={i18n.t('save_changes')}
+            title={localizationContext.t('save_changes')}
             disable={disable}
           />
         </View>

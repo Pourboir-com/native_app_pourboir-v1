@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -13,8 +13,8 @@ import { useMutation } from 'react-query';
 import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/delete-dish.png');
 const imgBg = require('../../assets/images/Group7.png');
-import i18n from '../../li8n';
 import { DELETE_DISH } from '../../queries';
+import Context from '../../contextApi/context';
 
 const DeleteDishModal = ({
   deleteDishModal,
@@ -25,6 +25,7 @@ const DeleteDishModal = ({
   deleteType,
   deleteMenu,
 }) => {
+  const { localizationContext } = useContext(Context);
   const [deleteDish, { isLoading: deleteDishLoading }] = useMutation(
     DELETE_DISH,
   );
@@ -96,13 +97,13 @@ const DeleteDishModal = ({
       <View style={{ marginTop: 100 }}>
         <View>
           <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-            {i18n.t('are_u_sure')}
+            {localizationContext.t('are_u_sure')}
           </Text>
           <Text style={[styles.txtName, { fontFamily: 'ProximaNova' }]}>
-            {/* {i18n.t('will_contact_by_email')} */}
+            {/* {localizationContext.t('will_contact_by_email')} */}
             {deleteType === 'menu'
-              ? i18n.t('delete_menu')
-              : i18n.t('delete_dish')}
+              ? localizationContext.t('delete_menu')
+              : localizationContext.t('delete_dish')}
           </Text>
         </View>
         <View
@@ -114,7 +115,7 @@ const DeleteDishModal = ({
         >
           <TouchableOpacity onPress={handleClose} style={styles.btns}>
             <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
-              {i18n.t('no')}
+              {localizationContext.t('no')}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -126,7 +127,7 @@ const DeleteDishModal = ({
             }
           >
             <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
-              {i18n.t('yes')}
+              {localizationContext.t('yes')}
             </Text>
           </TouchableOpacity>
         </View>

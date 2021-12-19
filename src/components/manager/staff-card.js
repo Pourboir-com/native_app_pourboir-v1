@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Image,
   Text,
@@ -11,11 +11,13 @@ import { AntDesign } from '@expo/vector-icons';
 // import RatingStar from '../../components/RatingComponent';
 import Swipeout from 'react-native-swipeout';
 import { Feather } from '@expo/vector-icons';
-import i18n from '../../li8n';
 import { upperTitleCase } from '../../util';
+import Context from '../../contextApi/context';
 
 const StaffCard = ({ toggleModal, data, handleDeleteForm, Width }) => {
   const [close, setClose] = useState(false);
+  const { localizationContext } = useContext(Context);
+
   // const obj = [1, 2, 3, 4, 5];
   var swipeoutBtns = [
     {
@@ -99,7 +101,7 @@ const StaffCard = ({ toggleModal, data, handleDeleteForm, Width }) => {
                 );
               })} */}
                 <Text style={{ fontFamily: 'ProximaNovaBold', fontSize: 16 }}>
-                  {data?.position || i18n.t('waiter')}
+                  {data?.position || localizationContext.t('waiter')}
                 </Text>
               </View>
             </View>

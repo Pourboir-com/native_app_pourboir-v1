@@ -12,32 +12,8 @@ const MapScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <StatusBar translucent={true} style="dark" />
-        <ImageBackground
-          style={{
-            width: '100%',
-            height: 100,
-            borderBottomLeftRadius: Dimensions.get('window').width * 0.06,
-            borderBottomRightRadius: Dimensions.get('window').width * 0.06,
-            overflow: 'hidden',
-            backgroundColor: 'transparent',
-          }}
-          source={require('../../assets/images/Group3.png')}
-        >
-          <GlobalHeader
-            arrow={true}
-            headingText={name}
-            fontSize={17}
-            color={'black'}
-            navigation={navigation}
-            setting={false}
-            backgroundColor={'transparent'}
-            borderRadius={true}
-          />
-        </ImageBackground>
-      </View>
-      <View style={{ flex: 1 }}>
+      <StatusBar translucent={true} style="dark" />
+      <View style={{flex: 1, marginTop: '5%'}}>
         <MapView
           showsUserLocation
           onLayout={() => setIsMapReady(true)}
@@ -58,6 +34,7 @@ const MapScreen = ({ navigation, route }) => {
           {isMapReady && (
             <>
               <MapView.Marker
+              rotation={4}
                 coordinate={{
                   latitude: geometry?.lat || 0,
                   longitude: geometry?.lng || 0,
@@ -78,6 +55,30 @@ const MapScreen = ({ navigation, route }) => {
           )}
         </MapView>
       </View>
+      <ImageBackground
+        style={{
+          width: '100%',
+          height: 100,
+          top: 0,
+          borderBottomLeftRadius: Dimensions.get('window').width * 0.06,
+          borderBottomRightRadius: Dimensions.get('window').width * 0.06,
+          overflow: 'hidden',
+          backgroundColor: 'transparent',
+          position: 'absolute',
+        }}
+        source={require('../../assets/images/Group3.png')}
+      >
+        <GlobalHeader
+          arrow={true}
+          headingText={name}
+          fontSize={17}
+          color={'black'}
+          navigation={navigation}
+          setting={false}
+          backgroundColor={'transparent'}
+          borderRadius={true}
+        />
+      </ImageBackground>
     </View>
   );
 };
@@ -87,8 +88,10 @@ export default MapScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: 'relative',
   },
   map: {
+    flex: 1,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },

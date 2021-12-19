@@ -9,7 +9,6 @@ import { useMutation } from 'react-query';
 import { CREATE_REVIEW } from '../../queries';
 import Context from '../../contextApi/context';
 import CheckInModal from '../modals/ThanksRatingModal';
-import i18n from '../../li8n';
 
 const Review = ({
   reviewData,
@@ -21,7 +20,7 @@ const Review = ({
   section,
 }) => {
   const [leaveRevModal, setLeaveRevModal] = useState(false);
-  const { state } = useContext(Context);
+  const { state, localizationContext  } = useContext(Context);
   const [hospitality, setHospitality] = useState();
   const [comment, setComment] = useState('');
   const [createRestaurantReview, { isLoading: createLoading }] = useMutation(
@@ -69,7 +68,7 @@ const Review = ({
         }}
       >
         <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
-          {i18n.t('review')}
+          {localizationContext.t('review')}
         </Text>
         {!tourModal || section !== 4 ? (
           <TouchableOpacity
@@ -90,7 +89,7 @@ const Review = ({
         ) : null}
       </View>
 
-      <View style={{ marginHorizontal: 15, marginVertical: 10 }}>
+      <View style={{ marginLeft: 20, marginVertical: 10 }}>
         <FlatList
           data={reviewData?.data || []}
           renderItem={({ item }) => (

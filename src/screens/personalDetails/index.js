@@ -24,12 +24,14 @@ import * as ImagePicker from 'expo-image-picker';
 import { getAsyncStorageValues } from '../../constants';
 import { UPDATE_PICTURE, EDIT_USER } from '../../queries';
 import { useMutation } from 'react-query';
-import i18n from '../../li8n';
 import { Colors } from '../../constants/Theme';
+import RPCountryPickerInfo from 'react-native-country-picker-info';
+const validator = require('validator');
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const PersonalDetails = ({ navigation, route }) => {
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : -450;
-  const { state, dispatch } = useContext(Context);
+  const { state, dispatch, localizationContext } = useContext(Context);
   const { login } = route?.params || {};
   //States
   const [FirstName, setFirstName] = useState(state?.userDetails?.name || '');
@@ -40,10 +42,16 @@ const PersonalDetails = ({ navigation, route }) => {
   const [username, setUsername] = useState(state?.userDetails?.username);
   const [about, setAbout] = useState(state?.userDetails?.description);
   const [loading, setLoading] = useState();
+  const [isOpenCountryPicker, setIsOpenCountryPicker] = useState(false);
+  const [countryCode, setCountryCode] = useState(
+    state?.userDetails?.calling_code || '+33',
+  );
   //Mutation
   const [updatePicture] = useMutation(UPDATE_PICTURE);
   const [editUser] = useMutation(EDIT_USER);
-  const validate = FirstName && LastName && email && username && phone;
+  let emailError = email && !validator?.isEmail(email);
+  const validate =
+    FirstName && LastName && email && username && phone && !emailError;
 
   const handleChangePicture = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -58,63 +66,87 @@ const PersonalDetails = ({ navigation, route }) => {
   };
 
   const handleEditProfile = async () => {
-    if (state?.userDetails?.user_id) {
-      setLoading(true);
-      let userDetails = {
-        ...state.userDetails,
-        name: FirstName || '',
-        last_name: LastName || '',
-        email: email || '',
-        phone_number: phone || '',
-        username: username || '',
-        description: about || '',
-        image: image || '',
-      };
-      let editProfile = {
-        id: state.userDetails.user_id,
-        first_name: FirstName || '',
-        last_name: LastName || '',
-        phone_number: phone || '',
-        email: email || '',
-        username: username || '',
-        description: about || '',
-      };
-      let formData = new FormData();
-      formData.append('image', {
-        uri: image,
-        type: `image/${image.split('.')[1]}`,
-        name: image.substr(image.lastIndexOf('/') + 1),
-      });
-      let UploadData = {
-        user_id: state.userDetails.user_id,
-        image: formData,
-      };
-
-      await updatePicture(UploadData, {});
-      await editUser(editProfile, {});
-
-      dispatch({
-        type: actionTypes.USER_DETAILS,
-        payload: { ...state.userDetails, ...userDetails },
-      });
-      const { userInfo } = await getAsyncStorageValues();
-      await AsyncStorage.setItem(
-        '@userInfo',
-        JSON.stringify({
-          ...userInfo,
-          ...userDetails,
-        }),
-      );
-      await AsyncStorage.setItem(
-        '@profileInfo',
-        JSON.stringify({
-          info: true,
-        }),
-      );
+    try {
+      if (state?.userDetails?.user_id) {
+        setLoading(true);
+        let userDetails = {
+          ...state.userDetails,
+          name: FirstName || '',
+          last_name: LastName || '',
+          email: email || '',
+          phone_number: phone || '',
+          username: username || '',
+          description: about || '',
+          calling_code: countryCode || '',
+          image: image || '',
+        };
+        let editProfile = {
+          id: state.userDetails.user_id,
+          first_name: FirstName || '',
+          last_name: LastName || '',
+          phone_number: phone || '',
+          ...(state?.userDetails?.username != username && {
+            username: username || '',
+          }),
+          ...(state?.userDetails?.email != email && { email: email || '' }),
+          description: about || '',
+          calling_code: countryCode || '',
+        };
+        let formData = new FormData();
+        formData.append('image', {
+          uri: image,
+          type: `image/${image.split('.')[1]}`,
+          name: image.substr(image.lastIndexOf('/') + 1),
+        });
+        let UploadData = {
+          user_id: state.userDetails.user_id,
+          image: formData,
+        };
+        if (image) {
+          await updatePicture(UploadData, {});
+        }
+        await editUser(editProfile, {
+          onSuccess: async () => {
+            dispatch({
+              type: actionTypes.USER_DETAILS,
+              payload: { ...state.userDetails, ...userDetails },
+            });
+            const { userInfo } = await getAsyncStorageValues();
+            await AsyncStorage.setItem(
+              '@userInfo',
+              JSON.stringify({
+                ...userInfo,
+                ...userDetails,
+              }),
+            );
+            await AsyncStorage.setItem(
+              '@profileInfo',
+              JSON.stringify({
+                info: true,
+              }),
+            );
+            setLoading(false);
+            navigation.replace('PublicProfile', { login });
+            alert('Your profile has been updated.');
+          },
+          onError: e => {
+            setLoading(false);
+            alert(e.response?.data?.message);
+          },
+        });
+      }
+    } catch {
       setLoading(false);
-      alert('Your profile has been updated.');
-      navigation.navigate('PublicProfile');
     }
+  };
+
+  const onPressOpenPicker = () => {
+    setIsOpenCountryPicker(!isOpenCountryPicker);
+  };
+
+  const onPressCountryItem = countryInfo => {
+    setCountryCode(countryInfo.dial_code);
+    setIsOpenCountryPicker(false);
   };
 
   return (
@@ -132,7 +164,7 @@ const PersonalDetails = ({ navigation, route }) => {
         >
           <GlobalHeader
             arrow={true}
-            headingText={i18n.t('your_personal_details')}
+            headingText={localizationContext.t('your_personal_details')}
             fontSize={17}
             color={'black'}
             login={login}
@@ -182,7 +214,7 @@ const PersonalDetails = ({ navigation, route }) => {
                       height: '100%',
                       borderRadius: 60,
                     }}
-                    source={{ uri: image }}
+                    source={{ uri: image || null }}
                     resizeMode="cover"
                   />
                 )}
@@ -202,9 +234,14 @@ const PersonalDetails = ({ navigation, route }) => {
             </View>
 
             <View style={{ marginHorizontal: 30, alignItems: 'center' }}>
-              <Text style={styles.heading1}> {i18n.t('personal_info')}</Text>
+              <Text style={styles.heading1}>
+                {' '}
+                {localizationContext.t('personal_info')}
+              </Text>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('first_name')}</Text>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('first_name')}
+                </Text>
                 <TextInput
                   style={styles.inputsTopTow}
                   onChangeText={setFirstName}
@@ -214,7 +251,9 @@ const PersonalDetails = ({ navigation, route }) => {
                 />
               </View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('last_name')}</Text>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('last_name')}
+                </Text>
                 <TextInput
                   style={styles.inputsTopTow}
                   onChangeText={setLastName}
@@ -224,16 +263,29 @@ const PersonalDetails = ({ navigation, route }) => {
                 />
               </View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('phone_num')}</Text>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('phone_num')}
+                </Text>
                 <View style={styles.inputsTopTow}>
-                  <TextInput
-                    onChangeText={setPhone}
-                    value={phone}
-                    placeholder="+33 6 88 88 88"
-                    keyboardType="number-pad"
-                    style={{ width: '100%' }}
-                    placeholderTextColor={'#485460'}
+                  <RPCountryPickerInfo
+                    isVisible={isOpenCountryPicker}
+                    isVisibleCancelButton={false}
+                    onPressClosePicker={onPressOpenPicker}
+                    onPressSelect={onPressCountryItem}
                   />
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <TouchableOpacity onPress={onPressOpenPicker}>
+                      <Text style={{ marginRight: 3 }}>{countryCode}</Text>
+                    </TouchableOpacity>
+                    <TextInput
+                      onChangeText={setPhone}
+                      value={phone}
+                      placeholder="6 88 88 88"
+                      keyboardType="number-pad"
+                      style={{ width: '100%' }}
+                      placeholderTextColor={'#485460'}
+                    />
+                  </View>
                   {/* <Text
                   style={{
                     color: '#E02020',
@@ -243,7 +295,7 @@ const PersonalDetails = ({ navigation, route }) => {
                     fontFamily: 'ProximaNova',
                   }}
                 >
-                  {i18n.t('not_verified')}
+                  {localizationContext.t('not_verified')}
                 </Text> */}
                 </View>
               </View>
@@ -256,9 +308,18 @@ const PersonalDetails = ({ navigation, route }) => {
                     value={email}
                     placeholder="christine@zhou.com"
                     keyboardType="email-address"
-                    style={{ width: '70%' }}
+                    style={{ width: '100%' }}
                     placeholderTextColor={'#485460'}
                   />
+                  <Text style={{ position: 'absolute', right: 3.5, top: 2 }}>
+                    {emailError && (
+                      <FontAwesome5
+                        name="exclamation-circle"
+                        size={13}
+                        color="red"
+                      />
+                    )}
+                  </Text>
                   {/* <Text
                   style={{
                     color: '#6DD400',
@@ -268,28 +329,40 @@ const PersonalDetails = ({ navigation, route }) => {
                     fontFamily: 'ProximaNova',
                   }}
                 >
-                  {i18n.t('checked')}
+                  {localizationContext.t('checked')}
                 </Text> */}
                 </View>
               </View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('username')}</Text>
-                <TextInput
-                  style={styles.inputsTopTow}
-                  onChangeText={e => setUsername(e)}
-                  value={username}
-                  placeholder="@christine_zhou"
-                  placeholderTextColor={'#485460'}
-                />
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('username')}
+                </Text>
+                <View
+                  style={[
+                    styles.inputsTopTow,
+                    { flexDirection: 'row', alignItems: 'center' },
+                  ]}
+                >
+                  <Text style={{ marginRight: 2, marginTop: -2 }}>@</Text>
+                  <TextInput
+                    onChangeText={e => setUsername(e)}
+                    value={username}
+                    placeholder="christine_zhou"
+                    placeholderTextColor={'#485460'}
+                    style={{ width: '100%' }}
+                  />
+                </View>
               </View>
               <View style={styles.input_box}>
-                <Text style={styles.inputLabel}>{i18n.t('about_me')}</Text>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('about_me')}
+                </Text>
                 <TextInput
                   style={{ ...styles.inputsTopTow, paddingBottom: 50 }}
                   onChangeText={e => setAbout(e)}
                   multiline={true}
                   value={about}
-                  placeholder={i18n.t('describe')}
+                  placeholder={localizationContext.t('describe')}
                   placeholderTextColor={'#485460'}
                 />
               </View>
@@ -297,7 +370,7 @@ const PersonalDetails = ({ navigation, route }) => {
 
             {/* <View style={{ alignItems: 'center', marginBottom: 40 }}> */}
             {/* <View>
-              <Text style={styles.heading1}>{i18n.t('payment_methods')}</Text>
+              <Text style={styles.heading1}>{localizationContext.t('payment_methods')}</Text>
             </View> */}
 
             {/* <View style={styles.payment_container}>
@@ -365,7 +438,7 @@ const PersonalDetails = ({ navigation, route }) => {
                     <AntDesign name="plus" size={21} color="black" />
                   </View>
                   <Text style={styles.paymentMethodLabel}>
-                    {i18n.t('add_pay_method')}
+                    {localizationContext.t('add_pay_method')}
                   </Text>
                 </View>
                 <View>
@@ -379,7 +452,7 @@ const PersonalDetails = ({ navigation, route }) => {
       </ScrollView>
       <View
         style={{
-          marginHorizontal: '4%',
+          marginHorizontal: '5%',
           marginBottom: Platform.OS === 'ios' ? 25 : 15,
           backgroundColor: 'transparent',
         }}
@@ -396,7 +469,7 @@ const PersonalDetails = ({ navigation, route }) => {
             <ActivityIndicator size={29} color="#EBC11B" />
           ) : (
             <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
-              {i18n.t('confirm')}
+              {localizationContext.t('confirm')}
             </Text>
           )}
         </TouchableOpacity>

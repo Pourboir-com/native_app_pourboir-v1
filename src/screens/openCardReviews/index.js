@@ -57,6 +57,7 @@ import TourModal from '../../components/modals/tour-modal';
 import { Review } from '../../components/open-card';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAsyncStorageValues } from '../../constants';
+import Discover from '../../components/open-card/discover';
 
 const ReviewDetails = ({ navigation, route }) => {
   const { state, dispatch, localizationContext } = useContext(Context);
@@ -772,6 +773,7 @@ const ReviewDetails = ({ navigation, route }) => {
             />
           </View>
         )}
+        <Discover />
         <View
           style={{
             flexDirection: 'row',

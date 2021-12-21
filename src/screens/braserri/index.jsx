@@ -15,6 +15,7 @@ import Media from '../../components/braserri/media';
 import GlobalHeader from '../../components/GlobalHeader';
 import styles from './styles';
 import Context from '../../contextApi/context';
+import i18n from '../../li8n';
 
 const Braserri = ({ navigation, route }) => {
   const { restaurant_id, img, name, place_id, refetchWaiters } = route?.params || {};
@@ -59,7 +60,7 @@ const Braserri = ({ navigation, route }) => {
       </ImageBackground>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1, width: '90%', marginTop: 30 }}
+        style={{ flex: 1, width: '90%', paddingTop: 30 }}
       >
         <View>
           <View
@@ -81,7 +82,7 @@ const Braserri = ({ navigation, route }) => {
             >
               <Image
                 source={require('../../assets/images/team.png')}
-                style={{ width: 24, height: 24, resizeMode: 'contain' }}
+                style={{ width: 28, height: 28, resizeMode: 'contain' }}
               />
               <Text style={styles.tabTxt}>{localizationContext.t('the_team')}</Text>
             </TouchableOpacity>
@@ -97,7 +98,7 @@ const Braserri = ({ navigation, route }) => {
             >
               <Image
                 source={require('../../assets/images/menu.png')}
-                style={{ width: 22, height: 22, resizeMode: 'contain' }}
+                style={{ width: 24, height: 24, resizeMode: 'contain' }}
               />
               <Text style={styles.tabTxt}>{localizationContext.t('the_menu')}</Text>
             </TouchableOpacity>
@@ -112,8 +113,8 @@ const Braserri = ({ navigation, route }) => {
               activeOpacity={0.6}
             >
               <Image
-                source={require('../../assets/images/menu.png')}
-                style={{ width: 22, height: 22, resizeMode: 'contain' }}
+                source={require('../../assets/images/Bitmap.png')}
+                style={{ width: 22, height: 24, resizeMode: 'contain' }}
               />
               <Text style={styles.tabTxt}>{i18n.t('the_media')}</Text>
             </TouchableOpacity>

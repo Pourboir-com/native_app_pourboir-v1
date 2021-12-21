@@ -4,11 +4,11 @@ const styles = StyleSheet.create({
   tabBtn: {
     backgroundColor: '#FFF6D4',
     borderRadius: 13,
-    width: '44%',
+    width: '31%',
     paddingHorizontal: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    height: 50,
+    height: 55,
   },
   tabTxt: {
     fontFamily: 'ProximaNova',
@@ -29,11 +29,12 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 14,
-    borderColor: "#E3E3E3",
-    borderWidth:1,
-    borderRadius:8,
-    padding:8,
-    backgroundColor: '#fff'
+    borderColor: '#E3E3E3',
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 8,
+    paddingLeft: 15,
+    backgroundColor: '#fff',
   },
   numberTxt: {
     fontSize: 15,
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 20,
     width: '100%',
-  }
+  },
 });
 
 export default styles;

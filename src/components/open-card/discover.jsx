@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, FlatList,TouchableOpacity } from 'react-native';
+import React, { useContext } from 'react';
+import { Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { Image } from 'react-native';
 import styles from '../../screens/braserri/styles';
 import i18n from '../../li8n';
+import Context from '../../contextApi/context';
 
 const Discover = () => {
+  const { localizationContext } = useContext(Context);
 
   const images = [
     {
@@ -18,8 +20,10 @@ const Discover = () => {
   ];
 
   return (
-    <View style={{ marginHorizontal: 20, marginTop: 20 }}>
-      <Text style={styles.mainHeading}>{i18n.t('discover')}</Text>
+    <View style={{ marginHorizontal: 15, marginBottom: 15 }}>
+      <Text style={styles.mainHeading}>
+        {localizationContext.t('discover')}
+      </Text>
       <View>
         {images.length ? (
           <FlatList
@@ -44,7 +48,8 @@ const Discover = () => {
                     height: 180,
                     resizrMode: 'contain',
                     borderRadius: 10,
-                    marginLeft: 10,
+                    marginRight: 20,
+                    marginVertical: 14,
                   }}
                 />
               </TouchableOpacity>
@@ -63,6 +68,7 @@ const Discover = () => {
               borderStyle: 'dashed',
               marginTop: 20,
               padding: 20,
+              marginBottom: 14,
             }}
           >
             <Text

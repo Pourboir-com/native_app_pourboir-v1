@@ -12,7 +12,6 @@ import { isSearch } from '../../util';
 import * as Location from 'expo-location';
 import AdModal from '../../components/modals/AdModal';
 import NoFavRestaurant from '../../components/no-fav-card';
-import Discover from '../../components/open-card/discover';
 // import AdModal from '../../components/modals/AdModal';
 // import NoFavRestaurant from '../../components/no-fav-card';
 import { AppState } from 'react-native';
@@ -197,9 +196,8 @@ const HomeScreen = props => {
         // nextPageToken={nextPageToken}
       >
         <StatusBar translucent={true} style="dark" />
-        {/* <Media /> */}
-        <Discover />
-        {/* <HomeScreenContent
+
+        <HomeScreenContent
           restaurantLoading={restaurantLoading}
           searchVal={searchVal}
           refetchRestaurant={() => {
@@ -245,7 +243,7 @@ const HomeScreen = props => {
           route={props?.route}
           title="popular_restaurant"
           searchTitle="popular_restaurant"
-        /> */}
+        />
       </Header>
       {/* {adModalVisible && (
         <AdModal

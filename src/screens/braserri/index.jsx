@@ -11,6 +11,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import Menu from '../../components/braserri/menu';
 import Team from '../../components/braserri/team';
+import Media from '../../components/braserri/media';
 import GlobalHeader from '../../components/GlobalHeader';
 import styles from './styles';
 import Context from '../../contextApi/context';
@@ -100,6 +101,22 @@ const Braserri = ({ navigation, route }) => {
               />
               <Text style={styles.tabTxt}>{localizationContext.t('the_menu')}</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setCurrentTab('media')}
+              style={
+                (styles.tabBtn,
+                currentTab != 'media'
+                  ? { ...styles.tabBtn, backgroundColor: '#fff' }
+                  : styles.tabBtn)
+              }
+              activeOpacity={0.6}
+            >
+              <Image
+                source={require('../../assets/images/menu.png')}
+                style={{ width: 22, height: 22, resizeMode: 'contain' }}
+              />
+              <Text style={styles.tabTxt}>{i18n.t('the_media')}</Text>
+            </TouchableOpacity>
           </View>
           <View style={{ marginBottom: 20 }}>
             {currentTab === 'menu' ? (
@@ -114,13 +131,15 @@ const Braserri = ({ navigation, route }) => {
                 restaurant_id={restaurant_id || ''}
                 place_id={place_id}
               />
-            ) : (
+            ) : currentTab === 'team' ? (
               <Team
                 restaurant_id={restaurant_id || ''}
                 place_id={place_id}
                 navigation={navigation}
                 refetchWaiters={refetchWaiters}
               />
+            ) :  (
+              <Media />
             )}
           </View>
         </View>

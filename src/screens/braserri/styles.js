@@ -27,6 +27,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 8,
   },
+  input: {
+    fontSize: 14,
+    borderColor: "#E3E3E3",
+    borderWidth:1,
+    borderRadius:8,
+    padding:8,
+    backgroundColor: '#fff'
+  },
   numberTxt: {
     fontSize: 15,
     fontFamily: 'ProximaNova',
@@ -86,6 +94,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '80%',
   },
+  checkContainer: {
+    backgroundColor: '#FCDF6F',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 7,
+    height: 35,
+  },
+  media_main_container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    width: '100%',
+  }
 });
 
 export default styles;

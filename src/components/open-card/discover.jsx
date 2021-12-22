@@ -14,9 +14,9 @@ const Discover = ({ data }) => {
         {localizationContext.t('discover')}
       </Text>
       <View>
-        {data?.data?.data?.length ? (
+        {data?.length ? (
           <FlatList
-            data={data?.data?.data || []}
+            data={data|| []}
             showsVerticalScrollIndicator={false}
             alwaysBounceHorizontal={false}
             //   scrollEnabled={false}

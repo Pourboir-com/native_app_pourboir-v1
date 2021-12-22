@@ -16,30 +16,60 @@ import GlobalHeader from '../../components/GlobalHeader';
 import styles from './styles';
 import Context from '../../contextApi/context';
 import i18n from '../../li8n';
-import { useQuery } from 'react-query';
-import { GET_INSTA_DETAILS } from '../../queries';
 import { reactQueryConfig } from '../../constants';
-
+import { useQuery } from 'react-query';
+import { GET_MENU, GET_WAITERS } from '../../queries';
 const Braserri = ({ navigation, route }) => {
-  const { restaurant_id, img, name, place_id, refetchWaiters, manager_id } =
-    route?.params || {};
+  const {
+    restaurant_id,
+    img,
+    name,
+    place_id,
+    refetchWaiters,
+    refetchInstaData,
+    InstaData,
+    refetchInstaFeed,
+  } = route?.params || {};
   const [currentTab, setCurrentTab] = useState('team');
   const [dishName, setDishName] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const { state, localizationContext } = useContext(Context);
+  const { data: menus, refetch: refetchMenus } = useQuery(
+    ['GET_MENU', { place_id: restaurant_id }],
+    GET_MENU,
+    {
+      ...reactQueryConfig,
+      onError: e => {
+        alert(e?.response?.data?.message);
+      },
+    },
+  );
 
-  const { data: InstaData, refetch: refetchInstaData } = useQuery(
+  const { data: waiterData, refetch: refetchWaiterData } = useQuery(
     [
-      'GET_INSTA_DETAILS',
+      'GET_WAITERS',
       {
-        user_id: manager_id,
-        place_id: restaurant_id,
+        type: 'waiter',
+        restaurant_id: place_id,
       },
     ],
-    GET_INSTA_DETAILS,
+    GET_WAITERS,
     {
-      enabled: manager_id && restaurant_id,
+      ...reactQueryConfig,
+    },
+  );
+
+  const { data: cookData, refetch: refetchCookData } = useQuery(
+    [
+      'GET_WAITERS',
+      {
+        type: 'cook',
+        restaurant_id: place_id,
+      },
+    ],
+    GET_WAITERS,
+    {
       ...reactQueryConfig,
     },
   );
@@ -154,6 +184,8 @@ const Braserri = ({ navigation, route }) => {
                 setPrice={setPrice}
                 restaurant_id={restaurant_id || ''}
                 place_id={place_id}
+                menuData={menus?.data || []}
+                refetchMenus={refetchMenus}
               />
             ) : currentTab === 'team' ? (
               <Team
@@ -161,11 +193,18 @@ const Braserri = ({ navigation, route }) => {
                 place_id={place_id}
                 navigation={navigation}
                 refetchWaiters={refetchWaiters}
+                waiterData={waiterData}
+                refetchWaiterData={refetchWaiterData}
+                cookData={cookData}
+                refetchCookData={refetchCookData}
               />
             ) : (
               <Media
+                refetchInstaData={refetchInstaData}
+                InstaData={InstaData}
                 user_id={state.userDetails.user_id}
                 place_id={restaurant_id}
+                refetchInstaFeed={refetchInstaFeed}
               />
             )}
           </View>

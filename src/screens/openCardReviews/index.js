@@ -41,6 +41,7 @@ import {
   GET_FAVORITES,
   ADD_CHECKIN,
   GET_INSTA_POSTS,
+  GET_INSTA_DETAILS,
 } from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
@@ -206,18 +207,38 @@ const ReviewDetails = ({ navigation, route }) => {
     },
   );
 
-  const { data: instaFeed } = useQuery(
+  const { data: InstaData, refetch: refetchInstaData } = useQuery(
+    [
+      'GET_INSTA_DETAILS',
+      {
+        place_id: RestaurantDetails?.data?._id,
+      },
+    ],
+    GET_INSTA_DETAILS,
+    {
+      enabled: RestaurantDetails?.data?._id ? true : false,
+      ...reactQueryConfig,
+      onError: e => {
+        alert(e.response?.data?.message);
+      },
+    },
+  );
+
+  const { data: instaFeed, refetch: refetchInstaFeed } = useQuery(
     [
       'GET_INSTA_POSTS',
       {
-        user_id: RestaurantDetails?.data?.manager?.user_id?._id,
         place_id: RestaurantDetails?.data?._id,
       },
     ],
     GET_INSTA_POSTS,
     {
-      enabled: RestaurantDetails?.data?._id && RestaurantDetails?.data?.manager?.user_id?._id,
+      enabled:
+        RestaurantDetails?.data?._id && InstaData?.data?.instagram_access_token,
       ...reactQueryConfig,
+      onError: e => {
+        alert(e.response?.data?.message);
+      },
     },
   );
 
@@ -458,11 +479,13 @@ const ReviewDetails = ({ navigation, route }) => {
               RestaurantDetails?.data?.manager?.status === 'active'
             ? navigation.navigate('Braserri', {
                 restaurant_id: RestaurantDetails?.data?._id || '',
-                manager_id: RestaurantDetails?.data?.manager?.user_id?._id || '',
                 img,
                 name,
                 place_id,
                 refetchWaiters,
+                refetchInstaData,
+                InstaData,
+                refetchInstaFeed,
               })
             : setApprovalModal(true)
         }
@@ -476,7 +499,7 @@ const ReviewDetails = ({ navigation, route }) => {
       >
         <View style={styles.viewImg}>
           <ImageBackground
-            source={{ uri: img || null }}
+            source={{ uri: InstaData?.data?.background_image || img || null }}
             style={{ flex: 1, justifyContent: 'space-between', height: '100%' }}
           >
             <LinearGradient
@@ -790,7 +813,9 @@ const ReviewDetails = ({ navigation, route }) => {
             />
           </View>
         )}
-        <Discover data={instaFeed || []} />
+        <Discover
+          data={instaFeed?.data?.data || InstaData?.data?.discover_images || []}
+        />
         <View
           style={{
             flexDirection: 'row',

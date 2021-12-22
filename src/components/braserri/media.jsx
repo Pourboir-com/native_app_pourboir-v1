@@ -15,16 +15,15 @@ import Context from '../../contextApi/context';
 import { useMutation } from 'react-query';
 import { SUBMIT_INSTA_DETAILS } from '../../queries';
 
-const Media = props => {
+const Media = ({ refetchInstaData, user_id, place_id, InstaData, refetchInstaFeed }) => {
   const { localizationContext } = useContext(Context);
-  const [bgImage, setBgImage] = useState('');
-  // const [discImg1, setDiscImg1] = useState('');
-  // const [discImg2, setDiscImg2] = useState('');
-  // const [discImg3, setDiscImg3] = useState('');
-  // const [discImg4, setDiscImg4] = useState('');
-  // const [discImg5, setDiscImg5] = useState('');
-  // const [userId, setUserId] = useState('');
-  const [token, setToken] = useState('');
+  const [bgImage, setBgImage] = useState(InstaData?.data?.background_image);
+  const [discImg1, setDiscImg1] = useState('');
+  const [discImg2, setDiscImg2] = useState('');
+  const [discImg3, setDiscImg3] = useState('');
+  const [discImg4, setDiscImg4] = useState('');
+  const [discImg5, setDiscImg5] = useState('');
+  const [token, setToken] = useState(InstaData?.data?.instagram_access_token);
   // const [clientId, setClientId] = useState('');
   const [
     submitInstaDetails,
@@ -33,17 +32,19 @@ const Media = props => {
   const saveInstaDetails = async () => {
     await submitInstaDetails(
       {
-        user_id: props?.user_id || '',
-        place_id: props?.place_id || '',
+        user_id,
+        place_id,
         access_token: token,
+        background_image: bgImage,
       },
       {
-        onSuccess: async res => {
-          // await props?.refetchMenus();
+        onSuccess: async () => {
+          await refetchInstaData();
+          await refetchInstaFeed();
           alert('The instagram details has been updated successfully!');
         },
         onError: e => {
-          alert('Something went wrong!');
+          alert(e.response?.data?.message);
         },
       },
     );
@@ -96,9 +97,11 @@ const Media = props => {
             </View>
           </View>
         </View>
-        {/* <View style={{ marginTop: 25 }}>
+        <View style={{ marginTop: 25 }}>
           <View>
-            <Text style={styles.mainHeading}>{localizationContext.t('discv_setting')}</Text>
+            <Text style={styles.mainHeading}>
+              {localizationContext.t('discv_setting')}
+            </Text>
             <Text
               style={(styles.numberTxt, { ...styles.numberTxt, marginTop: 5 })}
             >
@@ -208,7 +211,7 @@ const Media = props => {
               </View>
             </View>
           </View>
-        </View> */}
+        </View>
         <View style={{ marginTop: 25 }}>
           <View>
             <Text style={{ ...styles.mainHeading }}>
@@ -219,25 +222,6 @@ const Media = props => {
             >
               {localizationContext.t('link_ig_acc')}
             </Text>
-            {/* <View style={styles.media_main_container}>
-              <View style={{ width: '82%' }}>
-                <TextInput
-                  style={styles.input}
-                  placeholder={localizationContext.t('user_id')}
-                  placeholderTextColor={'#485460'}
-                  onChangeText={e => setUserId(e)}
-                  value={userId}
-                />
-              </View>
-              <View style={{ width: '13%', justifyContent: 'center' }}>
-                <TouchableOpacity
-                  style={styles.checkContainer}
-                  activeOpacity={0.6}
-                >
-                  <Entypo name="check" size={22} color="black" />
-                </TouchableOpacity>
-              </View>
-            </View> */}
             <View style={styles.media_main_container}>
               <View style={{ width: '82%' }}>
                 <TextInput

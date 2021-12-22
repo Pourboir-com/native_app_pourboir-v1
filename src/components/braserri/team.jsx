@@ -4,47 +4,18 @@ import styles from '../../screens/braserri/styles';
 import AddBtn from '../add-common-btn';
 import CommonCard from '../comman-card';
 import AddWaiterCookModal from '../modals/AddWaiterCookModal';
-import { useQuery, useMutation } from 'react-query';
-import { ADDING_WAITERS, GET_WAITERS } from '../../queries';
-import { reactQueryConfig } from '../../constants';
+import { useMutation } from 'react-query';
+import { ADDING_WAITERS } from '../../queries';
 import Context from '../../contextApi/context';
 
-const Team = ({ restaurant_id, place_id, refetchWaiters }) => {
+const Team = ({ restaurant_id, place_id, refetchWaiters, waiterData, refetchWaiterData, cookData, refetchCookData }) => {
   const { state, localizationContext } = useContext(Context);
   const [addModal, setAddModal] = useState(false);
   const [modalType, setModalType] = useState();
   const [waiters, setWaiters] = useState([]);
   const [cooks, setCooks] = useState([]);
-  const [addStaff, { isLoading: addStaffLoading }] = useMutation(
+  const [addStaff] = useMutation(
     ADDING_WAITERS,
-  );
-
-  const { data: waiterData, refetch: refetchWaiterData } = useQuery(
-    [
-      'GET_WAITERS',
-      {
-        type: 'waiter',
-        restaurant_id: place_id,
-      },
-    ],
-    GET_WAITERS,
-    {
-      ...reactQueryConfig,
-    },
-  );
-
-  const { data: cookData, refetch: refetchCookData } = useQuery(
-    [
-      'GET_WAITERS',
-      {
-        type: 'cook',
-        restaurant_id: place_id,
-      },
-    ],
-    GET_WAITERS,
-    {
-      ...reactQueryConfig,
-    },
   );
 
   const openWaiterModal = () => {

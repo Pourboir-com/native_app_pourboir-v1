@@ -5,17 +5,14 @@ import AddBtn from '../add-common-btn';
 import AddCategoryModal from '../modals/AddCategoryModal';
 import DeleteDishModal from '../modals/DeleteDishModal';
 import Categories from './categories';
-import { useQuery, useMutation } from 'react-query';
+import { useMutation } from 'react-query';
 import {
   DELETE_DISH,
-  GET_MENU,
   DELETE_MENU,
 } from '../../queries';
-import { reactQueryConfig } from '../../constants';
 import Context from '../../contextApi/context';
 
 const Menu = ({
-  currentTab,
   dishName,
   setDishName,
   price,
@@ -23,41 +20,29 @@ const Menu = ({
   description,
   setDescription,
   restaurant_id,
+  refetchMenus,
+  menuData,
 }) => {
   const { state, localizationContext } = useContext(Context);
   let ScreenHeight = Dimensions.get('window').height;
   const [categModal, setCategModal] = useState(false);
   const [deleteDishModal, setDeleteDishModal] = useState(false);
-  const [categArr, setCategArr] = useState([]);
+  const [categArr, setCategArr] = useState(menuData);
   const [dishState, setDishState] = useState([]);
   const [dishId, setDishId] = useState('');
   const [menuId, setMenuId] = useState('');
   const [dishes, setDishes] = useState([]);
   const [deleteType, setDeleteType] = useState();
-  const [deleteMenu, { isLoading: deleteMenuLoading }] = useMutation(
+  const [deleteMenu] = useMutation(
     DELETE_MENU,
   );
-  const [deleteDish, { isLoading: deleteDishLoading }] = useMutation(
+  const [deleteDish] = useMutation(
     DELETE_DISH,
   );
-  const {
-    data: menus,
-    isLoading: menusLoading,
-    isFetching: menusIsFetching,
-    refetch: refetchMenus,
-  } = useQuery(['GET_MENU', { place_id: restaurant_id }], GET_MENU, {
-    ...reactQueryConfig,
-    onSuccess: async res => {
-      setCategArr(res.data);
-    },
-    onError: e => {
-      alert(e?.response?.data?.message);
-    },
-  });
 
-  const newCategories = categArr.filter(v => {
-    return !v._id;
-  });
+  // const newCategories = categArr.filter(v => {
+  //   return !v._id;
+  // });
 
   const DeleteMenu = async id => {
     if (id.charAt(0) == 'x') {

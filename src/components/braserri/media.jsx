@@ -8,23 +8,47 @@ import {
 } from 'react-native';
 import { TextInput } from 'react-native';
 import styles from '../../screens/braserri/styles';
-import AddBtn from '../add-common-btn';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Entypo } from '@expo/vector-icons';
 import CommonButton from '../common-button';
 import Context from '../../contextApi/context';
+import { useMutation } from 'react-query';
+import { SUBMIT_INSTA_DETAILS } from '../../queries';
 
 const Media = props => {
   const { localizationContext } = useContext(Context);
   const [bgImage, setBgImage] = useState('');
-  const [discImg1, setDiscImg1] = useState('');
-  const [discImg2, setDiscImg2] = useState('');
-  const [discImg3, setDiscImg3] = useState('');
-  const [discImg4, setDiscImg4] = useState('');
-  const [discImg5, setDiscImg5] = useState('');
-  const [userId, setUserId] = useState('');
+  // const [discImg1, setDiscImg1] = useState('');
+  // const [discImg2, setDiscImg2] = useState('');
+  // const [discImg3, setDiscImg3] = useState('');
+  // const [discImg4, setDiscImg4] = useState('');
+  // const [discImg5, setDiscImg5] = useState('');
+  // const [userId, setUserId] = useState('');
   const [token, setToken] = useState('');
-  const [clientId, setClientId] = useState('');
+  // const [clientId, setClientId] = useState('');
+  const [
+    submitInstaDetails,
+    { isLoading: submitInstaDetailsLoading },
+  ] = useMutation(SUBMIT_INSTA_DETAILS);
+  const saveInstaDetails = async () => {
+    await submitInstaDetails(
+      {
+        user_id: props?.user_id || '',
+        place_id: props?.place_id || '',
+        access_token: token,
+      },
+      {
+        onSuccess: async res => {
+          // await props?.refetchMenus();
+          alert('The instagram details has been updated successfully!');
+        },
+        onError: e => {
+          alert('Something went wrong!');
+        },
+      },
+    );
+  };
+
   return (
     <KeyboardAwareScrollView
       bounces={false}
@@ -40,7 +64,9 @@ const Media = props => {
       <ScrollView bounces={false} keyboardShouldPersistTaps={'handled'}>
         <View style={{ marginTop: 25 }}>
           <View>
-            <Text style={styles.mainHeading}>{localizationContext.t('bg_img_heading')}</Text>
+            <Text style={styles.mainHeading}>
+              {localizationContext.t('bg_img_heading')}
+            </Text>
             <Text
               style={
                 (styles.numberTxt,
@@ -70,7 +96,7 @@ const Media = props => {
             </View>
           </View>
         </View>
-        <View style={{ marginTop: 25 }}>
+        {/* <View style={{ marginTop: 25 }}>
           <View>
             <Text style={styles.mainHeading}>{localizationContext.t('discv_setting')}</Text>
             <Text
@@ -182,7 +208,7 @@ const Media = props => {
               </View>
             </View>
           </View>
-        </View>
+        </View> */}
         <View style={{ marginTop: 25 }}>
           <View>
             <Text style={{ ...styles.mainHeading }}>
@@ -193,7 +219,7 @@ const Media = props => {
             >
               {localizationContext.t('link_ig_acc')}
             </Text>
-            <View style={styles.media_main_container}>
+            {/* <View style={styles.media_main_container}>
               <View style={{ width: '82%' }}>
                 <TextInput
                   style={styles.input}
@@ -211,7 +237,7 @@ const Media = props => {
                   <Entypo name="check" size={22} color="black" />
                 </TouchableOpacity>
               </View>
-            </View>
+            </View> */}
             <View style={styles.media_main_container}>
               <View style={{ width: '82%' }}>
                 <TextInput
@@ -231,7 +257,7 @@ const Media = props => {
                 </TouchableOpacity>
               </View>
             </View>
-            <View style={styles.media_main_container}>
+            {/* <View style={styles.media_main_container}>
               <View style={{ width: '82%' }}>
                 <TextInput
                   style={styles.input}
@@ -249,11 +275,16 @@ const Media = props => {
                   <Entypo name="check" size={22} color="black" />
                 </TouchableOpacity>
               </View>
-            </View>
+            </View> */}
           </View>
         </View>
         <View style={{ marginVertical: 16, marginBottom: 35 }}>
-          <CommonButton title={localizationContext.t('confirmer')} disable={false} />
+          <CommonButton
+            loading={submitInstaDetailsLoading}
+            onPress={saveInstaDetails}
+            title={localizationContext.t('confirmer')}
+            disable={false}
+          />
         </View>
       </ScrollView>
     </KeyboardAwareScrollView>

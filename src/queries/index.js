@@ -14,3 +14,4 @@ export * from './staff';
 export * from './favorites';
 export * from './check-in';
 export * from './update-user';
+export * from './insta';

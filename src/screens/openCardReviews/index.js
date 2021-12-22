@@ -40,6 +40,7 @@ import {
   ADD_FAVORITE,
   GET_FAVORITES,
   ADD_CHECKIN,
+  GET_INSTA_POSTS,
 } from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
@@ -202,6 +203,21 @@ const ReviewDetails = ({ navigation, route }) => {
     {
       ...reactQueryConfig,
       enabled: place_id,
+    },
+  );
+
+  const { data: instaFeed } = useQuery(
+    [
+      'GET_INSTA_POSTS',
+      {
+        user_id: RestaurantDetails?.data?.manager?.user_id?._id,
+        place_id: RestaurantDetails?.data?._id,
+      },
+    ],
+    GET_INSTA_POSTS,
+    {
+      enabled: RestaurantDetails?.data?._id && RestaurantDetails?.data?.manager?.user_id?._id,
+      ...reactQueryConfig,
     },
   );
 
@@ -442,6 +458,7 @@ const ReviewDetails = ({ navigation, route }) => {
               RestaurantDetails?.data?.manager?.status === 'active'
             ? navigation.navigate('Braserri', {
                 restaurant_id: RestaurantDetails?.data?._id || '',
+                manager_id: RestaurantDetails?.data?.manager?.user_id?._id || '',
                 img,
                 name,
                 place_id,
@@ -773,7 +790,7 @@ const ReviewDetails = ({ navigation, route }) => {
             />
           </View>
         )}
-        <Discover />
+        <Discover data={instaFeed || []} />
         <View
           style={{
             flexDirection: 'row',

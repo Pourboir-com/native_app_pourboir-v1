@@ -5,19 +5,8 @@ import styles from '../../screens/braserri/styles';
 import i18n from '../../li8n';
 import Context from '../../contextApi/context';
 
-const Discover = () => {
+const Discover = ({ data }) => {
   const { localizationContext } = useContext(Context);
-
-  const images = [
-    {
-      image:
-        'https://images.unsplash.com/photo-1639815188498-e23242c9c796?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDh8Q0R3dXdYSkFiRXd8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      image:
-        'https://images.unsplash.com/photo-1639815188498-e23242c9c796?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDh8Q0R3dXdYSkFiRXd8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
-    },
-  ];
 
   return (
     <View style={{ marginHorizontal: 15, marginBottom: 15 }}>
@@ -25,9 +14,9 @@ const Discover = () => {
         {localizationContext.t('discover')}
       </Text>
       <View>
-        {images.length ? (
+        {data?.data?.data?.length ? (
           <FlatList
-            data={images}
+            data={data?.data?.data || []}
             showsVerticalScrollIndicator={false}
             alwaysBounceHorizontal={false}
             //   scrollEnabled={false}
@@ -36,17 +25,16 @@ const Discover = () => {
             bounces={false}
             horizontal={true}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={v => (
+            renderItem={itemData => (
               <TouchableOpacity activeOpacity={0.4} style={{ marginTop: 10 }}>
                 <Image
                   source={{
-                    uri:
-                      'https://images.unsplash.com/photo-1639815188498-e23242c9c796?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDh8Q0R3dXdYSkFiRXd8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
+                    uri: itemData.item.media_url,
                   }}
                   style={{
                     width: 170,
                     height: 180,
-                    resizrMode: 'contain',
+                    resizeMode: 'contain',
                     borderRadius: 10,
                     marginRight: 20,
                     marginVertical: 14,

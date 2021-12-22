@@ -16,14 +16,33 @@ import GlobalHeader from '../../components/GlobalHeader';
 import styles from './styles';
 import Context from '../../contextApi/context';
 import i18n from '../../li8n';
+import { useQuery } from 'react-query';
+import { GET_INSTA_DETAILS } from '../../queries';
+import { reactQueryConfig } from '../../constants';
 
 const Braserri = ({ navigation, route }) => {
-  const { restaurant_id, img, name, place_id, refetchWaiters } = route?.params || {};
+  const { restaurant_id, img, name, place_id, refetchWaiters, manager_id } =
+    route?.params || {};
   const [currentTab, setCurrentTab] = useState('team');
   const [dishName, setDishName] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
-  const { localizationContext } = useContext(Context);
+  const { state, localizationContext } = useContext(Context);
+
+  const { data: InstaData, refetch: refetchInstaData } = useQuery(
+    [
+      'GET_INSTA_DETAILS',
+      {
+        user_id: manager_id,
+        place_id: restaurant_id,
+      },
+    ],
+    GET_INSTA_DETAILS,
+    {
+      enabled: manager_id && restaurant_id,
+      ...reactQueryConfig,
+    },
+  );
 
   return (
     <View style={{ flex: 1, backgroundColor: '#f9f9f9', alignItems: 'center' }}>
@@ -84,7 +103,9 @@ const Braserri = ({ navigation, route }) => {
                 source={require('../../assets/images/team.png')}
                 style={{ width: 28, height: 28, resizeMode: 'contain' }}
               />
-              <Text style={styles.tabTxt}>{localizationContext.t('the_team')}</Text>
+              <Text style={styles.tabTxt}>
+                {localizationContext.t('the_team')}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => setCurrentTab('menu')}
@@ -100,7 +121,9 @@ const Braserri = ({ navigation, route }) => {
                 source={require('../../assets/images/menu.png')}
                 style={{ width: 24, height: 24, resizeMode: 'contain' }}
               />
-              <Text style={styles.tabTxt}>{localizationContext.t('the_menu')}</Text>
+              <Text style={styles.tabTxt}>
+                {localizationContext.t('the_menu')}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => setCurrentTab('media')}
@@ -139,8 +162,11 @@ const Braserri = ({ navigation, route }) => {
                 navigation={navigation}
                 refetchWaiters={refetchWaiters}
               />
-            ) :  (
-              <Media />
+            ) : (
+              <Media
+                user_id={state.userDetails.user_id}
+                place_id={restaurant_id}
+              />
             )}
           </View>
         </View>

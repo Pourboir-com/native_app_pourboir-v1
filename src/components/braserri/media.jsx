@@ -55,8 +55,8 @@ const Media = ({
       {
         user_id,
         place_id,
-        access_token: token,
-        background_image: bgImage,
+        access_token: token || '',
+        background_image: bgImage || '',
         discover_images: validImages(),
       },
       {

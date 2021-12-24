@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   checkContainer: {
-    backgroundColor: '#FCDF6F',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 7,
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
   media_main_container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 20,
+    marginTop: 12,
     width: '100%',
   },
 });

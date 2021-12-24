@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { Text, View, FlatList } from 'react-native';
 import { Image } from 'react-native';
 import styles from '../../screens/braserri/styles';
 import i18n from '../../li8n';
 import Context from '../../contextApi/context';
 
-const Discover = ({ data }) => {
+const Discover = ({ data, loading }) => {
   const { localizationContext } = useContext(Context);
 
   return (
@@ -14,9 +14,21 @@ const Discover = ({ data }) => {
         {localizationContext.t('discover')}
       </Text>
       <View>
-        {data?.length ? (
+        {!data?.length && loading ? (
+          <View
+            style={{
+              width: 170,
+              height: 180,
+              borderRadius: 10,
+              marginRight: 20,
+              marginVertical: 14,
+              marginTop: 10,
+              backgroundColor: '#f0f0f0',
+            }}
+          />
+        ) : data?.length ? (
           <FlatList
-            data={data|| []}
+            data={data || []}
             showsVerticalScrollIndicator={false}
             alwaysBounceHorizontal={false}
             //   scrollEnabled={false}
@@ -26,21 +38,21 @@ const Discover = ({ data }) => {
             horizontal={true}
             keyExtractor={(item, index) => index.toString()}
             renderItem={itemData => (
-              <TouchableOpacity activeOpacity={0.4} style={{ marginTop: 10 }}>
-                <Image
-                  source={{
-                    uri: itemData.item.media_url,
-                  }}
-                  style={{
-                    width: 170,
-                    height: 180,
-                    resizeMode: 'contain',
-                    borderRadius: 10,
-                    marginRight: 20,
-                    marginVertical: 14,
-                  }}
-                />
-              </TouchableOpacity>
+              <Image
+                source={{
+                  uri: itemData.item.media_url || itemData.item,
+                }}
+                style={{
+                  width: 170,
+                  height: 180,
+                  resizeMode: 'cover',
+                  borderRadius: 10,
+                  marginRight: 20,
+                  marginVertical: 14,
+                  marginTop: 10,
+                  backgroundColor: '#f0f0f0',
+                }}
+              />
             )}
           />
         ) : (

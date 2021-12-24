@@ -13,7 +13,7 @@ import {
   Platform,
   Linking,
   Alert,
-  Share,
+  // Share,
 } from 'react-native';
 import * as actionTypes from '../../contextApi/actionTypes';
 import StarCard from '../../components/star-card';
@@ -76,7 +76,7 @@ const ReviewDetails = ({ navigation, route }) => {
 
   // Star arrayyyyyyyy
   const obj = [1, 2, 3, 4, 5];
-  const [data, setData] = useState([]);
+
   const [userWaiterModalVisible, setUserWaiterModalVisible] = useState(false);
   const [RefferedWaiterModalVisible, setRefferedWaiterModalVisible] = useState(
     false,
@@ -157,9 +157,9 @@ const ReviewDetails = ({ navigation, route }) => {
     {
       ...reactQueryConfig,
       enabled: state.language && place_id,
-      onError: e => {
-        alert(e?.response?.data?.message);
-      },
+      // onError: e => {
+      //   alert(e?.response?.data?.message);
+      // },
     },
   );
 
@@ -174,9 +174,6 @@ const ReviewDetails = ({ navigation, route }) => {
     {
       ...reactQueryConfig,
       enabled: place_id,
-      onSuccess: res => {
-        setData(res.data);
-      },
     },
   );
 
@@ -184,7 +181,6 @@ const ReviewDetails = ({ navigation, route }) => {
     data: RestaurantDetails,
     isLoading: RestaurantDetailsLoading,
     refetch: refetchRestaurantDetails,
-    isFetching: RestaurantDetailsIsFetching,
   } = useQuery(
     ['GET_RESTAURANT_DETAILS', { _id: place_id }],
     GET_RESTAURANT_DETAILS,
@@ -207,7 +203,11 @@ const ReviewDetails = ({ navigation, route }) => {
     },
   );
 
-  const { data: InstaData, refetch: refetchInstaData } = useQuery(
+  const {
+    data: InstaData,
+    refetch: refetchInstaData,
+    isLoading: instaDataLoading,
+  } = useQuery(
     [
       'GET_INSTA_DETAILS',
       {
@@ -218,13 +218,17 @@ const ReviewDetails = ({ navigation, route }) => {
     {
       enabled: RestaurantDetails?.data?._id ? true : false,
       ...reactQueryConfig,
-      onError: e => {
-        alert(e.response?.data?.message);
-      },
+      // onError: e => {
+      //   alert(e.response?.data?.message);
+      // },
     },
   );
 
-  const { data: instaFeed, refetch: refetchInstaFeed } = useQuery(
+  const {
+    data: instaFeed,
+    refetch: refetchInstaFeed,
+    isLoading: instaFeedLoading,
+  } = useQuery(
     [
       'GET_INSTA_POSTS',
       {
@@ -236,9 +240,9 @@ const ReviewDetails = ({ navigation, route }) => {
       enabled:
         RestaurantDetails?.data?._id && InstaData?.data?.instagram_access_token,
       ...reactQueryConfig,
-      onError: e => {
-        alert(e.response?.data?.message);
-      },
+      // onError: e => {
+      //   alert(e.response?.data?.message);
+      // },
     },
   );
 
@@ -264,7 +268,7 @@ const ReviewDetails = ({ navigation, route }) => {
   };
 
   const handleUserModalOpen = () => {
-    const isUserAlreadyWaiter = data.find(
+    const isUserAlreadyWaiter = waitersData?.data?.find(
       item => item?.user_id?._id === state.userDetails.user_id,
     );
     if (isUserAlreadyWaiter) {
@@ -273,6 +277,7 @@ const ReviewDetails = ({ navigation, route }) => {
       setUserWaiterModalVisible(true);
     }
   };
+
   const restaurant = {
     place_id: place_id,
     rating: rating,
@@ -442,17 +447,7 @@ const ReviewDetails = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <Spinner
-        visible={
-          (waitersIsFetching &&
-            !Refferedloading &&
-            !Userloading &&
-            !reviewDataLoading &&
-            !waitersLoading) ||
-          RestaurantDetailsIsFetching ||
-          RestaurantDetailsLoading
-        }
-      />
+      <Spinner visible={RestaurantDetailsLoading} />
       <StatusBar translucent={true} style="light" />
       <GlobalHeader
         arrow={true}
@@ -814,7 +809,14 @@ const ReviewDetails = ({ navigation, route }) => {
           </View>
         )}
         <Discover
-          data={instaFeed?.data?.data || InstaData?.data?.discover_images || []}
+          loading={
+            RestaurantDetailsLoading || instaDataLoading || instaFeedLoading
+          }
+          data={
+            (InstaData?.data?.instagram_access_token
+              ? instaFeed?.data?.data
+              : InstaData?.data?.discover_images) || []
+          }
         />
         <View
           style={{
@@ -830,31 +832,34 @@ const ReviewDetails = ({ navigation, route }) => {
           </Text>
           <View style={styles.viewNumRaters}>
             <Text style={[styles.txtNumRaters, { fontFamily: 'ProximaNova' }]}>
-              {data?.length || '0'}
+              {waitersData?.data?.length || '0'}
             </Text>
           </View>
         </View>
-        {!data.length && !waitersLoading && !waitersIsFetching && (
-          <Text
-            style={[
-              styles.no_waiter_found,
-              { fontFamily: 'ProximaNovaSemiBold' },
-            ]}
-          >
-            {localizationContext.t('no_waiter_found')}
-          </Text>
-        )}
-        {waitersLoading ? (
-          <View style={{ width: '90%', alignSelf: 'center' }}>
-            <ReviewsSkeleton />
-            <ReviewsSkeleton />
-          </View>
-        ) : (
-          <FlatList
-            data={waitersLoading ? null : data}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={item => item._id}
-            renderItem={itemData => (
+        {!waitersData?.data.length &&
+          !waitersLoading &&
+          !waitersIsFetching && (
+            <Text
+              style={[
+                styles.no_waiter_found,
+                { fontFamily: 'ProximaNovaSemiBold' },
+              ]}
+            >
+              {localizationContext.t('no_waiter_found')}
+            </Text>
+          )}
+
+        <FlatList
+          data={waitersData?.data || []}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={item => item._id}
+          renderItem={itemData =>
+            waitersLoading ? (
+              <View style={{ width: '90%', alignSelf: 'center' }}>
+                <ReviewsSkeleton />
+                <ReviewsSkeleton />
+              </View>
+            ) : (
               <TouchableOpacity
                 activeOpacity={0.5}
                 key={itemData?.item?._id}
@@ -926,9 +931,9 @@ const ReviewDetails = ({ navigation, route }) => {
                 </View>
                 <MaterialIcons name="chevron-right" size={28} color="grey" />
               </TouchableOpacity>
-            )}
-          />
-        )}
+            )
+          }
+        />
         <View style={styles.viewAddReview}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text

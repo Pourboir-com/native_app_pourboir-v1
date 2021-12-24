@@ -23,13 +23,27 @@ const Media = ({
   refetchInstaFeed,
 }) => {
   const { localizationContext } = useContext(Context);
-  const [bgImage, setBgImage] = useState(InstaData?.data?.background_image || '');
-  const [discImg1, setDiscImg1] = useState(InstaData?.data?.discover_images[0] || '');
-  const [discImg2, setDiscImg2] = useState(InstaData?.data?.discover_images[1] || '');
-  const [discImg3, setDiscImg3] = useState(InstaData?.data?.discover_images[2] || '');
-  const [discImg4, setDiscImg4] = useState(InstaData?.data?.discover_images[3] || '');
-  const [discImg5, setDiscImg5] = useState(InstaData?.data?.discover_images[4] || '');
-  const [token, setToken] = useState(InstaData?.data?.instagram_access_token || '');
+  const [bgImage, setBgImage] = useState(
+    InstaData?.data?.background_image || '',
+  );
+  const [discImg1, setDiscImg1] = useState(
+    InstaData?.data?.discover_images[0] || '',
+  );
+  const [discImg2, setDiscImg2] = useState(
+    InstaData?.data?.discover_images[1] || '',
+  );
+  const [discImg3, setDiscImg3] = useState(
+    InstaData?.data?.discover_images[2] || '',
+  );
+  const [discImg4, setDiscImg4] = useState(
+    InstaData?.data?.discover_images[3] || '',
+  );
+  const [discImg5, setDiscImg5] = useState(
+    InstaData?.data?.discover_images[4] || '',
+  );
+  const [token, setToken] = useState(
+    InstaData?.data?.instagram_access_token || '',
+  );
   // const [clientId, setClientId] = useState('');
 
   const disabled_color = '#f0f0f0';
@@ -62,7 +76,9 @@ const Media = ({
       {
         onSuccess: async () => {
           await refetchInstaData();
-          await refetchInstaFeed();
+          if (token) {
+            await refetchInstaFeed();
+          }
           alert('The instagram details has been updated successfully!');
         },
         onError: e => {

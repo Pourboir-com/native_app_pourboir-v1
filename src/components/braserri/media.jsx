@@ -89,9 +89,6 @@ const Media = ({
           }
           setSuccesModal(true);
         },
-        onError: () => {
-          setErrorModal(true);
-        },
       },
     );
   };
@@ -150,7 +147,9 @@ const Media = ({
                       ? clear_button_color
                       : not_disabled_color,
                   }}
-                  onPress={() => checkURL(bgImage) && setBgImage('')}
+                  onPress={() =>
+                    checkURL(bgImage) ? setBgImage('') : setErrorModal(true)
+                  }
                   activeOpacity={0.6}
                 >
                   <Entypo
@@ -222,7 +221,7 @@ const Media = ({
                       ? clear_button_color
                       : not_disabled_color,
                   }}
-                  onPress={() => checkURL(discImg1) && setDiscImg1('')}
+                  onPress={() => checkURL(discImg1) ? setDiscImg1('') : setErrorModal(true)}
                   activeOpacity={0.6}
                 >
                   <Entypo
@@ -274,7 +273,7 @@ const Media = ({
                       ? clear_button_color
                       : not_disabled_color,
                   }}
-                  onPress={() => checkURL(discImg2) && setDiscImg2('')}
+                  onPress={() => checkURL(discImg2) ? setDiscImg2('') : setErrorModal(true)}
                   activeOpacity={0.6}
                 >
                   <Entypo
@@ -326,7 +325,7 @@ const Media = ({
                       ? clear_button_color
                       : not_disabled_color,
                   }}
-                  onPress={() => checkURL(discImg3) && setDiscImg3('')}
+                  onPress={() => checkURL(discImg3) ? setDiscImg3('') : setErrorModal(true)}
                   activeOpacity={0.6}
                 >
                   <Entypo
@@ -378,7 +377,7 @@ const Media = ({
                       ? clear_button_color
                       : not_disabled_color,
                   }}
-                  onPress={() => checkURL(discImg4) && setDiscImg4('')}
+                  onPress={() => checkURL(discImg4) ? setDiscImg4('') : setErrorModal(true)}
                   activeOpacity={0.6}
                 >
                   <Entypo
@@ -430,7 +429,7 @@ const Media = ({
                       ? clear_button_color
                       : not_disabled_color,
                   }}
-                  onPress={() => checkURL(discImg5) && setDiscImg5('')}
+                  onPress={() => checkURL(discImg5) ? setDiscImg5('') : setErrorModal(true)}
                   activeOpacity={0.6}
                 >
                   <Entypo

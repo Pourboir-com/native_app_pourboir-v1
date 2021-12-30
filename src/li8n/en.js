@@ -338,4 +338,9 @@ export default {
   discover_msg: "This restaurant hasn't yet added any content.",
   the_media: 'Media',
   discv_setting: 'Discover Settings.',
+  congrats: 'Congratulations !',
+  congrats_text: 'The changes to your media has been set successfully',
+  error: 'An error occured',
+  error_text:
+    'Please make sure to use a file link ending with one of this extension jpeg, jpg, png ou gif',
 };

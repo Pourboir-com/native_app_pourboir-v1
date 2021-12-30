@@ -14,6 +14,9 @@ import CommonButton from '../common-button';
 import Context from '../../contextApi/context';
 import { useMutation } from 'react-query';
 import { SUBMIT_INSTA_DETAILS } from '../../queries';
+import CommonModal from '../../components/modals/HelpUsImproveModal';
+const successImg = require('../../assets/images/success.png');
+const errorImg = require('../../assets/images/errorImg.png');
 
 const Media = ({
   refetchInstaData,
@@ -45,17 +48,22 @@ const Media = ({
     InstaData?.data?.instagram_access_token || '',
   );
   // const [clientId, setClientId] = useState('');
+  const [successModal, setSuccesModal] = useState(false);
+  const [errorModal, setErrorModal] = useState(false);
 
   const disabled_color = '#f0f0f0';
   const not_disabled_color = '#FCDF6F';
+  const clear_button_color = '#FF5B5B';
+  const textbox_border_color = '#E3E3E3';
+
   const checkURL = url => {
-    return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+    return !url ? true : url.match(/\.(jpeg|jpg|gif|png)$/) != null;
   };
   const validImages = () => {
     let discovered_images = [discImg1, discImg2, discImg3, discImg4, discImg5];
     let validate_discover_images = [];
     discovered_images.map(
-      item => checkURL(item) && validate_discover_images.push(item),
+      item => item && checkURL(item) && validate_discover_images.push(item),
     );
     return validate_discover_images;
   };
@@ -79,10 +87,10 @@ const Media = ({
           if (token) {
             await refetchInstaFeed();
           }
-          alert('The instagram details has been updated successfully!');
+          setSuccesModal(true);
         },
-        onError: e => {
-          alert(e.response?.data?.message);
+        onError: () => {
+          setErrorModal(true);
         },
       },
     );
@@ -115,14 +123,42 @@ const Media = ({
               {localizationContext.t('bg_img_text')}
             </Text>
             <View style={styles.media_main_container}>
-              <View style={{ width: '82%' }}>
+              <View style={{ width: !bgImage ? '82%' : '66%' }}>
                 <TextInput
-                  style={styles.input}
+                  style={{
+                    ...styles.input,
+                    borderColor: checkURL(bgImage)
+                      ? textbox_border_color
+                      : clear_button_color,
+                  }}
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
                   onChangeText={e => setBgImage(e)}
                   value={bgImage}
                 />
+              </View>
+              <View
+                style={{
+                  width: !bgImage ? '0%' : '13%',
+                  justifyContent: 'center',
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    ...styles.checkContainer,
+                    backgroundColor: checkURL(bgImage)
+                      ? clear_button_color
+                      : not_disabled_color,
+                  }}
+                  onPress={() => checkURL(bgImage) && setBgImage('')}
+                  activeOpacity={0.6}
+                >
+                  <Entypo
+                    name={checkURL(bgImage) ? 'cross' : 'question'}
+                    size={26}
+                    color="black"
+                  />
+                </TouchableOpacity>
               </View>
               <View style={{ width: '13%', justifyContent: 'center' }}>
                 <TouchableOpacity
@@ -159,14 +195,42 @@ const Media = ({
               {localizationContext.t('discoverImg_text')}
             </Text>
             <View style={styles.media_main_container}>
-              <View style={{ width: '82%' }}>
+              <View style={{ width: !discImg1 ? '82%' : '66%' }}>
                 <TextInput
-                  style={styles.input}
+                  style={{
+                    ...styles.input,
+                    borderColor: checkURL(discImg1)
+                      ? textbox_border_color
+                      : clear_button_color,
+                  }}
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
                   onChangeText={e => setDiscImg1(e)}
                   value={discImg1}
                 />
+              </View>
+              <View
+                style={{
+                  width: !discImg1 ? '0%' : '13%',
+                  justifyContent: 'center',
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    ...styles.checkContainer,
+                    backgroundColor: checkURL(discImg1)
+                      ? clear_button_color
+                      : not_disabled_color,
+                  }}
+                  onPress={() => checkURL(discImg1) && setDiscImg1('')}
+                  activeOpacity={0.6}
+                >
+                  <Entypo
+                    name={checkURL(discImg1) ? 'cross' : 'question'}
+                    size={26}
+                    color="black"
+                  />
+                </TouchableOpacity>
               </View>
               <View style={{ width: '13%', justifyContent: 'center' }}>
                 <TouchableOpacity
@@ -183,14 +247,42 @@ const Media = ({
               </View>
             </View>
             <View style={styles.media_main_container}>
-              <View style={{ width: '82%' }}>
+              <View style={{ width: !discImg2 ? '82%' : '66%' }}>
                 <TextInput
-                  style={styles.input}
+                  style={{
+                    ...styles.input,
+                    borderColor: checkURL(discImg2)
+                      ? textbox_border_color
+                      : clear_button_color,
+                  }}
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
                   onChangeText={e => setDiscImg2(e)}
                   value={discImg2}
                 />
+              </View>
+              <View
+                style={{
+                  width: !discImg2 ? '0%' : '13%',
+                  justifyContent: 'center',
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    ...styles.checkContainer,
+                    backgroundColor: checkURL(discImg2)
+                      ? clear_button_color
+                      : not_disabled_color,
+                  }}
+                  onPress={() => checkURL(discImg2) && setDiscImg2('')}
+                  activeOpacity={0.6}
+                >
+                  <Entypo
+                    name={checkURL(discImg2) ? 'cross' : 'question'}
+                    size={26}
+                    color="black"
+                  />
+                </TouchableOpacity>
               </View>
               <View style={{ width: '13%', justifyContent: 'center' }}>
                 <TouchableOpacity
@@ -207,14 +299,42 @@ const Media = ({
               </View>
             </View>
             <View style={styles.media_main_container}>
-              <View style={{ width: '82%' }}>
+              <View style={{ width: !discImg3 ? '82%' : '66%' }}>
                 <TextInput
-                  style={styles.input}
+                  style={{
+                    ...styles.input,
+                    borderColor: checkURL(discImg3)
+                      ? textbox_border_color
+                      : clear_button_color,
+                  }}
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
                   onChangeText={e => setDiscImg3(e)}
                   value={discImg3}
                 />
+              </View>
+              <View
+                style={{
+                  width: !discImg3 ? '0%' : '13%',
+                  justifyContent: 'center',
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    ...styles.checkContainer,
+                    backgroundColor: checkURL(discImg3)
+                      ? clear_button_color
+                      : not_disabled_color,
+                  }}
+                  onPress={() => checkURL(discImg3) && setDiscImg3('')}
+                  activeOpacity={0.6}
+                >
+                  <Entypo
+                    name={checkURL(discImg3) ? 'cross' : 'question'}
+                    size={26}
+                    color="black"
+                  />
+                </TouchableOpacity>
               </View>
               <View style={{ width: '13%', justifyContent: 'center' }}>
                 <TouchableOpacity
@@ -231,14 +351,42 @@ const Media = ({
               </View>
             </View>
             <View style={styles.media_main_container}>
-              <View style={{ width: '82%' }}>
+              <View style={{ width: !discImg4 ? '82%' : '66%' }}>
                 <TextInput
-                  style={styles.input}
+                  style={{
+                    ...styles.input,
+                    borderColor: checkURL(discImg4)
+                      ? textbox_border_color
+                      : clear_button_color,
+                  }}
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
                   onChangeText={e => setDiscImg4(e)}
                   value={discImg4}
                 />
+              </View>
+              <View
+                style={{
+                  width: !discImg4 ? '0%' : '13%',
+                  justifyContent: 'center',
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    ...styles.checkContainer,
+                    backgroundColor: checkURL(discImg4)
+                      ? clear_button_color
+                      : not_disabled_color,
+                  }}
+                  onPress={() => checkURL(discImg4) && setDiscImg4('')}
+                  activeOpacity={0.6}
+                >
+                  <Entypo
+                    name={checkURL(discImg4) ? 'cross' : 'question'}
+                    size={26}
+                    color="black"
+                  />
+                </TouchableOpacity>
               </View>
               <View style={{ width: '13%', justifyContent: 'center' }}>
                 <TouchableOpacity
@@ -255,14 +403,42 @@ const Media = ({
               </View>
             </View>
             <View style={styles.media_main_container}>
-              <View style={{ width: '82%' }}>
+              <View style={{ width: !discImg5 ? '82%' : '66%' }}>
                 <TextInput
-                  style={styles.input}
+                  style={{
+                    ...styles.input,
+                    borderColor: checkURL(discImg5)
+                      ? textbox_border_color
+                      : clear_button_color,
+                  }}
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
                   onChangeText={e => setDiscImg5(e)}
                   value={discImg5}
                 />
+              </View>
+              <View
+                style={{
+                  width: !discImg5 ? '0%' : '13%',
+                  justifyContent: 'center',
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    ...styles.checkContainer,
+                    backgroundColor: checkURL(discImg5)
+                      ? clear_button_color
+                      : not_disabled_color,
+                  }}
+                  onPress={() => checkURL(discImg5) && setDiscImg5('')}
+                  activeOpacity={0.6}
+                >
+                  <Entypo
+                    name={checkURL(discImg5) ? 'cross' : 'question'}
+                    size={26}
+                    color="black"
+                  />
+                </TouchableOpacity>
               </View>
               <View style={{ width: '13%', justifyContent: 'center' }}>
                 <TouchableOpacity
@@ -291,7 +467,10 @@ const Media = ({
             <View style={styles.media_main_container}>
               <View style={{ width: '82%' }}>
                 <TextInput
-                  style={styles.input}
+                  style={{
+                    ...styles.input,
+                    borderColor: textbox_border_color,
+                  }}
                   placeholder={localizationContext.t('acc_token')}
                   placeholderTextColor={'#485460'}
                   onChangeText={e => setToken(e)}
@@ -342,6 +521,24 @@ const Media = ({
           />
         </View>
       </ScrollView>
+      {successModal && (
+        <CommonModal
+          isVisible={successModal}
+          handleModalClose={() => setSuccesModal(false)}
+          image={successImg}
+          heading={localizationContext.t('congrats')}
+          subHeadingText={localizationContext.t('congrats_text')}
+        />
+      )}
+      {errorModal && (
+        <CommonModal
+          isVisible={errorModal}
+          handleModalClose={() => setErrorModal(false)}
+          image={errorImg}
+          heading={localizationContext.t('error')}
+          subHeadingText={localizationContext.t('error_text')}
+        />
+      )}
     </KeyboardAwareScrollView>
   );
 };

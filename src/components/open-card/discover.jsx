@@ -40,7 +40,7 @@ const Discover = ({ data, loading }) => {
             renderItem={itemData => (
               <Image
                 source={{
-                  uri: itemData.item.media_url || itemData.item,
+                  uri: itemData?.item?.media_url || itemData?.item,
                 }}
                 style={{
                   width: 170,

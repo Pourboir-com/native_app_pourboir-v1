@@ -343,4 +343,9 @@ export default {
   discover_msg: 'Ce restaurant n’a pas encore ajouté de contenu',
   the_media: 'Media',
   discv_setting: 'Images d’avant-goût',
+  congrats: 'Succès !',
+  congrats_text: 'Vos média ont bien été mis à jour',
+  error: 'Une erreur s’est produite',
+  error_text:
+    'Merci d’utiliser un lien contenant un fichier se terminant en jpeg, jpg, png ou gif',
 };

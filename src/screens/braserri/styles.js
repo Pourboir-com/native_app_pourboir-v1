@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 14,
-    borderColor: '#E3E3E3',
     borderWidth: 1,
     borderRadius: 8,
     padding: 8,

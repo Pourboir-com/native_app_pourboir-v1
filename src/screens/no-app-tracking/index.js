@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,25 +8,42 @@ import {
   Image,
 } from 'react-native';
 import { Colors } from '../../constants/Theme';
-import { useNavigation } from '@react-navigation/native';
-import i18n from '../../li8n';
-import { Linking } from 'react-native';
 import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import Track from '../../assets/images/track.png';
+import { getAsyncStorageValues } from '../../constants';
+import Context from '../../contextApi/context';
 
-const NoAppTracking = () => {
-  const navigation = useNavigation();
+const NoAppTracking = ({ navigation, route }) => {
+  const { localizationContext } = useContext(Context);
+
+  const { checkLocation, notification } = route.params || {};
+  const validateNavigation = async () => {
+    const { userInfo = {} } = await getAsyncStorageValues();
+
+    if (checkLocation == false) {
+      navigation.replace('NoLocation', { notification });
+    } else if (notification == false) {
+      navigation.replace('Notification');
+    } else {
+      if (userInfo?.user_id) {
+        navigation.replace('Home', { crossIcon: false, ad: true });
+      } else {
+        navigation.replace('socialLogin');
+      }
+    }
+  };
 
   const excessAppTracking = async () => {
     if (Platform.OS === 'ios') {
       const { status } = await requestTrackingPermissionsAsync();
+
       if (status === 'granted') {
-        navigation.navigate('splashScreen');
+        validateNavigation();
       } else {
-        return Linking.openURL('app-settings:');
+        validateNavigation();
       }
     } else {
-      navigation.navigate('splashScreen');
+      validateNavigation();
     }
   };
 
@@ -43,10 +60,10 @@ const NoAppTracking = () => {
           fontFamily: 'ProximaNovaSemiBold',
         }}
       >
-        {i18n.t('activate_app_tracking')}
+        {localizationContext.t('activate_app_tracking')}
       </Text>
       <TouchableOpacity style={styles.btnStyle} onPress={excessAppTracking}>
-        <Text style={styles.txtColor}>{i18n.t('allow_app_tracking')}</Text>
+        <Text style={styles.txtColor}>{localizationContext.t('carry_on')}</Text>
       </TouchableOpacity>
     </View>
   );

@@ -1,54 +1,63 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Colors } from '../../constants/Theme';
 import { Entypo } from '@expo/vector-icons';
 import * as Location from 'expo-location';
-import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 var getCountry = require('country-currency-map').getCountry;
 var formatCurrency = require('country-currency-map').formatCurrency;
-import i18n from '../../li8n';
 import { Platform } from 'react-native';
-import { Linking } from 'react-native';
+import { getAsyncStorageValues } from '../../constants';
+import Context from '../../contextApi/context';
 
-const NoLocation = () => {
-  const navigation = useNavigation();
+const NoLocation = ({ navigation, route }) => {
+  const { notification } = route.params || {};
+  const { localizationContext } = useContext(Context);
+
+  const validateNavigation = async () => {
+    const { userInfo = {} } = await getAsyncStorageValues();
+
+    if (notification === false) {
+      navigation.replace('Notification');
+    } else {
+      if (userInfo?.user_id) {
+        navigation.replace('Home', { crossIcon: false, ad: true });
+      } else {
+        navigation.replace('socialLogin');
+      }
+    }
+  };
 
   const excessLocation = async () => {
     let locationStats = await Location.requestForegroundPermissionsAsync();
     if (locationStats.status !== 'granted') {
       if (Platform.OS === 'ios') {
-        Linking.openURL('app-settings:');
+        await validateNavigation();
       }
       return;
     }
-    const location = await Location.getCurrentPositionAsync({
-      accuracy: Location.Accuracy.Highest,
-    });
-    await AsyncStorage.setItem(
-      '@location',
-      JSON.stringify({
-        lat: location?.coords.latitude,
-        log: location?.coords.longitude,
-      }),
-    );
-    Location.getCurrentPositionAsync().then(pos => {
-      Location.reverseGeocodeAsync({
-        latitude: pos.coords.latitude,
-        longitude: pos.coords.longitude,
-      }).then(async res => {
-        let currency = getCountry(res[0]?.country);
-        let formattedCurrency = formatCurrency('', currency?.currency);
-        await AsyncStorage.setItem(
-          '@Currency',
-          JSON.stringify({
-            currency: formattedCurrency || '',
-          }),
-        );
+    Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Lowest,
+    })
+      .then(pos => {
+        Location.reverseGeocodeAsync({
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude,
+        }).then(async res => {
+          let currency = getCountry(res[0]?.country);
+          let formattedCurrency = formatCurrency('', currency?.currency);
+          await AsyncStorage.setItem(
+            '@Currency',
+            JSON.stringify({
+              currency: formattedCurrency || '',
+            }),
+          );
+          await validateNavigation();
+        });
+      })
+      .catch(async () => {
+        await validateNavigation();
       });
-    });
-
-    navigation.replace('Home', { crossIcon: false });
   };
 
   return (
@@ -78,10 +87,10 @@ const NoLocation = () => {
           fontFamily: 'ProximaNovaSemiBold',
         }}
       >
-        {i18n.t('activate_your_geolocation')}
+        {localizationContext.t('activate_your_geolocation')}
       </Text>
       <TouchableOpacity style={styles.btnStyle} onPress={excessLocation}>
-        <Text style={styles.txtColor}>{i18n.t('activate_geoloc')}</Text>
+        <Text style={styles.txtColor}>{localizationContext.t('carry_on')}</Text>
       </TouchableOpacity>
     </View>
   );

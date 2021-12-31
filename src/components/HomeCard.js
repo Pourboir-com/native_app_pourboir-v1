@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,7 +11,7 @@ import { Entypo } from '@expo/vector-icons';
 import { Colors } from '../constants/Theme';
 import RatingStar from './RatingComponent';
 import { LinearGradient } from 'expo-linear-gradient';
-import i18n from '../li8n';
+import Context from '../contextApi/context';
 
 const HomeCard = ({
   navigation,
@@ -27,12 +27,14 @@ const HomeCard = ({
   our_rating,
   restaurant_id,
   geometry,
+  refetchRestaurant,
 }) => {
   const [starSelect, setstarSelect] = useState(rating);
   const obj = [1, 2, 3, 4, 5];
   const onPressStar = v => {
     setstarSelect(v);
   };
+  const { localizationContext } = useContext(Context);
 
   return (
     <>
@@ -50,6 +52,7 @@ const HomeCard = ({
             our_rating,
             restaurant_id,
             geometry,
+            refetchRestaurant,
           });
         }}
         style={[styles.viewItemConatier]}
@@ -57,7 +60,7 @@ const HomeCard = ({
         <ImageBackground
           style={styles.imgCard}
           resizeMode="cover"
-          source={{ uri: img }}
+          source={{ uri: img || null }}
         >
           <LinearGradient
             style={{
@@ -121,8 +124,8 @@ const HomeCard = ({
                         v <= starSelect
                           ? 'filled'
                           : v === starSelect + 0.5
-                            ? 'half'
-                            : 'empty'
+                          ? 'half'
+                          : 'empty'
                       }
                       notRatedStarColor="rgba(255,255,255, 0.6)"
                     />
@@ -142,7 +145,11 @@ const HomeCard = ({
             </Text>
             <View style={styles.view2Card}>
               <Text style={[styles.txt2Card, { fontFamily: 'ProximaNova' }]}>
-                {distance ? distance + 'm' : ''}
+                {Number(distance) > 2000
+                  ? Math.round(Number(distance) / 1000) + 'km'
+                  : distance
+                  ? distance + 'm'
+                  : ''}
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text
@@ -155,7 +162,9 @@ const HomeCard = ({
                   {services + ' '}
                 </Text>
                 <Text style={[styles.txt2Card, { fontFamily: 'ProximaNova' }]}>
-                  {services > 1 ? i18n.t('serveurs') : i18n.t('serveur')}
+                  {services > 1
+                    ? localizationContext.t('serveurs')
+                    : localizationContext.t('serveur')}
                 </Text>
               </View>
             </View>

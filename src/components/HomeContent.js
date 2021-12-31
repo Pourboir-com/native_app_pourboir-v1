@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import { Colors } from '../constants/Theme';
 import HomeCard from './HomeCard';
-import i18n from '../li8n';
 import {
   distributeInArray,
   restaurantDistance,
@@ -26,6 +25,7 @@ import { useMutation } from 'react-query';
 import Context from '../contextApi/context';
 import * as actionTypes from '../contextApi/actionTypes';
 import Spinner from 'react-native-loading-spinner-overlay';
+import NoFavRestaurant from './no-fav-card';
 
 export default function HomeScreenContent({
   restaurantLoading,
@@ -35,11 +35,15 @@ export default function HomeScreenContent({
   Data,
   saveLocation,
   route,
+  title,
+  searchTitle,
+  favoriteRes,
+  noRefresh,
 }) {
   const [data, setData] = useState([]);
   const navigation = useNavigation();
   const [deleteLoading, setdeleteLoading] = useState(false);
-  const { state, dispatch } = useContext(Context);
+  const { state, dispatch, localizationContext } = useContext(Context);
   const [deleteRestaurant] = useMutation(DELETE_RES);
   useEffect(() => {
     setData(Data);
@@ -74,7 +78,8 @@ export default function HomeScreenContent({
       });
     }
   };
-  const noData = !data.length && !restaurantLoading && !resIsFetching && saveLocation;
+  const noData =
+    !data.length && !restaurantLoading && !resIsFetching && saveLocation;
   if (noData) {
     return (
       <>
@@ -101,11 +106,11 @@ export default function HomeScreenContent({
               />
             </View>
             <View>
-              <Text style={styles.textBold}>{i18n.t('no_restaurant')}</Text>
+              <Text style={styles.textBold}>{localizationContext.t('no_restaurant')}</Text>
               <Text style={[styles.textLight, { width: 320 }]}>
-                {i18n.t('search_rest')}:{' '}
+                {localizationContext.t('search_rest')}:{' '}
                 <Text style={{ fontFamily: 'ProximaNovaBold' }}>
-                  {i18n.t('you_waiter')}
+                  {localizationContext.t('you_waiter')}
                 </Text>
               </Text>
             </View>
@@ -121,13 +126,24 @@ export default function HomeScreenContent({
             <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
-              {searchEnter ? i18n.t('result_distance') : i18n.t('around_you')}
+              {searchEnter && !favoriteRes
+                ? localizationContext.t('result_distance')
+                : localizationContext.t(title)}
             </Text>
-            <Text
-              style={[styles.txt2NoRest, { fontFamily: 'ProximaNovaSemiBold' }]}
-            >
-              {i18n.t('no_restaurant_found')}
-            </Text>
+            {!favoriteRes ? (
+              <Text
+                style={[
+                  styles.txt2NoRest,
+                  { fontFamily: 'ProximaNovaSemiBold' },
+                ]}
+              >
+                {localizationContext.t('no_restaurant_found')}
+              </Text>
+            ) : (
+              <View style={{ marginTop: 20, marginLeft: 5 }}>
+                <NoFavRestaurant />
+              </View>
+            )}
           </View>
         )}
       </>
@@ -135,7 +151,7 @@ export default function HomeScreenContent({
   }
   return (
     <>
-      {(restaurantLoading || !saveLocation) ? (
+      {restaurantLoading || !saveLocation ? (
         <View
           style={{
             backgroundColor: '#F9F9F9',
@@ -158,10 +174,11 @@ export default function HomeScreenContent({
               scrollEnabled={false}
               alwaysBounceVertical={false}
               bounces={false}
+              horizontal={true}
               keyExtractor={(item, index) => index.toString()}
               renderItem={() => <HomeCardSkeleton />}
             />
-            <FlatList
+            {/* <FlatList
               data={dummyArray}
               showsVerticalScrollIndicator={false}
               style={{ marginTop: 15 }}
@@ -171,19 +188,20 @@ export default function HomeScreenContent({
               bounces={false}
               keyExtractor={(item, index) => index.toString()}
               renderItem={() => <HomeCardSkeleton />}
-            />
+            /> */}
           </View>
         </View>
       ) : (
         <ScrollView
-          bounces={true}
+          bounces={false}
           scrollEnabled={false}
           alwaysBounceVertical={true}
           showsVerticalScrollIndicator={false}
           alwaysBounceHorizontal={false}
           refreshControl={
             refetchRestaurant &&
-            resIsFetching && (
+            resIsFetching &&
+            !noRefresh && (
               <RefreshControl
                 //refresh control used for the Pull to Refresh
                 refreshing={!route.params.crossIcon && resIsFetching}
@@ -203,7 +221,7 @@ export default function HomeScreenContent({
             <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
-              {searchEnter ? i18n.t('result_distance') : i18n.t('around_you')}
+              {searchEnter ? localizationContext.t(searchTitle) : localizationContext.t(title)}
             </Text>
           )}
           <View
@@ -214,59 +232,64 @@ export default function HomeScreenContent({
           >
             <FlatList
               data={restaurantLoading ? dummyArray : sortRestaurant(data)}
-              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
               // onEndReached={handleLoadMore}
               // onEndReachedThreshold={0.5}
               alwaysBounceHorizontal={false}
+              horizontal={true}
               keyboardShouldPersistTaps={'handled'}
-              alwaysBounceVertical={true}
-              numColumns={2}
-              bounces={false}
+              alwaysBounceVertical={false}
+              // numColumns={2}
+              // bounces={false}
               keyExtractor={(item, index) => index}
               renderItem={itemData => {
                 if (Object.keys(itemData.item).length) {
                   return (
-                    <View
-                      style={{
-                        marginTop: itemData.index % 2 !== 0 ? 12 : 0,
-                        marginBottom: -12,
-                      }}
-                    >
-                      <HomeCard
-                        navigation={navigation}
-                        key={itemData?.item?.place_id}
-                        img={
-                          itemData?.item?.photos[0]
-                            ? itemData?.item?.photos[0]
-                            : ''
-                        }
-                        rating={
-                          Number(itemData?.item?.our_rating) > 0
-                            ? itemData?.item?.our_rating
-                            : itemData?.item?.rating
-                        }
-                        name={itemData?.item.name}
-                        DeleteRestaurant={
-                          (data,
-                          i =>
-                            DeleteRestaurant(
-                              itemData?.item?.waiter?._id,
-                              itemData?.item?.place_id,
-                            ))
-                        }
-                        distance={restaurantDistance(itemData)}
-                        services={itemData?.item.servers}
-                        loading={restaurantLoading}
-                        crossIcon={route.params.crossIcon}
-                        place_id={itemData?.item?.place_id}
-                        vicinity={itemData?.item?.vicinity}
-                        our_rating={String(itemData?.item?.our_rating) || '0'}
-                        restaurant_id={
-                          itemData?.item._id || itemData?.item?.restaurant_id
-                        }
-                        geometry={itemData?.item?.geometry?.location}
-                      />
-                    </View>
+                    // <View
+                    //   style={{
+                    //     marginTop: itemData.index % 2 !== 0 ? 12 : 0,
+                    //     marginBottom: -12,
+                    //   }}
+                    // >
+                    <HomeCard
+                      navigation={navigation}
+                      key={itemData?.item?.place_id}
+                      img={
+                        itemData?.item?.photos[0]
+                          ? itemData?.item?.photos[0]
+                          : ''
+                      }
+                      rating={
+                        Number(itemData?.item?.our_rating) > 0
+                          ? itemData?.item?.our_rating
+                          : itemData?.item?.rating
+                      }
+                      name={itemData?.item.name}
+                      DeleteRestaurant={
+                        (data,
+                        i =>
+                          DeleteRestaurant(
+                            itemData?.item?.waiter?._id,
+                            itemData?.item?.place_id,
+                          ))
+                      }
+                      distance={restaurantDistance(itemData)}
+                      services={itemData?.item.servers}
+                      loading={restaurantLoading}
+                      crossIcon={route.params.crossIcon}
+                      place_id={itemData?.item?.place_id}
+                      vicinity={itemData?.item?.vicinity}
+                      our_rating={String(itemData?.item?.our_rating) || '0'}
+                      restaurant_id={
+                        itemData?.item._id || itemData?.item?.restaurant_id
+                      }
+                      geometry={
+                        itemData?.item?.geometry?.location ||
+                        itemData?.item?.location
+                      }
+                      refetchRestaurant={refetchRestaurant}
+                    />
+                    // </View>
                   );
                 }
               }}

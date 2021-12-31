@@ -72,12 +72,12 @@ const HelpUsImproveModal = ({
           {heading && (
             <Text
               ellipsizeMode="tail"
-              numberOfLines={3}
+              numberOfLines={4}
               style={[
                 styles.txtName,
                 {
                   fontFamily: 'ProximaNovaBold',
-                  fontSize: customHeadingSize || 16,
+                  fontSize: customHeadingSize || 18,
                 },
               ]}
             >
@@ -87,7 +87,7 @@ const HelpUsImproveModal = ({
           {subHeadingText && (
             <Text
               ellipsizeMode="tail"
-              numberOfLines={3}
+              numberOfLines={4}
               style={[styles.txtConfrm, { fontFamily: 'ProximaNova' }]}
             >
               {subHeadingText}
@@ -96,7 +96,7 @@ const HelpUsImproveModal = ({
           {subtext && (
             <Text
               ellipsizeMode="tail"
-              numberOfLines={3}
+              numberOfLines={4}
               style={[styles.txtConfrm, { fontFamily: 'ProximaNova' }]}
             >
               {subtext}
@@ -105,28 +105,30 @@ const HelpUsImproveModal = ({
           {restaurant && (
             <Text
               ellipsizeMode="tail"
-              numberOfLines={3}
+              numberOfLines={4}
               style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}
             >
               {restaurant}
             </Text>
           )}
-          <TouchableOpacity
-            activeOpacity={0.5}
-            disabled={loading}
-            onPress={onPress && onPress}
-            style={[styles.btnConfrm, { width: customButtonWidth || '85%' }]}
-          >
-            {loading ? (
-              <ActivityIndicator size={29} color="#EBC11B" />
-            ) : (
-              <Text
-                style={[styles.txtBtnConfrm, { fontFamily: 'ProximaNova' }]}
-              >
-                {buttonText}
-              </Text>
-            )}
-          </TouchableOpacity>
+          {buttonText && (
+            <TouchableOpacity
+              activeOpacity={0.5}
+              disabled={loading}
+              onPress={onPress && onPress}
+              style={[styles.btnConfrm, { width: customButtonWidth || '85%' }]}
+            >
+              {loading ? (
+                <ActivityIndicator size={29} color="#EBC11B" />
+              ) : (
+                <Text
+                  style={[styles.txtBtnConfrm, { fontFamily: 'ProximaNova' }]}
+                >
+                  {buttonText}
+                </Text>
+              )}
+            </TouchableOpacity>
+          )}
         </KeyboardAvoidingView>
       </ScrollView>
     </Overlay>
@@ -141,6 +143,7 @@ const styles = StyleSheet.create({
     padding: 0,
     overflow: 'hidden',
     borderRadius: 15,
+    paddingBottom: 30,
   },
   imgBgStyle: {
     width: '100%',
@@ -155,7 +158,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 25,
     marginTop: 20,
     height: 45,
   },

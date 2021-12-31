@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   ImageBackground,
   Text,
@@ -8,19 +8,21 @@ import {
 } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
-import i18n from '../../li8n';
 import { useMutation } from 'react-query';
 import { LOGIN } from '../../queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios';
 import GlobalHeader from '../../components/GlobalHeader';
+import Context from '../../contextApi/context';
 
 const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [login] = useMutation(LOGIN);
   const [loading, setLoading] = useState(false);
+  const { localizationContext } = useContext(Context);
+
   const handleLogin = async () => {
     setLoading(true);
     await login(
@@ -85,13 +87,15 @@ const SignIn = ({ navigation }) => {
         }}
       >
         <View style={styles.whiteCard}>
-          <Text style={styles.topHeading}>{i18n.t('already_acc')}</Text>
+          <Text style={styles.topHeading}>
+            {localizationContext.t('already_acc')}
+          </Text>
           <View style={{ marginVertical: 30, width: '93%' }}>
             <TextInput
               style={styles.input}
               onChangeText={e => setEmail(e)}
               value={email}
-              placeholder={i18n.t('email')}
+              placeholder={localizationContext.t('email')}
               keyboardType="email-address"
               placeholderTextColor="#707070"
             />
@@ -99,7 +103,7 @@ const SignIn = ({ navigation }) => {
               style={styles.input}
               onChangeText={e => setPassword(e)}
               value={password}
-              placeholder={i18n.t('password_sign')}
+              placeholder={localizationContext.t('password_sign')}
               secureTextEntry={true}
               placeholderTextColor="#707070"
             />
@@ -117,28 +121,43 @@ const SignIn = ({ navigation }) => {
               {loading ? (
                 <ActivityIndicator size={25} color="#EBC11B" />
               ) : (
-                <Text style={styles.saveTxt}>{i18n.t('to_login')}</Text>
+                <Text style={styles.saveTxt}>
+                  {localizationContext.t('to_login')}
+                </Text>
               )}
             </TouchableOpacity>
-            <View style={{marginTop: 20, marginBottom: -20, flexDirection:'row', justifyContent:'center'}}>
-              <Text style={styles.text1}>{i18n.t('forget_password')}</Text>
+            <View
+              style={{
+                marginTop: 20,
+                marginBottom: -20,
+                flexDirection: 'row',
+                justifyContent: 'center',
+              }}
+            >
+              <Text style={styles.text1}>
+                {localizationContext.t('forget_password')}
+              </Text>
               <TouchableOpacity
                 onPress={() => navigation.navigate('ForgetPassword')}
                 activeOpacity={0.6}
               >
-                <Text style={styles.signupTxt}>{i18n.t('here')}</Text>
+                <Text style={styles.signupTxt}>
+                  {localizationContext.t('here')}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
 
         <View style={{ paddingVertical: 34 }}>
-          <Text style={styles.text1}>{i18n.t('no_acc')}</Text>
+          <Text style={styles.text1}>{localizationContext.t('no_acc')}</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate('ManagerSignUp')}
             activeOpacity={0.6}
           >
-            <Text style={styles.signupTxt}>{i18n.t('im_register')}</Text>
+            <Text style={styles.signupTxt}>
+              {localizationContext.t('im_register')}
+            </Text>
           </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>

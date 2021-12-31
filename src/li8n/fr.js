@@ -1,4 +1,6 @@
 export default {
+  english: 'Anglais',
+  french: 'Français',
   //home card
   serveur: 'serveur',
   serveurs: 'serveurs',
@@ -225,4 +227,125 @@ export default {
   allow_app_tracking: 'Activer le suivi d’activité',
   reinitialiser: 'Réinitialiser',
   clear_all: 'Tout effacer',
+
+  the_team: 'L’équipe',
+  the_menu: 'Le menu',
+  no_waiter: 'Désolé, aucun serveur inscrit à ce jour',
+  cook: ' La cuisine',
+  no_cook: 'Désolé, aucun cuisinier inscrit à ce jour',
+  add_cooks: 'Ajoutez vos cuisinier',
+  add_categ: 'Ajoutez une catégorie',
+  dish_name: 'Nom du plat',
+  price: 'Prix',
+  add_dish: 'Ajoutez un plat',
+  publish_menu: 'Publier votre menu',
+  new_categ: 'Nouvelle catégorie',
+  choose_categ: 'Choissisez une catégorie, par example : entrées',
+  confirm: 'Valider',
+  category: 'Catégorie',
+  are_u_sure: 'Êtes vous certain ?',
+  delete_dish: 'Vous étes sur le point de supprimer ce plat',
+  delete_menu: 'Vous étes sur le point de supprimer ce catégorie',
+  no: 'Non',
+  yes: 'Oui',
+  name_of_waiter: 'Donnez nous le nom de votre serveur',
+  name_of_cook: 'Donnez nous le nom de votre cuisinier',
+  waiter_name_placeholder: 'Le nom de votre serveur',
+  cook_name_placeholder: 'Le nom de votre cuisinier',
+  cook_email: 'L’email de votre cuisinier',
+
+  // manager modal
+
+  fill_info: 'Renseigner ces informations',
+  thanks_filling:
+    'Nous devons vérifier que vous êtes bien le propriétaire de cet établissement. Merci de renseigner les informations suivantes .',
+  siret_num: 'Numéro de SIRET',
+  cellPhone: 'téléphone',
+  i_accepts: "J'accepte les professionnel",
+  term_cond: `termes et \nconditions.`,
+  claim: 'Réclamer',
+  thank_u: 'Merci',
+  claim_received:
+    'Nous avons bien reçu votre demande, un membre de notre équipe va prendre contact avec vous rapidement. ',
+  save_changes: 'Enregistrez vos modifications',
+  your_rev: 'Your review',
+  how_exp: 'Qualité de votre expérience',
+  tell_us: 'En quelques mots ',
+  exp_placeholder: 'Parlez nous de votre expérience',
+  cancel: 'Annuler',
+
+  client: 'Client',
+  few_words: 'Quelques mots à son propos',
+  subs: 'Abonné',
+  follow: 'Suivre',
+  pub: 'Publications',
+  no_pub: 'Aucune publication',
+  no_pub_yet:
+    'Il n’y a pas encore de publication sur son compte. Suivez son compte pour recevoir du contenu exclusif très bientôt.',
+  modify_profile: 'Modifier votre profil',
+  your_tickets: 'Vos tickets gagnés',
+  bank_acc: 'Votre compte bancaire',
+  lang: 'Language',
+  rate_app: "Notez l'application",
+  collect_tickets:
+    'Collectez des tickets pour augmenter vos chances de gagner des cadeaux',
+  // Tour Modal Translations
+  tour_section1: 'Gérant de ce restaurant ? C’est par ici',
+  tour_section2: 'Ajoutez le à vos favoris pour y avoir accès rapidement',
+  tour_section3: 'Faites nous savoir que vous y êtes pour gagner des surprises',
+  tour_section4: 'Donnez votre avis pour encore plus de surprises',
+  tour_section5: 'Le menu en ligne digital c’est par ici  ',
+  see_menu: 'Voir le menu',
+  add_fav: 'Ajouter au favoris',
+  fav_list: 'Liste des favoris',
+  fav: 'Favoris',
+  added: 'Ajouté',
+  //Notification
+  notification:
+    'Activez les notifications pour recevoir des notifications de la part de vos restaurants favoris.',
+  fav_restaurant: 'Vos restaurants favoris',
+  popular_restaurant: 'Les restaurants populaires',
+  sorry: 'Désolé ',
+  not_near:
+    'Vous n’êtes pas assez proche de cet établissement, nous ne pouvons valider votre action.',
+  thank_here: 'Vous êtes là!',
+  confirm_here:
+    'Vous avez indiqué que vous êtes bien ici. Grâce à cela, vous collectez un ticket de lotterie.',
+  thank_review: 'Merci pour votre vote',
+  won_ticket:
+    'Nous vous contacterons par email pour vous offire un coupon très prochainement.',
+  no_fav_1: "Vous n'avez pas encore de restaurants préférés",
+  no_fav_2:
+    "Ajoutez des restaurants à vos favoris pour les voir s'afficher ici",
+  check_in: 'Check-in',
+  telephone: 'Téléphone',
+  username: 'Nom d’utilisateur',
+  about_me: 'A propos de moi',
+  describe: 'Décrivez vous en 150 charactères',
+  review: 'Les avis',
+  check_in_limit: `Nous limitons le nombres de check-in par personne par jour pour une meilleur expérience utilisateur. Merci de réessayer plus tard`,
+
+  //media component
+  bg_img_heading: 'Fond d’écran',
+  bg_img_text: 'Changer le fond d’écran de votre page  en publiant le lien ici',
+  img_placeholder: 'Copier le lien de votre image ici',
+  basic_settings: 'Paramètres simples',
+  discoverImg_text:
+    'Changes les images d’avant-goût de votre page, en ajoutant jusqu’à 5 photos ici. ',
+  advance_settings: 'Paramètres avancés',
+  link_ig_acc:
+    'Lier votre compte instagram et soyez sur de publier automatiquement vos derniers postes sur votre page. ',
+  user_id: 'User ID',
+  acc_token: 'Access Token',
+  client_id: 'Client ID',
+  confirmer: 'Confirmer',
+  discover: 'Avant-goût',
+  discover_msg: 'Ce restaurant n’a pas encore ajouté de contenu',
+  the_media: 'Media',
+  discv_setting: 'Images d’avant-goût',
+  congrats: 'Succès !',
+  congrats_text: 'Vos média ont bien été mis à jour',
+  error: 'Une erreur s’est produite',
+  error_text:
+    'Merci d’utiliser un lien contenant un fichier se terminant en jpeg, jpg, png ou gif',
 };

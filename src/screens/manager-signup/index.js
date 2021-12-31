@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   ImageBackground,
-  KeyboardAvoidingView,
   Text,
   TextInput,
   View,
@@ -12,13 +11,13 @@ import {
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
-import i18n from '../../li8n';
 import { useMutation } from 'react-query';
 import { SIGN_UP } from '../../queries';
 import { SEARCH_RESTAURANTS } from '../../queries';
 import stylesTextbox from '../find-job/styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 const validator = require('validator');
+import Context from '../../contextApi/context';
 
 const ManagerSignUp = ({ navigation }) => {
   const [signUp] = useMutation(SIGN_UP);
@@ -36,6 +35,8 @@ const ManagerSignUp = ({ navigation }) => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [lastExperience, setLastExperience] = useState({});
   const [searchRestaurant] = useMutation(SEARCH_RESTAURANTS);
+  const { localizationContext } = useContext(Context);
+
   const [loading, setLoading] = useState(false);
   const handleSearchRestaurant = async () => {
     if (lastExperience?.experience) {
@@ -66,7 +67,7 @@ const ManagerSignUp = ({ navigation }) => {
                 lastExperience?.experience &&
                 !lastExperience?.restaurant_id && (
                   <Text style={{ color: 'red' }}>
-                    *{i18n.t('search_click')}.
+                    *{localizationContext.t('search_click')}.
                   </Text>
                 )}
 
@@ -74,7 +75,7 @@ const ManagerSignUp = ({ navigation }) => {
                 lastExperience?.experience &&
                 showDropdown && (
                   <Text style={{ color: 'red' }}>
-                    *{i18n.t('select_restaurant')}.
+                    *{localizationContext.t('select_restaurant')}.
                   </Text>
                 )}
             </>
@@ -84,7 +85,12 @@ const ManagerSignUp = ({ navigation }) => {
         <View
           style={[
             stylesTextbox.input_icon,
-            { backgroundColor: '#F8F8F8', borderWidth: 0, marginBottom: -16, width:'100%' },
+            {
+              backgroundColor: '#F8F8F8',
+              borderWidth: 0,
+              marginBottom: -16,
+              width: '100%',
+            },
           ]}
         >
           <TextInput
@@ -105,7 +111,7 @@ const ManagerSignUp = ({ navigation }) => {
               styles.input_icon_text,
               { textAlign: 'center', width: '90%', fontSize: 16 },
             ]}
-            placeholder={i18n.t('passedat')}
+            placeholder={localizationContext.t('passedat')}
             placeholderTextColor={'#707375'}
           />
           <TouchableOpacity
@@ -149,43 +155,43 @@ const ManagerSignUp = ({ navigation }) => {
       id: 1,
       value: name,
       setValue: setName,
-      placeholder: i18n.t('res_name'),
+      placeholder: localizationContext.t('res_name'),
     },
     {
       id: 2,
       value: address,
       setValue: setAddress,
-      placeholder: i18n.t('address'),
+      placeholder: localizationContext.t('address'),
     },
     {
       id: 3,
       value: postalCode,
       setValue: setPostalCode,
-      placeholder: i18n.t('code_postal'),
+      placeholder: localizationContext.t('code_postal'),
     },
     {
       id: 4,
       value: firstName,
       setValue: setFirstName,
-      placeholder: i18n.t('first_name'),
+      placeholder: localizationContext.t('first_name'),
     },
     {
       id: 5,
       value: lastName,
       setValue: setLastName,
-      placeholder: i18n.t('last_name'),
+      placeholder: localizationContext.t('last_name'),
     },
     {
       id: 6,
       value: email,
       setValue: setEmail,
-      placeholder: i18n.t('email'),
+      placeholder: localizationContext.t('email'),
     },
     {
       id: 7,
       value: password,
       setValue: setPassword,
-      placeholder: i18n.t('password_sign'),
+      placeholder: localizationContext.t('password_sign'),
     },
   ];
 
@@ -300,9 +306,9 @@ const ManagerSignUp = ({ navigation }) => {
         <View style={styles.whiteCard}>
           <Text style={styles.topHeading}>
             {index === 0
-              ? i18n.t('restaurant')
+              ? localizationContext.t('restaurant')
               : index === 3
-              ? i18n.t('manager')
+              ? localizationContext.t('manager')
               : null}
           </Text>
           <View
@@ -345,7 +351,9 @@ const ManagerSignUp = ({ navigation }) => {
               onPress={index === 0 ? () => navigation.goBack() : handlePrev}
               activeOpacity={0.4}
             >
-              <Text style={styles.btn_txt}>{i18n.t('return')}</Text>
+              <Text style={styles.btn_txt}>
+                {localizationContext.t('return')}
+              </Text>
             </TouchableOpacity>
             {lastIndex === 7 ? (
               <TouchableOpacity
@@ -359,7 +367,7 @@ const ManagerSignUp = ({ navigation }) => {
                 onPress={
                   lastIndex > 6
                     ? handleSubmit
-                    : null && validate
+                    : validate
                     ? handleSubmit
                     : handleNext
                 }
@@ -368,10 +376,14 @@ const ManagerSignUp = ({ navigation }) => {
                   loading ? (
                     <ActivityIndicator size={25} color="#EBC11B" />
                   ) : (
-                    <Text style={styles.btn_txt}>{i18n.t('to_login')}</Text>
+                    <Text style={styles.btn_txt}>
+                      {localizationContext.t('to_login')}
+                    </Text>
                   )
                 ) : (
-                  <Text style={styles.btn_txt}>{i18n.t('carry_on')}</Text>
+                  <Text style={styles.btn_txt}>
+                    {localizationContext.t('carry_on')}
+                  </Text>
                 )}
               </TouchableOpacity>
             ) : (
@@ -380,7 +392,9 @@ const ManagerSignUp = ({ navigation }) => {
                 style={styles.btn_yellow}
                 onPress={handleNext}
               >
-                <Text style={styles.btn_txt}>{i18n.t('carry_on')}</Text>
+                <Text style={styles.btn_txt}>
+                  {localizationContext.t('carry_on')}
+                </Text>
               </TouchableOpacity>
             )}
           </View>

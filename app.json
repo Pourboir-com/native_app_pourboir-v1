@@ -2,10 +2,11 @@
   "expo": {
     "name": "Pourboir",
     "slug": "pourboir",
+    "scheme": "myapp",
     "facebookAppId": "771555200360518",
     "facebookScheme": "fb771555200360518",
     "facebookDisplayName": "Pourboir'",
-    "version": "1.0.95",
+    "version": "1.2.2",
     "orientation": "portrait",
     "icon": "./assets/Serveur-IOS.png",
     "splash": {
@@ -35,7 +36,10 @@
         "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses location for nearby restaurants",
         "NSLocationAlwaysUsageDescription": "This app uses location for nearby restaurants",
         "CFBundleAllowMixedLocalizations": true,
-        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
+        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
+        "NSUserActivityTypes": [
+          "INSendMessageIntent"
+        ]
       },
       "config": {
         "googleSignIn": {
@@ -66,7 +70,7 @@
         "ACCESS_FINE_LOCATION"
       ],
       "package": "com.developerspourboir.pourboir",
-      "versionCode": 12
+      "versionCode": 16
     },
     "web": {
       "favicon": "./assets/favicon.png"

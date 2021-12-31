@@ -1,40 +1,57 @@
 import React, { useState, useContext } from 'react';
 import { ImageBackground } from 'react-native';
-// import { KeyboardAvoidingView } from 'react-native';
-import { Text, View, Dimensions, Image } from 'react-native';
+import {
+  Text,
+  View,
+  Dimensions,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ActivityIndicator,
+} from 'react-native';
 import {
   ScrollView,
   TextInput,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import GlobalHeader from '../../components/GlobalHeader';
-// import { Colors } from '../../constants/Theme';
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from './styles';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import { getAsyncStorageValues } from '../../constants';
-import { UPDATE_PICTURE } from '../../queries';
+import { UPDATE_PICTURE, EDIT_USER } from '../../queries';
 import { useMutation } from 'react-query';
-import i18n from '../../li8n';
+import { Colors } from '../../constants/Theme';
+import RPCountryPickerInfo from 'react-native-country-picker-info';
+const validator = require('validator');
+import { FontAwesome5 } from '@expo/vector-icons';
 
-const PersonalDetails = ({ navigation }) => {
-  const { state, dispatch } = useContext(Context);
-  let fullName = state?.userDetails?.name?.split(' ');
-  let firstName =
-    fullName?.length > 1
-      ? fullName?.slice(0, fullName?.length - 1).join(' ')
-      : fullName[0];
-  let lastName = fullName?.length > 1 ? fullName[fullName?.length - 1] : '';
-
-  const [text, onChangeText] = React.useState(firstName);
-  const [text2, onChangeText2] = React.useState(lastName);
-  const [text3, onChangeText3] = React.useState();
-  const [text4, onChangeText4] = React.useState(state?.userDetails?.email);
-  const [image, setImage] = useState();
+const PersonalDetails = ({ navigation, route }) => {
+  const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : -450;
+  const { state, dispatch, localizationContext } = useContext(Context);
+  const { login } = route?.params || {};
+  //States
+  const [FirstName, setFirstName] = useState(state?.userDetails?.name || '');
+  const [LastName, setLastName] = useState(state?.userDetails?.last_name || '');
+  const [email, setEmail] = useState(state?.userDetails?.email);
+  const [phone, setPhone] = useState(state?.userDetails?.phone_number);
+  const [image, setImage] = useState(state.userDetails.image);
+  const [username, setUsername] = useState(state?.userDetails?.username);
+  const [about, setAbout] = useState(state?.userDetails?.description);
+  const [loading, setLoading] = useState();
+  const [isOpenCountryPicker, setIsOpenCountryPicker] = useState(false);
+  const [countryCode, setCountryCode] = useState(
+    state?.userDetails?.calling_code || '+33',
+  );
+  //Mutation
   const [updatePicture] = useMutation(UPDATE_PICTURE);
+  const [editUser] = useMutation(EDIT_USER);
+  let emailError = email && !validator?.isEmail(email);
+  const validate =
+    FirstName && LastName && email && username && phone && !emailError;
 
   const handleChangePicture = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -45,169 +62,231 @@ const PersonalDetails = ({ navigation }) => {
     });
     if (!result.cancelled) {
       setImage(result.uri);
-
-      const { userInfo } = await getAsyncStorageValues();
-      dispatch({
-        type: actionTypes.USER_DETAILS,
-        payload: {
-          ...state.userDetails,
-          image: result.uri,
-        },
-      });
-
-      await AsyncStorage.setItem(
-        '@userInfo',
-        JSON.stringify({
-          ...userInfo,
-          image: result.uri,
-        }),
-      );
-
-      let formData = new FormData();
-      formData.append('image', {
-        uri: result.uri,
-        type: `image/${result.uri.split('.')[1]}`,
-        name: result.uri.substr(result.uri.lastIndexOf('/') + 1),
-      });
-
-      let UploadData = {
-        user_id: state.userDetails.user_id,
-        image: formData,
-      };
-
-      await updatePicture(UploadData, {
-        onSuccess: res => {},
-      });
     }
+  };
+
+  const handleEditProfile = async () => {
+    try {
+      if (state?.userDetails?.user_id) {
+        setLoading(true);
+        let userDetails = {
+          ...state.userDetails,
+          name: FirstName || '',
+          last_name: LastName || '',
+          email: email || '',
+          phone_number: phone || '',
+          username: username || '',
+          description: about || '',
+          calling_code: countryCode || '',
+          image: image || '',
+        };
+        let editProfile = {
+          id: state.userDetails.user_id,
+          first_name: FirstName || '',
+          last_name: LastName || '',
+          phone_number: phone || '',
+          ...(state?.userDetails?.username != username && {
+            username: username || '',
+          }),
+          ...(state?.userDetails?.email != email && { email: email || '' }),
+          description: about || '',
+          calling_code: countryCode || '',
+        };
+        let formData = new FormData();
+        formData.append('image', {
+          uri: image,
+          type: `image/${image.split('.')[1]}`,
+          name: image.substr(image.lastIndexOf('/') + 1),
+        });
+        let UploadData = {
+          user_id: state.userDetails.user_id,
+          image: formData,
+        };
+        if (image) {
+          await updatePicture(UploadData, {});
+        }
+        await editUser(editProfile, {
+          onSuccess: async () => {
+            dispatch({
+              type: actionTypes.USER_DETAILS,
+              payload: { ...state.userDetails, ...userDetails },
+            });
+            const { userInfo } = await getAsyncStorageValues();
+            await AsyncStorage.setItem(
+              '@userInfo',
+              JSON.stringify({
+                ...userInfo,
+                ...userDetails,
+              }),
+            );
+            await AsyncStorage.setItem(
+              '@profileInfo',
+              JSON.stringify({
+                info: true,
+              }),
+            );
+            setLoading(false);
+            navigation.replace('PublicProfile', { login });
+            alert('Your profile has been updated.');
+          },
+          onError: e => {
+            setLoading(false);
+            alert(e.response?.data?.message);
+          },
+        });
+      }
+    } catch {
+      setLoading(false);
+    }
+  };
+
+  const onPressOpenPicker = () => {
+    setIsOpenCountryPicker(!isOpenCountryPicker);
+  };
+
+  const onPressCountryItem = countryInfo => {
+    setCountryCode(countryInfo.dial_code);
+    setIsOpenCountryPicker(false);
   };
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        style={{
-          width: '100%',
-          height: 100,
-          borderBottomLeftRadius: Dimensions.get('window').width * 0.06,
-          borderBottomRightRadius: Dimensions.get('window').width * 0.06,
-          overflow: 'hidden',
-        }}
-        source={require('../../assets/images/Group3.png')}
-      >
-        <GlobalHeader
-          arrow={true}
-          headingText={i18n.t('your_personal_details')}
-          fontSize={17}
-          color={'black'}
-          navigation={navigation}
-          setting={false}
-          backgroundColor={'transparent'}
-          borderRadius={true}
-        />
-      </ImageBackground>
+      <View style={{ flex: -1 }}>
+        <ImageBackground
+          style={{
+            width: '100%',
+            height: 100,
+            borderBottomLeftRadius: Dimensions.get('window').width * 0.06,
+            borderBottomRightRadius: Dimensions.get('window').width * 0.06,
+            overflow: 'hidden',
+          }}
+          source={require('../../assets/images/Group3.png')}
+        >
+          <GlobalHeader
+            arrow={true}
+            headingText={localizationContext.t('your_personal_details')}
+            fontSize={17}
+            color={'black'}
+            login={login}
+            navigation={navigation}
+            backgroundColor={'transparent'}
+            borderRadius={true}
+          />
+        </ImageBackground>
+      </View>
+
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         bounces={false}
         scrollEnabled={true}
         style={{
           width: '100%',
+          flex: 11,
         }}
       >
-        <View>
-          <View style={styles.avatar}>
-            {/* <TouchableOpacity style={styles.viewImg}>
+        <KeyboardAvoidingView
+          behavior="position"
+          keyboardVerticalOffset={keyboardVerticalOffset}
+        >
+          <View>
+            <View style={styles.avatar}>
+              <TouchableOpacity
+                onPress={handleChangePicture}
+                style={styles.viewImg}
+                activeOpacity={0.6}
+              >
+                {image === null || image === undefined || image === '' ? (
                   <Image
                     style={{
                       width: '100%',
                       height: '100%',
-                      borderRadius: 80,
+                      borderRadius: 60,
                     }}
                     source={{
                       uri:
                         'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png',
                     }}
                   />
-                </TouchableOpacity> */}
-            <TouchableOpacity
-              // onPress={() => navigation.navigate('personalDetails')}
-              onPress={handleChangePicture}
-              style={styles.viewImg}
-              activeOpacity={0.6}
-            >
-              {state.userDetails.image === null ||
-              state.userDetails.image === undefined ||
-              state.userDetails.image === '' ? (
-                // <FontAwesome name="user-circle-o" size={110} color="#fff" />
-                <Image
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: 60,
-                  }}
-                  source={{
-                    uri:
-                      'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png',
-                  }}
-                />
-              ) : (
-                <Image
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: 60,
-                  }}
-                  source={{ uri: image ? image : state.userDetails.image }}
-                  resizeMode="cover"
-                />
-              )}
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={handleChangePicture}
-              style={styles.btnPencil}
-            >
-              <View style={styles.viewPencil}>
-                <MaterialCommunityIcons
-                  name="pencil-outline"
-                  color="#fff"
-                  size={15}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
+                ) : (
+                  <Image
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: 60,
+                    }}
+                    source={{ uri: image || null }}
+                    resizeMode="cover"
+                  />
+                )}
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={handleChangePicture}
+                style={styles.btnPencil}
+              >
+                <View style={styles.viewPencil}>
+                  <MaterialCommunityIcons
+                    name="pencil-outline"
+                    color="#fff"
+                    size={15}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
 
-          <View style={{ marginHorizontal: 30, alignItems: 'center' }}>
-            <Text style={styles.heading1}> {i18n.t('personal_info')}</Text>
-            <View style={styles.input_box}>
-              <Text style={styles.inputLabel}>{i18n.t('first_name')}</Text>
-              <TextInput
-                style={styles.inputsTopTow}
-                onChangeText={onChangeText}
-                value={text}
-                placeholder="Christine"
-                placeholderTextColor={'#485460'}
-              />
-            </View>
-            <View style={styles.input_box}>
-              <Text style={styles.inputLabel}>{i18n.t('last_name')}</Text>
-              <TextInput
-                style={styles.inputsTopTow}
-                onChangeText={onChangeText2}
-                value={text2}
-                placeholder="Zhou"
-                placeholderTextColor={'#485460'}
-              />
-            </View>
-            <View style={styles.input_box}>
-              <Text style={styles.inputLabel}>{i18n.t('phone_num')}</Text>
-              <View style={styles.inputsBottomTwo}>
+            <View style={{ marginHorizontal: 30, alignItems: 'center' }}>
+              <Text style={styles.heading1}>
+                {' '}
+                {localizationContext.t('personal_info')}
+              </Text>
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('first_name')}
+                </Text>
                 <TextInput
-                  onChangeText={onChangeText3}
-                  value={text3}
-                  placeholder="+33 6 88 88 88"
-                  keyboardType="number-pad"
-                  style={{ width: '60%' }}
+                  style={styles.inputsTopTow}
+                  onChangeText={setFirstName}
+                  value={FirstName}
+                  placeholder="Christine"
                   placeholderTextColor={'#485460'}
                 />
-                <Text
+              </View>
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('last_name')}
+                </Text>
+                <TextInput
+                  style={styles.inputsTopTow}
+                  onChangeText={setLastName}
+                  value={LastName}
+                  placeholder="Zhou"
+                  placeholderTextColor={'#485460'}
+                />
+              </View>
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('phone_num')}
+                </Text>
+                <View style={styles.inputsTopTow}>
+                  <RPCountryPickerInfo
+                    isVisible={isOpenCountryPicker}
+                    isVisibleCancelButton={false}
+                    onPressClosePicker={onPressOpenPicker}
+                    onPressSelect={onPressCountryItem}
+                  />
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <TouchableOpacity onPress={onPressOpenPicker}>
+                      <Text style={{ marginRight: 3 }}>{countryCode}</Text>
+                    </TouchableOpacity>
+                    <TextInput
+                      onChangeText={setPhone}
+                      value={phone}
+                      placeholder="6 88 88 88"
+                      keyboardType="number-pad"
+                      style={{ width: '100%' }}
+                      placeholderTextColor={'#485460'}
+                    />
+                  </View>
+                  {/* <Text
                   style={{
                     color: '#E02020',
                     width: '40%',
@@ -216,23 +295,32 @@ const PersonalDetails = ({ navigation }) => {
                     fontFamily: 'ProximaNova',
                   }}
                 >
-                  {i18n.t('not_verified')}
-                </Text>
+                  {localizationContext.t('not_verified')}
+                </Text> */}
+                </View>
               </View>
-            </View>
 
-            <View style={styles.input_box}>
-              <Text style={styles.inputLabel}>E-mail</Text>
-              <View style={styles.inputsBottomTwo}>
-                <TextInput
-                  onChangeText={onChangeText4}
-                  value={text4}
-                  placeholder="christine@zhou.com"
-                  keyboardType="email-address"
-                  style={{ width: '70%' }}
-                  placeholderTextColor={'#485460'}
-                />
-                <Text
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>E-mail</Text>
+                <View style={styles.inputsTopTow}>
+                  <TextInput
+                    onChangeText={setEmail}
+                    value={email}
+                    placeholder="christine@zhou.com"
+                    keyboardType="email-address"
+                    style={{ width: '100%' }}
+                    placeholderTextColor={'#485460'}
+                  />
+                  <Text style={{ position: 'absolute', right: 3.5, top: 2 }}>
+                    {emailError && (
+                      <FontAwesome5
+                        name="exclamation-circle"
+                        size={13}
+                        color="red"
+                      />
+                    )}
+                  </Text>
+                  {/* <Text
                   style={{
                     color: '#6DD400',
                     width: '30%',
@@ -241,17 +329,51 @@ const PersonalDetails = ({ navigation }) => {
                     fontFamily: 'ProximaNova',
                   }}
                 >
-                  {i18n.t('checked')}
+                  {localizationContext.t('checked')}
+                </Text> */}
+                </View>
+              </View>
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('username')}
                 </Text>
+                <View
+                  style={[
+                    styles.inputsTopTow,
+                    { flexDirection: 'row', alignItems: 'center' },
+                  ]}
+                >
+                  <Text style={{ marginRight: 2, marginTop: -2 }}>@</Text>
+                  <TextInput
+                    onChangeText={e => setUsername(e)}
+                    value={username}
+                    placeholder="christine_zhou"
+                    placeholderTextColor={'#485460'}
+                    style={{ width: '100%' }}
+                  />
+                </View>
+              </View>
+              <View style={styles.input_box}>
+                <Text style={styles.inputLabel}>
+                  {localizationContext.t('about_me')}
+                </Text>
+                <TextInput
+                  style={{ ...styles.inputsTopTow, paddingBottom: 50 }}
+                  onChangeText={e => setAbout(e)}
+                  multiline={true}
+                  value={about}
+                  placeholder={localizationContext.t('describe')}
+                  placeholderTextColor={'#485460'}
+                />
               </View>
             </View>
-          </View>
-          <View style={{ alignItems: 'center', marginBottom: 40 }}>
-            <View>
-              <Text style={styles.heading1}>{i18n.t('payment_methods')}</Text>
-            </View>
 
-            <View style={styles.payment_container}>
+            {/* <View style={{ alignItems: 'center', marginBottom: 40 }}> */}
+            {/* <View>
+              <Text style={styles.heading1}>{localizationContext.t('payment_methods')}</Text>
+            </View> */}
+
+            {/* <View style={styles.payment_container}>
               <TouchableOpacity
                 onPress={() => navigation.navigate('paypalPayment')}
                 activeOpacity={0.6}
@@ -316,17 +438,42 @@ const PersonalDetails = ({ navigation }) => {
                     <AntDesign name="plus" size={21} color="black" />
                   </View>
                   <Text style={styles.paymentMethodLabel}>
-                    {i18n.t('add_pay_method')}
+                    {localizationContext.t('add_pay_method')}
                   </Text>
                 </View>
                 <View>
                   <AntDesign name="right" size={20} color="lightgray" />
                 </View>
               </TouchableOpacity>
-            </View>
+            </View> */}
+            {/* </View> */}
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </ScrollView>
+      <View
+        style={{
+          marginHorizontal: '5%',
+          marginBottom: Platform.OS === 'ios' ? 25 : 15,
+          backgroundColor: 'transparent',
+        }}
+      >
+        <TouchableOpacity
+          disabled={!validate}
+          style={[
+            styles.btnStyle,
+            { backgroundColor: !validate ? '#EAEAEA' : Colors.yellow },
+          ]}
+          onPress={handleEditProfile}
+        >
+          {loading ? (
+            <ActivityIndicator size={29} color="#EBC11B" />
+          ) : (
+            <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
+              {localizationContext.t('confirm')}
+            </Text>
+          )}
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

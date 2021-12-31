@@ -22,6 +22,11 @@ const reducer = (state, { type, payload }) => {
         ...state,
         refreshAnimation: payload,
       };
+    case actionTypes.CHANGE_LANGUAGE:
+      return {
+        ...state,
+        language: payload,
+      };
     default:
       return state;
   }

@@ -24,7 +24,6 @@ import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
 import { COLORS } from '../../constants/colors';
 import { HEADER_BAR_HEIGHT, LAYOUT, spacing } from '../../constants/layout';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
-import i18n from '../../li8n';
 import Context from '../../contextApi/context';
 // import { ActivityIndicator } from 'react-native';
 // import { useFocusEffect } from '@react-navigation/native';
@@ -33,7 +32,7 @@ import { userGivenName } from '../../util';
 const HomeScreen = props => {
   const scrollRef = useRef(null);
   const TextInputRef = React.useRef(null);
-  const { state } = useContext(Context);
+  const { state, localizationContext } = useContext(Context);
   const [loading, setLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   // const [loader, setLoader] = useState();
@@ -72,7 +71,7 @@ const HomeScreen = props => {
     props.saveLocation,
     state.userDetails,
     state.refreshAnimation,
-    state.restaurantsDetails,
+    props.Data,
   ]);
 
   const reBounce = 25;
@@ -209,7 +208,23 @@ const HomeScreen = props => {
                 //   <ActivityIndicator color="black" size={38} />
                 // ) : (
                 <TouchableOpacity
-                  onPress={() => props.navigation.navigate('Setting', { settingsBack: true })}
+                  onPress={() => props.navigation.navigate('PublicProfile')}
+                >
+                  <Image
+                    style={{
+                      borderRadius: 90,
+                      width: 40,
+                      height: 40,
+                    }}
+                    source={{ uri: state?.userDetails?.image }}
+                  />
+                </TouchableOpacity>
+              ) : (
+                // ) : props.yourRestaurantLoading ? (
+                //   <ActivityIndicator color="black" size={38} />
+                // ) : (
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate('PublicProfile')}
                 >
                   <Image
                     style={{
@@ -218,20 +233,10 @@ const HomeScreen = props => {
                       height: 40,
                     }}
                     source={{
-                      uri: state?.userDetails?.image,
+                      uri:
+                        'https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png',
                     }}
                   />
-                </TouchableOpacity>
-              ) : (
-                // ) : props.yourRestaurantLoading ? (
-                //   <ActivityIndicator color="black" size={38} />
-                // ) : (
-                <TouchableOpacity
-                  onPress={() =>
-                    props.navigation.navigate('Setting', { settingsBack: true })
-                  }
-                >
-                  <FontAwesome name="user-circle-o" size={37} color="black" />
                 </TouchableOpacity>
               )}
             </>
@@ -280,8 +285,8 @@ const HomeScreen = props => {
                 numberOfLines={1}
               >
                 {!state.userDetails.name
-                  ? i18n.t('hello')
-                  : i18n.t('hello') +
+                  ? localizationContext.t('hello')
+                  : localizationContext.t('hello') +
                     ' ' +
                     userGivenName(state.userDetails.name)}
               </Text>
@@ -458,7 +463,7 @@ const HomeScreen = props => {
                     onChangeText={e => {
                       props.setSearchVal(e);
                     }}
-                    placeholder={i18n.t('find_your_restaurant')}
+                    placeholder={localizationContext.t('find_your_restaurant')}
                     placeholderTextColor={'#485460'}
                     style={{ flex: 1, paddingHorizontal: 10 }}
                   />
@@ -630,7 +635,7 @@ const HomeScreen = props => {
                     onChangeText={e => {
                       props.setSearchVal(e);
                     }}
-                    placeholder={i18n.t('find_your_restaurant')}
+                    placeholder={localizationContext.t('find_your_restaurant')}
                     style={{ flex: 1, paddingHorizontal: 10 }}
                   />
 

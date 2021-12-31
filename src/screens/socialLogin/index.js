@@ -13,11 +13,10 @@ import {
 } from 'react-native';
 import Constants from 'expo-constants';
 import * as WebBrowser from 'expo-web-browser';
-import { FontAwesome, Entypo } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import CheckBox from 'react-native-check-box';
 import { Colors } from '../../constants/Theme';
 import * as Google from 'expo-google-app-auth';
-import i18n from '../../li8n';
 import { config } from '../../constants';
 import { userSignUp, iPhoneLoginName, upperTitleCase } from '../../util';
 import { useMutation } from 'react-query';
@@ -32,7 +31,6 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Device from 'expo-device';
 import { getAsyncStorageValues } from '../../constants';
 import * as Notifications from 'expo-notifications';
-import * as Localization from 'expo-localization';
 
 const SocialLogin = ({ navigation, route }) => {
   const [city, setCity] = useState();
@@ -43,7 +41,7 @@ const SocialLogin = ({ navigation, route }) => {
   const [HelpUs, setHelpUs] = useState();
   const [termsChecked, setTermsChecked] = useState(false);
   const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
-  const { state, dispatch } = useContext(Context);
+  const { dispatch, localizationContext } = useContext(Context);
   const notificationListener = useRef();
   const responseListener = useRef();
   Notifications.setNotificationHandler({
@@ -99,12 +97,12 @@ const SocialLogin = ({ navigation, route }) => {
         sound: true,
       });
     }
-    const { locale } = await Localization.getLocalizationAsync();
+    const { language } = await getAsyncStorageValues();
     await sendNotificationToken(
       {
         id: user_id,
         expo_notification_token: token,
-        lang: locale || '',
+        lang: language || '',
       },
       {
         enabled: user_id ? true : false,
@@ -170,6 +168,11 @@ const SocialLogin = ({ navigation, route }) => {
             email: res?.user?.email || '',
             accessToken: accessToken || '',
             user_id: res?.user?._id || '',
+            username: res?.user?.username || '',
+            description: res?.user?.description || '',
+            last_name: res?.user?.last_name || '',
+            calling_code: res?.user?.calling_code || '',
+            phone_number: res?.user?.phone_number || '',
             os,
           };
           dispatch({
@@ -182,14 +185,19 @@ const SocialLogin = ({ navigation, route }) => {
               ...userDetails,
             }),
           );
-          if (vote) {
+
+          if (!res?.user?.username) {
+            navigation.replace('personalDetails', {
+              login: true,
+            });
+          } else if (vote) {
             navigation.replace('RateYourService');
             setVote(false);
           } else if (confirmWaiter || HelpUs) {
             navigation.replace('OpenCardReviews');
           } else {
-            // navigation.navigate('Home', { crossIcon: false });
-            navigation.replace('Setting', { login: true });
+            navigation.navigate('Home', { crossIcon: false });
+            // navigation.replace('Setting', { login: true });
           }
           registerForPushNotifications(res?.user?._id);
           setLoading(false);
@@ -255,6 +263,12 @@ const SocialLogin = ({ navigation, route }) => {
                   email: res?.user?.email || '',
                   accessToken: token || '',
                   user_id: res?.user?._id || '',
+                  username: res?.user?.username || '',
+                  description: res?.user?.description || '',
+                  last_name: res?.user?.last_name || '',
+                  calling_code: res?.user?.calling_code || '',
+                  phone_number: res?.user?.phone_number || '',
+                  os,
                 };
 
                 dispatch({
@@ -269,14 +283,18 @@ const SocialLogin = ({ navigation, route }) => {
                   }),
                 );
 
-                if (vote) {
+                if (!res?.user?.username) {
+                  navigation.replace('personalDetails', {
+                    login: true,
+                  });
+                } else if (vote) {
                   navigation.replace('RateYourService');
                   setVote(false);
                 } else if (confirmWaiter || HelpUs) {
                   navigation.replace('OpenCardReviews');
                 } else {
-                  // navigation.navigate('Home', { crossIcon: false });
-                  navigation.replace('Setting', { login: true });
+                  navigation.navigate('Home', { crossIcon: false });
+                  // navigation.replace('Setting', { login: true });
                 }
                 registerForPushNotifications(res?.user?._id);
                 setLoading(false);
@@ -353,7 +371,7 @@ const SocialLogin = ({ navigation, route }) => {
                 },
               ]}
             >
-              {i18n.t('continue_with_fb')}
+              {localizationContext.t('continue_with_fb')}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -375,7 +393,7 @@ const SocialLogin = ({ navigation, route }) => {
                 },
               ]}
             >
-              {i18n.t('continue_with_google')}
+              {localizationContext.t('continue_with_google')}
             </Text>
           </TouchableOpacity>
           {Platform.OS === 'ios' && (
@@ -415,6 +433,12 @@ const SocialLogin = ({ navigation, route }) => {
                             email: res?.user?.email || '',
                             accessToken: credential.authorizationCode || '',
                             user_id: res?.user?._id || '',
+                            username: res?.user?.username || '',
+                            description: res?.user?.description || '',
+                            last_name: res?.user?.last_name || '',
+                            calling_code: res?.user?.calling_code || '',
+                            phone_number: res?.user?.phone_number || '',
+                            os,
                           };
 
                           dispatch({
@@ -428,14 +452,19 @@ const SocialLogin = ({ navigation, route }) => {
                               ...userDetails,
                             }),
                           );
-                          if (vote) {
+
+                          if (!res?.user?.username) {
+                            navigation.replace('personalDetails', {
+                              login: true,
+                            });
+                          } else if (vote) {
                             navigation.replace('RateYourService');
                             setVote(false);
                           } else if (confirmWaiter || HelpUs) {
                             navigation.replace('OpenCardReviews');
                           } else {
-                            // navigation.navigate('Home', { crossIcon: false });
-                            navigation.replace('Setting', { login: true });
+                            navigation.navigate('Home', { crossIcon: false });
+                            // navigation.replace('Setting', { login: true });
                           }
                           registerForPushNotifications(res?.user?._id);
                           setLoading(false);
@@ -469,7 +498,7 @@ const SocialLogin = ({ navigation, route }) => {
                     },
                   ]}
                 >
-                  {i18n.t('continue_with_apple')}
+                  {localizationContext.t('continue_with_apple')}
                 </Text>
               </TouchableOpacity>
             </React.Fragment>
@@ -523,7 +552,7 @@ const SocialLogin = ({ navigation, route }) => {
                     }}
                     onPress={() => setTermsChecked(!termsChecked)}
                   >
-                    {i18n.t('I_accept')}{' '}
+                    {localizationContext.t('I_accept')}{' '}
                   </Text>
                   <TouchableOpacity
                     onPress={() =>
@@ -542,7 +571,7 @@ const SocialLogin = ({ navigation, route }) => {
                         marginTop: Platform.OS === 'android' ? -1 : -2.5,
                       }}
                     >
-                      {i18n.t('terms_of_use')}
+                      {localizationContext.t('terms_of_use')}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -560,7 +589,7 @@ const SocialLogin = ({ navigation, route }) => {
               <Text
                 style={{ color: Colors.fontLight, fontFamily: 'ProximaNova' }}
               >
-                {i18n.t('et_la')}
+                {localizationContext.t('et_la')}
               </Text>
               <TouchableOpacity
                 onPress={() =>
@@ -570,7 +599,7 @@ const SocialLogin = ({ navigation, route }) => {
                 }
               >
                 <Text style={{ color: '#0050A0', fontFamily: 'ProximaNova' }}>
-                  {i18n.t('confidential')}
+                  {localizationContext.t('confidential')}
                 </Text>
               </TouchableOpacity>
             </View>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -12,15 +12,22 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/ThanksGiving.png');
 const imgBg = require('../../assets/images/Group7.png');
-import i18n from '../../li8n';
-import NumberFormat from 'react-number-format';
+import Context from '../../contextApi/context';
 
-const ThanksRatingModal = ({ isVisible, handleModalClose, LotteryNumber }) => {
+const ThanksRatingModal = ({
+  isVisible,
+  handleModalClose,
+  LotteryNumber,
+  heading,
+  subText,
+}) => {
   function pad(n, width, z) {
     z = z || '0';
     n = n + '';
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
   }
+  const { localizationContext } = useContext(Context);
+
   return (
     <Overlay
       overlayStyle={styles.container}
@@ -59,21 +66,19 @@ const ThanksRatingModal = ({ isVisible, handleModalClose, LotteryNumber }) => {
       </ImageBackground>
 
       <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-        {i18n.t('thanks_for_vote')}
+        {heading
+          ? localizationContext.t(heading)
+          : localizationContext.t('thanks_for_vote')}
       </Text>
       <Text style={[styles.txtName, { fontFamily: 'ProximaNova' }]}>
-        {i18n.t('will_contact_by_email')}
+        {subText
+          ? localizationContext.t(subText)
+          : localizationContext.t('will_contact_by_email')}
       </Text>
       {LotteryNumber ? (
-        <NumberFormat
-          value={pad(LotteryNumber, 8, '0')}
-          allowEmptyFormatting
-          displayType={'text'}
-          format="####-####"
-          renderText={formattedValue => (
-            <Text style={styles.lottery}>{formattedValue}</Text>
-          )}
-        />
+        <Text style={styles.lottery}>
+          {pad(LotteryNumber, 8, '0').replace(/(\d{4})(\d{4})/, '$1-$2')}
+        </Text>
       ) : (
         <Text style={styles.lottery}>XXXX-XXXX</Text>
       )}

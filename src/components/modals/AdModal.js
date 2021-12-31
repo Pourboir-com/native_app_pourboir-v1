@@ -43,7 +43,7 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
   return (
     <Modal
       isVisible={adModalVisible}
-      backdropOpacity={0}
+      backdropOpacity={0.7}
       animationInTiming={700}
       animationOutTiming={700}
       style={{
@@ -58,11 +58,9 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
           justifyContent: 'center',
           alignItems: 'center',
           height: '100%',
-          backgroundColor: '#000',
+          backgroundColor: 'transparent',
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
-          opacity: 0.7,
-          marginTop: 30,
         }}
       >
         <AdMobBanner
@@ -108,7 +106,7 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
           style={{
             alignSelf: 'flex-end',
             position: 'absolute',
-            top: 30,
+            top: 10,
             right: 10,
           }}
         >

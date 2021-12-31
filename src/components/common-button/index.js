@@ -1,33 +1,41 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   ActivityIndicator,
   Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
 } from 'react-native';
 import { Colors } from '../../constants/Theme';
 
 const CommonButton = props => {
-  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      // disabled={loading}
-      onPress={() => {
-        props.navigation &&
-          navigation.navigate(
-            props.navigation,
-            props.navigationData && props.navigationData,
-          );
-        props.dispatch && props.dispatch();
-      }}
-      style={styles.btnValider}
+      disabled={props.disable === false ? false : true}
+      onPress={
+        props.onPress
+          ? props.onPress
+          : () => {
+              props.navigation &&
+                navigation.navigate(
+                  props.navigation,
+                  props.navigationData && props.navigationData,
+                );
+              props.dispatch && props.dispatch();
+            }
+      }
+      style={
+        (styles.btnValider,
+        {
+          ...styles.btnValider,
+          backgroundColor: props.disable ? '#EAEAEA' : Colors.yellow,
+        })
+      }
     >
-      {loading ? (
+      {props.loading ? (
         <ActivityIndicator size={29} color="#EBC11B" />
       ) : (
         <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
@@ -50,6 +58,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 3,
     alignSelf: 'center',
+    zIndex: 99999,
     marginBottom: Platform.OS === 'ios' ? 15 : 0,
   },
 });

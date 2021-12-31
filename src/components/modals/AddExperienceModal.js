@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -15,7 +15,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/job-hunt.png');
 const imgBg = require('../../assets/images/Group7.png');
-import i18n from '../../li8n';
 import CheckBox from 'react-native-check-box';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -24,12 +23,16 @@ import { useMutation } from 'react-query';
 import stylesTextbox from '../../screens/find-job/styles';
 import moment from 'moment';
 import { validateAddForm } from '../../util';
+import Context from '../../contextApi/context';
+
 const AddExperienceModal = ({
   setExpModalVisible,
   expModalVisible,
   data,
   setData,
 }) => {
+  const { localizationContext } = useContext(Context);
+
   const [modeS, setModeS] = useState('date');
   const [showS, setShowS] = useState(false);
   const [modeL, setModeL] = useState('date');
@@ -176,7 +179,7 @@ const AddExperienceModal = ({
         resetScrollToCoords={{ x: 0, y: 0 }}
       >
         <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
-          {i18n.t('add_exp')}
+          {localizationContext.t('add_exp')}
         </Text>
         <View
           style={{
@@ -201,7 +204,7 @@ const AddExperienceModal = ({
                       restaurant?.name &&
                       !restaurant?.restaurant_id && (
                         <Text style={{ color: 'red' }}>
-                          *{i18n.t('search_click')}.
+                          *{localizationContext.t('search_click')}.
                         </Text>
                       )}
 
@@ -209,7 +212,7 @@ const AddExperienceModal = ({
                       restaurant?.name &&
                       showDropdown && (
                         <Text style={{ color: 'red' }}>
-                          *{i18n.t('select_restaurant')}.
+                          *{localizationContext.t('select_restaurant')}.
                         </Text>
                       )}
                   </>
@@ -232,7 +235,7 @@ const AddExperienceModal = ({
                 }
                 value={restaurant?.name}
                 style={stylesTextbox.input_icon_text}
-                placeholder={i18n.t('name_of_company')}
+                placeholder={localizationContext.t('name_of_company')}
                 placeholderTextColor={'#707375'}
               />
               <TouchableOpacity
@@ -273,7 +276,7 @@ const AddExperienceModal = ({
               style={styles.inputsTopTow}
               onChangeText={e => setPost(e)}
               value={post}
-              placeholder={i18n.t('the_post')}
+              placeholder={localizationContext.t('the_post')}
               placeholderTextColor={'#707375'}
             />
           </View>
@@ -288,7 +291,7 @@ const AddExperienceModal = ({
               }}
             >
               {start === ''
-                ? i18n.t('start_date')
+                ? localizationContext.t('start_date')
                 : startDate.toLocaleDateString()}
             </Text>
             <DateTimePickerModal
@@ -313,7 +316,7 @@ const AddExperienceModal = ({
                 paddingTop: 15,
               }}
             >
-              {end === '' ? i18n.t('end_date') : endDate.toLocaleDateString()}
+              {end === '' ? localizationContext.t('end_date') : endDate.toLocaleDateString()}
             </Text>
             <DateTimePickerModal
               date={endDate}
@@ -379,7 +382,7 @@ const AddExperienceModal = ({
                 marginTop: -2,
               }}
             >
-              {i18n.t('still_work')}
+              {localizationContext.t('still_work')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -401,7 +404,7 @@ const AddExperienceModal = ({
               color: Colors.fontDark,
             }}
           >
-            {i18n.t('add')}
+            {localizationContext.t('add')}
           </Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>

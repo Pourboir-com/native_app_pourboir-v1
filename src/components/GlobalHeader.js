@@ -21,9 +21,11 @@ const GlobalHeader = props => {
   const { state, dispatch } = useContext(Context);
 
   const goBackHandler = props => {
-    if (props.setting) {
+    if (props.login) {
+      props.navigation.navigate('personalDetails', { login: props?.login });
+    } else if (props?.setting) {
       props.navigation.navigate('Setting');
-    } else if (props.Home == 'true' && !state?.restaurantsDetails?.length) {
+    } else if (props?.Home == 'true' && !state?.restaurantsDetails?.length) {
       props.navigation.replace('Home', { crossIcon: false });
     } else {
       props.navigation.goBack(null);
@@ -44,7 +46,10 @@ const GlobalHeader = props => {
 
   React.useEffect(() => {
     const handleBackButtonClick = () => {
-      if (props.setting) {
+      if (props.login) {
+        props.navigation.navigate('personalDetails', { login: props?.login });
+        return true;
+      } else if (props.setting) {
         props.navigation.navigate('Setting');
         return true;
       } else if (props.Home == 'true' && !state?.restaurantsDetails?.length) {
@@ -187,6 +192,28 @@ const GlobalHeader = props => {
               <Image
                 source={require('../assets/images/Disconnect.png')}
                 style={{ width: 18, height: 18 }}
+              />
+            </TouchableOpacity>
+          ) : props.settingBtn ? (
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={props.settingBtnFunc && props.settingBtnFunc}
+              style={[styles.viewLeft, { marginTop: -3, marginRight: 0 }]}
+            >
+              <Image
+                source={require('../assets/images/gear.png')}
+                style={{ width: 20, height: 20 }}
+              />
+            </TouchableOpacity>
+          ) : props.menu ? (
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={props.menuBtn && props.menuBtn}
+              style={[styles.viewLeft, { marginTop: -3, marginRight: 0 }]}
+            >
+              <Image
+                source={require('../assets/images/list.png')}
+                style={{ width: 15, height: 15 }}
               />
             </TouchableOpacity>
           ) : null}

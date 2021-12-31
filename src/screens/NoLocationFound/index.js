@@ -29,6 +29,7 @@ const NoLocation = ({ navigation, route }) => {
   };
 
   const excessLocation = async () => {
+    await AsyncStorage.setItem('locationDone', 'true');
     let locationStats = await Location.requestForegroundPermissionsAsync();
     if (locationStats.status !== 'granted') {
       if (Platform.OS === 'ios') {

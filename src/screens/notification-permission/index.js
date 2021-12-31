@@ -15,6 +15,7 @@ import { useMutation } from 'react-query';
 import { SEND_PUSH_TOKEN } from '../../queries';
 import { getAsyncStorageValues } from '../../constants';
 import Context from '../../contextApi/context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NotificationPermission = ({ navigation }) => {
   const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
@@ -57,6 +58,7 @@ const NotificationPermission = ({ navigation }) => {
     return token;
   }
   const handleNotificationPermission = async () => {
+    await AsyncStorage.setItem('notificationDone', 'true');
     const { userInfo = {}, language } = await getAsyncStorageValues();
     registerForPushNotificationsAsync()
       .then(async token => {

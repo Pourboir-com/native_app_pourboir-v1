@@ -150,7 +150,19 @@ export default function SplashScreen(props) {
           const token = await checkNotificationPermission();
 
           if (Platform.OS === 'ios') {
-            validateNavigationIOS(
+            const isFirstLogin = await AsyncStorage.getItem('isFirstLogin');
+            console.log({ isFirstLogin });
+            // if (isFirstLogin) {
+            //   if (userInfo?.user_id) {
+            //     props.navigation.replace('Home', {
+            //       crossIcon: false,
+            //       ad: true,
+            //     });
+            //   } else {
+            //     props.navigation.replace('socialLogin');
+            //   }
+            // } else
+            await validateNavigationIOS(
               props.navigation,
               tracking,
               location,
@@ -160,7 +172,7 @@ export default function SplashScreen(props) {
           } else {
             validateNavigationAndroid(props.navigation, location, userInfo);
           }
-
+          // await AsyncStorage.setItem('isFirstLogin', true);
           if (userInfo?.user_id) {
             await sendNotificationToken({
               id: userInfo?.user_id || '',

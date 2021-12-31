@@ -12,6 +12,7 @@ import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import Track from '../../assets/images/track.png';
 import { getAsyncStorageValues } from '../../constants';
 import Context from '../../contextApi/context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NoAppTracking = ({ navigation, route }) => {
   const { localizationContext } = useContext(Context);
@@ -36,12 +37,12 @@ const NoAppTracking = ({ navigation, route }) => {
   const excessAppTracking = async () => {
     if (Platform.OS === 'ios') {
       const { status } = await requestTrackingPermissionsAsync();
-
       if (status === 'granted') {
         validateNavigation();
       } else {
         validateNavigation();
       }
+      await AsyncStorage.setItem('trackingDone', 'true');
     } else {
       validateNavigation();
     }

@@ -200,6 +200,11 @@ const HomeScreen = props => {
         <HomeScreenContent
           restaurantLoading={restaurantLoading}
           searchVal={searchVal}
+          refetchAll={() => {
+            refetchRestaurant();
+            refetchUserFavRestaurant();
+            refetchFavRestaurant();
+          }}
           refetchRestaurant={() => {
             refetchUserFavRestaurant();
             refetchFavRestaurant();
@@ -215,6 +220,11 @@ const HomeScreen = props => {
         <HomeScreenContent
           restaurantLoading={userFavRestaurantLoading}
           searchVal={searchVal}
+          refetchAll={() => {
+            refetchRestaurant();
+            refetchUserFavRestaurant();
+            refetchFavRestaurant();
+          }}
           refetchRestaurant={() => {
             refetchUserFavRestaurant();
             refetchFavRestaurant();
@@ -232,6 +242,11 @@ const HomeScreen = props => {
         <HomeScreenContent
           restaurantLoading={favRestaurantLoading}
           searchVal={searchVal}
+          refetchAll={() => {
+            refetchRestaurant();
+            refetchUserFavRestaurant();
+            refetchFavRestaurant();
+          }}
           refetchRestaurant={() => {
             refetchUserFavRestaurant();
             refetchFavRestaurant();

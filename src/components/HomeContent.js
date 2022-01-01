@@ -26,6 +26,7 @@ import Context from '../contextApi/context';
 import * as actionTypes from '../contextApi/actionTypes';
 import Spinner from 'react-native-loading-spinner-overlay';
 import NoFavRestaurant from './no-fav-card';
+import get from 'lodash/get';
 
 export default function HomeScreenContent({
   restaurantLoading,
@@ -39,6 +40,7 @@ export default function HomeScreenContent({
   searchTitle,
   favoriteRes,
   noRefresh,
+  refetchAll,
 }) {
   const [data, setData] = useState([]);
   const navigation = useNavigation();
@@ -106,7 +108,9 @@ export default function HomeScreenContent({
               />
             </View>
             <View>
-              <Text style={styles.textBold}>{localizationContext.t('no_restaurant')}</Text>
+              <Text style={styles.textBold}>
+                {localizationContext.t('no_restaurant')}
+              </Text>
               <Text style={[styles.textLight, { width: 320 }]}>
                 {localizationContext.t('search_rest')}:{' '}
                 <Text style={{ fontFamily: 'ProximaNovaBold' }}>
@@ -221,7 +225,9 @@ export default function HomeScreenContent({
             <Text
               style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
             >
-              {searchEnter ? localizationContext.t(searchTitle) : localizationContext.t(title)}
+              {searchEnter
+                ? localizationContext.t(searchTitle)
+                : localizationContext.t(title)}
             </Text>
           )}
           <View
@@ -255,16 +261,15 @@ export default function HomeScreenContent({
                       navigation={navigation}
                       key={itemData?.item?.place_id}
                       img={
-                        itemData?.item?.photos[0]
-                          ? itemData?.item?.photos[0]
-                          : ''
+                        itemData?.item?.store_details?.background_image ||
+                        get(itemData, 'item?.photos[0]')
                       }
                       rating={
                         Number(itemData?.item?.our_rating) > 0
                           ? itemData?.item?.our_rating
                           : itemData?.item?.rating
                       }
-                      name={itemData?.item.name}
+                      name={itemData?.item?.name}
                       DeleteRestaurant={
                         (data,
                         i =>
@@ -288,6 +293,7 @@ export default function HomeScreenContent({
                         itemData?.item?.location
                       }
                       refetchRestaurant={refetchRestaurant}
+                      refetchAll={refetchAll}
                     />
                     // </View>
                   );

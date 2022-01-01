@@ -29,6 +29,7 @@ const Braserri = ({ navigation, route }) => {
     refetchInstaData,
     InstaData,
     refetchInstaFeed,
+    refetchAll,
   } = route?.params || {};
   const [currentTab, setCurrentTab] = useState('team');
   const [dishName, setDishName] = useState('');
@@ -205,6 +206,7 @@ const Braserri = ({ navigation, route }) => {
                 user_id={state.userDetails.user_id}
                 place_id={restaurant_id}
                 refetchInstaFeed={refetchInstaFeed}
+                refetchAll={refetchAll}
               />
             )}
           </View>

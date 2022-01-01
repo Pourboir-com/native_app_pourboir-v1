@@ -136,6 +136,7 @@ const ReviewDetails = ({ navigation, route }) => {
     restaurant_id,
     geometry,
     refetchRestaurant,
+    refetchAll,
   } = route?.params || {};
 
   const refRBSheet = useRef();
@@ -481,6 +482,7 @@ const ReviewDetails = ({ navigation, route }) => {
                 refetchInstaData,
                 InstaData,
                 refetchInstaFeed,
+                refetchAll,
               })
             : setApprovalModal(true)
         }
@@ -836,18 +838,16 @@ const ReviewDetails = ({ navigation, route }) => {
             </Text>
           </View>
         </View>
-        {!waitersData?.data.length &&
-          !waitersLoading &&
-          !waitersIsFetching && (
-            <Text
-              style={[
-                styles.no_waiter_found,
-                { fontFamily: 'ProximaNovaSemiBold' },
-              ]}
-            >
-              {localizationContext.t('no_waiter_found')}
-            </Text>
-          )}
+        {!waitersData?.data.length && !waitersLoading && !waitersIsFetching && (
+          <Text
+            style={[
+              styles.no_waiter_found,
+              { fontFamily: 'ProximaNovaSemiBold' },
+            ]}
+          >
+            {localizationContext.t('no_waiter_found')}
+          </Text>
+        )}
 
         <FlatList
           data={waitersData?.data || []}

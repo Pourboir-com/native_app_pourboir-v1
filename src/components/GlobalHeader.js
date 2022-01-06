@@ -27,6 +27,8 @@ const GlobalHeader = props => {
       props.navigation.navigate('Setting');
     } else if (props?.Home == 'true' && !state?.restaurantsDetails?.length) {
       props.navigation.replace('Home', { crossIcon: false });
+    } else if (props.changesSaved) {
+      alert('Please save your changes first!');
     } else {
       props.navigation.goBack(null);
     }
@@ -55,6 +57,8 @@ const GlobalHeader = props => {
       } else if (props.Home == 'true' && !state?.restaurantsDetails?.length) {
         props.navigation.replace('Home', { crossIcon: false });
         return true;
+      } else if (props.changesSaved) {
+        alert('Please save your changes first!');
       }
     };
 

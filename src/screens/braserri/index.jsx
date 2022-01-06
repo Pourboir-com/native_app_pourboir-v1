@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Dimensions,
   ImageBackground,
@@ -35,31 +35,18 @@ const Braserri = ({ navigation, route }) => {
   const [dishName, setDishName] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
+  const [changesSaved, setChangesSaved] = useState(false);
   const { state, localizationContext } = useContext(Context);
   const [headerBg, setHeaderBg] = useState(
     InstaData?.data?.background_image || '',
   );
-  const [bgImage, setBgImage] = useState(
-    InstaData?.data?.background_image || '',
-  );
-  const [discImg1, setDiscImg1] = useState(
-    InstaData?.data?.discover_images[0] || '',
-  );
-  const [discImg2, setDiscImg2] = useState(
-    InstaData?.data?.discover_images[1] || '',
-  );
-  const [discImg3, setDiscImg3] = useState(
-    InstaData?.data?.discover_images[2] || '',
-  );
-  const [discImg4, setDiscImg4] = useState(
-    InstaData?.data?.discover_images[3] || '',
-  );
-  const [discImg5, setDiscImg5] = useState(
-    InstaData?.data?.discover_images[4] || '',
-  );
-  const [token, setToken] = useState(
-    InstaData?.data?.instagram_access_token || '',
-  );
+  const [bgImage, setBgImage] = useState();
+  const [discImg1, setDiscImg1] = useState();
+  const [discImg2, setDiscImg2] = useState();
+  const [discImg3, setDiscImg3] = useState();
+  const [discImg4, setDiscImg4] = useState();
+  const [discImg5, setDiscImg5] = useState();
+  const [token, setToken] = useState();
   let states = {
     bgImage,
     setBgImage,
@@ -76,7 +63,13 @@ const Braserri = ({ navigation, route }) => {
     token,
     setToken,
     setHeaderBg,
+    setChangesSaved,
   };
+
+  useEffect(() => {
+    setChangesSaved(true);
+  }, [bgImage, discImg1, discImg2, discImg3, discImg4, discImg5, token]);
+
   const { data: menus, refetch: refetchMenus } = useQuery(
     ['GET_MENU', { place_id: restaurant_id }],
     GET_MENU,
@@ -146,6 +139,7 @@ const Braserri = ({ navigation, route }) => {
           setting={false}
           backgroundColor={'transparent'}
           borderRadius={true}
+          changesSaved={changesSaved}
           // settingBtn={true}
         />
       </ImageBackground>

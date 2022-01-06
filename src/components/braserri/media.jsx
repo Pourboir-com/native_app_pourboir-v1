@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Platform,
   Text,
@@ -25,6 +25,7 @@ const Media = ({
   refetchInstaFeed,
   refetchAll,
   states,
+  InstaData
 }) => {
   const { localizationContext } = useContext(Context);
   let {
@@ -43,6 +44,7 @@ const Media = ({
     token,
     setToken,
     setHeaderBg,
+    setChangesSaved,
   } = states || {};
 
   // const [clientId, setClientId] = useState('');
@@ -81,6 +83,7 @@ const Media = ({
       },
       {
         onSuccess: async () => {
+          setChangesSaved(false);
           setHeaderBg(bgImage);
           refetchInstaData();
           refetchAll();
@@ -132,7 +135,7 @@ const Media = ({
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
                   onChangeText={e => setBgImage(e)}
-                  value={bgImage}
+                  value={bgImage || InstaData?.data?.background_image }
                 />
               </View>
               <View
@@ -208,7 +211,7 @@ const Media = ({
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
                   onChangeText={e => setDiscImg1(e)}
-                  value={discImg1}
+                  value={discImg1 || InstaData?.data?.discover_images[0]}
                 />
               </View>
               <View
@@ -264,7 +267,7 @@ const Media = ({
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
                   onChangeText={e => setDiscImg2(e)}
-                  value={discImg2}
+                  value={discImg2 || InstaData?.data?.discover_images[1]}
                 />
               </View>
               <View
@@ -320,7 +323,7 @@ const Media = ({
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
                   onChangeText={e => setDiscImg3(e)}
-                  value={discImg3}
+                  value={discImg3 || InstaData?.data?.discover_images[2]}
                 />
               </View>
               <View
@@ -376,7 +379,7 @@ const Media = ({
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
                   onChangeText={e => setDiscImg4(e)}
-                  value={discImg4}
+                  value={discImg4 || InstaData?.data?.discover_images[3]}
                 />
               </View>
               <View
@@ -432,7 +435,7 @@ const Media = ({
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
                   onChangeText={e => setDiscImg5(e)}
-                  value={discImg5}
+                  value={discImg5 || InstaData?.data?.discover_images[4]}
                 />
               </View>
               <View
@@ -495,7 +498,7 @@ const Media = ({
                   placeholder={localizationContext.t('acc_token')}
                   placeholderTextColor={'#485460'}
                   onChangeText={e => setToken(e)}
-                  value={token}
+                  value={token ||  InstaData?.data?.instagram_access_token}
                 />
               </View>
               <View style={{ width: '13%', justifyContent: 'center' }}>

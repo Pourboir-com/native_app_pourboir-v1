@@ -262,7 +262,7 @@ export default function HomeScreenContent({
                       key={itemData?.item?.place_id}
                       img={
                         itemData?.item?.store_details?.background_image ||
-                        get(itemData, 'item?.photos[0]')
+                        get(itemData?.item, 'photos[0]')
                       }
                       rating={
                         Number(itemData?.item?.our_rating) > 0

@@ -36,6 +36,47 @@ const Braserri = ({ navigation, route }) => {
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const { state, localizationContext } = useContext(Context);
+  const [headerBg, setHeaderBg] = useState(
+    InstaData?.data?.background_image || '',
+  );
+  const [bgImage, setBgImage] = useState(
+    InstaData?.data?.background_image || '',
+  );
+  const [discImg1, setDiscImg1] = useState(
+    InstaData?.data?.discover_images[0] || '',
+  );
+  const [discImg2, setDiscImg2] = useState(
+    InstaData?.data?.discover_images[1] || '',
+  );
+  const [discImg3, setDiscImg3] = useState(
+    InstaData?.data?.discover_images[2] || '',
+  );
+  const [discImg4, setDiscImg4] = useState(
+    InstaData?.data?.discover_images[3] || '',
+  );
+  const [discImg5, setDiscImg5] = useState(
+    InstaData?.data?.discover_images[4] || '',
+  );
+  const [token, setToken] = useState(
+    InstaData?.data?.instagram_access_token || '',
+  );
+  let states = {
+    bgImage,
+    setBgImage,
+    discImg1,
+    setDiscImg1,
+    discImg2,
+    setDiscImg2,
+    discImg3,
+    setDiscImg3,
+    discImg4,
+    setDiscImg4,
+    discImg5,
+    setDiscImg5,
+    token,
+    setToken,
+    setHeaderBg,
+  };
   const { data: menus, refetch: refetchMenus } = useQuery(
     ['GET_MENU', { place_id: restaurant_id }],
     GET_MENU,
@@ -85,7 +126,7 @@ const Braserri = ({ navigation, route }) => {
           borderBottomRightRadius: Dimensions.get('window').width * 0.06,
           overflow: 'hidden',
         }}
-        source={{ uri: img || 'https://www.tandoor.pk/img/sl3.jpg' }}
+        source={{ uri: headerBg || img || null }}
       >
         <LinearGradient
           style={{
@@ -207,6 +248,7 @@ const Braserri = ({ navigation, route }) => {
                 place_id={restaurant_id}
                 refetchInstaFeed={refetchInstaFeed}
                 refetchAll={refetchAll}
+                states={states}
               />
             )}
           </View>

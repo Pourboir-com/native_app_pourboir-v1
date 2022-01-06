@@ -22,32 +22,29 @@ const Media = ({
   refetchInstaData,
   user_id,
   place_id,
-  InstaData,
   refetchInstaFeed,
   refetchAll,
+  states,
 }) => {
   const { localizationContext } = useContext(Context);
-  const [bgImage, setBgImage] = useState(
-    InstaData?.data?.background_image || '',
-  );
-  const [discImg1, setDiscImg1] = useState(
-    InstaData?.data?.discover_images[0] || '',
-  );
-  const [discImg2, setDiscImg2] = useState(
-    InstaData?.data?.discover_images[1] || '',
-  );
-  const [discImg3, setDiscImg3] = useState(
-    InstaData?.data?.discover_images[2] || '',
-  );
-  const [discImg4, setDiscImg4] = useState(
-    InstaData?.data?.discover_images[3] || '',
-  );
-  const [discImg5, setDiscImg5] = useState(
-    InstaData?.data?.discover_images[4] || '',
-  );
-  const [token, setToken] = useState(
-    InstaData?.data?.instagram_access_token || '',
-  );
+  let {
+    bgImage,
+    setBgImage,
+    discImg1,
+    setDiscImg1,
+    discImg2,
+    setDiscImg2,
+    discImg3,
+    setDiscImg3,
+    discImg4,
+    setDiscImg4,
+    discImg5,
+    setDiscImg5,
+    token,
+    setToken,
+    setHeaderBg,
+  } = states || {};
+
   // const [clientId, setClientId] = useState('');
   const [successModal, setSuccesModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
@@ -58,7 +55,7 @@ const Media = ({
   const textbox_border_color = '#E3E3E3';
 
   const checkURL = url => {
-    return !url ? true : url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+    return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
   };
   const validImages = () => {
     let discovered_images = [discImg1, discImg2, discImg3, discImg4, discImg5];
@@ -84,6 +81,7 @@ const Media = ({
       },
       {
         onSuccess: async () => {
+          setHeaderBg(bgImage);
           refetchInstaData();
           refetchAll();
           if (token) {
@@ -126,9 +124,10 @@ const Media = ({
                 <TextInput
                   style={{
                     ...styles.input,
-                    borderColor: checkURL(bgImage)
-                      ? textbox_border_color
-                      : clear_button_color,
+                    borderColor:
+                      checkURL(bgImage) || !bgImage
+                        ? textbox_border_color
+                        : clear_button_color,
                   }}
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
@@ -169,6 +168,7 @@ const Media = ({
                       ? not_disabled_color
                       : disabled_color,
                   }}
+                  onPress={() => checkURL(bgImage) && saveInstaDetails()}
                   activeOpacity={0.6}
                 >
                   <Entypo name="check" size={22} color="black" />
@@ -200,9 +200,10 @@ const Media = ({
                 <TextInput
                   style={{
                     ...styles.input,
-                    borderColor: checkURL(discImg1)
-                      ? textbox_border_color
-                      : clear_button_color,
+                    borderColor:
+                      checkURL(discImg1) || !discImg1
+                        ? textbox_border_color
+                        : clear_button_color,
                   }}
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
@@ -243,6 +244,7 @@ const Media = ({
                       ? not_disabled_color
                       : disabled_color,
                   }}
+                  onPress={() => checkURL(discImg1) && saveInstaDetails()}
                   activeOpacity={0.6}
                 >
                   <Entypo name="check" size={22} color="black" />
@@ -254,9 +256,10 @@ const Media = ({
                 <TextInput
                   style={{
                     ...styles.input,
-                    borderColor: checkURL(discImg2)
-                      ? textbox_border_color
-                      : clear_button_color,
+                    borderColor:
+                      checkURL(discImg2) || !discImg2
+                        ? textbox_border_color
+                        : clear_button_color,
                   }}
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
@@ -297,6 +300,7 @@ const Media = ({
                       ? not_disabled_color
                       : disabled_color,
                   }}
+                  onPress={() => checkURL(discImg2) && saveInstaDetails()}
                   activeOpacity={0.6}
                 >
                   <Entypo name="check" size={22} color="black" />
@@ -308,9 +312,10 @@ const Media = ({
                 <TextInput
                   style={{
                     ...styles.input,
-                    borderColor: checkURL(discImg3)
-                      ? textbox_border_color
-                      : clear_button_color,
+                    borderColor:
+                      checkURL(discImg3) || !discImg3
+                        ? textbox_border_color
+                        : clear_button_color,
                   }}
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
@@ -351,6 +356,7 @@ const Media = ({
                       ? not_disabled_color
                       : disabled_color,
                   }}
+                  onPress={() => checkURL(discImg3) && saveInstaDetails()}
                   activeOpacity={0.6}
                 >
                   <Entypo name="check" size={22} color="black" />
@@ -362,9 +368,10 @@ const Media = ({
                 <TextInput
                   style={{
                     ...styles.input,
-                    borderColor: checkURL(discImg4)
-                      ? textbox_border_color
-                      : clear_button_color,
+                    borderColor:
+                      checkURL(discImg4) || !discImg4
+                        ? textbox_border_color
+                        : clear_button_color,
                   }}
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
@@ -405,6 +412,7 @@ const Media = ({
                       ? not_disabled_color
                       : disabled_color,
                   }}
+                  onPress={() => checkURL(discImg4) && saveInstaDetails()}
                   activeOpacity={0.6}
                 >
                   <Entypo name="check" size={22} color="black" />
@@ -416,9 +424,10 @@ const Media = ({
                 <TextInput
                   style={{
                     ...styles.input,
-                    borderColor: checkURL(discImg5)
-                      ? textbox_border_color
-                      : clear_button_color,
+                    borderColor:
+                      checkURL(discImg5) || !discImg5
+                        ? textbox_border_color
+                        : clear_button_color,
                   }}
                   placeholder={localizationContext.t('img_placeholder')}
                   placeholderTextColor={'#485460'}
@@ -459,6 +468,7 @@ const Media = ({
                       ? not_disabled_color
                       : disabled_color,
                   }}
+                  onPress={() => checkURL(discImg5) && saveInstaDetails()}
                   activeOpacity={0.6}
                 >
                   <Entypo name="check" size={22} color="black" />
@@ -496,6 +506,7 @@ const Media = ({
                       ? not_disabled_color
                       : disabled_color,
                   }}
+                  onPress={() => token && saveInstaDetails()}
                   activeOpacity={0.6}
                 >
                   <Entypo name="check" size={22} color="black" />

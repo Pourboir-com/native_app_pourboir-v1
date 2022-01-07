@@ -45,7 +45,7 @@ const Media = ({
     setToken,
     setHeaderBg,
     setChangesSaved,
-    changesSaved
+    changesSaved,
   } = states || {};
 
   // const [clientId, setClientId] = useState('');
@@ -101,7 +101,7 @@ const Media = ({
     <KeyboardAwareScrollView
       bounces={false}
       enableOnAndroid={true}
-      extraScrollHeight={10}
+      extraScrollHeight={40}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
       scrollToOverflowEnabled={true}

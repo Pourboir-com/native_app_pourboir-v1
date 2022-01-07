@@ -16,10 +16,9 @@ import { Body, Right } from 'native-base';
 import { Colors } from '../constants/Theme';
 import { MaterialIcons, FontAwesome, Fontisto } from '@expo/vector-icons';
 import Context from '../contextApi/context';
-import * as actionTypes from '../contextApi/actionTypes';
 
 const GlobalHeader = props => {
-  const { state, dispatch } = useContext(Context);
+  const { state } = useContext(Context);
 
   const goBackHandler = props => {
     if (props.login) {
@@ -70,7 +69,18 @@ const GlobalHeader = props => {
         props.navigation.replace('Home', { crossIcon: false });
         return true;
       } else if (props.changesSaved) {
-        alert('Please save your changes first!');
+        Alert.alert(
+          '',
+          'Please save your changes first!',
+          [
+            {
+              text: 'GO BACK',
+              onPress: () => props.navigation.goBack(null),
+            },
+            { text: 'OK' },
+          ],
+          { cancelable: false },
+        );
       }
     };
 

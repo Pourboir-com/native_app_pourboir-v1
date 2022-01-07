@@ -543,7 +543,7 @@ const Media = ({
             loading={submitInstaDetailsLoading}
             onPress={saveInstaDetails}
             title={localizationContext.t('confirmer')}
-            disable={!changesSaved}
+            disable={false}
           />
         </View>
       </ScrollView>

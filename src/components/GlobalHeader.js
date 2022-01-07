@@ -10,6 +10,7 @@ import {
   SafeAreaView,
   BackHandler,
   Image,
+  Alert,
 } from 'react-native';
 import { Body, Right } from 'native-base';
 import { Colors } from '../constants/Theme';
@@ -28,7 +29,18 @@ const GlobalHeader = props => {
     } else if (props?.Home == 'true' && !state?.restaurantsDetails?.length) {
       props.navigation.replace('Home', { crossIcon: false });
     } else if (props.changesSaved) {
-      alert('Please save your changes first!');
+      Alert.alert(
+        '',
+        'Please save your changes first!',
+        [
+          {
+            text: 'GO BACK',
+            onPress: () => props.navigation.goBack(null),
+          },
+          { text: 'OK' },
+        ],
+        { cancelable: false },
+      );
     } else {
       props.navigation.goBack(null);
     }

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import {
   Dimensions,
   ImageBackground,
@@ -20,6 +20,7 @@ import { reactQueryConfig } from '../../constants';
 import { useQuery } from 'react-query';
 import { GET_MENU, GET_WAITERS } from '../../queries';
 const Braserri = ({ navigation, route }) => {
+  const isFirstRun = useRef(true);
   const {
     restaurant_id,
     img,
@@ -40,13 +41,27 @@ const Braserri = ({ navigation, route }) => {
   const [headerBg, setHeaderBg] = useState(
     InstaData?.data?.background_image || '',
   );
-  const [bgImage, setBgImage] = useState();
-  const [discImg1, setDiscImg1] = useState();
-  const [discImg2, setDiscImg2] = useState();
-  const [discImg3, setDiscImg3] = useState();
-  const [discImg4, setDiscImg4] = useState();
-  const [discImg5, setDiscImg5] = useState();
-  const [token, setToken] = useState();
+  const [bgImage, setBgImage] = useState(
+    InstaData?.data?.background_image || '',
+  );
+  const [discImg1, setDiscImg1] = useState(
+    InstaData?.data?.discover_images[0] || '',
+  );
+  const [discImg2, setDiscImg2] = useState(
+    InstaData?.data?.discover_images[1] || '',
+  );
+  const [discImg3, setDiscImg3] = useState(
+    InstaData?.data?.discover_images[2] || '',
+  );
+  const [discImg4, setDiscImg4] = useState(
+    InstaData?.data?.discover_images[3] || '',
+  );
+  const [discImg5, setDiscImg5] = useState(
+    InstaData?.data?.discover_images[4] || '',
+  );
+  const [token, setToken] = useState(
+    InstaData?.data?.instagram_access_token || '',
+  );
   let states = {
     bgImage,
     setBgImage,
@@ -64,10 +79,16 @@ const Braserri = ({ navigation, route }) => {
     setToken,
     setHeaderBg,
     setChangesSaved,
+    changesSaved
   };
 
   useEffect(() => {
-    setChangesSaved(true);
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    } else {
+      setChangesSaved(true);
+    }
   }, [bgImage, discImg1, discImg2, discImg3, discImg4, discImg5, token]);
 
   const { data: menus, refetch: refetchMenus } = useQuery(

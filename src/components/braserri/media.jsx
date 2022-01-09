@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import { TextInput } from 'react-native';
 import styles from '../../screens/braserri/styles';
@@ -101,7 +102,7 @@ const Media = ({
     <KeyboardAwareScrollView
       bounces={false}
       enableOnAndroid={true}
-      extraScrollHeight={40}
+      extraScrollHeight={Dimensions.get('screen').height * 0.2}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
       scrollToOverflowEnabled={true}

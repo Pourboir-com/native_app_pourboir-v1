@@ -151,7 +151,7 @@ export default function SplashScreen(props) {
 
           if (Platform.OS === 'ios') {
             const isFirstLogin = await AsyncStorage.getItem('isFirstLogin');
-            console.log({ isFirstLogin });
+            // console.log({ isFirstLogin });
             // if (isFirstLogin) {
             //   if (userInfo?.user_id) {
             //     props.navigation.replace('Home', {

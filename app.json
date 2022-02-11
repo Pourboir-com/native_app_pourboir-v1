@@ -8,13 +8,13 @@
     "facebookDisplayName": "Pourboir'",
     "version": "1.2.3",
     "orientation": "portrait",
-    "icon": "./assets/Serveur-IOS.png",
+    "icon": "./assets/logo.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover"
     },
     "notification": {
-      "icon": "./assets/Serveur.png",
+      "icon": "./assets/logo.png",
       "androidMode": "default",
       "androidCollapsedTitle": "Updates from Pourboir",
       "iosDisplayInForeground": true
@@ -23,9 +23,7 @@
       "enabled": false,
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.developerspourboir.pourboir",
@@ -37,9 +35,7 @@
         "NSLocationAlwaysUsageDescription": "This app uses location for nearby restaurants",
         "CFBundleAllowMixedLocalizations": true,
         "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
-        "NSUserActivityTypes": [
-          "INSendMessageIntent"
-        ]
+        "NSUserActivityTypes": ["INSendMessageIntent"]
       },
       "config": {
         "googleSignIn": {

@@ -6,7 +6,7 @@
     "facebookAppId": "771555200360518",
     "facebookScheme": "fb771555200360518",
     "facebookDisplayName": "Pourboir'",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "orientation": "portrait",
     "icon": "./assets/Serveur-IOS.png",
     "splash": {
@@ -70,7 +70,7 @@
         "ACCESS_FINE_LOCATION"
       ],
       "package": "com.developerspourboir.pourboir",
-      "versionCode": 16
+      "versionCode": 17
     },
     "web": {
       "favicon": "./assets/favicon.png"

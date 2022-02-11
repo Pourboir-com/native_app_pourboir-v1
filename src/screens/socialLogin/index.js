@@ -25,7 +25,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 const imgLogo = require('../../assets/images/imgLogo.png');
-const imgWaiter = require('../../assets/images/waiter2.png');
+const logo = require('../../assets/images/logo.png');
 import * as Facebook from 'expo-facebook';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Device from 'expo-device';
@@ -331,7 +331,7 @@ const SocialLogin = ({ navigation, route }) => {
         <ActivityIndicator size={70} color={Colors.yellow} />
       ) : (
         <View style={{ width: '100%', alignItems: 'center' }}>
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
               width: '100%',
@@ -344,13 +344,9 @@ const SocialLogin = ({ navigation, route }) => {
               source={imgLogo}
               resizeMode="contain"
             />
-          </View>
+          </View> */}
           <View style={styles.viewImg}>
-            <Image
-              style={styles.imgStyle}
-              source={imgWaiter}
-              resizeMode="contain"
-            />
+            <Image style={styles.imgStyle} source={logo} resizeMode="contain" />
           </View>
           <TouchableOpacity
             activeOpacity={0.5}
@@ -626,9 +622,7 @@ const styles = StyleSheet.create({
   },
   viewImg: {
     width: '100%',
-    alignSelf: 'center',
     height: Dimensions.get('window').height * 0.5,
-    marginBottom: 10,
   },
   viewbtns: {
     flexDirection: 'row',
@@ -646,8 +640,6 @@ const styles = StyleSheet.create({
     width: 200,
     height: 50,
     position: 'relative',
-    // marginRight: '16%',
-    // marginTop: 10,
   },
   btnFb: {
     width: '90%',

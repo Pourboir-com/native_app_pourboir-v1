@@ -16,7 +16,7 @@
     "notification": {
       "icon": "./assets/logo.png",
       "androidMode": "default",
-      "androidCollapsedTitle": "Updates from Pourboir",
+      "androidCollapsedTitle": "Updates from Miam's",
       "iosDisplayInForeground": true
     },
     "updates": {

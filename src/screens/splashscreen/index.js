@@ -1,19 +1,16 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Animated, ActivityIndicator, Platform } from 'react-native';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import { getAsyncStorageValues } from '../../constants';
-import Context from '../../contextApi/context';
 import { Colors } from '../../constants/Theme';
-import * as actionTypes from '../../contextApi/actionTypes';
 var getCountry = require('country-currency-map').getCountry;
 var formatCurrency = require('country-currency-map').formatCurrency;
 import * as Notifications from 'expo-notifications';
 import { useMutation } from 'react-query';
 import { SEND_PUSH_TOKEN } from '../../queries';
 import { getTrackingPermissionsAsync } from 'expo-tracking-transparency';
-import { upperTitleCase } from '../../util';
 import Constants from 'expo-constants';
 import {
   validateNavigationIOS,
@@ -29,7 +26,6 @@ Notifications.setNotificationHandler({
 });
 
 export default function SplashScreen(props) {
-  const { dispatch } = useContext(Context);
   const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -58,32 +54,6 @@ export default function SplashScreen(props) {
       alert('Must use physical device for Push Notifications');
     }
     return token;
-  };
-
-  const InitializeStates = async () => {
-    const { userInfo = {}, language } = await getAsyncStorageValues();
-    if (userInfo?.user_id) {
-      let userDetails = {
-        name: upperTitleCase(userInfo?.name),
-        image: userInfo?.image,
-        email: userInfo?.email,
-        accessToken: userInfo?.accessToken,
-        user_id: userInfo?.user_id,
-        phone_number: userInfo.phone_number || '',
-        username: userInfo?.username || '',
-        description: userInfo?.description || '',
-        last_name: userInfo?.last_name || '',
-        calling_code: userInfo?.calling_code || '',
-      };
-      dispatch({
-        type: actionTypes.CHANGE_LANGUAGE,
-        payload: language,
-      });
-      dispatch({
-        type: actionTypes.USER_DETAILS,
-        payload: userDetails,
-      });
-    }
   };
 
   const setCurrency = async () => {
@@ -141,7 +111,6 @@ export default function SplashScreen(props) {
       NetInfo.fetch().then(async state => {
         if (state.isConnected) {
           const { userInfo = {}, language } = await getAsyncStorageValues();
-          InitializeStates();
           let tracking = '';
           if (Platform.OS === 'ios') {
             tracking = await checkTrackingPermission();

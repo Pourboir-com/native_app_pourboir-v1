@@ -53,6 +53,17 @@ export const restaurantDistance = item => {
   return _get(item, 'item.distance.rows[0].elements[0].distance.value', '');
 };
 
+export const singleRestDistance = data => {
+  return _get(data, 'distance.rows[0].elements[0].distance.value', '');
+};
+
+export const calculateDistanceInKm = distance => {
+  return Number(distance) > 2000
+    ? Math.round(Number(distance) / 1000) + 'km'
+    : distance
+    ? distance + 'm'
+    : '';
+};
 export const isSearch = (searchVal, searchEnter) => {
   if (!searchVal) {
     return '';

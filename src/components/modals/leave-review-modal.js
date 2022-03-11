@@ -1,5 +1,11 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/Theme';
 import Modal from 'react-native-modal';
@@ -15,6 +21,7 @@ const LeaveReviewModal = ({
   comment,
   setComment,
   confirmClick,
+  createLoading,
 }) => {
   const obj = [1, 2, 3, 4, 5];
   const { localizationContext } = useContext(Context);
@@ -120,9 +127,13 @@ const LeaveReviewModal = ({
             style={styles.btn}
             onPress={confirmClick}
           >
-            <Text style={styles.btnTxt}>
-              {localizationContext.t('confirm')}
-            </Text>
+            {createLoading ? (
+              <ActivityIndicator color="white" />
+            ) : (
+              <Text style={styles.btnTxt}>
+                {localizationContext.t('confirm')}
+              </Text>
+            )}
           </TouchableOpacity>
         </View>
       </View>

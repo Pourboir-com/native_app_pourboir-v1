@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "Miam's",
-    "slug": "pourboir",
-    "scheme": "myapp",
+    "slug": "miams",
+    "scheme": "https",
     "facebookAppId": "771555200360518",
     "facebookScheme": "fb771555200360518",
     "facebookDisplayName": "Pourboir'",
@@ -25,6 +25,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "associatedDomains": ["applinks:miams.app"],
       "supportsTablet": true,
       "bundleIdentifier": "com.developerspourboir.pourboir",
       "buildNumber": "1.0.0",
@@ -64,6 +65,34 @@
         "MEDIA_LIBRARY",
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION"
+      ],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "https",
+              "host": "www.miams.app",
+              "pathPrefix": "/OpenCardReviews"
+            },
+            {
+              "scheme": "http",
+              "host": "www.miams.app",
+              "pathPrefix": "/OpenCardReviews"
+            },
+            {
+              "scheme": "http",
+              "host": "miams.app",
+              "pathPrefix": "/OpenCardReviews"
+            },
+            {
+              "scheme": "https",
+              "host": "miams.app",
+              "pathPrefix": "/OpenCardReviews"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
       ],
       "package": "com.developerspourboir.pourboir",
       "versionCode": 18

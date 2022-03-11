@@ -12,8 +12,8 @@ import {
   Animated,
   Platform,
   Linking,
+  Share,
   Alert,
-  // Share,
 } from 'react-native';
 import * as actionTypes from '../../contextApi/actionTypes';
 import StarCard from '../../components/star-card';
@@ -21,7 +21,7 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import RefferedWaiterModal from '../../components/modals/ConfirmModal';
 import CheckInModal from '../../components/modals/ThanksRatingModal';
-import { Feather } from '@expo/vector-icons';
+import { Feather, FontAwesome } from '@expo/vector-icons';
 import CommonModal from '../../components/modals/HelpUsImproveModal';
 import { Colors } from '../../constants/Theme';
 import RatingStar from '../../components/RatingComponent';
@@ -42,6 +42,7 @@ import {
   ADD_CHECKIN,
   GET_INSTA_POSTS,
   GET_INSTA_DETAILS,
+  REGISTER_RESTAURANT,
 } from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
@@ -60,23 +61,14 @@ import { Review } from '../../components/open-card';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAsyncStorageValues } from '../../constants';
 import Discover from '../../components/open-card/discover';
+import * as Location from 'expo-location';
+import { singleRestDistance } from '../../util';
 
 const ReviewDetails = ({ navigation, route }) => {
   const { state, dispatch, localizationContext } = useContext(Context);
-
-  const openDialScreen = () => {
-    let number = '';
-    if (Platform.OS === 'ios') {
-      number = `telprompt:${RestaurantDetails?.data?.international_phone_number}`;
-    } else {
-      number = `tel:${RestaurantDetails?.data?.international_phone_number}`;
-    }
-    Linking.openURL(number);
-  };
-
+  const [location, setLocation] = useState({});
   // Star arrayyyyyyyy
   const obj = [1, 2, 3, 4, 5];
-
   const [userWaiterModalVisible, setUserWaiterModalVisible] = useState(false);
   const [RefferedWaiterModalVisible, setRefferedWaiterModalVisible] = useState(
     false,
@@ -86,7 +78,6 @@ const ReviewDetails = ({ navigation, route }) => {
   const [checkInModalText, setcheckInModalText] = useState(
     localizationContext.t('not_near'),
   );
-
   const [notCheckInModal, setnotCheckInModal] = useState(false);
   const [refferedThanksModalVisible, setRefferedThanksModalVisible] = useState(
     false,
@@ -94,6 +85,7 @@ const ReviewDetails = ({ navigation, route }) => {
   const [IAMWAITER] = useMutation(I_AM_WAITER);
   const [addCheckIn] = useMutation(ADD_CHECKIN);
   const [AddWaiters] = useMutation(ADDING_WAITERS);
+  const [registerRestaurant] = useMutation(REGISTER_RESTAURANT);
   const [Refferedloading, setRefferedLoading] = useState(false);
   const [Userloading, setUserLoading] = useState(false);
   const [cellPhone, setCellPhone] = useState('');
@@ -106,6 +98,49 @@ const ReviewDetails = ({ navigation, route }) => {
   const [AddFavorite, { isLoading: favLoading }] = useMutation(ADD_FAVORITE);
   const [section, setSection] = useState(1);
   const [countryCode, setCountryCode] = useState('+33');
+  const {
+    img,
+    name,
+    rating,
+    distance: placeDistance,
+    place_id,
+    vicinity,
+    our_rating,
+    restaurant_id,
+    geometry,
+    refetchRestaurant,
+    refetchAll,
+    directLink,
+  } = route?.params || {};
+  const refRBSheet = useRef();
+
+  useEffect(() => {
+    (async () => {
+      if (directLink) {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          return;
+        }
+        let location = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.Lowest,
+        });
+        setLocation({
+          lat: location.coords.latitude,
+          log: location.coords.latitude,
+        });
+      }
+    })();
+  }, []);
+
+  const openDialScreen = () => {
+    let number = '';
+    if (Platform.OS === 'ios') {
+      number = `telprompt:${RestaurantDetails?.data?.international_phone_number}`;
+    } else {
+      number = `tel:${RestaurantDetails?.data?.international_phone_number}`;
+    }
+    Linking.openURL(number);
+  };
 
   useEffect(() => {
     (async () => {
@@ -125,23 +160,6 @@ const ReviewDetails = ({ navigation, route }) => {
   }, []);
 
   const {
-    img,
-    name,
-    rating,
-    distance,
-    services,
-    place_id,
-    vicinity,
-    our_rating,
-    restaurant_id,
-    geometry,
-    refetchRestaurant,
-    refetchAll,
-  } = route?.params || {};
-
-  const refRBSheet = useRef();
-
-  const {
     data: reviewData,
     isLoading: reviewDataLoading,
     refetch: reviewRefetch,
@@ -150,7 +168,6 @@ const ReviewDetails = ({ navigation, route }) => {
       'GET_REVIEWS',
       {
         google_place_id: place_id,
-        user_id: state.userDetails.user_id,
         language: state.language,
       },
     ],
@@ -158,9 +175,9 @@ const ReviewDetails = ({ navigation, route }) => {
     {
       ...reactQueryConfig,
       enabled: state.language && place_id,
-      // onError: e => {
-      //   alert(e?.response?.data?.message);
-      // },
+      onError: e => {
+        alert(e?.response?.data?.message);
+      },
     },
   );
 
@@ -183,12 +200,24 @@ const ReviewDetails = ({ navigation, route }) => {
     isLoading: RestaurantDetailsLoading,
     refetch: refetchRestaurantDetails,
   } = useQuery(
-    ['GET_RESTAURANT_DETAILS', { _id: place_id }],
+    ['GET_RESTAURANT_DETAILS', { _id: place_id, location }],
     GET_RESTAURANT_DETAILS,
     {
+      enabled:
+        directLink && location?.lat && place_id
+          ? true
+          : !directLink && place_id
+          ? true
+          : false,
       ...reactQueryConfig,
     },
   );
+
+  let distance = placeDistance || singleRestDistance(RestaurantDetails?.data);
+  let restaurantId =
+    restaurant_id ||
+    RestaurantDetails?.data?._id ||
+    RestaurantDetails?.data?.restaurant_id;
 
   const {
     data: favoritesData,
@@ -280,13 +309,18 @@ const ReviewDetails = ({ navigation, route }) => {
   };
 
   const restaurant = {
-    place_id: place_id,
-    rating: rating,
-    photos: [img],
-    name: name,
-    formatted_address: vicinity || 'city',
-    our_rating: String(our_rating),
-    location: geometry,
+    place_id: place_id || RestaurantDetails?.data?.place_id,
+    rating: rating
+      ? rating
+      : Number(RestaurantDetails?.data?.our_rating) > 0
+      ? RestaurantDetails?.data?.our_rating
+      : RestaurantDetails?.data?.rating || '0',
+    photos: [img] || RestaurantDetails?.data?.photos,
+    name: name || RestaurantDetails?.data?.name,
+    formatted_address:
+      vicinity || RestaurantDetails?.data?.formatted_address || 'city',
+    our_rating: our_rating || RestaurantDetails?.data?.our_rating || '0',
+    location: geometry || RestaurantDetails?.data?.location,
     international_phone_number:
       RestaurantDetails?.data?.international_phone_number || '',
   };
@@ -338,6 +372,23 @@ const ReviewDetails = ({ navigation, route }) => {
       );
     } else {
       setnotCheckInModal(true);
+    }
+  };
+
+  const handleRegisterRestaurant = async () => {
+    if (!restaurantId) {
+      let { place_id, ...rest } = restaurant;
+      await registerRestaurant(
+        { ...rest, google_place_id: place_id },
+        {
+          onSuccess: async () => {
+            await refetchRestaurantDetails();
+            onShare();
+          },
+        },
+      );
+    } else {
+      onShare();
     }
   };
 
@@ -401,24 +452,28 @@ const ReviewDetails = ({ navigation, route }) => {
     );
   };
 
-  // const onShare = async () => {
-  //   try {
-  //     const result = await Share.share({
-  //       message: name,
-  //     });
-  //     if (result.action === Share.sharedAction) {
-  //       if (result.activityType) {
-  //         // shared with activity type of result.activityType
-  //       } else {
-  //         // shared
-  //       }
-  //     } else if (result.action === Share.dismissedAction) {
-  //       // dismissed
-  //     }
-  //   } catch (error) {
-  //     alert(error.message);
-  //   }
-  // };
+  // let dev_url = `exp://127.0.0.1:19000/--/OpenCardReviews?place_id=${place_id}&directLink=true`;
+  let prod_url = `https://www.miams.app/OpenCardReviews?place_id=${place_id}&directLink=true`;
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: Platform.OS === 'ios' ? name : `${name} ${prod_url}`,
+        url: prod_url,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const handleAddFavorite = async () => {
     if (state.userDetails.user_id) {
@@ -429,7 +484,9 @@ const ReviewDetails = ({ navigation, route }) => {
       await AddFavorite(newFavorite, {
         onSuccess: async () => {
           await refetchFavorites();
-          await refetchRestaurant();
+          if (refetchRestaurant) {
+            await refetchRestaurant();
+          }
           dispatch({
             type: actionTypes.REFRESH_ANIMATION,
             payload: !state.refreshAnimation,
@@ -451,8 +508,9 @@ const ReviewDetails = ({ navigation, route }) => {
       <Spinner visible={RestaurantDetailsLoading} />
       <StatusBar translucent={true} style="light" />
       <GlobalHeader
+        Home={directLink ? 'true' : 'false'}
         arrow={true}
-        headingText={name}
+        headingText={restaurant?.name}
         fontSize={17}
         color={'#fff'}
         bold={true}
@@ -475,8 +533,8 @@ const ReviewDetails = ({ navigation, route }) => {
               RestaurantDetails?.data?.manager?.status === 'active'
             ? navigation.navigate('Braserri', {
                 restaurant_id: RestaurantDetails?.data?._id || '',
-                img,
-                name,
+                img: restaurant?.photos[0],
+                name: restaurant?.name,
                 place_id,
                 refetchWaiters,
                 refetchInstaData,
@@ -496,7 +554,12 @@ const ReviewDetails = ({ navigation, route }) => {
       >
         <View style={styles.viewImg}>
           <ImageBackground
-            source={{ uri: InstaData?.data?.background_image || img || null }}
+            source={{
+              uri:
+                InstaData?.data?.background_image ||
+                restaurant?.photos[0] ||
+                null,
+            }}
             style={{ flex: 1, justifyContent: 'space-between', height: '100%' }}
           >
             <LinearGradient
@@ -528,9 +591,9 @@ const ReviewDetails = ({ navigation, route }) => {
                       <RatingStar
                         starSize={17}
                         type={
-                          v <= rating
+                          v <= restaurant?.rating
                             ? 'filled'
-                            : v === rating + 0.5
+                            : v === restaurant?.rating + 0.5
                             ? 'half'
                             : 'empty'
                         }
@@ -540,15 +603,16 @@ const ReviewDetails = ({ navigation, route }) => {
                   );
                 })}
               </View>
-              {/* <View>
+              <View>
                 <TouchableOpacity
-                  onPress={onShare}
+                  onPress={handleRegisterRestaurant}
                   style={{ marginRight: 15 }}
                   activeOpacity={0.5}
+                  disabled={RestaurantDetailsLoading}
                 >
                   <FontAwesome name="share-square-o" size={24} color="white" />
                 </TouchableOpacity>
-              </View> */}
+              </View>
               <View>
                 <Text
                   style={{
@@ -674,7 +738,7 @@ const ReviewDetails = ({ navigation, route }) => {
                     state={state}
                     navigation={navigation}
                     place_id={place_id}
-                    restaurant_id={restaurant_id}
+                    restaurant_id={restaurantId}
                     navigationDisable={true}
                   />
                 )}
@@ -696,8 +760,8 @@ const ReviewDetails = ({ navigation, route }) => {
             activeOpacity={0.5}
             onPress={() =>
               navigation.navigate('MapScreen', {
-                geometry,
-                name,
+                geometry: restaurant?.location,
+                name: restaurant?.name,
               })
             }
             style={[styles.viewItem]}
@@ -877,7 +941,7 @@ const ReviewDetails = ({ navigation, route }) => {
                         itemData?.item?.user_id?.picture,
                       restaurant_id: place_id,
                       waiter_id: itemData?.item?._id,
-                      place_id: restaurant_id,
+                      place_id: restaurantId,
                     });
                   } else {
                     alert(localizationContext.t('cannot_vote'));
@@ -962,7 +1026,7 @@ const ReviewDetails = ({ navigation, route }) => {
         onPress={() =>
           navigation.navigate('MenuScreen', {
             restaurant_id: RestaurantDetails?.data?._id || '',
-            name,
+            name: restaurant?.name,
           })
         }
         style={[
@@ -1032,7 +1096,7 @@ const ReviewDetails = ({ navigation, route }) => {
           image={waiter}
           buttonText={localizationContext.t('i_confirm')}
           subHeadingText={localizationContext.t('confrm_you_are_server')}
-          restaurant={name}
+          restaurant={restaurant?.name}
         />
       )}
       {userThanksModalVisible && (

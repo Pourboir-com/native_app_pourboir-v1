@@ -31,13 +31,15 @@ export const I_AM_WAITER = async e => {
   return res;
 };
 
+export const REGISTER_RESTAURANT = async e => {
+  let res = await axios.post(BASE_URL + `/v1/restaurants/save`, e);
+  return res;
+};
+
 export const GET_RESTAURANT_DETAILS = async (get, e = {}) => {
-  const {_id, ...rest} = e;
-  const res = await axios.get(
-    BASE_URL + `/v1/restaurants/detail/${_id}`,
-    {
-      params: rest,
-    },
-  );
+  const { _id, ...rest } = e;
+  const res = await axios.get(BASE_URL + `/v1/restaurants/detail/${_id}`, {
+    params: rest,
+  });
   return res.data;
 };

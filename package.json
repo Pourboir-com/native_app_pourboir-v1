@@ -39,6 +39,7 @@
     "expo-image-picker": "~10.1.4",
     "expo-intent-launcher": "^9.1.0",
     "expo-linear-gradient": "~9.1.0",
+    "expo-linking": "~2.2.3",
     "expo-localization": "~10.1.0",
     "expo-location": "^12.0.4",
     "expo-notifications": "~0.11.6",

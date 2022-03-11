@@ -12,6 +12,7 @@ import { Colors } from '../constants/Theme';
 import RatingStar from './RatingComponent';
 import { LinearGradient } from 'expo-linear-gradient';
 import Context from '../contextApi/context';
+import { calculateDistanceInKm } from '../util';
 
 const HomeCard = ({
   navigation,
@@ -147,11 +148,7 @@ const HomeCard = ({
             </Text>
             <View style={styles.view2Card}>
               <Text style={[styles.txt2Card, { fontFamily: 'ProximaNova' }]}>
-                {Number(distance) > 2000
-                  ? Math.round(Number(distance) / 1000) + 'km'
-                  : distance
-                  ? distance + 'm'
-                  : ''}
+                {calculateDistanceInKm(distance)}
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text

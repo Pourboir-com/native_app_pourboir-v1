@@ -20,7 +20,7 @@ const Review = ({
   section,
 }) => {
   const [leaveRevModal, setLeaveRevModal] = useState(false);
-  const { state, localizationContext  } = useContext(Context);
+  const { state, localizationContext } = useContext(Context);
   const [hospitality, setHospitality] = useState();
   const [comment, setComment] = useState('');
   const [createRestaurantReview, { isLoading: createLoading }] = useMutation(
@@ -38,8 +38,8 @@ const Review = ({
         place: restaurant,
       },
       {
-        onSuccess: res => {
-          reviewRefetch();
+        onSuccess: async res => {
+          await reviewRefetch();
           setLeaveRevModal(false);
           setToken(res?.data?.data?.token || 0);
           setReviewSuccess(true);
@@ -96,7 +96,7 @@ const Review = ({
             <View style={{ marginRight: 7, marginBottom: 10, marginTop: 5 }}>
               <Text>
                 {item.comment && (
-                  <ReviewSlider rating={+item.rating} item={item} />
+                  <ReviewSlider rating={item.rating} item={item} />
                 )}
               </Text>
             </View>
@@ -125,6 +125,7 @@ const Review = ({
         comment={comment}
         setComment={setComment}
         confirmClick={confirmClick}
+        createLoading={createLoading}
       />
     </View>
   );

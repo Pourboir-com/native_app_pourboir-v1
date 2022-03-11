@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import splashScreen from '../screens/splashscreen';
@@ -31,10 +31,46 @@ import PublicProfile from '../screens/public-profile';
 import YourTickets from '../screens/your-tickets';
 import NotificationPermission from '../screens/notification-permission';
 import MenuScreen from '../screens/menu-screen';
+import * as actionTypes from '../contextApi/actionTypes';
+import Context from '../contextApi/context';
+import { getAsyncStorageValues } from '../constants';
+import { upperTitleCase } from '../util';
 
 const Stack = createStackNavigator();
 
 function AppNavigator() {
+  const { dispatch } = useContext(Context);
+
+  const InitializeStates = async () => {
+    const { userInfo = {}, language } = await getAsyncStorageValues();
+    if (userInfo?.user_id) {
+      let userDetails = {
+        name: upperTitleCase(userInfo?.name),
+        image: userInfo?.image,
+        email: userInfo?.email,
+        accessToken: userInfo?.accessToken,
+        user_id: userInfo?.user_id,
+        phone_number: userInfo.phone_number || '',
+        username: userInfo?.username || '',
+        description: userInfo?.description || '',
+        last_name: userInfo?.last_name || '',
+        calling_code: userInfo?.calling_code || '',
+      };
+      dispatch({
+        type: actionTypes.CHANGE_LANGUAGE,
+        payload: language,
+      });
+      dispatch({
+        type: actionTypes.USER_DETAILS,
+        payload: userDetails,
+      });
+    }
+  };
+
+  useEffect(() => {
+    InitializeStates();
+  }, []);
+
   return (
     <Stack.Navigator
       initialRouteName="splashScreen"

@@ -88,7 +88,9 @@ const Media = ({
           setChangesSaved(false);
           setHeaderBg(bgImage);
           refetchInstaData();
-          refetchAll();
+          if (refetchAll) {
+            refetchAll();
+          }
           if (token) {
             await refetchInstaFeed();
           }

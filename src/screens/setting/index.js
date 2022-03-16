@@ -31,7 +31,6 @@ import { upperTitleCase, userGivenName } from '../../util';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Spinner from 'react-native-loading-spinner-overlay';
 const imgBg = require('../../assets/images/Group5.png');
-import { StatusBar } from 'expo-status-bar';
 
 const Setting = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
@@ -118,7 +117,6 @@ const Setting = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar translucent={true} style="dark" />
       <Spinner visible={loading} />
       <View style={styles.viewProfile}>
         <ImageBackground

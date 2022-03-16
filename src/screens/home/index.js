@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import Header from './HeaderAnimated';
 import HomeScreenContent from '../../components/HomeContent';
-import { StatusBar } from 'expo-status-bar';
 import { GET_RESTAURANT, GET_FAVORITE_RESTAURANT } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import { useQuery } from 'react-query';
@@ -23,7 +22,6 @@ const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
   const [searchEnter, setsearchEnter] = useState('');
   const [refreshAnimation, setRefreshAnimation] = useState(false);
-
   const [saveLocation, setSaveLocation] = useState('');
   // const [nextPageToken, setnextPageToken] = useState();
   const { state, dispatch } = useContext(Context);
@@ -96,6 +94,10 @@ const HomeScreen = props => {
   }, []);
 
   useEffect(() => {
+    dispatch({
+      type: actionTypes.RESTAURANTS_DETAILS,
+      payload: true,
+    });
     currentLocation();
   }, []);
 
@@ -195,8 +197,6 @@ const HomeScreen = props => {
         Data={restaurantData?.restaurants?.results || []}
         // nextPageToken={nextPageToken}
       >
-        <StatusBar translucent={true} style="dark" />
-
         <HomeScreenContent
           restaurantLoading={restaurantLoading}
           searchVal={searchVal}

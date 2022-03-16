@@ -17,31 +17,22 @@ import 'moment/locale/fr';
 // import 'moment/locale/en';
 import { loadAsync } from 'expo-font';
 import i18n from './src/li8n';
-import * as Linking from 'expo-linking';
+// import * as Linking from 'expo-linking';
 
 export default function App() {
   const initialState = useContext(Context);
   const [state, dispatch] = useReducer(Reducer, initialState);
   const [locale, setLocale] = useState();
-  const [url, setUrl] = useState(null);
-  let redirectUrl = Linking.createURL('www.miams.app');
-  let redirectUrl2 = Linking.createURL('www.miams.app/');
-
-  alert(redirectUrl);
+  // const [url, setUrl] = useState(null);
+  // const redirectUrl = Linking.makeUrl('/');
   const linking = {
     prefixes: [
-      redirectUrl,
-      redirectUrl2,
       'https://www.miams.app',
       'https://www.miams.app/',
-      'http://www.miams.app',
-      'http://www.miams.app/',
       'https://miams.app/',
       'https://miams.app',
-      'http://miams.app',
-      'http://miams.app/',
       'https://',
-      'http://',
+      // redirectUrl,
     ],
     config: {
       screens: {
@@ -50,17 +41,10 @@ export default function App() {
     },
   };
 
-  const handleUrl = ({ url }) => {
-    let data = Linking.parse(url);
-    setUrl(data);
-  };
-
-  const getInitialURL = async () => {
-    const initialURL = await Linking.getInitialURL();
-    if (initialURL) {
-      setUrl(Linking.parse(initialURL));
-    }
-  };
+  // const handleUrl = ({ url }) => {
+  //   let data = Linking.parse(url);
+  //   setUrl(data);
+  // };
 
   useEffect(() => {
     (async () => {
@@ -82,13 +66,19 @@ export default function App() {
           ProximaNovaSemiBold: require('./src/assets/fonts/ProximaNova/ProximaNova-Semibold.otf'),
         });
 
-        Linking.addEventListener('url', handleUrl);
-        if (!url) {
-          getInitialURL();
-        }
-        return () => {
-          Linking.removeEventListener('url');
-        };
+        // Linking.getInitialURL()
+        //   .then(url => {
+        //     handleUrl(url);
+        //   })
+        //   .catch(err => {
+        //     console.log('Deeplinking error', err);
+        //   });
+
+        // Linking.addListener('url', handleUrl);
+
+        // return () => {
+        //   Linking.removeEventListener('url', handleUrl);
+        // };
       } catch {
         // console.log('App.js Error');
       }

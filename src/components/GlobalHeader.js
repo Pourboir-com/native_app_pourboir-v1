@@ -25,7 +25,7 @@ const GlobalHeader = props => {
       props.navigation.navigate('personalDetails', { login: props?.login });
     } else if (props?.setting) {
       props.navigation.navigate('Setting');
-    } else if (props?.Home == 'true' && !state?.restaurantsDetails?.length) {
+    } else if (props?.Home == 'true' && !state.restaurantsDetails) {
       props.navigation.replace('Home', { crossIcon: false });
     } else if (props.changesSaved) {
       Alert.alert(
@@ -41,7 +41,7 @@ const GlobalHeader = props => {
         { cancelable: false },
       );
     } else {
-      props.navigation.goBack(null);
+      props.navigation.goBack();
     }
   };
 
@@ -65,8 +65,8 @@ const GlobalHeader = props => {
       } else if (props.setting) {
         props.navigation.navigate('Setting');
         return true;
-      } else if (props.Home == 'true' && !state?.restaurantsDetails?.length) {
-        props.navigation.replace('Home', { crossIcon: false });
+      } else if (props.Home == 'true') {
+        props.navigation.navigate('Home', { crossIcon: false });
         return true;
       } else if (props.changesSaved) {
         Alert.alert(

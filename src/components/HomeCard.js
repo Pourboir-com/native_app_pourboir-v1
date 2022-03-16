@@ -48,6 +48,7 @@ const HomeCard = ({
             rating: starSelect,
             name,
             distance,
+            calculatedDistance: calculateDistanceInKm(distance),
             services,
             place_id,
             vicinity,

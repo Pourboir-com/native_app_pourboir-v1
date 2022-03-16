@@ -14,6 +14,7 @@ import {
   Linking,
   Share,
   Alert,
+  StatusBar,
 } from 'react-native';
 import * as actionTypes from '../../contextApi/actionTypes';
 import StarCard from '../../components/star-card';
@@ -26,7 +27,6 @@ import CommonModal from '../../components/modals/HelpUsImproveModal';
 import { Colors } from '../../constants/Theme';
 import RatingStar from '../../components/RatingComponent';
 import GlobalHeader from '../../components/GlobalHeader';
-import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useMutation, useQuery } from 'react-query';
 import { reactQueryConfig } from '../../constants';
@@ -62,11 +62,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAsyncStorageValues } from '../../constants';
 import Discover from '../../components/open-card/discover';
 import * as Location from 'expo-location';
-import { singleRestDistance } from '../../util';
+import { singleRestDistance, calculateDistanceInKm } from '../../util';
 
 const ReviewDetails = ({ navigation, route }) => {
   const { state, dispatch, localizationContext } = useContext(Context);
-  const [location, setLocation] = useState({});
+  const [location, setLocation] = useState({
+    geometry: {},
+    isLocationLoaded: false,
+  });
   // Star arrayyyyyyyy
   const obj = [1, 2, 3, 4, 5];
   const [userWaiterModalVisible, setUserWaiterModalVisible] = useState(false);
@@ -85,7 +88,10 @@ const ReviewDetails = ({ navigation, route }) => {
   const [IAMWAITER] = useMutation(I_AM_WAITER);
   const [addCheckIn] = useMutation(ADD_CHECKIN);
   const [AddWaiters] = useMutation(ADDING_WAITERS);
-  const [registerRestaurant] = useMutation(REGISTER_RESTAURANT);
+  const [
+    registerRestaurant,
+    { isLoading: registerRestaurantLoading },
+  ] = useMutation(REGISTER_RESTAURANT);
   const [Refferedloading, setRefferedLoading] = useState(false);
   const [Userloading, setUserLoading] = useState(false);
   const [cellPhone, setCellPhone] = useState('');
@@ -111,6 +117,7 @@ const ReviewDetails = ({ navigation, route }) => {
     refetchRestaurant,
     refetchAll,
     directLink,
+    calculatedDistance,
   } = route?.params || {};
   const refRBSheet = useRef();
 
@@ -119,14 +126,21 @@ const ReviewDetails = ({ navigation, route }) => {
       if (directLink) {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
+          setLocation({
+            geometry: {},
+            isLocationLoaded: true,
+          });
           return;
         }
         let location = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Lowest,
         });
         setLocation({
-          lat: location.coords.latitude,
-          log: location.coords.latitude,
+          geometry: {
+            lat: location.coords.latitude,
+            log: location.coords.longitude,
+          },
+          isLocationLoaded: true,
         });
       }
     })();
@@ -198,26 +212,28 @@ const ReviewDetails = ({ navigation, route }) => {
   const {
     data: RestaurantDetails,
     isLoading: RestaurantDetailsLoading,
+    isFetching: RestaurantDetailsIsFetching,
     refetch: refetchRestaurantDetails,
   } = useQuery(
-    ['GET_RESTAURANT_DETAILS', { _id: place_id, location }],
+    ['GET_RESTAURANT_DETAILS', { _id: place_id, location: location?.geometry }],
     GET_RESTAURANT_DETAILS,
     {
-      enabled:
-        directLink && location?.lat && place_id
-          ? true
-          : !directLink && place_id
-          ? true
-          : false,
+      enabled: !directLink
+        ? true
+        : directLink && location?.isLocationLoaded
+        ? true
+        : false,
       ...reactQueryConfig,
     },
   );
-
-  let distance = placeDistance || singleRestDistance(RestaurantDetails?.data);
+  let restaurantDistance = singleRestDistance(RestaurantDetails?.data);
+  let distance = placeDistance || restaurantDistance;
   let restaurantId =
     restaurant_id ||
     RestaurantDetails?.data?._id ||
     RestaurantDetails?.data?.restaurant_id;
+  let distanceDisplayed =
+    calculatedDistance || calculateDistanceInKm(restaurantDistance);
 
   const {
     data: favoritesData,
@@ -297,16 +313,16 @@ const ReviewDetails = ({ navigation, route }) => {
     setUserWaiterModalVisible(false);
   };
 
-  const handleUserModalOpen = () => {
-    const isUserAlreadyWaiter = waitersData?.data?.find(
-      item => item?.user_id?._id === state.userDetails.user_id,
-    );
-    if (isUserAlreadyWaiter) {
-      alert(localizationContext.t('already_waiter'));
-    } else {
-      setUserWaiterModalVisible(true);
-    }
-  };
+  // const handleUserModalOpen = () => {
+  //   const isUserAlreadyWaiter = waitersData?.data?.find(
+  //     item => item?.user_id?._id === state.userDetails.user_id,
+  //   );
+  //   if (isUserAlreadyWaiter) {
+  //     alert(localizationContext.t('already_waiter'));
+  //   } else {
+  //     setUserWaiterModalVisible(true);
+  //   }
+  // };
 
   const restaurant = {
     place_id: place_id || RestaurantDetails?.data?.place_id,
@@ -315,10 +331,10 @@ const ReviewDetails = ({ navigation, route }) => {
       : Number(RestaurantDetails?.data?.our_rating) > 0
       ? RestaurantDetails?.data?.our_rating
       : RestaurantDetails?.data?.rating || '0',
-    photos: [img] || RestaurantDetails?.data?.photos,
+    photos: img ? [img] : RestaurantDetails?.data?.photos,
     name: name || RestaurantDetails?.data?.name,
     formatted_address:
-      vicinity || RestaurantDetails?.data?.formatted_address || 'city',
+      vicinity || RestaurantDetails?.data?.formatted_address || '',
     our_rating: our_rating || RestaurantDetails?.data?.our_rating || '0',
     location: geometry || RestaurantDetails?.data?.location,
     international_phone_number:
@@ -353,7 +369,7 @@ const ReviewDetails = ({ navigation, route }) => {
   };
 
   const handleCheckIn = async () => {
-    if (Number(distance) < 300) {
+    if (distance && Number(distance) < 300) {
       await addCheckIn(
         {
           place: restaurant,
@@ -454,11 +470,19 @@ const ReviewDetails = ({ navigation, route }) => {
 
   // let dev_url = `exp://127.0.0.1:19000/--/OpenCardReviews?place_id=${place_id}&directLink=true`;
   let prod_url = `https://www.miams.app/OpenCardReviews?place_id=${place_id}&directLink=true`;
-
+  let url_details = `${restaurant?.name && `${restaurant?.name}`} ${
+    restaurant?.formatted_address && restaurant?.formatted_address !== 'city'
+      ? `- ${restaurant?.formatted_address}`
+      : ''
+  } ${restaurant?.international_phone_number &&
+    `- ${restaurant?.international_phone_number}`}`;
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: Platform.OS === 'ios' ? name : `${name} ${prod_url}`,
+        message:
+          Platform.OS === 'ios'
+            ? url_details
+            : `${url_details} - app-link: ${prod_url}`,
         url: prod_url,
       });
       if (result.action === Share.sharedAction) {
@@ -505,10 +529,20 @@ const ReviewDetails = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <Spinner visible={RestaurantDetailsLoading} />
-      <StatusBar translucent={true} style="light" />
+      <StatusBar barStyle="light-content" />
+      <Spinner
+        visible={
+          RestaurantDetailsLoading ||
+          registerRestaurantLoading ||
+          RestaurantDetailsIsFetching
+        }
+      />
       <GlobalHeader
-        Home={directLink ? 'true' : 'false'}
+        {...(!state.restaurantsDetails
+          ? {
+              Home: 'true',
+            }
+          : {})}
         arrow={true}
         headingText={restaurant?.name}
         fontSize={17}
@@ -556,9 +590,9 @@ const ReviewDetails = ({ navigation, route }) => {
           <ImageBackground
             source={{
               uri:
-                InstaData?.data?.background_image ||
-                restaurant?.photos[0] ||
-                null,
+                InstaData?.data?.background_image || restaurant?.photos
+                  ? restaurant?.photos[0]
+                  : null,
             }}
             style={{ flex: 1, justifyContent: 'space-between', height: '100%' }}
           >
@@ -621,11 +655,7 @@ const ReviewDetails = ({ navigation, route }) => {
                     fontSize: 16,
                   }}
                 >
-                  {Number(distance) > 2000
-                    ? Number(distance) / 1000 + 'km'
-                    : distance
-                    ? distance + 'm'
-                    : ''}
+                  {distanceDisplayed}
                 </Text>
               </View>
             </View>

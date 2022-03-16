@@ -10,6 +10,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Platform,
+  StatusBar,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import GlobalHeader from '../../components/GlobalHeader';
@@ -19,7 +20,6 @@ import RatingStar from '../../components/RatingComponent';
 import Context from '../../contextApi/context';
 import { ADD_RATINGS } from '../../queries';
 import { useMutation } from 'react-query';
-import { StatusBar } from 'expo-status-bar';
 import NumberFormat from 'react-number-format';
 const imgBg = require('../../assets/images/Group5.png');
 import { getAsyncStorageValues } from '../../constants';
@@ -130,287 +130,289 @@ const RateService = ({ navigation, route }) => {
   const obj = [1, 2, 3, 4, 5];
 
   return (
-    <ScrollView
-      ref={scrollRef}
-      alwaysBounceHorizontal={false}
-      alwaysBounceVertical={false}
-      bounces={false}
-      showsVerticalScrollIndicator={false}
-      keyboardShouldPersistTaps={'handled'}
-      style={[
-        styles.container,
-        Platform.OS === 'ios'
-          ? isKeyboardVisible
-            ? { marginBottom: Dimensions.get('window').height * 0.4 }
-            : null
-          : null,
-      ]}
-    >
-      <StatusBar translucent={true} style="dark" />
-      <View style={styles.viewProfile}>
-        <ImageBackground
-          style={{ width: '100%', height: 'auto', paddingBottom: 70 }}
-          source={imgBg}
-          resizeMode="stretch"
-        >
-          <GlobalHeader
-            arrow={true}
-            headingText={localizationContext.t('rate_your_server')}
-            fontSize={17}
-            color={Colors.fontDark}
-            backgroundColor={'transparent'}
-            navigation={navigation}
-          />
-          <View>
-            <View style={styles.viewImg}>
-              {image ? (
-                <Image
-                  style={{ width: 100, height: 100, borderRadius: 50 }}
-                  source={{ uri: image }}
-                />
-              ) : (
-                <FontAwesome name="user-circle-o" size={100} color="#fff" />
-              )}
-            </View>
-            <Text
-              ellipsizeMode="tail"
-              numberOfLines={1}
-              style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}
-            >
-              {name}
-            </Text>
-          </View>
-        </ImageBackground>
-      </View>
+    <>
+      <StatusBar barStyle="dark-content" />
       <ScrollView
+        ref={scrollRef}
         alwaysBounceHorizontal={false}
         alwaysBounceVertical={false}
         bounces={false}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps={'handled'}
-        style={styles.viewFlatlist}
+        style={[
+          styles.container,
+          Platform.OS === 'ios'
+            ? isKeyboardVisible
+              ? { marginBottom: Dimensions.get('window').height * 0.4 }
+              : null
+            : null,
+        ]}
       >
-        <View style={styles.viewListCard}>
-          <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
-            {localizationContext.t('hospitality')}
-          </Text>
-          <View style={{ flexDirection: 'row', marginTop: 10 }}>
-            {obj.map((v, i) => {
-              return (
-                <TouchableOpacity
-                  key={i}
-                  onPress={() => {
-                    setHospitality(v);
-                  }}
-                >
-                  <RatingStar
-                    padding={true}
-                    starSize={25}
-                    type={
-                      v <= hospitality
-                        ? 'filled'
-                        : v === hospitality + 0.5
-                        ? 'half'
-                        : 'empty'
-                    }
-                    notRatedStarColor="rgba(0,0,0,0.1)"
-                  />
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        </View>
-        <View style={styles.viewListCard}>
-          <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
-            {localizationContext.t('speed')}
-          </Text>
-          <View style={{ flexDirection: 'row', marginTop: 10 }}>
-            {obj.map((v, i) => {
-              return (
-                <TouchableOpacity
-                  key={i}
-                  onPress={() => {
-                    setSpeed(v);
-                  }}
-                >
-                  <RatingStar
-                    padding={true}
-                    starSize={25}
-                    type={
-                      v <= speed
-                        ? 'filled'
-                        : v === speed + 0.5
-                        ? 'half'
-                        : 'empty'
-                    }
-                    notRatedStarColor="rgba(0,0,0,0.1)"
-                  />
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        </View>
-        <View style={styles.viewListCard}>
-          <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
-            {localizationContext.t('service')}
-          </Text>
-          <View style={{ flexDirection: 'row', marginTop: 10 }}>
-            {obj.map((v, i) => {
-              return (
-                <TouchableOpacity
-                  key={i}
-                  onPress={() => {
-                    setService(v);
-                  }}
-                >
-                  <RatingStar
-                    padding={true}
-                    starSize={25}
-                    type={
-                      v <= service
-                        ? 'filled'
-                        : v === service + 0.5
-                        ? 'half'
-                        : 'empty'
-                    }
-                    notRatedStarColor="rgba(0,0,0,0.1)"
-                  />
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        </View>
-        <View style={styles.viewListCard}>
-          <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
-            {localizationContext.t('professionalism')}
-          </Text>
-          <View style={{ flexDirection: 'row', marginTop: 10 }}>
-            {obj.map((v, i) => {
-              return (
-                <TouchableOpacity
-                  key={i}
-                  onPress={() => {
-                    setProfessionalism(v);
-                  }}
-                >
-                  <RatingStar
-                    padding={true}
-                    starSize={25}
-                    type={
-                      v <= professionalism
-                        ? 'filled'
-                        : v === professionalism + 0.5
-                        ? 'half'
-                        : 'empty'
-                    }
-                    notRatedStarColor="rgba(0,0,0,0.1)"
-                  />
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        </View>
-        <View style={{ alignItems: 'center' }}>
-          <View style={styles.viewTip}>
-            <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
-              {localizationContext.t('your_tip_to_waiter')}
-            </Text>
-            <NumberFormat
-              value={remarks}
-              thousandSeparator={true}
-              prefix={
-                currency ? currency.currency.split(' ').join('') + ' ' : ''
-              }
-              renderText={formattedValue => (
-                <TextInput
-                  returnKeyLabel="Validate"
-                  returnKeyType="done"
-                  onSubmitEditing={
-                    hospitality &&
-                    speed &&
-                    professionalism &&
-                    service &&
-                    remarks.replace(/[^0-9]/g, '') &&
-                    handleAddRatings
-                  }
-                  keyboardType="number-pad"
-                  value={formattedValue}
-                  onFocus={() => {
-                    setKeyboardVisible(true);
-                    setTimeout(() => {
-                      scrollRef.current.scrollToEnd({ animated: true });
-                    }, 100);
-                  }}
-                  onBlur={() => {
-                    setKeyboardVisible(false);
-                  }}
-                  onChangeText={e => {
-                    scrollRef.current.scrollToEnd({ animated: true });
-                    setRemarks(e);
-                  }}
-                  //  onFocus={() => setonHandleFocus(!onHandleFocus)}
-                  style={[
-                    styles.inputStyle,
-                    { fontFamily: 'ProximaNova', textAlign: 'center' },
-                  ]}
-                />
-              )}
-              displayType={'text'}
+        <View style={styles.viewProfile}>
+          <ImageBackground
+            style={{ width: '100%', height: 'auto', paddingBottom: 70 }}
+            source={imgBg}
+            resizeMode="stretch"
+          >
+            <GlobalHeader
+              arrow={true}
+              headingText={localizationContext.t('rate_your_server')}
+              fontSize={17}
+              color={Colors.fontDark}
+              backgroundColor={'transparent'}
+              navigation={navigation}
             />
-          </View>
+            <View>
+              <View style={styles.viewImg}>
+                {image ? (
+                  <Image
+                    style={{ width: 100, height: 100, borderRadius: 50 }}
+                    source={{ uri: image }}
+                  />
+                ) : (
+                  <FontAwesome name="user-circle-o" size={100} color="#fff" />
+                )}
+              </View>
+              <Text
+                ellipsizeMode="tail"
+                numberOfLines={1}
+                style={[styles.txtName, { fontFamily: 'ProximaNovaBold' }]}
+              >
+                {name}
+              </Text>
+            </View>
+          </ImageBackground>
         </View>
-        <TouchableOpacity
-          onPress={() => setPayMethodsIsVisible(true)}
-          disabled={
-            loading
-              ? true
-              : hospitality &&
+        <ScrollView
+          alwaysBounceHorizontal={false}
+          alwaysBounceVertical={false}
+          bounces={false}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps={'handled'}
+          style={styles.viewFlatlist}
+        >
+          <View style={styles.viewListCard}>
+            <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
+              {localizationContext.t('hospitality')}
+            </Text>
+            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+              {obj.map((v, i) => {
+                return (
+                  <TouchableOpacity
+                    key={i}
+                    onPress={() => {
+                      setHospitality(v);
+                    }}
+                  >
+                    <RatingStar
+                      padding={true}
+                      starSize={25}
+                      type={
+                        v <= hospitality
+                          ? 'filled'
+                          : v === hospitality + 0.5
+                          ? 'half'
+                          : 'empty'
+                      }
+                      notRatedStarColor="rgba(0,0,0,0.1)"
+                    />
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+          <View style={styles.viewListCard}>
+            <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
+              {localizationContext.t('speed')}
+            </Text>
+            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+              {obj.map((v, i) => {
+                return (
+                  <TouchableOpacity
+                    key={i}
+                    onPress={() => {
+                      setSpeed(v);
+                    }}
+                  >
+                    <RatingStar
+                      padding={true}
+                      starSize={25}
+                      type={
+                        v <= speed
+                          ? 'filled'
+                          : v === speed + 0.5
+                          ? 'half'
+                          : 'empty'
+                      }
+                      notRatedStarColor="rgba(0,0,0,0.1)"
+                    />
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+          <View style={styles.viewListCard}>
+            <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
+              {localizationContext.t('service')}
+            </Text>
+            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+              {obj.map((v, i) => {
+                return (
+                  <TouchableOpacity
+                    key={i}
+                    onPress={() => {
+                      setService(v);
+                    }}
+                  >
+                    <RatingStar
+                      padding={true}
+                      starSize={25}
+                      type={
+                        v <= service
+                          ? 'filled'
+                          : v === service + 0.5
+                          ? 'half'
+                          : 'empty'
+                      }
+                      notRatedStarColor="rgba(0,0,0,0.1)"
+                    />
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+          <View style={styles.viewListCard}>
+            <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
+              {localizationContext.t('professionalism')}
+            </Text>
+            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+              {obj.map((v, i) => {
+                return (
+                  <TouchableOpacity
+                    key={i}
+                    onPress={() => {
+                      setProfessionalism(v);
+                    }}
+                  >
+                    <RatingStar
+                      padding={true}
+                      starSize={25}
+                      type={
+                        v <= professionalism
+                          ? 'filled'
+                          : v === professionalism + 0.5
+                          ? 'half'
+                          : 'empty'
+                      }
+                      notRatedStarColor="rgba(0,0,0,0.1)"
+                    />
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+          <View style={{ alignItems: 'center' }}>
+            <View style={styles.viewTip}>
+              <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
+                {localizationContext.t('your_tip_to_waiter')}
+              </Text>
+              <NumberFormat
+                value={remarks}
+                thousandSeparator={true}
+                prefix={
+                  currency ? currency.currency.split(' ').join('') + ' ' : ''
+                }
+                renderText={formattedValue => (
+                  <TextInput
+                    returnKeyLabel="Validate"
+                    returnKeyType="done"
+                    onSubmitEditing={
+                      hospitality &&
+                      speed &&
+                      professionalism &&
+                      service &&
+                      remarks.replace(/[^0-9]/g, '') &&
+                      handleAddRatings
+                    }
+                    keyboardType="number-pad"
+                    value={formattedValue}
+                    onFocus={() => {
+                      setKeyboardVisible(true);
+                      setTimeout(() => {
+                        scrollRef.current.scrollToEnd({ animated: true });
+                      }, 100);
+                    }}
+                    onBlur={() => {
+                      setKeyboardVisible(false);
+                    }}
+                    onChangeText={e => {
+                      scrollRef.current.scrollToEnd({ animated: true });
+                      setRemarks(e);
+                    }}
+                    //  onFocus={() => setonHandleFocus(!onHandleFocus)}
+                    style={[
+                      styles.inputStyle,
+                      { fontFamily: 'ProximaNova', textAlign: 'center' },
+                    ]}
+                  />
+                )}
+                displayType={'text'}
+              />
+            </View>
+          </View>
+          <TouchableOpacity
+            onPress={() => setPayMethodsIsVisible(true)}
+            disabled={
+              loading
+                ? true
+                : hospitality &&
+                  speed &&
+                  professionalism &&
+                  service &&
+                  remarks.replace(/[^0-9]/g, '')
+                ? false
+                : true
+            }
+            style={[
+              styles.btnValider,
+              hospitality &&
                 speed &&
                 professionalism &&
                 service &&
-                remarks.replace(/[^0-9]/g, '')
-              ? false
-              : true
-          }
-          style={[
-            styles.btnValider,
-            hospitality &&
-              speed &&
-              professionalism &&
-              service &&
-              remarks.replace(/[^0-9]/g, '') && {
-                backgroundColor: Colors.yellow,
-              },
-          ]}
-        >
-          <Text
-            style={{
-              fontSize: 16,
-              fontFamily: 'ProximaNova',
-              color: Colors.fontLight,
-            }}
+                remarks.replace(/[^0-9]/g, '') && {
+                  backgroundColor: Colors.yellow,
+                },
+            ]}
           >
-            {localizationContext.t('validate')}
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 16,
+                fontFamily: 'ProximaNova',
+                color: Colors.fontLight,
+              }}
+            >
+              {localizationContext.t('validate')}
+            </Text>
+          </TouchableOpacity>
+        </ScrollView>
+        {TokenModalIsVisible && (
+          <ThankRatingModal
+            isVisible={TokenModalIsVisible}
+            LotteryNumber={lotteryNo}
+            handleModalClose={handleTokenModalClose}
+          />
+        )}
+        {PayMethodsIsVisible && (
+          <TipModal
+            loading={loading}
+            isVisible={PayMethodsIsVisible}
+            handleModalClose={handlePayMethodClose}
+            handlePayCash={handleAddRatings}
+            handlePayDigital={handlePayDigital}
+          />
+        )}
       </ScrollView>
-      {TokenModalIsVisible && (
-        <ThankRatingModal
-          isVisible={TokenModalIsVisible}
-          LotteryNumber={lotteryNo}
-          handleModalClose={handleTokenModalClose}
-        />
-      )}
-      {PayMethodsIsVisible && (
-        <TipModal
-          loading={loading}
-          isVisible={PayMethodsIsVisible}
-          handleModalClose={handlePayMethodClose}
-          handlePayCash={handleAddRatings}
-          handlePayDigital={handlePayDigital}
-        />
-      )}
-    </ScrollView>
+    </>
   );
 };
 export default RateService;

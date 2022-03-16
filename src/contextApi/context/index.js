@@ -10,7 +10,7 @@ const Context = createContext({
   },
   language: 'en-US',
   refreshAnimation: false,
-  restaurantsDetails: [],
+  restaurantsDetails: false,
   yourRestaurants: [],
 });
 

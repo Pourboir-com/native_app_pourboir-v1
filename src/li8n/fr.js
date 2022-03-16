@@ -88,7 +88,7 @@ export default {
   thanks_for_vote: 'Merci pour votre vote',
   will_contact_by_email:
     'Nous vous offrons un coupon pour la prochaine loterie',
-  must_loggedIn: 'Vous devez être connecté pour utiliser Pourboir!',
+  must_loggedIn: `Veuillez activer votre wifi pour accéder à l'application !`,
   continue_with_apple: 'Continuer avec Apple',
   cannot_vote: 'Vous ne pouvez pas voter vous-même',
   already_waiter: 'Vous êtes déjà serveur dans ce restaurant',

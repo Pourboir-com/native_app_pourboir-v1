@@ -1,10 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, Platform } from 'react-native';
 import Modal from 'react-native-modal';
 import { AdMobBanner } from 'expo-ads-admob';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import * as actionTypes from '../../contextApi/actionTypes';
-import Context from '../../contextApi/context';
 import Constants from 'expo-constants';
 
 const AdModal = ({ adModalVisible, setAdModalVisible }) => {
@@ -20,7 +18,6 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
   const adUnitID = Constants.isDevice && !__DEV__ ? productionID : testID;
 
   const [error, setError] = useState();
-  const { state, dispatch } = useContext(Context);
   const [showCross, setShowCross] = useState(false);
   const [Ad, setAd] = useState(false);
 
@@ -34,12 +31,6 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
     showCrossDelay();
   }, []);
 
-  const refreshAnimation = () => {
-    dispatch({
-      type: actionTypes.REFRESH_ANIMATION,
-      payload: !state.refreshAnimation,
-    });
-  };
   return (
     <Modal
       isVisible={adModalVisible}
@@ -101,7 +92,6 @@ const AdModal = ({ adModalVisible, setAdModalVisible }) => {
         <TouchableOpacity
           onPress={() => {
             setAdModalVisible(false);
-            refreshAnimation();
           }}
           style={{
             alignSelf: 'flex-end',

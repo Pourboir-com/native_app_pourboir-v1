@@ -30,7 +30,7 @@ import StaffCard from '../../components/manager/staff-card';
 const ServerProfile = ({ navigation, route }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [formId, setFormId] = useState('');
-  const { state, dispatch,  localizationContext } = useContext(Context);
+  const { state, dispatch, localizationContext } = useContext(Context);
   // const [saveLocation, setSaveLocation] = useState('');
   const [userInfo, setuserInfo] = useState();
   const [loading, setLoading] = useState(false);
@@ -162,12 +162,6 @@ const ServerProfile = ({ navigation, route }) => {
                     title={localizationContext.t('ind_rest')}
                     navigation={'Home'}
                     navigationData={{ crossIcon: false }}
-                    dispatch={() => {
-                      dispatch({
-                        type: actionTypes.REFRESH_ANIMATION,
-                        payload: !state.refreshAnimation,
-                      });
-                    }}
                   />
                 </View>
                 {waiterFormLoading ? (

@@ -65,7 +65,7 @@ import * as Location from 'expo-location';
 import { singleRestDistance, calculateDistanceInKm } from '../../util';
 
 const ReviewDetails = ({ navigation, route }) => {
-  const { state, dispatch, localizationContext } = useContext(Context);
+  const { state, localizationContext } = useContext(Context);
   const [location, setLocation] = useState({
     geometry: {},
     isLocationLoaded: false,
@@ -479,11 +479,7 @@ const ReviewDetails = ({ navigation, route }) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message:
-          Platform.OS === 'ios'
-            ? url_details
-            : `${url_details} - app-link: ${prod_url}`,
-        url: prod_url,
+        message: `${url_details} - app-link: ${prod_url}`,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -511,10 +507,6 @@ const ReviewDetails = ({ navigation, route }) => {
           if (refetchRestaurant) {
             await refetchRestaurant();
           }
-          dispatch({
-            type: actionTypes.REFRESH_ANIMATION,
-            payload: !state.refreshAnimation,
-          });
         },
       });
     } else {
@@ -531,11 +523,7 @@ const ReviewDetails = ({ navigation, route }) => {
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
       <Spinner
-        visible={
-          RestaurantDetailsLoading ||
-          registerRestaurantLoading ||
-          RestaurantDetailsIsFetching
-        }
+        visible={RestaurantDetailsLoading || registerRestaurantLoading}
       />
       <GlobalHeader
         {...(!state.restaurantsDetails

@@ -14,16 +14,15 @@ import axios from 'axios';
 import { getAsyncStorageValues } from './src/constants';
 import moment from 'moment';
 import 'moment/locale/fr';
-// import 'moment/locale/en';
-import { loadAsync } from 'expo-font';
 import i18n from './src/li8n';
 // import * as Linking from 'expo-linking';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 export default function App() {
   const initialState = useContext(Context);
   const [state, dispatch] = useReducer(Reducer, initialState);
   const [locale, setLocale] = useState();
-  // const [url, setUrl] = useState(null);
   // const redirectUrl = Linking.makeUrl('/');
   const linking = {
     prefixes: [
@@ -41,11 +40,6 @@ export default function App() {
     },
   };
 
-  // const handleUrl = ({ url }) => {
-  //   let data = Linking.parse(url);
-  //   setUrl(data);
-  // };
-
   useEffect(() => {
     (async () => {
       try {
@@ -59,26 +53,6 @@ export default function App() {
         if (manager_details?.token) {
           axios.defaults.headers.common.Authorization = `Bearer ${manager_details?.token}`;
         }
-        await loadAsync({
-          // Load a font `Montserrat` from a static resource
-          ProximaNova: require('./src/assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
-          ProximaNovaBold: require('./src/assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
-          ProximaNovaSemiBold: require('./src/assets/fonts/ProximaNova/ProximaNova-Semibold.otf'),
-        });
-
-        // Linking.getInitialURL()
-        //   .then(url => {
-        //     handleUrl(url);
-        //   })
-        //   .catch(err => {
-        //     console.log('Deeplinking error', err);
-        //   });
-
-        // Linking.addListener('url', handleUrl);
-
-        // return () => {
-        //   Linking.removeEventListener('url', handleUrl);
-        // };
       } catch {
         // console.log('App.js Error');
       }
@@ -94,6 +68,16 @@ export default function App() {
     [locale],
   );
 
+  const [loaded] = useFonts({
+    // Load a font `Montserrat` from a static resource
+    ProximaNova: require('./src/assets/fonts/ProximaNova/ProximaNova-Regular.otf'),
+    ProximaNovaBold: require('./src/assets/fonts/ProximaNova/ProximaNova-Bold.otf'),
+    ProximaNovaSemiBold: require('./src/assets/fonts/ProximaNova/ProximaNova-Semibold.otf'),
+  });
+
+  if (!loaded) {
+    return <AppLoading />;
+  }
   return (
     <Context.Provider value={{ state, dispatch, localizationContext }}>
       <NavigationContainer

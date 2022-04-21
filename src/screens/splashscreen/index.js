@@ -119,29 +119,34 @@ export default function SplashScreen(props) {
           const token = await checkNotificationPermission();
 
           if (Platform.OS === 'ios') {
-            const isFirstLogin = await AsyncStorage.getItem('isFirstLogin');
-            // console.log({ isFirstLogin });
-            // if (isFirstLogin) {
-            //   if (userInfo?.user_id) {
-            //     props.navigation.replace('Home', {
-            //       crossIcon: false,
-            //       ad: true,
-            //     });
-            //   } else {
-            //     props.navigation.replace('socialLogin');
-            //   }
-            // } else
-            await validateNavigationIOS(
-              props.navigation,
-              tracking,
-              location,
-              token,
-              userInfo,
+            const firstLogin = await AsyncStorage.getItem('isFirstLogin');
+            const { isFirstLogin } = JSON.parse(firstLogin || '{}');
+            if (isFirstLogin) {
+              if (userInfo?.user_id) {
+                props.navigation.replace('Home', {
+                  crossIcon: false,
+                });
+              } else {
+                props.navigation.replace('socialLogin');
+              }
+            } else
+              await validateNavigationIOS(
+                props.navigation,
+                tracking,
+                location,
+                token,
+                userInfo,
+              );
+            await AsyncStorage.setItem(
+              'isFirstLogin',
+              JSON.stringify({
+                isFirstLogin: true,
+              }),
             );
           } else {
             validateNavigationAndroid(props.navigation, location, userInfo);
           }
-          // await AsyncStorage.setItem('isFirstLogin', true);
+
           if (userInfo?.user_id) {
             await sendNotificationToken({
               id: userInfo?.user_id || '',
@@ -172,7 +177,11 @@ export default function SplashScreen(props) {
           props.navigation.replace('NoWiFi');
         }
       });
-    } catch {}
+    } catch {
+      props.navigation.replace('Home', {
+        crossIcon: false,
+      });
+    }
   }, []);
 
   return (

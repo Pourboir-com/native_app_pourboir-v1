@@ -88,10 +88,6 @@ const PublicProfile = ({ navigation, route }) => {
           type: actionTypes.CHANGE_LANGUAGE,
           payload: 'en-US',
         });
-        dispatch({
-          type: actionTypes.REFRESH_ANIMATION,
-          payload: !state.refreshAnimation,
-        });
       },
     },
     {
@@ -102,10 +98,6 @@ const PublicProfile = ({ navigation, route }) => {
         dispatch({
           type: actionTypes.CHANGE_LANGUAGE,
           payload: 'fr-FR',
-        });
-        dispatch({
-          type: actionTypes.REFRESH_ANIMATION,
-          payload: !state.refreshAnimation,
         });
       },
     },

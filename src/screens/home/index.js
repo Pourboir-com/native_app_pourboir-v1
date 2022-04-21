@@ -5,14 +5,8 @@ import { GET_RESTAURANT, GET_FAVORITE_RESTAURANT } from '../../queries';
 import { reactQueryConfig } from '../../constants';
 import { useQuery } from 'react-query';
 import Context from '../../contextApi/context';
-// import * as actionTypes from '../../contextApi/actionTypes';
 import { isSearch } from '../../util';
-// import * as FacebookAds from 'expo-ads-facebook';
 import * as Location from 'expo-location';
-import AdModal from '../../components/modals/AdModal';
-import NoFavRestaurant from '../../components/no-fav-card';
-// import AdModal from '../../components/modals/AdModal';
-// import NoFavRestaurant from '../../components/no-fav-card';
 import { AppState } from 'react-native';
 import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -21,7 +15,6 @@ import { differenceInSeconds } from 'date-fns';
 const HomeScreen = props => {
   const [searchVal, setSearchVal] = useState('');
   const [searchEnter, setsearchEnter] = useState('');
-  const [refreshAnimation, setRefreshAnimation] = useState(false);
   const [saveLocation, setSaveLocation] = useState('');
   // const [nextPageToken, setnextPageToken] = useState();
   const { state, dispatch } = useContext(Context);
@@ -77,7 +70,6 @@ const HomeScreen = props => {
       if (elapsed > 300) {
         currentLocation();
       }
-      setRefreshAnimation(prev => !prev);
     }
     if (nextAppState === 'background') {
       recordStartTime();
@@ -100,15 +92,6 @@ const HomeScreen = props => {
     });
     currentLocation();
   }, []);
-
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch({
-        type: actionTypes.REFRESH_ANIMATION,
-        payload: !state.refreshAnimation,
-      });
-    }, 10);
-  }, [refreshAnimation]);
 
   // useEffect(() => {
   //   if (props?.route?.params?.ad) {

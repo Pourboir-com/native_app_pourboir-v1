@@ -250,11 +250,11 @@ const HomeScreen = props => {
           >
             <TouchableOpacity
               onPress={() => {
-                if (scrollRef.current && scrollRef.current.getNode) {
-                  const node = scrollRef.current.getNode();
+                if (scrollRef.current) {
+                  const node = scrollRef.current;
                   if (node) {
                     // if (scrollPosition > 0) {
-                    node.scrollTo({ y: -50, animated: true });
+                    node.scrollTo({ y: 0, animated: true });
                     setTimeout(() => {
                       TextInputRef.current.focus();
                     }, 200);

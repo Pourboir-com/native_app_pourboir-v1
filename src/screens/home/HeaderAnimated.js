@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   Image,
   RefreshControl,
+  ScrollView,
 } from 'react-native';
-import Animated, { Extrapolate } from 'react-native-reanimated';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
 import { SvgHeaderSearchIcon } from '../../components/svg/header_search_icon';
@@ -23,59 +23,9 @@ const HomeScreen = props => {
   const scrollRef = useRef(null);
   const TextInputRef = React.useRef(null);
   const { state, localizationContext } = useContext(Context);
-
   const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight() + 0;
-
   const navigation = useNavigation();
-
   const colorScheme = 'dark';
-  const scrollYAnimatedValue = new Animated.Value(0);
-
-  const headerHeight = scrollYAnimatedValue.interpolate({
-    inputRange: [0, HEADER_HEIGHT],
-    // outputRange: [0, -HEADER_HEIGHT + HEADER_BAR_HEIGHT + getStatusBarHeight() + spacing(1)],
-    outputRange: [
-      0,
-      -HEADER_HEIGHT + 1.5 * HEADER_BAR_HEIGHT + getStatusBarHeight() + 0,
-    ],
-    extrapolate: Extrapolate.CLAMP,
-  });
-
-  const searchBarWidth = scrollYAnimatedValue.interpolate({
-    inputRange: [0, HEADER_HEIGHT / 2],
-    outputRange: [LAYOUT.window.width - spacing(5), HEADER_BAR_HEIGHT],
-    // outputRange: [LAYOUT.window.width - spacing(5), LAYOUT.window.width - spacing(5)],
-    extrapolate: Extrapolate.CLAMP,
-  });
-  const searchBarHeight = scrollYAnimatedValue.interpolate({
-    inputRange: [0, HEADER_HEIGHT],
-    // outputRange: [50, HEADER_BAR_HEIGHT],
-    outputRange: [HEADER_BAR_HEIGHT, HEADER_BAR_HEIGHT],
-    extrapolate: Extrapolate.CLAMP,
-  });
-
-  const searchBarColor = Animated.interpolateColors(scrollYAnimatedValue, {
-    inputRange: [0, HEADER_HEIGHT / 2],
-    outputColorRange: [
-      COLORS[colorScheme].common.white,
-      COLORS[colorScheme].secondary.main,
-    ],
-  });
-  const searchBarTop = scrollYAnimatedValue.interpolate({
-    inputRange: [0, HEADER_HEIGHT - getStatusBarHeight()],
-    outputRange: [
-      HEADER_HEIGHT - 1.5 * HEADER_BAR_HEIGHT,
-      getStatusBarHeight() + spacing(1.1),
-    ],
-
-    extrapolate: Extrapolate.CLAMP,
-  });
-
-  const borderRadiusIcon = scrollYAnimatedValue.interpolate({
-    inputRange: [0, HEADER_BAR_HEIGHT],
-    outputRange: [10, HEADER_BAR_HEIGHT],
-    extrapolate: Extrapolate.CLAMP,
-  });
 
   useLayoutEffect(() => {
     const renderUserIcon = () => {
@@ -153,7 +103,7 @@ const HomeScreen = props => {
               },
             ]}
           >
-            <Animated.View
+            <View
               style={{
                 position: 'absolute',
                 height: HEADER_BAR_HEIGHT,
@@ -178,7 +128,7 @@ const HomeScreen = props => {
                     ' ' +
                     userGivenName(state.userDetails.name)}
               </Text>
-            </Animated.View>
+            </View>
           </View>
         </>
       );
@@ -195,9 +145,10 @@ const HomeScreen = props => {
       headerLeftContainerStyle: { position: 'absolute' },
     });
   });
+
   return (
     <>
-      <Animated.ScrollView
+      <ScrollView
         style={{ backgroundColor: '#F9F9F9' }}
         alwaysBounceHorizontal={false}
         alwaysBounceVertical={true}
@@ -221,13 +172,10 @@ const HomeScreen = props => {
         }}
         scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
-        onScroll={Animated.event([
-          { nativeEvent: { contentOffset: { y: scrollYAnimatedValue } } },
-        ])}
       >
         {props.children}
-      </Animated.ScrollView>
-      <Animated.View
+      </ScrollView>
+      <View
         style={{
           position: 'absolute',
           top: 0,
@@ -235,12 +183,11 @@ const HomeScreen = props => {
           right: 0,
         }}
       >
-        <Animated.View
+        <View
           style={[
             {
               position: 'relative',
-              top: headerHeight,
-              height: HEADER_HEIGHT,
+              height: 170,
             },
           ]}
         >
@@ -271,16 +218,16 @@ const HomeScreen = props => {
               />
             </G>
           </Svg>
-        </Animated.View>
-        <Animated.View
+        </View>
+        <View
           style={{
             position: 'absolute',
-            top: searchBarTop,
-            height: searchBarHeight,
-            width: searchBarWidth,
+            top: 110,
+            height: 40,
+            width: LAYOUT.window.width - spacing(5),
             left: spacing(2.5),
-            borderRadius: borderRadiusIcon,
-            backgroundColor: searchBarColor,
+            borderRadius: 10,
+            backgroundColor: 'white',
             shadowColor: '#000',
             shadowOffset: {
               width: 0,
@@ -352,8 +299,8 @@ const HomeScreen = props => {
               </TouchableOpacity>
             ) : null}
           </View>
-        </Animated.View>
-      </Animated.View>
+        </View>
+      </View>
     </>
   );
 };

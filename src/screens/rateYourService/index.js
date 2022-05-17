@@ -94,7 +94,7 @@ const RateService = ({ navigation, route }) => {
           service: service || '',
           professionalism: professionalism || '',
         },
-        tip: remarks.replace(/[^0-9]/g, '') || '',
+        tip: remarks || '',
         user_id: state.userDetails.user_id || '',
         waiter_id: waiter_id || '',
         restaurant_id: restaurant_id || '',
@@ -110,7 +110,8 @@ const RateService = ({ navigation, route }) => {
         },
         onError: () => {
           setLoading(false);
-          alert('You can only vote once today.');
+          // alert('You can only vote once today.');
+          alert('Your balance is not enough.');
         },
       });
     } else {
@@ -307,47 +308,37 @@ const RateService = ({ navigation, route }) => {
               <Text style={[styles.txtCard, { fontFamily: 'ProximaNovaBold' }]}>
                 {localizationContext.t('your_tip_to_waiter')}
               </Text>
-              <NumberFormat
-                value={remarks}
-                thousandSeparator={true}
-                prefix={
-                  currency ? currency.currency.split(' ').join('') + ' ' : ''
+              <TextInput
+                returnKeyLabel="Validate"
+                returnKeyType="done"
+                onSubmitEditing={
+                  hospitality &&
+                  speed &&
+                  professionalism &&
+                  service &&
+                  remarks.replace(/[^0-9]/g, '') &&
+                  handleAddRatings
                 }
-                renderText={formattedValue => (
-                  <TextInput
-                    returnKeyLabel="Validate"
-                    returnKeyType="done"
-                    onSubmitEditing={
-                      hospitality &&
-                      speed &&
-                      professionalism &&
-                      service &&
-                      remarks.replace(/[^0-9]/g, '') &&
-                      handleAddRatings
-                    }
-                    keyboardType="number-pad"
-                    value={formattedValue}
-                    onFocus={() => {
-                      setKeyboardVisible(true);
-                      setTimeout(() => {
-                        scrollRef.current.scrollToEnd({ animated: true });
-                      }, 100);
-                    }}
-                    onBlur={() => {
-                      setKeyboardVisible(false);
-                    }}
-                    onChangeText={e => {
-                      scrollRef.current.scrollToEnd({ animated: true });
-                      setRemarks(e);
-                    }}
-                    //  onFocus={() => setonHandleFocus(!onHandleFocus)}
-                    style={[
-                      styles.inputStyle,
-                      { fontFamily: 'ProximaNova', textAlign: 'center' },
-                    ]}
-                  />
-                )}
-                displayType={'text'}
+                keyboardType="number-pad"
+                value={remarks}
+                onFocus={() => {
+                  setKeyboardVisible(true);
+                  setTimeout(() => {
+                    scrollRef.current.scrollToEnd({ animated: true });
+                  }, 100);
+                }}
+                onBlur={() => {
+                  setKeyboardVisible(false);
+                }}
+                onChangeText={e => {
+                  scrollRef.current.scrollToEnd({ animated: true });
+                  setRemarks(e);
+                }}
+                //  onFocus={() => setonHandleFocus(!onHandleFocus)}
+                style={[
+                  styles.inputStyle,
+                  { fontFamily: 'ProximaNova', textAlign: 'center' },
+                ]}
               />
             </View>
           </View>
@@ -391,6 +382,9 @@ const RateService = ({ navigation, route }) => {
             isVisible={TokenModalIsVisible}
             LotteryNumber={lotteryNo}
             handleModalClose={handleTokenModalClose}
+            checkBalance
+            navigation={navigation}
+            setModalClose={() => setTokenModalIsVisible(false)}
           />
         )}
         {PayMethodsIsVisible && (

@@ -284,6 +284,20 @@ export default {
     'Il n’y a pas encore de publication sur son compte. Suivez son compte pour recevoir du contenu exclusif très bientôt.',
   modify_profile: 'Modifier votre profil',
   your_tickets: 'Vos tickets gagnés',
+  nav_head_balance: 'Vos Miams',
+  your_balance: 'Votre balance (Miams)',
+  balance_description:
+    'Pour chaque actions sur l’application recevez des Miams.',
+  balance_heading: 'Balance',
+  history_heading: 'Historique',
+  checkin_balance: 'Check-in at restaurant',
+  review_balance: 'Laisse un avis au',
+  tip_balance: 'Donne un pourboire',
+  to: 'à',
+  checkin_balance_credited:
+    'Nous avons créditer votre compte avec 1 Miam’s pour votre avis. Le plus vous participez, le plus vous recevrez de Miam’s.',
+  balance_credited:
+    'Nous avons créditer votre compte avec 2 Miam’s pour votre avis. Le plus vous participez, le plus vous recevrez de Miam’s.',
   bank_acc: 'Votre compte bancaire',
   lang: 'Language',
   rate_app: "Notez l'application",
@@ -296,6 +310,7 @@ export default {
   tour_section4: 'Donnez votre avis pour encore plus de surprises',
   tour_section5: 'Le menu en ligne digital c’est par ici  ',
   see_menu: 'Voir le menu',
+  top_up: 'Recharge',
   add_fav: 'Ajouter au favoris',
   fav_list: 'Liste des favoris',
   fav: 'Favoris',
@@ -306,12 +321,15 @@ export default {
   fav_restaurant: 'Vos restaurants favoris',
   popular_restaurant: 'Les restaurants populaires',
   sorry: 'Désolé ',
+  patient: 'Soyez',
+  patient_description:
+    'Pour recharger votre compte, il vous suffit d’utiliser l’application.',
   not_near:
     'Vous n’êtes pas assez proche de cet établissement, nous ne pouvons valider votre action.',
   thank_here: 'Vous êtes là!',
   confirm_here:
     'Vous avez indiqué que vous êtes bien ici. Grâce à cela, vous collectez un ticket de lotterie.',
-  thank_review: 'Merci pour votre vote',
+  thank_review: 'Merci pour votre avis',
   won_ticket:
     'Nous vous contacterons par email pour vous offire un coupon très prochainement.',
   no_fav_1: "Vous n'avez pas encore de restaurants préférés",
@@ -340,6 +358,7 @@ export default {
   client_id: 'Client ID',
   confirmer: 'Confirmer',
   discover: 'Avant-goût',
+  navigate_balance: 'Consultez votre balance',
   discover_msg: 'Ce restaurant n’a pas encore ajouté de contenu',
   the_media: 'Media',
   discv_setting: 'Images d’avant-goût',

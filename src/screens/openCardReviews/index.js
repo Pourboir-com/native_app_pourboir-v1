@@ -1142,7 +1142,7 @@ const ReviewDetails = ({ navigation, route }) => {
           handleModalClose={() => setcheckInModal(false)}
           LotteryNumber={token}
           heading={'thank_here'}
-          subText={'confirm_here'}
+          subText={'checkin_balance_credited'}
         />
       )}
       {approvalModal && (

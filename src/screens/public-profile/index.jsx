@@ -109,12 +109,12 @@ const PublicProfile = ({ navigation, route }) => {
       nav: 'personalDetails',
     },
     {
-      element: localizationContext.t('your_tickets'),
-      nav: 'YourTickets',
+      element: localizationContext.t('your_balance'),
+      nav: 'Balance',
     },
-    {
-      element: localizationContext.t('bank_acc'),
-    },
+    // {
+    //   element: localizationContext.t('bank_acc'),
+    // },
     {
       element: localizationContext.t('lang'),
       func: () => {

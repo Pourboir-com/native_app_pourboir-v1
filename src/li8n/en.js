@@ -278,12 +278,29 @@ export default {
   no_pub_yet:
     'There is no publications yet on this account. Follow to receive exclusive content soon. ',
   modify_profile: 'Modify your profile ',
+  nav_head_balance: 'Your Miams',
   your_tickets: 'Your Tickets',
+  your_balance: 'Your balance (Miams)',
+  balance_description: 'Receive Miams for each actions performed in the app.',
+  balance_heading: 'Balance',
+  navigate_balance: 'Check balance',
+  balance_credited:
+    'We have credited your account with 2 Miam’s for your review. The more you participate, the more you will collect Miam’s',
+  checkin_balance_credited:
+    'We have credited your account with 1 Miam’s for your review. The more you participate, the more you will collect Miam’s',
+  history_heading: 'History',
+  checkin_balance: 'Check-in at restaurant',
+  review_balance: 'Leave review at restaurant',
+  tip_balance: 'Give a tip',
+  to: 'to',
   bank_acc: 'Your bank account',
   lang: 'Language',
   rate_app: 'Rate this applicaiton',
   collect_tickets: 'Collect tickets to increase your chance of winning',
-
+  top_up: 'Top up',
+  patient: 'Be patient',
+  patient_description:
+    'To topup your account, please simply use the application.',
   // Tour Modal Translations
   tour_section1: 'Are you owner of this restaurant ? click here',
   tour_section2:

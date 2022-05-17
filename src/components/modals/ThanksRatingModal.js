@@ -17,22 +17,23 @@ import Context from '../../contextApi/context';
 const ThanksRatingModal = ({
   isVisible,
   handleModalClose,
-  LotteryNumber,
+  checkBalance,
   heading,
   subText,
+  navigation,
+  setModalClose,
 }) => {
-  function pad(n, width, z) {
-    z = z || '0';
-    n = n + '';
-    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-  }
+  // function pad(n, width, z) {
+  //   z = z || '0';
+  //   n = n + '';
+  //   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+  // }
   const { localizationContext } = useContext(Context);
-
   return (
     <Overlay
       overlayStyle={styles.container}
       isVisible={isVisible}
-      onBackdropPress={handleModalClose}
+      onBackdropPress={setModalClose || handleModalClose}
     >
       <ImageBackground
         style={styles.imgBgStyle}
@@ -41,7 +42,7 @@ const ThanksRatingModal = ({
       >
         <View style={styles.viewImg}>
           <TouchableOpacity
-            onPress={handleModalClose}
+            onPress={setModalClose || handleModalClose}
             style={{ alignSelf: 'flex-end', margin: 10 }}
           >
             <AntDesign name="close" size={29} color="#485460" />
@@ -68,19 +69,26 @@ const ThanksRatingModal = ({
       <Text style={[styles.txtConfrm, { fontFamily: 'ProximaNovaBold' }]}>
         {heading
           ? localizationContext.t(heading)
-          : localizationContext.t('thanks_for_vote')}
+          : localizationContext.t('thank_review')}
       </Text>
       <Text style={[styles.txtName, { fontFamily: 'ProximaNova' }]}>
         {subText
           ? localizationContext.t(subText)
-          : localizationContext.t('will_contact_by_email')}
+          : localizationContext.t('balance_credited')}
       </Text>
-      {LotteryNumber ? (
-        <Text style={styles.lottery}>
-          {pad(LotteryNumber, 8, '0').replace(/(\d{4})(\d{4})/, '$1-$2')}
-        </Text>
-      ) : (
-        <Text style={styles.lottery}>XXXX-XXXX</Text>
+      {checkBalance && (
+        <TouchableOpacity
+          style={{ width: '80%' }}
+          activeOpacity={0.7}
+          onPress={() => {
+            navigation.navigate('Balance');
+            setModalClose();
+          }}
+        >
+          <Text style={styles.lottery}>
+            {localizationContext.t('navigate_balance')}
+          </Text>
+        </TouchableOpacity>
       )}
     </Overlay>
   );
@@ -100,7 +108,6 @@ const styles = StyleSheet.create({
   imgBgStyle: {
     width: '100%',
     height: 240,
-    // overflow:"hidden"
   },
   txtBtnConfrm: {
     fontSize: 16,
@@ -139,12 +146,11 @@ const styles = StyleSheet.create({
   viewImg: {
     width: '100%',
     height: 240,
-    // backgroundColor:"red"
   },
   lottery: {
-    width: '80%',
     backgroundColor: '#fcf4e4',
     borderRadius: 10,
+    overflow: 'hidden',
     fontSize: 20,
     paddingTop: 10,
     paddingBottom: 10,

@@ -13,7 +13,7 @@ const CommonButton = props => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      activeOpacity={0.5}
+      activeOpacity={props.opacity || 0.5}
       disabled={props.disable === false ? false : true}
       onPress={
         props.onPress

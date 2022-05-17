@@ -12,6 +12,7 @@ import NoLocation from '../screens/NoLocationFound';
 // import SelectLanguage from '../screens/selectLanguage';
 import NoWiFi from '../screens/noWifi';
 import PersonalDetails from '../screens/personalDetails';
+import Balance from '../screens/balance';
 
 import { spacing } from '../constants/layout';
 // import PaypalPayment from '../screens/paypal';
@@ -105,6 +106,19 @@ function AppNavigator() {
       <Stack.Screen
         name="Home"
         component={Home}
+        options={() => ({
+          headerShown: true,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: true,
+        })}
+      />
+      <Stack.Screen
+        name="Balance"
+        component={Balance}
         options={() => ({
           headerShown: true,
           title: '',

@@ -23,7 +23,7 @@ const HomeScreen = props => {
   const scrollRef = useRef(null);
   const TextInputRef = React.useRef(null);
   const { state, localizationContext } = useContext(Context);
-  const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3.1 + getStatusBarHeight() + 0;
+  const HEADER_HEIGHT = HEADER_BAR_HEIGHT * 3 + getStatusBarHeight();
   const navigation = useNavigation();
   const colorScheme = 'dark';
 
@@ -187,7 +187,7 @@ const HomeScreen = props => {
           style={[
             {
               position: 'relative',
-              height: 170,
+              height: HEADER_HEIGHT,
             },
           ]}
         >
@@ -222,7 +222,7 @@ const HomeScreen = props => {
         <View
           style={{
             position: 'absolute',
-            top: 110,
+            top: HEADER_HEIGHT - 55,
             height: 40,
             width: LAYOUT.window.width - spacing(5),
             left: spacing(2.5),

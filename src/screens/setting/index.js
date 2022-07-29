@@ -15,12 +15,9 @@ import GlobalHeader from '../../components/GlobalHeader';
 import { Colors } from '../../constants/Theme';
 import * as ImagePicker from 'expo-image-picker';
 import { getAsyncStorageValues } from '../../constants';
-import * as Google from 'expo-google-app-auth';
-import { config } from '../../constants';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Facebook from 'expo-facebook';
 import { UPDATE_PICTURE } from '../../queries';
 import { useMutation } from 'react-query';
 import { Platform } from 'react-native';
@@ -56,14 +53,7 @@ const Setting = ({ navigation, route }) => {
     if (accessToken) {
       setLoading(true);
       try {
-        const auth = await Facebook.getAuthenticationCredentialAsync();
-        if (auth) {
-          Facebook.logOutAsync();
-          resetState();
-        } else {
-          await Google.logOutAsync({ accessToken, ...config });
-          resetState();
-        }
+        resetState();
       } catch {
         resetState();
       }

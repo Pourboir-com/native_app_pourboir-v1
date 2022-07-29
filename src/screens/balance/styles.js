@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontFamily: 'ProximaNova',
-    textAlign: 'center',
+    textAlign: 'left',
   },
   amount: {
     fontSize: 18,

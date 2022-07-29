@@ -5,48 +5,22 @@ import styles from './styles';
 import { ReviewSlider } from './ReviewSlider';
 import LeaveReviewModal from '../modals/leave-review-modal';
 import { Entypo } from '@expo/vector-icons';
-import { useMutation } from 'react-query';
-import { CREATE_REVIEW } from '../../queries';
 import Context from '../../contextApi/context';
-import CheckInModal from '../modals/ThanksRatingModal';
 
 const Review = ({
   reviewData,
-  reviewRefetch,
-  restaurant,
   distance,
   handleOpenModal,
   tourModal,
   section,
+  confirmClick,
+  setLeaveRevModal,
+  createLoading,
+  leaveRevModal,
 }) => {
-  const [leaveRevModal, setLeaveRevModal] = useState(false);
-  const { state, localizationContext } = useContext(Context);
+  const { localizationContext } = useContext(Context);
   const [hospitality, setHospitality] = useState();
   const [comment, setComment] = useState('');
-  const [createRestaurantReview, { isLoading: createLoading }] = useMutation(
-    CREATE_REVIEW,
-  );
-  const [reviewSuccess, setReviewSuccess] = useState(false);
-  const [token, setToken] = useState(0);
-
-  const confirmClick = async () => {
-    await createRestaurantReview(
-      {
-        user_id: state.userDetails.user_id,
-        rating: hospitality,
-        comment,
-        place: restaurant,
-      },
-      {
-        onSuccess: async res => {
-          await reviewRefetch();
-          setLeaveRevModal(false);
-          setToken(res?.data?.data?.token || 0);
-          setReviewSuccess(true);
-        },
-      },
-    );
-  };
 
   const handleAddClick = () => {
     if (Number(distance) < 300) {
@@ -107,15 +81,6 @@ const Review = ({
           keyExtractor={item => item.id}
         />
       </View>
-      {reviewSuccess && (
-        <CheckInModal
-          isVisible={reviewSuccess}
-          handleModalClose={() => setReviewSuccess(false)}
-          LotteryNumber={token}
-          heading={'thank_review'}
-          subText={'won_ticket'}
-        />
-      )}
 
       <LeaveReviewModal
         leaveRevModal={leaveRevModal}
@@ -124,7 +89,7 @@ const Review = ({
         setHospitality={setHospitality}
         comment={comment}
         setComment={setComment}
-        confirmClick={confirmClick}
+        confirmClick={() => confirmClick(hospitality, comment)}
         createLoading={createLoading}
       />
     </View>

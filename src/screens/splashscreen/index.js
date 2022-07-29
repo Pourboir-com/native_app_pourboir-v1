@@ -50,8 +50,6 @@ export default function SplashScreen(props) {
         }
         token = (await Notifications.getExpoPushTokenAsync()).data;
       }
-    } else {
-      alert('Must use physical device for Push Notifications');
     }
     return token;
   };

@@ -13,6 +13,9 @@ import { Colors } from '../../constants/Theme';
 const imgWaiter = require('../../assets/images/ThanksGiving.png');
 const imgBg = require('../../assets/images/Group7.png');
 import Context from '../../contextApi/context';
+import { GET_ACCOUNTS } from '../../queries';
+import { useQuery } from 'react-query';
+import { reactQueryConfig } from '../../constants';
 
 const ThanksRatingModal = ({
   isVisible,
@@ -22,13 +25,17 @@ const ThanksRatingModal = ({
   subText,
   navigation,
   setModalClose,
+  balanceType,
 }) => {
-  // function pad(n, width, z) {
-  //   z = z || '0';
-  //   n = n + '';
-  //   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-  // }
   const { localizationContext } = useContext(Context);
+  const { data: accountsData } = useQuery(['GET_ACCOUNTS'], GET_ACCOUNTS, {
+    ...reactQueryConfig,
+    enabled: balanceType ? true : false,
+    onError: e => {
+      alert(e?.response?.data?.message);
+    },
+  });
+
   return (
     <Overlay
       overlayStyle={styles.container}
@@ -74,15 +81,16 @@ const ThanksRatingModal = ({
       <Text style={[styles.txtName, { fontFamily: 'ProximaNova' }]}>
         {subText
           ? localizationContext.t(subText)
-          : localizationContext.t('balance_credited')}
+          : localizationContext.t('balance_credited')}{' '}
+        {accountsData?.data[balanceType]}{' '}
+        {localizationContext.t('balance_credited_2')}
       </Text>
       {checkBalance && (
         <TouchableOpacity
           style={{ width: '80%' }}
           activeOpacity={0.7}
           onPress={() => {
-            navigation.navigate('Balance');
-            setModalClose();
+            navigation.replace('Balance');
           }}
         >
           <Text style={styles.lottery}>

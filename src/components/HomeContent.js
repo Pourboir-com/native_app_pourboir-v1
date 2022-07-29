@@ -12,12 +12,7 @@ import {
 } from 'react-native';
 import { Colors } from '../constants/Theme';
 import HomeCard from './HomeCard';
-import {
-  distributeInArray,
-  restaurantDistance,
-  filteredMinusRestaurant,
-  sortRestaurant,
-} from '../util';
+import { filteredMinusRestaurant, sortRestaurant } from '../util';
 import { HomeCardSkeleton } from '../components/skeleton';
 import NoListImg from '../assets/images/emptyRestaurantList.png';
 import { DELETE_RES } from '../queries';
@@ -39,7 +34,6 @@ export default function HomeScreenContent({
   title,
   searchTitle,
   favoriteRes,
-  noRefresh,
   refetchAll,
 }) {
   const [data, setData] = useState([]);
@@ -80,6 +74,7 @@ export default function HomeScreenContent({
       });
     }
   };
+
   const noData =
     !data.length && !restaurantLoading && !resIsFetching && saveLocation;
   if (noData) {
@@ -123,8 +118,8 @@ export default function HomeScreenContent({
           <View
             style={{
               backgroundColor: '#F9F9F9',
-              marginTop: 0,
-              flex: 1,
+              // marginTop: 0,
+              // flex: 1,
             }}
           >
             <Text
@@ -155,154 +150,93 @@ export default function HomeScreenContent({
   }
   return (
     <>
-      {restaurantLoading || !saveLocation ? (
-        <View
-          style={{
-            backgroundColor: '#F9F9F9',
-            marginTop:
-              Platform.OS === 'ios' && !route?.params?.crossIcon ? -58 : 0,
-            flex: 1,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: 'row',
-              marginTop: 17,
-              alignItems: 'center',
-            }}
-          >
-            <FlatList
-              data={dummyArray}
-              showsVerticalScrollIndicator={false}
-              alwaysBounceHorizontal={false}
-              scrollEnabled={false}
-              alwaysBounceVertical={false}
-              bounces={false}
-              horizontal={true}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={() => <HomeCardSkeleton />}
-            />
-            {/* <FlatList
-              data={dummyArray}
-              showsVerticalScrollIndicator={false}
-              style={{ marginTop: 15 }}
-              alwaysBounceHorizontal={false}
-              scrollEnabled={false}
-              alwaysBounceVertical={false}
-              bounces={false}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={() => <HomeCardSkeleton />}
-            /> */}
-          </View>
-        </View>
-      ) : (
-        <ScrollView
-          bounces={false}
-          scrollEnabled={false}
-          alwaysBounceVertical={true}
-          showsVerticalScrollIndicator={false}
-          alwaysBounceHorizontal={false}
-          refreshControl={
-            refetchRestaurant &&
-            resIsFetching &&
-            !noRefresh && (
-              <RefreshControl
-                //refresh control used for the Pull to Refresh
-                refreshing={!route.params.crossIcon && resIsFetching}
-                // color="#F9F9F9"
-                // tintColor="#F9F9F9"
-                // onRefresh={refetchRestaurant}
-                onRefresh={() => {}}
-              />
-            )
-          }
-          keyboardShouldPersistTaps={'handled'}
-          style={{ backgroundColor: '#F9F9F9' }}
-        >
-          {/* {resIsFetching && <BallIndicator style={{ marginTop: 25 }} size={25} color="black" />} */}
-          <Spinner visible={deleteLoading} />
-          {!route.params.crossIcon && (
-            <Text
-              style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}
-            >
-              {searchEnter
-                ? localizationContext.t(searchTitle)
-                : localizationContext.t(title)}
-            </Text>
-          )}
-          <View
-            style={{
-              marginTop: 17,
-              marginLeft: 2,
-            }}
-          >
-            <FlatList
-              data={restaurantLoading ? dummyArray : sortRestaurant(data)}
-              showsHorizontalScrollIndicator={false}
-              // onEndReached={handleLoadMore}
-              // onEndReachedThreshold={0.5}
-              alwaysBounceHorizontal={false}
-              horizontal={true}
-              keyboardShouldPersistTaps={'handled'}
-              alwaysBounceVertical={false}
-              // numColumns={2}
-              // bounces={false}
-              keyExtractor={(item, index) => index}
-              renderItem={itemData => {
-                if (Object.keys(itemData.item).length) {
-                  return (
-                    // <View
-                    //   style={{
-                    //     marginTop: itemData.index % 2 !== 0 ? 12 : 0,
-                    //     marginBottom: -12,
-                    //   }}
-                    // >
-                    <HomeCard
-                      navigation={navigation}
-                      key={itemData?.item?.place_id}
-                      img={
-                        itemData?.item?.store_details?.background_image ||
-                        get(itemData?.item, 'photos[0]')
-                      }
-                      rating={
-                        Number(itemData?.item?.our_rating) > 0
-                          ? itemData?.item?.our_rating
-                          : itemData?.item?.rating
-                      }
-                      name={itemData?.item?.name}
-                      DeleteRestaurant={
-                        (data,
-                        i =>
-                          DeleteRestaurant(
-                            itemData?.item?.waiter?._id,
-                            itemData?.item?.place_id,
-                          ))
-                      }
-                      distance={restaurantDistance(itemData)}
-                      services={itemData?.item.servers}
-                      loading={restaurantLoading}
-                      crossIcon={route.params.crossIcon}
-                      place_id={itemData?.item?.place_id}
-                      vicinity={itemData?.item?.vicinity}
-                      our_rating={String(itemData?.item?.our_rating) || '0'}
-                      restaurant_id={
-                        itemData?.item._id || itemData?.item?.restaurant_id
-                      }
-                      geometry={
-                        itemData?.item?.geometry?.location ||
-                        itemData?.item?.location
-                      }
-                      refetchRestaurant={refetchRestaurant}
-                      refetchAll={refetchAll}
-                    />
-                    // </View>
-                  );
-                }
-              }}
-            />
-          </View>
-        </ScrollView>
+      {/* {resIsFetching && <BallIndicator style={{ marginTop: 25 }} size={25} color="black" />} */}
+      {/* <Spinner visible={deleteLoading} /> */}
+      {!route.params.crossIcon && (
+        <Text style={[styles.txtHeading, { fontFamily: 'ProximaNovaBold' }]}>
+          {searchEnter
+            ? localizationContext.t(searchTitle)
+            : localizationContext.t(title)}
+        </Text>
       )}
+      <View
+        style={{
+          marginTop: 17,
+          marginLeft: 2,
+        }}
+      >
+        {restaurantLoading || !saveLocation ? (
+          <FlatList
+            data={dummyArray}
+            showsVerticalScrollIndicator={false}
+            alwaysBounceHorizontal={false}
+            scrollEnabled={false}
+            alwaysBounceVertical={false}
+            bounces={false}
+            horizontal={true}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={() => <HomeCardSkeleton />}
+          />
+        ) : (
+          <FlatList
+            data={restaurantLoading ? dummyArray : sortRestaurant(data)}
+            showsHorizontalScrollIndicator={false}
+            // onEndReached={handleLoadMore}
+            // onEndReachedThreshold={0.5}
+            alwaysBounceHorizontal={false}
+            horizontal={true}
+            keyboardShouldPersistTaps={'handled'}
+            alwaysBounceVertical={false}
+            // numColumns={2}
+            // bounces={false}
+            keyExtractor={(item, index) => index}
+            renderItem={itemData => {
+              if (Object.keys(itemData.item).length) {
+                return (
+                  <HomeCard
+                    navigation={navigation}
+                    key={itemData?.item?.place_id}
+                    img={
+                      itemData?.item?.store_details?.background_image ||
+                      get(itemData?.item, 'photos[0]')
+                    }
+                    rating={
+                      Number(itemData?.item?.our_rating) > 0
+                        ? itemData?.item?.our_rating
+                        : itemData?.item?.rating
+                    }
+                    name={itemData?.item?.name}
+                    DeleteRestaurant={
+                      (data,
+                      i =>
+                        DeleteRestaurant(
+                          itemData?.item?.waiter?._id,
+                          itemData?.item?.place_id,
+                        ))
+                    }
+                    distance={itemData?.item?.distance?.meter}
+                    services={itemData?.item.servers}
+                    loading={restaurantLoading}
+                    crossIcon={route.params.crossIcon}
+                    place_id={itemData?.item?.place_id}
+                    vicinity={itemData?.item?.vicinity}
+                    our_rating={String(itemData?.item?.our_rating) || '0'}
+                    restaurant_id={
+                      itemData?.item._id || itemData?.item?.restaurant_id
+                    }
+                    geometry={
+                      itemData?.item?.geometry?.location ||
+                      itemData?.item?.location
+                    }
+                    refetchRestaurant={refetchRestaurant}
+                    refetchAll={refetchAll}
+                  />
+                );
+              }
+            }}
+          />
+        )}
+      </View>
     </>
   );
 }

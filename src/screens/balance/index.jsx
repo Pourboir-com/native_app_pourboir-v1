@@ -15,11 +15,12 @@ import { useQuery } from 'react-query';
 import { reactQueryConfig } from '../../constants';
 import CommonButton from '../../components/common-button';
 import CommonModal from '../../components/modals/HelpUsImproveModal';
-const waiter = require('../../assets/images/waiter2.png');
+const balanceImg = require('../../assets/images/balance.png');
+const balanceBg = require('../../assets/images/modalBG.png');
 
 const Balance = ({ navigation }) => {
   const { state, localizationContext } = useContext(Context);
-  const { data: balanceData, isLoading: balanceDataLoading } = useQuery(
+  const { data: balanceData } = useQuery(
     ['GET_BALANCE', { user_id: state.userDetails.user_id }],
     GET_BALANCE,
     {
@@ -29,7 +30,6 @@ const Balance = ({ navigation }) => {
       },
     },
   );
-  console.log(balanceData);
   const { data: userData, isLoading: userDataLoading } = useQuery(
     ['GET_USER_DETAILS', { user_id: state.userDetails.user_id }],
     GET_USER_DETAILS,
@@ -40,9 +40,14 @@ const Balance = ({ navigation }) => {
       },
     },
   );
+
   const totalBalance = data => {
     return (
-      data?.checkIn + data?.createAnAccount + data?.leaveAReview + data?.tip
+      data?.checkIn +
+      data?.createAnAccount +
+      data?.leaveAReview +
+      data?.tip +
+      data?.restaurantReview
     );
   };
   const [isTopUp, setIsTopUp] = useState(false);
@@ -52,7 +57,8 @@ const Balance = ({ navigation }) => {
       return (
         <>
           <Text style={styles.text}>
-            {localizationContext.t('review_balance')}
+            {localizationContext.t('review_balance')}{' '}
+            {item?.place_id?.name ? item?.place_id?.name : 'restaurant'}
           </Text>
           <Text style={styles.amount}>
             {item.transaction_amount > 0 && '+'}
@@ -78,7 +84,21 @@ const Balance = ({ navigation }) => {
       return (
         <>
           <Text style={styles.text}>
-            {localizationContext.t('checkin_balance')}
+            {localizationContext.t('checkin_balance')}{' '}
+            {item?.place_id?.name ? item?.place_id?.name : 'restaurant'}
+          </Text>
+          <Text style={styles.amount}>
+            {item.transaction_amount > 0 && '+'}
+            {item.transaction_amount}
+          </Text>
+        </>
+      );
+    } else if (item.transaction_type === 'restaurantReview') {
+      return (
+        <>
+          <Text style={styles.text}>
+            {localizationContext.t('review_balance')}{' '}
+            {item?.place_id?.name ? item?.place_id?.name : 'restaurant'}
           </Text>
           <Text style={styles.amount}>
             {item.transaction_amount > 0 && '+'}
@@ -154,16 +174,11 @@ const Balance = ({ navigation }) => {
         bounces={false}
         contentContainerStyle={[{ alignItems: 'center', paddingBottom: '22%' }]}
       >
-        {/* {balanceDataLoading ? (
-          <View style={{ marginTop: 50 }}>
-            <ActivityIndicator size={50} color="#EBC11B" />
+        {(balanceData?.data || []).map((item, index) => (
+          <View key={index} style={styles.flex}>
+            {historyDetails(item)}
           </View>
-        ) : ( */}
-        {(balanceData?.data || []).map(item => (
-          <View style={styles.flex}>{historyDetails(item)}</View>
         ))}
-
-        {/* )} */}
       </ScrollView>
       <View
         style={{
@@ -186,9 +201,10 @@ const Balance = ({ navigation }) => {
         <CommonModal
           isVisible={isTopUp}
           handleModalClose={() => setIsTopUp(false)}
-          image={waiter}
+          image={balanceImg}
           subHeadingText={localizationContext.t('patient_description')}
           heading={localizationContext.t('patient')}
+          bgImage={balanceBg}
         />
       )}
     </View>

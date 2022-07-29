@@ -7,7 +7,7 @@ import { useQuery } from 'react-query';
 import Context from '../../contextApi/context';
 import { isSearch } from '../../util';
 import * as Location from 'expo-location';
-import { AppState } from 'react-native';
+import { AppState, ActivityIndicator, View } from 'react-native';
 import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { differenceInSeconds } from 'date-fns';
@@ -166,6 +166,9 @@ const HomeScreen = props => {
     GET_FAVORITE_RESTAURANT,
     { enabled: saveLocation, ...reactQueryConfig },
   );
+  let validateIsLoading =
+    resIsFetching && restaurantData?.restaurants?.results?.length > 0;
+
   return (
     <>
       <Header
@@ -173,13 +176,18 @@ const HomeScreen = props => {
         restaurantLoading={restaurantLoading}
         setSearchVal={setSearchVal}
         navigation={props?.navigation}
-        resIsFetching={resIsFetching}
+        resIsFetching={validateIsLoading}
         saveLocation={saveLocation}
         refetchRestaurant={refetchRestaurant}
         setsearchEnter={setsearchEnter}
         Data={restaurantData?.restaurants?.results || []}
         // nextPageToken={nextPageToken}
       >
+        {validateIsLoading && (
+          <View style={{ marginTop: 30 }}>
+            <ActivityIndicator color="#EBC11B" />
+          </View>
+        )}
         <HomeScreenContent
           restaurantLoading={restaurantLoading}
           searchVal={searchVal}
@@ -192,7 +200,7 @@ const HomeScreen = props => {
             refetchUserFavRestaurant();
             refetchFavRestaurant();
           }}
-          resIsFetching={resIsFetching}
+          // resIsFetching={resIsFetching}
           saveLocation={saveLocation}
           searchEnter={searchEnter}
           title="around_you"
@@ -212,7 +220,7 @@ const HomeScreen = props => {
             refetchUserFavRestaurant();
             refetchFavRestaurant();
           }}
-          resIsFetching={userFavResIsFetching}
+          // resIsFetching={userFavResIsFetching}
           saveLocation={saveLocation}
           searchEnter={searchEnter}
           Data={userFavRestaurantData?.data || []}
@@ -220,7 +228,6 @@ const HomeScreen = props => {
           title="fav_restaurant"
           searchTitle="fav_restaurant"
           favoriteRes
-          noRefresh
         />
         <HomeScreenContent
           restaurantLoading={favRestaurantLoading}
@@ -234,7 +241,7 @@ const HomeScreen = props => {
             refetchUserFavRestaurant();
             refetchFavRestaurant();
           }}
-          resIsFetching={favResIsFetching}
+          // resIsFetching={favResIsFetching}
           saveLocation={saveLocation}
           searchEnter={searchEnter}
           Data={favRestaurantData?.data || []}

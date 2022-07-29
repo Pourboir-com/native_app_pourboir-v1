@@ -10,28 +10,33 @@ import {
   ActivityIndicator,
   ScrollView,
   BackHandler,
+  Alert,
 } from 'react-native';
+import * as Facebook from 'expo-auth-session/providers/facebook';
 import Constants from 'expo-constants';
 import * as WebBrowser from 'expo-web-browser';
 import { FontAwesome } from '@expo/vector-icons';
 import CheckBox from 'react-native-check-box';
 import { Colors } from '../../constants/Theme';
-import * as Google from 'expo-google-app-auth';
-import { config } from '../../constants';
+import * as Google from 'expo-auth-session/providers/google';
+import * as AuthSession from 'expo-auth-session';
+import { googleLoginConfig } from '../../constants';
 import { userSignUp, iPhoneLoginName, upperTitleCase } from '../../util';
 import { useMutation } from 'react-query';
 import { GOOGLE_SIGNUP, SEND_PUSH_TOKEN } from '../../queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
-const imgLogo = require('../../assets/images/imgLogo.png');
 const logo = require('../../assets/images/logo.png');
-import * as Facebook from 'expo-facebook';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Device from 'expo-device';
 import { getAsyncStorageValues } from '../../constants';
 import * as Notifications from 'expo-notifications';
-
+// const redirectUri = AuthSession.makeRedirectUri({
+//   useProxy: true,
+// });
+// Alert.alert(redirectUri);
+WebBrowser.maybeCompleteAuthSession();
 const SocialLogin = ({ navigation, route }) => {
   const [city, setCity] = useState();
   const [loading, setLoading] = useState(false);
@@ -42,6 +47,37 @@ const SocialLogin = ({ navigation, route }) => {
   const [termsChecked, setTermsChecked] = useState(false);
   const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
   const { dispatch, localizationContext } = useContext(Context);
+  const os = Platform.OS === 'android' ? 'android' : 'apple';
+  // const useProxy = Platform.select({ web: false, default: true });
+  // const redirectUri = AuthSession.makeRedirectUri({ useProxy: true });
+  // let discovery = {
+  //   authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
+  // };
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    ...googleLoginConfig,
+  });
+
+  // AuthSession.loadAsync(
+  //   {
+  //     redirectUri,
+  //     clientId:
+  //       '849073051273-98gj33amn2p0a9apup5ogfktdl22a4tc.apps.googleusercontent.com',
+  //     scopes: ['openid', 'profile', 'email'],
+  //   },
+  //   discovery,
+  // ).then(request => {
+  //   console.log(request);
+  //   request.promptAsync(discovery);
+  // })
+
+  const [
+    facebookRequest,
+    facebookResponse,
+    facebookPromptAsync,
+  ] = Facebook.useAuthRequest({
+    clientId: '771555200360518',
+  });
+
   const notificationListener = useRef();
   const responseListener = useRef();
   Notifications.setNotificationHandler({
@@ -140,22 +176,36 @@ const SocialLogin = ({ navigation, route }) => {
     loadCity();
   }, []);
 
-  const os = Platform.OS === 'android' ? 'android' : 'apple';
+  useEffect(() => {
+    if (response?.type === 'success') {
+      handleGoogleSignIn(response.params.id_token);
+    }
+  }, [response]);
+  // Alert.alert(`${response?.params?.access_token} ${response?.type}`);
 
-  const handleGoogleSignIn = async () => {
-    setLoading(true);
-    // First- obtain access token from Expo's Google API
-    const { type, accessToken, user } = await Google.logInAsync(config);
-    if (type === 'success') {
+  useEffect(() => {
+    if (facebookResponse?.type === 'success') {
+      facebookLogin(facebookResponse.params.id_token);
+    }
+  }, [facebookResponse]);
+
+  const handleGoogleSignIn = async accessToken => {
+    try {
       setLoading(true);
-      // Then you can use the Google REST API
       let userInfoResponse = await userSignUp(accessToken);
+
       let userSignInDetails = {
-        ...userInfoResponse.data,
+        email: userInfoResponse.data.email,
+        family_name: userInfoResponse.data?.family_name,
+        given_name: userInfoResponse.data?.given_name,
+        id: userInfoResponse.data.sub,
+        locale: userInfoResponse.data.locale,
+        name: userInfoResponse.data.name,
+        picture: userInfoResponse.data?.picture,
         city: city,
         login_type: 'Google',
         mobile_type: Device.deviceName,
-        verified_email: `${userInfoResponse.data.verified_email}`,
+        verified_email: `${userInfoResponse.data.email_verified}`,
         os,
       };
       await googleSignup(userSignInDetails, {
@@ -166,7 +216,7 @@ const SocialLogin = ({ navigation, route }) => {
             // : '',
             image: res?.user?.picture || '',
             email: res?.user?.email || '',
-            accessToken: accessToken || '',
+            accessToken: response?.params?.id_token || '',
             user_id: res?.user?._id || '',
             username: res?.user?.username || '',
             description: res?.user?.description || '',
@@ -210,108 +260,84 @@ const SocialLogin = ({ navigation, route }) => {
         setLoading(false);
         alert(`Google Login Error: ${error}`);
       });
-    } else {
+    } catch (e) {
       setLoading(false);
+      alert(`Google Login Error: ${e}`);
     }
   };
 
-  const facebookLogin = async () => {
+  const facebookLogin = async token => {
     try {
-      await Facebook.initializeAsync({
-        appId: '771555200360518',
-      });
-      if (Platform.OS === 'ios') {
-        await Facebook.setAdvertiserTrackingEnabledAsync(true);
-      }
-      const {
-        type,
-        token,
-        expirationDate,
-        permissions,
-        declinedPermissions,
-      } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['public_profile', 'email'],
-      });
-
-      if (type === 'success') {
-        // Get the user's name using Facebook's Graph API
-        const response = await fetch(
-          `https://graph.facebook.com/me?access_token=${token}&fields=id,name,first_name,last_name,middle_name,email,picture.height(500)`,
-        )
-          .then(response => response.json())
-          .then(async data => {
-            setLoading(true);
-
-            let user = {
-              name: data?.name || '',
-              email: data?.email || '',
-              family_name: data?.last_name || '',
-              id: data?.id || '',
-              picture: data?.picture?.data?.url || '',
-              city: city,
-              login_type: 'Facebook',
-              mobile_type: Device.deviceName || '',
-              os,
-            };
-            await googleSignup(user, {
-              onSuccess: async res => {
-                let userDetails = {
-                  name: upperTitleCase(res?.user?.full_name),
-                  // ? userGivenName(res?.user?.full_name)
-                  // : '',
-                  image: res?.user?.picture || '',
-                  email: res?.user?.email || '',
-                  accessToken: token || '',
-                  user_id: res?.user?._id || '',
-                  username: res?.user?.username || '',
-                  description: res?.user?.description || '',
-                  last_name: res?.user?.last_name || '',
-                  calling_code: res?.user?.calling_code || '',
-                  phone_number: res?.user?.phone_number || '',
-                  os,
-                };
-
-                dispatch({
-                  type: actionTypes.USER_DETAILS,
-                  payload: userDetails,
+      const response = await fetch(
+        `https://graph.facebook.com/me?access_token=${token}&fields=id,name,first_name,last_name,middle_name,email,picture.height(500)`,
+      )
+        .then(response => response.json())
+        .then(async data => {
+          setLoading(true);
+          let user = {
+            name: data?.name || '',
+            email: data?.email || '',
+            family_name: data?.last_name || '',
+            id: data?.id || '',
+            picture: data?.picture?.data?.url || '',
+            city: city,
+            login_type: 'Facebook',
+            mobile_type: Device.deviceName || '',
+            os,
+          };
+          await googleSignup(user, {
+            onSuccess: async res => {
+              let userDetails = {
+                name: upperTitleCase(res?.user?.full_name),
+                // ? userGivenName(res?.user?.full_name)
+                // : '',
+                image: res?.user?.picture || '',
+                email: res?.user?.email || '',
+                accessToken: token || '',
+                user_id: res?.user?._id || '',
+                username: res?.user?.username || '',
+                description: res?.user?.description || '',
+                last_name: res?.user?.last_name || '',
+                calling_code: res?.user?.calling_code || '',
+                phone_number: res?.user?.phone_number || '',
+                os,
+              };
+              dispatch({
+                type: actionTypes.USER_DETAILS,
+                payload: userDetails,
+              });
+              await AsyncStorage.setItem(
+                '@userInfo',
+                JSON.stringify({
+                  ...userDetails,
+                }),
+              );
+              if (!res?.user?.username) {
+                navigation.replace('personalDetails', {
+                  login: true,
                 });
-
-                await AsyncStorage.setItem(
-                  '@userInfo',
-                  JSON.stringify({
-                    ...userDetails,
-                  }),
-                );
-
-                if (!res?.user?.username) {
-                  navigation.replace('personalDetails', {
-                    login: true,
-                  });
-                } else if (vote) {
-                  navigation.replace('RateYourService');
-                  setVote(false);
-                } else if (confirmWaiter || HelpUs) {
-                  navigation.replace('OpenCardReviews');
-                } else {
-                  navigation.navigate('Home', { crossIcon: false });
-                  // navigation.replace('Setting', { login: true });
-                }
-                registerForPushNotifications(res?.user?._id);
-                setLoading(false);
-              },
-              onError: e => {
-                setLoading(false);
-                alert(`Facebook Login Error: ${e}`);
-              },
-            });
-          })
-          .catch(e => {
-            setLoading(false);
-            alert(`Facebook Login Error: ${e}`);
+              } else if (vote) {
+                navigation.replace('RateYourService');
+                setVote(false);
+              } else if (confirmWaiter || HelpUs) {
+                navigation.replace('OpenCardReviews');
+              } else {
+                navigation.navigate('Home', { crossIcon: false });
+                // navigation.replace('Setting', { login: true });
+              }
+              registerForPushNotifications(res?.user?._id);
+              setLoading(false);
+            },
+            onError: e => {
+              setLoading(false);
+              alert(`Facebook Login Error: ${e}`);
+            },
           });
-      } else {
-        // type === 'cancel'
-      }
+        })
+        .catch(e => {
+          setLoading(false);
+          alert(`Facebook Login Error: ${e}`);
+        });
     } catch ({ message }) {
       alert(`Facebook Login Error: ${message}`);
     }
@@ -331,28 +357,15 @@ const SocialLogin = ({ navigation, route }) => {
         <ActivityIndicator size={70} color={Colors.yellow} />
       ) : (
         <View style={{ width: '100%', alignItems: 'center' }}>
-          {/* <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Image
-              style={styles.imgLogoStyle}
-              source={imgLogo}
-              resizeMode="contain"
-            />
-          </View> */}
           <View style={styles.viewImg}>
             <Image style={styles.imgStyle} source={logo} resizeMode="contain" />
           </View>
           <TouchableOpacity
             activeOpacity={0.5}
+            disabled={!facebookRequest}
             onPress={() =>
               termsChecked
-                ? facebookLogin()
+                ? facebookPromptAsync()
                 : alert('Please accept condition to continue.')
             }
             style={styles.btnFb}
@@ -372,9 +385,10 @@ const SocialLogin = ({ navigation, route }) => {
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.5}
+            disabled={!request}
             onPress={() =>
               termsChecked
-                ? handleGoogleSignIn()
+                ? promptAsync()
                 : alert('Please accept condition to continue.')
             }
             style={styles.btnGoogle}

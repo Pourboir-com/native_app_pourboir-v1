@@ -8,8 +8,8 @@ function getEnvVars(env = '') {
 }
 export const releaseEnvironment = getEnvVars(Constants.manifest.releaseChannel);
 const apiUrl = () => {
-  let api_url = `http://192.168.10.20:8081/api`;
-  // let api_url = `http://localhost:8081/api`;
+  // let api_url = `http://192.168.1.39:8081/api`;
+  let api_url = `http://localhost:8081/api`;
 
   if (releaseEnvironment == 'production') {
     // expo build:ios --clear-provisioning-profile --revoke-credentials --release-channel production-1.0.0
@@ -19,7 +19,7 @@ const apiUrl = () => {
     api_url = 'https://api.miams.app/api';
   } else if (releaseEnvironment == 'staging') {
     // expo publish --release-channel staging-1.0.0
-    api_url = 'https://staging-api.pourboir.com/api';
+    api_url = 'https://staging-api.miams.app/api';
   }
   return api_url;
 };

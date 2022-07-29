@@ -17,13 +17,10 @@ import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { Colors } from '../../constants/Theme';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { getAsyncStorageValues } from '../../constants';
-import * as Facebook from 'expo-facebook';
-import * as Google from 'expo-google-app-auth';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import * as IntentLauncher from 'expo-intent-launcher';
-import { config } from '../../constants';
 import { email_to } from '../../constants/env';
 
 const PublicProfile = ({ navigation, route }) => {
@@ -64,14 +61,7 @@ const PublicProfile = ({ navigation, route }) => {
     /* Log-Out */
     if (accessToken) {
       try {
-        const auth = await Facebook.getAuthenticationCredentialAsync();
-        if (auth) {
-          Facebook.logOutAsync();
-          resetState();
-        } else {
-          await Google.logOutAsync({ accessToken, ...config });
-          resetState();
-        }
+        resetState();
       } catch {
         resetState();
       }

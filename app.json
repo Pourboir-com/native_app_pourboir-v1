@@ -1,12 +1,12 @@
 {
   "expo": {
     "name": "Miam's",
-    "slug": "miams",
+    "slug": "pourboir",
     "scheme": "https",
     "facebookAppId": "771555200360518",
     "facebookScheme": "fb771555200360518",
     "facebookDisplayName": "Pourboir'",
-    "version": "1.2.7",
+    "version": "1.2.8",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "splash": {
@@ -96,7 +96,7 @@
         }
       ],
       "package": "com.developerspourboir.pourboir",
-      "versionCode": 18
+      "versionCode": 25
     },
     "web": {
       "favicon": "./assets/favicon.png"

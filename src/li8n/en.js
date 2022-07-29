@@ -284,13 +284,14 @@ export default {
   balance_description: 'Receive Miams for each actions performed in the app.',
   balance_heading: 'Balance',
   navigate_balance: 'Check balance',
-  balance_credited:
-    'We have credited your account with 2 Miam’s for your review. The more you participate, the more you will collect Miam’s',
+  balance_credited_2:
+    'Miam’s for your review. The more you participate, the more you will collect Miam’s.',
+  balance_credited: 'We have credited your account with',
   checkin_balance_credited:
     'We have credited your account with 1 Miam’s for your review. The more you participate, the more you will collect Miam’s',
   history_heading: 'History',
-  checkin_balance: 'Check-in at restaurant',
-  review_balance: 'Leave review at restaurant',
+  checkin_balance: 'Check-in at',
+  review_balance: 'Leave review at',
   tip_balance: 'Give a tip',
   to: 'to',
   bank_acc: 'Your bank account',
@@ -324,6 +325,7 @@ export default {
   confirm_here:
     'You have confirmed that you are at this restaurants. Thanks to that you have earned one loterry ticket.',
   thank_review: 'Thanks for your review !',
+  not_enough_miams: 'You do not have enough Miams',
   won_ticket:
     'You have won a ticket for your review and are now part of the monthly lotery.',
   no_fav_1: "You don't have favorite restaurants yet",

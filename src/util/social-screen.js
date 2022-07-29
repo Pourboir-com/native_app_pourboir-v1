@@ -1,12 +1,14 @@
 import axios from 'axios';
 
 export const userSignUp = async accessToken => {
-  return await axios.get('https://www.googleapis.com/userinfo/v2/me', {
-    headers: { Authorization: `Bearer ${accessToken}` },
+  return await axios.get('https://oauth2.googleapis.com/tokeninfo', {
+    params: {
+      id_token: accessToken,
+    },
   });
 };
 
-export const userGivenName = (name='') => {
+export const userGivenName = (name = '') => {
   let given_name;
   let fullName = name.split(' ');
   if (fullName.length >= 3) {
@@ -25,9 +27,11 @@ export const iPhoneLoginName = (fullName = {}) => {
   }
   if (fullName.middleName) {
     return fullName.middleName;
-  } if (fullName.namePrefix) {
+  }
+  if (fullName.namePrefix) {
     return fullName.namePrefix;
-  } if (fullName.nameSuffix) {
+  }
+  if (fullName.nameSuffix) {
     return fullName.nameSuffix;
   }
   if (fullName.nickname) {

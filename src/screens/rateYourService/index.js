@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   Platform,
   StatusBar,
+  ActivityIndicator,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import GlobalHeader from '../../components/GlobalHeader';
@@ -20,14 +21,14 @@ import RatingStar from '../../components/RatingComponent';
 import Context from '../../contextApi/context';
 import { ADD_RATINGS } from '../../queries';
 import { useMutation } from 'react-query';
-import NumberFormat from 'react-number-format';
 const imgBg = require('../../assets/images/Group5.png');
 import { getAsyncStorageValues } from '../../constants';
-import * as actionTypes from '../../contextApi/actionTypes';
-import TipModal from '../../components/modals/TipModal';
+// import TipModal from '../../components/modals/TipModal';
+import CommonModal from '../../components/modals/HelpUsImproveModal';
+const waiter = require('../../assets/images/no-checkin.png');
 
 const RateService = ({ navigation, route }) => {
-  const { state, dispatch, localizationContext } = useContext(Context);
+  const { state, localizationContext } = useContext(Context);
   const [hospitality, setHospitality] = useState();
   const [currency, setCurrency] = useState();
   const [speed, setSpeed] = useState();
@@ -35,6 +36,7 @@ const RateService = ({ navigation, route }) => {
   const [professionalism, setProfessionalism] = useState();
   const [remarks, setRemarks] = useState('');
   const [PayMethodsIsVisible, setPayMethodsIsVisible] = useState(false);
+  const [isEnoughBalance, setIsEnoughBalance] = useState(false);
   const [TokenModalIsVisible, setTokenModalIsVisible] = useState(false);
   const [addRatings] = useMutation(ADD_RATINGS);
   const [loading, setLoading] = useState(false);
@@ -110,8 +112,7 @@ const RateService = ({ navigation, route }) => {
         },
         onError: () => {
           setLoading(false);
-          // alert('You can only vote once today.');
-          alert('Your balance is not enough.');
+          setIsEnoughBalance(true);
         },
       });
     } else {
@@ -343,7 +344,7 @@ const RateService = ({ navigation, route }) => {
             </View>
           </View>
           <TouchableOpacity
-            onPress={() => setPayMethodsIsVisible(true)}
+            onPress={handleAddRatings}
             disabled={
               loading
                 ? true
@@ -366,15 +367,19 @@ const RateService = ({ navigation, route }) => {
                 },
             ]}
           >
-            <Text
-              style={{
-                fontSize: 16,
-                fontFamily: 'ProximaNova',
-                color: Colors.fontLight,
-              }}
-            >
-              {localizationContext.t('validate')}
-            </Text>
+            {loading ? (
+              <ActivityIndicator size={25} color="#EBC11B" />
+            ) : (
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontFamily: 'ProximaNova',
+                  color: Colors.fontLight,
+                }}
+              >
+                {localizationContext.t('validate')}
+              </Text>
+            )}
           </TouchableOpacity>
         </ScrollView>
         {TokenModalIsVisible && (
@@ -383,17 +388,32 @@ const RateService = ({ navigation, route }) => {
             LotteryNumber={lotteryNo}
             handleModalClose={handleTokenModalClose}
             checkBalance
+            balanceType={'leaveAReview'}
             navigation={navigation}
-            setModalClose={() => setTokenModalIsVisible(false)}
+            setModalClose={() => {
+              setTokenModalIsVisible(false);
+              navigation.goBack();
+            }}
           />
         )}
-        {PayMethodsIsVisible && (
+        {/* {PayMethodsIsVisible && (
           <TipModal
             loading={loading}
             isVisible={PayMethodsIsVisible}
             handleModalClose={handlePayMethodClose}
             handlePayCash={handleAddRatings}
             handlePayDigital={handlePayDigital}
+          />
+        )} */}
+        {isEnoughBalance && (
+          <CommonModal
+            isVisible={isEnoughBalance}
+            handleModalClose={() => setIsEnoughBalance(false)}
+            image={waiter}
+            heading={localizationContext.t('sorry')}
+            buttonText={localizationContext.t('top_up')}
+            onPress={() => navigation.navigate('Balance')}
+            subHeadingText={localizationContext.t('not_enough_miams')}
           />
         )}
       </ScrollView>

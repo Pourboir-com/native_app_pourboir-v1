@@ -43,6 +43,7 @@ import {
   GET_INSTA_POSTS,
   GET_INSTA_DETAILS,
   REGISTER_RESTAURANT,
+  CREATE_REVIEW,
 } from '../../queries';
 import { ReviewsSkeleton } from '../../components/skeleton';
 import { SvgHeaderUserIcon } from '../../components/svg/header_user_icon';
@@ -92,10 +93,12 @@ const ReviewDetails = ({ navigation, route }) => {
     registerRestaurant,
     { isLoading: registerRestaurantLoading },
   ] = useMutation(REGISTER_RESTAURANT);
+  const [createRestaurantReview, { isLoading: createLoading }] = useMutation(
+    CREATE_REVIEW,
+  );
   const [Refferedloading, setRefferedLoading] = useState(false);
   const [Userloading, setUserLoading] = useState(false);
   const [cellPhone, setCellPhone] = useState('');
-  const [token, setToken] = useState(0);
   const [siretNumber, setSiretNumber] = useState(parseInt());
   const [termsChecked, setTermsChecked] = useState(false);
   const [approvalModal, setApprovalModal] = useState(false);
@@ -104,6 +107,9 @@ const ReviewDetails = ({ navigation, route }) => {
   const [AddFavorite, { isLoading: favLoading }] = useMutation(ADD_FAVORITE);
   const [section, setSection] = useState(1);
   const [countryCode, setCountryCode] = useState('+33');
+  const [reviewSuccess, setReviewSuccess] = useState(false);
+  const [leaveRevModal, setLeaveRevModal] = useState(false);
+
   const {
     img,
     name,
@@ -212,7 +218,6 @@ const ReviewDetails = ({ navigation, route }) => {
   const {
     data: RestaurantDetails,
     isLoading: RestaurantDetailsLoading,
-    isFetching: RestaurantDetailsIsFetching,
     refetch: refetchRestaurantDetails,
   } = useQuery(
     ['GET_RESTAURANT_DETAILS', { _id: place_id, location: location?.geometry }],
@@ -376,9 +381,8 @@ const ReviewDetails = ({ navigation, route }) => {
           user_id: state.userDetails.user_id,
         },
         {
-          onSuccess: res => {
+          onSuccess: () => {
             setcheckInModal(true);
-            setToken(res?.data?.token || 0);
           },
           onError: e => {
             setcheckInModalText(localizationContext.t('check_in_limit'));
@@ -512,6 +516,26 @@ const ReviewDetails = ({ navigation, route }) => {
     } else {
       navigation.navigate('socialLogin', { confirmWaiter: true });
     }
+  };
+
+  const confirmClick = async (hospitality, comment) => {
+    await createRestaurantReview(
+      {
+        user_id: state.userDetails.user_id,
+        rating: hospitality,
+        comment,
+        place: restaurant,
+      },
+      {
+        onSuccess: async () => {
+          await reviewRefetch();
+          setLeaveRevModal(false);
+          setTimeout(() => {
+            setReviewSuccess(true);
+          }, 500);
+        },
+      },
+    );
   };
 
   const checkFavorite = () =>
@@ -880,6 +904,10 @@ const ReviewDetails = ({ navigation, route }) => {
             }}
           >
             <Review
+              leaveRevModal={leaveRevModal}
+              createLoading={createLoading}
+              setLeaveRevModal={setLeaveRevModal}
+              confirmClick={confirmClick}
               route={route}
               navigation={navigation}
               reviewData={reviewData}
@@ -1140,9 +1168,8 @@ const ReviewDetails = ({ navigation, route }) => {
         <CheckInModal
           isVisible={checkInModal}
           handleModalClose={() => setcheckInModal(false)}
-          LotteryNumber={token}
           heading={'thank_here'}
-          subText={'checkin_balance_credited'}
+          balanceType={'checkIn'}
         />
       )}
       {approvalModal && (
@@ -1176,6 +1203,14 @@ const ReviewDetails = ({ navigation, route }) => {
           setTourModal={setTourModal}
           section={section}
           setSection={setSection}
+        />
+      )}
+      {reviewSuccess && (
+        <CheckInModal
+          isVisible={reviewSuccess}
+          handleModalClose={() => setReviewSuccess(false)}
+          heading={'thank_review'}
+          balanceType={'restaurantReview'}
         />
       )}
     </View>

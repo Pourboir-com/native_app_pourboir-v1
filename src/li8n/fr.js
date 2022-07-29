@@ -290,8 +290,8 @@ export default {
     'Pour chaque actions sur l’application recevez des Miams.',
   balance_heading: 'Balance',
   history_heading: 'Historique',
-  checkin_balance: 'Check-in at restaurant',
-  review_balance: 'Laisse un avis au',
+  checkin_balance: 'Check-in at',
+  review_balance: 'Laisse un avis',
   tip_balance: 'Donne un pourboire',
   to: 'à',
   checkin_balance_credited:
@@ -310,7 +310,7 @@ export default {
   tour_section4: 'Donnez votre avis pour encore plus de surprises',
   tour_section5: 'Le menu en ligne digital c’est par ici  ',
   see_menu: 'Voir le menu',
-  top_up: 'Recharge',
+  top_up: 'Recharger',
   add_fav: 'Ajouter au favoris',
   fav_list: 'Liste des favoris',
   fav: 'Favoris',
@@ -321,6 +321,7 @@ export default {
   fav_restaurant: 'Vos restaurants favoris',
   popular_restaurant: 'Les restaurants populaires',
   sorry: 'Désolé ',
+  not_enough_miams: `Vous n'avez pas assez de Miams.`,
   patient: 'Soyez',
   patient_description:
     'Pour recharger votre compte, il vous suffit d’utiliser l’application.',

@@ -25,7 +25,7 @@ import * as AuthSession from 'expo-auth-session';
 import { googleLoginConfig } from '../../constants';
 import { userSignUp, iPhoneLoginName, upperTitleCase } from '../../util';
 import { useMutation } from 'react-query';
-import { GOOGLE_SIGNUP, SEND_PUSH_TOKEN } from '../../queries';
+import { GOOGLE_SIGNUP, SEND_PUSH_TOKEN, LOGIN_USER } from '../../queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
@@ -61,12 +61,17 @@ const Input = ({ icon, placeholder, warperStyles }) => {
 const SocialLogin = ({ navigation, route }) => {
   const [city, setCity] = useState();
   const [loading, setLoading] = useState(false);
+  const [state, setState] = useState({
+    email: '',
+    password: '',
+  });
   const [googleSignup] = useMutation(GOOGLE_SIGNUP);
   const [vote, setVote] = useState(false);
   const [confirmWaiter, setconfirmWaiter] = useState(false);
   const [HelpUs, setHelpUs] = useState();
   const [termsChecked, setTermsChecked] = useState(false);
   const [sendNotificationToken] = useMutation(SEND_PUSH_TOKEN);
+  const [loginUser, { isLoading: loginLoading }] = useMutation(LOGIN_USER);
   const { dispatch, localizationContext } = useContext(Context);
   const os = Platform.OS === 'android' ? 'android' : 'apple';
   // const useProxy = Platform.select({ web: false, default: true });
@@ -179,6 +184,12 @@ const SocialLogin = ({ navigation, route }) => {
         });
       },
     );
+  };
+  const handleChange = (name, value) => {
+    setState(prev => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   useEffect(() => {
@@ -364,6 +375,22 @@ const SocialLogin = ({ navigation, route }) => {
     }
   };
 
+  const handleLogin = async () => {
+    await loginUser(
+      {
+        ...state,
+      },
+      {
+        onSuccess: async res => {
+          navigation.navigate('Home', { crossIcon: false });
+        },
+        onError: e => {
+          alert(e.response.data.message);
+        },
+      },
+    );
+  };
+
   return (
     <ScrollView
       alwaysBounceHorizontal={false}
@@ -537,13 +564,21 @@ const SocialLogin = ({ navigation, route }) => {
               icon={mail}
               placeholder="Email Address"
               warperStyles={{ marginBottom: 20, marginTop: 42 }}
+              value={state.email}
+              onChangeText={e => handleChange('email', e)}
             />
             <Input
               icon={lock}
               placeholder="Password"
               warperStyles={{ marginBottom: 20 }}
+              value={state.password}
+              onChangeText={e => handleChange('password', e)}
             />
-            <CommonButton title="Sign In" />
+            <CommonButton
+              disable={loginLoading}
+              title="Sign In"
+              onPress={handleLogin}
+            />
             <View
               style={{
                 flexDirection: 'row',

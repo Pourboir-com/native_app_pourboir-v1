@@ -16,3 +16,8 @@ export const SIGN_UP_USER = async e => {
   let res = await axios.post(BASE_URL + `/v1/register`, e);
   return res;
 };
+
+export const LOGIN_USER = async e => {
+  let res = await axios.post(BASE_URL + `/v1/login`, e);
+  return res;
+};

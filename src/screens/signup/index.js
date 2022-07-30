@@ -104,7 +104,7 @@ const Signup = ({ navigation }) => {
           navigation.navigate('socialLogin');
         },
         onError: e => {
-          console.log(e.response.data);
+          alert(e.response.data.message);
         },
       },
     );

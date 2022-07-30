@@ -45,7 +45,7 @@ const lock = require('../../assets/images/lock.png');
 // Alert.alert(redirectUri);
 WebBrowser.maybeCompleteAuthSession();
 
-const Input = ({ icon, placeholder, warperStyles }) => {
+const Input = ({ icon, placeholder, warperStyles, onChangeText }) => {
   return (
     <View style={[styles.inputWarper, warperStyles]}>
       <Image source={icon} />
@@ -53,6 +53,7 @@ const Input = ({ icon, placeholder, warperStyles }) => {
         placeholderTextColor="#485460"
         placeholder={placeholder}
         style={styles.input}
+        onChangeText={onChangeText}
       />
     </View>
   );
@@ -376,6 +377,7 @@ const SocialLogin = ({ navigation, route }) => {
   };
 
   const handleLogin = async () => {
+    console.log(state);
     await loginUser(
       {
         ...state,
@@ -385,7 +387,7 @@ const SocialLogin = ({ navigation, route }) => {
           navigation.navigate('Home', { crossIcon: false });
         },
         onError: e => {
-          alert(e.response.data.message);
+          console.log(e.response.data);
         },
       },
     );

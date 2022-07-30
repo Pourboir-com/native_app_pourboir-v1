@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { BASE_URL } from '../constants';
 
 export const GOOGLE_SIGNUP = async e => {
@@ -9,4 +10,9 @@ export const GOOGLE_SIGNUP = async e => {
     },
   });
   return await res.json();
+};
+
+export const SIGN_UP_USER = async e => {
+  let res = await axios.post(BASE_URL + `/v1/register`, e);
+  return res;
 };

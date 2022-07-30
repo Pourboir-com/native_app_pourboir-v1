@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import splashScreen from '../screens/splashscreen';
 import socialLogin from '../screens/socialLogin';
+import Signup from '../screens/signup';
 import Home from '../screens/home';
 
 import RateYourService from '../screens/rateYourService';
@@ -93,6 +94,19 @@ function AppNavigator() {
       <Stack.Screen
         name="socialLogin"
         component={socialLogin}
+        options={() => ({
+          headerShown: true,
+          title: '',
+          headerLeft: null,
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerRightContainerStyle: { paddingRight: spacing(2) },
+          gestureEnabled: false,
+        })}
+      />
+      <Stack.Screen
+        name="signup"
+        component={Signup}
         options={() => ({
           headerShown: true,
           title: '',

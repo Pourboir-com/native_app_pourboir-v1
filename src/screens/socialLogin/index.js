@@ -12,6 +12,8 @@ import {
   BackHandler,
   Alert,
 } from 'react-native';
+import { TextInput } from 'react-native';
+
 import * as Facebook from 'expo-auth-session/providers/facebook';
 import Constants from 'expo-constants';
 import * as WebBrowser from 'expo-web-browser';
@@ -27,16 +29,35 @@ import { GOOGLE_SIGNUP, SEND_PUSH_TOKEN } from '../../queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Context from '../../contextApi/context';
 import * as actionTypes from '../../contextApi/actionTypes';
-const logo = require('../../assets/images/logo.png');
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Device from 'expo-device';
 import { getAsyncStorageValues } from '../../constants';
 import * as Notifications from 'expo-notifications';
+import CommonButton from '../../components/common-button';
+
+const logo = require('../../assets/images/logo.png');
+const mail = require('../../assets/images/mail.png');
+const lock = require('../../assets/images/lock.png');
+
 // const redirectUri = AuthSession.makeRedirectUri({
 //   useProxy: true,
 // });
 // Alert.alert(redirectUri);
 WebBrowser.maybeCompleteAuthSession();
+
+const Input = ({ icon, placeholder, warperStyles }) => {
+  return (
+    <View style={[styles.inputWarper, warperStyles]}>
+      <Image source={icon} />
+      <TextInput
+        placeholderTextColor="#485460"
+        placeholder={placeholder}
+        style={styles.input}
+      />
+    </View>
+  );
+};
+
 const SocialLogin = ({ navigation, route }) => {
   const [city, setCity] = useState();
   const [loading, setLoading] = useState(false);
@@ -348,10 +369,7 @@ const SocialLogin = ({ navigation, route }) => {
       alwaysBounceHorizontal={false}
       alwaysBounceVertical={false}
       bounces={false}
-      contentContainerStyle={[
-        styles.container,
-        { backgroundColor: loading ? '#fff' : Colors.yellow },
-      ]}
+      contentContainerStyle={[styles.container, { backgroundColor: '#f9f9f9' }]}
     >
       {loading ? (
         <ActivityIndicator size={70} color={Colors.yellow} />
@@ -360,7 +378,7 @@ const SocialLogin = ({ navigation, route }) => {
           <View style={styles.viewImg}>
             <Image style={styles.imgStyle} source={logo} resizeMode="contain" />
           </View>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             activeOpacity={0.5}
             disabled={!facebookRequest}
             onPress={() =>
@@ -382,8 +400,8 @@ const SocialLogin = ({ navigation, route }) => {
             >
               {localizationContext.t('continue_with_fb')}
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </TouchableOpacity> */}
+          {/* <TouchableOpacity
             activeOpacity={0.5}
             disabled={!request}
             onPress={() =>
@@ -405,8 +423,8 @@ const SocialLogin = ({ navigation, route }) => {
             >
               {localizationContext.t('continue_with_google')}
             </Text>
-          </TouchableOpacity>
-          {Platform.OS === 'ios' && (
+          </TouchableOpacity> */}
+          {/* {Platform.OS === 'ios' && (
             <React.Fragment>
               <TouchableOpacity
                 activeOpacity={0.5}
@@ -512,8 +530,104 @@ const SocialLogin = ({ navigation, route }) => {
                 </Text>
               </TouchableOpacity>
             </React.Fragment>
-          )}
-          <View>
+          )} */}
+          <Text style={styles.txtSignIn}>Sign in</Text>
+          <View style={styles.controlsWarper}>
+            <Input
+              icon={mail}
+              placeholder="Email Address"
+              warperStyles={{ marginBottom: 20, marginTop: 42 }}
+            />
+            <Input
+              icon={lock}
+              placeholder="Password"
+              warperStyles={{ marginBottom: 20 }}
+            />
+            <CommonButton title="Sign In" />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 24,
+              }}
+            >
+              <View
+                style={{
+                  height: 1,
+                  width: 40,
+                  borderWidth: 1,
+                  borderColor: '#000',
+                }}
+              ></View>
+              <Text
+                style={{
+                  fontSize: '16px',
+                  color: '#485460',
+                  marginHorizontal: 20,
+                  fontFamily: 'ProximaNovaSemiBold',
+                }}
+              >
+                Or Sign in with
+              </Text>
+              <View
+                style={{
+                  height: 1,
+                  width: 40,
+                  borderWidth: 1,
+                  borderColor: '#000',
+                }}
+              ></View>
+            </View>
+
+            <View
+              style={{
+                backgroundColor: '#000',
+                height: 50,
+                width: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+                marginTop: 20,
+              }}
+            >
+              <FontAwesome name="apple" color="#fff" size={30} />
+            </View>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '100%',
+                marginTop: 96,
+              }}
+            >
+              <View>
+                <TouchableOpacity onPress={() => navigation.navigate('signup')}>
+                  <Text
+                    style={{
+                      fontSize: '14px',
+                      color: '#485460',
+                      fontFamily: 'ProximaNovaSemiBold',
+                    }}
+                  >
+                    Sign Up
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <Text
+                style={{
+                  fontSize: '14px',
+                  color: '#485460',
+                  fontFamily: 'ProximaNovaSemiBold',
+                }}
+              >
+                Forgot Password ?
+              </Text>
+            </View>
+          </View>
+
+          {/* <View>
             <View
               style={{
                 flexDirection: 'row',
@@ -613,7 +727,7 @@ const SocialLogin = ({ navigation, route }) => {
                 </Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </View> */}
         </View>
       )}
     </ScrollView>
@@ -624,9 +738,29 @@ export default SocialLogin;
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     paddingTop: 45,
+  },
+  txtSignIn: {
+    color: '#1E272E',
+    fontSize: 36,
+    fontWeight: '400',
+  },
+  controlsWarper: {
+    width: 276,
+    alignItems: 'center',
+  },
+  inputWarper: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    paddingLeft: 10,
+    borderRadius: 10,
+  },
+  input: {
+    backgroundColor: 'transparent',
+    width: '92%',
+    height: 50,
+    paddingLeft: 10,
   },
   txtCreatingAcc: {
     color: Colors.fontLight,
@@ -636,7 +770,6 @@ const styles = StyleSheet.create({
   },
   viewImg: {
     width: '100%',
-    height: Dimensions.get('window').height * 0.5,
   },
   viewbtns: {
     flexDirection: 'row',
@@ -646,7 +779,6 @@ const styles = StyleSheet.create({
   },
   imgStyle: {
     marginLeft: Dimensions.get('window').width * 0.05,
-    height: Dimensions.get('window').height * 0.38,
     alignSelf: 'center',
     marginTop: 15,
   },

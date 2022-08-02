@@ -58,9 +58,9 @@ export default {
   continue_with_fb: 'Continue with Facebook',
   continue_with_google: 'Continue with Google',
   I_accept: 'I accept the',
-  terms_of_use: 'Terms of use and privacy policy',
-  et_la: '',
-  confidential: '',
+  terms_of_use: 'Terms of use',
+  et_la: 'the',
+  confidential: 'Privacy Policy',
   I_am: 'I am',
   manager_res: 'restaurateur',
 
@@ -147,7 +147,7 @@ export default {
   thank_info: 'Thank you for your information',
 
   // manager side translations
-  forget_password: 'Password forgotten ? ',
+  forget_password: 'Forgot Password ? ',
   here: `here`,
   already_acc: 'I already have an account',
   email: 'E-mail',
@@ -362,4 +362,15 @@ export default {
   error: 'An error occured',
   error_text:
     'Please make sure to use a file link ending with one of this extension jpeg, jpg, png ou gif',
+
+  email_address: 'Email address',
+  password: 'Password',
+  sign_up: 'Sign Up',
+  sign_in: 'Sign In',
+  sign_up_with: 'Or Sign up with',
+  sign_in_with: 'Or Sign in with',
+  and: 'and',
+  already_a_member: 'Already a member ?',
+  sign_in_small: 'Sign in',
+  sign_up_small: 'Sign up',
 };

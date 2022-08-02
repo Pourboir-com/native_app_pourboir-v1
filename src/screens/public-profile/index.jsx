@@ -43,22 +43,10 @@ const PublicProfile = ({ navigation, route }) => {
     await AsyncStorage.setItem('@userInfo', JSON.stringify({}));
   };
 
-  // const openSettings = () => {
-  //   if (Platform.OS === 'ios') {
-  //     Linking.openURL('app-settings:');
-  //   } else {
-  //     IntentLauncher.startActivityAsync(
-  //       IntentLauncher.ACTION_APPLICATION_DETAILS_SETTINGS,
-  //       { data: 'package:' + pkg },
-  //     );
-  //   }
-  // };
-
   //user signout
   const handleSignOut = async () => {
     const { userInfo } = await getAsyncStorageValues();
     const accessToken = userInfo.accessToken;
-    /* Log-Out */
     if (accessToken) {
       try {
         resetState();
@@ -174,6 +162,7 @@ const PublicProfile = ({ navigation, route }) => {
                   width: 140,
                   height: 140,
                   borderRadius: 280,
+                  backgroundColor: 'grey',
                 }}
               />
             ) : (
@@ -315,7 +304,7 @@ const PublicProfile = ({ navigation, route }) => {
 
         <TouchableOpacity
           onPress={handleSignOut}
-          style={{ ...styles.signOutBtn, color: '#2F3676' }}
+          style={{ ...styles.signOutBtn, color: '#2F3676', marginBottom: 10 }}
         >
           <Text style={{ ...styles.sheetTxt, textAlign: 'center' }}>
             {localizationContext.t('sign_out')}

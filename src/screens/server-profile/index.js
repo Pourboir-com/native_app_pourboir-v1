@@ -82,10 +82,8 @@ const ServerProfile = ({ navigation, route }) => {
 
   useEffect(() => {
     (async () => {
-      // const { location } = await getAsyncStorageValues();
       const { userInfo = {} } = await getAsyncStorageValues();
       setuserInfo(userInfo);
-      // setSaveLocation(location);
     })();
   }, []);
 
@@ -98,7 +96,6 @@ const ServerProfile = ({ navigation, route }) => {
     [
       'GET_YOUR_RES',
       {
-        // location: saveLocation,
         user_id: userInfo?.user_id,
       },
     ],

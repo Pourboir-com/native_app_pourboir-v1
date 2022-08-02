@@ -43,9 +43,6 @@ const HomeScreen = props => {
           {state.userDetails.user_id ? (
             <>
               {state.userDetails.image ? (
-                // props.yourRestaurantLoading ? (
-                //   <ActivityIndicator color="black" size={38} />
-                // ) : (
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate('PublicProfile')}
                 >
@@ -54,14 +51,12 @@ const HomeScreen = props => {
                       borderRadius: 90,
                       width: 40,
                       height: 40,
+                      backgroundColor: 'grey',
                     }}
                     source={{ uri: state?.userDetails?.image }}
                   />
                 </TouchableOpacity>
               ) : (
-                // ) : props.yourRestaurantLoading ? (
-                //   <ActivityIndicator color="black" size={38} />
-                // ) : (
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate('PublicProfile')}
                 >

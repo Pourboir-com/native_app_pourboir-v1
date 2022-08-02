@@ -38,7 +38,12 @@ const CommonButton = props => {
       {props.loading ? (
         <ActivityIndicator size={29} color="#EBC11B" />
       ) : (
-        <Text style={{ fontFamily: 'ProximaNova', fontSize: 16 }}>
+        <Text
+          style={{
+            fontFamily: props.fontFamily || 'ProximaNova',
+            fontSize: 16,
+          }}
+        >
           {props.title}
         </Text>
       )}

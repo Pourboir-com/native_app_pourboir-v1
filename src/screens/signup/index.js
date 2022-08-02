@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,32 +6,35 @@ import {
   Image,
   Dimensions,
   Platform,
-  ActivityIndicator,
   ScrollView,
   BackHandler,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import { TextInput } from 'react-native';
 import { useMutation } from 'react-query';
 import { SIGN_UP_USER } from '../../queries';
+import { GOOGLE_SIGNUP } from '../../queries';
+import * as actionTypes from '../../contextApi/actionTypes';
+import { getAsyncStorageValues } from '../../constants';
 
 import * as WebBrowser from 'expo-web-browser';
 import { FontAwesome } from '@expo/vector-icons';
 import CheckBox from 'react-native-check-box';
 import { Colors } from '../../constants/Theme';
+import * as Device from 'expo-device';
+import { iPhoneLoginName, upperTitleCase } from '../../util';
 
 import Context from '../../contextApi/context';
 import * as Notifications from 'expo-notifications';
 import CommonButton from '../../components/common-button';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const logo = require('../../assets/images/logo.png');
 const mail = require('../../assets/images/mail.png');
 const lock = require('../../assets/images/lock.png');
 
-// const redirectUri = AuthSession.makeRedirectUri({
-//   useProxy: true,
-// });
-// Alert.alert(redirectUri);
 WebBrowser.maybeCompleteAuthSession();
 
 const Input = ({ icon, placeholder, warperStyles, onChangeText }) => {
@@ -49,8 +52,9 @@ const Input = ({ icon, placeholder, warperStyles, onChangeText }) => {
 };
 
 const Signup = ({ navigation }) => {
-  const [loading, setLoading] = useState(false);
   const [termsChecked, setTermsChecked] = useState(false);
+  const [city, setCity] = useState();
+  const os = Platform.OS === 'android' ? 'android' : 'apple';
 
   const [state, setState] = useState({
     name: '',
@@ -59,6 +63,7 @@ const Signup = ({ navigation }) => {
   });
   const { dispatch, localizationContext } = useContext(Context);
   const [onSignUp, { isLoading: signupLoading }] = useMutation(SIGN_UP_USER);
+  const [googleSignup] = useMutation(GOOGLE_SIGNUP);
 
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -75,7 +80,15 @@ const Signup = ({ navigation }) => {
     }));
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    async function loadCity() {
+      const { City } = await getAsyncStorageValues();
+      setCity(City?.city);
+    }
+    loadCity();
+  }, []);
+
+  useEffect(() => {
     const handleBackButtonClick = () => {
       BackHandler.exitApp();
       return true;
@@ -92,19 +105,21 @@ const Signup = ({ navigation }) => {
     });
   });
 
-  // Alert.alert(`${response?.params?.access_token} ${response?.type}`);
-
   const register = async () => {
     await onSignUp(
       {
         ...state,
+        city,
+        login_type: 'login',
+        mobile_type: Device.deviceName || '',
+        os,
       },
       {
         onSuccess: async res => {
           navigation.navigate('socialLogin');
         },
         onError: e => {
-          alert(e.response.data.message);
+          Alert.alert(e.response.data.message);
         },
       },
     );
@@ -115,44 +130,43 @@ const Signup = ({ navigation }) => {
       alwaysBounceHorizontal={false}
       alwaysBounceVertical={false}
       bounces={false}
-      contentContainerStyle={[styles.container, { backgroundColor: '#f9f9f9' }]}
+      contentContainerStyle={{ backgroundColor: '#f9f9f9', height: '100%' }}
     >
-      {loading ? (
-        <ActivityIndicator size={70} color={Colors.yellow} />
-      ) : (
+      <View style={styles.container}>
         <View style={{ width: '100%', alignItems: 'center' }}>
           <View style={styles.viewImg}>
             <Image style={styles.imgStyle} source={logo} resizeMode="contain" />
           </View>
 
-          <Text style={styles.txtSignIn}>Sign up</Text>
+          <Text style={styles.txtSignIn}>
+            {localizationContext.t('sign_up')}
+          </Text>
           <View style={styles.controlsWarper}>
             <Input
               icon={mail}
-              placeholder="Name"
+              placeholder={localizationContext.t('email_address')}
               warperStyles={{ marginBottom: 20, marginTop: 42 }}
-              value={state.name}
-              onChangeText={e => handleChange('name', e)}
-            />
-            <Input
-              icon={mail}
-              placeholder="Email Address"
-              warperStyles={{ marginBottom: 20 }}
               value={state.email}
               onChangeText={e => handleChange('email', e)}
             />
 
             <Input
               icon={lock}
-              placeholder="Password"
+              placeholder={localizationContext.t('password')}
               warperStyles={{ marginBottom: 20 }}
               value={state.password}
               onChangeText={e => handleChange('password', e)}
             />
             <CommonButton
               disable={signupLoading}
-              title="Sign Up"
-              onPress={register}
+              fontFamily="ProximaNovaBold"
+              title={localizationContext.t('sign_up')}
+              onPress={() =>
+                termsChecked
+                  ? register()
+                  : alert('Please accept condition to continue.')
+              }
+              loading={signupLoading}
             />
             <View
               style={{
@@ -175,10 +189,10 @@ const Signup = ({ navigation }) => {
                   fontSize: '16px',
                   color: '#485460',
                   marginHorizontal: 20,
-                  fontFamily: 'ProximaNovaSemiBold',
+                  fontFamily: 'ProximaNovaBold',
                 }}
               >
-                Or Sign up with
+                {localizationContext.t('sign_up_with')}
               </Text>
               <View
                 style={{
@@ -190,7 +204,7 @@ const Signup = ({ navigation }) => {
               ></View>
             </View>
 
-            <View
+            <TouchableOpacity
               style={{
                 backgroundColor: '#000',
                 height: 50,
@@ -200,9 +214,87 @@ const Signup = ({ navigation }) => {
                 borderRadius: 10,
                 marginTop: 20,
               }}
+              activeOpacity={0.5}
+              onPress={async () => {
+                try {
+                  if (termsChecked) {
+                    const credential = await AppleAuthentication.signInAsync({
+                      requestedScopes: [
+                        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+                        AppleAuthentication.AppleAuthenticationScope.EMAIL,
+                      ],
+                    });
+
+                    let user = {
+                      name: iPhoneLoginName(credential.fullName) || '',
+                      email: credential.email || '',
+                      family_name: credential.fullName?.familyName || '',
+                      id: credential.user || '',
+                      picture: credential.image || '',
+                      city: city,
+                      login_type: 'Facebook',
+                      mobile_type: Device.deviceName || '',
+                      os,
+                    };
+
+                    await googleSignup(user, {
+                      onSuccess: async res => {
+                        let userDetails = {
+                          name: upperTitleCase(res?.user?.full_name),
+                          // ? userGivenName(res?.user?.full_name)
+                          // : '',
+                          image: res?.user?.picture || '',
+                          email: res?.user?.email || '',
+                          accessToken: credential.authorizationCode || '',
+                          user_id: res?.user?._id || '',
+                          username: res?.user?.username || '',
+                          description: res?.user?.description || '',
+                          last_name: res?.user?.last_name || '',
+                          calling_code: res?.user?.calling_code || '',
+                          phone_number: res?.user?.phone_number || '',
+                          os,
+                        };
+
+                        dispatch({
+                          type: actionTypes.USER_DETAILS,
+                          payload: userDetails,
+                        });
+
+                        await AsyncStorage.setItem(
+                          '@userInfo',
+                          JSON.stringify({
+                            ...userDetails,
+                          }),
+                        );
+
+                        if (!res?.user?.username) {
+                          navigation.replace('personalDetails', {
+                            login: true,
+                          });
+                        } else {
+                          navigation.navigate('Home', { crossIcon: false });
+                          // navigation.replace('Setting', { login: true });
+                        }
+                      },
+                      onError: e => {
+                        alert(`Apple Login Error: ${e}`);
+                      },
+                    });
+                  } else {
+                    Alert.alert('Please accept condition to continue.');
+                  }
+                  // signed in
+                } catch (e) {
+                  if (e.code === 'ERR_CANCELED') {
+                    // handle that the user canceled the sign-in flow
+                  } else {
+                    // handle other errors
+                  }
+                }
+              }}
             >
               <FontAwesome name="apple" color="#fff" size={30} />
-            </View>
+            </TouchableOpacity>
           </View>
 
           <View>
@@ -211,14 +303,14 @@ const Signup = ({ navigation }) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minHeight: 80,
+                minHeight: 55,
                 textAlign: 'center',
+                marginTop: 10,
               }}
             >
               <CheckBox
                 style={{
                   zIndex: 9999,
-                  marginTop: Platform.OS === 'ios' ? -10 : -2,
                 }}
                 onClick={() => setTermsChecked(!termsChecked)}
                 isChecked={termsChecked}
@@ -237,89 +329,108 @@ const Signup = ({ navigation }) => {
                   />
                 }
               />
-              <Text
-                style={[
-                  {
+
+              <View style={{ flexDirection: 'row' }}>
+                <Text
+                  style={{
+                    color: Colors.fontLight,
                     textAlign: 'center',
-                  },
-                ]}
-              >
-                <View style={{ flexDirection: 'row' }}>
+                    fontSize: 14,
+                    marginLeft: Platform.OS === 'android' ? 15 : 5,
+                  }}
+                  onPress={() => setTermsChecked(!termsChecked)}
+                >
+                  {localizationContext.t('I_accept')}{' '}
+                </Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    WebBrowser.openBrowserAsync(
+                      'https://pourboir.com/fr/need-help/privacy-policy/',
+                    )
+                  }
+                >
                   <Text
                     style={{
                       color: Colors.fontLight,
-                      textAlign: 'center',
-                      fontSize: 14,
-                      marginLeft: Platform.OS === 'android' ? 15 : 5,
                     }}
-                    onPress={() => setTermsChecked(!termsChecked)}
-                  >
-                    {localizationContext.t('I_accept')}{' '}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() =>
-                      WebBrowser.openBrowserAsync(
-                        'https://pourboir.com/fr/need-help/privacy-policy/',
-                      )
-                    }
                   >
                     <Text
                       style={{
                         color: '#0050A0',
                         fontSize: 14,
                         fontFamily: 'ProximaNova',
-                        lineHeight: 24,
-                        textAlign: 'center',
-                        marginTop: Platform.OS === 'android' ? -1 : -2.5,
                       }}
                     >
                       {localizationContext.t('terms_of_use')}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </Text>
-            </View>
-
-            <View
-              style={{
-                justifyContent: 'center',
-                flexDirection: 'row',
-                marginTop: -27,
-                marginLeft: 30,
-              }}
-            >
-              <Text
-                style={{ color: Colors.fontLight, fontFamily: 'ProximaNova' }}
-              >
-                {localizationContext.t('et_la')}
-              </Text>
-              <TouchableOpacity
-                onPress={() =>
-                  WebBrowser.openBrowserAsync(
-                    'https://pourboir.com/fr/need-help/privacy-policy/',
-                  )
-                }
-              >
-                <Text style={{ color: '#0050A0', fontFamily: 'ProximaNova' }}>
-                  {localizationContext.t('confidential')}
-                </Text>
-              </TouchableOpacity>
+                    </Text>{' '}
+                    {localizationContext.t('and')}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-
-          <Text
+          <TouchableOpacity
             style={{
-              color: '#485460',
-              fontSize: 14,
-              fontFamily: 'ProximaNova',
-              lineHeight: 24,
-              textAlign: 'center',
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: -10,
+            }}
+            onPress={() =>
+              WebBrowser.openBrowserAsync(
+                'https://pourboir.com/fr/need-help/privacy-policy/',
+              )
+            }
+          >
+            <Text
+              style={{
+                color: Colors.fontLight,
+                textAlign: 'center',
+                fontSize: 14,
+              }}
+              onPress={() => setTermsChecked(!termsChecked)}
+            >
+              {localizationContext.t('et_la')}
+            </Text>
+            <Text style={{ color: '#0050A0', fontFamily: 'ProximaNova' }}>
+              {' '}
+              {localizationContext.t('confidential')}
+            </Text>
+          </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: 40,
             }}
           >
-            Already a member ? Sign in
-          </Text>
+            <Text
+              style={{
+                color: '#485460',
+                fontSize: 14,
+                fontFamily: 'ProximaNova',
+                lineHeight: 24,
+                textAlign: 'center',
+              }}
+            >
+              {localizationContext.t('already_a_member')}
+            </Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('socialLogin')}
+            >
+              <Text
+                style={{
+                  color: '#485460',
+                  fontSize: 14,
+                  fontFamily: 'ProximaNovaBold',
+                  lineHeight: 24,
+                  marginLeft: 6,
+                }}
+              >
+                {localizationContext.t('sign_in_small')}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      )}
+      </View>
     </ScrollView>
   );
 };
@@ -327,13 +438,13 @@ export default Signup;
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    paddingTop: 45,
+    marginTop: 'auto',
+    marginBottom: 'auto',
   },
   txtSignIn: {
     color: '#1E272E',
     fontSize: 36,
-    fontWeight: '400',
+    fontFamily: 'ProximaNovaBold',
   },
   controlsWarper: {
     width: 276,
@@ -371,32 +482,12 @@ const styles = StyleSheet.create({
     marginLeft: Dimensions.get('window').width * 0.05,
     alignSelf: 'center',
     marginTop: 15,
+    height: 160,
   },
   imgLogoStyle: {
     width: 200,
     height: 50,
     position: 'relative',
-  },
-  btnFb: {
-    width: '90%',
-    flexDirection: 'row',
-    backgroundColor: '#4267B2',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 50,
-    marginBottom: 15,
-    marginTop: -35,
-  },
-  btnGoogle: {
-    width: '90%',
-    flexDirection: 'row',
-    backgroundColor: '#DD4B39',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 50,
-    marginBottom: 15,
   },
   btnApple: {
     width: '90%',
@@ -407,16 +498,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 50,
     marginBottom: 15,
-  },
-  textFb: {
-    color: '#fff',
-    marginLeft: 10,
-  },
-  cross: {
-    width: '18%',
-    alignSelf: 'flex-start',
-    alignContent: 'center',
-    display: 'flex',
-    justifyContent: 'flex-start',
   },
 });

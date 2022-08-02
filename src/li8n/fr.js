@@ -151,7 +151,7 @@ export default {
   part_time: 'Temps partiel',
 
   // manager side translations
-  forget_password: 'mot de passe oublié ? ',
+  forget_password: 'Mot de passe oublier ? ',
   here: `c'est ici`,
   already_acc: 'J’ai déjà un compte',
   email: 'e-mail',
@@ -368,4 +368,15 @@ export default {
   error: 'Une erreur s’est produite',
   error_text:
     'Merci d’utiliser un lien contenant un fichier se terminant en jpeg, jpg, png ou gif',
+
+  email_address: 'Adresse e-mail',
+  password: 'Mot de passe',
+  sign_up: `S'inscrire`,
+  sign_in: 'Se connecter',
+  sign_up_with: 'Ou inscrit toi avec',
+  sign_in_with: 'Se connecter avec',
+  and: '',
+  already_a_member: 'Déià inscrit?',
+  sign_in_small: 'Se connecter',
+  sign_up_small: 'Inscription',
 };

@@ -50,6 +50,7 @@ const Balance = ({ navigation }) => {
       data?.restaurantReview
     );
   };
+
   const [isTopUp, setIsTopUp] = useState(false);
 
   const historyDetails = item => {
@@ -106,6 +107,18 @@ const Balance = ({ navigation }) => {
           </Text>
         </>
       );
+    } else if (item.transaction_type === 'createAnAccount') {
+      return (
+        <>
+          <Text style={styles.text}>
+            {localizationContext.t('account_created')}
+          </Text>
+          <Text style={styles.amount}>
+            {item.transaction_amount > 0 && '+'}
+            {item.transaction_amount}
+          </Text>
+        </>
+      );
     }
   };
 
@@ -141,7 +154,7 @@ const Balance = ({ navigation }) => {
           justifyContent: 'center',
         }}
       >
-        <Text style={[styles.text, { width: '70%' }]}>
+        <Text style={[styles.text, { width: '70%', textAlign: 'center' }]}>
           {localizationContext.t('balance_description')}
         </Text>
         <Text style={styles.heading}>

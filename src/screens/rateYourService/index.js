@@ -35,14 +35,12 @@ const RateService = ({ navigation, route }) => {
   const [service, setService] = useState();
   const [professionalism, setProfessionalism] = useState();
   const [remarks, setRemarks] = useState('');
-  const [PayMethodsIsVisible, setPayMethodsIsVisible] = useState(false);
   const [isEnoughBalance, setIsEnoughBalance] = useState(false);
   const [TokenModalIsVisible, setTokenModalIsVisible] = useState(false);
   const [addRatings] = useMutation(ADD_RATINGS);
   const [loading, setLoading] = useState(false);
   const scrollRef = React.useRef(null);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-  const [lotteryNo, setlotteryNo] = useState();
   useEffect(() => {
     (async () => {
       const { Currency } = await getAsyncStorageValues();
@@ -50,39 +48,10 @@ const RateService = ({ navigation, route }) => {
     })();
   }, []);
 
-  // useEffect(() => {
-  //   const keyboardDidShowListener = Keyboard.addListener(
-  //     'keyboardDidShow',
-  //     () => {
-  //       // setKeyboardVisible(true); // or some other action
-  //       scrollRef.current.scrollToEnd();
-  //     },
-  //   );
-
-  //   return () => {
-  //     // keyboardDidHideListener.remove();
-  //     keyboardDidShowListener.remove();
-  //   };
-  // }, []);
-  const handlePayMethodClose = () => {
-    setPayMethodsIsVisible(false);
-  };
   const handleTokenModalClose = () => {
     setTokenModalIsVisible(false);
     navigation.navigate('Home', { crossIcon: false });
   };
-  const handlePayDigital = () => {
-    setPayMethodsIsVisible(false);
-    navigation.navigate('addCard');
-  };
-
-  // useEffect(() => {
-  //   if (isVisible) {
-  //     setTimeout(() => {
-  //       handleModalClose();
-  //     }, 5000);
-  //   }
-  // }, [isVisible]);
 
   const { name, image, restaurant_id, waiter_id, place_id } = route.params;
 
@@ -104,10 +73,8 @@ const RateService = ({ navigation, route }) => {
         place_id,
       };
       await addRatings(ratingDetails, {
-        onSuccess: async e => {
+        onSuccess: async () => {
           setTokenModalIsVisible(true);
-          setPayMethodsIsVisible(false);
-          setlotteryNo(e.data.data.token);
           setLoading(false);
         },
         onError: () => {
@@ -385,10 +352,9 @@ const RateService = ({ navigation, route }) => {
         {TokenModalIsVisible && (
           <ThankRatingModal
             isVisible={TokenModalIsVisible}
-            LotteryNumber={lotteryNo}
             handleModalClose={handleTokenModalClose}
             checkBalance
-            balanceType={'leaveAReview'}
+            subText={'thanks_review_descp'}
             navigation={navigation}
             setModalClose={() => {
               setTokenModalIsVisible(false);
@@ -396,15 +362,6 @@ const RateService = ({ navigation, route }) => {
             }}
           />
         )}
-        {/* {PayMethodsIsVisible && (
-          <TipModal
-            loading={loading}
-            isVisible={PayMethodsIsVisible}
-            handleModalClose={handlePayMethodClose}
-            handlePayCash={handleAddRatings}
-            handlePayDigital={handlePayDigital}
-          />
-        )} */}
         {isEnoughBalance && (
           <CommonModal
             isVisible={isEnoughBalance}
@@ -412,7 +369,10 @@ const RateService = ({ navigation, route }) => {
             image={waiter}
             heading={localizationContext.t('sorry')}
             buttonText={localizationContext.t('top_up')}
-            onPress={() => navigation.navigate('Balance')}
+            onPress={() => {
+              setIsEnoughBalance(false);
+              navigation.navigate('Balance');
+            }}
             subHeadingText={localizationContext.t('not_enough_miams')}
           />
         )}

@@ -137,6 +137,7 @@ export default {
   partial: 'Partial',
   part_time: 'Part time',
   candidate_btn: 'Create my candidate profile',
+  account_created: 'Created an account',
   candidate_profile: 'Your Candidate Profile',
   Time: 'Time',
   position: 'Position',
@@ -324,6 +325,8 @@ export default {
   thank_here: 'You are here !',
   confirm_here:
     'You have confirmed that you are at this restaurants. Thanks to that you have earned one loterry ticket.',
+  thanks_review_descp:
+    'We have transfered your Miams to the waiter of this restaurant.',
   thank_review: 'Thanks for your review !',
   not_enough_miams: 'You do not have enough Miams',
   won_ticket:

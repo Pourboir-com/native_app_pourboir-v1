@@ -81,9 +81,9 @@ const ThanksRatingModal = ({
       <Text style={[styles.txtName, { fontFamily: 'ProximaNova' }]}>
         {subText
           ? localizationContext.t(subText)
-          : localizationContext.t('balance_credited')}{' '}
-        {accountsData?.data[balanceType]}{' '}
-        {localizationContext.t('balance_credited_2')}
+          : `${localizationContext.t('balance_credited')} ${
+              accountsData?.data[balanceType]
+            } ${localizationContext.t('balance_credited_2')}`}
       </Text>
       {checkBalance && (
         <TouchableOpacity

@@ -35,7 +35,13 @@ const lock = require('../../assets/images/lock.png');
 
 WebBrowser.maybeCompleteAuthSession();
 
-const Input = ({ icon, placeholder, warperStyles, onChangeText }) => {
+const Input = ({
+  icon,
+  placeholder,
+  warperStyles,
+  onChangeText,
+  secureTextEntry,
+}) => {
   return (
     <View style={[styles.inputWarper, warperStyles]}>
       <Image source={icon} />
@@ -44,6 +50,7 @@ const Input = ({ icon, placeholder, warperStyles, onChangeText }) => {
         placeholder={placeholder}
         style={styles.input}
         onChangeText={onChangeText}
+        secureTextEntry={secureTextEntry}
       />
     </View>
   );
@@ -104,7 +111,7 @@ const SocialLogin = ({ navigation, route }) => {
         finalStatus = status;
       }
       if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
+        // alert('Failed to get push token for push notification!');
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
@@ -230,7 +237,9 @@ const SocialLogin = ({ navigation, route }) => {
           setLoading(false);
         },
         onError: e => {
-          Alert.alert(e.response.data.message);
+          Alert.alert(
+            e.response?.data?.message || e?.response?.data?.error[0]?.message,
+          );
         },
       },
     );
@@ -241,7 +250,7 @@ const SocialLogin = ({ navigation, route }) => {
       alwaysBounceHorizontal={false}
       alwaysBounceVertical={false}
       bounces={false}
-      contentContainerStyle={{ backgroundColor: '#f9f9f9', height: '100%' }}
+      contentContainerStyle={{ backgroundColor: '#f9f9f9', flexGrow: 1 }}
     >
       <View style={styles.container}>
         <Spinner visible={loading} />
@@ -266,50 +275,53 @@ const SocialLogin = ({ navigation, route }) => {
               warperStyles={{ marginBottom: 20 }}
               value={state.password}
               onChangeText={e => handleChange('password', e)}
+              secureTextEntry={true}
             />
             <CommonButton
               disable={loginLoading}
               title={localizationContext.t('sign_in')}
+              loading={loginLoading}
               onPress={handleLogin}
               fontFamily="ProximaNovaBold"
             />
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginTop: 24,
-              }}
-            >
-              <View
-                style={{
-                  height: 1,
-                  width: 40,
-                  borderWidth: 1,
-                  borderColor: '#000',
-                }}
-              ></View>
-              <Text
-                style={{
-                  fontSize: '16px',
-                  color: '#485460',
-                  marginHorizontal: 20,
-                  fontFamily: 'ProximaNovaBold',
-                }}
-              >
-                {localizationContext.t('sign_in_with')}
-              </Text>
-              <View
-                style={{
-                  height: 1,
-                  width: 40,
-                  borderWidth: 1,
-                  borderColor: '#000',
-                }}
-              ></View>
-            </View>
             {Platform.OS === 'ios' && (
               <>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: 24,
+                  }}
+                >
+                  <View
+                    style={{
+                      height: 1,
+                      width: 40,
+                      borderWidth: 1,
+                      borderColor: '#000',
+                    }}
+                  ></View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: '#485460',
+                      marginHorizontal: 20,
+                      fontFamily: 'ProximaNovaBold',
+                    }}
+                  >
+                    {localizationContext.t('sign_in_with')}
+                  </Text>
+                  <View
+                    style={{
+                      height: 1,
+                      width: 40,
+                      borderWidth: 1,
+                      borderColor: '#000',
+                    }}
+                  ></View>
+                </View>
+
                 <TouchableOpacity
                   style={{
                     backgroundColor: '#000',
@@ -412,14 +424,15 @@ const SocialLogin = ({ navigation, route }) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 width: '100%',
-                marginTop: 96,
+                marginVertical: 40,
+                marginTop: 60,
               }}
             >
               <View>
                 <TouchableOpacity onPress={() => navigation.navigate('signup')}>
                   <Text
                     style={{
-                      fontSize: '14px',
+                      fontSize: 14,
                       color: '#485460',
                       fontFamily: 'ProximaNovaBold',
                     }}
@@ -430,7 +443,7 @@ const SocialLogin = ({ navigation, route }) => {
               </View>
               <Text
                 style={{
-                  fontSize: '14px',
+                  fontSize: 14,
                   color: '#485460',
                   fontFamily: 'ProximaNovaSemiBold',
                 }}

@@ -296,8 +296,9 @@ export default {
   to: 'à',
   checkin_balance_credited:
     'Nous avons créditer votre compte avec 1 Miam’s pour votre avis. Le plus vous participez, le plus vous recevrez de Miam’s.',
-  balance_credited:
-    'Nous avons créditer votre compte avec 2 Miam’s pour votre avis. Le plus vous participez, le plus vous recevrez de Miam’s.',
+  balance_credited: 'Nous avons créditer votre compte avec',
+  balance_credited_2:
+    'Miam’s pour votre avis. Le plus vous participez, le plus vous recevrez de Miam’s.',
   bank_acc: 'Votre compte bancaire',
   lang: 'Language',
   rate_app: "Notez l'application",
@@ -364,6 +365,7 @@ export default {
   the_media: 'Media',
   discv_setting: 'Images d’avant-goût',
   congrats: 'Succès !',
+  account_created: 'Créé un compte',
   congrats_text: 'Vos média ont bien été mis à jour',
   error: 'Une erreur s’est produite',
   error_text:
@@ -379,4 +381,6 @@ export default {
   already_a_member: 'Déià inscrit?',
   sign_in_small: 'Se connecter',
   sign_up_small: 'Inscription',
+  thanks_review_descp:
+    'Nous avons transférer vos Miams au serveur de ce restaurant.',
 };

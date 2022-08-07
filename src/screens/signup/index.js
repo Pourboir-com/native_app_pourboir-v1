@@ -24,7 +24,6 @@ import CheckBox from 'react-native-check-box';
 import { Colors } from '../../constants/Theme';
 import * as Device from 'expo-device';
 import { iPhoneLoginName, upperTitleCase } from '../../util';
-
 import Context from '../../contextApi/context';
 import * as Notifications from 'expo-notifications';
 import CommonButton from '../../components/common-button';
@@ -37,7 +36,13 @@ const lock = require('../../assets/images/lock.png');
 
 WebBrowser.maybeCompleteAuthSession();
 
-const Input = ({ icon, placeholder, warperStyles, onChangeText }) => {
+const Input = ({
+  icon,
+  placeholder,
+  warperStyles,
+  onChangeText,
+  secureTextEntry,
+}) => {
   return (
     <View style={[styles.inputWarper, warperStyles]}>
       <Image source={icon} />
@@ -46,6 +51,7 @@ const Input = ({ icon, placeholder, warperStyles, onChangeText }) => {
         placeholder={placeholder}
         style={styles.input}
         onChangeText={onChangeText}
+        secureTextEntry={secureTextEntry}
       />
     </View>
   );
@@ -119,7 +125,9 @@ const Signup = ({ navigation }) => {
           navigation.navigate('socialLogin');
         },
         onError: e => {
-          Alert.alert(e.response.data.message);
+          Alert.alert(
+            e?.response?.data?.error[0]?.message || e.response?.data?.message,
+          );
         },
       },
     );
@@ -130,7 +138,7 @@ const Signup = ({ navigation }) => {
       alwaysBounceHorizontal={false}
       alwaysBounceVertical={false}
       bounces={false}
-      contentContainerStyle={{ backgroundColor: '#f9f9f9', height: '100%' }}
+      contentContainerStyle={{ backgroundColor: '#f9f9f9', flexGrow: 1 }}
     >
       <View style={styles.container}>
         <View style={{ width: '100%', alignItems: 'center' }}>
@@ -156,6 +164,7 @@ const Signup = ({ navigation }) => {
               warperStyles={{ marginBottom: 20 }}
               value={state.password}
               onChangeText={e => handleChange('password', e)}
+              secureTextEntry={true}
             />
             <CommonButton
               disable={signupLoading}
@@ -168,133 +177,141 @@ const Signup = ({ navigation }) => {
               }
               loading={signupLoading}
             />
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginTop: 24,
-              }}
-            >
-              <View
-                style={{
-                  height: 1,
-                  width: 40,
-                  borderWidth: 1,
-                  borderColor: '#000',
-                }}
-              ></View>
-              <Text
-                style={{
-                  fontSize: '16px',
-                  color: '#485460',
-                  marginHorizontal: 20,
-                  fontFamily: 'ProximaNovaBold',
-                }}
-              >
-                {localizationContext.t('sign_up_with')}
-              </Text>
-              <View
-                style={{
-                  height: 1,
-                  width: 40,
-                  borderWidth: 1,
-                  borderColor: '#000',
-                }}
-              ></View>
-            </View>
+            {Platform.OS === 'ios' && (
+              <>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: 24,
+                  }}
+                >
+                  <View
+                    style={{
+                      height: 1,
+                      width: 40,
+                      borderWidth: 1,
+                      borderColor: '#000',
+                    }}
+                  ></View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: '#485460',
+                      marginHorizontal: 20,
+                      fontFamily: 'ProximaNovaBold',
+                    }}
+                  >
+                    {localizationContext.t('sign_up_with')}
+                  </Text>
+                  <View
+                    style={{
+                      height: 1,
+                      width: 40,
+                      borderWidth: 1,
+                      borderColor: '#000',
+                    }}
+                  ></View>
+                </View>
 
-            <TouchableOpacity
-              style={{
-                backgroundColor: '#000',
-                height: 50,
-                width: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 10,
-                marginTop: 20,
-              }}
-              activeOpacity={0.5}
-              onPress={async () => {
-                try {
-                  if (termsChecked) {
-                    const credential = await AppleAuthentication.signInAsync({
-                      requestedScopes: [
-                        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-                        AppleAuthentication.AppleAuthenticationScope.EMAIL,
-                      ],
-                    });
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#000',
+                    height: 50,
+                    width: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 10,
+                    marginTop: 20,
+                  }}
+                  activeOpacity={0.5}
+                  onPress={async () => {
+                    try {
+                      if (termsChecked) {
+                        const credential = await AppleAuthentication.signInAsync(
+                          {
+                            requestedScopes: [
+                              AppleAuthentication.AppleAuthenticationScope
+                                .FULL_NAME,
+                              AppleAuthentication.AppleAuthenticationScope
+                                .EMAIL,
+                            ],
+                          },
+                        );
 
-                    let user = {
-                      name: iPhoneLoginName(credential.fullName) || '',
-                      email: credential.email || '',
-                      family_name: credential.fullName?.familyName || '',
-                      id: credential.user || '',
-                      picture: credential.image || '',
-                      city: city,
-                      login_type: 'Facebook',
-                      mobile_type: Device.deviceName || '',
-                      os,
-                    };
-
-                    await googleSignup(user, {
-                      onSuccess: async res => {
-                        let userDetails = {
-                          name: upperTitleCase(res?.user?.full_name),
-                          // ? userGivenName(res?.user?.full_name)
-                          // : '',
-                          image: res?.user?.picture || '',
-                          email: res?.user?.email || '',
-                          accessToken: credential.authorizationCode || '',
-                          user_id: res?.user?._id || '',
-                          username: res?.user?.username || '',
-                          description: res?.user?.description || '',
-                          last_name: res?.user?.last_name || '',
-                          calling_code: res?.user?.calling_code || '',
-                          phone_number: res?.user?.phone_number || '',
+                        let user = {
+                          name: iPhoneLoginName(credential.fullName) || '',
+                          email: credential.email || '',
+                          family_name: credential.fullName?.familyName || '',
+                          id: credential.user || '',
+                          picture: credential.image || '',
+                          city: city,
+                          login_type: 'Facebook',
+                          mobile_type: Device.deviceName || '',
                           os,
                         };
 
-                        dispatch({
-                          type: actionTypes.USER_DETAILS,
-                          payload: userDetails,
+                        await googleSignup(user, {
+                          onSuccess: async res => {
+                            let userDetails = {
+                              name: upperTitleCase(res?.user?.full_name),
+                              // ? userGivenName(res?.user?.full_name)
+                              // : '',
+                              image: res?.user?.picture || '',
+                              email: res?.user?.email || '',
+                              accessToken: credential.authorizationCode || '',
+                              user_id: res?.user?._id || '',
+                              username: res?.user?.username || '',
+                              description: res?.user?.description || '',
+                              last_name: res?.user?.last_name || '',
+                              calling_code: res?.user?.calling_code || '',
+                              phone_number: res?.user?.phone_number || '',
+                              os,
+                            };
+
+                            dispatch({
+                              type: actionTypes.USER_DETAILS,
+                              payload: userDetails,
+                            });
+
+                            await AsyncStorage.setItem(
+                              '@userInfo',
+                              JSON.stringify({
+                                ...userDetails,
+                              }),
+                            );
+
+                            if (!res?.user?.username) {
+                              navigation.replace('personalDetails', {
+                                login: true,
+                              });
+                            } else {
+                              navigation.navigate('Home', { crossIcon: false });
+                              // navigation.replace('Setting', { login: true });
+                            }
+                          },
+                          onError: e => {
+                            alert(`Apple Login Error: ${e}`);
+                          },
                         });
-
-                        await AsyncStorage.setItem(
-                          '@userInfo',
-                          JSON.stringify({
-                            ...userDetails,
-                          }),
-                        );
-
-                        if (!res?.user?.username) {
-                          navigation.replace('personalDetails', {
-                            login: true,
-                          });
-                        } else {
-                          navigation.navigate('Home', { crossIcon: false });
-                          // navigation.replace('Setting', { login: true });
-                        }
-                      },
-                      onError: e => {
-                        alert(`Apple Login Error: ${e}`);
-                      },
-                    });
-                  } else {
-                    Alert.alert('Please accept condition to continue.');
-                  }
-                  // signed in
-                } catch (e) {
-                  if (e.code === 'ERR_CANCELED') {
-                    // handle that the user canceled the sign-in flow
-                  } else {
-                    // handle other errors
-                  }
-                }
-              }}
-            >
-              <FontAwesome name="apple" color="#fff" size={30} />
-            </TouchableOpacity>
+                      } else {
+                        Alert.alert('Please accept condition to continue.');
+                      }
+                      // signed in
+                    } catch (e) {
+                      if (e.code === 'ERR_CANCELED') {
+                        // handle that the user canceled the sign-in flow
+                      } else {
+                        // handle other errors
+                      }
+                    }
+                  }}
+                >
+                  <FontAwesome name="apple" color="#fff" size={30} />
+                </TouchableOpacity>
+              </>
+            )}
           </View>
 
           <View>
@@ -399,6 +416,7 @@ const Signup = ({ navigation }) => {
           <View
             style={{
               flexDirection: 'row',
+              marginVertical: 20,
               marginTop: 40,
             }}
           >

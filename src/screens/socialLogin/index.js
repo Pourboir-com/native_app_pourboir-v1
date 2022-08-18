@@ -263,10 +263,15 @@ const SocialLogin = ({ navigation, route }) => {
             {localizationContext.t('sign_in')}
           </Text>
           <View style={styles.controlsWarper}>
+            {signInError && (
+              <Text style={styles.authError}>
+                {localizationContext.t('auth_error')}
+              </Text>
+            )}
             <Input
               icon={mail}
               placeholder={localizationContext.t('email_address')}
-              warperStyles={{ marginBottom: 20, marginTop: 42 }}
+              warperStyles={{ marginBottom: 20, marginTop: 8 }}
               value={state.email}
               onChangeText={e => handleChange('email', e)}
             />
@@ -451,7 +456,7 @@ const SocialLogin = ({ navigation, route }) => {
           </View>
         </View>
       </View>
-      {signInError && (
+      {/* {signInError && (
         <CommonModal
           isVisible={signInError}
           handleModalClose={() => setSignInError(false)}
@@ -477,7 +482,7 @@ const SocialLogin = ({ navigation, route }) => {
           subHeadingText={localizationContext.t('signin_error')}
           buttonText={localizationContext.t('sign_up')}
         />
-      )}
+      )} */}
     </ScrollView>
   );
 };
@@ -492,6 +497,7 @@ const styles = StyleSheet.create({
     color: '#1E272E',
     fontSize: 36,
     fontFamily: 'ProximaNovaBold',
+    marginTop: 10,
   },
   controlsWarper: {
     width: 276,
@@ -509,6 +515,12 @@ const styles = StyleSheet.create({
     width: '92%',
     height: 50,
     paddingLeft: 10,
+  },
+  authError: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#ee2e71',
+    marginTop: 8,
   },
   txtCreatingAcc: {
     color: Colors.fontLight,

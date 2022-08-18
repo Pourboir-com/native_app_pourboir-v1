@@ -370,6 +370,7 @@ export default {
 
   email_address: 'Email address',
   password: 'Password',
+  auth_error: 'Wrong e-mail or password',
   sign_up: 'Sign Up',
   sign_in: 'Sign In',
   sign_up_with: 'Or Sign up with',

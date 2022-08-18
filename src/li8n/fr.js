@@ -375,6 +375,7 @@ export default {
 
   email_address: 'Adresse e-mail',
   password: 'Mot de passe',
+  auth_error: 'Mauvais e-mail ou mot de',
   sign_up: `S'inscrire`,
   sign_in: 'Se connecter',
   sign_up_with: 'Ou inscrit toi avec',

@@ -250,12 +250,6 @@ const HomeScreen = props => {
           searchTitle="popular_restaurant"
         />
       </Header>
-      {/* {adModalVisible && (
-        <AdModal
-          adModalVisible={adModalVisible}
-          setAdModalVisible={setAdModalVisible}
-        />
-      )} */}
     </>
   );
 };

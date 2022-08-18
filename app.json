@@ -27,7 +27,7 @@
     "ios": {
       "associatedDomains": ["applinks:miams.app"],
       "bundleIdentifier": "com.developerspourboir.pourboir",
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.0.1",
       "usesAppleSignIn": true,
       "supportsTablet": true,
       "infoPlist": {
@@ -96,7 +96,7 @@
         }
       ],
       "package": "com.developerspourboir.pourboir",
-      "versionCode": 25
+      "versionCode": 26
     },
     "web": {
       "favicon": "./assets/favicon.png"

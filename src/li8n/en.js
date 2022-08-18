@@ -139,6 +139,8 @@ export default {
   candidate_btn: 'Create my candidate profile',
   account_created: 'Created an account',
   candidate_profile: 'Your Candidate Profile',
+  signin_error:
+    'We do not have an account register under this e-mail. Please sign up',
   Time: 'Time',
   position: 'Position',
   year: 'Year',

@@ -30,6 +30,8 @@ const HelpUsImproveModal = ({
   customHeadingSize,
   customButtonWidth,
   bgImage,
+  imageSyles,
+  bgImageStyles,
 }) => {
   return (
     <Overlay
@@ -52,7 +54,7 @@ const HelpUsImproveModal = ({
           }}
         >
           <ImageBackground
-            style={styles.imgBgStyle}
+            style={[styles.imgBgStyle, ...(bgImageStyles ? bgImageStyles : [])]}
             source={bgImage || imgBg}
             resizeMode={bgImage ? 'cover' : 'stretch'}
           >
@@ -65,7 +67,7 @@ const HelpUsImproveModal = ({
               </TouchableOpacity>
               <Image
                 source={image}
-                style={styles.imgStyle}
+                style={[styles.imgStyle, ...(imageSyles ? imageSyles : [])]}
                 resizeMode="contain"
               />
             </View>

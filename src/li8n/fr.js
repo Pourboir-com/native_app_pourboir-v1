@@ -294,6 +294,8 @@ export default {
   review_balance: 'Laisse un avis',
   tip_balance: 'Donne un pourboire',
   to: 'à',
+  signin_error:
+    'Nous n’avons pas de compte enregistré avec ce mail. Merci de vous inscrire',
   checkin_balance_credited:
     'Nous avons créditer votre compte avec 1 Miam’s pour votre avis. Le plus vous participez, le plus vous recevrez de Miam’s.',
   balance_credited: 'Nous avons créditer votre compte avec',

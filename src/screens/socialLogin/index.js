@@ -28,10 +28,12 @@ import * as Device from 'expo-device';
 import { getAsyncStorageValues } from '../../constants';
 import * as Notifications from 'expo-notifications';
 import CommonButton from '../../components/common-button';
-
+import CommonModal from '../../components/modals/HelpUsImproveModal';
+const waiter = require('../../assets/images/error-icon.png');
 const logo = require('../../assets/images/logo.png');
 const mail = require('../../assets/images/mail.png');
 const lock = require('../../assets/images/lock.png');
+const balanceBg = require('../../assets/images/modalBG.png');
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -63,6 +65,7 @@ const SocialLogin = ({ navigation, route }) => {
     email: '',
     password: '',
   });
+  const [signInError, setSignInError] = useState(false);
   const [googleSignup] = useMutation(GOOGLE_SIGNUP);
   const [vote, setVote] = useState(false);
   const [confirmWaiter, setconfirmWaiter] = useState(false);
@@ -236,10 +239,8 @@ const SocialLogin = ({ navigation, route }) => {
           registerForPushNotifications(_id);
           setLoading(false);
         },
-        onError: e => {
-          Alert.alert(
-            e.response?.data?.message || e?.response?.data?.error[0]?.message,
-          );
+        onError: () => {
+          setSignInError(true);
         },
       },
     );
@@ -385,11 +386,7 @@ const SocialLogin = ({ navigation, route }) => {
                             }),
                           );
 
-                          if (!res?.user?.username) {
-                            navigation.replace('personalDetails', {
-                              login: true,
-                            });
-                          } else if (vote) {
+                          if (vote) {
                             navigation.replace('RateYourService');
                             setVote(false);
                           } else if (confirmWaiter || HelpUs) {
@@ -454,6 +451,33 @@ const SocialLogin = ({ navigation, route }) => {
           </View>
         </View>
       </View>
+      {signInError && (
+        <CommonModal
+          isVisible={signInError}
+          handleModalClose={() => setSignInError(false)}
+          image={waiter}
+          bgImage={balanceBg}
+          imageSyles={[
+            {
+              height: 160,
+              marginTop: 20,
+            },
+          ]}
+          bgImageStyles={[
+            {
+              height: 400,
+              marginBottom: -170,
+            },
+          ]}
+          onPress={() => {
+            setSignInError(false);
+            navigation.navigate('signup');
+          }}
+          heading={localizationContext.t('sorry')}
+          subHeadingText={localizationContext.t('signin_error')}
+          buttonText={localizationContext.t('sign_up')}
+        />
+      )}
     </ScrollView>
   );
 };
